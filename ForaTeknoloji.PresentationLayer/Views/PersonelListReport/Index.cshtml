@@ -1,0 +1,167 @@
+﻿@using ForaTeknoloji.Entities.ComplexType
+@model ForaTeknoloji.PresentationLayer.Models.PersonelListViewModel
+@{
+    ViewBag.Title = "Personel Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+
+    List<PersonelList> liste = Model.PersonelListesi;
+ }
+<div class="card mt-2 shadow-lg">
+    <div class="card-header-tabs mt-1">
+        <h3 class="text-center text-muted">Personel Listesi</h3>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "PersonelListReport", FormMethod.Post))
+        {
+            <div class="row">
+                @Html.ValidationSummary(true, "", new { @class = "text-denger" })
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="SirketSirketNo">Şirket Seçimi</label>
+                        @Html.DropDownListFor(model => model.Sirketler, Model.Sirketler, "Şirket Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sirketler, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="DepartmanNo">Departman Seçimi</label>
+                        @Html.DropDownListFor(model => model.Departmanlar, Model.Departmanlar, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Departmanlar, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="Plaka">Plaka Seçimi</label>
+                        <input type="text" placeholder="Plaka" class="form-control" id="Plaka" name="Plaka" value="" />
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="BlokNo">Blok Seçimi</label>
+                        @Html.DropDownListFor(model => model.Bloklar, Model.Bloklar, "Blok Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Bloklar, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="Daire">Daire Seçimi</label>
+                        <input type="number" class="form-control" id="Daire" placeholder="Daire" name="Daire" value="" min="0" max="3" step="1" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect5">Geçiş Grubu Seçimi</label>
+                        @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Groupsdetail, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="GlobalBolgeNo">Global Kapı Bölge Seçimi</label>
+                        @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Global_Bolge_Adi, "", new { @class = "text-danger" })
+                    </div>
+                    <br />
+                    <h4 class="text-info text-right">@Model.ListCount Adet Kayıt Listelendi</h4>
+                    <hr />
+                    <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                    <a id="Excell" href="@Url.Action("PersonelListesi","PersonelListReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <button class="btn btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+<div class="card shadow-lg mt-2 mb-1">
+
+    <div class="card-body">
+
+        <table class="table-borderless table table-hover text-center table-striped ">
+            <thead class="table-info">
+                <tr>
+                    <td>ID</td>
+                    <td>Kart ID</td>
+                    <td>Adı</td>
+                    <td>Soyadı</td>
+                    <td>Tc Kimlik No</td>
+                    <td>Şirket</td>
+                    <td>Departman</td>
+                    <td>Plaka</td>
+                    <td>Blok</td>
+                    <td>Daire</td>
+                    <td>Geçiş Grubu</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.PersonelListesi.Count == 0)
+                {
+                    <tr>
+                        <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                    </tr>
+                }
+                else
+                {
+
+                    foreach (var item in Model.PersonelListesi)
+                    {
+
+                        <tr>
+                            <td>@item.ID</td>
+                            <td>@item.Kart_ID</td>
+                            <td>@item.Adi</td>
+                            <td>@item.Soyadi</td>
+                            @if (item.TCKimlik == null)
+                            {
+                                <td>Null</td>
+                            }
+                            else
+                            {
+                                <td>@item.TCKimlik</td>
+                            }
+                            @if (item.SirketAdi == null)
+                            {
+                                <td>Null</td>
+                            }
+                            else
+                            {
+                                <td>@item.SirketAdi</td>
+                            }
+                            @if (item.DepartmanAdi == null)
+                            {
+                                <td>Null</td>
+                            }
+                            else
+                            {
+
+                                <td>@item.DepartmanAdi</td>
+                            }
+                            <td>@item.Plaka</td>
+                            <td>@item.BlokAdi</td>
+                            <td>@item.Daire</td>
+                            <td>@item.Grup_Adi</td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+
+    $("input[type='number']").inputSpinner()
+    $("#Excell").click(function () {
+        $.ajax('@Url.Action("ExportToExcell")', {
+            type: 'POST',
+            traditional: true,
+            data: {
+                personelListss:liste
+            }
+        });
+    });
+
+</script>
+
+<script src="./src/bootstrap-input-spinner.js"></script>

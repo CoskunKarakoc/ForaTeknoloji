@@ -1,0 +1,226 @@
+﻿
+@{
+    ViewBag.Title = "Ziyaretçi Raporları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mt-1 shadow-lg">
+    <div class="card-header-tabs">
+        <h3 class="text-muted text-center">Ziyaretçi Raporları</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="tümYon" class="custom-control-input" id="tümü" checked name="KapiYon">
+                        <label class="custom-control-label" for="tümü">Tüm Yönler</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="giris" class="custom-control-input" id="giris" name="KapiYon">
+                        <label class="custom-control-label" for="giris">Giriş</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="cikis" class="custom-control-input" id="cikis" name="KapiYon">
+                        <label class="custom-control-label" for="cikis">Çıkış</label>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="tümKayit" class="custom-control-input" id="tümü" checked name="Kayit">
+                        <label class="custom-control-label" for="tümKayit">Tüm Kayıtlar</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="OnaylananGecisler" class="custom-control-input" id="OnaylananGecisler" name="Kayit">
+                        <label class="custom-control-label text-success" for="OnaylananGecisler">Onaylanan Geçişler</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="Antipassback" class="custom-control-input" id="Antipassback" name="Kayit">
+                        <label class="custom-control-label text-danger" for="Antipassback">Antipassback İhlalleri</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="Engellenen" class="custom-control-input" id="Engellenen" name="Kayit">
+                        <label class="custom-control-label text-warning" for="Engellenen">Engellenen İstekler</label>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="Tümü" />
+                        <label class="custom-control-label" for="Tümü">Tüm Kapılar</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Kapi1" class="custom-control-input" id="Kapi1" />
+                        <label class="custom-control-label" for="Kapi1">Kapı 1</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Kapi2" class="custom-control-input" id="Kapi2" />
+                        <label class="custom-control-label" for="Kapi2">Kapı 2</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Kapi3" class="custom-control-input" id="Kapi3" />
+                        <label class="custom-control-label" for="Kapi3">Kapı 3</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Kapi4" class="custom-control-input" id="Kapi4" />
+                        <label class="custom-control-label" for="Kapi4">Kapı 4</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Kapi5" class="custom-control-input" id="Kapi5" />
+                        <label class="custom-control-label" for="Kapi5">Kapı 5</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Kapi6" class="custom-control-input" id="Kapi6" />
+                        <label class="custom-control-label" for="Kapi6">Kapı 6</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Kapi7" class="custom-control-input" id="Kapi7" />
+                        <label class="custom-control-label" for="Kapi7">Kapı 7</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="Kapi8" class="custom-control-input" id="Kapi8" />
+                        <label class="custom-control-label" for="Kapi8">Kapı 8</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                        <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
+                    </div>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                        <label class="custom-control-label" for="TümPanel">Tüm Global Kapı Bölgeleri</label>
+                    </div>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                            <label class="custom-control-label" for="TümPanel">Tüm Ziyaretçiler</label>
+                        </div>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                            <label class="custom-control-label" for="TümPanel">Tüm Gruplar</label>
+                        </div>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                        <label class="custom-control-label" for="TümPanel">Tüm Tarihler</label>
+                    </div>
+                    <br />
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                        <label class="custom-control-label" for="TümPanel">İki Tarih Arası</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Başlangıç</label>
+                        <input type="datetime" class="form-control form-control-sm " id="exampleFormControlInput1" placeholder="21:08:2019">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Bitiş</label>
+                        <input type="datetime" class="form-control form-control-sm " id="exampleFormControlInput1" placeholder="21:08:2019">
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                        <label class="custom-control-label" for="TümPanel">İki Saat Arası</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="datetime" class="form-control form-control-sm " id="exampleFormControlInput1" placeholder="08:15:00">
+                    </div>
+                    <div class="form-group">
+                        <input type="datetime" class="form-control form-control-sm " id="exampleFormControlInput1" placeholder="18:00:00">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mt-1 shadow-lg">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table-borderless table-responsive table table-sm table-striped text-center  table-hover">
+                    <thead class="table-info">
+                        <tr>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>TC Kimlik No</td>
+                            <td>Telefon</td>
+                            <td>Plaka</td>
+                            <td>Ziyaret Sebebi</td>
+                            <td>Grup Adı</td>
+                            <td>Panel</td>
+                            <td>Kapı</td>
+                            <td>Geçiş</td>
+                            <td>Tarih</td>
+                            <td>Personel Adı</td>
+                            <td>Personel Soyadı</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                            <td>ABCDEF1233</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

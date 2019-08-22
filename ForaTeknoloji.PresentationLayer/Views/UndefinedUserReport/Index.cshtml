@@ -1,0 +1,209 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.TanimsizKullaniciListViewModel
+@{
+    ViewBag.Title = "Tanımsız Kullanıcı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow-lg mt-3">
+    <div class="card-header-tabs mt-1">
+        <h3 class="text-center text-muted">Tanımsız Kullanıcı</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-6">
+                @using (Html.BeginForm("Index", "UndefinedUserReport", FormMethod.Post))
+                {
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="tümYon" class="custom-control-input" id="tümü" checked name="KapiYon">
+                                    <label class="custom-control-label" for="tümü">Tüm Yönler</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="giris" class="custom-control-input" id="giris" name="KapiYon">
+                                    <label class="custom-control-label" for="giris">Giriş</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="cikis" class="custom-control-input" id="cikis" name="KapiYon">
+                                    <label class="custom-control-label" for="cikis">Çıkış</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="Tümü" />
+                                    <label class="custom-control-label" for="Tümü">Tüm Kapılar</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Kapi1" class="custom-control-input" id="Kapi1" />
+                                    <label class="custom-control-label" for="Kapi1">Kapı 1</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Kapi2" class="custom-control-input" id="Kapi2" />
+                                    <label class="custom-control-label" for="Kapi2">Kapı 2</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Kapi3" class="custom-control-input" id="Kapi3" />
+                                    <label class="custom-control-label" for="Kapi3">Kapı 3</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Kapi4" class="custom-control-input" id="Kapi4" />
+                                    <label class="custom-control-label" for="Kapi4">Kapı 4</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Kapi5" class="custom-control-input" id="Kapi5" />
+                                    <label class="custom-control-label" for="Kapi5">Kapı 5</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Kapi6" class="custom-control-input" id="Kapi6" />
+                                    <label class="custom-control-label" for="Kapi6">Kapı 6</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Kapi7" class="custom-control-input" id="Kapi7" />
+                                    <label class="custom-control-label" for="Kapi7">Kapı 7</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="Kapi8" class="custom-control-input" id="Kapi8" />
+                                    <label class="custom-control-label" for="Kapi8">Kapı 8</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="TümTarih" class="custom-control-input" id="TümTarih" />
+                                    <label class="custom-control-label" for="TümTarih">Tüm Tarihler</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="ikiTarih" class="custom-control-input" id="ikiTarih" />
+                                    <label class="custom-control-label" for="ikiTarih">İki Tarih Arası</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
+                                    <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                                    <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
+                                </div>
+                                @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçiniz..", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Panel, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <h4 class="text-info text-right">@Model.Liste.Count Adet Kayıt Listelendi</h4>
+                            <hr />
+                            <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                            <a href="@Url.Action("ExportToExcell","PersonelListReport",new { personelLists=Model.Liste })" class="btn btn-sm btn-success"><i class="fa fa-file-export"></i> Excel'e Aktar</a>
+                            <button class="btn btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-6">
+                <img src="#" alt="Canlı Fotoğraf" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mt-1 shadow-lg">
+    <div class="card-body">
+        <table id="myTable" class="table-borderless table table table-striped text-center  table-hover">
+            <thead class="table-info">
+                <tr>
+                    <td>Kart ID</td>
+                    <td>Panel</td>
+                    <td>Kapı</td>
+                    <td>Geçiş</td>
+                    <td>Tarih</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Liste.Count == 0)
+                {
+                    <tr>
+                        <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model.Liste)
+                    {
+                        <tr class="deneme">
+                            <td class="deneme1" data-Kart="merj">@item.Kart_ID</td>
+                            <td>@item.Panel_ID</td>
+                            <td>@item.Kapi_ID</td>
+                            @if (item.Gecis_Tipi == 0)
+                            {
+
+                                <td>Giriş</td>
+                            }
+                            else
+                            {
+                                <td>Çıkış</td>
+                            }
+                            <td>@item.Tarih</td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#TümPanel").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Panel").attr("disabled", true);
+            } else {
+                $("#Panel").attr("disabled", false);
+            }
+        });
+        $("#Tümü").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Kapi1").attr("disabled", true);
+                $("#Kapi1").prop("checked", false);
+                $("#Kapi2").attr("disabled", true);
+                $("#Kapi2").prop("checked", false);
+                $("#Kapi1").prop("checked", false);
+                $("#Kapi3").attr("disabled", true);
+                $("#Kapi3").prop("checked", false);
+                $("#Kapi4").attr("disabled", true);
+                $("#Kapi4").prop("checked", false);
+                $("#Kapi5").attr("disabled", true);
+                $("#Kapi5").prop("checked", false);
+                $("#Kapi6").attr("disabled", true);
+                $("#Kapi6").prop("checked", false);
+                $("#Kapi7").attr("disabled", true);
+                $("#Kapi7").prop("checked", false);
+                $("#Kapi8").attr("disabled", true);
+                $("#Kapi8").prop("checked", false);
+            } else {
+                $("#Kapi1").attr("disabled", false);
+                $("#Kapi2").attr("disabled", false);
+                $("#Kapi3").attr("disabled", false);
+                $("#Kapi4").attr("disabled", false);
+                $("#Kapi5").attr("disabled", false);
+                $("#Kapi6").attr("disabled", false);
+                $("#Kapi7").attr("disabled", false);
+                $("#Kapi8").attr("disabled", false);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "İçerdekiler-Dışardakiler Raporu ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow-lg mt-2">
+    <div class="card-header-tabs">
+        <h3 class="text-center text-muted">İçerdekiler-Dışardakiler</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="Personel" checked class="custom-control-input" id="Personel" name="UserTip">
+                        <label class="custom-control-label" for="Personel">Personel</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="Ziyaretci" class="custom-control-input" id="Ziyaretci" name="UserTip">
+                        <label class="custom-control-label" for="Ziyaretci">Ziyaretçi</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="Tümü" class="custom-control-input" id="Tümü" name="UserTip">
+                        <label class="custom-control-label" for="Tümü">Tümü</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="Icerdekiler" class="custom-control-input" id="Icerdekiler" checked name="InOut">
+                        <label class="custom-control-label" for="Icerdekiler">İçerdekiler</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="Disardakiler" class="custom-control-input" id="Disardakiler" name="InOut">
+                        <label class="custom-control-label" for="Disardakiler">Dışardakiler</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="LokalBolge" class="custom-control-input" id="LokalBolge" checked name="Bolge">
+                                <label class="custom-control-label" for="LokalBolge">Lokal Bölge</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="GlobalBolge" class="custom-control-input" id="GlobalBolge" name="Bolge">
+                                <label class="custom-control-label" for="GlobalBolge">Global Bölge</label>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control form-control-sm">
+                                <option>Default select</option>
+                            </select>
+                            <select class="form-control form-control-sm">
+                                <option>Default select</option>
+                            </select>
+                            <br />
+                            <select class="form-control form-control-sm">
+                                <option>Default select</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="SecilenKayit" class="custom-control-input" id="SecilenKayit" checked name="Kayit">
+                        <label class="custom-control-label" for="SecilenKayit">Seçilen Kayıt</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" value="TumKayit" class="custom-control-input" id="TumKayit" name="Kayit">
+                        <label class="custom-control-label" for="TumKayit">Tüm Kayıtlar</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <select class="form-control form-control-sm">
+                        <option>Default select</option>
+                    </select>
+                </div>
+                <button class="btn btn-secondary btn-sm">Manuel Çıkış Ver</button>
+            </div>
+            <div class="col-md-12 text-right">
+
+                <h4 class="text-info text-right">Adet Kayıt Listelendi</h4>
+                <hr />
+                <button class="btn btn-sm btn-secondary "><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                <button class="btn btn-sm btn-success"><i class="fa fa-file-export"></i> Excel'e Aktar</button>
+                <button class="btn btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card shadow-lg mt-1">
+    <div class="card-body">
+        <table class="table-borderless table table table-striped text-center table-hover">
+            <thead class="table-info">
+                <tr>
+                    <td>ID</td>
+                    <td>Kart ID</td>
+                    <td>Adı</td>
+                    <td>Soyadı</td>
+                    <td>Şirket</td>
+                    <td>Departman</td>
+                    <td>Tarih</td>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>ABCD</td>
+                    <td>1234</td>
+                    <td>EFGH</td>
+                    <td>DCEB</td>
+                    <td>5698</td>
+                    <td>7899</td>
+                    <td>102</td>
+            </tbody>
+        </table>
+    </div>
+</div>

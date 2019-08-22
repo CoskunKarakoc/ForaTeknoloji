@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F90EA7E7-6541-4D89-AF3D-38689C9EDDA7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ForaTeknoloji.BusinessLayer</RootNamespace>
+    <AssemblyName>ForaTeknoloji.BusinessLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0-preview8-19405-04\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0-preview8-19405-04\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.4.0.0-beta-0134\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\IAccessCountTypesService.cs" />
+    <Compile Include="Abstract\IAccessDatasService.cs" />
+    <Compile Include="Abstract\IAccessModesService.cs" />
+    <Compile Include="Abstract\IAlarmlarService.cs" />
+    <Compile Include="Abstract\IAlarmTipleriService.cs" />
+    <Compile Include="Abstract\IBloklarService.cs" />
+    <Compile Include="Abstract\ICamerasService.cs" />
+    <Compile Include="Abstract\ICodeOperationService.cs" />
+    <Compile Include="Abstract\IDBRolesService.cs" />
+    <Compile Include="Abstract\IDBUsersService.cs" />
+    <Compile Include="Abstract\IDBUsersSirketService.cs" />
+    <Compile Include="Abstract\IDepartmanService.cs" />
+    <Compile Include="Abstract\IDevicesService.cs" />
+    <Compile Include="Abstract\IDoorGroupsDetailService.cs" />
+    <Compile Include="Abstract\IDoorGroupsMasterService.cs" />
+    <Compile Include="Abstract\IFloorNamesService.cs" />
+    <Compile Include="Abstract\IGlobalZoneService.cs" />
+    <Compile Include="Abstract\IGlobalZonesInterlockService.cs" />
+    <Compile Include="Abstract\IGroupMasterService.cs" />
+    <Compile Include="Abstract\IGroupsDetailService.cs" />
+    <Compile Include="Abstract\ILiftGroupsService.cs" />
+    <Compile Include="Abstract\IMapsObjectsService.cs" />
+    <Compile Include="Abstract\IMapsService.cs" />
+    <Compile Include="Abstract\IPanelSettingsService.cs" />
+    <Compile Include="Abstract\IRawGroupsService.cs" />
+    <Compile Include="Abstract\IRawUsersService.cs" />
+    <Compile Include="Abstract\IReaderSettingsService.cs" />
+    <Compile Include="Abstract\ISirketService.cs" />
+    <Compile Include="Abstract\ITimeGroupsService.cs" />
+    <Compile Include="Abstract\IUserService.cs" />
+    <Compile Include="Abstract\IUsersOLDService.cs" />
+    <Compile Include="Concrete\AccessCountTypesManager.cs" />
+    <Compile Include="Concrete\AccessDatasManager.cs" />
+    <Compile Include="Concrete\AccessModesManager.cs" />
+    <Compile Include="Concrete\AlarmlarManager.cs" />
+    <Compile Include="Concrete\AlarmTipleriManager.cs" />
+    <Compile Include="Concrete\BloklarManager.cs" />
+    <Compile Include="Concrete\CamerasManager.cs" />
+    <Compile Include="Concrete\CodeOperationManager.cs" />
+    <Compile Include="Concrete\DBRolesManager.cs" />
+    <Compile Include="Concrete\DBUsersManager.cs" />
+    <Compile Include="Concrete\DBUsersSirketManager.cs" />
+    <Compile Include="Concrete\DepartmanManager.cs" />
+    <Compile Include="Concrete\DevicesManager.cs" />
+    <Compile Include="Concrete\DoorGroupsDetailManager.cs" />
+    <Compile Include="Concrete\DoorGroupsMasterManager.cs" />
+    <Compile Include="Concrete\FloorNamesManager.cs" />
+    <Compile Include="Concrete\GlobalZoneManager.cs" />
+    <Compile Include="Concrete\GlobalZonesInterlockManager.cs" />
+    <Compile Include="Concrete\GroupsDetailManager.cs" />
+    <Compile Include="Concrete\GroupsMasterManager.cs" />
+    <Compile Include="Concrete\MapsManager.cs" />
+    <Compile Include="Concrete\MapsObjectsManager.cs" />
+    <Compile Include="Concrete\RawGroupsManager.cs" />
+    <Compile Include="Concrete\LiftGroupsManager.cs" />
+    <Compile Include="Concrete\PanelSettingsManager.cs" />
+    <Compile Include="Concrete\RawUsersManager.cs" />
+    <Compile Include="Concrete\ReaderSettingsManager.cs" />
+    <Compile Include="Concrete\SirketManager.cs" />
+    <Compile Include="Concrete\TimeGroupsManager.cs" />
+    <Compile Include="Concrete\UserManager.cs" />
+    <Compile Include="Concrete\UsersOLDManager.cs" />
+    <Compile Include="DependencyResolvers\Ninject\BusinessModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ForaTeknoloji.Core\ForaTeknoloji.Core.csproj">
+      <Project>{35d9412b-9386-4908-a26d-d6ab9492a336}</Project>
+      <Name>ForaTeknoloji.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ForaTeknoloji.DataAccessLayer\ForaTeknoloji.DataAccessLayer.csproj">
+      <Project>{3719863d-8a70-44a4-86a0-e9f881f83afc}</Project>
+      <Name>ForaTeknoloji.DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ForaTeknoloji.Entities\ForaTeknoloji.Entities.csproj">
+      <Project>{3cda063d-8feb-43b9-a4fd-1a78147e5acc}</Project>
+      <Name>ForaTeknoloji.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\EntityFramework.6.3.0-preview8-19405-04\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0-preview8-19405-04\build\EntityFramework.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0-preview8-19405-04\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0-preview8-19405-04\build\EntityFramework.targets'))" />
+  </Target>
+</Project>
