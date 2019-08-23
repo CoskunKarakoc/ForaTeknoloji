@@ -1,5 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.PresentationLayer.Models;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +49,53 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.Panel_ID.ToString()
                 })
             };
+            TempData["DigerGecis"] = liste;
             return View(model);
+        }
+
+      
+        //Export Excell
+        public void DigerGecisListesi()
+        {
+            List<DigerGecisRaporList> lists = new List<DigerGecisRaporList>();
+
+            lists = TempData["DigerGecis"] as List<DigerGecisRaporList>;
+            if (lists == null || lists.Count == 0)
+            {
+                lists = _accessDatasService.GetDigerGecisListesi(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null); ;
+            }
+            ExcelPackage package = new ExcelPackage();
+            ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
+            worksheet.Cells["A1"].Value = "Diğer Geçiş Listesi";
+            worksheet.Cells["A3"].Value = "Tarih";
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["A6"].Value = "Panel";
+            worksheet.Cells["B6"].Value = "Kapı";
+            worksheet.Cells["C6"].Value = "Geçiş";
+            worksheet.Cells["D6"].Value = "Operasyon";
+            worksheet.Cells["E6"].Value = "Tarih";
+            worksheet.Cells["A1"].Style.Font.Size = 13;
+            worksheet.Cells["A1"].Style.Font.Bold = true;
+            int rowStart = 7;
+            foreach (var item in lists)
+            {
+                // worksheet.Row(rowStart).Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                // worksheet.Row(rowStart).Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(string.Format("pink")));
+                worksheet.Cells[string.Format("A{0}", rowStart)].Value = item.Panel_ID;
+                worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Kapi_ID;
+                worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
+                worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Operasyon;
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Tarih;
+                rowStart++;
+
+            }
+            worksheet.Cells[string.Format("A{0}", rowStart + 3)].Value = "Toplam Kayıt=" + lists.Count();
+            worksheet.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-dispositon", "attachment: filename=" + "ExcelReport.xlsx");
+            Response.BinaryWrite(package.GetAsByteArray());
+            Response.End();
         }
     }
 }

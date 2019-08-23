@@ -3,7 +3,6 @@
     ViewBag.Title = "Diğer Geçiş Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="card shadow-lg mt-1">
     <div class="card-header-tabs">
         <h3 class="text-center text-muted">Diğer Geçiş Raporları</h3>
@@ -97,17 +96,14 @@
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="IkiTarih" class="custom-control-input" id="IkiTarih" />
                             <label class="custom-control-label" for="IkiTarih">İki Tarih Arası</label>
-                            <input class="form-control form-control-sm" type="text" placeholder="12.01.2019">
-                            <input class="form-control form-control-sm" type="text" placeholder="12.01.2019">
                         </div>
                         <br />
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="IkiSaat" class="custom-control-input" id="IkiSaat" />
-                            <label class="custom-control-label" for="IkiSaat">İki Saat Arası</label>
-                            <input class="form-control form-control-sm" type="text" placeholder="12.01.2019">
-                            <input class="form-control form-control-sm" type="text" placeholder="12.01.2019">
+                            <label class="custom-control-label" for="IkiSaat">Tüm Tarihler</label>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -164,9 +160,8 @@
                                 <h4 class="text-info text-right">@Model.DigerGecisListesi.Count Adet Kayıt Listelendi</h4>
                                 <hr />
                                 <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                                <button class="btn btn-sm btn-success"><i class="fa fa-file-export"></i> Excel'e Aktar</button>
-                                <button class="btn btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
-
+                                <a class="btn btn-sm btn-success" href="@Url.Action("DigerGecisListesi","OutherReport")"><i class="fa fa-file-export"></i> Excel'e Aktar</a>
+                                <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                             </div>
                         </div>
                     </div>
@@ -178,8 +173,8 @@
     </div>
 </div>
 <div class="card shadow-lg mt-1">
-    <div class="card-body">
-        <table class="table-borderless table table-hover text-center table-striped">
+    <div id="print_div" class="card-body">
+        <table class=" table table-hover text-center table-striped">
             <thead class="table-info">
                 <tr>
                     <td>Panel</td>
@@ -221,8 +216,39 @@
             </tbody>
 
         </table>
+
     </div>
 </div>
+
+<script>
+    $(function () {
+        //Yazıcı Çıktısı Alan Kod Table'ı kaplayan div'in => id'sine print_div yaz birde id si btnPrint olan bir buton yaz
+        $("#btnPrint").click(function () {
+            var contents = $("#print_div").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html><head><title>Diğer Geçiş Listesi</title>');
+            frameDoc.document.write('</head><body>');
+            //Append the external CSS file.
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            //Append the DIV contents.
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
         $("#TümTarih").change(function () {

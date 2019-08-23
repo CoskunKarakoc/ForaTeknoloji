@@ -106,8 +106,8 @@
                             <h4 class="text-info text-right">@Model.Liste.Count Adet Kayıt Listelendi</h4>
                             <hr />
                             <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                            <a href="@Url.Action("ExportToExcell","PersonelListReport",new { personelLists=Model.Liste })" class="btn btn-sm btn-success"><i class="fa fa-file-export"></i> Excel'e Aktar</a>
-                            <button class="btn btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+                            <a href="@Url.Action("TanimsizKullaniciListesi","UndefinedUserReport")" class="btn btn-sm btn-success"><i class="fa fa-file-export"></i> Excel'e Aktar</a>
+                            <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
 
                         </div>
                     </div>
@@ -121,7 +121,7 @@
     </div>
 </div>
 <div class="card mt-1 shadow-lg">
-    <div class="card-body">
+    <div id="print_div" class="card-body">
         <table id="myTable" class="table-borderless table table table-striped text-center  table-hover">
             <thead class="table-info">
                 <tr>
@@ -204,6 +204,35 @@
                 $("#Kapi7").attr("disabled", false);
                 $("#Kapi8").attr("disabled", false);
             }
+        });
+    });
+</script>
+<script>
+    $(function () {
+        //Yazıcı Çıktısı Alan Kod Table'ı kaplayan div'in => id'sine print_div yaz birde id si btnPrint olan bir buton yaz
+        $("#btnPrint").click(function () {
+            var contents = $("#print_div").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html><head><title>Tanımsız Kullanıcı Listesi</title>');
+            frameDoc.document.write('</head><body>');
+            //Append the external CSS file.
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            //Append the DIV contents.
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
         });
     });
 </script>

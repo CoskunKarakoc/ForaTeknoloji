@@ -6,36 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>MaviSoft 301-@ViewBag.Title</title>
+    <title>MaviSoft 301 - @ViewBag.Title</title>
     <!-- Custom fonts for this template-->
+
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-reboot.min.css" rel="stylesheet" />
-    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
-    <link href="~/Templete/TempleteDosyalari/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Templete/TempleteDosyalari/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="~/Templete/TempleteDosyalari/css/sb-admin-2.min.css" rel="stylesheet" />
-    <!-- Bootstrap core JavaScript-->
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
+    <link href="~/Content/gridmvc.datepicker.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    @*<script src="~/Templete/TempleteDosyalari/vendor/jquery/jquery.min.js"></script>*@
+    <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/gridmvc.min.js"></script>
-    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-    <script src="~/Templete/TempleteDosyalari/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="~/Templete/TempleteDosyalari/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="~/Templete/TempleteDosyalari/js/sb-admin-2.min.js"></script>
-    <!-- Page level plugins -->
-    <script src="~/Templete/TempleteDosyalari/vendor/chart.js/Chart.min.js"></script>
-    <!-- Page level custom scripts -->
-    <script src="~/Templete/TempleteDosyalari/js/demo/chart-area-demo.js"></script>
-    <script src="~/Templete/TempleteDosyalari/js/demo/chart-pie-demo.js"></script>
-    <script src="~/Scripts/gridmvc.lang.tr.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jszip-2.5.0/dt-1.10.18/b-1.5.6/b-html5-1.5.6/fh-3.1.4/datatables.min.js"></script>
 
-    <script src="~/Scripts/DataTables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/gridmvc.min.js"></script>
 </head>
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -74,11 +64,10 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Rapor Sayfaları</h6>
                         <a class="collapse-item" href="@Url.Action("Index","PersonelListReport")">Personel Listesi</a>
-                        <a class="collapse-item" href="buttons.html"> Personel Raporları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","ReportPersonel")">Personel Raporları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Diğer Kullanıcılar</a>
+                        <a class="collapse-item" href="@Url.Action("Index","InsideOutReport")">İçerde Dışarda Raporları</a>
                         <a class="collapse-item" href="@Url.Action("Index","VisitorReport")">Ziyaretçi Raporları</a>
-                        <a class="collapse-item" href="buttons.html">Gelen-Gelmeyen, <br /> Çalışma Raporları</a>
-                        <a class="collapse-item" href="buttons.html">İçerde/Dışarda Raporu</a>
-                        <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Diğer Raporlar</a>
                         <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Tanımsız Kullanıcı Raporları</a>
                     </div>
                 </div>
@@ -87,7 +76,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Çalışma Aşamasında</span>
+                    <span>Utilities</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -103,7 +92,7 @@
             <hr class="sidebar-divider">
             <!-- Heading -->
             <div class="sidebar-heading">
-                Eklentiler
+                Addons
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -149,25 +138,17 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                @*<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-
-                    </nav>*@
-                <!-- End of Topbar -->
-                <!-- Begin Page Content -->
+            <div class="content">
                 <div class="container-fluid">
                     @RenderBody()
                 </div>
-                <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; ForaTeknoloji @DateTime.Now.Year</span>
+                        <span>Copyright &copy; Fora Teknoloji @DateTime.Now.Year</span>
                     </div>
                 </div>
             </footer>
@@ -179,25 +160,18 @@
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
-    </a>
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    </a> <!-- Bootstrap core JavaScript-->
+    <script src="~/Templete/TempleteDosyalari/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Templete/TempleteDosyalari/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/Templete/TempleteDosyalari/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/Templete/TempleteDosyalari/js/sb-admin-2.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="~/Templete/TempleteDosyalari/vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="~/Templete/TempleteDosyalari/js/demo/chart-area-demo.js"></script>
+    <script src="~/Templete/TempleteDosyalari/js/demo/chart-pie-demo.js"></script>
 
 </body>
 </html>

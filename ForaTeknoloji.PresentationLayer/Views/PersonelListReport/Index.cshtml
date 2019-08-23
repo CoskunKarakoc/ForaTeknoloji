@@ -1,4 +1,5 @@
 ﻿@using ForaTeknoloji.Entities.ComplexType
+@using GridMvc.Html;
 @model ForaTeknoloji.PresentationLayer.Models.PersonelListViewModel
 @{
     ViewBag.Title = "Personel Listesi";
@@ -7,7 +8,7 @@
 @{
 
     List<PersonelList> liste = Model.PersonelListesi;
- }
+}
 <div class="card mt-2 shadow-lg">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Personel Listesi</h3>
@@ -62,8 +63,7 @@
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                     <a id="Excell" href="@Url.Action("PersonelListesi","PersonelListReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
-                    <button class="btn btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
-
+                    <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
             </div>
         }
@@ -75,93 +75,124 @@
 
 <div class="card shadow-lg mt-2 mb-1">
 
-    <div class="card-body">
-
-        <table class="table-borderless table table-hover text-center table-striped ">
-            <thead class="table-info">
-                <tr>
-                    <td>ID</td>
-                    <td>Kart ID</td>
-                    <td>Adı</td>
-                    <td>Soyadı</td>
-                    <td>Tc Kimlik No</td>
-                    <td>Şirket</td>
-                    <td>Departman</td>
-                    <td>Plaka</td>
-                    <td>Blok</td>
-                    <td>Daire</td>
-                    <td>Geçiş Grubu</td>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.PersonelListesi.Count == 0)
-                {
+    <div id="print_div" class="card-body">
+        @Html.Grid(Model.PersonelListesi).Columns(column =>
+{
+column.Add(x => x.ID);
+column.Add(x => x.Kart_ID);
+column.Add(x => x.Adi);
+column.Add(x => x.Soyadi);
+column.Add(x => x.TCKimlik);
+column.Add(x => x.SirketAdi);
+column.Add(x => x.DepartmanAdi);
+column.Add(x => x.Plaka);
+column.Add(x => x.BlokAdi);
+column.Add(x => x.Daire);
+column.Add(x => x.Grup_Adi);
+}).Sortable(true).SetLanguage("tr").WithPaging(10);
+        @*<table class="table-borderless table table-hover text-center table-striped ">
+                <thead class="table-info">
                     <tr>
-                        <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                        <td>ID</td>
+                        <td>Kart ID</td>
+                        <td>Adı</td>
+                        <td>Soyadı</td>
+                        <td>Tc Kimlik No</td>
+                        <td>Şirket</td>
+                        <td>Departman</td>
+                        <td>Plaka</td>
+                        <td>Blok</td>
+                        <td>Daire</td>
+                        <td>Geçiş Grubu</td>
                     </tr>
-                }
-                else
-                {
-
-                    foreach (var item in Model.PersonelListesi)
+                </thead>
+                <tbody>
+                    @if (Model.PersonelListesi.Count == 0)
                     {
-
                         <tr>
-                            <td>@item.ID</td>
-                            <td>@item.Kart_ID</td>
-                            <td>@item.Adi</td>
-                            <td>@item.Soyadi</td>
-                            @if (item.TCKimlik == null)
-                            {
-                                <td>Null</td>
-                            }
-                            else
-                            {
-                                <td>@item.TCKimlik</td>
-                            }
-                            @if (item.SirketAdi == null)
-                            {
-                                <td>Null</td>
-                            }
-                            else
-                            {
-                                <td>@item.SirketAdi</td>
-                            }
-                            @if (item.DepartmanAdi == null)
-                            {
-                                <td>Null</td>
-                            }
-                            else
-                            {
-
-                                <td>@item.DepartmanAdi</td>
-                            }
-                            <td>@item.Plaka</td>
-                            <td>@item.BlokAdi</td>
-                            <td>@item.Daire</td>
-                            <td>@item.Grup_Adi</td>
-
+                            <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
                         </tr>
                     }
-                }
-            </tbody>
-        </table>
+                    else
+                    {
+
+                        foreach (var item in Model.PersonelListesi)
+                        {
+
+                            <tr>
+                                <td>@item.ID</td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                @if (item.TCKimlik == null)
+                                {
+                                    <td>Null</td>
+                                }
+                                else
+                                {
+                                    <td>@item.TCKimlik</td>
+                                }
+                                @if (item.SirketAdi == null)
+                                {
+                                    <td>Null</td>
+                                }
+                                else
+                                {
+                                    <td>@item.SirketAdi</td>
+                                }
+                                @if (item.DepartmanAdi == null)
+                                {
+                                    <td>Null</td>
+                                }
+                                else
+                                {
+
+                                    <td>@item.DepartmanAdi</td>
+                                }
+                                <td>@item.Plaka</td>
+                                <td>@item.BlokAdi</td>
+                                <td>@item.Daire</td>
+                                <td>@item.Grup_Adi</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>*@
     </div>
+
 </div>
 
 <script>
 
     $("input[type='number']").inputSpinner()
-    $("#Excell").click(function () {
-        $.ajax('@Url.Action("ExportToExcell")', {
-            type: 'POST',
-            traditional: true,
-            data: {
-                personelListss:liste
-            }
+</script>
+<script>
+    $(function () {
+        $("#btnPrint").click(function () {
+            var contents = $("#print_div").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html><head><title>Personel Listesi</title>');
+            frameDoc.document.write('</head><body>');
+            //Append the external CSS file.
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            //Append the DIV contents.
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
         });
     });
-
 </script>
-
 <script src="./src/bootstrap-input-spinner.js"></script>

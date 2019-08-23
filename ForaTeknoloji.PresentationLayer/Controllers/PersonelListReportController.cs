@@ -2,6 +2,7 @@
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
+using Rotativa;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,7 +21,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ISirketService _sirketService;
         private IGlobalZoneService _globalZoneService;
         private IGroupMasterService _groupMasterService;
-        public List<PersonelList> personelLists = new List<PersonelList>();
         public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupsDetailService groupsDetailService, ISirketService sirketService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService)
         {
             _userService = userService;
@@ -34,7 +34,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: PersonelListReport
         public ActionResult Index()
         {
-            personelLists = _userService.GetPersonelLists(null, null, null, null, null, null, null);
+            var personelLists = _userService.GetPersonelLists(null, null, null, null, null, null, null);
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -81,10 +81,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         [HttpPost]
-
         public ActionResult Index(int? Sirketler, int? Departmanlar, int? Bloklar, int? Groupsdetail, int? Global_Bolge_Adi, int? Daire, string Plaka = "")
         {
-            personelLists = _userService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
+            var personelLists = _userService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -129,14 +128,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             };
 
-            TempData["Document"] = personelLists;
+            TempData["PersonelLists"] = personelLists;
             return View(model);
         }
+
+      
+
         //EXCELL EXPORT
         public void PersonelListesi()
         {
-            List<PersonelList> liste = TempData["Document"] as List<PersonelList>;
-            if (liste.Count == 0)
+            List<PersonelList> liste = new List<PersonelList>();
+
+            liste = TempData["PersonelLists"] as List<PersonelList>;
+
+            if (liste == null || liste.Count == 0 )
             {
                 liste = _userService.GetPersonelLists(null, null, null, null, null, null, null);
             }
@@ -186,5 +191,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             Response.End();
 
         }
+
+      
     }
 }

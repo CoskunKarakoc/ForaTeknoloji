@@ -13,8 +13,8 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <div class="custom-control custom-radio">
-                        <input type="radio" value="tümYon" class="custom-control-input" id="tümü" checked name="KapiYon">
-                        <label class="custom-control-label" for="tümü">Tüm Yönler</label>
+                        <input type="radio" value="tümYon" class="custom-control-input" id="tümYon" checked name="KapiYon">
+                        <label class="custom-control-label" for="tümYon">Tüm Yönler</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input type="radio" value="giris" class="custom-control-input" id="giris" name="KapiYon">
@@ -28,7 +28,7 @@
                 <hr />
                 <div class="form-group">
                     <div class="custom-control custom-radio">
-                        <input type="radio" value="tümKayit" class="custom-control-input" id="tümü" checked name="Kayit">
+                        <input type="radio" value="tümKayit" class="custom-control-input" id="tümKayit" checked name="Kayit">
                         <label class="custom-control-label" for="tümKayit">Tüm Kayıtlar</label>
                     </div>
                     <div class="custom-control custom-radio">
@@ -47,8 +47,8 @@
                 <hr />
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="Tümü" />
-                        <label class="custom-control-label" for="Tümü">Tüm Kapılar</label>
+                        <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="TümKapi" />
+                        <label class="custom-control-label" for="TümKapi">Tüm Kapılar</label>
                     </div>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" value="true" name="Kapi1" class="custom-control-input" id="Kapi1" />
@@ -98,7 +98,7 @@
                         <option>5</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
@@ -111,7 +111,7 @@
                         <option>4</option>
                         <option>5</option>
                     </select>
-                    
+
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
@@ -125,7 +125,7 @@
                             <option>5</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </div>
-           
+
             <div class="col-md-4">
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
@@ -179,7 +179,7 @@
 <div class="card mt-1 shadow-lg">
     <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div id="print_div" class="col-md-12">
                 <table class="table-borderless table-responsive table table-sm table-striped text-center  table-hover">
                     <thead class="table-info">
                         <tr>
@@ -224,3 +224,71 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+
+
+        $("#TümKapi").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Kapi1").attr("disabled", true);
+                $("#Kapi1").prop("checked", false);
+                $("#Kapi2").attr("disabled", true);
+                $("#Kapi2").prop("checked", false);
+                $("#Kapi3").attr("disabled", true);
+                $("#Kapi3").prop("checked", false);
+                $("#Kapi4").attr("disabled", true);
+                $("#Kapi4").prop("checked", false);
+                $("#Kapi5").attr("disabled", true);
+                $("#Kapi5").prop("checked", false);
+                $("#Kapi6").attr("disabled", true);
+                $("#Kapi6").prop("checked", false);
+                $("#Kapi7").attr("disabled", true);
+                $("#Kapi7").prop("checked", false);
+                $("#Kapi8").attr("disabled", true);
+                $("#Kapi8").prop("checked", false);
+            } else {
+                $("#Kapi1").attr("disabled", false);
+                $("#Kapi2").attr("disabled", false);
+                $("#Kapi3").attr("disabled", false);
+                $("#Kapi4").attr("disabled", false);
+                $("#Kapi5").attr("disabled", false);
+                $("#Kapi6").attr("disabled", false);
+                $("#Kapi7").attr("disabled", false);
+                $("#Kapi8").attr("disabled", false);
+            }
+
+        });
+
+
+
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#btnPrint").click(function () {
+            var contents = $("#print_div").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html><head><title>Ziyaretçi Listesi</title>');
+            frameDoc.document.write('</head><body>');
+            //Append the external CSS file.
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            //Append the DIV contents.
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+        });
+    });
+</script>
