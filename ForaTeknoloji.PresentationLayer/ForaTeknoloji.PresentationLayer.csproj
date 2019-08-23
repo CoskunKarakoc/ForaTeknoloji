@@ -286,6 +286,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\11184810.jpg" />
+    <Content Include="Images\2386685.jpg" />
+    <Content Include="Images\15491735.jpg" />
+    <Content Include="Images\6300990.jpg" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />

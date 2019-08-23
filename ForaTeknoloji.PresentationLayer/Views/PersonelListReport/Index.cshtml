@@ -33,7 +33,7 @@
                         <label for="Plaka">Plaka Seçimi</label>
                         <input type="text" placeholder="Plaka" class="form-control" id="Plaka" name="Plaka" value="" />
                     </div>
-
+                  
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -46,6 +46,7 @@
                         <label for="Daire">Daire Seçimi</label>
                         <input type="number" class="form-control" id="Daire" placeholder="Daire" name="Daire" value="" min="0" max="3" step="1" />
                     </div>
+
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -75,7 +76,7 @@
 
 <div class="card shadow-lg mt-2 mb-1">
 
-    <div id="print_div" class="card-body">
+    <div id="" class="card-body">
         @Html.Grid(Model.PersonelListesi).Columns(column =>
 {
 column.Add(x => x.ID);
@@ -164,7 +165,6 @@ column.Add(x => x.Grup_Adi);
 </div>
 
 <script>
-
     $("input[type='number']").inputSpinner()
 </script>
 <script>

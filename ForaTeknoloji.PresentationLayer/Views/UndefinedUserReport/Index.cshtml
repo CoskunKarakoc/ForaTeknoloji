@@ -84,11 +84,25 @@
                                     <input type="checkbox" value="true" name="ikiTarih" class="custom-control-input" id="ikiTarih" />
                                     <label class="custom-control-label" for="ikiTarih">İki Tarih Arası</label>
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Başlangıç</label>
+                                    <input class="form-control" name="Tarih1" type="date" value="2019-08-13" id="Tarih1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Bitiş</label>
+                                    <input class="form-control" name="Tarih2" disabled type="date" value="2019-08-13" id="Tarih2">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
                                     <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" name="Saat1" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" name="Saat2" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -115,7 +129,7 @@
             </div>
 
             <div class="col-md-6">
-                <img src="#" alt="Canlı Fotoğraf" />
+                <img class="img-fluid" id="change-image" alt="Kritere Uygun Resim Yok" src="" />
             </div>
         </div>
     </div>
@@ -144,7 +158,7 @@
                     foreach (var item in Model.Liste)
                     {
                         <tr class="deneme">
-                            <td class="deneme1" data-Kart="merj">@item.Kart_ID</td>
+                            <td data-kart="@item.Kart_ID">@item.Kart_ID</td>
                             <td>@item.Panel_ID</td>
                             <td>@item.Kapi_ID</td>
                             @if (item.Gecis_Tipi == 0)
@@ -174,6 +188,39 @@
             } else {
                 $("#Panel").attr("disabled", false);
             }
+        });
+        $("#TümTarih").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#ikiTarih").attr("disabled", true);
+                $("#ikiSaat").attr("disabled", true);
+                $("#Tarih1").attr("disabled", true);
+                $("#Tarih2").attr("disabled", true);
+                $("#Saat1").attr("disabled", true);
+                $("#Saat2").attr("disabled", true);
+            } else {
+                $("#ikiTarih").attr("disabled", false);
+                $("#ikiSaat").attr("disabled", false);
+                $("#Tarih1").attr("disabled", false);
+            }
+
+        });
+        $("#ikiSaat").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Saat1").attr("disabled", false);
+                $("#Saat2").attr("disabled", false);
+            } else {
+                $("#Saat1").attr("disabled", true);
+                $("#Saat2").attr("disabled", true);
+            }
+
+        });
+        $("#ikiTarih").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Tarih2").attr("disabled", false);
+            } else {
+                $("#Tarih2").attr("disabled", true);
+            }
+
         });
         $("#Tümü").change(function () {
             if ($(this).prop("checked") == true) {
@@ -205,10 +252,6 @@
                 $("#Kapi8").attr("disabled", false);
             }
         });
-    });
-</script>
-<script>
-    $(function () {
         //Yazıcı Çıktısı Alan Kod Table'ı kaplayan div'in => id'sine print_div yaz birde id si btnPrint olan bir buton yaz
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
@@ -233,6 +276,10 @@
                 frame1.remove();
             }, 500);
 
+        });
+        $("#myTable tbody tr").click(function () {
+            var kartID = $(this).children("td").data("kart");
+            $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
         });
     });
 </script>

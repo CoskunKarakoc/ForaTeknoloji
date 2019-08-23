@@ -9,15 +9,17 @@ else
 {
     <div class="grid-mvc" data-lang="@Model.Language" data-gridname="@Model.RenderOptions.GridName" data-selectable="@Model.RenderOptions.Selectable.ToString().ToLower()" data-multiplefilters ="@Model.RenderOptions.AllowMultipleFilters.ToString().ToLower()">
         <div class="grid-wrap">
-            <table class=" grid-table table-borderless table table-hover text-center table-striped">
-                @* Draw grid header *@
-                <thead class="table-info">
-                    @RenderGridHeader()
-                </thead>
-                <tbody>
-                    @RenderGridBody()
-                </tbody>
-            </table>
+            <div id="print_div" class="tst">
+                <table class=" grid-table table-borderless table table-hover text-center table-striped">
+                    @* Draw grid header *@
+                    <thead class="table-info">
+                        @RenderGridHeader()
+                    </thead>
+                    <tbody>
+                        @RenderGridBody()
+                    </tbody>
+                </table>
+            </div>
             @RenderGridPager()
         </div>
     </div>

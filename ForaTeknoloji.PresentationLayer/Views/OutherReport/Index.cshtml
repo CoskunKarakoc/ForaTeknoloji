@@ -92,15 +92,31 @@
                             <input type="checkbox" value="true" name="TümTarih" class="custom-control-input" id="TümTarih" />
                             <label class="custom-control-label" for="TümTarih">Tüm Tarihler</label>
                         </div>
-                        <br />
+                    </div>
+                    <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="IkiTarih" class="custom-control-input" id="IkiTarih" />
-                            <label class="custom-control-label" for="IkiTarih">İki Tarih Arası</label>
+                            <input type="checkbox" value="true" name="ikiTarih" class="custom-control-input" id="ikiTarih" />
+                            <label class="custom-control-label" for="ikiTarih">İki Tarih Arası</label>
                         </div>
-                        <br />
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Başlangıç</label>
+                            <input class="form-control" name="Tarih1" type="date" value="2019-08-13" id="Tarih1">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Bitiş</label>
+                            <input class="form-control" name="Tarih2" disabled type="date" value="2019-08-13" id="Tarih2">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="IkiSaat" class="custom-control-input" id="IkiSaat" />
-                            <label class="custom-control-label" for="IkiSaat">Tüm Tarihler</label>
+                            <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
+                            <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="Saat1" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="Saat2" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
                         </div>
                     </div>
 
@@ -253,15 +269,36 @@
     $(document).ready(function () {
         $("#TümTarih").change(function () {
             if ($(this).prop("checked") == true) {
-                $("#IkiTarih").attr("disabled", true);
-                $("#IkiTarih").prop("checked", false);
-                $("#IkiSaat").attr("disabled", true);
-                $("#IkiSaat").prop("checked", false);
-
+                $("#ikiTarih").attr("disabled", true);
+                $("#ikiSaat").attr("disabled", true);
+                $("#Tarih1").attr("disabled", true);
+                $("#Tarih2").attr("disabled", true);
+                $("#Saat1").attr("disabled", true);
+                $("#Saat2").attr("disabled", true);
             } else {
-                $("#IkiTarih").attr("disabled", false);
-                $("#IkiSaat").attr("disabled", false);
+                $("#ikiTarih").attr("disabled", false);
+                $("#ikiSaat").attr("disabled", false);
+                $("#Tarih1").attr("disabled", false);
             }
+
+        });
+        $("#ikiSaat").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Saat1").attr("disabled", false);
+                $("#Saat2").attr("disabled", false);
+            } else {
+                $("#Saat1").attr("disabled", true);
+                $("#Saat2").attr("disabled", true);
+            }
+
+        });
+        $("#ikiTarih").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Tarih2").attr("disabled", false);
+            } else {
+                $("#Tarih2").attr("disabled", true);
+            }
+
         });
         $("#TümPanel").change(function () {
             if ($(this).prop("checked") == true) {
