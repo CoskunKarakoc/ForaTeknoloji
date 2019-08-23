@@ -50,6 +50,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IReaderSettingsDal>().To<EfReaderSettingsDal>().InSingletonScope();
             Bind<IMapsDal>().To<EfMapsDal>().InSingletonScope();
             Bind<IMapsObjectsDal>().To<EfMapsObjectsDal>().InSingletonScope();
+            Bind<IVisitorsDal>().To<EfVisitorsDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -83,7 +84,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IReaderSettingsService>().To<ReaderSettingsManager>().InSingletonScope();
             Bind<IMapsService>().To<MapsManager>().InSingletonScope();
             Bind<IMapsObjectsService>().To<MapsObjectsManager>().InSingletonScope();
-
+            Bind<IVisitorsService>().To<VisitorsManager>().InSingletonScope();
             /*Context*/
             Bind<DbContext>().To<ForaContext>();
         }

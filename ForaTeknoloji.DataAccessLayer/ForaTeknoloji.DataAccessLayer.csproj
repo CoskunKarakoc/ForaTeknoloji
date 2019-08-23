@@ -84,6 +84,7 @@
     <Compile Include="Abstract\ITimeGroupsDal.cs" />
     <Compile Include="Abstract\IUserDal.cs" />
     <Compile Include="Abstract\IUsersOLDDal.cs" />
+    <Compile Include="Abstract\IVisitorsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessCountTypesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessDatasDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessModesDal.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Concrete\EntityFramework\EfTimeGroupsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUserDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUsersOLDDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfVisitorsDal.cs" />
     <Compile Include="Concrete\EntityFramework\ForaContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
