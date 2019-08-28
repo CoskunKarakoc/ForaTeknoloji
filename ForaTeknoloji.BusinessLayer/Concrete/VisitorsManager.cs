@@ -141,7 +141,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
             List<ZiyaretciRaporList> liste = new List<ZiyaretciRaporList>();
-            using (SqlConnection connection = new SqlConnection(@"data source=ARGE-1\ARGE;initial catalog=MW301_DB25;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection connection = new SqlConnection(@"data source=ARGE2\SQLEXPRESS;initial catalog=MW301_DB25;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 try

@@ -129,7 +129,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             queryString += " GROUP BY AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi,Sirketler.Adi, Departmanlar.Adi, GroupsMaster.[Grup Adi], CONVERT(VARCHAR(10), AccessDatas.Tarih, 103)";
             queryString += " ORDER BY AccessDatas.ID";
             List<GelenGelmeyenRaporList> liste = new List<GelenGelmeyenRaporList>();
-            using (SqlConnection connection = new SqlConnection(@"data source=ARGE-1\ARGE;initial catalog=MW301_DB25;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection connection = new SqlConnection(@"data source=ARGE2\SQLEXPRESS;initial catalog=MW301_DB25;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 try
@@ -299,7 +299,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
             List<PersonelList> liste = new List<PersonelList>();
-            using (SqlConnection connection = new SqlConnection(@"data source=ARGE-1\ARGE;initial catalog=MW301_DB25;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection connection = new SqlConnection(@"data source=ARGE2\SQLEXPRESS;initial catalog=MW301_DB25;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 try
@@ -499,7 +499,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
             List<ReportPersonelList> liste = new List<ReportPersonelList>();
-            using (SqlConnection connection = new SqlConnection(@"data source=ARGE-1\ARGE;initial catalog=MW301_DB25;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
+            using (SqlConnection connection = new SqlConnection(@"data source=ARGE2\SQLEXPRESS;initial catalog=MW301_DB25;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework"))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 try
