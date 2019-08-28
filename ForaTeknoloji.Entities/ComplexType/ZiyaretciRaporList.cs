@@ -8,6 +8,8 @@ namespace ForaTeknoloji.Entities.ComplexType
 {
     public class ZiyaretciRaporList
     {
+        public int? ID { get; set; }
+        public int? Kod { get; set; }
         public int Kayit_No { get; set; }
         public string Kart_ID { get; set; }
         public string Ziyaretci_Adi { get; set; }

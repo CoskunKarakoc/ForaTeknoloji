@@ -38,7 +38,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]
         public ActionResult Index(bool? Kapi1, bool? Kapi2, bool? Kapi3, bool? Kapi4, bool? Kapi5, bool? Kapi6, bool? Kapi7, bool? Kapi8, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Tetikleme = "", string KapiYon = "")
         {
-            var liste = _accessDatasService.GetDigerGecisListesi(Kapi1, Kapi2, Kapi3, Kapi4, Kapi5, Kapi6, Kapi7, Kapi8, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Tetikleme, KapiYon);
+            List<DigerGecisRaporList> liste = new List<DigerGecisRaporList>();
+            List<DigerGecisRaporListKullaniciAlarm> listKulAlarm = new List<DigerGecisRaporListKullaniciAlarm>();
+            if (Tetikleme == "KulAlarm")
+            {
+                listKulAlarm = _accessDatasService.GetDigerGecisRaporListKullaniciAlarms(Kapi1, Kapi2, Kapi3, Kapi4, Kapi5, Kapi6, Kapi7, Kapi8, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Tetikleme, KapiYon);
+            }
+            else
+            {
+                liste = _accessDatasService.GetDigerGecisListesi(Kapi1, Kapi2, Kapi3, Kapi4, Kapi5, Kapi6, Kapi7, Kapi8, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Tetikleme, KapiYon);
+            }
             var panel = _panelSettingsService.GetAllPanelSettings();
             var model = new DigerGecisRaporListViewModel
             {
@@ -53,7 +62,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
-      
+
         //Export Excell
         public void DigerGecisListesi()
         {

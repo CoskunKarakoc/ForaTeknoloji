@@ -2309,6 +2309,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\GelenGelmeyenReportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsideOutReportController.cs" />
     <Compile Include="Controllers\OutherReportController.cs" />
@@ -2320,8 +2321,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DigerGecisRaporListViewModel.cs" />
+    <Compile Include="Models\GelenGelmeyenViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
+    <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
+    <Compile Include="Models\VisitorsList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagHelpers\PagingTagHelper.cs" />
     <Compile Include="Utilities\MVC\Infrastructure\NinjectControllerFactory.cs" />
@@ -2339,6 +2343,7 @@
     <Content Include="Views\InsideOutReport\Index.cshtml" />
     <Content Include="Views\VisitorReport\Index.cshtml" />
     <Content Include="Views\ReportPersonel\Index.cshtml" />
+    <Content Include="Views\GelenGelmeyenReport\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

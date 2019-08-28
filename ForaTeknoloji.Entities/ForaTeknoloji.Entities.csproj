@@ -51,7 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComplexType\DigerGecisRaporList.cs" />
+    <Compile Include="ComplexType\DigerGecisRaporListKullaniciAlarm.cs" />
+    <Compile Include="ComplexType\GelenGelmeyenRaporList.cs" />
     <Compile Include="ComplexType\PersonelList.cs" />
+    <Compile Include="ComplexType\ReportPersonelList.cs" />
     <Compile Include="ComplexType\ZiyaretciRaporList.cs" />
     <Compile Include="Entities\AccessCountTypes.cs" />
     <Compile Include="Entities\AccessDatas.cs" />

@@ -12,5 +12,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     public interface IUserDal : IEntityRepository<Users>
     {
         IQueryable<PersonelList> GetComplexPersonelList();
+        IQueryable<GelenGelmeyenRaporList> GetComplexGelenGelmeyenRaporList(string Tipler = null);
     }
 }

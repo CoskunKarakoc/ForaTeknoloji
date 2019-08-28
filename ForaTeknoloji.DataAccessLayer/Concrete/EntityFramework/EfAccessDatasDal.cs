@@ -22,14 +22,12 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                         {
                             Gecis_Tipi = tbl1.Gecis_Tipi,
                             Kapi_ID = tbl1.Kapi_ID,
-                            Kod = tbl1.Kod,
                             Kayit_No = tbl1.Kayit_No,
-                            TKod = co.TKod,
                             Operasyon = co.Operasyon,
                             Panel_ID = tbl1.Panel_ID,
                             Tarih = tbl1.Tarih
                         };
-            return liste;
+            return liste.Distinct();
 
         }
 
@@ -39,7 +37,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             var liste = from ad in contex.AccessDatas
                         where ad.Kod == 4
                         select ad;
-            return liste;
+            return liste.Distinct();
         }
 
     }

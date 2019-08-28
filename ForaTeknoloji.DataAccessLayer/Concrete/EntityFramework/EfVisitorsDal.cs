@@ -28,6 +28,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                         where tbl1.Kullanici_Tipi == 1
                         select new ZiyaretciRaporList
                         {
+                            ID = v.ID,
+                            Kod = tbl1.Kod,
                             Personel_Adi = tbl3.Adi,
                             Personel_Soyadi = tbl3.Soyadi,
                             Tarih = tbl1.Tarih,
@@ -46,7 +48,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             Kayit_No = tbl1.Kayit_No
 
                         };
-            return liste;
+            return liste.Distinct();
         }
     }
 }

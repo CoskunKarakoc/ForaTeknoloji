@@ -1,0 +1,174 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.GelenGelmeyenViewModel
+@{
+    ViewBag.Title = "Gelen-Gelmeyen ve Çalışma Raporları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow-lg mt-1">
+    <div class="card-header-tabs">
+        <h3 class="text-muted text-center">Gelen-Gelmeyen ve Çalışma Raporları</h3>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "GelenGelmeyenReport"))
+        {
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" value="Gelenler" class="custom-control-input" id="gelen" checked name="Tipler">
+                            <label class="custom-control-label" for="gelen">Gelenler</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" value="Gelmeyenler" class="custom-control-input" id="gelmeyenler" name="Tipler">
+                            <label class="custom-control-label" for="gelmeyenler">Gelmeyenler</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" value="ilk Giriş Son Çıkış" class="custom-control-input" id="ilksongiris" name="Tipler">
+                            <label class="custom-control-label" for="ilksongiris">İlk Giriş-Son Çıkış</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" value="Toplam İcerde Kalma" class="custom-control-input" id="toplamicerdekalma" name="Tipler">
+                            <label class="custom-control-label" for="toplamicerdekalma">Toplam İçerde Kalma</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" value="Pasif Kullanıcı" class="custom-control-input" id="pasifKullanici" name="Tipler">
+                            <label class="custom-control-label" for="pasifKullanici">Pasif Kullanıcı</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="TümTarih" class="custom-control-input" id="TümTarih" />
+                                <label class="custom-control-label" for="TümTarih">Tüm Tarihler</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="ikiTarih" class="custom-control-input" id="ikiTarih" />
+                                <label class="custom-control-label" for="ikiTarih">İki Tarih Arası</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Başlangıç</label>
+                                <input class="form-control" name="Tarih1" type="date" value="2019-08-13" id="Tarih1">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Bitiş</label>
+                                <input class="form-control" name="Tarih2" disabled type="date" value="2019-08-13" id="Tarih2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
+                                <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="Saat1" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="Saat2" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümGlobal" class="custom-control-input" id="TümGlobal" />
+                            <label class="custom-control-label" for="TümGlobal">Tüm Global Kapı Bölgeleri</label>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümGecis" class="custom-control-input" id="TümGecis" />
+                            <label class="custom-control-label" for="TümGecis">Tüm Gruplar</label>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümDepartman" class="custom-control-input" id="TümDepartman" />
+                            <label class="custom-control-label" for="TümDepartman">Tüm Departmanlar</label>
+                        </div>
+                        @Html.DropDownListFor(model => model.Departmanlar, Model.Departmanlar, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Departmanlar, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümSirket" class="custom-control-input" id="TümSirket" />
+                            <label class="custom-control-label" for="TümSirket">Tüm Şirketler</label>
+                        </div>
+                        @Html.DropDownListFor(model => model.Sirketler, Model.Sirketler, "Şirket Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sirketler, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.DropDownListFor(model => model.Visitors, Model.Visitors, "Ziyaretçi Seçiniz..", new { @class = "form-control" })
+                    </div>
+                    <h4 class="text-info text-right">@Model.GelenGelmeyen.Count Adet Kayıt Listelendi</h4>
+                    <hr />
+                    <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                    <a id="Excell" href="@Url.Action("GelenGelmeyenListesi","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="card shadow-lg mt-1">
+    <div class="card-body">
+        <table class="table-borderless table table-hover text-center table-striped ">
+            <thead class="table-info">
+                <tr>
+                    <td>ID</td>
+                    <td>Kart ID</td>
+                    <td>Adı</td>
+                    <td>Soyadı</td>
+                    <td>TC Kimlik</td>
+                    <td>Şirket</td>
+                    <td>Departman</td>
+                    <td>Plaka</td>
+                    <td>Blok</td>
+                    <td>Daire</td>
+                    <td>Geçiş Grubu</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.GelenGelmeyen.Count == 0)
+                {
+
+                }
+                else
+                {
+                    foreach (var item in Model.GelenGelmeyen)
+                    {
+                <tr>
+                    <td>@item.ID</td>
+                    <td>@item.Kart_ID</td>
+                    <td>@item.Adi</td>
+                    <td>@item.Soyadi</td>
+                    <td>@item.TCKimlik</td>
+                    <td>@item.Sirket_Adi</td>
+                    <td>@item.Departman_Adi</td>
+                    <td>@item.Plaka</td>
+                    <td>@item.Blok_Adi</td>
+                    <td>@item.Daire</td>
+                    <td>@item.Global_Bolge_Adi</td>
+                </tr>
+                        }
+                    }
+            </tbody>
+        </table>
+    </div>
+</div>
