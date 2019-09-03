@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +10,10 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
 {
     public interface IDBUsersService
     {
-        List<DBUsers> GetAllDBUsers();
+        List<DBUsers> GetAllDBUsers(Expression<Func<DBUsers, bool>> filter = null);
         DBUsers GetById(string kullaniciAdi);
-        DBUsers AddDBUser(DBUsers dBUsers);
-        void DeleteDBUser(DBUsers dBUsers);
-        DBUsers UpdateDBUser(DBUsers dBUsers);
+        DBUsers AddDBUsers(DBUsers dBUsers);
+        void DeleteDBUsers(DBUsers dBUsers);
+        DBUsers UpdateDBUsers(DBUsers dBUsers);
     }
 }

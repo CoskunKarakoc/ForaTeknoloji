@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
 
 namespace ForaTeknoloji.PresentationLayer.Models
 {
@@ -13,7 +14,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> Bloklar { get; set; }
         public IEnumerable<SelectListItem> Sirketler { get; set; }
         public IEnumerable<SelectListItem> Gecis_Grubu { get; set; }
-        public IEnumerable<SelectListItem> Visitors { get; internal set; }
         public List<ReportPersonelList> ReportPersonel { get; internal set; }
     }
 }

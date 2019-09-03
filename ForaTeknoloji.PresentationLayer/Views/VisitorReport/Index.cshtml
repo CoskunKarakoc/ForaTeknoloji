@@ -53,40 +53,39 @@
                             <label class="custom-control-label" for="TümKapi">Tüm Kapılar</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Kapi1" class="custom-control-input" id="Kapi1" />
+                            <input type="checkbox" value="1" name="Kapi" class="custom-control-input" id="Kapi1" />
                             <label class="custom-control-label" for="Kapi1">Kapı 1</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Kapi2" class="custom-control-input" id="Kapi2" />
+                            <input type="checkbox" value="2" name="Kapi" class="custom-control-input" id="Kapi2" />
                             <label class="custom-control-label" for="Kapi2">Kapı 2</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Kapi3" class="custom-control-input" id="Kapi3" />
+                            <input type="checkbox" value="3" name="Kapi" class="custom-control-input" id="Kapi3" />
                             <label class="custom-control-label" for="Kapi3">Kapı 3</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Kapi4" class="custom-control-input" id="Kapi4" />
+                            <input type="checkbox" value="4" name="Kapi" class="custom-control-input" id="Kapi4" />
                             <label class="custom-control-label" for="Kapi4">Kapı 4</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Kapi5" class="custom-control-input" id="Kapi5" />
+                            <input type="checkbox" value="5" name="Kapi" class="custom-control-input" id="Kapi5" />
                             <label class="custom-control-label" for="Kapi5">Kapı 5</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Kapi6" class="custom-control-input" id="Kapi6" />
+                            <input type="checkbox" value="6" name="Kapi" class="custom-control-input" id="Kapi6" />
                             <label class="custom-control-label" for="Kapi6">Kapı 6</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Kapi7" class="custom-control-input" id="Kapi7" />
+                            <input type="checkbox" value="7" name="Kapi" class="custom-control-input" id="Kapi7" />
                             <label class="custom-control-label" for="Kapi7">Kapı 7</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Kapi8" class="custom-control-input" id="Kapi8" />
+                            <input type="checkbox" value="8" name="Kapi" class="custom-control-input" id="Kapi8" />
                             <label class="custom-control-label" for="Kapi8">Kapı 8</label>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
+
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
@@ -97,7 +96,7 @@
 
                         </div>
                     </div>
-                    <br />
+
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="TümGlobal" class="custom-control-input" id="TümGlobal" />
@@ -108,17 +107,7 @@
 
                         </div>
                     </div>
-                    <br />
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümZiyaret" class="custom-control-input" id="TümZiyaret" />
-                            <label class="custom-control-label" for="TümZiyaret">Tüm Ziyaretçiler</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" data-toggle="modal" id="Ziyaret" data-target="#exampleModal" name="Ziyaret" />
-                        </div>
-                    </div>
-                    <br />
+
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="TümGecis" class="custom-control-input" id="TümGecis" />
@@ -128,10 +117,20 @@
                             @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
                         </div>
                     </div>
-
                 </div>
-
                 <div class="col-md-4">
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümZiyaret" class="custom-control-input" id="TümZiyaret" />
+                            <label class="custom-control-label" for="TümZiyaret">Tüm Ziyaretçiler</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="Ziyaretci" class="form-control" name="Ziyaret" />
+                            <input type="text" id="Visitor" hidden name="Visitors" />
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
@@ -154,8 +153,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
+                            <div class="custom-control  custom-checkbox">
+                                <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input " id="ikiSaat" />
                                 <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
                             </div>
                             <div class="form-group">
@@ -165,12 +164,23 @@
                                 <input class="form-control" name="Saat2" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
                             </div>
                         </div>
-                        <br />
+                        <br /> <br /><br /> <br /><br /><br />
                         <h4 class="text-info text-right">@Model.ComplexVisitorsListesi.Count Adet Kayıt Listelendi</h4>
                         <hr />
                         <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                         <a id="Excell" href="@Url.Action("ZiyaretciListesi","VisitorReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                         <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="#" alt="Kayıtlı Fotoğraf" />
+                        </div>
+                        <div class="col-md-6">
+                            <img src="#" alt="Canlı Fotoğraf" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -246,15 +256,10 @@
                 </button>
             </div>
             <div class="modal-body ">
-                @using (Html.BeginForm("Index", "VisitorReport"))
-                {
-                    <div class="form-group">
-                        <input class="form-control mr-sm-2" name="Search" type="search" placeholder="Ara.." aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ara</button>
-                    </div>
-
-                }
-                <table class="table table-hover text-center table-striped">
+                <div class="alert-success">
+                    <h2 id="alert" class="text-center text-muted"></h2>
+                </div>
+                <table id="myTable" class="table table-hover text-center table-striped">
                     <thead class="table-info">
                         <tr>
                             <td>Kayıt No</td>
@@ -278,7 +283,7 @@
                         @foreach (var item in Model.Visitors)
                         {
                             <tr>
-                                <td>@item.Kayit_No</td>
+                                <td data-kayitno="@item.Kayit_No" data-visitor="@(item.Adi+' '+item.Soyadi)">@item.Kayit_No</td>
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
@@ -300,8 +305,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                <button type="button" class="btn btn-primary">Seç</button>
+                <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal">Kapat</button>
             </div>
         </div>
     </div>
@@ -355,9 +359,11 @@
         });
         $("#TümZiyaret").change(function () {
             if ($(this).prop("checked") == true) {
-                $("#Ziyaret").attr("disabled", true);
+                $("#Ziyaretci").attr("disabled", true);
+                $("#Visitor").attr("value", null);
+                $("#Ziyaretci").attr("value", null);
             } else {
-                $("#Ziyaret").attr("disabled", false);
+                $("#Ziyaretci").attr("disabled", false);
             }
         });
         $("#TümGecis").change(function () {
@@ -448,5 +454,22 @@
             }, 500);
 
         });
+        $("#Ziyaretci").focus(function () {
+            $("#exampleModal").modal("show");
+            $("#myTable tbody tr").click(function () {
+                var kayitNo = $(this).children("td").data("kayitno");
+                var name = $(this).children("td").data("visitor");
+                $("#Ziyaretci").attr('value', name);
+                $("#Visitor").attr('value', kayitNo);
+                $("#alert").text(name + " Seçildi!");
+
+            });
+        });
+
+
+
+        var today = new Date();
+        $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+        $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
     });
 </script>

@@ -21,7 +21,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ISirketService _sirketService;
         private IGlobalZoneService _globalZoneService;
         private IGroupMasterService _groupMasterService;
-        public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupsDetailService groupsDetailService, ISirketService sirketService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService)
+        private IReportService _reportService;
+        public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupsDetailService groupsDetailService, ISirketService sirketService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IReportService reportService)
         {
             _userService = userService;
             _departmanService = departmanService;
@@ -30,11 +31,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _sirketService = sirketService;
             _globalZoneService = globalZoneService;
             _groupMasterService = groupMasterService;
+            _reportService = reportService;
         }
         // GET: PersonelListReport
         public ActionResult Index()
         {
-            var personelLists = _userService.GetPersonelLists(null, null, null, null, null, null, null);
+            var personelLists = _reportService.GetPersonelLists(null, null, null, null, null, null, null);
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -83,7 +85,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]
         public ActionResult Index(int? Sirketler, int? Departmanlar, int? Bloklar, int? Groupsdetail, int? Global_Bolge_Adi, int? Daire, string Plaka = "")
         {
-            var personelLists = _userService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
+            var personelLists = _reportService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -132,7 +134,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
-      
+
 
         //EXCELL EXPORT
         public void PersonelListesi()
@@ -141,9 +143,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             liste = TempData["PersonelLists"] as List<PersonelList>;
 
-            if (liste == null || liste.Count == 0 )
+            if (liste == null || liste.Count == 0)
             {
-                liste = _userService.GetPersonelLists(null, null, null, null, null, null, null);
+                liste = _reportService.GetPersonelLists(null, null, null, null, null, null, null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
@@ -192,6 +194,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
-      
+
     }
 }

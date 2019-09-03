@@ -16,17 +16,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IGroupsDetailService _groupsDetailService;
         private IGlobalZoneService _globalZoneService;
-        public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService)
+        private IReportService _reportService;
+        public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService)
         {
             _visitorsService = visitorsService;
             _panelSettingsService = panelSettingsService;
             _groupsDetailService = groupsDetailService;
             _globalZoneService = globalZoneService;
+            _reportService = reportService;
         }
         // GET: VisitorReport
         public ActionResult Index()
         {
-            var liste = _visitorsService.GetZiyaretciListesi(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            var liste = _reportService.GetZiyaretciListesi(null, null, null, null, null, null, null, null, null, null, null);
             var panel = _panelSettingsService.GetAllPanelSettings();
             var visitors = _visitorsService.GetAllVisitors();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -56,9 +58,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(bool? Kapi1, bool? Kapi2, bool? Kapi3, bool? Kapi4, bool? Kapi5, bool? Kapi6, bool? Kapi7, bool? Kapi8, int? Global_Bolge_Adi, int? Groupsdetail, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Kayit = "", string KapiYon = "", string Search = "")
+        public ActionResult Index(List<string> Kapi, bool? Tümü, int? Visitors, int? Global_Bolge_Adi, int? Groupsdetail, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Kayit = "", string KapiYon = "", string Search = "")
         {
-            var liste = _visitorsService.GetZiyaretciListesi(Kapi1, Kapi2, Kapi3, Kapi4, Kapi5, Kapi6, Kapi7, Kapi8, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
+
+            var liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Visitors, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
             var panel = _panelSettingsService.GetAllPanelSettings();
             var visitors = _visitorsService.GetAllVisitors();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -88,7 +91,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             TempData["VisitorsList"] = liste;
             if (Search != null && Search != "")
             {
-                liste = _visitorsService.GetZiyaretciListesi(Kapi1, Kapi2, Kapi3, Kapi4, Kapi5, Kapi6, Kapi7, Kapi8, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
+                liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Global_Bolge_Adi, Groupsdetail, Visitors, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
                 panel = _panelSettingsService.GetAllPanelSettings();
                 visitors = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search));
                 groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -129,7 +132,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (liste == null || liste.Count == 0)
             {
-                liste = _visitorsService.GetZiyaretciListesi(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                liste = _reportService.GetZiyaretciListesi(null, null, null, null, null, null, null, null, null, null, null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,34 +12,34 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 {
     public class ReaderSettingsManager : IReaderSettingsService
     {
-        private IReaderSettingsDal _readerSettingsDal;
-        public ReaderSettingsManager(IReaderSettingsDal readerSettingsDal)
+        private IReaderSettingDal _readerSettingDal;
+        public ReaderSettingsManager(IReaderSettingDal readerSettingDal)
         {
-            _readerSettingsDal = readerSettingsDal;
+            _readerSettingDal = readerSettingDal;
         }
-        public ReaderSettings AddReaderSetting(ReaderSettings readerSettings)
+        public ReaderSettings AddreaderSettings(ReaderSettings readerSettings)
         {
-            return _readerSettingsDal.Add(readerSettings);
-        }
-
-        public void DeleteReaderSetting(ReaderSettings readerSettings)
-        {
-            _readerSettingsDal.Delete(readerSettings);
+            return _readerSettingDal.Add(readerSettings);
         }
 
-        public List<ReaderSettings> GetAllReaderSettings()
+        public void DeletereaderSettings(ReaderSettings readerSettings)
         {
-            return _readerSettingsDal.GetList();
+            _readerSettingDal.Delete(readerSettings);
+        }
+
+        public List<ReaderSettings> GetAllreaderSettings(Expression<Func<ReaderSettings, bool>> filter = null)
+        {
+            return filter == null ? _readerSettingDal.GetList() : _readerSettingDal.GetList(filter);
         }
 
         public ReaderSettings GetById(int id)
         {
-            return _readerSettingsDal.Get(x => x.Kayit_No == id);
+            return _readerSettingDal.Get(x => x.Kayit_No == id);
         }
 
-        public ReaderSettings UpdateReaderSetting(ReaderSettings readerSettings)
+        public ReaderSettings UpdatereaderSettings(ReaderSettings readerSettings)
         {
-            return _readerSettingsDal.Update(readerSettings);
+            return _readerSettingDal.Update(readerSettings);
         }
     }
 }

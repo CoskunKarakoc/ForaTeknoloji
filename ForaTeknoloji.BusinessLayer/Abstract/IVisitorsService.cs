@@ -16,7 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         Visitors AddVisitor(Visitors visitors);
         void DeleteVisitor(Visitors visitors);
         Visitors UpdateVisitor(Visitors visitors);
-        List<ZiyaretciRaporList> GetZiyaretciListesi(bool? Kapi1, bool? Kapi2, bool? Kapi3, bool? Kapi4, bool? Kapi5, bool? Kapi6, bool? Kapi7, bool? Kapi8, int? Global_Bolge_Adi, int? Groupsdetail, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Kayit = "", string KapiYon = "");
       
     }
 }

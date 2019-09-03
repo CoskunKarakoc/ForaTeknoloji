@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
-    public interface IDBUsersDal:IEntityRepository<DBUsers>
+    public interface IDBUsersDal : IEntityRepository<DBUsers>
     {
     }
 }

@@ -2326,6 +2326,7 @@
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
     <Compile Include="Models\VisitorsList.cs" />
+    <Compile Include="Models\ZiyaretciListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagHelpers\PagingTagHelper.cs" />
     <Compile Include="Utilities\MVC\Infrastructure\NinjectControllerFactory.cs" />
@@ -2340,10 +2341,12 @@
     <Content Include="Views\OutherReport\Index.cshtml" />
     <Content Include="Views\UndefinedUserReport\Index.cshtml" />
     <Content Include="Views\PersonelListReport\Index.cshtml" />
-    <Content Include="Views\InsideOutReport\Index.cshtml" />
+    <Content Include="Views\InsideOutReport\Personel.cshtml" />
     <Content Include="Views\VisitorReport\Index.cshtml" />
     <Content Include="Views\ReportPersonel\Index.cshtml" />
     <Content Include="Views\GelenGelmeyenReport\Index.cshtml" />
+    <Content Include="Views\InsideOutReport\Tümü.cshtml" />
+    <Content Include="Views\InsideOutReport\Ziyaretci.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,9 +27,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _sirketDal.Delete(sirket);
         }
 
-        public List<Sirketler> GetAllSirketler()
+        public List<Sirketler> GetAllSirketler(Expression<Func<Sirketler, bool>> filter = null)
         {
-            return _sirketDal.GetList();
+            return filter == null ? _sirketDal.GetList() : _sirketDal.GetList(filter);
         }
 
         public Sirketler GetById(int id)

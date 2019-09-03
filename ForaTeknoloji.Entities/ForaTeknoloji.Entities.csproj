@@ -53,6 +53,13 @@
     <Compile Include="ComplexType\DigerGecisRaporList.cs" />
     <Compile Include="ComplexType\DigerGecisRaporListKullaniciAlarm.cs" />
     <Compile Include="ComplexType\GelenGelmeyenRaporList.cs" />
+    <Compile Include="ComplexType\GelenGelmeyen_Gelenler.cs" />
+    <Compile Include="ComplexType\GelenGelmeyen_Gelmeyen.cs" />
+    <Compile Include="ComplexType\GelenGelmeyen_IlkGirisSonCikis.cs" />
+    <Compile Include="ComplexType\GelenGelmeyen_PasifKullanici.cs" />
+    <Compile Include="ComplexType\IcerdeDisardaPersonel.cs" />
+    <Compile Include="ComplexType\IcerdeDısardaTümü.cs" />
+    <Compile Include="ComplexType\IcerdeDısardaZiyaretci.cs" />
     <Compile Include="ComplexType\PersonelList.cs" />
     <Compile Include="ComplexType\ReportPersonelList.cs" />
     <Compile Include="ComplexType\ZiyaretciRaporList.cs" />

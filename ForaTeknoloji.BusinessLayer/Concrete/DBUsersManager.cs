@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,19 +17,19 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             _dBUsersDal = dBUsersDal;
         }
-        public DBUsers AddDBUser(DBUsers dBUsers)
+        public DBUsers AddDBUsers(DBUsers dBUsers)
         {
             return _dBUsersDal.Add(dBUsers);
         }
 
-        public void DeleteDBUser(DBUsers dBUsers)
+        public void DeleteDBUsers(DBUsers dBUsers)
         {
             _dBUsersDal.Delete(dBUsers);
         }
 
-        public List<DBUsers> GetAllDBUsers()
+        public List<DBUsers> GetAllDBUsers(Expression<Func<DBUsers, bool>> filter = null)
         {
-            return _dBUsersDal.GetList();
+            return filter == null ? _dBUsersDal.GetList() : _dBUsersDal.GetList(filter);
         }
 
         public DBUsers GetById(string kullaniciAdi)
@@ -36,7 +37,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _dBUsersDal.Get(x => x.Kullanici_Adi == kullaniciAdi);
         }
 
-        public DBUsers UpdateDBUser(DBUsers dBUsers)
+        public DBUsers UpdateDBUsers(DBUsers dBUsers)
         {
             return _dBUsersDal.Update(dBUsers);
         }

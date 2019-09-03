@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
-    public class EfReaderSettingsDal : EfEntityRepositoryBase<ReaderSettings, ForaContext>, IReaderSettingsDal
+    public class EfReaderSettingsDal : EfEntityRepositoryBase<ReaderSettings, ForaContext>,IReaderSettingDal
     {
     }
 }

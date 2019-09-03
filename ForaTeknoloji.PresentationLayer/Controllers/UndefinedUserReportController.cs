@@ -14,15 +14,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
         private IAccessDatasService _accessDatasService;
         private IPanelSettingsService _panelSettingsService;
-        public UndefinedUserReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService)
+        private IReportService _reportService;
+        public UndefinedUserReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService)
         {
             _accessDatasService = accessDatasService;
             _panelSettingsService = panelSettingsService;
+            _reportService = reportService;
         }
         // GET: UndefinedUserReport
         public ActionResult Index()
         {
-            var list = _accessDatasService.GetTanimsizListesi(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "");
+            var list = _reportService.GetTanimsizListesi(null, null, null, null, null, null, null, null, "");
             var PanelName = _panelSettingsService.GetAllPanelSettings();
             var model = new TanimsizKullaniciListViewModel
             {
@@ -36,9 +38,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult Index(bool? Kapi1, bool? Kapi2, bool? Kapi3, bool? Kapi4, bool? Kapi5, bool? Kapi6, bool? Kapi7, bool? Kapi8, bool? Tümü, bool? TümPanel, int? Panel, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon = "")
+        public ActionResult Index(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Panel, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon = "")
         {
-            var liste = _accessDatasService.GetTanimsizListesi(Kapi1, Kapi2, Kapi3, Kapi4, Kapi5, Kapi6, Kapi7, Kapi8, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
+            var liste = _reportService.GetTanimsizListesi(Kapi, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
             var PanelName = _panelSettingsService.GetAllPanelSettings();
             var model = new TanimsizKullaniciListViewModel
             {
@@ -60,7 +62,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             list = TempData["Tanimsiz"] as List<AccessDatas>;
             if (list == null || list.Count == 0)
             {
-                list = _accessDatasService.GetTanimsizListesi(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "");
+                list = _reportService.GetTanimsizListesi(null, null, null, null, null, null, null, null, "");
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

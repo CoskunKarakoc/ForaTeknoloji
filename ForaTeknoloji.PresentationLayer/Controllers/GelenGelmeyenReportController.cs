@@ -1,5 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.PresentationLayer.Models;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGroupsDetailService _groupsDetailService;
         private IVisitorsService _visitorsService;
         private IGlobalZoneService _globalZoneService;
-        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService,IGlobalZoneService globalZoneService)
+        private IReportService _reportService;
+        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService)
         {
             _userService = userService;
             _departmanService = departmanService;
@@ -24,11 +27,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _groupsDetailService = groupsDetailService;
             _visitorsService = visitorsService;
             _globalZoneService = globalZoneService;
+            _reportService = reportService;
         }
         // GET: GelenGelmeyenReport
         public ActionResult Index()
         {
-            var gelenGelmeyenRaporLists = _userService.GetGelenGelmeyenLists(null, null, null, null, null, null, null, null, null, null);
+            var nesne = _reportService.GelenGelmeyen_Gelmeyens(null, null, null, null, null, null, null, null, null, null);
+            var gelenGelmeyenRaporLists = _reportService.GetGelenGelmeyenLists(null, null, null, null, null, null, null, null, null, null);
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var sirketler = _sirketService.GetAllSirketler();
@@ -69,7 +74,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]
         public ActionResult Index(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? Visitors, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Tipler = "")
         {
-            var gelenGelmeyenRaporLists = _userService.GetGelenGelmeyenLists(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Visitors, Tarih1, Tarih2, Saat1, Saat2, Tipler);
+            var gelenGelmeyenRaporLists = _reportService.GetGelenGelmeyenLists(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Visitors, Tarih1, Tarih2, Saat1, Saat2, Tipler);
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var sirketler = _sirketService.GetAllSirketler();
@@ -105,7 +110,28 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.ID.ToString()
                 })
             };
+            TempData["GelenGelmeyen"] = gelenGelmeyenRaporLists;
             return View(model);
         }
+
+
+
+        public void GelenGelmeyenListesi()
+        {
+            List<GelenGelmeyenRaporList> liste = new List<GelenGelmeyenRaporList>();
+            liste = TempData["GelenGelmeyen"] as List<GelenGelmeyenRaporList>;
+            if (liste == null || liste.Count == 0)
+            {
+                liste = _reportService.GetGelenGelmeyenLists(null, null, null, null, null, null, null, null, null, null);
+            }
+            ExcelPackage package = new ExcelPackage();
+            ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
+            worksheet.Cells[""].Value = "Gelen Gelmeyen Rapor Listesi";
+
+
+        }
+
+
+
     }
 }

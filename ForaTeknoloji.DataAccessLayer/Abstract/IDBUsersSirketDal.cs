@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
-    public interface IDBUsersSirketDal:IEntityRepository<DBUsersSirket>
+    public interface IDBUsersSirketDal : IEntityRepository<DBUsersSirket>
     {
     }
 }
