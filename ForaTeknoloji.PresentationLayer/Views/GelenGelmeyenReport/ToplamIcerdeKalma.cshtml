@@ -1,0 +1,287 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.GelenGelmeyen_ToplamIcerdeKalmaListViewModel
+@{
+    ViewBag.Title = "Toplam İçerde Kalma";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="card shadow-lg mt-2">
+    <div class="card-header-tabs">
+        <h3 class="text-muted text-center">Toplam İçerde Kalma</h3>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("ToplamIcerdeKalma", "GelenGelmeyenReport"))
+        {
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">İlk Tarih</label>
+                            <input class="form-control form-control-sm" name="Tarih1" type="date" value="2019-08-13" id="Tarih1">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Son Tarih</label>
+                            <input class="form-control form-control-sm" name="Tarih2" type="date" value="2019-08-13" id="Tarih2">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümGlobal" class="custom-control-input" id="TümGlobal" />
+                            <label class="custom-control-label" for="TümGlobal">Tüm Global Kapı Bölgeleri</label>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümDepartman" class="custom-control-input" id="TümDepartman" />
+                            <label class="custom-control-label" for="TümDepartman">Tüm Departmanlar</label>
+                        </div>
+                        @Html.DropDownListFor(model => model.Departmanlar, Model.Departmanlar, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Departmanlar, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümGecis" class="custom-control-input" id="TümGecis" />
+                            <label class="custom-control-label" for="TümGecis">Tüm Gruplar</label>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümSirket" class="custom-control-input" id="TümSirket" />
+                            <label class="custom-control-label" for="TümSirket">Tüm Şirketler</label>
+                        </div>
+                        @Html.DropDownListFor(model => model.Sirketler, Model.Sirketler, "Şirket Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sirketler, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümZiyaret" class="custom-control-input" id="TümZiyaret" />
+                            <label class="custom-control-label" for="TümZiyaret">Tüm Ziyaretçiler</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="Ziyaretci" class="form-control" name="Ziyaret" />
+                            <input type="text" id="Visitor" hidden name="UserID" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right float-right">
+                    <h4 class="text-info text-right">@Model.ToplamIcerdeKalma.Count Adet Kayıt Listelendi</h4>
+                    <hr />
+                    <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                    <a id="Excell" href="@Url.Action("GelenGelmeyenListesi","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div id="print_div" class="mt-4">
+                        <table class="table-borderless table table-hover text-center table-striped ">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>Grup No</td>
+                                    <td>Tarih Değeri</td>
+                                    <td>Toplam Saat</td>
+                                    <td>Toplam Dakika</td>
+                                    <td>Toplam Saniye</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ToplamIcerdeKalma.Count == 0)
+                                {
+                                    <tr>
+                                        <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model.ToplamIcerdeKalma)
+                                    {
+                                        <tr>
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.SirketAdi</td>
+                                            <td>@item.DepartmanAdi</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Tarih_Degeri</td>
+                                            <td>@item.Toplam_Saat</td>
+                                            <td>@item.Toplam_Dakika</td>
+                                            <td>@item.Toplam_Saniye</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-muted">Ziyaretçi Arama</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <div class="alert-success">
+                    <h2 id="alert" class="text-center text-muted"></h2>
+                </div>
+                <table id="myTable" class="table table-hover text-center table-striped">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Kayıt No</td>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Şirket</td>
+                            <td>Departman</td>
+                            <td>Blok</td>
+                            <td>Plaka</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Ziyaretçi Grubu</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Kullanicilar)
+                        {
+                            <tr>
+                                <td data-kayitno="@item.ID" data-visitor="@(item.Adi+' '+item.Soyadi)">@item.Kayit_No</td>
+                                <td>@item.ID</td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                <td>@item.Sirket_No</td>
+                                <td>@item.Departman_No</td>
+                                <td>@item.Blok_No</td>
+                                <td>@item.Plaka</td>
+                                <td>@item.Gecis_Modu</td>
+                                <td>@item.Visitor_Grup_No</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#btnPrint").click(function () {
+            var contents = $("#print_div").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html><head><title>Toplam İçerde Kalma</title>');
+            frameDoc.document.write('</head><body>');
+            //Append the external CSS file.
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            //Append the DIV contents.
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+        });
+        $("#TümDepartman").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Departmanlar").attr("disabled", true);
+            } else {
+                $("#Departmanlar").attr("disabled", false);
+            }
+        });
+        $("#TümGecis").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Groupsdetail").attr("disabled", true)
+            } else {
+                $("#Groupsdetail").attr("disabled", false);
+            }
+
+        });
+        $("#TümSirket").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Sirketler").attr("disabled", true);
+            } else {
+                $("#Sirketler").attr("disabled", false);
+            }
+        });
+        $("#TümGlobal").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Global_Bolge_Adi").attr("disabled", true);
+            } else {
+                $("#Global_Bolge_Adi").attr("disabled", false);
+            }
+        });
+        $("#TümZiyaret").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Ziyaretci").attr("disabled", true);
+                $("#Visitor").attr("value", null);
+                $("#Ziyaretci").attr("value", null);
+            } else {
+                $("#Ziyaretci").attr("disabled", false);
+            }
+        });
+        $("#Ziyaretci").focus(function () {
+            $("#exampleModal").modal("show");
+            $("#myTable tbody tr").click(function () {
+                var kayitNo = $(this).children("td").data("kayitno");
+                var name = $(this).children("td").data("visitor");
+                $("#Ziyaretci").attr('value', name);
+                $("#Visitor").attr('value', kayitNo);
+                $("#alert").text(name + " Seçildi!");
+
+            });
+        });
+    });
+    var today = new Date();
+    $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+    $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+</script>

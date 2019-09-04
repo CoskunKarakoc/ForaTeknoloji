@@ -20,6 +20,10 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<IcerdeDisardaPersonel> GetIcerdeDisardaPersonels();
         List<IcerdeDısardaZiyaretci> GetIcerdeDısardaZiyaretci();
         List<IcerdeDısardaTümü> GetIcerdeDısardaTümü();
-        List<GelenGelmeyen_Gelmeyen> GelenGelmeyen_Gelmeyens(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? Visitors, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Tipler = null);
+        List<GelenGelmeyen_Gelmeyen> GelenGelmeyen_Gelmeyens(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih);
+        List<GelenGelmeyen_Gelenler> GelenGelmeyen_Gelenlers(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih);
+        List<GelenGelmeyen_PasifKullanici> GelenGelmeyen_PasifKullanicis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih, double? Fark);
+        List<GelenGelmeyen_ToplamIcerdeKalma> GelenGelmeyen_ToplamIcerdeKalmas(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2);
+
     }
 }

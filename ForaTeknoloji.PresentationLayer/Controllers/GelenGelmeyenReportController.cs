@@ -29,20 +29,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _globalZoneService = globalZoneService;
             _reportService = reportService;
         }
-        // GET: GelenGelmeyenReport
-        public ActionResult Index()
+    
+
+
+
+
+        public ActionResult Gelenler()
         {
-            var nesne = _reportService.GelenGelmeyen_Gelmeyens(null, null, null, null, null, null, null, null, null, null);
-            var gelenGelmeyenRaporLists = _reportService.GetGelenGelmeyenLists(null, null, null, null, null, null, null, null, null, null);
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var nesne = _reportService.GelenGelmeyen_Gelenlers(null, null, null, null, null);
             var sirketler = _sirketService.GetAllSirketler();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var visitors = _visitorsService.GetAllVisitors();
-
-            var model = new GelenGelmeyenViewModel
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var model = new GelenGelmeyen_GelenlerListViewModel
             {
-                GelenGelmeyen = gelenGelmeyenRaporLists,
+                Gelenler = nesne,
                 Departmanlar = departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
@@ -62,28 +63,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
-                }),
-                Visitors = visitors.Select(a => new SelectListItem
-                {
-                    Text = a.Adi + " " + a.Soyadi,
-                    Value = a.ID.ToString()
                 })
             };
             return View(model);
         }
+
         [HttpPost]
-        public ActionResult Index(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? Visitors, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Tipler = "")
+        public ActionResult Gelenler(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
         {
-            var gelenGelmeyenRaporLists = _reportService.GetGelenGelmeyenLists(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Visitors, Tarih1, Tarih2, Saat1, Saat2, Tipler);
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var nesne = _reportService.GelenGelmeyen_Gelenlers(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih);
             var sirketler = _sirketService.GetAllSirketler();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var visitors = _visitorsService.GetAllVisitors();
-
-            var model = new GelenGelmeyenViewModel
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var model = new GelenGelmeyen_GelenlerListViewModel
             {
-                GelenGelmeyen = gelenGelmeyenRaporLists,
+                Gelenler = nesne,
                 Departmanlar = departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
@@ -97,24 +92,248 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Grup_No.ToString()
+                    Value = a.Kayit_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
-                }),
-                Visitors = visitors.Select(a => new SelectListItem
-                {
-                    Text = a.Adi + " " + a.Soyadi,
-                    Value = a.ID.ToString()
                 })
             };
-            TempData["GelenGelmeyen"] = gelenGelmeyenRaporLists;
+            TempData["Gelenler"] = nesne;
             return View(model);
         }
 
 
+        public ActionResult Gelmeyenler()
+        {
+            var nesne = _reportService.GelenGelmeyen_Gelmeyens(null, null, null, null, null);
+            var sirketler = _sirketService.GetAllSirketler();
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var model = new GelenGelmeyen_GelmeyenlerListViewModel
+            {
+                Gelmeyenler = nesne,
+                Departmanlar = departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
+                Sirketler = sirketler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
+                Groupsdetail = groupsdetail.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Kayit_No.ToString()
+                }),
+                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                {
+                    Text = a.Global_Bolge_Adi,
+                    Value = a.Global_Bolge_No.ToString()
+                })
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Gelmeyenler(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
+        {
+            var nesne = _reportService.GelenGelmeyen_Gelmeyens(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih);
+            var sirketler = _sirketService.GetAllSirketler();
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var model = new GelenGelmeyen_GelmeyenlerListViewModel
+            {
+                Gelmeyenler = nesne,
+                Departmanlar = departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
+                Sirketler = sirketler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
+                Groupsdetail = groupsdetail.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Kayit_No.ToString()
+                }),
+                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                {
+                    Text = a.Global_Bolge_Adi,
+                    Value = a.Global_Bolge_No.ToString()
+                })
+            };
+            TempData["Gelmeyenler"] = nesne;
+            return View(model);
+        }
+
+
+        public ActionResult PasifKullanici()
+        {
+            var nesne = _reportService.GelenGelmeyen_PasifKullanicis(null, null, null, null, DateTime.Now, 45);
+            var sirketler = _sirketService.GetAllSirketler();
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var model = new GelenGelmeyen_PasifListViewModel
+            {
+                Pasif = nesne,
+                Departmanlar = departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
+                Sirketler = sirketler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
+                Groupsdetail = groupsdetail.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Kayit_No.ToString()
+                }),
+                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                {
+                    Text = a.Global_Bolge_Adi,
+                    Value = a.Global_Bolge_No.ToString()
+                })
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult PasifKullanici(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih, double? Fark)
+        {
+            var nesne = _reportService.GelenGelmeyen_PasifKullanicis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih, Fark);
+            var sirketler = _sirketService.GetAllSirketler();
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var model = new GelenGelmeyen_PasifListViewModel
+            {
+                Pasif = nesne,
+                Departmanlar = departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
+                Sirketler = sirketler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
+                Groupsdetail = groupsdetail.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Kayit_No.ToString()
+                }),
+                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                {
+                    Text = a.Global_Bolge_Adi,
+                    Value = a.Global_Bolge_No.ToString()
+                })
+            };
+            TempData["Pasif"] = nesne;
+            return View(model);
+        }
+
+
+
+        public ActionResult ToplamIcerdeKalma()
+        {
+            var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(null, null, null, null, null, DateTime.Now, DateTime.Now);
+            var sirketler = _sirketService.GetAllSirketler();
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var users = _userService.GetAllUsers();
+            var model = new GelenGelmeyen_ToplamIcerdeKalmaListViewModel
+            {
+                ToplamIcerdeKalma = nesne,
+                Kullanicilar = users,
+                Departmanlar = departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
+                Sirketler = sirketler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
+                Groupsdetail = groupsdetail.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Kayit_No.ToString()
+                }),
+                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                {
+                    Text = a.Global_Bolge_Adi,
+                    Value = a.Global_Bolge_No.ToString()
+                })
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult ToplamIcerdeKalma(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
+        {
+            var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
+            var sirketler = _sirketService.GetAllSirketler();
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var users = _userService.GetAllUsers();
+            var model = new GelenGelmeyen_ToplamIcerdeKalmaListViewModel
+            {
+                ToplamIcerdeKalma = nesne,
+                Kullanicilar = users,
+                Departmanlar = departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
+                Sirketler = sirketler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
+                Groupsdetail = groupsdetail.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Kayit_No.ToString()
+                }),
+                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                {
+                    Text = a.Global_Bolge_Adi,
+                    Value = a.Global_Bolge_No.ToString()
+                })
+            };
+            TempData["Toplam"] = nesne;
+            return View(model);
+        }
+
+
+
+
+
+
+
+        //Gelenler Excell
+        public void GelenlerExcell() { }
+        //Gelmeyenler Excell
+        public void GelmeyenlerExcell() { }
 
         public void GelenGelmeyenListesi()
         {

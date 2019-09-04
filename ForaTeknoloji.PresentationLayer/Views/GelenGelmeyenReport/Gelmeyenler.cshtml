@@ -1,0 +1,175 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.GelenGelmeyen_GelmeyenlerListViewModel
+@{
+    ViewBag.Title = "Gelmeyen Kişi Raporları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow-lg mt-2">
+    <div class="card-header-tabs">
+        <h3 class="text-muted text-center">Gelmeyen Kişi Raporları</h3>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Gelmeyenler", "GelenGelmeyenReport"))
+        {
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="custom-control">
+                            <label for="exampleFormControlInput1">Tarih</label>
+                            <input class="form-control" name="Tarih" type="date" value="2019-08-13" id="Tarih">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümGlobal" class="custom-control-input" id="TümGlobal" />
+                            <label class="custom-control-label" for="TümGlobal">Tüm Global Kapı Bölgeleri</label>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümGecis" class="custom-control-input" id="TümGecis" />
+                            <label class="custom-control-label" for="TümGecis">Tüm Gruplar</label>
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümDepartman" class="custom-control-input" id="TümDepartman" />
+                            <label class="custom-control-label" for="TümDepartman">Tüm Departmanlar</label>
+                        </div>
+                        @Html.DropDownListFor(model => model.Departmanlar, Model.Departmanlar, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Departmanlar, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümSirket" class="custom-control-input" id="TümSirket" />
+                            <label class="custom-control-label" for="TümSirket">Tüm Şirketler</label>
+                        </div>
+                        @Html.DropDownListFor(model => model.Sirketler, Model.Sirketler, "Şirket Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sirketler, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12 text-right float-right">
+                    <h4 class="text-info text-right">@Model.Gelmeyenler.Count Adet Kayıt Listelendi</h4>
+                    <hr />
+                    <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                    <a id="Excell" href="@Url.Action("GelenGelmeyenListesi","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div id="print_div" class="mt-4">
+                        <table class="table-borderless table table-hover text-center table-striped ">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>TC Kimlik</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>Plaka</td>
+                                    <td>Blok</td>
+                                    <td>Daire</td>
+                                    <td>Geçiş Grubu</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Gelmeyenler.Count == 0)
+                                {
+                                    <tr>
+                                        <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model.Gelmeyenler)
+                                    {
+                                        <tr>
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.SirketAdi</td>
+                                            <td>@item.DepartmanAdi</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.BlokAdi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Global_Bolge_Adi</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+
+
+    $(function () {
+        $("#btnPrint").click(function () {
+            var contents = $("#print_div").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html><head><title>Gelen Kişi Raporları</title>');
+            frameDoc.document.write('</head><body>');
+            //Append the external CSS file.
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            //Append the DIV contents.
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+        });
+
+
+
+
+
+
+
+
+        var today = new Date();
+        $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+        $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+
+    });
+    var today = new Date();
+    $('#Tarih').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+</script>

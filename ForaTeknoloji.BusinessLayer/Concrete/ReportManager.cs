@@ -432,21 +432,14 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
         //GelenGelmeyen-Gelmeyenler
-        public List<GelenGelmeyen_Gelmeyen> GelenGelmeyen_Gelmeyens(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? Visitors, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Tipler = null)
+        public List<GelenGelmeyen_Gelmeyen> GelenGelmeyen_Gelmeyens(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
-            string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi], Users.Resim FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No])LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0";
+            string queryString = " SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi], Users.Resim FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No])LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0";
             var sirketListesi = GetSirketNo();
-
-            if (sirketListesi.Count != 0 && sirketListesi != null)
+            if (sirketListesi != null)
             {
-                string sirketler = "";
-                foreach (var item in sirketListesi)
-                {
-                    sirketler += item + ",";
-                }
-                sirketler = sirketler.Substring(0, sirketler.Length - 1);
-                queryString += " AND Sirketler.[Sirket No] IN(1000," + sirketler + ")";
+                //queryString += " AND Sirketler.[Sirket No] IN(1000," + sirketListesi + ")";
             }
             if (Sirketler != null)
             {
@@ -460,14 +453,15 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND Users.[Grup No] = " + Groupsdetail;
             }
+
             queryString += " AND Users.[Kart ID] <> ALL (SELECT DISTINCT AccessDatas.[Kart ID] FROM AccessDatas WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod = 1";
-            if (Tarih1 != null)
+
+            if (Tarih != null)
             {
                 //TODO: Format(dateGelmeyen.Value & " 00:00:01", "dd/mm/yyyy hh:mm:ss") başlangıç zamanı Format(dateGelmeyen.Value & " 23:59:59", "dd/mm/yyyy hh:mm:ss") bitiş zamanı girilecek
-                queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + Tarih1 + "',103) ";
-                queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + Tarih1 + "',103)";
+                queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + Tarih?.Date.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + Tarih?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
             }
-            //  Global_Bolge_Adi = 1;//Deneme amaçlı
             if (Global_Bolge_Adi != null)
             {
 
@@ -508,7 +502,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + "))";
             }
-
+            queryString += " AND Users.[Kart ID] <> ALL (SELECT DISTINCT AccessDatas.[Kart ID] FROM AccessDatas WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod = 1";
+            queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+            queryString += " AND AccessDatas.[Gecis Tipi] = 0)";
 
 
 
@@ -558,10 +554,45 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
         //Gelen-Gelmeyen Gelenler
-        public List<GelenGelmeyen_Gelenler> GelenGelmeyen_Gelenlers()
+        public List<GelenGelmeyen_Gelenler> GelenGelmeyen_Gelenlers(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
             string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi], Users.Resim FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No])LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0";
+            var sirketListesi = GetSirketNo();
+            queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+            if (Sirketler != null)
+            {
+                queryString += " AND Users.[Sirket No] =" + Sirketler;
+            }
+            if (Departmanlar != null)
+            {
+                queryString += " AND Users.[Departman No] =" + Departmanlar;
+            }
+            if (Groupsdetail != null)
+            {
+                queryString += " AND Users.[Grup No] =" + Groupsdetail;
+            }
+
+            queryString += " AND Users.[Kart ID] IN (SELECT DISTINCT AccessDatas.[Kart ID] FROM AccessDatas WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod = 1";
+
+            if (Global_Bolge_Adi != null)
+            {
+
+            }
+            else
+            {
+                queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + "))";
+            }
+            if (Tarih != null)
+            {
+                queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + Tarih?.AddSeconds(1).Date.ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + Tarih?.AddHours(23).AddMinutes(59).AddSeconds(59).Date.ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+            }
+            queryString += ")";
+            queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+            queryString += " AND AccessDatas.[Gecis Tipi] = 0)";
+
+
 
 
             List<GelenGelmeyen_Gelenler> liste = new List<GelenGelmeyen_Gelenler>();
@@ -596,7 +627,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 finally
@@ -612,10 +642,48 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
         //Gelen-Gelmeyen PasifKullanici
-        public List<GelenGelmeyen_PasifKullanici> GelenGelmeyen_PasifKullanicis()
+        public List<GelenGelmeyen_PasifKullanici> GelenGelmeyen_PasifKullanicis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih, double? Fark)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
-            string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]WHERE Users.ID > 0";
+            string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0 ";
+            var sirketListesi = GetSirketNo();
+            queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+            if (Sirketler != null)
+            {
+                queryString += " AND Users.[Sirket No] =" + Sirketler;
+            }
+            if (Departmanlar != null)
+            {
+                queryString += " AND Users.[Departman No] =" + Departmanlar;
+            }
+            if (Groupsdetail != null)
+            {
+                queryString += " AND Users.[Grup No] =" + Groupsdetail;
+            }
+
+            queryString += " AND Users.[Kart ID] <> ALL (SELECT DISTINCT AccessDatas.[Kart ID] FROM AccessDatas WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod = 1";
+
+            if (Global_Bolge_Adi != null)
+            {
+                queryString += "";
+            }
+            else
+            {
+                queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+            }
+            if (Tarih != null)
+            {
+                Fark = Fark * -1;
+                var baslangicTarihi = Tarih?.Date.AddDays((double)Fark).AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss");
+
+                var dentarr = Tarih?.AddDays((double)Fark).Date.ToString("yyyy/mm/dd");
+                queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + baslangicTarihi + "',103)";
+                queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + Tarih?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+
+            }
+            queryString += ")";
+
+
             List<GelenGelmeyen_PasifKullanici> liste = new List<GelenGelmeyen_PasifKullanici>();
             using (SqlConnection connection = new SqlConnection(address))
             {
@@ -710,6 +778,88 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
+
+
+        public List<GelenGelmeyen_ToplamIcerdeKalma> GelenGelmeyen_ToplamIcerdeKalmas(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
+        {
+            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string queryString = "SELECT a.ID, a.[Kart ID], Users.Adi, Users.Soyadi, Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman, GroupsMaster.[Grup Adi] AS Grup, CONVERT(VARCHAR(10), a.Tarih, 103) AS [Tarih Değeri], a.Tarih AS log_in, COALESCE( (SELECT min(Tarih) FROM AccessDatas as b WHERE a.ID = b.ID AND CAST(a.Tarih AS DATE) = CAST(b.Tarih AS DATE) AND b.Tarih >= a.Tarih AND b.[Gecis Tipi] = 1), a.Tarih) as log_out FROM (AccessDatas AS a LEFT JOIN (((Users LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) ON a.ID = Users.ID) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] WHERE a.[Kullanici Tipi] = 0 AND a.Kod = 1 AND a.[Gecis Tipi] = 0 AND a.Tarih >= CONVERT(SMALLDATETIME,'" + Tarih1?.Date.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND a.Tarih <= CONVERT(SMALLDATETIME,'" + Tarih2?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+            var sirketListesi = GetSirketNo();
+            //queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+
+
+            if (UserID != null)
+            {
+                queryString += " AND a.ID =" + UserID;
+            }
+            if (Groupsdetail != null)
+            {
+                queryString += " AND Users.[Grup No] =" + Groupsdetail;
+            }
+            if (Departmanlar != null)
+            {
+                queryString += " AND Users.[Departman No] =" + Departmanlar;
+            }
+            if (Sirketler != null)
+            {
+                queryString += " AND Users.[Sirket No] =" + Sirketler;
+
+            }
+            if (Global_Bolge_Adi != null)
+            {
+
+            }
+            else
+            {
+                queryString += " AND a.[Panel ID] IN(200," + GetPanelListesi() + ")";
+            }
+            string tempQuery = "SELECT ID, [Kart ID], Adi, Soyadi, Şirket, Departman, Grup, [Tarih Değeri], (SUM(DATEPART( HOUR, CAST((log_out - log_in) AS TIME))) + (((SUM(DATEPART(MINUTE, CAST((log_out - log_in) AS TIME)))) + (SUM(DATEPART( SECOND, CAST((log_out - log_in) AS TIME))) / 60)) / 60)) AS [Toplam Saat], (((SUM(DATEPART(MINUTE, CAST((log_out - log_in) AS TIME)))) + (SUM(DATEPART( SECOND, CAST((log_out - log_in) AS TIME))) / 60)) % 60) AS [Toplam Dakika], (SUM( DATEPART( SECOND, CAST((log_out - log_in) AS TIME) ) ) % 60 ) AS [Toplam Saniye] FROM ( " + queryString + " ) as t";
+
+            tempQuery += " GROUP BY ID, [Kart ID], Adi, Soyadi, Şirket, Departman, Grup, [Tarih Değeri] ";
+            tempQuery += " ORDER BY ID";
+            List<GelenGelmeyen_ToplamIcerdeKalma> liste = new List<GelenGelmeyen_ToplamIcerdeKalma>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(tempQuery, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var nesne = new GelenGelmeyen_ToplamIcerdeKalma
+                        {
+                            ID = reader[0] as int? ?? default(int),
+                            Kart_ID = reader[1].ToString(),
+                            Adi = reader[2].ToString(),
+                            Soyadi = reader[3].ToString(),
+                            SirketAdi = reader[4].ToString(),
+                            DepartmanAdi = reader[5].ToString(),
+                            Grup_Adi = reader[6].ToString(),
+                            Tarih_Degeri = reader[7].ToString(),
+                            Toplam_Saat = reader[8].ToString(),
+                            Toplam_Dakika = reader[9].ToString(),
+                            Toplam_Saniye = reader[10].ToString()
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+
+
+            return liste;
+        }
 
 
         //PersonelListReport Controller
@@ -1419,9 +1569,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
-        
+
         //Kullanıcı Adına Göre Şirket No Getiriyor
-        public List<int> GetSirketNo()
+        public string GetSirketNo()
         {
             //TODO: Kullanıcı girişi esnasında alınan kullanıcı adına göre şirket listelenecek
             string address = ConfigurationManager.AppSettings["ForaConnection"];
@@ -1452,7 +1602,20 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
 
             }
-            return liste;
+            string sirketListesi = "";
+            if (liste.Count > 0)
+            {
+                foreach (var item in liste)
+                {
+                    sirketListesi += item + ",";
+                }
+                sirketListesi = sirketListesi.Substring(0, sirketListesi.Length - 1);
+                return sirketListesi;
+            }
+            else
+            {
+                return "0";
+            }
 
         }
 
@@ -1488,12 +1651,19 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
             }
             string panelListesi = "";
-            foreach (var item in liste)
+            if (liste.Count > 0)
             {
-                panelListesi += item + ",";
+                foreach (var item in liste)
+                {
+                    panelListesi += item + ",";
+                }
+                panelListesi = panelListesi.Substring(0, panelListesi.Length - 1);
+                return panelListesi;
             }
-            panelListesi = panelListesi.Substring(0, panelListesi.Length - 1);
-            return panelListesi;
+            else
+            {
+                return "0";
+            }
         }
     }
 }

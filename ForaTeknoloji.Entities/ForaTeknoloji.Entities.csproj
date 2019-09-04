@@ -57,6 +57,7 @@
     <Compile Include="ComplexType\GelenGelmeyen_Gelmeyen.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_IlkGirisSonCikis.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_PasifKullanici.cs" />
+    <Compile Include="ComplexType\GelenGelmeyen_ToplamIcerdeKalma.cs" />
     <Compile Include="ComplexType\IcerdeDisardaPersonel.cs" />
     <Compile Include="ComplexType\IcerdeDısardaTümü.cs" />
     <Compile Include="ComplexType\IcerdeDısardaZiyaretci.cs" />

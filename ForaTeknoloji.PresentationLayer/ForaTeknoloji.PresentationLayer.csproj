@@ -2322,6 +2322,10 @@
     </Compile>
     <Compile Include="Models\DigerGecisRaporListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyenViewModel.cs" />
+    <Compile Include="Models\GelenGelmeyen_GelenlerListViewModel.cs" />
+    <Compile Include="Models\GelenGelmeyen_GelmeyenlerListViewModel.cs" />
+    <Compile Include="Models\GelenGelmeyen_PasifListViewModel.cs" />
+    <Compile Include="Models\GelenGelmeyen_ToplamIcerdeKalmaListViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
@@ -2344,9 +2348,12 @@
     <Content Include="Views\InsideOutReport\Personel.cshtml" />
     <Content Include="Views\VisitorReport\Index.cshtml" />
     <Content Include="Views\ReportPersonel\Index.cshtml" />
-    <Content Include="Views\GelenGelmeyenReport\Index.cshtml" />
     <Content Include="Views\InsideOutReport\Tümü.cshtml" />
     <Content Include="Views\InsideOutReport\Ziyaretci.cshtml" />
+    <Content Include="Views\GelenGelmeyenReport\Gelenler.cshtml" />
+    <Content Include="Views\GelenGelmeyenReport\Gelmeyenler.cshtml" />
+    <Content Include="Views\GelenGelmeyenReport\PasifKullanici.cshtml" />
+    <Content Include="Views\GelenGelmeyenReport\ToplamIcerdeKalma.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
