@@ -1,17 +1,15 @@
-﻿@model ForaTeknoloji.PresentationLayer.Models.GelenGelmeyen_ToplamIcerdeKalmaListViewModel
+﻿@model ForaTeknoloji.PresentationLayer.Models.GelenGelmeyen_IlkGirisSonCikisListViewModel
 @{
-    ViewBag.Title = "Toplam İçerde Kalma";
+    ViewBag.Title = "İlk Giriş Son Çıkış";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <div class="card shadow-lg mt-2">
     <div class="card-header-tabs">
-        <h3 class="text-muted text-center">Toplam İçerde Kalma</h3>
+        <h3 class="text-muted text-center">İlk Giriş Son Çıkış</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("ToplamIcerdeKalma", "GelenGelmeyenReport"))
+        @using (Html.BeginForm("IlkGirisSonCikis", "GelenGelmeyenReport"))
         {
 
             <div class="row">
@@ -81,10 +79,10 @@
                     </div>
                 </div>
                 <div class="col-md-12 text-right float-right">
-                    <h4 class="text-info text-right">@Model.ToplamIcerdeKalma.Count Adet Kayıt Listelendi</h4>
+                    <h4 class="text-info text-right">@Model.IlkGirisSonCikis.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("ToplamIcerdeKalmaExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("IlkGirisSonCikisExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
 
@@ -108,7 +106,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Model.ToplamIcerdeKalma.Count == 0)
+                                @if (Model.IlkGirisSonCikis.Count == 0)
                                 {
                                     <tr>
                                         <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
@@ -116,7 +114,7 @@
                                 }
                                 else
                                 {
-                                    foreach (var item in Model.ToplamIcerdeKalma)
+                                    foreach (var item in Model.IlkGirisSonCikis)
                                     {
                                         <tr>
                                             <td>@item.ID</td>
@@ -127,9 +125,9 @@
                                             <td>@item.DepartmanAdi</td>
                                             <td>@item.Grup_Adi</td>
                                             <td>@item.Tarih_Degeri</td>
-                                            <td>@item.Toplam_Saat</td>
-                                            <td>@item.Toplam_Dakika</td>
-                                            <td>@item.Toplam_Saniye</td>
+                                            <td>@item.Ilk_Kayit</td>
+                                            <td>@item.Son_Kayit</td>
+                                            <td>@item.Fark</td>
                                         </tr>
                                     }
                                 }

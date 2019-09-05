@@ -72,7 +72,7 @@
                     <h4 class="text-info text-right">@Model.Pasif.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("GelenGelmeyenListesi","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("PasifKullaniciExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
 
@@ -169,6 +169,34 @@
 
         });
 
+        $("#TümDepartman").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Departmanlar").attr("disabled", true);
+            } else {
+                $("#Departmanlar").attr("disabled", false);
+            }
+        });
+        $("#TümSirket").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Sirketler").attr("disabled", true);
+            } else {
+                $("#Sirketler").attr("disabled", false);
+            }
+        });
+        $("#TümGlobal").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Global_Bolge_Adi").attr("disabled", true);
+            } else {
+                $("#Global_Bolge_Adi").attr("disabled", false);
+            }
+        });
+        $("#TümGecis").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Groupsdetail").attr("disabled", true);
+            } else {
+                $("#Groupsdetail").attr("disabled", false);
+            }
+        });
 
     });
     var today = new Date();

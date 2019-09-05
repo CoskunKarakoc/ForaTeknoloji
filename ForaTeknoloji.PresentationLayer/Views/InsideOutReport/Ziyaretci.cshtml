@@ -1,4 +1,4 @@
-﻿@model ForaTeknoloji.PresentationLayer.Models.ZiyaretciListViewModel
+﻿@model ForaTeknoloji.PresentationLayer.Models.IcerdeDısardaZiyaretciListViewModel
 @{
     ViewBag.Title = "Ziyaretci";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,7 +13,7 @@
         {
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <div class="custom-control custom-radio">
                             <input type="radio" value="Lokal" class="custom-control-input" id="lokal" checked name="Bolge">
@@ -25,34 +25,31 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.DropDownListFor(model => model.Paneller, Model.Paneller, "Panel Seçimi", new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
                         <div class="custom-control custom-radio">
-                            <input type="radio" value="İcerde" class="custom-control-input" id="In" checked name="InOut">
+                            <input type="radio" value="0" class="custom-control-input" id="In" checked name="Gecis">
                             <label class="custom-control-label" for="In">İçerdekiler</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" value="Dısarda" class="custom-control-input" id="Out" name="InOut">
+                            <input type="radio" value="1" class="custom-control-input" id="Out" name="Gecis">
                             <label class="custom-control-label" for="Out">Dışardakiler</label>
                         </div>
                     </div>
 
+
+                </div>
+                <div class="col-md-3">
                     <div class="form-group">
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="SecilenKayit" class="custom-control-input" id="Secilen" checked name="Kayit">
-                            <label class="custom-control-label" for="Secilen">Seçilen Kayıtlar</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="TümKayit" class="custom-control-input" id="Tüm" name="Kayit">
-                            <label class="custom-control-label" for="Tüm">Tüm Kayıtlar</label>
-                        </div>
+                        <label for="exampleFormControlSelect1">Panel Listesi</label>
+                        @Html.DropDownListFor(model => model.Paneller, Model.Paneller, "Panel Seçimi", new { @class = "form-control" })
                     </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Global Kapı Bölgesi</label>
+                        @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3">
 
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Panel Çıkış Kapı No</label>
@@ -65,13 +62,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-12 text-right">
                     <br />
                     <br />
                     <br />
                     <br />
                     <br />
-                    <h4 class="text-info text-right">@*@Model.ComplexVisitorsListesi.Count*@ Adet Kayıt Listelendi</h4>
+                    <h4 class="text-info text-right">@Model.ZiyaretciListesi.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                     <a id="Excell" href="@Url.Action("Ziyaretci","InsideOutReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
@@ -83,28 +80,39 @@
 </div>
 <div class="card mt-2 shadow-lg">
     <div id="print_div" class="card-body">
-        <table class="table table-hover text-center table-striped">
-            <thead class="table-info">
-                <tr>
-                    <td>Kart ID</td>
-                    <td>Adı</td>
-                    <td>Soyadı</td>
-                    <td>Ziyaret Sebebi</td>
-                    <td>Tarih</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>111</td>
-                    <td>Test</td>
-                    <td>Test</td>
-                    <td>Null</td>
-                    <td>28.08.2019</td>
-                </tr>
+        @using (Html.BeginForm("ManuelCikis", "InsideOutReport", FormMethod.Post))
+        {
+            <table class="table table-hover text-center table-sm table-striped">
+                <thead class="table-info">
+                    <tr>
+                        <td>Tümünü Seç</td>
+                        <td>Kart ID</td>
+                        <td>Adı</td>
+                        <td>Soyadı</td>
+                        <td>Ziyaret Sebebi</td>
+                        <td>Tarih</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ZiyaretciListesi)
+                    {
+                        <tr>
+                            <td><input type="checkbox" name="Kayit_No" class="form-control form-control-sm" value="@item.Kayit_No" /></td>
+                            <td>@item.Kart_ID</td>
+                            <td>@item.Adi</td>
+                            <td>@item.Soyadi</td>
+                            <td>@item.Ziyaret_Sebebi</td>
+                            <td>@item.Tarih</td>
+                        </tr>
+                    }
 
-            </tbody>
+                </tbody>
+                <tfoot>
+                    <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa fa-sign-out-alt"></i> Manuel Çıkış</button>
+                </tfoot>
+            </table>
 
-        </table>
+        }
     </div>
 </div>
 

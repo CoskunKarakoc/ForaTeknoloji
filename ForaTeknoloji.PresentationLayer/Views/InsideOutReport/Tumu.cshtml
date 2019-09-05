@@ -1,4 +1,4 @@
-﻿@model ForaTeknoloji.PresentationLayer.Models.ZiyaretciListViewModel
+﻿@model ForaTeknoloji.PresentationLayer.Models.IcerdeDısardaTumuListViewModel
 @{
     ViewBag.Title = "Tümü";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,7 +10,7 @@
         <h3 class="text-center text-muted">İçerdekiler-Dışardakiler Tümü</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Ziyaretci", "InsideOutReport"))
+        @using (Html.BeginForm("Tumu", "InsideOutReport"))
         {
 
             <div class="row">
@@ -35,23 +35,12 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <div class="custom-control custom-radio">
-                            <input type="radio" value="İcerde" class="custom-control-input" id="In" checked name="InOut">
+                            <input type="radio" value="0" class="custom-control-input" id="In" checked name="Gecis">
                             <label class="custom-control-label" for="In">İçerdekiler</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" value="Dısarda" class="custom-control-input" id="Out" name="InOut">
+                            <input type="radio" value="1" class="custom-control-input" id="Out" name="Gecis">
                             <label class="custom-control-label" for="Out">Dışardakiler</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="SecilenKayit" class="custom-control-input" id="Secilen" checked name="Kayit">
-                            <label class="custom-control-label" for="Secilen">Seçilen Kayıtlar</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="TümKayit" class="custom-control-input" id="Tüm" name="Kayit">
-                            <label class="custom-control-label" for="Tüm">Tüm Kayıtlar</label>
                         </div>
                     </div>
 
@@ -72,10 +61,10 @@
                     <br />
                     <br />
                     <br />
-                    <h4 class="text-info text-right">@*@Model.ComplexVisitorsListesi.Count*@ Adet Kayıt Listelendi</h4>
+                    <h4 class="text-info text-right">@Model.TumuListesi.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("Ziyaretci","InsideOutReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("Tumu","InsideOutReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
             </div>
@@ -87,29 +76,47 @@
         <table class="table table-hover text-center table-striped">
             <thead class="table-info">
                 <tr>
+                    
                     <td>ID</td>
                     <td>Kart ID</td>
                     <td>Adı</td>
                     <td>Soyadı</td>
                     <td>Ziyaretçi Adı</td>
+                    <td>Ziyaretçi Soyadı</td>
                     <td>Şirket</td>
                     <td>Departman</td>
-                    <td>TTT.Tarih</td>
-                    <td>TTT2.Tarih</td>
+                    <td>Tarih</td>
+                    <td>Tarih</td>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>111</td>
-                    <td>Test</td>
-                    <td>Test</td>
-                    <td>Null</td>
-                    <td>28.08.2019</td>
-                    <td>aass</td>
-                    <td>sss</td>
-                    <td>dddd</td>
-                    <td>ffff</td>
-                </tr>
+                @if (Model.TumuListesi.Count == 0)
+                {
+                    <tr>
+                        <td class="text-warning" rowspan="10" colspan="10"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model.TumuListesi)
+                    {
+                        <tr>
+                            
+                            <td>@item.ID</td>
+                            <td>@item.Kart_ID</td>
+                            <td>@item.Adi</td>
+                            <td>@item.Soyadi</td>
+                            <td>@item.Ziyaretci_Adi</td>
+                            <td>@item.Ziyaretci_Soyadi</td>
+                            <td>@item.Sirket</td>
+                            <td>@item.Departman</td>
+                            <td>@item.Tarih</td>
+                            <td>@item.Ziyaret_Tarihi</td>
+                        </tr>
+                    }
+                }
+
+
 
             </tbody>
 

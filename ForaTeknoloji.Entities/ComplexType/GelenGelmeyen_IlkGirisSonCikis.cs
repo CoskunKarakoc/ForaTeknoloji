@@ -15,10 +15,10 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string SirketAdi { get; set; }
         public string DepartmanAdi { get; set; }
         public string Grup_Adi { get; set; }
-        public DateTime? Tarih_Degeri { get; set; }
-        public DateTime? Ilk_Kayit { get; set; }
-        public DateTime? Son_Kayit { get; set; }
-        public DateTime? Fark { get; set; }
+        public string Tarih_Degeri { get; set; }
+        public string Ilk_Kayit { get; set; }
+        public string Son_Kayit { get; set; }
+        public string Fark { get; set; }
 
     }
 }

@@ -17,7 +17,7 @@
                     <div class="form-group">
                         <div class="custom-control">
                             <label for="exampleFormControlInput1">Tarih</label>
-                            <input class="form-control" name="Tarih" type="date" value="2019-08-13" id="Tarih">
+                            <input class="form-control form-control-sm" name="Tarih" type="date" value="2019-08-13" id="Tarih">
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <h4 class="text-info text-right">@Model.Gelenler.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("GelenGelmeyenListesi","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("GelenlerExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
 
@@ -160,7 +160,34 @@
         });
 
 
-
+        $("#TümDepartman").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Departmanlar").attr("disabled", true);
+            } else {
+                $("#Departmanlar").attr("disabled", false);
+            }
+        });
+        $("#TümSirket").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Sirketler").attr("disabled", true);
+            } else {
+                $("#Sirketler").attr("disabled", false);
+            }
+        });
+        $("#TümGlobal").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Global_Bolge_Adi").attr("disabled", true);
+            } else {
+                $("#Global_Bolge_Adi").attr("disabled", false);
+            }
+        });
+        $("#TümGecis").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Groupsdetail").attr("disabled", true);
+            } else {
+                $("#Groupsdetail").attr("disabled", false);
+            }
+        });
 
 
 
