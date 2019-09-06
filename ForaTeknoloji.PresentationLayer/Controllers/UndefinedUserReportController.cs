@@ -25,7 +25,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index()
         {
             var list = _reportService.GetTanimsizListesi(null, null, null, null, null, null, null, null, "");
-            var PanelName = _panelSettingsService.GetAllPanelSettings();
+            var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
             var model = new TanimsizKullaniciListViewModel
             {
                 Liste = list,
@@ -41,7 +41,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Panel, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon = "")
         {
             var liste = _reportService.GetTanimsizListesi(Kapi, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
-            var PanelName = _panelSettingsService.GetAllPanelSettings();
+            var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
             var model = new TanimsizKullaniciListViewModel
             {
                 Liste = liste,

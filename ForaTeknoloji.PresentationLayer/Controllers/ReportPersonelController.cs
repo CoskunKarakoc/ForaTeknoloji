@@ -41,7 +41,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: ReportPersonel
         public ActionResult Index()
         {
-            var panel = _panelSettingsService.GetAllPanelSettings();
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
@@ -98,7 +98,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index(List<string> Kapi, bool? Günlük, bool? Tümü, bool? TümKullanici, int? Sirketler, int? Departmanlar, int? Bloklar, bool? TümPanel, int? Visitors, int? Panel, int? Groupsdetail, int? Daire, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon, string Plaka = null, string Kullanici = null, string Kayit = null)
         {
             var liste = _reportService.GetReportPersonelLists(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kullanici, Kayit);
-            var panel = _panelSettingsService.GetAllPanelSettings();
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();

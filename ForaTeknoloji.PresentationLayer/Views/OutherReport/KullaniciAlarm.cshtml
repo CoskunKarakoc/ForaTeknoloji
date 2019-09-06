@@ -1,4 +1,4 @@
-﻿@model ForaTeknoloji.PresentationLayer.Models.DigerGecisRaporListViewModel
+﻿@model ForaTeknoloji.PresentationLayer.Models.DigerGecisRaporAlarmListViewModel
 @{
     ViewBag.Title = "Diğer Geçiş Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -195,10 +195,10 @@
                         <div class="row">
                             <div class="col-md-12 text-right">
                                 <br />
-                                <h4 class="text-info text-right">@Model.DigerGecisListesi.Count Adet Kayıt Listelendi</h4>
+                                <h4 class="text-info text-right">@Model.DigerGecisListesiAlarm.Count Adet Kayıt Listelendi</h4>
                                 <hr />
                                 <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                                <a class="btn btn-sm btn-success" href="@Url.Action("DigerGecisListesi","OutherReport")"><i class="fa fa-file-export"></i> Excel'e Aktar</a>
+                                <a class="btn btn-sm btn-success" href="@Url.Action("DigerGecisListesiAlarm","OutherReport")"><i class="fa fa-file-export"></i> Excel'e Aktar</a>
                                 <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                             </div>
                         </div>
@@ -215,6 +215,12 @@
         <table class=" table table-hover text-center table-striped">
             <thead class="table-info">
                 <tr>
+                    <td>Kayıt No</td>
+                    <td>ID</td>
+                    <td>Kart ID</td>
+                    <td>Adı</td>
+                    <td>Soyadı</td>
+                    <td>Şirket</td>
                     <td>Panel</td>
                     <td>Kapı</td>
                     <td>Geçiş</td>
@@ -223,7 +229,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.DigerGecisListesi.Count == 0)
+                @if (Model.DigerGecisListesiAlarm.Count == 0)
                 {
                     <tr>
                         <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
@@ -231,10 +237,16 @@
                 }
                 else
                 {
-                    foreach (var item in Model.DigerGecisListesi)
+                    foreach (var item in Model.DigerGecisListesiAlarm)
                     {
                         <tr>
-                            <td>@item.Panel_ID</td>
+                            <td>@item.Kayit_No</td>
+                            <td>@item.ID</td>
+                            <td>@item.Kart_ID</td>
+                            <td>@item.Adi</td>
+                            <td>@item.Soyadi</td>
+                            <td>@item.SirketAdi</td>
+                            <td>@item.PanelID</td>
                             <td>@item.Kapi_ID</td>
                             @if (item.Gecis_Tipi == 0)
                             {

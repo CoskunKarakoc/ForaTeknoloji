@@ -14,7 +14,7 @@
         {
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <div class="custom-control custom-radio">
                             <input type="radio" value="Lokal" class="custom-control-input" id="lokal" checked name="Bolge">
@@ -26,14 +26,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.DropDownListFor(model => model.Paneller, Model.Paneller, "Panel Seçimi", new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
                         <div class="custom-control custom-radio">
                             <input type="radio" value="0" class="custom-control-input" id="In" checked name="Gecis">
                             <label class="custom-control-label" for="In">İçerdekiler</label>
@@ -43,28 +35,38 @@
                             <label class="custom-control-label" for="Out">Dışardakiler</label>
                         </div>
                     </div>
-
+                </div>
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Panel Çıkış Kapı No</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
+                        <label for="exampleFormControlSelect1">Panel Listesi</label>
+                        @Html.DropDownListFor(model => model.Paneller, Model.Paneller, "Panel Seçimi", new { @class = "form-control" })
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Panel Çıkış Kapı No</label>
+                        <select class="form-control" id="reader"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect2">Global Kapı Bölgesi</label>
+                        @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="col-md-12">
                     <br />
                     <br />
                     <br />
                     <br />
                     <br />
+                    <h5 id="mesaj" hidden class="text-success text-right"></h5>
                     <h4 class="text-info text-right">@Model.TumuListesi.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("Tumu","InsideOutReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("IcerdeDısardaTumu","InsideOutReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
             </div>
@@ -76,7 +78,7 @@
         <table class="table table-hover text-center table-striped">
             <thead class="table-info">
                 <tr>
-                    
+                    <td>Seçim</td>
                     <td>ID</td>
                     <td>Kart ID</td>
                     <td>Adı</td>
@@ -93,7 +95,7 @@
                 @if (Model.TumuListesi.Count == 0)
                 {
                     <tr>
-                        <td class="text-warning" rowspan="10" colspan="10"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                        <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
                     </tr>
                 }
                 else
@@ -101,7 +103,7 @@
                     foreach (var item in Model.TumuListesi)
                     {
                         <tr>
-                            
+                            <td><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></td>
                             <td>@item.ID</td>
                             <td>@item.Kart_ID</td>
                             <td>@item.Adi</td>
@@ -115,11 +117,12 @@
                         </tr>
                     }
                 }
-
-
-
             </tbody>
-
+            <tfoot>
+                <tr>
+                    <td colspan="11"><input type="submit" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" /></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -151,5 +154,131 @@
             }, 500);
 
         });
+        $("#Global_Bolge_Adi").attr("disabled", true);
+        $("#Paneller").change(function () {
+            var panelid = $(this).val();
+            if (panelid == 0 || panelid < 0 || panelid == "") {
+                $("#reader").html("");
+            }
+            $.ajax({
+                url: '@Url.Action("Reader", "InsideOutReport")',
+                type: "POST",
+                dataType: "json",
+                data: { Paneller: panelid },
+                success: function (data) {
+                    $("#reader").html("");
+                    $.each(data, function (index,value) {
+                        if (value.WKapi1_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi1_Lokal_Bolge + '>' + value.WKapi1_Adi + '</option>')
+                        }
+                        if (value.WKapi2_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi2_Lokal_Bolge + '>' + value.WKapi2_Adi + '</option>')
+                        }
+                        if (value.WKapi3_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi3_Lokal_Bolge + '>' + value.WKapi3_Adi + '</option>')
+                        }
+                        if (value.WKapi4_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi4_Lokal_Bolge + '>' + value.WKapi4_Adi + '</option>')
+                        }
+                        if (value.WKapi5_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi5_Lokal_Bolge + '>' + value.WKapi5_Adi + '</option>')
+                        }
+                        if (value.WKapi6_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi6_Lokal_Bolge + '>' + value.WKapi6_Adi + '</option>')
+                        }
+                        if (value.WKapi7_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi7_Lokal_Bolge + '>' + value.WKapi7_Adi + '</option>')
+                        }
+                        if (value.WKapi8_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi8_Lokal_Bolge + '>' + value.WKapi8_Adi + '</option>')
+                        }
+                        if (value.WKapi9_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi9_Lokal_Bolge + '>' + value.WKapi9_Adi + '</option>')
+                        }
+                        if (value.WKapi10_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi10_Lokal_Bolge + '>' + value.WKapi10_Adi + '</option>')
+                        }
+                        if (value.WKapi11_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi11_Lokal_Bolge + '>' + value.WKapi11_Adi + '</option>')
+                        }
+                        if (value.WKapi12_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi12_Lokal_Bolge + '>' + value.WKapi12_Adi + '</option>')
+                        }
+                        if (value.WKapi13_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi13_Lokal_Bolge + '>' + value.WKapi13_Adi + '</option>')
+                        }
+                        if (value.WKapi14_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi14_Lokal_Bolge + '>' + value.WKapi14_Adi + '</option>')
+                        }
+                        if (value.WKapi15_Lokal_Bolge != 0) {
+
+                            $('#reader').append('<option value=' + value.WKapi15_Lokal_Bolge + '>' + value.WKapi15_Adi + '</option>')
+                        }
+                        if (value.WKapi16_Lokal_Bolge!=0) {
+                            $('#reader').append('<option value=' + value.WKapi16_Lokal_Bolge + '>' + value.WKapi16_Adi + '</option>')
+                        }
+
+
+                    })
+                }
+            });
+
+        });
+        $("#reader").change(function () {
+            var lokal = $(this).val();
+            $("#mesaj").html("");
+            $("#mesaj").text("Seçilen Lokal Bölge " + lokal);
+            $("#mesaj").removeAttr("hidden")
+        });
+        $("#lokal").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Paneller").attr("disabled", false);
+                $("#reader").attr("disabled", false);
+                $("#Global_Bolge_Adi").attr("disabled", true);
+            } else {
+
+                $("#Paneller").attr("disabled", true);
+                $("#reader").attr("disabled", true);
+                $("#Global_Bolge_Adi").attr("disabled", false);
+            }
+
+        });
+        $("#global").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Global_Bolge_Adi").attr("disabled", false);
+                $("#Paneller").attr("disabled", true);
+                $("#reader").attr("disabled", true);
+                $("#mesaj").html("");
+                $("#mesaj").attr("hidden", true)
+            } else {
+                $("#Paneller").attr("disabled", false);
+                $("#reader").attr("disabled", false);
+                $("#Global_Bolge_Adi").attr("disabled", true);
+            }
+
+        });
+
+
+
+
+
+
+
+
+
     });
 </script>

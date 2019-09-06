@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,9 +27,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _panelSettingsDal.Delete(panelSettings);
         }
 
-        public List<PanelSettings> GetAllPanelSettings()
+        public List<PanelSettings> GetAllPanelSettings(Expression<Func<PanelSettings, bool>> filter = null)
         {
-            return _panelSettingsDal.GetList();
+            return filter == null ? _panelSettingsDal.GetList() : _panelSettingsDal.GetList(filter);
         }
 
         public PanelSettings GetById(int id)

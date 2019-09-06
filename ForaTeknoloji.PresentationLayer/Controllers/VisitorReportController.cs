@@ -29,7 +29,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index()
         {
             var liste = _reportService.GetZiyaretciListesi(null, null, null, null, null, null, null, null, null, null, null);
-            var panel = _panelSettingsService.GetAllPanelSettings();
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
             var visitors = _visitorsService.GetAllVisitors();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -62,7 +62,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
 
             var liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Visitors, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
-            var panel = _panelSettingsService.GetAllPanelSettings();
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
             var visitors = _visitorsService.GetAllVisitors();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -92,7 +92,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (Search != null && Search != "")
             {
                 liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Global_Bolge_Adi, Groupsdetail, Visitors, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
-                panel = _panelSettingsService.GetAllPanelSettings();
+                panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
                 visitors = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search));
                 groupsdetail = _groupsDetailService.GetAllGroupsDetail();
                 globalBolgeAdi = _globalZoneService.GetAllGlobalZones();

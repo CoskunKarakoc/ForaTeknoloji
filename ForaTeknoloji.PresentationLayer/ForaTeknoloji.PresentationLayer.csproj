@@ -2320,6 +2320,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DigerGecisRaporAlarmListViewModel.cs" />
     <Compile Include="Models\DigerGecisRaporListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyenViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_GelenlerListViewModel.cs" />
@@ -2359,6 +2360,7 @@
     <Content Include="Views\GelenGelmeyenReport\PasifKullanici.cshtml" />
     <Content Include="Views\GelenGelmeyenReport\ToplamIcerdeKalma.cshtml" />
     <Content Include="Views\GelenGelmeyenReport\IlkGirisSonCikis.cshtml" />
+    <Content Include="Views\OutherReport\KullaniciAlarm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

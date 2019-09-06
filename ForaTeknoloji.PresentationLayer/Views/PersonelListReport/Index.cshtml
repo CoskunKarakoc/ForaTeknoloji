@@ -2,12 +2,8 @@
 @using GridMvc.Html;
 @model ForaTeknoloji.PresentationLayer.Models.PersonelListViewModel
 @{
-    ViewBag.Title = "Personel Listesi";
+    ViewBag.Title = "Personel Listesi Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@{
-
-    List<PersonelList> liste = Model.PersonelListesi;
 }
 <div class="card mt-2 shadow-lg">
     <div class="card-header-tabs mt-1">
@@ -33,7 +29,7 @@
                         <label for="Plaka">Plaka Seçimi</label>
                         <input type="text" placeholder="Plaka" class="form-control" id="Plaka" name="Plaka" value="" />
                     </div>
-                  
+
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -77,20 +73,24 @@
 <div class="card shadow-lg mt-2 mb-1">
 
     <div id="" class="card-body">
+    
+
         @Html.Grid(Model.PersonelListesi).Columns(column =>
-{
-column.Add(x => x.ID);
-column.Add(x => x.Kart_ID);
-column.Add(x => x.Adi);
-column.Add(x => x.Soyadi);
-column.Add(x => x.TCKimlik);
-column.Add(x => x.SirketAdi);
-column.Add(x => x.DepartmanAdi);
-column.Add(x => x.Plaka);
-column.Add(x => x.BlokAdi);
-column.Add(x => x.Daire);
-column.Add(x => x.Grup_Adi);
-}).Sortable(true).SetLanguage("tr").WithPaging(10);
+            {
+            column.Add(x => x.ID);
+            column.Add(x => x.Kart_ID);
+            column.Add(x => x.Adi);
+            column.Add(x => x.Soyadi);
+            column.Add(x => x.TCKimlik);
+            column.Add(x => x.SirketAdi);
+            column.Add(x => x.DepartmanAdi);
+            column.Add(x => x.Plaka);
+            column.Add(x => x.BlokAdi);
+            column.Add(x => x.Daire);
+            column.Add(x => x.Grup_Adi);
+            }).Sortable(true).SetLanguage("tr").WithPaging(10);
+
+
         @*<table class="table-borderless table table-hover text-center table-striped ">
                 <thead class="table-info">
                     <tr>
@@ -193,6 +193,23 @@ column.Add(x => x.Grup_Adi);
             }, 500);
 
         });
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
     });
 </script>
 <script src="./src/bootstrap-input-spinner.js"></script>
+
