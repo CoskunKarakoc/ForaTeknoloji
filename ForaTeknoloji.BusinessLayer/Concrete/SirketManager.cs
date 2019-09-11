@@ -13,9 +13,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
     public class SirketManager : ISirketService
     {
         private ISirketDal _sirketDal;
-        public SirketManager(ISirketDal sirketDal)
+        private IDBUsersSirketDal _dBUsersSirketDal;
+        public SirketManager(ISirketDal sirketDal, IDBUsersSirketDal dBUsersSirketDal)
         {
             _sirketDal = sirketDal;
+            _dBUsersSirketDal = dBUsersSirketDal;
         }
         public Sirketler AddSirket(Sirketler sirket)
         {
@@ -40,6 +42,14 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public Sirketler UpdateSirket(Sirketler sirket)
         {
             return _sirketDal.Update(sirket);
+        }
+
+
+        public List<Sirketler> GetByKullaniciAdi(string kullaniciAdi)
+        {
+            List<int?> liste = new List<int?>();
+            liste = _dBUsersSirketDal.GetList(x => x.Kullanici_Adi == kullaniciAdi).Select(a => a.Sirket_No).ToList();
+            return _sirketDal.GetList(x => liste.Contains(x.Sirket_No));
         }
     }
 }

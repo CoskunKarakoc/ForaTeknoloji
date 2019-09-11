@@ -1,4 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject;
+using ForaTeknoloji.Common;
+using ForaTeknoloji.PresentationLayer.Init;
 using ForaTeknoloji.PresentationLayer.Utilities.MVC.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,7 @@ namespace ForaTeknoloji.PresentationLayer
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(new BusinessModule()));
+            App.Common = new WebCommon();
         }
     }
 }

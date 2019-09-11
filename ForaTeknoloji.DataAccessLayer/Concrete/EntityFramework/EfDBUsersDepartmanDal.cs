@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
-    public class EfDBUsersSirket : EfEntityRepositoryBase<DBUsersSirket, ForaContext>, IDBUsersSirketDal
+    public class EfDBUsersDepartmanDal : EfEntityRepositoryBase<DBUsersDepartman, ForaContext>, IDBUsersDepartmanDal
     {
     }
 }

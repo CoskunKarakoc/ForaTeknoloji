@@ -1,5 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
 using System;
@@ -10,6 +12,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     public class VisitorReportController : Controller
     {
         private IVisitorsService _visitorsService;
@@ -17,19 +20,32 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGroupsDetailService _groupsDetailService;
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
-        public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService)
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDoorNamesService _doorNamesService;
+        List<int?> kullaniciyaAitPaneller = new List<int?>();
+        DBUsers user = new DBUsers();
+        public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _visitorsService = visitorsService;
             _panelSettingsService = panelSettingsService;
             _groupsDetailService = groupsDetailService;
             _globalZoneService = globalZoneService;
             _reportService = reportService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            _doorNamesService = doorNamesService;
+            kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+
         }
         // GET: VisitorReport
         public ActionResult Index()
         {
             var liste = _reportService.GetZiyaretciListesi(null, null, null, null, null, null, null, null, null, null, null);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var visitors = _visitorsService.GetAllVisitors();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -62,7 +78,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
 
             var liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Visitors, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var visitors = _visitorsService.GetAllVisitors();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -92,7 +108,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (Search != null && Search != "")
             {
                 liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Global_Bolge_Adi, Groupsdetail, Visitors, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
-                panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+                panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
                 visitors = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search));
                 groupsdetail = _groupsDetailService.GetAllGroupsDetail();
                 globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -120,6 +136,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             }
             return View(model);
+        }
+
+
+        public ActionResult KapiListesi()
+        {
+            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
         }
 
 

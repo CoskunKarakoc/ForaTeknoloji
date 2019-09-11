@@ -46,6 +46,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,9 +58,12 @@
     <Compile Include="Abstract\IAccessDatasService.cs" />
     <Compile Include="Abstract\IBloklarService.cs" />
     <Compile Include="Abstract\ICodeOperationService.cs" />
+    <Compile Include="Abstract\IDBUsersDepartmanService.cs" />
+    <Compile Include="Abstract\IDBUsersPanelsService.cs" />
     <Compile Include="Abstract\IDBUsersService.cs" />
     <Compile Include="Abstract\IDBUsersSirketService.cs" />
     <Compile Include="Abstract\IDepartmanService.cs" />
+    <Compile Include="Abstract\IDoorNamesService.cs" />
     <Compile Include="Abstract\IGlobalZoneService.cs" />
     <Compile Include="Abstract\IGlobalZonesInterlockService.cs" />
     <Compile Include="Abstract\IGroupMasterService.cs" />
@@ -74,9 +78,12 @@
     <Compile Include="Concrete\AccessDatasManager.cs" />
     <Compile Include="Concrete\BloklarManager.cs" />
     <Compile Include="Concrete\CodeOperationManager.cs" />
+    <Compile Include="Concrete\DBUsersDepartmanManager.cs" />
     <Compile Include="Concrete\DBUsersManager.cs" />
+    <Compile Include="Concrete\DBUsersPanelsManager.cs" />
     <Compile Include="Concrete\DBUsersSirketManager.cs" />
     <Compile Include="Concrete\DepartmanManager.cs" />
+    <Compile Include="Concrete\DoorNamesManager.cs" />
     <Compile Include="Concrete\GlobalZoneManager.cs" />
     <Compile Include="Concrete\GlobalZonesInterlockManager.cs" />
     <Compile Include="Concrete\GroupsDetailManager.cs" />
@@ -97,6 +104,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ForaTeknoloji.Common\ForaTeknoloji.Common.csproj">
+      <Project>{8c6eab79-5b9f-4438-a17d-7eb0cd321b47}</Project>
+      <Name>ForaTeknoloji.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ForaTeknoloji.Core\ForaTeknoloji.Core.csproj">
       <Project>{35d9412b-9386-4908-a26d-d6ab9492a336}</Project>
       <Name>ForaTeknoloji.Core</Name>

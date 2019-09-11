@@ -1,4 +1,4 @@
-﻿using ForaTeknoloji.BusinessLayer.Abstract;
+﻿     using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.DataAccessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace ForaTeknoloji.BusinessLayer.Concrete
 {
@@ -22,8 +23,13 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         private IDepartmanDal _departmanDal;
         private IPanelSettingsDal _panelSettingsDal;
         private IReaderSettingDal _readerSettingDal;
+        private IDBUsersSirketDal _dbUsersSirketDal;
         private IAccessDatasService _accessDatasService;
-        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService)
+        private IDBUsersPanelsService _dbUsersPanelsService;
+        public string panelListesi = "0";
+        public string sirketListesi = "0";
+        public List<int?> sirketler;
+        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal)
         {
             _visitorsDal = visitorsDal;
             _groupsDetailDal = groupsDetailDal;
@@ -34,6 +40,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _panelSettingsDal = panelSettingsDal;
             _readerSettingDal = readerSettingDal;
             _accessDatasService = accessDatasService;
+            _dbUsersPanelsService = dbUsersPanelsService;
+            _dbUsersSirketDal = dBUsersSirketDal;
+
         }
 
         //=====>Tamamlandı<=====
@@ -91,10 +100,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                    + " ON CodeOperation.TKod = AccessDatas.Kod )"
                    + " WHERE AccessDatas.Kod = " + Tetikleme;
             }
-            queryString += "AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+            queryString += " AND AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
             if (Paneller != null)
             {
-                queryString += "AND AccessDatas.[Panel ID]=" + Paneller;
+                queryString += " AND AccessDatas.[Panel ID]=" + Paneller;
             }
             if (Tümü != true)
             {
@@ -182,7 +191,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
-         //=====>Tamamlandı<=====
+        //=====>Tamamlandı<=====
         //OutherReport Farklı Tipteki Liste                       
         public List<DigerGecisRaporListKullaniciAlarm> GetDigerGecisRaporListKullaniciAlarms(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, int Tetikleme, string KapiYon)
         {
@@ -193,11 +202,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                    + " AccessDatas.Tarih"
                    + " FROM DoorNames RIGHT JOIN(CodeOperation RIGHT JOIN (AccessDatas RIGHT JOIN (Users RIGHT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) ON CodeOperation.TKod = AccessDatas.Kod) ON(DoorNames.[Kapi No] = AccessDatas.[Kapi ID]) AND(DoorNames.[Panel No] = AccessDatas.[Panel ID])"
                    + " WHERE AccessDatas.Kod >= 26 AND AccessDatas.Kod <= 27 ";
-            queryString += "AND Sirketler.[Sirket No] IN(10000," + GetSirketNo() + ")";
-            queryString += "AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+            queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+            queryString += " AND AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
             if (Paneller != null)
             {
-                queryString += "AND AccessDatas.[Panel ID]=" + Paneller;
+                queryString += " AND AccessDatas.[Panel ID]=" + Paneller;
             }
             if (Tümü != true)
             {
@@ -297,7 +306,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
             string queryString = " SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi], Users.Resim FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No])LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0";
-            var sirketListesi = GetSirketNo();
+
             if (sirketListesi != null)
             {
                 //queryString += " AND Sirketler.[Sirket No] IN(1000," + sirketListesi + ")";
@@ -360,10 +369,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             else
             {
-                queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + "))";
+                queryString += " AND AccessDatas.[Panel ID] IN(200," + panelListesi + "))";
             }
             queryString += " AND Users.[Kart ID] <> ALL (SELECT DISTINCT AccessDatas.[Kart ID] FROM AccessDatas WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod = 1";
-            queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+            queryString += " AND AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
             queryString += " AND AccessDatas.[Gecis Tipi] = 0)";
 
 
@@ -418,8 +427,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
             string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Şirket,  Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi], Users.Resim FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0 ";
-            var sirketListesi = GetSirketNo();
-            //queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+            queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             if (Sirketler != null)
             {
                 queryString += " AND Users.[Sirket No] =" + Sirketler;
@@ -441,7 +449,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             else
             {
-                queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+                queryString += " AND AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
             }
             if (Tarih != null)
             {
@@ -506,7 +514,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
             string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0 ";
-            var sirketListesi = GetSirketNo();
             queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             if (Sirketler != null)
             {
@@ -529,7 +536,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             else
             {
-                queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+                queryString += " AND AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
             }
             if (Tarih != null)
             {
@@ -618,7 +625,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             else
             {
-                queryString += " AND AccessDatas.[Panel ID] IN(200," + GetPanelListesi() + ")";
+                queryString += " AND AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
             }
             if (Tarih1 != null && Tarih2 != null)
             {
@@ -678,8 +685,8 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
             string queryString = "SELECT a.ID, a.[Kart ID], Users.Adi, Users.Soyadi, Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman, GroupsMaster.[Grup Adi] AS Grup, CONVERT(VARCHAR(10), a.Tarih, 103) AS [Tarih Değeri], a.Tarih AS log_in, COALESCE( (SELECT min(Tarih) FROM AccessDatas as b WHERE a.ID = b.ID AND CAST(a.Tarih AS DATE) = CAST(b.Tarih AS DATE) AND b.Tarih >= a.Tarih AND b.[Gecis Tipi] = 1), a.Tarih) as log_out FROM (AccessDatas AS a LEFT JOIN (((Users LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) ON a.ID = Users.ID) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] WHERE a.[Kullanici Tipi] = 0 AND a.Kod = 1 AND a.[Gecis Tipi] = 0 AND a.Tarih >= CONVERT(SMALLDATETIME,'" + Tarih1?.Date.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND a.Tarih <= CONVERT(SMALLDATETIME,'" + Tarih2?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-            var sirketListesi = GetSirketNo();
-            //queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+
+            queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
 
 
             if (UserID != null)
@@ -705,7 +712,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             else
             {
-                queryString += " AND a.[Panel ID] IN(200," + GetPanelListesi() + ")";
+                queryString += " AND a.[Panel ID] IN(200," + panelListesi + ")";
             }
             string tempQuery = "SELECT ID, [Kart ID], Adi, Soyadi, Şirket, Departman, Grup, [Tarih Değeri], (SUM(DATEPART( HOUR, CAST((log_out - log_in) AS TIME))) + (((SUM(DATEPART(MINUTE, CAST((log_out - log_in) AS TIME)))) + (SUM(DATEPART( SECOND, CAST((log_out - log_in) AS TIME))) / 60)) / 60)) AS [Toplam Saat], (((SUM(DATEPART(MINUTE, CAST((log_out - log_in) AS TIME)))) + (SUM(DATEPART( SECOND, CAST((log_out - log_in) AS TIME))) / 60)) % 60) AS [Toplam Dakika], (SUM( DATEPART( SECOND, CAST((log_out - log_in) AS TIME) ) ) % 60 ) AS [Toplam Saniye] FROM ( " + queryString + " ) as t";
 
@@ -1251,11 +1258,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
 
             }
-            //if (Saat1 != null && Saat2 != null)
-            //{
-            //    İki saat arası yok
-            //}
-
             queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
 
 
@@ -1315,13 +1317,16 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
             string queryString = "";
-            string sirketListesi = "";
+
 
 
             if (Bolge == "Lokal")
             {
-
-                queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], TTT.Adi, TTT.Soyadi, TTT.Sirket, TTT.Departman,TTT.Tarih, AccessDatas.[Gecis Tipi] FROM AccessDatas INNER JOIN (SELECT AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi, Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,MAX(AccessDatas.[Tarih]) AS Tarih FROM Users LEFT OUTER JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No] LEFT OUTER JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] LEFT OUTER JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No] WHERE AccessDatas.[Lokal Bolge No] =" + Kapi + " AND AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.ID > 0 AND AccessDatas.Kod = 1 AND Sirketler.[Sirket No] IN(10000," + GetSirketNo() + ") GROUP BY AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi, Sirketler.Adi, Departmanlar.Adi) TTT ON AccessDatas.[User Kayit No] = TTT.[User Kayit No] AND AccessDatas.Tarih = TTT.Tarih WHERE AccessDatas.[Gecis Tipi] =" + Gecis;
+                if (Kapi == null)
+                {
+                    Kapi = "1";
+                }
+                queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], TTT.Adi, TTT.Soyadi, TTT.Sirket, TTT.Departman,TTT.Tarih, AccessDatas.[Gecis Tipi] FROM AccessDatas INNER JOIN (SELECT AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi, Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,MAX(AccessDatas.[Tarih]) AS Tarih FROM Users LEFT OUTER JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No] LEFT OUTER JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] LEFT OUTER JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No] WHERE AccessDatas.[Lokal Bolge No] =" + Kapi + " AND AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.ID > 0 AND AccessDatas.Kod = 1 AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ") GROUP BY AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi, Sirketler.Adi, Departmanlar.Adi) TTT ON AccessDatas.[User Kayit No] = TTT.[User Kayit No] AND AccessDatas.Tarih = TTT.Tarih WHERE AccessDatas.[Gecis Tipi] =" + Gecis;
 
             }
             else
@@ -1331,7 +1336,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     Global_Bolge_Adi = 1;
                 }
 
-                queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], TTT.Adi, TTT.Soyadi, TTT.Sirket, TTT.Departman,TTT.Tarih, AccessDatas.[Gecis Tipi] FROM AccessDatas INNER JOIN (SELECT AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi,Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,MAX(AccessDatas.[Tarih]) AS Tarih FROM Users LEFT OUTER JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No] LEFT OUTER JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] LEFT OUTER JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No] WHERE AccessDatas.[Global Bolge No] = " + Global_Bolge_Adi + " AND AccessDatas.ID > 0  AND AccessDatas.Kod = 1  AND Sirketler.[Sirket No] IN(10000," + GetSirketNo() + ") GROUP BY AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi, Sirketler.Adi, Departmanlar.Adi) TTT  ON AccessDatas.[User Kayit No] = TTT.[User Kayit No] AND AccessDatas.Tarih = TTT.Tarih WHERE AccessDatas.[Gecis Tipi] =" + Gecis;
+                queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], TTT.Adi, TTT.Soyadi, TTT.Sirket, TTT.Departman,TTT.Tarih, AccessDatas.[Gecis Tipi] FROM AccessDatas INNER JOIN (SELECT AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi,Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,MAX(AccessDatas.[Tarih]) AS Tarih FROM Users LEFT OUTER JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No] LEFT OUTER JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] LEFT OUTER JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No] WHERE AccessDatas.[Global Bolge No] = " + Global_Bolge_Adi + " AND AccessDatas.ID > 0  AND AccessDatas.Kod = 1  AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ") GROUP BY AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi, Sirketler.Adi, Departmanlar.Adi) TTT  ON AccessDatas.[User Kayit No] = TTT.[User Kayit No] AND AccessDatas.Tarih = TTT.Tarih WHERE AccessDatas.[Gecis Tipi] =" + Gecis;
 
             }
             List<IcerdeDisardaPersonel> liste = new List<IcerdeDisardaPersonel>();
@@ -1387,6 +1392,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             if (Bolge == "Lokal")
             {
                 //TODO: Lokal Bölge Gelecek
+                if (Kapi == null)
+                {
+                    Kapi = "1";
+                }
                 queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.[Kart ID], TTT.Adi, TTT.Soyadi, Visitors.[Ziyaret Sebebi], TTT.Tarih, AccessDatas.[Gecis Tipi] FROM AccessDatas INNER JOIN (SELECT AccessDatas.[Visitor Kayit No], Visitors.Adi, Visitors.Soyadi, MAX(AccessDatas.[Tarih]) AS Tarih FROM Visitors LEFT OUTER JOIN AccessDatas ON Visitors.[Kayit No] = AccessDatas.[Visitor Kayit No] WHERE AccessDatas.[Lokal Bolge No] =" + Kapi + " AND AccessDatas.[Kullanici Tipi] = 1 AND AccessDatas.[Visitor Kayit No] > 0 AND AccessDatas.Kod = 1 GROUP BY AccessDatas.[Visitor Kayit No], Visitors.Adi, Visitors.Soyadi) TTT ON AccessDatas.[Visitor Kayit No] = TTT.[Visitor Kayit No] AND AccessDatas.Tarih = TTT.Tarih LEFT OUTER JOIN Visitors ON AccessDatas.[Visitor Kayit No] = Visitors.[Kayit No] WHERE AccessDatas.[Gecis Tipi] =" + Gecis;
 
             }
@@ -1446,7 +1455,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
             if (Bolge == "Lokal")
             {
-
+                if (Kapi == null)
+                {
+                    Kapi = "1";
+                }
                 queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], TTT.Adi, TTT.Soyadi, TTT2.Adi AS [Ziyaretçi Adi], TTT2.Soyadi AS [Ziyaretçi Soyadi],"
                           + "TTT.Sirket, TTT.Departman,"
                           + "TTT.Tarih, TTT2.Tarih, AccessDatas.[Gecis Tipi] "
@@ -1465,7 +1477,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                               + " WHERE AccessDatas.[Lokal Bolge No] =" + Kapi
                               + " AND AccessDatas.ID > 0"
                               + " AND AccessDatas.Kod = 1"
-                              + " AND Sirketler.[Sirket No] IN(10000," + GetSirketNo() + ")"
+                              + " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")"
                               + " GROUP BY AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi, Sirketler.Adi, Departmanlar.Adi) TTT"
                               + " ON AccessDatas.[User Kayit No] = TTT.[User Kayit No] AND AccessDatas.Tarih = TTT.Tarih) ";
 
@@ -1486,6 +1498,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             else
             {
+                
                 if (Global_Bolge_Adi == null)
                 {
                     Global_Bolge_Adi = 1;
@@ -1508,7 +1521,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                + " WHERE AccessDatas.[Global Bolge No] =" + Global_Bolge_Adi
                                + " AND AccessDatas.ID > 0"
                                + " AND AccessDatas.Kod = 1"
-                               + " AND Sirketler.[Sirket No] IN(10000," + GetSirketNo() + ")"
+                               + " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")"
                                + " GROUP BY AccessDatas.[User Kayit No], Users.Adi, Users.Soyadi, Sirketler.Adi, Departmanlar.Adi) TTT"
                                + " ON AccessDatas.[User Kayit No] = TTT.[User Kayit No] AND AccessDatas.Tarih = TTT.Tarih) ";
 
@@ -1574,101 +1587,45 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
 
-
-
-        //Kullanıcı Adına Göre Şirket No Getiriyor
-        public string GetSirketNo()
+        //Kullanıcı adına göre Sirket Listesi döndürüyor
+        public void GetSirketList(DBUsers users)
         {
-            //TODO: Kullanıcı girişi esnasında alınan kullanıcı adına göre şirket listelenecek
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
-            string queryString = "Select [Sirket No] From DBUsersSirket Where [Kullanici Adi] = 'coskun' Order By [Kullanici Adi]";
-            List<int> liste = new List<int>();
-            using (SqlConnection connection = new SqlConnection(address))
-            {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                try
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        var nesne = reader[0] as int? ?? default(int);
-                        liste.Add(nesne);
-                    }
-                    reader.Close();
-                }
-                catch (Exception)
-                {
+            var sirketler = _dbUsersSirketDal.GetList(x => x.Kullanici_Adi == users.Kullanici_Adi).Select(x => x.Sirket_No).ToList();
 
-                    throw;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-
-            }
-            string sirketListesi = "";
-            if (liste.Count > 0)
+            if (sirketler.Count > 0)
             {
-                foreach (var item in liste)
+                sirketListesi = "";
+                foreach (var item in sirketler)
                 {
                     sirketListesi += item + ",";
                 }
                 sirketListesi = sirketListesi.Substring(0, sirketListesi.Length - 1);
-                return sirketListesi;
+
             }
             else
             {
-                return "0";
+                sirketListesi = "0";
             }
-
         }
 
-        //Kullanıcı Adına Göre Panel No Getiriyor
-        public string GetPanelListesi()
+        //Kullanıcı adına göre Panel Listesi döndürüyor
+        public void GetPanelList(DBUsers user)
         {
-            //TODO: Giriş yapan kullanıcının adına göre sorgu yazılacak
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
-            string queryString = "Select [Panel No] From DBUsersPanels Where [Kullanici Adi] = 'coskun' Order By [Kullanici Adi]";
-            List<int> liste = new List<int>();
-            using (SqlConnection connection = new SqlConnection(address))
+            var paneller = _dbUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderBy(x => x.Kullanici_Adi).Select(x => x.Panel_No).ToList();
+            panelListesi = "";
+            if (paneller.Count > 0)
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                try
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        var nesne = reader[0] as int? ?? default(int);
-                        liste.Add(nesne);
-                    }
-                    reader.Close();
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            }
-            string panelListesi = "";
-            if (liste.Count > 0)
-            {
-                foreach (var item in liste)
+                panelListesi = "";
+                foreach (var item in paneller)
                 {
                     panelListesi += item + ",";
                 }
                 panelListesi = panelListesi.Substring(0, panelListesi.Length - 1);
-                return panelListesi;
+
             }
             else
             {
-                return "0";
+                panelListesi = "0";
             }
         }
 
@@ -1676,14 +1633,34 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //TODO: Kayit No'suna göre manuel çıkış yapılacak İçerde Dışarda Raporu
         public void Guncelle(List<int> KayitNo)
         {
-            foreach (var item in KayitNo)
+            if (KayitNo != null)
             {
-                var nesne = _accessDatasService.GetByKayit_No(item);
-                if (nesne.Gecis_Tipi == 0)
+                foreach (var item in KayitNo)
                 {
-                    nesne.Gecis_Tipi = 1;
+                    var nesne = _accessDatasService.GetByKayit_No(item);
+                    if (nesne.Gecis_Tipi == 0)
+                    {
+                        var newAccessDatas = new AccessDatas
+                        {
+                            Panel_ID = nesne.Panel_ID,
+                            Lokal_Bolge_No = nesne.Lokal_Bolge_No,
+                            Global_Bolge_No = nesne.Global_Bolge_No,
+                            Kapi_ID = nesne.Kapi_ID,
+                            ID = nesne.ID,
+                            Kart_ID = nesne.Kart_ID,
+                            Tarih = DateTime.Now,
+                            Gecis_Tipi = 1,
+                            Kod = nesne.Kod,
+                            Kullanici_Tipi = nesne.Kullanici_Tipi,
+                            Visitor_Kayit_No = nesne.Visitor_Kayit_No,
+                            User_Kayit_No = nesne.User_Kayit_No,
+                            Kontrol = nesne.Kontrol,
+                            Plaka = nesne.Plaka
+                        };
+                        _accessDatasService.AddAccessData(newAccessDatas);
+                    }
                 }
-                _accessDatasService.UpdateAccessData(nesne);
+
             }
         }
 

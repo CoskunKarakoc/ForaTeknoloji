@@ -12,13 +12,15 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
     public class DepartmanManager : IDepartmanService
     {
         private IDepartmanDal _departmanDal;
-        public DepartmanManager(IDepartmanDal departmanDal)
+        private IDBUsersDepartmanDal _dBUsersDepartmanDal;
+        public DepartmanManager(IDepartmanDal departmanDal, IDBUsersDepartmanDal dBUsersDepartmanDal)
         {
             _departmanDal = departmanDal;
+            _dBUsersDepartmanDal = dBUsersDepartmanDal;
         }
         public Departmanlar AddDepartman(Departmanlar departman)
         {
-           return _departmanDal.Add(departman);
+            return _departmanDal.Add(departman);
         }
 
         public void DeleteDepartmanlar(Departmanlar departman)
@@ -39,6 +41,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public Departmanlar UpdateDepartman(Departmanlar departman)
         {
             return _departmanDal.Update(departman);
+        }
+
+        public List<Departmanlar> GetByKullaniciAdi(string kullaniciAdi)
+        {
+            List<int?> liste = _dBUsersDepartmanDal.GetList(x => x.Kullanici_Adi == kullaniciAdi).Select(x => x.Departman_No).ToList();
+            return _departmanDal.GetList(x => liste.Contains(x.Departman_No));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
 using System;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     public class InsideOutReportController : Controller
     {
         private IVisitorsService _visitorsService;
@@ -19,14 +21,26 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
         private IReaderSettingsService _readerSettingsService;
-        public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService)
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        List<int?> kullaniciyaAitPaneller = new List<int?>();
+        public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
+
+            DBUsers user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _visitorsService = visitorsService;
             _panelSettingsService = panelSettingsService;
             _groupsDetailService = groupsDetailService;
             _globalZoneService = globalZoneService;
             _reportService = reportService;
             _readerSettingsService = readerSettingsService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
         }
 
 
@@ -34,7 +48,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Personel()
         {
             var liste = _reportService.GetIcerdeDisardaPersonels(1, 1, "1", "Lokal", "0");
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && x.Seri_No != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && x.Seri_No != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaPersonelListViewModel
             {
@@ -59,7 +73,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
 
             var liste = _reportService.GetIcerdeDisardaPersonels(Global_Bolge_Adi, Paneller, Kapi, Bolge, Gecis);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaPersonelListViewModel
             {
@@ -86,7 +100,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Ziyaretci()
         {
             var liste = _reportService.GetIcerdeDısardaZiyaretci(1, null, null, null, "0");
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaZiyaretciListViewModel
             {
@@ -110,7 +124,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Ziyaretci(int? Paneller, string Kapi, string Bolge, string Gecis, int? Global_Bolge_Adi = 1)
         {
             var liste = _reportService.GetIcerdeDısardaZiyaretci(Global_Bolge_Adi, Paneller, Kapi, Bolge, Gecis);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaZiyaretciListViewModel
             {
@@ -138,7 +152,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Tumu()
         {
             var liste = _reportService.GetIcerdeDısardaTümü(1, null, null, null, "0");
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaTumuListViewModel
             {
@@ -163,7 +177,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Tumu(int? Paneller, string Kapi, string Bolge, string Gecis, int? Global_Bolge_Adi = 1)
         {
             var liste = _reportService.GetIcerdeDısardaTümü(Global_Bolge_Adi, Paneller, Kapi, Bolge, Gecis);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaTumuListViewModel
             {
@@ -202,6 +216,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var nesne = _readerSettingsService.GetAllreaderSettings(x => x.Panel_ID == Paneller);
             return Json(nesne, JsonRequestBehavior.AllowGet);
         }
+
+       
 
 
 

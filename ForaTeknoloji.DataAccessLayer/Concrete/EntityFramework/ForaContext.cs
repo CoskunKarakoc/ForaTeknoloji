@@ -26,6 +26,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<DBUsers> DBUsers { get; set; }
         public virtual DbSet<DBUsersPanels> DBUsersPanels { get; set; }
         public virtual DbSet<DBUsersSirket> DBUsersSirket { get; set; }
+        public virtual DbSet<DBUsersDepartman> DBUsersDepartman { get; set; }
         public virtual DbSet<Departmanlar> Departmanlar { get; set; }
         public virtual DbSet<Devices> Devices { get; set; }
         public virtual DbSet<DevicesSelected> DevicesSelected { get; set; }

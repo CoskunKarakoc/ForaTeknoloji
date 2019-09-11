@@ -110,6 +110,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Canli_Images\801324018.jpg" />
+    <Content Include="Canli_Images\805791746.jpg" />
     <Content Include="Content\bootstrap-1.1.0.css" />
     <Content Include="Content\bootstrap-1.1.0.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -283,13 +285,18 @@
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\gridmvc.datepicker.css" />
     <Content Include="Content\gridmvc.datepicker.min.css" />
+    <Content Include="Content\Login-Page.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Validation-Summary.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Images\11184810.jpg" />
-    <Content Include="Images\2386685.jpg" />
+    <Content Include="Images\803551058.jpg" />
+    <Content Include="Images\801324018.jpg" />
     <Content Include="Images\15491735.jpg" />
     <Content Include="Images\6300990.jpg" />
+    <Content Include="Images\Logo.jpg" />
+    <Content Include="Images\MavisoftYatayOrta2.jpg" />
+    <Content Include="Images\MavisoftYatayOrtaLogo.png" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
@@ -2317,9 +2324,12 @@
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
     <Compile Include="Controllers\VisitorReportController.cs" />
+    <Compile Include="Filters\Auth.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Init\WebCommon.cs" />
+    <Compile Include="Models\CurrentSession.cs" />
     <Compile Include="Models\DigerGecisRaporAlarmListViewModel.cs" />
     <Compile Include="Models\DigerGecisRaporListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyenViewModel.cs" />
@@ -2361,6 +2371,7 @@
     <Content Include="Views\GelenGelmeyenReport\ToplamIcerdeKalma.cshtml" />
     <Content Include="Views\GelenGelmeyenReport\IlkGirisSonCikis.cshtml" />
     <Content Include="Views\OutherReport\KullaniciAlarm.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2375,6 +2386,10 @@
     <ProjectReference Include="..\ForaTeknoloji.BusinessLayer\ForaTeknoloji.BusinessLayer.csproj">
       <Project>{f90ea7e7-6541-4d89-af3d-38689c9edda7}</Project>
       <Name>ForaTeknoloji.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ForaTeknoloji.Common\ForaTeknoloji.Common.csproj">
+      <Project>{8c6eab79-5b9f-4438-a17d-7eb0cd321b47}</Project>
+      <Name>ForaTeknoloji.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\ForaTeknoloji.Core\ForaTeknoloji.Core.csproj">
       <Project>{35d9412b-9386-4908-a26d-d6ab9492a336}</Project>

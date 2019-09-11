@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
 using System;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     public class ReportPersonelController : Controller
     {
         private IUserService _userService;
@@ -24,8 +26,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGroupMasterService _groupMasterService;
         private IReportService _reportService;
         private IUsersOLDService _usersOLDService;
-        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IGroupsDetailService groupsDetailService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService)
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDoorNamesService _doorNamesService;
+        List<int?> kullaniciyaAitPaneller = new List<int?>();
+        DBUsers user = new DBUsers();
+        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IGroupsDetailService groupsDetailService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _userService = userService;
             _sirketService = sirketService;
             _departmanService = departmanService;
@@ -37,16 +48,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _groupMasterService = groupMasterService;
             _reportService = reportService;
             _usersOLDService = usersOLDService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            _doorNamesService = doorNamesService;
+            kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+
         }
         // GET: ReportPersonel
         public ActionResult Index()
         {
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
             var liste = _reportService.GetReportPersonelLists(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
@@ -88,7 +103,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Grup_Adi,
                     Value = a.Grup_No.ToString()
                 })
-               
+
 
             };
             return View(model);
@@ -98,12 +113,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index(List<string> Kapi, bool? Günlük, bool? Tümü, bool? TümKullanici, int? Sirketler, int? Departmanlar, int? Bloklar, bool? TümPanel, int? Visitors, int? Panel, int? Groupsdetail, int? Daire, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon, string Plaka = null, string Kullanici = null, string Kayit = null)
         {
             var liste = _reportService.GetReportPersonelLists(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kullanici, Kayit);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
             var model = new ReportPersonelViewModel
@@ -162,6 +177,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(_usersOLDService.GetAllUsersOLD().OrderBy(x => x.Kayit_No), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult KapiListesi()
+        {
+            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a=>a.Panel_No).ToList();
+            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)),JsonRequestBehavior.AllowGet);
+        }
 
         //EXCELL EXPORT
         public void PersonelRaporları()

@@ -1,4 +1,5 @@
-﻿using ForaTeknoloji.Entities.Entities;
+﻿using ForaTeknoloji.Entities.DataTransferObjects;
+using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         DBUsers AddDBUsers(DBUsers dBUsers);
         void DeleteDBUsers(DBUsers dBUsers);
         DBUsers UpdateDBUsers(DBUsers dBUsers);
+        DBUsers LoginUsers(LoginViewModel model);
     }
 }

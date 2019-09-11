@@ -57,8 +57,11 @@
     <Compile Include="Abstract\IBloklarDal.cs" />
     <Compile Include="Abstract\ICodeOperationDal.cs" />
     <Compile Include="Abstract\IDBUsersDal.cs" />
+    <Compile Include="Abstract\IDBUsersDepartmanDal.cs" />
+    <Compile Include="Abstract\IDBUsersPanelsDal.cs" />
     <Compile Include="Abstract\IDBUsersSirketDal.cs" />
     <Compile Include="Abstract\IDepartmanDal.cs" />
+    <Compile Include="Abstract\IDoorNamesDal.cs" />
     <Compile Include="Abstract\IGlobalZoneDal.cs" />
     <Compile Include="Abstract\IGlobalZonesInterlockDal.cs" />
     <Compile Include="Abstract\IGroupMasterDal.cs" />
@@ -73,8 +76,11 @@
     <Compile Include="Concrete\EntityFramework\EfBloklarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCodeOperationDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersDal.cs" />
-    <Compile Include="Concrete\EntityFramework\EfDBUsersSirket.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDBUsersDepartmanDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDBUsersPanelsDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDBUsersSirketDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDepartmanDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDoorNamesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGlobalZoneDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGlobalZonesInterlockDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGroupsDetailDal.cs" />
@@ -89,6 +95,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ForaTeknoloji.Common\ForaTeknoloji.Common.csproj">
+      <Project>{8c6eab79-5b9f-4438-a17d-7eb0cd321b47}</Project>
+      <Name>ForaTeknoloji.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ForaTeknoloji.Core\ForaTeknoloji.Core.csproj">
       <Project>{35D9412B-9386-4908-A26D-D6AB9492A336}</Project>
       <Name>ForaTeknoloji.Core</Name>

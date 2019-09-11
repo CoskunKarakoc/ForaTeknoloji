@@ -1,5 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
 using Rotativa;
@@ -12,6 +14,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     public class PersonelListReportController : Controller
     {
         private IUserService _userService;
@@ -22,6 +25,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGlobalZoneService _globalZoneService;
         private IGroupMasterService _groupMasterService;
         private IReportService _reportService;
+        public DBUsers user = new DBUsers();
         public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupsDetailService groupsDetailService, ISirketService sirketService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IReportService reportService)
         {
             _userService = userService;
@@ -32,15 +36,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _globalZoneService = globalZoneService;
             _groupMasterService = groupMasterService;
             _reportService = reportService;
+            user = CurrentSession.User;
         }
         // GET: PersonelListReport
         public ActionResult Index()
         {
             var personelLists = _reportService.GetPersonelLists(null, null, null, null, null, null, null);
-            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var model = new PersonelListViewModel
@@ -86,11 +91,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index(int? Sirketler, int? Departmanlar, int? Bloklar, int? Groupsdetail, int? Global_Bolge_Adi, int? Daire, string Plaka = "")
         {
             var personelLists = _reportService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
-            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
 
             var model = new PersonelListViewModel

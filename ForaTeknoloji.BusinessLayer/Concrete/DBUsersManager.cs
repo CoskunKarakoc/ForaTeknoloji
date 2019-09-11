@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.DataAccessLayer.Abstract;
+using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
@@ -41,5 +42,17 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _dBUsersDal.Update(dBUsers);
         }
+
+
+        public DBUsers LoginUsers(LoginViewModel model)
+        {
+            DBUsers user = _dBUsersDal.Get(x => x.Kullanici_Adi == model.Username && x.Sifre == model.Password);
+            if (user == null)
+            {
+                return null;
+            }
+            return user;
+        }
+
     }
 }

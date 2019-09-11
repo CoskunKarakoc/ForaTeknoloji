@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
 using System;
@@ -10,22 +11,33 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     public class UndefinedUserReportController : Controller
     {
         private IAccessDatasService _accessDatasService;
         private IPanelSettingsService _panelSettingsService;
         private IReportService _reportService;
-        public UndefinedUserReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService)
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        List<int?> kullaniciyaAitPaneller = new List<int?>();
+        public UndefinedUserReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService)
         {
+            DBUsers user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _accessDatasService = accessDatasService;
             _panelSettingsService = panelSettingsService;
             _reportService = reportService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+
         }
         // GET: UndefinedUserReport
         public ActionResult Index()
         {
             var list = _reportService.GetTanimsizListesi(null, null, null, null, null, null, null, null, "");
-            var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var model = new TanimsizKullaniciListViewModel
             {
                 Liste = list,
@@ -41,7 +53,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Panel, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon = "")
         {
             var liste = _reportService.GetTanimsizListesi(Kapi, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
-            var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var model = new TanimsizKullaniciListViewModel
             {
                 Liste = liste,

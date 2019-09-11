@@ -33,8 +33,14 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IGlobalZonesInterlockDal>().To<EfGlobalZonesInterlockDal>().InSingletonScope();
             Bind<IVisitorsDal>().To<EfVisitorsDal>().InSingletonScope();
             Bind<IDBUsersDal>().To<EfDBUsersDal>().InSingletonScope();
-            Bind<IDBUsersSirketDal>().To<EfDBUsersSirket>().InSingletonScope();
+            Bind<IDBUsersSirketDal>().To<EfDBUsersSirketDal>().InSingletonScope();
             Bind<IReaderSettingDal>().To<EfReaderSettingsDal>().InSingletonScope();
+            Bind<IDBUsersPanelsDal>().To<EfDBUsersPanelsDal>().InSingletonScope();
+            Bind<IDBUsersDepartmanDal>().To<EfDBUsersDepartmanDal>().InSingletonScope();
+            Bind<IDoorNamesDal>().To<EfDoorNamesDal>().InSingletonScope();
+
+
+
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
             Bind<IDepartmanService>().To<DepartmanManager>().InSingletonScope();
@@ -53,6 +59,12 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IDBUsersService>().To<DBUsersManager>().InSingletonScope();
             Bind<IDBUsersSirketService>().To<DBUsersSirketManager>().InSingletonScope();
             Bind<IReaderSettingsService>().To<ReaderSettingsManager>().InSingletonScope();
+            Bind<IDBUsersPanelsService>().To<DBUsersPanelsManager>().InSingletonScope();
+            Bind<IDBUsersDepartmanService>().To<DBUsersDepartmanManager>().InSingletonScope();
+            Bind<IDoorNamesService>().To<DoorNamesManager>().InSingletonScope();
+
+
+
             /*Context*/
             Bind<DbContext>().To<ForaContext>();
         }

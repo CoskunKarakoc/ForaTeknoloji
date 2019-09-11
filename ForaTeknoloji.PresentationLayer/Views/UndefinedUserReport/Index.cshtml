@@ -277,6 +277,8 @@
             }, 500);
 
         });
+
+        //Tablodaki satıra tıklanıldığında resim gösterme
         $("#myTable tbody tr").click(function () {
             var kartID = $(this).children("td").data("kart");
             $("#change-image").attr('src', '/Images/' + kartID + '.jpg');

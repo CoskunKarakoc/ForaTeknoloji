@@ -15,5 +15,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         ReaderSettings AddreaderSettings(ReaderSettings readerSettings);
         void DeletereaderSettings(ReaderSettings readerSettings);
         ReaderSettings UpdatereaderSettings(ReaderSettings readerSettings);
+        List<ReaderSettings> GetReaderName(DBUsers kullaniciAdi);
     }
 }

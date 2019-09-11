@@ -52,38 +52,7 @@
                             <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="TümKapi" />
                             <label class="custom-control-label" for="TümKapi">Tüm Kapılar</label>
                         </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="1" name="Kapi" class="custom-control-input" id="Kapi1" />
-                            <label class="custom-control-label" for="Kapi1">Kapı 1</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="2" name="Kapi" class="custom-control-input" id="Kapi2" />
-                            <label class="custom-control-label" for="Kapi2">Kapı 2</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="3" name="Kapi" class="custom-control-input" id="Kapi3" />
-                            <label class="custom-control-label" for="Kapi3">Kapı 3</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="4" name="Kapi" class="custom-control-input" id="Kapi4" />
-                            <label class="custom-control-label" for="Kapi4">Kapı 4</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="5" name="Kapi" class="custom-control-input" id="Kapi5" />
-                            <label class="custom-control-label" for="Kapi5">Kapı 5</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="6" name="Kapi" class="custom-control-input" id="Kapi6" />
-                            <label class="custom-control-label" for="Kapi6">Kapı 6</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="7" name="Kapi" class="custom-control-input" id="Kapi7" />
-                            <label class="custom-control-label" for="Kapi7">Kapı 7</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="8" name="Kapi" class="custom-control-input" id="Kapi8" />
-                            <label class="custom-control-label" for="Kapi8">Kapı 8</label>
-                        </div>
+                        <div id="Kapilar"></div>
                     </div>
 
                     <div class="form-group">
@@ -174,14 +143,10 @@
 
                 </div>
                 <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="#" alt="Kayıtlı Fotoğraf" />
-                        </div>
-                        <div class="col-md-6">
-                            <img src="#" alt="Canlı Fotoğraf" />
-                        </div>
-                    </div>
+                    <img id="change-image" src="#" alt="Kayıtlı Fotoğraf" />
+                    <hr />
+                    <img id="change-image-canli" src="#" alt="Canlı Fotoğraf" />
+
                 </div>
             </div>
         }
@@ -190,7 +155,7 @@
 <div class="card mt-1 shadow-lg">
     <div class="card-body">
         <div id="print_div">
-            <table class="table table-hover text-center table-striped">
+            <table id="myTable" class="table table-hover text-center table-striped">
                 <thead class="table-info">
                     <tr>
                         <td>ID</td>
@@ -222,7 +187,7 @@
                         foreach (var item in Model.ComplexVisitorsListesi)
                         {
                             <tr>
-                                <td>@item.ID</td>
+                                <td data-kart="@item.Kart_ID">@item.ID</td>
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Ziyaretci_Adi</td>
                                 <td>@item.Ziyaretci_Soyadi</td>
@@ -313,6 +278,25 @@
 
 <script>
     $(function () {
+        $.ajax({
+            url: '/VisitorReport/KapiListesi',
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#Kapilar").html("");
+                for (var i in data) {
+                    $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                        + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
+                        + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
+                        + "</div>");
+                }
+            }, error: function () {
+                alert("Kapı Listesi Yüklenemedi");
+            }
+        });
+
+
         $("#TümKapi").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#Kapi1").attr("disabled", true);
@@ -430,30 +414,6 @@
             }, 500);
 
         });
-        $("#btnPrint").click(function () {
-            var contents = $("#print_div").html();
-            var frame1 = $('<iframe />');
-            frame1[0].name = "frame1";
-            frame1.css({ "position": "absolute" });
-            $("body").append(frame1);
-            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
-            frameDoc.document.open();
-            //Create a new HTML document.
-            frameDoc.document.write('<html><head><title>Ziyaretçi Listesi</title>');
-            frameDoc.document.write('</head><body>');
-            //Append the external CSS file.
-            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
-            //Append the DIV contents.
-            frameDoc.document.write(contents);
-            frameDoc.document.write('</body></html>');
-            frameDoc.document.close();
-            setTimeout(function () {
-                window.frames["frame1"].focus();
-                window.frames["frame1"].print();
-                frame1.remove();
-            }, 500);
-
-        });
         $("#Ziyaretci").focus(function () {
             $("#exampleModal").modal("show");
             $("#myTable tbody tr").click(function () {
@@ -466,7 +426,12 @@
             });
         });
 
-
+        //Tablodaki satıra tıklanıldığında resim gösterme
+        $("#myTable tbody tr").click(function () {
+            var kartID = $(this).children("td").data("kart");
+            $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
+            $("#change-image-canli").attr('src', '/Canli_Images/' + kartID + '.jpg');
+        });
 
         var today = new Date();
         $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));

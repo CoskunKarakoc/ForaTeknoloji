@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
 using System;
@@ -11,16 +12,32 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     public class OutherReportController : Controller
     {
         private IAccessDatasService _accessDatasService;
         private IPanelSettingsService _panelSettingsService;
         private IReportService _reportService;
-        public OutherReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService)
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDoorNamesService _doorNamesService;
+        List<int?> kullaniciyaAitPaneller = new List<int?>();
+        DBUsers user = new DBUsers();
+        public OutherReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _accessDatasService = accessDatasService;
             _panelSettingsService = panelSettingsService;
             _reportService = reportService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            _doorNamesService = doorNamesService;
+            kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
         }
 
 
@@ -28,7 +45,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index()
         {
             var liste = _reportService.GetDigerGecisListesi(null, null, null, null, null, null, null, null, 100, null);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var model = new DigerGecisRaporListViewModel
             {
                 DigerGecisListesi = liste,
@@ -48,7 +65,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
 
                 var listKulAlarm = _reportService.GetDigerGecisRaporListKullaniciAlarms(Kapi, Tümü, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, 26, KapiYon);
-                var panell = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+                var panell = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
                 var modelAlarm = new DigerGecisRaporAlarmListViewModel
                 {
                     DigerGecisListesiAlarm = listKulAlarm,
@@ -64,7 +81,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             else
             {
                 var liste = _reportService.GetDigerGecisListesi(Kapi, Tümü, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Tetikleme, KapiYon);
-                var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0);
+                var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
                 var model = new DigerGecisRaporListViewModel
                 {
                     DigerGecisListesi = liste,
@@ -86,6 +103,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             var nesne = TempData["DigerGecisAlarm"] as DigerGecisRaporAlarmListViewModel;
             return View(nesne);
+        }
+
+
+        public ActionResult KapiListesi()
+        {
+            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
         }
 
 
@@ -183,7 +207,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 rowStart++;
 
             }
-            worksheet.Cells[string.Format("A{0}", rowStart + 3)].Value = "Toplam Kayıt=" + lists.Count();
+            worksheet.Cells[string.Format("A{0}", rowStart + 3)].Value = "Toplam Kayıt=" + liste.Count();
             worksheet.Cells["A:AZ"].AutoFitColumns();
             Response.Clear();
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";

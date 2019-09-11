@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForaTeknoloji.PresentationL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForaTeknoloji.Entities", "ForaTeknoloji.Entities\ForaTeknoloji.Entities.csproj", "{3CDA063D-8FEB-43B9-A4FD-1A78147E5ACC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForaTeknoloji.Common", "ForaTeknoloji.Common\ForaTeknoloji.Common.csproj", "{8C6EAB79-5B9F-4438-A17D-7EB0CD321B47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3CDA063D-8FEB-43B9-A4FD-1A78147E5ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CDA063D-8FEB-43B9-A4FD-1A78147E5ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CDA063D-8FEB-43B9-A4FD-1A78147E5ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6EAB79-5B9F-4438-A17D-7EB0CD321B47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6EAB79-5B9F-4438-A17D-7EB0CD321B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6EAB79-5B9F-4438-A17D-7EB0CD321B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6EAB79-5B9F-4438-A17D-7EB0CD321B47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

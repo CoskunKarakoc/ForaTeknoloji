@@ -13,9 +13,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
     public class ReaderSettingsManager : IReaderSettingsService
     {
         private IReaderSettingDal _readerSettingDal;
-        public ReaderSettingsManager(IReaderSettingDal readerSettingDal)
+        private IDBUsersPanelsDal _dbUsersPanelsDal;
+        public ReaderSettingsManager(IReaderSettingDal readerSettingDal, IDBUsersPanelsDal dBUsersPanelsDal)
         {
             _readerSettingDal = readerSettingDal;
+            _dbUsersPanelsDal = dBUsersPanelsDal;
         }
         public ReaderSettings AddreaderSettings(ReaderSettings readerSettings)
         {
@@ -35,6 +37,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public ReaderSettings GetById(int id)
         {
             return _readerSettingDal.Get(x => x.Kayit_No == id);
+        }
+
+        public List<ReaderSettings> GetReaderName(DBUsers kullaniciAdi)
+        {
+            var liste = _dbUsersPanelsDal.GetList(x => x.Kullanici_Adi == kullaniciAdi.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+            return _readerSettingDal.GetList(x => liste.Contains(x.Panel_ID));
         }
 
         public ReaderSettings UpdatereaderSettings(ReaderSettings readerSettings)

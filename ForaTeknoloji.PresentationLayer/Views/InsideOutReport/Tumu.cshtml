@@ -14,7 +14,7 @@
         {
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
                         <div class="custom-control custom-radio">
                             <input type="radio" value="Lokal" class="custom-control-input" id="lokal" checked name="Bolge">
@@ -36,26 +36,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Panel Listesi</label>
+                        <label for="Paneller">Paneller</label>
                         @Html.DropDownListFor(model => model.Paneller, Model.Paneller, "Panel Seçimi", new { @class = "form-control" })
                     </div>
-                </div>
-                <div class="col-md-3">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Panel Çıkış Kapı No</label>
+                        <label for="reader">Okuyucular</label>
                         <select class="form-control" id="reader"></select>
                     </div>
                 </div>
-                <div class="col-md-3">
 
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect2">Global Kapı Bölgesi</label>
+                        <label for="Global_Bolge_Adi">Global Bölge Adı</label>
                         @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
                     </div>
-
+                    <div class="form-group">
+                        <label for="readerCikis">Panel Çıkış Kapı No</label>
+                        <select class="form-control" id="readerCikis">
+                            <option>Panel Çıkış Kapı No</option>
+                        </select>
+                    </div>
                 </div>
+
                 <div class="col-md-12">
                     <br />
                     <br />
@@ -120,7 +124,9 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="11"><input type="submit" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" /></td>
+                    <td colspan="11">
+                        <input type="submit" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" />
+                    </td>
                 </tr>
             </tfoot>
         </table>
@@ -155,8 +161,10 @@
 
         });
         $("#Global_Bolge_Adi").attr("disabled", true);
+        var sonuc = $("#Paneller").val();
         $("#Paneller").change(function () {
-            var panelid = $(this).val();
+            //var panelid = $(this).val();
+            var panelid = sonuc;
             if (panelid == 0 || panelid < 0 || panelid == "") {
                 $("#reader").html("");
             }
@@ -167,7 +175,195 @@
                 data: { Paneller: panelid },
                 success: function (data) {
                     $("#reader").html("");
-                    $.each(data, function (index,value) {
+                    $("#readerCikis").html("");
+
+                    $.each(data, function (index, value) {
+                        if (value.WKapi1_Kapi_Tipi != null) {
+                            if (value.WKapi1_Kapi_Tipi==2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi1_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi1_Adi + '</option>');
+
+                        } else {
+                            $("#readerCikis").append('<option value=' + 1 + '> Kapı 1</option>');
+                            if (value.WKapi1_Kapi_Tipi==2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi1_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi2_Kapi_Tipi != null) {
+                            if (value.WKapi2_Kapi_Tipi ==2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi2_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi2_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 2</option>');
+                            if (value.WKapi2_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi2_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi3_Kapi_Tipi != null) {
+                            if (value.WKapi3_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi3_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi3_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 3</option>');
+                            if (value.WKapi3_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi3_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi4_Kapi_Tipi != null) {
+                            if (value.WKapi4_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi4_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi4_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 4</option>');
+                            if (value.WKapi4_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi4_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi5_Kapi_Tipi != null) {
+                            if (value.WKapi5_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi5_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi5_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 5</option>');
+                            if (value.WKapi5_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi5_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi6_Kapi_Tipi != null) {
+                            if (value.WKapi6_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi6_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi6_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 6</option>');
+                            if (value.WKapi6_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi6_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi7_Kapi_Tipi != null) {
+                            if (value.WKapi7_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi7_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi7_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 7</option>');
+                            if (value.WKapi7_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi7_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi8_Kapi_Tipi != null) {
+                            if (value.WKapi8_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi8_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi8_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 8</option>');
+                            if (value.WKapi8_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi8_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi9_Kapi_Tipi != null) {
+                            if (value.WKapi9_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi9_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi9_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 9</option>');
+                            if (value.WKapi9_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi9_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi10_Kapi_Tipi != null) {
+                            if (value.WKapi10_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi10_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi10_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 10</option>');
+                            if (value.WKapi10_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi10_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi11_Kapi_Tipi != null) {
+                            if (value.WKapi11_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi11_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi11_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 11</option>');
+                            if (value.WKapi11_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi11_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi12_Kapi_Tipi != null) {
+                            if (value.WKapi12_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi12_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi12_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 12</option>');
+                            if (value.WKapi12_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi12_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi13_Kapi_Tipi != null) {
+                            if (value.WKapi13_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi13_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi13_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 13</option>');
+                            if (value.WKapi13_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi13_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi14_Kapi_Tipi != null) {
+                            if (value.WKapi14_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi14_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi14_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 14</option>');
+                            if (value.WKapi14_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi14_Adi + '</option>');
+                            }
+                        }
+                        if (value.WKapi15_Kapi_Tipi != null) {
+                            if (value.WKapi15_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi15_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi15_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 15</option>');
+                            if (value.WKapi15_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi15_Adi + '</option>');
+                            }
+                        }
+
+                        if (value.WKapi16_Kapi_Tipi != null) {
+                            if (value.WKapi16_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi16_Adi + '</option>');
+                            }
+                            $("#readerCikis").append('<option value=' + 2 + '>' + value.WKapi16_Adi + '</option>');
+                        } else {
+                            $("#readerCikis").append('<option value=' + 2 + '> Kapı 16</option>');
+                            if (value.WKapi16_Kapi_Tipi == 2) {
+                                $("#readerCikis").append('<option value=' + 1 + '>' + value.WKapi16_Adi + '</option>');
+                            }
+                        }
+
+
+
+
+
+
+
+
                         if (value.WKapi1_Lokal_Bolge != 0) {
 
                             $('#reader').append('<option value=' + value.WKapi1_Lokal_Bolge + '>' + value.WKapi1_Adi + '</option>')
@@ -271,9 +467,17 @@
             }
 
         });
+        $("#Out").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#readerCikis").attr("disabled", true);
+            } 
+        });
 
-
-
+        $("#In").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#readerCikis").attr("disabled", false);
+            }
+        });
 
 
 

@@ -1,5 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
 using System;
@@ -10,6 +12,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     public class GelenGelmeyenReportController : Controller
     {
         private IUserService _userService;
@@ -19,6 +22,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IVisitorsService _visitorsService;
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
+        public DBUsers user = new DBUsers();
         public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService)
         {
             _userService = userService;
@@ -28,6 +32,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _visitorsService = visitorsService;
             _globalZoneService = globalZoneService;
             _reportService = reportService;
+
+
+            user = CurrentSession.User;
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
         }
 
 
@@ -37,9 +46,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Gelenler()
         {
             var nesne = _reportService.GelenGelmeyen_Gelenlers(null, null, null, null, null);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var model = new GelenGelmeyen_GelenlerListViewModel
             {
@@ -72,9 +81,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Gelenler(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
         {
             var nesne = _reportService.GelenGelmeyen_Gelenlers(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var model = new GelenGelmeyen_GelenlerListViewModel
             {
@@ -108,7 +117,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Gelmeyenler()
         {
             var nesne = _reportService.GelenGelmeyen_Gelmeyens(null, null, null, null, null);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -143,7 +152,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Gelmeyenler(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
         {
             var nesne = _reportService.GelenGelmeyen_Gelmeyens(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -179,7 +188,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult PasifKullanici()
         {
             var nesne = _reportService.GelenGelmeyen_PasifKullanicis(null, null, null, null, DateTime.Now, 45);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -215,7 +224,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult PasifKullanici(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih, double? Fark)
         {
             var nesne = _reportService.GelenGelmeyen_PasifKullanicis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih, Fark);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -252,7 +261,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult ToplamIcerdeKalma()
         {
             var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(null, null, null, null, null, DateTime.Now, DateTime.Now);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -290,7 +299,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult ToplamIcerdeKalma(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
         {
             var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -328,7 +337,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult IlkGirisSonCikis()
         {
             var nesne = _reportService.GelenGelmeyen_IlkGirisSonCikis(null, null, null, null, null, DateTime.Now, DateTime.Now);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -365,7 +374,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult IlkGirisSonCikis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
         {
             var nesne = _reportService.GelenGelmeyen_IlkGirisSonCikis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
-            var sirketler = _sirketService.GetAllSirketler();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
