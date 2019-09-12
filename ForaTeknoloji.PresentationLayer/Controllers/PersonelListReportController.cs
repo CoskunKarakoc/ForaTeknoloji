@@ -25,9 +25,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGlobalZoneService _globalZoneService;
         private IGroupMasterService _groupMasterService;
         private IReportService _reportService;
-        public DBUsers user = new DBUsers();
+        public DBUsers user;
         public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupsDetailService groupsDetailService, ISirketService sirketService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IReportService reportService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _userService = userService;
             _departmanService = departmanService;
             _bloklarService = bloklarService;
@@ -36,7 +41,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _globalZoneService = globalZoneService;
             _groupMasterService = groupMasterService;
             _reportService = reportService;
-            user = CurrentSession.User;
+
         }
         // GET: PersonelListReport
         public ActionResult Index()
@@ -84,6 +89,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 })
 
             };
+            TempData["dataGrid"] = personelLists;
             return View(model);
         }
 
@@ -134,7 +140,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 })
 
             };
-
+            TempData["dataGrid"] = personelLists;
             TempData["PersonelLists"] = personelLists;
             return View(model);
         }

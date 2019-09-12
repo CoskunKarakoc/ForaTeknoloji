@@ -12,7 +12,8 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
-    [Auth]
+
+    [Auth]//Authentication İçin Yazılmış Filtre
     public class OutherReportController : Controller
     {
         private IAccessDatasService _accessDatasService;
@@ -21,7 +22,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
-        DBUsers user = new DBUsers();
+        DBUsers user;
         public OutherReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
             user = CurrentSession.User;
@@ -36,8 +37,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _doorNamesService = doorNamesService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
 
-            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
-            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);//Account olan kullanıcının panel listeleme metoduna kullanıcı gönderiliyor 
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);//Account olan kullanıcının şirket listeleme metoduna kullanıcı gönderiliyor
         }
 
 
@@ -57,6 +58,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             };
             return View(model);
         }
+        // POST: OutherReport
         [HttpPost]
         public ActionResult Index(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, int Tetikleme, string KapiYon = "")
         {
@@ -106,12 +108,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        //Veritabanındaki DoorNames Tablosundan Kapılar Çekiliyor
         public ActionResult KapiListesi()
         {
             var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
             return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
         }
-
 
 
         //Export Excell

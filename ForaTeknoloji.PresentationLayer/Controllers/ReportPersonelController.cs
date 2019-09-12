@@ -29,7 +29,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
-        DBUsers user = new DBUsers();
+        DBUsers user;
         public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IGroupsDetailService groupsDetailService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
             user = CurrentSession.User;
@@ -106,6 +106,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
             };
+            TempData["reportListe"] = liste;
             return View(model);
 
         }
@@ -162,6 +163,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
             };
+            TempData["reportListe"] = liste;
             TempData["ReportPersonel"] = liste;
             return View(model);
 
@@ -179,8 +181,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult KapiListesi()
         {
-            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a=>a.Panel_No).ToList();
-            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)),JsonRequestBehavior.AllowGet);
+            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
         }
 
         //EXCELL EXPORT

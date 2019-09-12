@@ -23,7 +23,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
-        DBUsers user = new DBUsers();
+        DBUsers user;
         public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
             user = CurrentSession.User;
@@ -138,7 +138,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
-
+        //DoorNames Tablosundan Ajax ile Kapılar Çekiliyor JQuery ile Ekrana Basılıyor 
         public ActionResult KapiListesi()
         {
             var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();

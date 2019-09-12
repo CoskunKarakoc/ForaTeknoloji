@@ -22,9 +22,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IVisitorsService _visitorsService;
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
-        public DBUsers user = new DBUsers();
+        public DBUsers user;
         public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
+
             _userService = userService;
             _departmanService = departmanService;
             _sirketService = sirketService;
@@ -34,7 +40,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService = reportService;
 
 
-            user = CurrentSession.User;
+
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
         }

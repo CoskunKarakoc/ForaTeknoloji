@@ -261,8 +261,8 @@
             type: 'GET',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            succuess: function (data) {
-                console.log(data);
+            success: function (data) {
+                console.log(data); 
                 $("#Kapilar").html("");
                 for (var i in data) {
                     $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
@@ -273,7 +273,6 @@
             }, error: function () {
                 alert("Kapı Listesi Yüklenemedi");
             }
-
         });
 
 

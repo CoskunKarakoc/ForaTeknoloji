@@ -23,14 +23,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReaderSettingsService _readerSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
+        DBUsers user;
         public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
 
-            DBUsers user = CurrentSession.User;
+            user = CurrentSession.User;
             if (user == null)
             {
                 user = new DBUsers();
             }
+
             _visitorsService = visitorsService;
             _panelSettingsService = panelSettingsService;
             _groupsDetailService = groupsDetailService;
@@ -198,6 +200,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
+
+        //Seçilen Kullanıcılar AccessDatas'a yeniden Geçiş Tipi 1 Olacak Şekilde Kaydediliyor
         public ActionResult ManuelCikis(List<int> Kayit_No)
         {
             if (Kayit_No != null)
@@ -217,7 +221,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(nesne, JsonRequestBehavior.AllowGet);
         }
 
-       
+
 
 
 
@@ -233,7 +237,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi";
+            worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi-Ziyaretçi";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Kart ID";
@@ -243,6 +247,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Tarih";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
+            worksheet.Cells["E6"].Style.Numberformat.Format = "dd/MM/yy hh:MM:ss";
             int rowStart = 7;
             foreach (var item in liste)
             {
@@ -276,7 +281,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi";
+            worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi-Personel";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Kayıt No";
@@ -290,6 +295,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Geçiş";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
+            worksheet.Cells["E6"].Style.Numberformat.Format = "dd/MM/yy hh:MM:ss";
             int rowStart = 7;
             foreach (var item in liste)
             {
@@ -328,7 +334,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi";
+            worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi-Tümü";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
@@ -343,6 +349,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["J6"].Value = "Tarih";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
+            worksheet.Cells["I6"].Style.Numberformat.Format = "dd/MM/yy hh:MM:ss";
+            worksheet.Cells["J6"].Style.Numberformat.Format = "dd/MM/yy hh:MM:ss";
             int rowStart = 7;
             foreach (var item in liste)
             {

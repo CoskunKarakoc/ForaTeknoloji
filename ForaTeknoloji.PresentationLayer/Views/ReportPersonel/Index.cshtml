@@ -1,4 +1,6 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.ReportPersonelViewModel
+@using GridMvc.Html;
+@using ForaTeknoloji.Entities.ComplexType
 @{
     ViewBag.Title = "Personel Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -208,6 +210,26 @@
 <div class="card mt-1 shadow-lg">
     <div class="card-body">
         <div id="print_div">
+            @*@Html.Grid(TempData["reportListe"] as List<ReportPersonelList>).Columns(column =>
+        {
+            column.Add(x => x.ID);
+            column.Add(x => x.Kart_ID);
+            column.Add(x => x.Adi);
+            column.Add(x => x.Soyadi);
+            column.Add(x => x.TCKimlik);
+            column.Add(x => x.SirketAdi);
+            column.Add(x => x.DepartmanAdi);
+            column.Add(x => x.Plaka);
+            column.Add(x => x.BlokAdi);
+            column.Add(x => x.Daire);
+            column.Add(x => x.Grup_Adi);
+            column.Add(x => x.Panel_ID);
+            column.Add(x => x.Kapi_ID);
+            column.Add(x => x.Gecis_Tipi);
+            column.Add(x => x.Tarih);
+
+        }).Sortable(true).SetLanguage("tr").WithPaging(10);*@
+            
             <table id="myTable" class="table-borderless table table-hover text-center table-striped">
                 <thead class="table-info">
                     <tr>

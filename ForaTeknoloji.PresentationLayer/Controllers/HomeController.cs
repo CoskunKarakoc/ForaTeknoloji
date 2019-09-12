@@ -19,6 +19,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersService = dBUsersService;
 
         }
+
         [Auth]
         // GET: Home
         public ActionResult Index()
@@ -27,12 +28,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View();
         }
 
-
+        //GET:Login
         public ActionResult Login()
         {
             return View();
         }
 
+        //POST: Login
         [HttpPost]
         public ActionResult Login(LoginViewModel login)
         {
@@ -50,6 +52,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return View(login);
         }
+        //Çıkış Action'u
         public ActionResult Logout()
         {
             Session.Clear();

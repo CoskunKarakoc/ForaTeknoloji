@@ -18,10 +18,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IReportService _reportService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDoorNamesService _doorNamesService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
-        public UndefinedUserReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService)
+        DBUsers user;
+        public UndefinedUserReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
-            DBUsers user = CurrentSession.User;
+            user = CurrentSession.User;
             if (user == null)
             {
                 user = new DBUsers();
@@ -30,6 +32,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _reportService = reportService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _doorNamesService = doorNamesService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
 
         }
@@ -66,6 +69,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             TempData["Tanimsiz"] = liste;
             return View(model);
         }
+
+
+
+
+        //DoorNames Tablosundan Ajax ile Kapılar Çekiliyor JQuery ile Ekrana Basılıyor 
+        public ActionResult KapiListesi()
+        {
+            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
+        }
+
+
         //Export Excell
         public void TanimsizKullaniciListesi()
         {
