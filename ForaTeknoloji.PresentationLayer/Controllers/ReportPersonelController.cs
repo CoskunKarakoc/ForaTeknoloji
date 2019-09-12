@@ -169,17 +169,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
-        public ActionResult AktifZiyaretciler()
+        public ActionResult AktifZiyaretciler()//Popup'a Aktif Kulanıcı Yükleniyor
         {
             return Json(_userService.GetAllUsers().OrderBy(x => x.Kayit_No), JsonRequestBehavior.AllowGet);
-
         }
-        public ActionResult EskiZiyaretciler()
+
+        public ActionResult EskiZiyaretciler()//Popup'a Eski Kullanıcı Yükleniyor
         {
             return Json(_usersOLDService.GetAllUsersOLD().OrderBy(x => x.Kayit_No), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult KapiListesi()
+        public ActionResult KapiListesi()//Kullanıcıya ait olan panellerin kapıları listeleniyor
         {
             var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
             return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);

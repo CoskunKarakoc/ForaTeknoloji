@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Personel Listesi Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model.PersonelListesi,rowsPerPage:2);
 }
 <div class="card mt-2 shadow-lg">
     <div class="card-header-tabs mt-1">
@@ -72,76 +73,93 @@
 <div class="card shadow-lg mt-2 mb-1">
 
     <div id="print_div" class="card-body">
+        @webGrid.GetHtml(
+                 htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                 columns: webGrid.Columns(
+                     webGrid.Column("ID", "ID"),
+                     webGrid.Column("Kart_ID", "Kart ID"),
+                     webGrid.Column("Adi", "Adı"),
+                     webGrid.Column("Soyadi", "Soyadı"),
+                     webGrid.Column("TCKimlik", "TC Kimlik"),
+                     webGrid.Column("SirketAdi", "Şirket"),
+                     webGrid.Column("DepartmanAdi", "Departman"),
+                     webGrid.Column("Plaka", "Plaka"),
+                     webGrid.Column("BlokAdi", "Blok"),
+                     webGrid.Column("Daire", "Daire"),
+                     webGrid.Column("Grup_Adi", "Grup")))
 
-        <table class="table-borderless table table-hover text-center table-striped ">
-            <thead class="table-info">
-                <tr>
-                    <td>ID</td>
-                    <td>Kart ID</td>
-                    <td>Adı</td>
-                    <td>Soyadı</td>
-                    <td>Tc Kimlik No</td>
-                    <td>Şirket</td>
-                    <td>Departman</td>
-                    <td>Plaka</td>
-                    <td>Blok</td>
-                    <td>Daire</td>
-                    <td>Geçiş Grubu</td>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.PersonelListesi.Count == 0)
-                {
+
+
+
+        @*<table class="table-borderless table table-hover text-center table-striped ">
+                <thead class="table-info">
                     <tr>
-                        <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                        <td>ID</td>
+                        <td>Kart ID</td>
+                        <td>Adı</td>
+                        <td>Soyadı</td>
+                        <td>Tc Kimlik No</td>
+                        <td>Şirket</td>
+                        <td>Departman</td>
+                        <td>Plaka</td>
+                        <td>Blok</td>
+                        <td>Daire</td>
+                        <td>Geçiş Grubu</td>
                     </tr>
-                }
-                else
-                {
-
-                    foreach (var item in Model.PersonelListesi)
+                </thead>
+                <tbody>
+                    @if (Model.PersonelListesi.Count == 0)
                     {
-
                         <tr>
-                            <td>@item.ID</td>
-                            <td>@item.Kart_ID</td>
-                            <td>@item.Adi</td>
-                            <td>@item.Soyadi</td>
-                            @if (item.TCKimlik == null)
-                            {
-                                <td>Null</td>
-                            }
-                            else
-                            {
-                                <td>@item.TCKimlik</td>
-                            }
-                            @if (item.SirketAdi == null)
-                            {
-                                <td>Null</td>
-                            }
-                            else
-                            {
-                                <td>@item.SirketAdi</td>
-                            }
-                            @if (item.DepartmanAdi == null)
-                            {
-                                <td>Null</td>
-                            }
-                            else
-                            {
-
-                                <td>@item.DepartmanAdi</td>
-                            }
-                            <td>@item.Plaka</td>
-                            <td>@item.BlokAdi</td>
-                            <td>@item.Daire</td>
-                            <td>@item.Grup_Adi</td>
-
+                            <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
                         </tr>
                     }
-                }
-            </tbody>
-        </table>
+                    else
+                    {
+
+                        foreach (var item in Model.PersonelListesi)
+                        {
+
+                            <tr>
+                                <td>@item.ID</td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                @if (item.TCKimlik == null)
+                                {
+                                    <td>Null</td>
+                                }
+                                else
+                                {
+                                    <td>@item.TCKimlik</td>
+                                }
+                                @if (item.SirketAdi == null)
+                                {
+                                    <td>Null</td>
+                                }
+                                else
+                                {
+                                    <td>@item.SirketAdi</td>
+                                }
+                                @if (item.DepartmanAdi == null)
+                                {
+                                    <td>Null</td>
+                                }
+                                else
+                                {
+
+                                    <td>@item.DepartmanAdi</td>
+                                }
+                                <td>@item.Plaka</td>
+                                <td>@item.BlokAdi</td>
+                                <td>@item.Daire</td>
+                                <td>@item.Grup_Adi</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>*@
     </div>
 
 </div>

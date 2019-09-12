@@ -64,7 +64,6 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IDoorNamesService>().To<DoorNamesManager>().InSingletonScope();
 
 
-
             /*Context*/
             Bind<DbContext>().To<ForaContext>();
         }

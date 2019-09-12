@@ -42,10 +42,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _groupMasterService = groupMasterService;
             _reportService = reportService;
 
+
         }
+
+
+
         // GET: PersonelListReport
         public ActionResult Index()
         {
+
             var personelLists = _reportService.GetPersonelLists(null, null, null, null, null, null, null);
             var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
@@ -96,6 +101,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]
         public ActionResult Index(int? Sirketler, int? Departmanlar, int? Bloklar, int? Groupsdetail, int? Global_Bolge_Adi, int? Daire, string Plaka = "")
         {
+
             var personelLists = _reportService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
             var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
@@ -144,6 +150,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             TempData["PersonelLists"] = personelLists;
             return View(model);
         }
+
+
 
 
 
