@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Ziyaretci";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model.ZiyaretciListesi, rowsPerPage: 20);
 }
 
 <div class="card mt-2 shadow-lg">
@@ -9,7 +10,7 @@
         <h3 class="text-center text-muted">İçerdekiler-Dışardakiler Ziyaretçi</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Ziyaretci", "InsideOutReport"))
+        @using (Html.BeginForm("Ziyaretci", "InsideOutReport", FormMethod.Get))
         {
 
             <div class="row">
@@ -79,43 +80,61 @@
     </div>
 </div>
 <div class="card mt-2 shadow-lg">
-    <div id="print_div" class="card-body">
-        @using (Html.BeginForm("ManuelCikis", "InsideOutReport", FormMethod.Post))
-        {
-            <table class="table table-hover text-center table-sm table-striped">
-                <thead class="table-info">
-                    <tr>
-                        <td>Seçim</td>
-                        <td>Kart ID</td>
-                        <td>Adı</td>
-                        <td>Soyadı</td>
-                        <td>Ziyaret Sebebi</td>
-                        <td>Tarih</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.ZiyaretciListesi)
-                    {
+
+    @using (Html.BeginForm("ManuelCikis", "InsideOutReport", FormMethod.Post))
+    {
+        <div id="print_div" class="card-body">
+
+            @webGrid.GetHtml(
+                htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                columns: webGrid.Columns(
+                    webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
+                         webGrid.Column("Kart_ID", "Kart ID"),
+                         webGrid.Column("Adi", "Adı"),
+                         webGrid.Column("Soyadi", "Soyadı"),
+                         webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
+                         webGrid.Column("Tarih", "Tarih")))
+
+
+            @*<table class="table table-hover text-center table-sm table-striped">
+                    <thead class="table-info">
                         <tr>
-                            <td><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></td>
-                            <td>@item.Kart_ID</td>
-                            <td>@item.Adi</td>
-                            <td>@item.Soyadi</td>
-                            <td>@item.Ziyaret_Sebebi</td>
-                            <td>@item.Tarih</td>
+                            <td>Seçim</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Ziyaret Sebebi</td>
+                            <td>Tarih</td>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ZiyaretciListesi)
+                        {
+                            <tr>
+                                <td><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                <td>@item.Ziyaret_Sebebi</td>
+                                <td>@item.Tarih</td>
+                            </tr>
+                        }
 
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6"><input type="submit" id="CikisVer" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" /></td>
-                    </tr>
-                </tfoot>
-            </table>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6"><input type="submit" id="CikisVer" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" /></td>
+                        </tr>
+                    </tfoot>
+                </table>*@
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <input type="submit" id="CikisVer" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" />
+            </div>
+        </div>
+    }
 
-        }
-    </div>
 </div>
 
 <script>

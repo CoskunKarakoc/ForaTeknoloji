@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,9 +27,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _usersOLDDal.Delete(usersOLD);
         }
 
-        public List<UsersOLD> GetAllUsersOLD()
+        public List<UsersOLD> GetAllUsersOLD(Expression<Func<UsersOLD, bool>> filter = null)
         {
-            return _usersOLDDal.GetList();
+            return filter == null ? _usersOLDDal.GetList() : _usersOLDDal.GetList(filter);
         }
 
         public UsersOLD GetById(int id)

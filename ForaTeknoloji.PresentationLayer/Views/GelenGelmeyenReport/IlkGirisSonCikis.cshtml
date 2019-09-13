@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "İlk Giriş Son Çıkış";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model.IlkGirisSonCikis, rowsPerPage: 2);
 }
 
 <div class="card shadow-lg mt-2">
@@ -9,7 +10,7 @@
         <h3 class="text-muted text-center">İlk Giriş Son Çıkış</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("IlkGirisSonCikis", "GelenGelmeyenReport"))
+        @using (Html.BeginForm("IlkGirisSonCikis", "GelenGelmeyenReport", FormMethod.Get))
         {
 
             <div class="row">
@@ -89,7 +90,29 @@
                 <div class="col-md-12">
 
                     <div id="print_div" class="mt-4">
-                        <table class="table-borderless table table-hover text-center table-striped ">
+
+                        @webGrid.GetHtml(
+           htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+           columns: webGrid.Columns(
+               webGrid.Column("ID", "ID"),
+               webGrid.Column("Kart_ID", "Kart ID"),
+               webGrid.Column("Adi", "Adı"),
+               webGrid.Column("Soyadi", "Soyadı"),
+               webGrid.Column("TCKimlik", "TC Kimlik"),
+               webGrid.Column("SirketAdi", "Şirket"),
+               webGrid.Column("DepartmanAdi", "Departman"),
+               webGrid.Column("Grup_Adi", "Grup No"),
+               webGrid.Column("Tarih_Degeri", "Tarih Değeri"),
+               webGrid.Column("Ilk_Kayit", "İlk Kayıt"),
+               webGrid.Column("Son_Kayit", "Son Kayıt"),
+               webGrid.Column("Fark", "Fark")))
+
+
+
+
+
+
+                        @*<table class="table-borderless table table-hover text-center table-striped ">
                             <thead class="table-info">
                                 <tr>
                                     <td>ID</td>
@@ -132,7 +155,7 @@
                                     }
                                 }
                             </tbody>
-                        </table>
+                        </table>*@
                     </div>
 
 

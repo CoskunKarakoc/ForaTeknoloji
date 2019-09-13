@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Tanımsız Kullanıcı";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    WebGrid webGrid = new WebGrid(source: Model.Liste, rowsPerPage: 20);
 }
 
 <div class="card shadow-lg mt-3">
@@ -12,7 +14,7 @@
         <div class="row">
 
             <div class="col-md-6">
-                @using (Html.BeginForm("Index", "UndefinedUserReport", FormMethod.Post))
+                @using (Html.BeginForm("Index", "UndefinedUserReport", FormMethod.Get))
                 {
 
                     <div class="row">
@@ -105,47 +107,63 @@
 </div>
 <div class="card mt-1 shadow-lg">
     <div id="print_div" class="card-body">
-        <table id="myTable" class="table-borderless table table table-striped text-center  table-hover">
-            <thead class="table-info">
-                <tr>
-                    <td>Kart ID</td>
-                    <td>Panel</td>
-                    <td>Kapı</td>
-                    <td>Geçiş</td>
-                    <td>Tarih</td>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Liste.Count == 0)
-                {
-                    <tr>
-                        <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
-                    </tr>
-                }
-                else
-                {
-                    foreach (var item in Model.Liste)
-                    {
-                        <tr class="deneme">
-                            <td data-kart="@item.Kart_ID">@item.Kart_ID</td>
-                            <td>@item.Panel_ID</td>
-                            <td>@item.Kapi_ID</td>
-                            @if (item.Gecis_Tipi == 0)
-                            {
+        @webGrid.GetHtml(
+                 htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                 columns: webGrid.Columns(
+                     webGrid.Column(null,null,format:@<text><td hidden data-kart="@item.Kart_ID"></td></text>),
+                             webGrid.Column("Kart_ID", "Kart ID"),
+                             webGrid.Column("Panel_ID", "Panel"),
+                             webGrid.Column("Kapi_ID", "Kapı"),
+                             webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+                             webGrid.Column("Tarih", "Tarih")))
 
-                                <td>Giriş</td>
-                            }
-                            else
-                            {
-                                <td>Çıkış</td>
-                            }
-                            <td>@item.Tarih</td>
+
+
+
+
+
+
+        @*<table id="myTable" class="table-borderless table table table-striped text-center  table-hover">
+                <thead class="table-info">
+                    <tr>
+                        <td>Kart ID</td>
+                        <td>Panel</td>
+                        <td>Kapı</td>
+                        <td>Geçiş</td>
+                        <td>Tarih</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Liste.Count == 0)
+                    {
+                        <tr>
+                            <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
                         </tr>
                     }
-                }
+                    else
+                    {
+                        foreach (var item in Model.Liste)
+                        {
+                            <tr class="deneme">
+                                <td data-kart="@item.Kart_ID">@item.Kart_ID</td>
+                                <td>@item.Panel_ID</td>
+                                <td>@item.Kapi_ID</td>
+                                @if (item.Gecis_Tipi == 0)
+                                {
 
-            </tbody>
-        </table>
+                                    <td>Giriş</td>
+                                }
+                                else
+                                {
+                                    <td>Çıkış</td>
+                                }
+                                <td>@item.Tarih</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>*@
 
     </div>
 </div>
@@ -260,11 +278,20 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $("#Kapilar").html("");
-                for (var i in data) {
-                    $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-                        + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
-                        + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
-                        + "</div>");
+                if (data.length == 0 || data.length < 0) {
+                    for (var i = 1; i < 9; i++) {
+                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                            + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
+                            + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " +i + "</label>"
+                            + "</div>");
+                    }
+                } else {
+                    for (var i in data) {
+                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                            + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
+                            + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
+                            + "</div>");
+                    }
                 }
             },
             error: function () {

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,9 +30,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _userDal.Delete(users);
         }
 
-        public List<Users> GetAllUsers()
+        public List<Users> GetAllUsers(Expression<Func<Users, bool>> filter = null)
         {
-            return _userDal.GetList();
+            return filter == null ? _userDal.GetList() : _userDal.GetList(filter);
         }
 
         public Users GetById(int id)

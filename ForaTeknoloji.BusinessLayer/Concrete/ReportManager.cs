@@ -1,4 +1,4 @@
-﻿     using ForaTeknoloji.BusinessLayer.Abstract;
+﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.DataAccessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
@@ -600,8 +600,17 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
-            string queryString = "SELECT AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi,Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman,GroupsMaster.[Grup Adi] AS Grup, CONVERT(VARCHAR(10), AccessDatas.Tarih, 103) AS [Tarih Değeri], MIN(AccessDatas.Tarih) AS [İlk Kayıt], MAX(AccessDatas.Tarih) AS [Son Kayıt],CAST((MAX(AccessDatas.Tarih)-MIN(AccessDatas.Tarih)) as time(0)) AS Fark  FROM (AccessDatas LEFT JOIN (((Users LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No])LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) ON AccessDatas.ID = Users.ID)LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod = 1 ";
-            //queryString += "AND Sirketler.[Sirket No] IN(10000," + GetSirketNo() + ")";
+            string queryString = "SELECT AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi, "
+                   + " Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman,"
+                   + " GroupsMaster.[Grup Adi] AS Grup, CONVERT(VARCHAR(10), AccessDatas.Tarih, 103) AS[Tarih Değeri],"
+                   + " MIN(AccessDatas.Tarih) AS[İlk Kayıt], MAX(AccessDatas.Tarih) AS[Son Kayıt], "
+                   + " CAST((MAX(AccessDatas.Tarih) - MIN(AccessDatas.Tarih)) as time(0)) AS Fark"
+                   + " FROM(AccessDatas LEFT JOIN(((Users LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No])"
+                   + " LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])"
+                   + " LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) ON AccessDatas.ID = Users.ID) "
+                   + " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]"
+                   + " WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod = 1";
+            queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             if (UserID != null)
             {
                 queryString += " AND AccessDatas.ID =" + UserID;
@@ -631,9 +640,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + Tarih1?.Date.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
                 queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + Tarih2?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
-                queryString += " GROUP BY AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi,Sirketler.Adi, Departmanlar.Adi, GroupsMaster.[Grup Adi], CONVERT(VARCHAR(10), AccessDatas.Tarih, 103)";
-                queryString += " ORDER BY AccessDatas.ID";
+
             }
+            queryString += " GROUP BY AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi,Sirketler.Adi, Departmanlar.Adi, GroupsMaster.[Grup Adi], CONVERT(VARCHAR(10), AccessDatas.Tarih, 103)";
+            queryString += " ORDER BY AccessDatas.ID";
 
             List<GelenGelmeyen_IlkGirisSonCikis> liste = new List<GelenGelmeyen_IlkGirisSonCikis>();
             using (SqlConnection connection = new SqlConnection(address))
@@ -1498,7 +1508,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             else
             {
-                
+
                 if (Global_Bolge_Adi == null)
                 {
                     Global_Bolge_Adi = 1;

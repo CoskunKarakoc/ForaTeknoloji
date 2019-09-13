@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Personel Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model.ReportPersonel, rowsPerPage: 20);
 }
 
 <div class="card mt-1 shadow-lg">
@@ -11,7 +12,7 @@
         <h3 class="text-center text-muted">Personel Raporları</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Index", "ReportPersonel", FormMethod.Post))
+        @using (Html.BeginForm("Index", "ReportPersonel", FormMethod.Get))
         {
 
             <div class="row">
@@ -211,85 +212,109 @@
     <div class="card-body">
         <div id="print_div">
             @*@Html.Grid(TempData["reportListe"] as List<ReportPersonelList>).Columns(column =>
-        {
-            column.Add(x => x.ID);
-            column.Add(x => x.Kart_ID);
-            column.Add(x => x.Adi);
-            column.Add(x => x.Soyadi);
-            column.Add(x => x.TCKimlik);
-            column.Add(x => x.SirketAdi);
-            column.Add(x => x.DepartmanAdi);
-            column.Add(x => x.Plaka);
-            column.Add(x => x.BlokAdi);
-            column.Add(x => x.Daire);
-            column.Add(x => x.Grup_Adi);
-            column.Add(x => x.Panel_ID);
-            column.Add(x => x.Kapi_ID);
-            column.Add(x => x.Gecis_Tipi);
-            column.Add(x => x.Tarih);
+                {
+                    column.Add(x => x.ID);
+                    column.Add(x => x.Kart_ID);
+                    column.Add(x => x.Adi);
+                    column.Add(x => x.Soyadi);
+                    column.Add(x => x.TCKimlik);
+                    column.Add(x => x.SirketAdi);
+                    column.Add(x => x.DepartmanAdi);
+                    column.Add(x => x.Plaka);
+                    column.Add(x => x.BlokAdi);
+                    column.Add(x => x.Daire);
+                    column.Add(x => x.Grup_Adi);
+                    column.Add(x => x.Panel_ID);
+                    column.Add(x => x.Kapi_ID);
+                    column.Add(x => x.Gecis_Tipi);
+                    column.Add(x => x.Tarih);
 
-        }).Sortable(true).SetLanguage("tr").WithPaging(10);*@
-            
-            <table id="myTable" class="table-borderless table table-hover text-center table-striped">
-                <thead class="table-info">
-                    <tr>
-                        <td>ID</td>
-                        <td>Kart ID</td>
-                        <td>Adı</td>
-                        <td>Soyadı</td>
-                        <td>Tc Kimlik No</td>
-                        <td>Telefon</td>
-                        <td>Şirket</td>
-                        <td>Departman</td>
-                        <td>Plaka</td>
-                        <td>Blok</td>
-                        <td>Daire</td>
-                        <td>Grup Adı</td>
-                        <td>Panel</td>
-                        <td>Kapı</td>
-                        <td>Geçiş</td>
-                        <td>Tarih</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.ReportPersonel.Count == 0)
-                    {
+                }).Sortable(true).SetLanguage("tr").WithPaging(10);*@
+
+            @webGrid.GetHtml(
+         htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+
+         columns: webGrid.Columns(
+             webGrid.Column(null,null,format:@<text><td hidden data-kart="@item.Kart_ID"></td></text>),
+             webGrid.Column("ID", "ID"),
+             webGrid.Column("Kart_ID", "Kart ID"),
+             webGrid.Column("Adi", "Adı"),
+             webGrid.Column("Soyadi", "Soyadı"),
+             webGrid.Column("TCKimlik", "TC Kimlik"),
+             webGrid.Column("Telefon", "Telefon"),
+             webGrid.Column("SirketAdi", "Şirket"),
+             webGrid.Column("DepartmanAdi", "Departman"),
+             webGrid.Column("Plaka", "Plaka"),
+             webGrid.Column("BlokAdi", "Blok"),
+             webGrid.Column("Daire", "Daire"),
+             webGrid.Column("Grup_Adi", "Grup"),
+             webGrid.Column("Panel_ID", "Panel"),
+             webGrid.Column("Kapi_ID", "Kapı"),
+             webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+             webGrid.Column("Tarih", "Grup")))
+
+
+
+
+
+            @*<table id="myTable" class="table-borderless table table-hover text-center table-striped">
+                    <thead class="table-info">
                         <tr>
-                            <td class="text-warning" rowspan="16" colspan="16"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Tc Kimlik No</td>
+                            <td>Telefon</td>
+                            <td>Şirket</td>
+                            <td>Departman</td>
+                            <td>Plaka</td>
+                            <td>Blok</td>
+                            <td>Daire</td>
+                            <td>Grup Adı</td>
+                            <td>Panel</td>
+                            <td>Kapı</td>
+                            <td>Geçiş</td>
+                            <td>Tarih</td>
                         </tr>
-                    }
-                    else
-                    {
-                        foreach (var item in Model.ReportPersonel)
+                    </thead>
+                    <tbody>
+                        @if (Model.ReportPersonel.Count == 0)
                         {
                             <tr>
-                                <td data-kart="@item.Kart_ID">@item.ID</td>
-                                <td>@item.Kart_ID</td>
-                                <td>@item.Adi</td>
-                                <td>@item.Soyadi</td>
-                                <td>@item.TCKimlik</td>
-                                <td>@item.Telefon</td>
-                                <td>@item.SirketAdi</td>
-                                <td>@item.DepartmanAdi</td>
-                                <td>@item.Plaka</td>
-                                <td>@item.BlokAdi</td>
-                                <td>@item.Daire</td>
-                                <td>@item.Grup_Adi</td>
-                                <td>@item.Panel_ID</td>
-                                <td>@item.Kapi_ID</td>
-                                <td>@item.Gecis_Tipi</td>
-                                <td>@item.Tarih</td>
+                                <td class="text-warning" rowspan="16" colspan="16"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
                             </tr>
                         }
-                    }
-                </tbody>
+                        else
+                        {
+                            foreach (var item in Model.ReportPersonel)
+                            {
+                                <tr>
+                                    <td data-kart="@item.Kart_ID">@item.ID</td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Soyadi</td>
+                                    <td>@item.TCKimlik</td>
+                                    <td>@item.Telefon</td>
+                                    <td>@item.SirketAdi</td>
+                                    <td>@item.DepartmanAdi</td>
+                                    <td>@item.Plaka</td>
+                                    <td>@item.BlokAdi</td>
+                                    <td>@item.Daire</td>
+                                    <td>@item.Grup_Adi</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Kapi_ID</td>
+                                    <td>@item.Gecis_Tipi</td>
+                                    <td>@item.Tarih</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
 
-            </table>
+                </table>*@
         </div>
     </div>
 </div>
-
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
@@ -305,6 +330,14 @@
                 <div class="alert-success alert">
                     <h2 id="alert" class="text-center text-muted"></h2>
                 </div>
+                <!-- Search form -->
+                @using (Html.BeginForm("Index", "VisitorReport", FormMethod.Get))
+                {
+                    <div class="input-group md-form form-sm form-2 pl-0">
+                        <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
+                    </div>
+                }
+                <hr />
                 <table id="myTable" class="table table-hover text-center table-striped">
                     <thead class="table-info">
                         <tr>
@@ -377,11 +410,20 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $("#Kapilar").html("");
-                for (var i in data) {
-                    $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-                        + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
-                        + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
-                        + "</div>");
+                if (data.length == 0 || data.length < 0) {
+                    for (var i = 1; i < 9; i++) {
+                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                            + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
+                            + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
+                            + "</div>");
+                    }
+                } else {
+                    for (var i in data) {
+                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                            + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
+                            + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
+                            + "</div>");
+                    }
                 }
             },
             error: function () {
@@ -614,7 +656,90 @@
             }
 
         });
+        ////Search İşlemi
+        //$("#eski").change(function () {
+        //    if ($(this).prop("checked") == true) {
 
+        //        $("#Search").change(function () {
+        //            $.ajax({
+        //                url: '/ReportPersonel/EskiZiyaretciler',
+        //                type: 'GET',
+        //                data: { Search: Search },
+        //                success: function (data) {
+        //                    $("#zyrt").html("");
+
+        //                    for (var i in data) {
+        //                        $("#zyrt").append("<tr><td data-kayitno=" +
+        //                            data[i].Kayit_No +
+        //                            " data-visitor=" +
+        //                            data[i].Adi + '-' + data[i].Soyadi + ">" +
+        //                            data[i].Kayit_No +
+        //                            "</td><td>" + data[i].ID +
+        //                            "</td><td>" + data[i].Kart_ID +
+        //                            "</td><td>" + data[i].Adi +
+        //                            "</td><td>" + data[i].Soyadi +
+        //                            "</td><td>" + data[i].Sirket_No +
+        //                            "</td><td>" + data[i].Departman_No +
+        //                            "</td><td>" + data[i].Blok_No +
+        //                            "</td><td>" + data[i].Plaka +
+        //                            "</td><td>" + data[i].Gecis_Modu +
+        //                            "</td><td>" + data[i].Visitor_Grup_No +
+        //                            "</td></tr>");
+        //                    }
+
+        //                },
+        //                error: function () {
+        //                    alert('error buddy');
+        //                }
+        //            });
+
+
+        //        });
+        //    }
+
+        //});
+        ////Search İşlemi
+        //$("#aktif").change(function () {
+        //    if ($(this).prop("checked") == true) {
+        //        $("#Search").change(function () {
+        //            $.ajax({
+        //                url: '/ReportPersonel/AktifZiyaretciler',
+        //                type: 'GET',
+        //                dataType:'json'
+        //                data: { Search: Search },
+        //                success: function (data) {
+        //                    $("#zyrt").html("");
+
+        //                    for (var i in data) {
+        //                        $("#zyrt").append("<tr><td data-kayitno=" +
+        //                            data[i].Kayit_No +
+        //                            " data-visitor=" +
+        //                            data[i].Adi + '-' + data[i].Soyadi + ">" +
+        //                            data[i].Kayit_No +
+        //                            "</td><td>" + data[i].ID +
+        //                            "</td><td>" + data[i].Kart_ID +
+        //                            "</td><td>" + data[i].Adi +
+        //                            "</td><td>" + data[i].Soyadi +
+        //                            "</td><td>" + data[i].Sirket_No +
+        //                            "</td><td>" + data[i].Departman_No +
+        //                            "</td><td>" + data[i].Blok_No +
+        //                            "</td><td>" + data[i].Plaka +
+        //                            "</td><td>" + data[i].Gecis_Modu +
+        //                            "</td><td>" + data[i].Visitor_Grup_No +
+        //                            "</td></tr>");
+        //                    }
+
+        //                },
+        //                error: function () {
+        //                    alert('error buddy');
+        //                }
+        //            });
+
+
+        //        });
+        //    }
+
+        //});
         //Tablodaki satıra tıklanıldığında resim gösterme
         $("#myTable tbody tr").click(function () {
             var kartID = $(this).children("td").data("kart");

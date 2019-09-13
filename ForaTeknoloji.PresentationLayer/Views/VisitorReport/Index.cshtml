@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Ziyaretçi Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model.ComplexVisitorsListesi, rowsPerPage: 20);
 }
 
 <div class="card mt-1 shadow-lg">
@@ -9,7 +10,7 @@
         <h3 class="text-muted text-center">Ziyaretçi Raporları</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Index", "VisitorReport"))
+        @using (Html.BeginForm("Index", "VisitorReport", FormMethod.Get))
         {
             <div class="row">
                 <div class="col-md-4">
@@ -155,58 +156,82 @@
 <div class="card mt-1 shadow-lg">
     <div class="card-body">
         <div id="print_div">
-            <table id="myTable" class="table table-hover text-center table-striped">
-                <thead class="table-info">
-                    <tr>
-                        <td>ID</td>
-                        <td>Kart ID</td>
-                        <td>Adı</td>
-                        <td>Soyadı</td>
-                        <td>TC Kimlik No</td>
-                        <td>Telefon</td>
-                        <td>Plaka</td>
-                        <td>Ziyaret Sebebi</td>
-                        <td>Grup Adı</td>
-                        <td>Panel</td>
-                        <td>Kapı</td>
-                        <td>Geçiş</td>
-                        <td>Tarih</td>
-                        <td>Personel Adı</td>
-                        <td>Personel Soyadı</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.ComplexVisitorsListesi.Count == 0)
-                    {
+            @webGrid.GetHtml(
+          htmlAttributes: new { @id = "tableNon", @class = "table-borderless table table-hover text-center table-striped" },
+          columns: webGrid.Columns(
+             webGrid.Column(null, null, format:@<text><td hidden data-kart="@item.Kart_ID"></td></text>),
+    webGrid.Column("ID", "ID"),
+    webGrid.Column("Kart_ID", "Kart ID"),
+    webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
+    webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadı"),
+    webGrid.Column("Ziyaretci_TCKimlik", "Ziyaretçi TC Kimlik"),
+    webGrid.Column("Ziyaretci_Telefon", "Ziyaretçi Telefon"),
+    webGrid.Column("Ziyaretci_Plaka", "Ziyaretçi Plaka"),
+    webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
+    webGrid.Column("Grup_Adi", "Grup"),
+    webGrid.Column("Panel_ID", "Panel"),
+    webGrid.Column("Kapi_ID", "Kapı"),
+    webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+    webGrid.Column("Tarih", "Tarih"),
+    webGrid.Column("Personel_Adi", "Personel Adı"),
+    webGrid.Column("Personel_Soyadi", "Personel Soyadı")))
+
+
+
+
+
+            @*<table id="tableNon" class="table table-hover text-center table-striped">
+                    <thead class="table-info">
                         <tr>
-                            <td class="text-warning" rowspan="15" colspan="15"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>TC Kimlik No</td>
+                            <td>Telefon</td>
+                            <td>Plaka</td>
+                            <td>Ziyaret Sebebi</td>
+                            <td>Grup Adı</td>
+                            <td>Panel</td>
+                            <td>Kapı</td>
+                            <td>Geçiş</td>
+                            <td>Tarih</td>
+                            <td>Personel Adı</td>
+                            <td>Personel Soyadı</td>
                         </tr>
-                    }
-                    else
-                    {
-                        foreach (var item in Model.ComplexVisitorsListesi)
+                    </thead>
+                    <tbody>
+                        @if (Model.ComplexVisitorsListesi.Count == 0)
                         {
                             <tr>
-                                <td data-kart="@item.Kart_ID">@item.ID</td>
-                                <td>@item.Kart_ID</td>
-                                <td>@item.Ziyaretci_Adi</td>
-                                <td>@item.Ziyaretci_Soyadi</td>
-                                <td>@item.Ziyaretci_TCKimlik</td>
-                                <td>@item.Ziyaretci_Telefon</td>
-                                <td>@item.Ziyaretci_Plaka</td>
-                                <td>@item.Ziyaret_Sebebi</td>
-                                <td>@item.Grup_Adi</td>
-                                <td>@item.Panel_ID</td>
-                                <td>@item.Kapi_ID</td>
-                                <td>@item.Gecis_Tipi</td>
-                                <td>@item.Tarih</td>
-                                <td>@item.Personel_Adi</td>
-                                <td>@item.Personel_Soyadi</td>
+                                <td class="text-warning" rowspan="15" colspan="15"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
                             </tr>
                         }
-                    }
-                </tbody>
-            </table>
+                        else
+                        {
+                            foreach (var item in Model.ComplexVisitorsListesi)
+                            {
+                                <tr>
+                                    <td data-kart="@item.Kart_ID">@item.ID</td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.Ziyaretci_Adi</td>
+                                    <td>@item.Ziyaretci_Soyadi</td>
+                                    <td>@item.Ziyaretci_TCKimlik</td>
+                                    <td>@item.Ziyaretci_Telefon</td>
+                                    <td>@item.Ziyaretci_Plaka</td>
+                                    <td>@item.Ziyaret_Sebebi</td>
+                                    <td>@item.Grup_Adi</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Kapi_ID</td>
+                                    <td>@item.Gecis_Tipi</td>
+                                    <td>@item.Tarih</td>
+                                    <td>@item.Personel_Adi</td>
+                                    <td>@item.Personel_Soyadi</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>*@
         </div>
     </div>
 </div>
@@ -224,6 +249,8 @@
                 <div class="alert-success">
                     <h2 id="alert" class="text-center text-muted"></h2>
                 </div>
+
+
                 <table id="myTable" class="table table-hover text-center table-striped">
                     <thead class="table-info">
                         <tr>
@@ -248,7 +275,7 @@
                         @foreach (var item in Model.Visitors)
                         {
                             <tr>
-                                <td data-kayitno="@item.Kayit_No" data-visitor="@(item.Adi+' '+item.Soyadi)">@item.Kayit_No</td>
+                                <td data-kayitno="@item.Kayit_No" data-visitor="@(item.Adi + ' ' + item.Soyadi)">@item.Kayit_No</td>
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
@@ -285,11 +312,20 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $("#Kapilar").html("");
-                for (var i in data) {
-                    $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-                        + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
-                        + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
-                        + "</div>");
+                if (data.length == 0 || data.length < 0) {
+                    for (var i = 1; i < 9; i++) {
+                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                            + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
+                            + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
+                            + "</div>");
+                    }
+                } else {
+                    for (var i in data) {
+                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                            + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
+                            + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
+                            + "</div>");
+                    }
                 }
             }, error: function () {
                 alert("Kapı Listesi Yüklenemedi");
@@ -381,7 +417,7 @@
                 $("#Saat2").attr("disabled", true);
             }
 
-        });
+        });//İki Saati Seçme
         $("#ikiTarih").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#Tarih2").attr("disabled", false);
@@ -389,7 +425,7 @@
                 $("#Tarih2").attr("disabled", true);
             }
 
-        });
+        });//İki tarihi seçme
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
             var frame1 = $('<iframe />');
@@ -413,7 +449,7 @@
                 frame1.remove();
             }, 500);
 
-        });
+        });//Çıktı Alma Kodu
         $("#Ziyaretci").focus(function () {
             $("#exampleModal").modal("show");
             $("#myTable tbody tr").click(function () {
@@ -424,11 +460,12 @@
                 $("#alert").text(name + " Seçildi!");
 
             });
-        });
+        });//Açılan Popup'taki kullanıcıyı seçme ve text'te yazma
 
         //Tablodaki satıra tıklanıldığında resim gösterme
-        $("#myTable tbody tr").click(function () {
+        $("#tableNon tbody tr").click(function () {
             var kartID = $(this).children("td").data("kart");
+            alert(kartID);
             $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
             $("#change-image-canli").attr('src', '/Canli_Images/' + kartID + '.jpg');
         });

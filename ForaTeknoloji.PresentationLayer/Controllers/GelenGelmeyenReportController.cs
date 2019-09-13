@@ -23,6 +23,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
         public DBUsers user;
+        public DateTime DefaultTarih1;
+        public DateTime DefaultTarih2;
         public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService)
         {
             user = CurrentSession.User;
@@ -38,7 +40,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _visitorsService = visitorsService;
             _globalZoneService = globalZoneService;
             _reportService = reportService;
-
+            DefaultTarih1 = DateTime.Now;
+            DefaultTarih2 = DateTime.Now;
 
 
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
@@ -49,42 +52,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        public ActionResult Gelenler()
-        {
-            var nesne = _reportService.GelenGelmeyen_Gelenlers(null, null, null, null, null);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var model = new GelenGelmeyen_GelenlerListViewModel
-            {
-                Gelenler = nesne,
-                Departmanlar = departmanlar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Departman_No.ToString()
-                }),
-                Sirketler = sirketler.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Sirket_No.ToString()
-                }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                {
-                    Text = a.Global_Bolge_Adi,
-                    Value = a.Global_Bolge_No.ToString()
-                })
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Gelenler(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
+        public ActionResult Gelenler(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, DateTime? Tarih = null)
         {
             var nesne = _reportService.GelenGelmeyen_Gelenlers(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
@@ -120,42 +88,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult Gelmeyenler()
-        {
-            var nesne = _reportService.GelenGelmeyen_Gelmeyens(null, null, null, null, null);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var model = new GelenGelmeyen_GelmeyenlerListViewModel
-            {
-                Gelmeyenler = nesne,
-                Departmanlar = departmanlar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Departman_No.ToString()
-                }),
-                Sirketler = sirketler.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Sirket_No.ToString()
-                }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                {
-                    Text = a.Global_Bolge_Adi,
-                    Value = a.Global_Bolge_No.ToString()
-                })
-            };
-            return View(model);
-        }
 
-        [HttpPost]
-        public ActionResult Gelmeyenler(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
+
+        public ActionResult Gelmeyenler(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, DateTime? Tarih = null)
         {
             var nesne = _reportService.GelenGelmeyen_Gelmeyens(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
@@ -191,44 +126,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult PasifKullanici()
-        {
-            var nesne = _reportService.GelenGelmeyen_PasifKullanicis(null, null, null, null, DateTime.Now, 45);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var model = new GelenGelmeyen_PasifListViewModel
-            {
-                Pasif = nesne,
-                Departmanlar = departmanlar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Departman_No.ToString()
-                }),
-                Sirketler = sirketler.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Sirket_No.ToString()
-                }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                {
-                    Text = a.Global_Bolge_Adi,
-                    Value = a.Global_Bolge_No.ToString()
-                })
-            };
 
-            return View(model);
-        }
 
-        [HttpPost]
-        public ActionResult PasifKullanici(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih, double? Fark)
+        public ActionResult PasifKullanici(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, DateTime? Tarih = null, double? Fark = 45)
         {
+            
             var nesne = _reportService.GelenGelmeyen_PasifKullanicis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih, Fark);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -264,46 +166,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        public ActionResult ToplamIcerdeKalma()
-        {
-            var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(null, null, null, null, null, DateTime.Now, DateTime.Now);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var users = _userService.GetAllUsers();
-            var model = new GelenGelmeyen_ToplamIcerdeKalmaListViewModel
-            {
-                ToplamIcerdeKalma = nesne,
-                Kullanicilar = users,
-                Departmanlar = departmanlar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Departman_No.ToString()
-                }),
-                Sirketler = sirketler.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Sirket_No.ToString()
-                }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                {
-                    Text = a.Global_Bolge_Adi,
-                    Value = a.Global_Bolge_No.ToString()
-                })
-            };
 
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult ToplamIcerdeKalma(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
+        public ActionResult ToplamIcerdeKalma(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, int? UserID = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null)
         {
+            
             var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -340,45 +206,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult IlkGirisSonCikis()
-        {
-            var nesne = _reportService.GelenGelmeyen_IlkGirisSonCikis(null, null, null, null, null, DateTime.Now, DateTime.Now);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var users = _userService.GetAllUsers();
-            var model = new GelenGelmeyen_IlkGirisSonCikisListViewModel
-            {
-                IlkGirisSonCikis = nesne,
-                Kullanicilar = users,
-                Departmanlar = departmanlar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Departman_No.ToString()
-                }),
-                Sirketler = sirketler.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Sirket_No.ToString()
-                }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                {
-                    Text = a.Global_Bolge_Adi,
-                    Value = a.Global_Bolge_No.ToString()
-                })
-            };
 
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult IlkGirisSonCikis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
+
+        public ActionResult IlkGirisSonCikis(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, int? UserID = null, DateTime? Tarih1 = null , DateTime? Tarih2 = null)
         {
+            
             var nesne = _reportService.GelenGelmeyen_IlkGirisSonCikis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -413,6 +245,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             TempData["IlkGirisSonCikis"] = nesne;
             return View(model);
         }
+
+
 
 
         //Gelenler Excell

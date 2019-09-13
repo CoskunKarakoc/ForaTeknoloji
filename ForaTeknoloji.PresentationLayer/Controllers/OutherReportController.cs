@@ -43,29 +43,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: OutherReport
-        public ActionResult Index()
-        {
-            var liste = _reportService.GetDigerGecisListesi(null, null, null, null, null, null, null, null, 100, null);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-            var model = new DigerGecisRaporListViewModel
-            {
-                DigerGecisListesi = liste,
-                Paneller = panel.Select(a => new SelectListItem
-                {
-                    Text = a.Panel_Name,
-                    Value = a.Panel_ID.ToString()
-                })
-            };
-            return View(model);
-        }
-        // POST: OutherReport
-        [HttpPost]
-        public ActionResult Index(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, int Tetikleme, string KapiYon = "")
+        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, bool? TümPanel = null, int? Paneller = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, int Tetikleme = 100, string KapiYon = "")
         {
 
             if (Tetikleme == 26)
             {
-
                 var listKulAlarm = _reportService.GetDigerGecisRaporListKullaniciAlarms(Kapi, Tümü, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, 26, KapiYon);
                 var panell = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
                 var modelAlarm = new DigerGecisRaporAlarmListViewModel

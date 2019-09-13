@@ -42,44 +42,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: VisitorReport
-        public ActionResult Index()
+        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, int? Visitors = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, bool? TümPanel = null, int? Paneller = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string Kayit = "", string KapiYon = "", string Search = "")
         {
-            var liste = _reportService.GetZiyaretciListesi(null, null, null, null, null, null, null, null, null, null, null);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-            var visitors = _visitorsService.GetAllVisitors();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var model = new VisitorsList
-            {
-
-                ComplexVisitorsListesi = liste,
-                Paneller = panel.Select(a => new SelectListItem
-                {
-                    Text = a.Panel_Name,
-                    Value = a.Panel_ID.ToString()
-                }),
-                Visitors = visitors,
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                {
-                    Text = a.Global_Bolge_Adi,
-                    Value = a.Global_Bolge_No.ToString()
-                }),
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Index(List<string> Kapi, bool? Tümü, int? Visitors, int? Global_Bolge_Adi, int? Groupsdetail, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Kayit = "", string KapiYon = "", string Search = "")
-        {
-
+            List<Visitors> visitors = new List<Visitors>();
+            //TODO:Search olayıda yapılacak
             var liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Visitors, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-            var visitors = _visitorsService.GetAllVisitors();
+
+            if (Search != null && Search != "")
+            {
+                visitors = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search));
+            }
+            else
+            {
+                visitors = _visitorsService.GetAllVisitors();
+            }
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new VisitorsList
@@ -103,40 +80,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.Global_Bolge_No.ToString()
                 }),
             };
-
             TempData["VisitorsList"] = liste;
-            if (Search != null && Search != "")
-            {
-                liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Global_Bolge_Adi, Groupsdetail, Visitors, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
-                panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-                visitors = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search));
-                groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-                globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-                model = new VisitorsList
-                {
-
-                    ComplexVisitorsListesi = liste,
-                    Paneller = panel.Select(a => new SelectListItem
-                    {
-                        Text = a.Panel_Name,
-                        Value = a.Panel_ID.ToString()
-                    }),
-                    Visitors = visitors,
-                    Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                    {
-                        Text = a.Grup_Adi,
-                        Value = a.Kayit_No.ToString()
-                    }),
-                    Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                    {
-                        Text = a.Global_Bolge_Adi,
-                        Value = a.Global_Bolge_No.ToString()
-                    }),
-                };
-
-            }
             return View(model);
         }
+
+
+
 
         //DoorNames Tablosundan Ajax ile Kapılar Çekiliyor JQuery ile Ekrana Basılıyor 
         public ActionResult KapiListesi()

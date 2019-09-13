@@ -54,7 +54,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: ReportPersonel
-        public ActionResult Index()
+        public ActionResult Index(List<string> Kapi = null, bool? Günlük = null, bool? Tümü = null, bool? TümKullanici = null, int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, bool? TümPanel = null, int? Visitors = null, int? Panel = null, int? Groupsdetail = null, int? Daire = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = null, string Plaka = null, string Kullanici = null, string Kayit = null)
         {
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
@@ -64,7 +64,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
-            var liste = _reportService.GetReportPersonelLists(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            var liste = _reportService.GetReportPersonelLists(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kullanici, Kayit);
             var model = new ReportPersonelViewModel
             {
                 ReportPersonel = liste,
@@ -105,78 +105,36 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 })
 
 
-            };
-            TempData["reportListe"] = liste;
-            return View(model);
-
-        }
-        [HttpPost]
-        public ActionResult Index(List<string> Kapi, bool? Günlük, bool? Tümü, bool? TümKullanici, int? Sirketler, int? Departmanlar, int? Bloklar, bool? TümPanel, int? Visitors, int? Panel, int? Groupsdetail, int? Daire, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon, string Plaka = null, string Kullanici = null, string Kayit = null)
-        {
-            var liste = _reportService.GetReportPersonelLists(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kullanici, Kayit);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var bloklar = _bloklarService.GetAllBloklar();
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var groupMaster = _groupMasterService.GetAllGroupsMaster();
-            var visitors = _visitorsService.GetAllVisitors();
-            var model = new ReportPersonelViewModel
-            {
-                ReportPersonel = liste,
-                Paneller = panel.Select(a => new SelectListItem
-                {
-                    Text = a.Panel_Name,
-                    Value = a.Panel_ID.ToString()
-                }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                {
-                    Text = a.Global_Bolge_Adi,
-                    Value = a.Global_Bolge_No.ToString()
-                }),
-                Departmanlar = departmanlar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Departman_No.ToString()
-                }),
-                Bloklar = bloklar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Blok_No.ToString()
-                }),
-                Sirketler = sirketler.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Sirket_No.ToString()
-                }),
-                Gecis_Grubu = groupMaster.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Grup_No.ToString()
-                }),
-
 
             };
-            TempData["reportListe"] = liste;
             TempData["ReportPersonel"] = liste;
             return View(model);
 
         }
 
-        public ActionResult AktifZiyaretciler()//Popup'a Aktif Kulanıcı Yükleniyor
+
+
+
+
+
+        public ActionResult AktifZiyaretciler(string Search)//Popup'a Aktif Kulanıcı Yükleniyor
         {
-            return Json(_userService.GetAllUsers().OrderBy(x => x.Kayit_No), JsonRequestBehavior.AllowGet);
+            var liste = _userService.GetAllUsers().OrderBy(x => x.Kayit_No);
+            if (Search != null && Search != "")
+            {
+                liste = _userService.GetAllUsers(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search)).OrderBy(x => x.Kayit_No);
+            }
+            return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult EskiZiyaretciler()//Popup'a Eski Kullanıcı Yükleniyor
+        public ActionResult EskiZiyaretciler(string Search)//Popup'a Eski Kullanıcı Yükleniyor
         {
-            return Json(_usersOLDService.GetAllUsersOLD().OrderBy(x => x.Kayit_No), JsonRequestBehavior.AllowGet);
+            var liste = _usersOLDService.GetAllUsersOLD().OrderBy(x => x.Kayit_No);
+            if (Search != null && Search != "")
+            {
+                liste = _usersOLDService.GetAllUsersOLD(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search)).OrderBy(x => x.Kayit_No);
+            }
+            return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult KapiListesi()//Kullanıcıya ait olan panellerin kapıları listeleniyor

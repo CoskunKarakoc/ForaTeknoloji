@@ -37,9 +37,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: UndefinedUserReport
-        public ActionResult Index()
+        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, bool? TümPanel = null, int? Panel = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = "")
         {
-            var list = _reportService.GetTanimsizListesi(null, null, null, null, null, null, null, null, "");
+            //TODO: satırlara data Attribute'u gelecek buna ve reportpoersonele
+            var list = _reportService.GetTanimsizListesi(Kapi, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
+
             var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var model = new TanimsizKullaniciListViewModel
             {
@@ -50,23 +52,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = x.Panel_ID.ToString()
                 })
             };
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult Index(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Panel, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon = "")
-        {
-            var liste = _reportService.GetTanimsizListesi(Kapi, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
-            var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-            var model = new TanimsizKullaniciListViewModel
-            {
-                Liste = liste,
-                Panel = PanelName.Select(x => new SelectListItem
-                {
-                    Text = x.Panel_Name,
-                    Value = x.Panel_ID.ToString()
-                })
-            };
-            TempData["Tanimsiz"] = liste;
+            TempData["Tanimsiz"] = list;
             return View(model);
         }
 

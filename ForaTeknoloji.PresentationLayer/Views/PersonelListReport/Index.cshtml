@@ -3,14 +3,14 @@
 @{
     ViewBag.Title = "Personel Listesi Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    WebGrid webGrid = new WebGrid(source: Model.PersonelListesi,rowsPerPage:2);
+    WebGrid webGrid = new WebGrid(source: Model.PersonelListesi, rowsPerPage: 20);
 }
 <div class="card mt-2 shadow-lg">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Personel Listesi</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Index", "PersonelListReport", FormMethod.Post))
+        @using (Html.BeginForm("Index", "PersonelListReport", FormMethod.Get))
         {
             <div class="row">
                 @Html.ValidationSummary(true, "", new { @class = "text-denger" })
@@ -75,6 +75,7 @@
     <div id="print_div" class="card-body">
         @webGrid.GetHtml(
                  htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                 
                  columns: webGrid.Columns(
                      webGrid.Column("ID", "ID"),
                      webGrid.Column("Kart_ID", "Kart ID"),

@@ -48,68 +48,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: PersonelListReport
-        public ActionResult Index()
-        {
-
-            var personelLists = _reportService.GetPersonelLists(null, null, null, null, null, null, null);
-            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var bloklar = _bloklarService.GetAllBloklar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var groupMaster = _groupMasterService.GetAllGroupsMaster();
-            var model = new PersonelListViewModel
-            {
-                ListCount = personelLists.Count.ToString(),
-                PersonelListesi = personelLists.ToList(),
-                Departmanlar = departmanlar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Departman_No.ToString()
-                }),
-                Bloklar = bloklar.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Blok_No.ToString()
-                }),
-                Sirketler = sirketler.Select(a => new SelectListItem
-                {
-                    Text = a.Adi,
-                    Value = a.Sirket_No.ToString()
-                }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
-                {
-                    Text = a.Global_Bolge_Adi,
-                    Value = a.Global_Bolge_No.ToString()
-                }),
-                Gecis_Grubu = groupMaster.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Grup_No.ToString()
-                })
-
-            };
-            TempData["dataGrid"] = personelLists;
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Index(int? Sirketler, int? Departmanlar, int? Bloklar, int? Groupsdetail, int? Global_Bolge_Adi, int? Daire, string Plaka = "")
+        public ActionResult Index(int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, int? Groupsdetail = null, int? Global_Bolge_Adi = null, int? Daire = null, string Plaka = "")
         {
 
             var personelLists = _reportService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
             var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
-
             var model = new PersonelListViewModel
             {
                 ListCount = personelLists.Count.ToString(),
@@ -146,15 +94,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 })
 
             };
-            TempData["dataGrid"] = personelLists;
             TempData["PersonelLists"] = personelLists;
             return View(model);
         }
-
-
-
-
-
 
         //EXCELL EXPORT
         public void PersonelListesi()
