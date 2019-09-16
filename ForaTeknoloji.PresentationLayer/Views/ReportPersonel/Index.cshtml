@@ -4,9 +4,34 @@
 @{
     ViewBag.Title = "Personel Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    WebGrid webGrid = new WebGrid(source: Model.ReportPersonel, rowsPerPage: 20);
-}
+    WebGrid webGrid = new WebGrid(source: Model.ReportPersonel, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    webGrid.Pager(WebGridPagerModes.NextPrevious);
+    string img = "#";
+    string canlimg = "#";
+    if (webGrid.HasSelection)
+    {
+        var sonuc = (ForaTeknoloji.Entities.ComplexType.ReportPersonelList)webGrid.Rows[webGrid.SelectedIndex].Value;
+        img = "/Images/" + sonuc.Kart_ID + ".jpg";
+        canlimg = "/Canli_Images/" + sonuc.Kart_ID + ".jpg";
 
+    }
+}
+<style>
+    .table-pager > td {
+        padding-top: 10px;
+    }
+
+        .table-pager > td > a {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 3px 7px;
+        }
+
+            .table-pager > td > a:hover {
+                background-color: #f0f0f0;
+            }
+</style>
 <div class="card mt-1 shadow-lg">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Personel Raporları</h3>
@@ -18,6 +43,7 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
+
                         <div class="custom-control custom-radio">
                             <input type="radio" value="Aktif" class="custom-control-input" id="aktif" checked name="Kullanici">
                             <label class="custom-control-label" for="aktif">Aktif Kullanıcılar</label>
@@ -187,16 +213,15 @@
                     </div>
 
                 </div>
-
                 <div class="col-md-4">
-                    <img id="change-image" src="#" alt="Kayıtlı Fotoğraf" />
+                    <img id="change-image" src="@img " alt="Kayıtlı Fotoğraf" />
                     <hr />
-                    <img id="change-image-canli" src="#" alt="Canlı Fotoğraf" />
+                    <img id="change-image-canli" src="@canlimg" alt="Canlı Fotoğraf" />
                     <br /><br /><br />
                     <h4 class="text-info text-right">@Model.ReportPersonel.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("PersonelRaporları","ReportPersonel")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("PersonelRaporları", "ReportPersonel")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
 
 
@@ -211,47 +236,29 @@
 <div class="card mt-1 shadow-lg">
     <div class="card-body">
         <div id="print_div">
-            @*@Html.Grid(TempData["reportListe"] as List<ReportPersonelList>).Columns(column =>
-                {
-                    column.Add(x => x.ID);
-                    column.Add(x => x.Kart_ID);
-                    column.Add(x => x.Adi);
-                    column.Add(x => x.Soyadi);
-                    column.Add(x => x.TCKimlik);
-                    column.Add(x => x.SirketAdi);
-                    column.Add(x => x.DepartmanAdi);
-                    column.Add(x => x.Plaka);
-                    column.Add(x => x.BlokAdi);
-                    column.Add(x => x.Daire);
-                    column.Add(x => x.Grup_Adi);
-                    column.Add(x => x.Panel_ID);
-                    column.Add(x => x.Kapi_ID);
-                    column.Add(x => x.Gecis_Tipi);
-                    column.Add(x => x.Tarih);
-
-                }).Sortable(true).SetLanguage("tr").WithPaging(10);*@
-
             @webGrid.GetHtml(
-         htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+  htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+   selectedRowStyle: "selectRow",
+   footerStyle: "table-pager",
+  columns: webGrid.Columns(
+      webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
+      webGrid.Column("ID", "ID"),
+      webGrid.Column("Kart_ID", "Kart ID"),
+      webGrid.Column("Adi", "Adı"),
+      webGrid.Column("Soyadi", "Soyadı"),
+      webGrid.Column("TCKimlik", "TC Kimlik"),
+      webGrid.Column("Telefon", "Telefon"),
+      webGrid.Column("SirketAdi", "Şirket"),
+      webGrid.Column("DepartmanAdi", "Departman"),
+      webGrid.Column("Plaka", "Plaka"),
+      webGrid.Column("BlokAdi", "Blok"),
+      webGrid.Column("Daire", "Daire"),
+      webGrid.Column("Grup_Adi", "Grup"),
+      webGrid.Column("Panel_ID", "Panel"),
+      webGrid.Column("Kapi", "Kapı"),
+      webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+      webGrid.Column("Tarih", "Tarih")))
 
-         columns: webGrid.Columns(
-             webGrid.Column(null,null,format:@<text><td hidden data-kart="@item.Kart_ID"></td></text>),
-             webGrid.Column("ID", "ID"),
-             webGrid.Column("Kart_ID", "Kart ID"),
-             webGrid.Column("Adi", "Adı"),
-             webGrid.Column("Soyadi", "Soyadı"),
-             webGrid.Column("TCKimlik", "TC Kimlik"),
-             webGrid.Column("Telefon", "Telefon"),
-             webGrid.Column("SirketAdi", "Şirket"),
-             webGrid.Column("DepartmanAdi", "Departman"),
-             webGrid.Column("Plaka", "Plaka"),
-             webGrid.Column("BlokAdi", "Blok"),
-             webGrid.Column("Daire", "Daire"),
-             webGrid.Column("Grup_Adi", "Grup"),
-             webGrid.Column("Panel_ID", "Panel"),
-             webGrid.Column("Kapi_ID", "Kapı"),
-             webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
-             webGrid.Column("Tarih", "Grup")))
 
 
 
@@ -331,12 +338,12 @@
                     <h2 id="alert" class="text-center text-muted"></h2>
                 </div>
                 <!-- Search form -->
-                @using (Html.BeginForm("Index", "VisitorReport", FormMethod.Get))
-                {
-                    <div class="input-group md-form form-sm form-2 pl-0">
-                        <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
-                    </div>
-                }
+
+                <div class="input-group md-form form-sm form-2 pl-0">
+                    <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
+                    <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
+                </div>
+
                 <hr />
                 <table id="myTable" class="table table-hover text-center table-striped">
                     <thead class="table-info">
@@ -369,7 +376,125 @@
 <script src="./src/bootstrap-input-spinner.js"></script>
 <script>
 
-    $(function () {
+
+
+    $(document).ready(function () {
+        //Model arama işlemi
+        $("#SearchBtn").click(function () {
+            var arama = $("#Search").val();
+            $("#Search").val("");
+            $.ajax({
+                url: '/ReportPersonel/AktifZiyaretciler',
+                type: 'GET',
+                data: { Search: arama },
+                dataType: 'json',
+                success: function (data) {
+                    $("#zyrt").html("");
+                    $("#Search").html("");
+                    for (var i in data) {
+                        $("#zyrt").append("<tr><td data-kayitno=" +
+                            data[i].Kayit_No +
+                            " data-visitor=" +
+                            data[i].Adi + '-' + data[i].Soyadi + ">" +
+                            data[i].Kayit_No +
+                            "</td><td>" + data[i].ID +
+                            "</td><td>" + data[i].Kart_ID +
+                            "</td><td>" + data[i].Adi +
+                            "</td><td>" + data[i].Soyadi +
+                            "</td><td>" + data[i].Sirket_No +
+                            "</td><td>" + data[i].Departman_No +
+                            "</td><td>" + data[i].Blok_No +
+                            "</td><td>" + data[i].Plaka +
+                            "</td><td>" + data[i].Gecis_Modu +
+                            "</td><td>" + data[i].Visitor_Grup_No +
+                            "</td></tr>");
+                    }
+                }
+            });
+          
+        });
+
+        $("#aktif").change(function () {
+            //Aktif Kullanıcı Arama
+            if ($(this).prop("checked") == true) {
+                $("#SearchBtn").click(function () {
+                    var arama = $("#Search").val();
+                    $("#Search").val("");
+                    $.ajax({
+                        url: '/ReportPersonel/AktifZiyaretciler',
+                        type: 'GET',
+                        data: { Search: arama },
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#zyrt").html("");
+                            $("#Search").html("");
+                            for (var i in data) {
+                                $("#zyrt").append("<tr><td data-kayitno=" +
+                                    data[i].Kayit_No +
+                                    " data-visitor=" +
+                                    data[i].Adi + '-' + data[i].Soyadi + ">" +
+                                    data[i].Kayit_No +
+                                    "</td><td>" + data[i].ID +
+                                    "</td><td>" + data[i].Kart_ID +
+                                    "</td><td>" + data[i].Adi +
+                                    "</td><td>" + data[i].Soyadi +
+                                    "</td><td>" + data[i].Sirket_No +
+                                    "</td><td>" + data[i].Departman_No +
+                                    "</td><td>" + data[i].Blok_No +
+                                    "</td><td>" + data[i].Plaka +
+                                    "</td><td>" + data[i].Gecis_Modu +
+                                    "</td><td>" + data[i].Visitor_Grup_No +
+                                    "</td></tr>");
+                            }
+                            
+                        }
+                    });
+                  
+                });
+            } else {
+                //Eski Kullanıcı Arama
+                $("#SearchBtn").click(function () {
+                    var arama = $("#Search").val();
+                    $("#Search").val("");
+                    $.ajax({
+                        url: '/ReportPersonel/EskiZiyaretciler',
+                        type: 'GET',
+                        data: { Search: arama },
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#zyrt").html("");
+                            $("#Search").html("");
+                            for (var i in data) {
+                                $("#zyrt").append("<tr><td data-kayitno=" +
+                                    data[i].Kayit_No +
+                                    " data-visitor=" +
+                                    data[i].Adi + '-' + data[i].Soyadi + ">" +
+                                    data[i].Kayit_No +
+                                    "</td><td>" + data[i].ID +
+                                    "</td><td>" + data[i].Kart_ID +
+                                    "</td><td>" + data[i].Adi +
+                                    "</td><td>" + data[i].Soyadi +
+                                    "</td><td>" + data[i].Sirket_No +
+                                    "</td><td>" + data[i].Departman_No +
+                                    "</td><td>" + data[i].Blok_No +
+                                    "</td><td>" + data[i].Plaka +
+                                    "</td><td>" + data[i].Gecis_Modu +
+                                    "</td><td>" + data[i].Visitor_Grup_No +
+                                    "</td></tr>");
+                            }
+
+                        }
+                    });
+                 
+
+                });
+
+            }
+
+        });
+
+
+
         $.ajax({
             url: '/ReportPersonel/AktifZiyaretciler',
             type: 'GET',
@@ -571,7 +696,6 @@
 
         });
         $("#Ziyaretci").focus(function () {
-
             $("#exampleModal").modal("show");
             $("#myTable tbody tr").click(function () {
                 var kayitNo = $(this).children("td").data("kayitno");
@@ -580,8 +704,6 @@
                 $("#Visitor").attr('value', kayitNo);
                 $("#alert").text(name + " Seçildi!");
             });
-
-
         });
         $("#aktif").change(function () {
             if ($(this).prop("checked") == true) {
@@ -656,96 +778,14 @@
             }
 
         });
-        ////Search İşlemi
-        //$("#eski").change(function () {
-        //    if ($(this).prop("checked") == true) {
-
-        //        $("#Search").change(function () {
-        //            $.ajax({
-        //                url: '/ReportPersonel/EskiZiyaretciler',
-        //                type: 'GET',
-        //                data: { Search: Search },
-        //                success: function (data) {
-        //                    $("#zyrt").html("");
-
-        //                    for (var i in data) {
-        //                        $("#zyrt").append("<tr><td data-kayitno=" +
-        //                            data[i].Kayit_No +
-        //                            " data-visitor=" +
-        //                            data[i].Adi + '-' + data[i].Soyadi + ">" +
-        //                            data[i].Kayit_No +
-        //                            "</td><td>" + data[i].ID +
-        //                            "</td><td>" + data[i].Kart_ID +
-        //                            "</td><td>" + data[i].Adi +
-        //                            "</td><td>" + data[i].Soyadi +
-        //                            "</td><td>" + data[i].Sirket_No +
-        //                            "</td><td>" + data[i].Departman_No +
-        //                            "</td><td>" + data[i].Blok_No +
-        //                            "</td><td>" + data[i].Plaka +
-        //                            "</td><td>" + data[i].Gecis_Modu +
-        //                            "</td><td>" + data[i].Visitor_Grup_No +
-        //                            "</td></tr>");
-        //                    }
-
-        //                },
-        //                error: function () {
-        //                    alert('error buddy');
-        //                }
-        //            });
 
 
-        //        });
-        //    }
-
-        //});
-        ////Search İşlemi
-        //$("#aktif").change(function () {
-        //    if ($(this).prop("checked") == true) {
-        //        $("#Search").change(function () {
-        //            $.ajax({
-        //                url: '/ReportPersonel/AktifZiyaretciler',
-        //                type: 'GET',
-        //                dataType:'json'
-        //                data: { Search: Search },
-        //                success: function (data) {
-        //                    $("#zyrt").html("");
-
-        //                    for (var i in data) {
-        //                        $("#zyrt").append("<tr><td data-kayitno=" +
-        //                            data[i].Kayit_No +
-        //                            " data-visitor=" +
-        //                            data[i].Adi + '-' + data[i].Soyadi + ">" +
-        //                            data[i].Kayit_No +
-        //                            "</td><td>" + data[i].ID +
-        //                            "</td><td>" + data[i].Kart_ID +
-        //                            "</td><td>" + data[i].Adi +
-        //                            "</td><td>" + data[i].Soyadi +
-        //                            "</td><td>" + data[i].Sirket_No +
-        //                            "</td><td>" + data[i].Departman_No +
-        //                            "</td><td>" + data[i].Blok_No +
-        //                            "</td><td>" + data[i].Plaka +
-        //                            "</td><td>" + data[i].Gecis_Modu +
-        //                            "</td><td>" + data[i].Visitor_Grup_No +
-        //                            "</td></tr>");
-        //                    }
-
-        //                },
-        //                error: function () {
-        //                    alert('error buddy');
-        //                }
-        //            });
-
-
-        //        });
-        //    }
-
-        //});
         //Tablodaki satıra tıklanıldığında resim gösterme
-        $("#myTable tbody tr").click(function () {
-            var kartID = $(this).children("td").data("kart");
-            $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
-            $("#change-image-canli").attr('src', '/Canli_Images/' + kartID + '.jpg');
-        });
+        //$("#myTable tbody tr").click(function () {
+        //    var kartID = $(this).children("td").data("kart");
+        //    $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
+        //    $("#change-image-canli").attr('src', '/Canli_Images/' + kartID + '.jpg');
+        //});
 
 
         //Tarih Formatına Bugünün Tarihini Getime Kodları
@@ -755,3 +795,4 @@
     });
 </script>
 @*Personel Raporları*@
+

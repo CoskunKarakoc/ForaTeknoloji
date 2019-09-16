@@ -130,7 +130,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PasifKullanici(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, DateTime? Tarih = null, double? Fark = 45)
         {
-            
+
             var nesne = _reportService.GelenGelmeyen_PasifKullanicis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih, Fark);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -169,17 +169,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult ToplamIcerdeKalma(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, int? UserID = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null)
         {
-            
+
             var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var users = _userService.GetAllUsers();
+            var usersComplex = _userService.GetAllUsersWithOuther();
             var model = new GelenGelmeyen_ToplamIcerdeKalmaListViewModel
             {
                 ToplamIcerdeKalma = nesne,
-                Kullanicilar = users,
+                KullaniciComplex=usersComplex,
                 Departmanlar = departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
@@ -208,19 +208,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        public ActionResult IlkGirisSonCikis(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, int? UserID = null, DateTime? Tarih1 = null , DateTime? Tarih2 = null)
+        public ActionResult IlkGirisSonCikis(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, int? UserID = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null)
         {
-            
+
             var nesne = _reportService.GelenGelmeyen_IlkGirisSonCikis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
             var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
-            var users = _userService.GetAllUsers();
+            var usersComplex = _userService.GetAllUsersWithOuther();
             var model = new GelenGelmeyen_IlkGirisSonCikisListViewModel
             {
                 IlkGirisSonCikis = nesne,
-                Kullanicilar = users,
+                KullaniciComplex = usersComplex,
                 Departmanlar = departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,

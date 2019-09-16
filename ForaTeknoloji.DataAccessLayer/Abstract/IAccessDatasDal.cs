@@ -11,7 +11,5 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
     public interface IAccessDatasDal : IEntityRepository<AccessDatas>
     {
-        IQueryable<AccessDatas> GetTanimsizListesi();
-        IQueryable<DigerGecisRaporList> GetDigerGecisListesi();
     }
 }

@@ -3,9 +3,33 @@
     ViewBag.Title = "Tanımsız Kullanıcı";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    WebGrid webGrid = new WebGrid(source: Model.Liste, rowsPerPage: 20);
-}
+    WebGrid webGrid = new WebGrid(source: Model.Liste, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    webGrid.Pager(WebGridPagerModes.NextPrevious);
+    string img = "#";
+    string canlimg = "#";
+    if (webGrid.HasSelection)
+    {
+        var sonuc = (ForaTeknoloji.Entities.Entities.AccessDatas)webGrid.Rows[webGrid.SelectedIndex].Value;
+        canlimg = "/Canli_Images/" + sonuc.Kart_ID + ".jpg";
 
+    }
+}
+<style>
+    .table-pager > td {
+        padding-top: 10px;
+    }
+
+        .table-pager > td > a {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 3px 7px;
+        }
+
+            .table-pager > td > a:hover {
+                background-color: #f0f0f0;
+            }
+</style>
 <div class="card shadow-lg mt-3">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Tanımsız Kullanıcı</h3>
@@ -100,7 +124,7 @@
             </div>
 
             <div class="col-md-6">
-                <img class="img-fluid" id="change-image" alt="Kritere Uygun Resim Yok" src="" />
+                <img class="img-fluid" id="change-image" alt="Kritere Uygun Resim Yok" src="@canlimg" />
             </div>
         </div>
     </div>
@@ -109,14 +133,15 @@
     <div id="print_div" class="card-body">
         @webGrid.GetHtml(
                  htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                  selectedRowStyle: "selectRow",
+                  footerStyle: "table-pager",
                  columns: webGrid.Columns(
-                     webGrid.Column(null,null,format:@<text><td hidden data-kart="@item.Kart_ID"></td></text>),
+                     webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
                              webGrid.Column("Kart_ID", "Kart ID"),
                              webGrid.Column("Panel_ID", "Panel"),
                              webGrid.Column("Kapi_ID", "Kapı"),
                              webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
                              webGrid.Column("Tarih", "Tarih")))
-
 
 
 
@@ -282,7 +307,7 @@
                     for (var i = 1; i < 9; i++) {
                         $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
                             + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
-                            + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " +i + "</label>"
+                            + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
                             + "</div>");
                     }
                 } else {

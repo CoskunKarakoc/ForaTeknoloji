@@ -13,7 +13,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int? Kayit_No { get; set; }
         public int? Panel_ID { get; set; }
-        public int? Kapi_ID { get; set; }
+        public string Kapi { get; set; }
         public int? Gecis_Tipi { get; set; }
         public string Operasyon { get; set; }
         public DateTime? Tarih { get; set; }

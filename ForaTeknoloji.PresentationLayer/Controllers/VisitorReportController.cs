@@ -145,7 +145,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Panel_ID;
                 worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Kapi_ID;
                 worksheet.Cells[string.Format("L{0}", rowStart)].Value = item.Gecis_Tipi;
-                worksheet.Cells[string.Format("M{0}", rowStart)].Value = item.Tarih;
+                worksheet.Cells[string.Format("M{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih);
                 worksheet.Cells[string.Format("N{0}", rowStart)].Value = item.Personel_Adi;
                 worksheet.Cells[string.Format("O{0}", rowStart)].Value = item.Personel_Soyadi;
                 rowStart++;

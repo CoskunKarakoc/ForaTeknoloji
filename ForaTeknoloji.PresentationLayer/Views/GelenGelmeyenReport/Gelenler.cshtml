@@ -4,7 +4,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.Gelenler, rowsPerPage: 20);
 }
+<style>
+    .table-pager > td {
+        padding-top: 10px;
+    }
 
+        .table-pager > td > a {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 3px 7px;
+        }
+
+            .table-pager > td > a:hover {
+                background-color: #f0f0f0;
+            }
+</style>
 <div class="card shadow-lg mt-2">
     <div class="card-header-tabs">
         <h3 class="text-muted text-center">Gelen Kişi Raporları</h3>
@@ -78,7 +93,7 @@
                     <div id="print_div" class="mt-4">
                         @webGrid.GetHtml(
                 htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-                
+                 footerStyle: "table-pager",
                 columns: webGrid.Columns(
                     webGrid.Column("ID", "ID"),
                     webGrid.Column("Kart_ID", "Kart ID"),
@@ -90,7 +105,7 @@
                     webGrid.Column("Plaka", "Plaka"),
                     webGrid.Column("BlokAdi", "Blok"),
                     webGrid.Column("Daire", "Daire"),
-                    webGrid.Column("Global_Bolge_Adi", "Global Bölge")))
+                    webGrid.Column("Grup_Adi", "Geçiş Grubu")))
 
 
 

@@ -99,7 +99,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Panel_ID;
                 worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Kapi_ID;
                 worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
-                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Tarih;
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:HH: mm tt}", item.Tarih);
                 rowStart++;
 
             }

@@ -4,7 +4,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.ToplamIcerdeKalma, rowsPerPage: 20);
 }
+<style>
+    .table-pager > td {
+        padding-top: 10px;
+    }
 
+        .table-pager > td > a {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 3px 7px;
+        }
+
+            .table-pager > td > a:hover {
+                background-color: #f0f0f0;
+            }
+</style>
 
 
 <div class="card shadow-lg mt-2">
@@ -98,12 +113,12 @@
 
                         @webGrid.GetHtml(
            htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+           footerStyle:"table-pager",
            columns: webGrid.Columns(
                webGrid.Column("ID", "ID"),
                webGrid.Column("Kart_ID", "Kart ID"),
                webGrid.Column("Adi", "Adı"),
                webGrid.Column("Soyadi", "Soyadı"),
-               webGrid.Column("TCKimlik", "TC Kimlik"),
                webGrid.Column("SirketAdi", "Şirket"),
                webGrid.Column("DepartmanAdi", "Departman"),
                webGrid.Column("Grup_Adi", "Grup No"),
@@ -202,7 +217,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Kullanicilar)
+                      
+                        @foreach (var item in Model.KullaniciComplex)
                         {
                             <tr>
                                 <td data-kayitno="@item.ID" data-visitor="@(item.Adi+' '+item.Soyadi)">@item.Kayit_No</td>
@@ -210,12 +226,12 @@
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
-                                <td>@item.Sirket_No</td>
-                                <td>@item.Departman_No</td>
-                                <td>@item.Blok_No</td>
+                                <td>@item.Sirket</td>
+                                <td>@item.Departman</td>
+                                <td>@item.Blok</td>
                                 <td>@item.Plaka</td>
-                                <td>@item.Gecis_Modu</td>
-                                <td>@item.Visitor_Grup_No</td>
+                                <td>@item.Gecis_Grubu</td>
+                                <td>@item.Ziyaretci_Grubu</td>
                             </tr>
                         }
                     </tbody>

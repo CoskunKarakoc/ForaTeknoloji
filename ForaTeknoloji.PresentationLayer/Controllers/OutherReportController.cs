@@ -126,10 +126,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 // worksheet.Row(rowStart).Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                 // worksheet.Row(rowStart).Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(string.Format("pink")));
                 worksheet.Cells[string.Format("A{0}", rowStart)].Value = item.Panel_ID;
-                worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Kapi_ID;
+                worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Kapi;
                 worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
                 worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Operasyon;
-                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Tarih;
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih); 
                 rowStart++;
 
             }
@@ -187,7 +187,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Kapi_ID;
                 worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
                 worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Operasyon;
-                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Tarih;
+                worksheet.Cells[string.Format("K{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih); 
                 rowStart++;
 
             }

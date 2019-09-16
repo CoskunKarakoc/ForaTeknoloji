@@ -165,7 +165,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                         {
                             Kayit_No = reader[0] as int? ?? default(int),
                             Panel_ID = reader[1] as int? ?? default(int),
-                            Kapi_ID = reader[2] as int? ?? default(int),
+                            Kapi = reader[2].ToString(),
                             Gecis_Tipi = reader[3] as int? ?? default(int),
                             Operasyon = reader[4].ToString(),
                             Tarih = reader[5] as DateTime? ?? default(DateTime)
@@ -513,7 +513,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<GelenGelmeyen_PasifKullanici> GelenGelmeyen_PasifKullanicis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih, double? Fark)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
-            string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0 ";
+            string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No])LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0 ";
             queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             if (Sirketler != null)
             {
@@ -879,7 +879,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
 
             string address = ConfigurationManager.AppSettings["ForaConnection"];
-            string queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID],Users.Adi, Users.Soyadi, Users.TCKimlik, Users.Telefon, Sirketler.Adi AS Sirket,Departmanlar.Adi AS Departman,Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, AccessDatas.[Kapi ID] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, Users.Resim, AccessDatas.[Canli Resim] FROM (((GroupsMaster RIGHT JOIN (Users LEFT JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No]) ON GroupsMaster.[Grup No] = Users.[Grup No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] WHERE AccessDatas.[Kullanici Tipi] = 0 ";
+            string queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID],Users.Adi, Users.Soyadi, Users.TCKimlik, Users.Telefon, Sirketler.Adi AS Sirket,Departmanlar.Adi AS Departman,Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, DoorNames.[Kapi Adi] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, Users.Resim, AccessDatas.[Canli Resim] FROM ((((GroupsMaster RIGHT JOIN (Users LEFT JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No]) ON GroupsMaster.[Grup No] = Users.[Grup No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] )  LEFT JOIN DoorNames ON (AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) AND (AccessDatas.[Panel ID] = DoorNames.[Panel No]) WHERE AccessDatas.[Kullanici Tipi] = 0 ";
             var SirketAdi = _sirketDal.Get(x => x.Sirket_No == Sirketler);
             var DepartmanAdi = _departmanDal.Get(x => x.Departman_No == Departmanlar);
             var GroupDetail = _groupsDetailDal.Get(x => x.Grup_No == Groupsdetail);
@@ -887,7 +887,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
             if (Kullanici == "Aktif")
             {
-                queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID],Users.Adi, Users.Soyadi, Users.TCKimlik, Users.Telefon, Sirketler.Adi AS Sirket,Departmanlar.Adi AS Departman,Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, AccessDatas.[Kapi ID] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, Users.Resim, AccessDatas.[Canli Resim] FROM (((GroupsMaster RIGHT JOIN (Users LEFT JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No]) ON GroupsMaster.[Grup No] = Users.[Grup No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] WHERE AccessDatas.[Kullanici Tipi] = 0";
+                queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID],Users.Adi, Users.Soyadi, Users.TCKimlik, Users.Telefon, Sirketler.Adi AS Sirket,Departmanlar.Adi AS Departman,Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, DoorNames.[Kapi Adi] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, Users.Resim, AccessDatas.[Canli Resim] FROM ((((GroupsMaster RIGHT JOIN (Users LEFT JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No]) ON GroupsMaster.[Grup No] = Users.[Grup No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] )  LEFT JOIN DoorNames ON (AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) AND (AccessDatas.[Panel ID] = DoorNames.[Panel No]) WHERE AccessDatas.[Kullanici Tipi] = 0 ";
                 if (TümKullanici == null)
                 {
                     if (Visitors != null)
@@ -936,7 +936,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             else if (Kullanici == "Eski")
             {
-                queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID],UsersOLD.Adi, UsersOLD.Soyadi, UsersOLD.TCKimlik, UsersOLD.Telefon, Sirketler.Adi AS Sirket,Departmanlar.Adi AS Departman,UsersOLD.Plaka, Bloklar.Adi AS Blok, UsersOLD.Daire,GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, AccessDatas.[Kapi ID] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, UsersOLD.Resim, AccessDatas.[Canli Resim] FROM (((GroupsMaster RIGHT JOIN (UsersOLD LEFT JOIN AccessDatas ON UsersOLD.[User Kayit No] = AccessDatas.[User Kayit No]) ON GroupsMaster.[Grup No] = UsersOLD.[Grup No]) LEFT JOIN Sirketler ON UsersOLD.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON UsersOLD.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON UsersOLD.[Blok No] = Bloklar.[Blok No] WHERE AccessDatas.[Kullanici Tipi] = 0";
+                queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID],UsersOLD.Adi, UsersOLD.Soyadi, UsersOLD.TCKimlik, UsersOLD.Telefon, Sirketler.Adi AS Sirket,Departmanlar.Adi AS Departman,UsersOLD.Plaka, Bloklar.Adi AS Blok, UsersOLD.Daire,GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, AccessDatas.[Kapi ID] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, UsersOLD.Resim, AccessDatas.[Canli Resim] FROM ((((GroupsMaster RIGHT JOIN (UsersOLD LEFT JOIN AccessDatas ON UsersOLD.[User Kayit No] = AccessDatas.[User Kayit No]) ON GroupsMaster.[Grup No] = UsersOLD.[Grup No]) LEFT JOIN Sirketler ON UsersOLD.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON UsersOLD.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON UsersOLD.[Blok No] = Bloklar.[Blok No] ) LEFT JOIN DoorNames ON (AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) AND (AccessDatas.[Panel ID] = DoorNames.[Panel No]) WHERE AccessDatas.[Kullanici Tipi] = 0 ";
                 if (TümKullanici == null)
                 {
                     if (Visitors != null)
@@ -1030,10 +1030,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
 
             }
-            //if (Saat1 != null && Saat2 == null)
-            //{
-            //    queryString += "";
-            //}
+          
 
             if (Günlük != null && Tarih1 != null && Tarih2 != null && Saat1 != null && Saat2 != null)
             {
@@ -1070,7 +1067,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Daire = reader[11] as int? ?? default(int),
                             Grup_Adi = reader[12].ToString(),
                             Panel_ID = reader[13] as int? ?? default(int),
-                            Kapi_ID = reader[14] as int? ?? default(int),
+                            Kapi = reader[14].ToString(),
                             Gecis_Tipi = reader[15] as int? ?? default(int),
                             Tarih = reader[16] as DateTime? ?? default(DateTime),
                             Resim = reader[17].ToString(),

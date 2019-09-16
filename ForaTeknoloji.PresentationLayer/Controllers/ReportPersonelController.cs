@@ -119,10 +119,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult AktifZiyaretciler(string Search)//Popup'a Aktif Kulanıcı Yükleniyor
         {
+
             var liste = _userService.GetAllUsers().OrderBy(x => x.Kayit_No);
             if (Search != null && Search != "")
             {
-                liste = _userService.GetAllUsers(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search)).OrderBy(x => x.Kayit_No);
+                liste = _userService.GetAllUsers(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim())).OrderBy(x => x.Kayit_No);
             }
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
@@ -132,7 +133,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var liste = _usersOLDService.GetAllUsersOLD().OrderBy(x => x.Kayit_No);
             if (Search != null && Search != "")
             {
-                liste = _usersOLDService.GetAllUsersOLD(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search)).OrderBy(x => x.Kayit_No);
+                liste = _usersOLDService.GetAllUsersOLD(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim())).OrderBy(x => x.Kayit_No);
             }
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
@@ -194,9 +195,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Daire;
                 worksheet.Cells[string.Format("L{0}", rowStart)].Value = item.Grup_Adi;
                 worksheet.Cells[string.Format("M{0}", rowStart)].Value = item.Panel_ID;
-                worksheet.Cells[string.Format("N{0}", rowStart)].Value = item.Kapi_ID;
+                worksheet.Cells[string.Format("N{0}", rowStart)].Value = item.Kapi;
                 worksheet.Cells[string.Format("O{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
-                worksheet.Cells[string.Format("P{0}", rowStart)].Value = item.Tarih;
+                worksheet.Cells[string.Format("P{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih); 
                 rowStart++;
 
             }

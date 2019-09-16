@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUserDal;
 
 namespace ForaTeknoloji.BusinessLayer.Concrete
 {
@@ -44,5 +45,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _userDal.Update(users);
         }
+
+        public List<ComplexUser> GetAllUsersWithOuther()
+        {
+
+            return _userDal.GetAllUsersWithOuther();
+        }
+
     }
 }

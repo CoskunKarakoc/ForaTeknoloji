@@ -75,7 +75,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        
+
 
         public ActionResult Ziyaretci(int? Paneller = null, string Kapi = "", string Bolge = "", string Gecis = "0", int? Global_Bolge_Adi = 1)
         {
@@ -180,7 +180,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Tarih";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
-            worksheet.Cells["E6"].Style.Numberformat.Format = "dd/MM/yy hh:MM:ss";
             int rowStart = 7;
             foreach (var item in liste)
             {
@@ -190,7 +189,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Adi;
                 worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Soyadi;
                 worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Ziyaret_Sebebi;
-                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Tarih;
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih);
                 rowStart++;
 
             }
@@ -228,7 +227,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Geçiş";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
-            worksheet.Cells["E6"].Style.Numberformat.Format = "dd/MM/yy hh:MM:ss";
             int rowStart = 7;
             foreach (var item in liste)
             {
@@ -241,7 +239,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Soyadi;
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Sirket;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.Departman;
-                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Tarih;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih);
                 worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
                 rowStart++;
 
@@ -282,8 +280,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["J6"].Value = "Tarih";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
-            worksheet.Cells["I6"].Style.Numberformat.Format = "dd/MM/yy hh:MM:ss";
-            worksheet.Cells["J6"].Style.Numberformat.Format = "dd/MM/yy hh:MM:ss";
             int rowStart = 7;
             foreach (var item in liste)
             {
@@ -297,8 +293,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Ziyaretci_Soyadi;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.Sirket;
                 worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Departman;
-                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Tarih;
-                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Tarih;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih);
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Ziyaret_Tarihi);
 
                 rowStart++;
 

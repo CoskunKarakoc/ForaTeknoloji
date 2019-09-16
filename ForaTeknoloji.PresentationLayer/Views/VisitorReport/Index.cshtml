@@ -2,9 +2,34 @@
 @{
     ViewBag.Title = "Ziyaretçi Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    WebGrid webGrid = new WebGrid(source: Model.ComplexVisitorsListesi, rowsPerPage: 20);
-}
+    WebGrid webGrid = new WebGrid(source: Model.ComplexVisitorsListesi, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    webGrid.Pager(WebGridPagerModes.NextPrevious);
+    string img = "#";
+    string canlimg = "#";
+    if (webGrid.HasSelection)
+    {
+        var sonuc = (ForaTeknoloji.Entities.ComplexType.ZiyaretciRaporList)webGrid.Rows[webGrid.SelectedIndex].Value;
+        img = "/Images/" + sonuc.Kart_ID + ".jpg";
+        canlimg = "/Canli_Images/" + sonuc.Kart_ID + ".jpg";
 
+    }
+}
+<style>
+    .table-pager > td {
+        padding-top: 10px;
+    }
+
+        .table-pager > td > a {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 3px 7px;
+        }
+
+            .table-pager > td > a:hover {
+                background-color: #f0f0f0;
+            }
+</style>
 <div class="card mt-1 shadow-lg">
     <div class="card-header-tabs">
         <h3 class="text-muted text-center">Ziyaretçi Raporları</h3>
@@ -144,9 +169,9 @@
 
                 </div>
                 <div class="col-md-4">
-                    <img id="change-image" src="#" alt="Kayıtlı Fotoğraf" />
+                    <img id="change-image" src="@img" alt="Kayıtlı Fotoğraf" />
                     <hr />
-                    <img id="change-image-canli" src="#" alt="Canlı Fotoğraf" />
+                    <img id="change-image-canli" src="@canlimg" alt="Canlı Fotoğraf" />
 
                 </div>
             </div>
@@ -158,8 +183,10 @@
         <div id="print_div">
             @webGrid.GetHtml(
           htmlAttributes: new { @id = "tableNon", @class = "table-borderless table table-hover text-center table-striped" },
+         footerStyle:"table-pager",
+          selectedRowStyle: "selectRow",
           columns: webGrid.Columns(
-             webGrid.Column(null, null, format:@<text><td hidden data-kart="@item.Kart_ID"></td></text>),
+    webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
     webGrid.Column("ID", "ID"),
     webGrid.Column("Kart_ID", "Kart ID"),
     webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
@@ -465,7 +492,6 @@
         //Tablodaki satıra tıklanıldığında resim gösterme
         $("#tableNon tbody tr").click(function () {
             var kartID = $(this).children("td").data("kart");
-            alert(kartID);
             $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
             $("#change-image-canli").attr('src', '/Canli_Images/' + kartID + '.jpg');
         });
