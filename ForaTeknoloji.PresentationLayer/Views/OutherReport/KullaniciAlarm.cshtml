@@ -229,21 +229,28 @@
 </div>
 <div class="card shadow-lg mt-1">
     <div id="print_div" class="card-body">
-        @webGrid.GetHtml(
-          htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-          footerStyle:"table-pager",
-          columns: webGrid.Columns(
-              webGrid.Column("Kayit_No", "Kayıt No"),
-              webGrid.Column("ID", "ID"),
-              webGrid.Column("Kart_ID", "Kart ID"),
-              webGrid.Column("Adi", "Adı"),
-              webGrid.Column("Soyadi", "Soyadı"),
-              webGrid.Column("SirketAdi", "Şirket"),
-              webGrid.Column("PanelID", "Panel"),
-              webGrid.Column("Kapi_ID", "Kapı"),
-              webGrid.Column("Gecis_Tipi", "Geçiş",format:item=>item.Gecis_Tipi==0?"Giriş":"Çıkış"),
-              webGrid.Column("Operasyon", "Operasyon"),
-              webGrid.Column("Tarih", "Tarih")))
+        @if (Model.DigerGecisListesiAlarm.Count > 0)
+        {
+            @webGrid.GetHtml(
+               htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+               footerStyle: "table-pager",
+               columns: webGrid.Columns(
+                   webGrid.Column("Kayit_No", "Kayıt No"),
+                   webGrid.Column("ID", "ID"),
+                   webGrid.Column("Kart_ID", "Kart ID"),
+                   webGrid.Column("Adi", "Adı"),
+                   webGrid.Column("Soyadi", "Soyadı"),
+                   webGrid.Column("SirketAdi", "Şirket"),
+                   webGrid.Column("PanelID", "Panel"),
+                   webGrid.Column("Kapi_ID", "Kapı"),
+                   webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+                   webGrid.Column("Operasyon", "Operasyon"),
+                   webGrid.Column("Tarih", "Tarih")))
+        }
+        else
+        {
+            <div class="alert alert-info alert-message"><h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4></div>
+        }
 
 
 
@@ -306,8 +313,9 @@
     </div>
 </div>
 
+
 <script>
-    $(function () {
+    $(document).ready(function () {
         //Yazıcı Çıktısı Alan Kod Table'ı kaplayan div'in => id'sine print_div yaz birde id si btnPrint olan bir buton yaz
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
@@ -333,10 +341,6 @@
             }, 500);
 
         });
-    });
-</script>
-<script>
-    $(document).ready(function () {
         $("#TümTarih").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#ikiTarih").attr("disabled", true);
@@ -407,7 +411,6 @@
             }
 
         });
-
         $.ajax({
             url: '/OutherReport/KapiListesi',
             type: 'GET',

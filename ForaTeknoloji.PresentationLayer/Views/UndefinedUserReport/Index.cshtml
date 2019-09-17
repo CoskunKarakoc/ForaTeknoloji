@@ -131,18 +131,26 @@
 </div>
 <div class="card mt-1 shadow-lg">
     <div id="print_div" class="card-body">
-        @webGrid.GetHtml(
-                 htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-                  selectedRowStyle: "selectRow",
-                  footerStyle: "table-pager",
-                 columns: webGrid.Columns(
-                     webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
-                             webGrid.Column("Kart_ID", "Kart ID"),
-                             webGrid.Column("Panel_ID", "Panel"),
-                             webGrid.Column("Kapi_ID", "Kapı"),
-                             webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
-                             webGrid.Column("Tarih", "Tarih")))
-
+        @if (Model.Liste.Count > 0)
+        {
+            @webGrid.GetHtml(
+               htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                selectedRowStyle: "selectRow",
+                footerStyle: "table-pager",
+               columns: webGrid.Columns(
+                   webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
+                           webGrid.Column("Kart_ID", "Kart ID"),
+                           webGrid.Column("Panel_ID", "Panel"),
+                           webGrid.Column("Kapi_Adi", "Kapı"),
+                           webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+                           webGrid.Column("Tarih", "Tarih")))
+        }
+        else
+        {
+            <div class="alert alert-info alert-message">
+                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+            </div>
+        }
 
 
 
@@ -289,13 +297,11 @@
             }, 500);
 
         });
-
         //Tablodaki satıra tıklanıldığında resim gösterme
         $("#myTable tbody tr").click(function () {
             var kartID = $(this).children("td").data("kart");
             $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
         });
-
         $.ajax({
             url: '/UndefinedUserReport/KapiListesi',
             type: 'GET',

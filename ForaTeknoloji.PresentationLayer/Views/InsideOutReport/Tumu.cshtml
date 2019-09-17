@@ -97,21 +97,30 @@
     @using (Html.BeginForm("ManuelCikis", "InsideOutReport", FormMethod.Post))
     {
         <div id="print_div" class="card-body">
-            @webGrid.GetHtml(
-                htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-                footerStyle:"table-pager",
-                columns: webGrid.Columns(
-                    webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                         webGrid.Column("ID", "ID"),
-                         webGrid.Column("Kart_ID", "Kart ID"),
-                         webGrid.Column("Adi", "Adı"),
-                         webGrid.Column("Soyadi", "Soyadı"),
-                         webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
-                         webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadi"),
-                         webGrid.Column("Sirket", "Şirket"),
-                         webGrid.Column("Departman", "Departman"),
-                         webGrid.Column("Tarih", "Tarih"),
-                         webGrid.Column("Ziyaret_Tarihi", "Tarihi")))
+            @if (Model.TumuListesi.Count > 0)
+            {
+                @webGrid.GetHtml(
+              htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+              footerStyle:"table-pager",
+              columns: webGrid.Columns(
+                  webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
+                               webGrid.Column("ID", "ID"),
+                               webGrid.Column("Kart_ID", "Kart ID"),
+                               webGrid.Column("Adi", "Adı"),
+                               webGrid.Column("Soyadi", "Soyadı"),
+                               webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
+                               webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadi"),
+                               webGrid.Column("Sirket", "Şirket"),
+                               webGrid.Column("Departman", "Departman"),
+                               webGrid.Column("Tarih", "Tarih"),
+                               webGrid.Column("Ziyaret_Tarihi", "Tarihi")))
+            }
+            else
+            {
+                <div class="alert alert-info alert-message">
+                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                </div>
+            }
 
 
 
@@ -382,8 +391,6 @@
             }
 
         });
-
-
         $("#In").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#CikisVer").attr("disabled", false);
@@ -396,11 +403,6 @@
                 $("#readerCikis").attr("disabled", true);
             }
         });
-
-
-
-
-
 
     });
 </script>

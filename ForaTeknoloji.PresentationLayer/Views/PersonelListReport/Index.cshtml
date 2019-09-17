@@ -89,23 +89,31 @@
 <div class="card shadow-lg mt-2 mb-1">
 
     <div id="print_div" class="card-body">
-        @webGrid.GetHtml(
-                 htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-                 footerStyle: "table-pager",
-                 columns: webGrid.Columns(
-                     webGrid.Column("ID", "ID"),
-                     webGrid.Column("Kart_ID", "Kart ID"),
-                     webGrid.Column("Adi", "Adı"),
-                     webGrid.Column("Soyadi", "Soyadı"),
-                     webGrid.Column("TCKimlik", "TC Kimlik"),
-                     webGrid.Column("SirketAdi", "Şirket"),
-                     webGrid.Column("DepartmanAdi", "Departman"),
-                     webGrid.Column("Plaka", "Plaka"),
-                     webGrid.Column("BlokAdi", "Blok"),
-                     webGrid.Column("Daire", "Daire"),
-                     webGrid.Column("Grup_Adi", "Grup")))
+        @if (Model.PersonelListesi.Count > 0)
+        {
+            @webGrid.GetHtml(
+                      htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                      footerStyle: "table-pager",
+                      columns: webGrid.Columns(
+                          webGrid.Column("ID", "ID"),
+                          webGrid.Column("Kart_ID", "Kart ID"),
+                          webGrid.Column("Adi", "Adı"),
+                          webGrid.Column("Soyadi", "Soyadı"),
+                          webGrid.Column("TCKimlik", "TC Kimlik"),
+                          webGrid.Column("SirketAdi", "Şirket"),
+                          webGrid.Column("DepartmanAdi", "Departman"),
+                          webGrid.Column("Plaka", "Plaka"),
+                          webGrid.Column("BlokAdi", "Blok"),
+                          webGrid.Column("Daire", "Daire"),
+                          webGrid.Column("Grup_Adi", "Grup")))
 
-
+        }
+        else
+        {
+            <div class="alert alert-info alert-message ">
+                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+            </div>
+        }
 
 
         @*<table class="table-borderless table table-hover text-center table-striped ">
@@ -182,9 +190,6 @@
 </div>
 
 <script>
-    $("input[type='number']").inputSpinner()
-</script>
-<script>
     $(function () {
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
@@ -211,27 +216,8 @@
 
         });
 
-
-
-
     });
+    $("input[type='number']").inputSpinner()
 
-
-
-
-
-
-
-
-
-
-
-    });
 </script>
 <script src="./src/bootstrap-input-spinner.js"></script>
-
-<script>
-    [].forEach.call(document.getElementsByClassName('mvc-grid'), function (element) {
-        new MvcGrid(element);
-    });
-</script>

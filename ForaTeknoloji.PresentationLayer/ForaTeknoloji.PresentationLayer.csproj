@@ -462,6 +462,7 @@
     <Content Include="Content\Gridmvc.css" />
     <Content Include="Content\gridmvc.datepicker.css" />
     <Content Include="Content\gridmvc.datepicker.min.css" />
+    <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Login-Page.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Validation-Summary.css" />

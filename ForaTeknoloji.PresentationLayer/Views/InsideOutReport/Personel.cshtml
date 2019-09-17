@@ -98,20 +98,29 @@
 
         <div id="print_div" class="card-body">
 
-            @webGrid.GetHtml(
-                htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-                footerStyle:"table-pager",
-                columns: webGrid.Columns(
-                    webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                              webGrid.Column("Kayit_No", "Kayıt No"),
-                              webGrid.Column("ID", "ID"),
-                              webGrid.Column("Kart_ID", "Kart ID"),
-                              webGrid.Column("Adi", "Adı"),
-                              webGrid.Column("Soyadi", "Soyadı"),
-                              webGrid.Column("Sirket", "Şirket"),
-                              webGrid.Column("Departman", "Departman"),
-                              webGrid.Column("Tarih", "Tarih"),
-                              webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
+            @if (Model.IcerdeDısardaPersonel.Count > 0)
+            {
+                @webGrid.GetHtml(
+    htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+    footerStyle:"table-pager",
+    columns: webGrid.Columns(
+     webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
+                webGrid.Column("Kayit_No", "Kayıt No"),
+                webGrid.Column("ID", "ID"),
+                webGrid.Column("Kart_ID", "Kart ID"),
+                webGrid.Column("Adi", "Adı"),
+                webGrid.Column("Soyadi", "Soyadı"),
+                webGrid.Column("Sirket", "Şirket"),
+                webGrid.Column("Departman", "Departman"),
+                webGrid.Column("Tarih", "Tarih"),
+                webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
+            }
+            else
+            {
+                <div class="alert alert-info alert-message">
+                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                </div>
+            }
 
 
 
@@ -364,8 +373,6 @@
             }
 
         });
-
-
         $("#In").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#CikisVer").attr("disabled", false);
@@ -378,9 +385,6 @@
                 $("#readerCikis").attr("disabled", true);
             }
         });
-
-
-
 
     });
 </script>

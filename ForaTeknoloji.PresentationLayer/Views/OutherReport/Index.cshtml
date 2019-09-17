@@ -20,6 +20,7 @@
                 background-color: #f0f0f0;
             }
 </style>
+
 <div class="card shadow-lg mt-1">
     <div class="card-header-tabs">
         <h3 class="text-center text-muted">Diğer Geçiş Raporları</h3>
@@ -198,16 +199,27 @@
 </div>
 <div class="card shadow-lg mt-1">
     <div id="print_div" class="card-body">
+        @if (Model.DigerGecisListesi.Count > 0)
+        {
 
-        @webGrid.GetHtml(
-         htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-        footerStyle:"table-pager",
-         columns: webGrid.Columns(
-             webGrid.Column("Panel_ID", "Panel"),
-             webGrid.Column("Kapi", "Kapı"),
-             webGrid.Column("Gecis_Tipi", "Geçiş",format:item=>item.Gecis_Tipi==0 ? "Giriş":"Çıkış"),
-             webGrid.Column("Operasyon", "Operasyon"),
-             webGrid.Column("Tarih", "Tarih")))
+            @webGrid.GetHtml(
+             htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+            footerStyle:"table-pager",
+             columns: webGrid.Columns(
+                 webGrid.Column("Panel_ID", "Panel"),
+                 webGrid.Column("Kapi", "Kapı"),
+                 webGrid.Column("Gecis_Tipi", "Geçiş",format:item=>item.Gecis_Tipi==0 ? "Giriş":"Çıkış"),
+                 webGrid.Column("Operasyon", "Operasyon"),
+                 webGrid.Column("Tarih", "Tarih")))
+        }
+        else
+        {
+            <div class="alert alert-info alert-message">
+                <h4 class="text-center text-muted">
+                    Kriterlere Uygun Kayıt Yok!
+                </h4>
+            </div>
+        }
 
 
 
@@ -261,8 +273,9 @@
     </div>
 </div>
 
+
 <script>
-    $(function () {
+    $(document).ready(function () {
         //Yazıcı Çıktısı Alan Kod Table'ı kaplayan div'in => id'sine print_div yaz birde id si btnPrint olan bir buton yaz
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
@@ -288,43 +301,6 @@
             }, 500);
 
         });
-
-
-        $.ajax({
-            url: '/OutherReport/KapiListesi',
-            type: 'GET',
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                console.log(data);
-                $("#Kapilar").html("");
-                if (data.length == 0 || data.length < 0) {
-                    for (var i = 1; i < 9; i++) {
-                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-                            + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
-                            + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
-                            + "</div>");
-                    }
-                } else {
-                    for (var i in data) {
-                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-                            + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
-                            + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
-                            + "</div>");
-                    }
-                }
-            }, error: function () {
-                alert("Kapı Listesi Yüklenemedi");
-            }
-        });
-
-
-
-    });
-</script>
-<script>
-    $(document).ready(function () {
-
         $("#TümTarih").change(function () {
             if ($(this).prop("checked") == true) {
 
@@ -397,7 +373,33 @@
             }
 
         });
-
+        $.ajax({
+            url: '/OutherReport/KapiListesi',
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log(data);
+                $("#Kapilar").html("");
+                if (data.length == 0 || data.length < 0) {
+                    for (var i = 1; i < 9; i++) {
+                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                            + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
+                            + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
+                            + "</div>");
+                    }
+                } else {
+                    for (var i in data) {
+                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+                            + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
+                            + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
+                            + "</div>");
+                    }
+                }
+            }, error: function () {
+                alert("Kapı Listesi Yüklenemedi");
+            }
+        });
 
         var today = new Date();
         $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));

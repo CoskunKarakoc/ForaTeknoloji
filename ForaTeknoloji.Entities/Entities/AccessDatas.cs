@@ -58,5 +58,7 @@ namespace ForaTeknoloji.Entities.Entities
 
         [StringLength(50)]
         public string Plaka { get; set; }
+
+        public string Kapi_Adi { get; set; }
     }
 }

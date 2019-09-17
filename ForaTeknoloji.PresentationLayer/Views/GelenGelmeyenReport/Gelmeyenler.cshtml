@@ -92,67 +92,77 @@
 
                     <div id="print_div" class="mt-4">
 
-                        @webGrid.GetHtml(
-              htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-              footerStyle: "table-pager",
-              columns: webGrid.Columns(
-                  webGrid.Column("ID", "ID"),
-                  webGrid.Column("Kart_ID", "Kart ID"),
-                  webGrid.Column("Adi", "Adı"),
-                  webGrid.Column("Soyadi", "Soyadı"),
-                  webGrid.Column("TCKimlik", "TC Kimlik"),
-                  webGrid.Column("SirketAdi", "Şirket"),
-                  webGrid.Column("DepartmanAdi", "Departman"),
-                  webGrid.Column("Plaka", "Plaka"),
-                  webGrid.Column("BlokAdi", "Blok"),
-                  webGrid.Column("Daire", "Daire"),
-                  webGrid.Column("Grup_Adi", "Geçiş Grubu")))
+                        @if (Model.Gelmeyenler.Count > 0)
+                        {
+                            @webGrid.GetHtml(
+                   htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                   footerStyle: "table-pager",
+                   columns: webGrid.Columns(
+                       webGrid.Column("ID", "ID"),
+                       webGrid.Column("Kart_ID", "Kart ID"),
+                       webGrid.Column("Adi", "Adı"),
+                       webGrid.Column("Soyadi", "Soyadı"),
+                       webGrid.Column("TCKimlik", "TC Kimlik"),
+                       webGrid.Column("SirketAdi", "Şirket"),
+                       webGrid.Column("DepartmanAdi", "Departman"),
+                       webGrid.Column("Plaka", "Plaka"),
+                       webGrid.Column("BlokAdi", "Blok"),
+                       webGrid.Column("Daire", "Daire"),
+                       webGrid.Column("Grup_Adi", "Geçiş Grubu")))
+                        }
+                        else
+                        {
+                            <div class="alert alert-info alert-message">
+                                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                            </div>
+
+                        }
 
 
                         @*<table class="table-borderless table table-hover text-center table-striped ">
-                            <thead class="table-info">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Kart ID</td>
-                                    <td>Adı</td>
-                                    <td>Soyadı</td>
-                                    <td>TC Kimlik</td>
-                                    <td>Şirket</td>
-                                    <td>Departman</td>
-                                    <td>Plaka</td>
-                                    <td>Blok</td>
-                                    <td>Daire</td>
-                                    <td>Geçiş Grubu</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.Gelmeyenler.Count == 0)
-                                {
+                                <thead class="table-info">
                                     <tr>
-                                        <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                                        <td>ID</td>
+                                        <td>Kart ID</td>
+                                        <td>Adı</td>
+                                        <td>Soyadı</td>
+                                        <td>TC Kimlik</td>
+                                        <td>Şirket</td>
+                                        <td>Departman</td>
+                                        <td>Plaka</td>
+                                        <td>Blok</td>
+                                        <td>Daire</td>
+                                        <td>Geçiş Grubu</td>
                                     </tr>
-                                }
-                                else
-                                {
-                                    foreach (var item in Model.Gelmeyenler)
+                                </thead>
+                                <tbody>
+                                    @if (Model.Gelmeyenler.Count == 0)
                                     {
                                         <tr>
-                                            <td>@item.ID</td>
-                                            <td>@item.Kart_ID</td>
-                                            <td>@item.Adi</td>
-                                            <td>@item.Soyadi</td>
-                                            <td>@item.TCKimlik</td>
-                                            <td>@item.SirketAdi</td>
-                                            <td>@item.DepartmanAdi</td>
-                                            <td>@item.Plaka</td>
-                                            <td>@item.BlokAdi</td>
-                                            <td>@item.Daire</td>
-                                            <td>@item.Global_Bolge_Adi</td>
+                                            <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
                                         </tr>
                                     }
-                                }
-                            </tbody>
-                        </table>*@
+                                    else
+                                    {
+                                        foreach (var item in Model.Gelmeyenler)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.Kart_ID</td>
+                                                <td>@item.Adi</td>
+                                                <td>@item.Soyadi</td>
+                                                <td>@item.TCKimlik</td>
+                                                <td>@item.SirketAdi</td>
+                                                <td>@item.DepartmanAdi</td>
+                                                <td>@item.Plaka</td>
+                                                <td>@item.BlokAdi</td>
+                                                <td>@item.Daire</td>
+                                                <td>@item.Global_Bolge_Adi</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>*@
                     </div>
 
 
@@ -221,15 +231,6 @@
                 $("#Groupsdetail").attr("disabled", false);
             }
         });
-
-
-
-
-
-
-        var today = new Date();
-        $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
-        $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
 
     });
     var today = new Date();

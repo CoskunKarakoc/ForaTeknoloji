@@ -16,6 +16,7 @@
 
     }
 }
+
 <style>
     .table-pager > td {
         padding-top: 10px;
@@ -236,30 +237,39 @@
 <div class="card mt-1 shadow-lg">
     <div class="card-body">
         <div id="print_div">
-            @webGrid.GetHtml(
-  htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-   selectedRowStyle: "selectRow",
-   footerStyle: "table-pager",
-  columns: webGrid.Columns(
-      webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
-      webGrid.Column("ID", "ID"),
-      webGrid.Column("Kart_ID", "Kart ID"),
-      webGrid.Column("Adi", "Adı"),
-      webGrid.Column("Soyadi", "Soyadı"),
-      webGrid.Column("TCKimlik", "TC Kimlik"),
-      webGrid.Column("Telefon", "Telefon"),
-      webGrid.Column("SirketAdi", "Şirket"),
-      webGrid.Column("DepartmanAdi", "Departman"),
-      webGrid.Column("Plaka", "Plaka"),
-      webGrid.Column("BlokAdi", "Blok"),
-      webGrid.Column("Daire", "Daire"),
-      webGrid.Column("Grup_Adi", "Grup"),
-      webGrid.Column("Panel_ID", "Panel"),
-      webGrid.Column("Kapi", "Kapı"),
-      webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
-      webGrid.Column("Tarih", "Tarih")))
+            @if (Model.ReportPersonel.Count > 0)
+            {
+                @webGrid.GetHtml(
+htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+selectedRowStyle: "selectRow",
+footerStyle: "table-pager",
+columns: webGrid.Columns(
+webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
+webGrid.Column("ID", "ID"),
+webGrid.Column("Kart_ID", "Kart ID"),
+webGrid.Column("Adi", "Adı"),
+webGrid.Column("Soyadi", "Soyadı"),
+webGrid.Column("TCKimlik", "TC Kimlik"),
+webGrid.Column("Telefon", "Telefon"),
+webGrid.Column("SirketAdi", "Şirket"),
+webGrid.Column("DepartmanAdi", "Departman"),
+webGrid.Column("Plaka", "Plaka"),
+webGrid.Column("BlokAdi", "Blok"),
+webGrid.Column("Daire", "Daire"),
+webGrid.Column("Grup_Adi", "Grup"),
+webGrid.Column("Panel_ID", "Panel"),
+webGrid.Column("Kapi", "Kapı"),
+webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+webGrid.Column("Tarih", "Tarih")))
 
+            }
+            else
+            {
+                <div class="alert alert-info alert-message">
+                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                </div>
 
+            }
 
 
 
@@ -338,7 +348,6 @@
                     <h2 id="alert" class="text-center text-muted"></h2>
                 </div>
                 <!-- Search form -->
-
                 <div class="input-group md-form form-sm form-2 pl-0">
                     <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
                     <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
@@ -371,13 +380,10 @@
     </div>
 </div>
 
-<script>$("input[type='number']").inputSpinner()</script>
 
-<script src="./src/bootstrap-input-spinner.js"></script>
+
 <script>
-
-
-
+    $("input[type='number']").inputSpinner()
     $(document).ready(function () {
         //Model arama işlemi
         $("#SearchBtn").click(function () {
@@ -411,9 +417,14 @@
                     }
                 }
             });
-          
+            $("#myTable tbody tr").click(function () {
+                var kayitNo = $(this).children("td").data("kayitno");
+                var name = $(this).children("td").data("visitor");
+                $("#Ziyaretci").attr('value', name);
+                $("#Visitor").attr('value', kayitNo);
+                $("#alert").text(name + " Seçildi!");
+            });
         });
-
         $("#aktif").change(function () {
             //Aktif Kullanıcı Arama
             if ($(this).prop("checked") == true) {
@@ -446,10 +457,16 @@
                                     "</td><td>" + data[i].Visitor_Grup_No +
                                     "</td></tr>");
                             }
-                            
+
                         }
                     });
-                  
+                    $("#myTable tbody tr").click(function () {
+                        var kayitNo = $(this).children("td").data("kayitno");
+                        var name = $(this).children("td").data("visitor");
+                        $("#Ziyaretci").attr('value', name);
+                        $("#Visitor").attr('value', kayitNo);
+                        $("#alert").text(name + " Seçildi!");
+                    });
                 });
             } else {
                 //Eski Kullanıcı Arama
@@ -485,16 +502,19 @@
 
                         }
                     });
-                 
+                    $("#myTable tbody tr").click(function () {
+                        var kayitNo = $(this).children("td").data("kayitno");
+                        var name = $(this).children("td").data("visitor");
+                        $("#Ziyaretci").attr('value', name);
+                        $("#Visitor").attr('value', kayitNo);
+                        $("#alert").text(name + " Seçildi!");
+                    });
 
                 });
 
             }
 
         });
-
-
-
         $.ajax({
             url: '/ReportPersonel/AktifZiyaretciler',
             type: 'GET',
@@ -527,7 +547,6 @@
                 alert('error body');
             }
         });
-
         $.ajax({
             url: '/ReportPersonel/KapiListesi',
             type: 'GET',
@@ -794,5 +813,6 @@
         $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
     });
 </script>
+<script src="./src/bootstrap-input-spinner.js"></script>
 @*Personel Raporları*@
 

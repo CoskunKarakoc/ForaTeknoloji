@@ -110,71 +110,80 @@
 
 
 
+                        @if (Model.ToplamIcerdeKalma.Count > 0)
+                        {
 
-                        @webGrid.GetHtml(
-           htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-           footerStyle:"table-pager",
-           columns: webGrid.Columns(
-               webGrid.Column("ID", "ID"),
-               webGrid.Column("Kart_ID", "Kart ID"),
-               webGrid.Column("Adi", "Adı"),
-               webGrid.Column("Soyadi", "Soyadı"),
-               webGrid.Column("SirketAdi", "Şirket"),
-               webGrid.Column("DepartmanAdi", "Departman"),
-               webGrid.Column("Grup_Adi", "Grup No"),
-               webGrid.Column("Tarih_Degeri", "Tarih Değeri"),
-               webGrid.Column("Toplam_Saat", "Toplam Saat"),
-               webGrid.Column("Toplam_Dakika", "Toplam Dakika"),
-               webGrid.Column("Toplam_Saniye", "Toplam Saniye")))
+                            @webGrid.GetHtml(
+               htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+               footerStyle:"table-pager",
+               columns: webGrid.Columns(
+                   webGrid.Column("ID", "ID"),
+                   webGrid.Column("Kart_ID", "Kart ID"),
+                   webGrid.Column("Adi", "Adı"),
+                   webGrid.Column("Soyadi", "Soyadı"),
+                   webGrid.Column("SirketAdi", "Şirket"),
+                   webGrid.Column("DepartmanAdi", "Departman"),
+                   webGrid.Column("Grup_Adi", "Grup No"),
+                   webGrid.Column("Tarih_Degeri", "Tarih Değeri"),
+                   webGrid.Column("Toplam_Saat", "Toplam Saat"),
+                   webGrid.Column("Toplam_Dakika", "Toplam Dakika"),
+                   webGrid.Column("Toplam_Saniye", "Toplam Saniye")))
+                        }
+                        else
+                        {
+                            <div class="alert alert-info alert-message">
+                                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                            </div>
+                        }
 
 
 
 
 
                         @*<table class="table-borderless table table-hover text-center table-striped ">
-                            <thead class="table-info">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Kart ID</td>
-                                    <td>Adı</td>
-                                    <td>Soyadı</td>
-                                    <td>Şirket</td>
-                                    <td>Departman</td>
-                                    <td>Grup No</td>
-                                    <td>Tarih Değeri</td>
-                                    <td>Toplam Saat</td>
-                                    <td>Toplam Dakika</td>
-                                    <td>Toplam Saniye</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.ToplamIcerdeKalma.Count == 0)
-                                {
+                                <thead class="table-info">
                                     <tr>
-                                        <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
+                                        <td>ID</td>
+                                        <td>Kart ID</td>
+                                        <td>Adı</td>
+                                        <td>Soyadı</td>
+                                        <td>Şirket</td>
+                                        <td>Departman</td>
+                                        <td>Grup No</td>
+                                        <td>Tarih Değeri</td>
+                                        <td>Toplam Saat</td>
+                                        <td>Toplam Dakika</td>
+                                        <td>Toplam Saniye</td>
                                     </tr>
-                                }
-                                else
-                                {
-                                    foreach (var item in Model.ToplamIcerdeKalma)
+                                </thead>
+                                <tbody>
+                                    @if (Model.ToplamIcerdeKalma.Count == 0)
                                     {
                                         <tr>
-                                            <td>@item.ID</td>
-                                            <td>@item.Kart_ID</td>
-                                            <td>@item.Adi</td>
-                                            <td>@item.Soyadi</td>
-                                            <td>@item.SirketAdi</td>
-                                            <td>@item.DepartmanAdi</td>
-                                            <td>@item.Grup_Adi</td>
-                                            <td>@item.Tarih_Degeri</td>
-                                            <td>@item.Toplam_Saat</td>
-                                            <td>@item.Toplam_Dakika</td>
-                                            <td>@item.Toplam_Saniye</td>
+                                            <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
                                         </tr>
                                     }
-                                }
-                            </tbody>
-                        </table>*@
+                                    else
+                                    {
+                                        foreach (var item in Model.ToplamIcerdeKalma)
+                                        {
+                                            <tr>
+                                                <td>@item.ID</td>
+                                                <td>@item.Kart_ID</td>
+                                                <td>@item.Adi</td>
+                                                <td>@item.Soyadi</td>
+                                                <td>@item.SirketAdi</td>
+                                                <td>@item.DepartmanAdi</td>
+                                                <td>@item.Grup_Adi</td>
+                                                <td>@item.Tarih_Degeri</td>
+                                                <td>@item.Toplam_Saat</td>
+                                                <td>@item.Toplam_Dakika</td>
+                                                <td>@item.Toplam_Saniye</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>*@
                     </div>
 
 
@@ -217,7 +226,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                      
+
                         @foreach (var item in Model.KullaniciComplex)
                         {
                             <tr>

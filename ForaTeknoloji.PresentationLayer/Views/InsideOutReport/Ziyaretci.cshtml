@@ -100,17 +100,26 @@
     {
         <div id="print_div" class="card-body">
 
-            @webGrid.GetHtml(
+            @if (Model.ZiyaretciListesi.Count > 0)
+            {
+                @webGrid.GetHtml(
                 htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
                 footerStyle:"table-pager",
                 columns: webGrid.Columns(
                     webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                         webGrid.Column("Kart_ID", "Kart ID"),
-                         webGrid.Column("Adi", "Adı"),
-                         webGrid.Column("Soyadi", "Soyadı"),
-                         webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
-                         webGrid.Column("Tarih", "Tarih")))
+                                       webGrid.Column("Kart_ID", "Kart ID"),
+                                       webGrid.Column("Adi", "Adı"),
+                                       webGrid.Column("Soyadi", "Soyadı"),
+                                       webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
+                                       webGrid.Column("Tarih", "Tarih")))
 
+            }
+            else
+            {
+                <div class="alert alert-info alert-message">
+                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                </div>
+            }
 
             @*<table class="table table-hover text-center table-sm table-striped">
                     <thead class="table-info">
@@ -180,7 +189,6 @@
             }, 500);
 
         });
-
         $("#Global_Bolge_Adi").attr("disabled", true);
              $("#Paneller").change(function () {
                  var panelid = $(this).val();
@@ -352,9 +360,6 @@
             }
 
         });
-
-
-
         $("#In").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#CikisVer").attr("disabled", false);
@@ -367,19 +372,6 @@
                 $("#readerCikis").attr("disabled", true);
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     });
 </script>

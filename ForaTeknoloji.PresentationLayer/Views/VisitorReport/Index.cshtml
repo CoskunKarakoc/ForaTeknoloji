@@ -181,7 +181,9 @@
 <div class="card mt-1 shadow-lg">
     <div class="card-body">
         <div id="print_div">
-            @webGrid.GetHtml(
+            @if (Model.ComplexVisitorsListesi.Count > 0)
+            {
+                @webGrid.GetHtml(
           htmlAttributes: new { @id = "tableNon", @class = "table-borderless table table-hover text-center table-striped" },
          footerStyle:"table-pager",
           selectedRowStyle: "selectRow",
@@ -202,7 +204,13 @@
     webGrid.Column("Tarih", "Tarih"),
     webGrid.Column("Personel_Adi", "Personel Adı"),
     webGrid.Column("Personel_Soyadi", "Personel Soyadı")))
-
+            }
+            else
+            {
+                <div class="alert alert-info alert-message">
+                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                </div>
+            }
 
 
 
@@ -358,8 +366,6 @@
                 alert("Kapı Listesi Yüklenemedi");
             }
         });
-
-
         $("#TümKapi").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#Kapi1").attr("disabled", true);
@@ -488,13 +494,7 @@
 
             });
         });//Açılan Popup'taki kullanıcıyı seçme ve text'te yazma
-
-        //Tablodaki satıra tıklanıldığında resim gösterme
-        $("#tableNon tbody tr").click(function () {
-            var kartID = $(this).children("td").data("kart");
-            $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
-            $("#change-image-canli").attr('src', '/Canli_Images/' + kartID + '.jpg');
-        });
+        
 
         var today = new Date();
         $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));

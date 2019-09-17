@@ -1097,7 +1097,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<AccessDatas> GetTanimsizListesi(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Panel, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
-            string queryString = " SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.[Kart ID],AccessDatas.[Panel ID] As Panel, AccessDatas.[Kapi ID] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, AccessDatas.[Canli Resim] FROM AccessDatas WHERE AccessDatas.Kod = 4";
+            string queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.[Kart ID],AccessDatas.[Panel ID] As Panel, DoorNames.[Kapi Adi] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, AccessDatas.[Canli Resim] FROM AccessDatas RIGHT JOIN DoorNames ON AccessDatas.[Panel ID] = DoorNames.[Panel No] AND AccessDatas.[Kapi ID] = DoorNames.[Kapi No] WHERE AccessDatas.Kod = 4 ";
             if (Panel != null)
             {
                 queryString += " AND AccessDatas.[Panel ID] =" + Panel;
@@ -1163,7 +1163,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Kayit_No = reader[0] as int? ?? default(int),
                             Kart_ID = reader[1].ToString(),
                             Panel_ID = reader[2] as int? ?? default(int),
-                            Kapi_ID = reader[3] as int? ?? default(int),
+                            Kapi_Adi = reader[3].ToString(),
                             Gecis_Tipi = reader[4] as int? ?? default(int),
                             Tarih = reader[5] as DateTime? ?? default(DateTime),
                             Canli_Resim = reader[6].ToString()
