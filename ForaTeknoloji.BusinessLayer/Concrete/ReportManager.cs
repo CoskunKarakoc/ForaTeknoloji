@@ -794,7 +794,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             if (Plaka != null && Plaka != "")
             {
-                queryString += " AND Users.[Plaka] ='" + Plaka + "'";
+                queryString += " AND Users.[Plaka] ='" + Plaka.Trim() + "'";
             }
             if (Bloklar != null)
             {
@@ -930,7 +930,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
                 if (Plaka != null && Plaka != "")
                 {
-                    queryString += " AND Users.[Plaka] ='" + Plaka + "'";
+                    queryString += " AND Users.[Plaka] ='" + Plaka.Trim() + "'";
                 }
 
             }
@@ -962,7 +962,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
                 if (Plaka != null && Plaka != "")
                 {
-                    queryString += " AND UsersOLD.[Plaka] ='" + Plaka + "'";
+                    queryString += " AND UsersOLD.[Plaka] ='" + Plaka.Trim() + "'";
                 }
                 if (Bloklar != null)
                 {
@@ -1030,7 +1030,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
 
             }
-          
+
 
             if (Günlük != null && Tarih1 != null && Tarih2 != null && Saat1 != null && Saat2 != null)
             {
