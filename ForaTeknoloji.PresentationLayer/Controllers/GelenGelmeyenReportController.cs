@@ -7,25 +7,25 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
     [Auth]
+    [Excp]
     public class GelenGelmeyenReportController : Controller
     {
         private IUserService _userService;
         private IDepartmanService _departmanService;
         private ISirketService _sirketService;
-        private IGroupsDetailService _groupsDetailService;
         private IVisitorsService _visitorsService;
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
+        private IGroupMasterService _groupMasterService;
         public DBUsers user;
         public DateTime DefaultTarih1;
         public DateTime DefaultTarih2;
-        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService)
+        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService, IGroupMasterService groupMasterService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -36,7 +36,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _userService = userService;
             _departmanService = departmanService;
             _sirketService = sirketService;
-            _groupsDetailService = groupsDetailService;
+            _groupMasterService = groupMasterService;
             _visitorsService = visitorsService;
             _globalZoneService = globalZoneService;
             _reportService = reportService;
@@ -54,11 +54,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Gelenler(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, DateTime? Tarih = null)
         {
+            Tarih = Tarih ?? DateTime.Now.Date;
             var nesne = _reportService.GelenGelmeyen_Gelenlers(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var model = new GelenGelmeyen_GelenlerListViewModel
             {
                 Gelenler = nesne,
@@ -75,7 +76,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
+                    Value = a.Grup_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
@@ -92,11 +93,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Gelmeyenler(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, DateTime? Tarih = null)
         {
+            Tarih = Tarih ?? DateTime.Now.Date;
             var nesne = _reportService.GelenGelmeyen_Gelmeyens(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var model = new GelenGelmeyen_GelmeyenlerListViewModel
             {
                 Gelmeyenler = nesne,
@@ -113,7 +115,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
+                    Value = a.Grup_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
@@ -130,12 +132,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PasifKullanici(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, DateTime? Tarih = null, double? Fark = 45)
         {
-
+            Tarih = Tarih ?? DateTime.Now.Date;
             var nesne = _reportService.GelenGelmeyen_PasifKullanicis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, Tarih, Fark);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var model = new GelenGelmeyen_PasifListViewModel
             {
                 Pasif = nesne,
@@ -152,7 +154,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
+                    Value = a.Grup_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
@@ -169,17 +171,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult ToplamIcerdeKalma(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, int? UserID = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null)
         {
-
+            Tarih1 = Tarih1 ?? DateTime.Now.Date;
+            Tarih2 = Tarih2 ?? DateTime.Now.Date;
             var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var usersComplex = _userService.GetAllUsersWithOuther();
             var model = new GelenGelmeyen_ToplamIcerdeKalmaListViewModel
             {
                 ToplamIcerdeKalma = nesne,
-                KullaniciComplex=usersComplex,
+                KullaniciComplex = usersComplex,
                 Departmanlar = departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
@@ -193,7 +196,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
+                    Value = a.Grup_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
@@ -205,17 +208,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
-
+      
 
 
         public ActionResult IlkGirisSonCikis(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, int? UserID = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null)
         {
-
+            Tarih1 = Tarih1 ?? DateTime.Now.Date;
+            Tarih2 = Tarih2 ?? DateTime.Now.Date;
             var nesne = _reportService.GelenGelmeyen_IlkGirisSonCikis(Sirketler, Departmanlar, Global_Bolge_Adi, Groupsdetail, UserID, Tarih1, Tarih2);
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var usersComplex = _userService.GetAllUsersWithOuther();
             var model = new GelenGelmeyen_IlkGirisSonCikisListViewModel
             {
@@ -234,7 +238,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
+                    Value = a.Grup_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
@@ -262,7 +266,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Gelen Kullanıcı Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -313,7 +317,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Gelmeyen Kullanıcı Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -365,7 +369,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Toplam İçerde Kalma Raporları";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -418,7 +422,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Pasif Kullanıcı Raporları";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -472,7 +476,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "İlk Giriş Son Çıkış";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";

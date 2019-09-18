@@ -42,7 +42,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             Ziyaretci_Resim = v.Resim,
                             Ziyaretci_TCKimlik = v.TCKimlik,
                             Ziyaretci_Telefon = v.Telefon,
-                            Kapi_ID = tbl1.Kapi_ID,
+                            Kapi = tbl1.Kapi_Adi,
                             Kart_ID = tbl1.Kart_ID,
                             Panel_ID = tbl1.Panel_ID,
                             Kayit_No = tbl1.Kayit_No

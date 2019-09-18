@@ -5,6 +5,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<Users, ForaContext>, IUserDal
     {
-        public List<ComplexUser> GetAllUsersWithOuther()
+        public List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null)
         {
             using (var context = new ForaContext())
             {
@@ -44,7 +45,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Ziyaretci_Grubu = u.Visitor_Grup_No
                             };
 
-                return query.ToList();
+                return filter == null ? query.ToList() : query.Where(filter).ToList();
 
             }
 

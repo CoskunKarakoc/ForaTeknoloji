@@ -2499,6 +2499,7 @@
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
     <Compile Include="Controllers\VisitorReportController.cs" />
     <Compile Include="Filters\Auth.cs" />
+    <Compile Include="Filters\Excp.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2546,6 +2547,7 @@
     <Content Include="Views\GelenGelmeyenReport\IlkGirisSonCikis.cshtml" />
     <Content Include="Views\OutherReport\KullaniciAlarm.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\HassError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

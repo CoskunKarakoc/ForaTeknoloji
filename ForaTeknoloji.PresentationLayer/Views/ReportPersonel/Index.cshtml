@@ -94,7 +94,40 @@
                             <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="TumKapi" />
                             <label class="custom-control-label" for="TumKapi">Tüm Kapılar</label>
                         </div>
-                        <div id="Kapilar"></div>
+                        <div class="custom-control custom-checkbox">
+                            <div id="Kapilar"></div>
+                            <input type="checkbox" value="1" name="Kapi" class="custom-control-input" id="Kapi1" />
+                            <label class="custom-control-label" for="Kapi1">Kapı 1</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="2" name="Kapi" class="custom-control-input" id="Kapi2" />
+                            <label class="custom-control-label" for="Kapi2">Kapı 2</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="3" name="Kapi" class="custom-control-input" id="Kapi3" />
+                            <label class="custom-control-label" for="Kapi3">Kapı 3</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="4" name="Kapi" class="custom-control-input" id="Kapi4" />
+                            <label class="custom-control-label" for="Kapi4">Kapı 4</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="5" name="Kapi" class="custom-control-input" id="Kapi5" />
+                            <label class="custom-control-label" for="Kapi5">Kapı 5</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="6" name="Kapi" class="custom-control-input" id="Kapi6" />
+                            <label class="custom-control-label" for="Kapi6">Kapı 6</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="7" name="Kapi" class="custom-control-input" id="Kapi7" />
+                            <label class="custom-control-label" for="Kapi7">Kapı 7</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="8" name="Kapi" class="custom-control-input" id="Kapi8" />
+                            <label class="custom-control-label" for="Kapi8">Kapı 8</label>
+                        </div>
+                        @*<div id="Kapilar"></div>*@
                     </div>
 
 
@@ -240,7 +273,7 @@
             @if (Model.ReportPersonel.Count > 0)
             {
                 @webGrid.GetHtml(
-htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
 selectedRowStyle: "selectRow",
 footerStyle: "table-pager",
 columns: webGrid.Columns(
@@ -337,14 +370,14 @@ webGrid.Column("Tarih", "Tarih")))
     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="text-muted">Ziyaretçi Arama</h4>
+                <h4 class="text-muted">Kullanıcı Arama</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body ">
-                <div class="alert-success alert">
+                <div hidden id="alertMain" class="alert-success alert">
                     <h2 id="alert" class="text-center text-muted"></h2>
                 </div>
                 <!-- Search form -->
@@ -352,7 +385,6 @@ webGrid.Column("Tarih", "Tarih")))
                     <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
                     <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
                 </div>
-
                 <hr />
                 <table id="myTable" class="table table-hover text-center table-striped">
                     <thead class="table-info">
@@ -362,19 +394,20 @@ webGrid.Column("Tarih", "Tarih")))
                             <td>Kart ID</td>
                             <td>Adı</td>
                             <td>Soyadı</td>
-                            <td>Şirket No</td>
+                            <td>Şirket</td>
                             <td>Departman</td>
-                            <td>Blok No</td>
+                            <td>Blok</td>
                             <td>Plaka</td>
-                            <td>Geçiş Modu</td>
-                            <td>Ziyaretçi Grup No</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Ziyaretçi Grubu</td>
                         </tr>
                     </thead>
                     <tbody id="zyrt"></tbody>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal">Kapat</button>
+                <button type="button" id="temizle" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
+                <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
             </div>
         </div>
     </div>
@@ -383,7 +416,38 @@ webGrid.Column("Tarih", "Tarih")))
 
 
 <script>
-    $("input[type='number']").inputSpinner()
+    //$.ajax({
+    //    url: '/ReportPersonel/KapiListesi',
+    //    type: 'GET',
+    //    dataType: 'json',
+    //    contentType: 'application/json; charset=utf-8',
+    //    success: function (data) {
+    //        $("#Kapilar").html("");
+    //        if (data.length == 0 || data.length < 0) {
+    //            for (var i = 1; i < 9; i++) {
+    //                $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+    //                    + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
+    //                    + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
+    //                    + "</div>");
+    //            }
+    //        } else {
+    //            for (var i in data) {
+    //                $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
+    //                    + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
+    //                    + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
+    //                    + "</div>");
+    //            }
+    //        }
+    //    },
+    //    error: function () {
+    //        alert('error body');
+    //    }
+
+    //});
+    var today = new Date();
+    $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+    $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+
     $(document).ready(function () {
         //Model arama işlemi
         $("#SearchBtn").click(function () {
@@ -407,412 +471,365 @@ webGrid.Column("Tarih", "Tarih")))
                             "</td><td>" + data[i].Kart_ID +
                             "</td><td>" + data[i].Adi +
                             "</td><td>" + data[i].Soyadi +
-                            "</td><td>" + data[i].Sirket_No +
-                            "</td><td>" + data[i].Departman_No +
-                            "</td><td>" + data[i].Blok_No +
+                            "</td><td>" + data[i].Sirket +
+                            "</td><td>" + data[i].Departman +
+                            "</td><td>" + data[i].Blok +
                             "</td><td>" + data[i].Plaka +
-                            "</td><td>" + data[i].Gecis_Modu +
-                            "</td><td>" + data[i].Visitor_Grup_No +
+                            "</td><td>" + data[i].Gecis_Grubu +
+                            "</td><td>" + data[i].Ziyaretci_Grubu +
                             "</td></tr>");
                     }
                 }
             });
-            $("#myTable tbody tr").click(function () {
-                var kayitNo = $(this).children("td").data("kayitno");
-                var name = $(this).children("td").data("visitor");
-                $("#Ziyaretci").attr('value', name);
-                $("#Visitor").attr('value', kayitNo);
-                $("#alert").text(name + " Seçildi!");
-            });
         });
-        $("#aktif").change(function () {
-            //Aktif Kullanıcı Arama
-            if ($(this).prop("checked") == true) {
-                $("#SearchBtn").click(function () {
-                    var arama = $("#Search").val();
-                    $("#Search").val("");
-                    $.ajax({
-                        url: '/ReportPersonel/AktifZiyaretciler',
-                        type: 'GET',
-                        data: { Search: arama },
-                        dataType: 'json',
-                        success: function (data) {
-                            $("#zyrt").html("");
-                            $("#Search").html("");
-                            for (var i in data) {
-                                $("#zyrt").append("<tr><td data-kayitno=" +
-                                    data[i].Kayit_No +
-                                    " data-visitor=" +
-                                    data[i].Adi + '-' + data[i].Soyadi + ">" +
-                                    data[i].Kayit_No +
-                                    "</td><td>" + data[i].ID +
-                                    "</td><td>" + data[i].Kart_ID +
-                                    "</td><td>" + data[i].Adi +
-                                    "</td><td>" + data[i].Soyadi +
-                                    "</td><td>" + data[i].Sirket_No +
-                                    "</td><td>" + data[i].Departman_No +
-                                    "</td><td>" + data[i].Blok_No +
-                                    "</td><td>" + data[i].Plaka +
-                                    "</td><td>" + data[i].Gecis_Modu +
-                                    "</td><td>" + data[i].Visitor_Grup_No +
-                                    "</td></tr>");
-                            }
-
-                        }
-                    });
-                    $("#myTable tbody tr").click(function () {
-                        var kayitNo = $(this).children("td").data("kayitno");
-                        var name = $(this).children("td").data("visitor");
-                        $("#Ziyaretci").attr('value', name);
-                        $("#Visitor").attr('value', kayitNo);
-                        $("#alert").text(name + " Seçildi!");
-                    });
-                });
-            } else {
-                //Eski Kullanıcı Arama
-                $("#SearchBtn").click(function () {
-                    var arama = $("#Search").val();
-                    $("#Search").val("");
-                    $.ajax({
-                        url: '/ReportPersonel/EskiZiyaretciler',
-                        type: 'GET',
-                        data: { Search: arama },
-                        dataType: 'json',
-                        success: function (data) {
-                            $("#zyrt").html("");
-                            $("#Search").html("");
-                            for (var i in data) {
-                                $("#zyrt").append("<tr><td data-kayitno=" +
-                                    data[i].Kayit_No +
-                                    " data-visitor=" +
-                                    data[i].Adi + '-' + data[i].Soyadi + ">" +
-                                    data[i].Kayit_No +
-                                    "</td><td>" + data[i].ID +
-                                    "</td><td>" + data[i].Kart_ID +
-                                    "</td><td>" + data[i].Adi +
-                                    "</td><td>" + data[i].Soyadi +
-                                    "</td><td>" + data[i].Sirket_No +
-                                    "</td><td>" + data[i].Departman_No +
-                                    "</td><td>" + data[i].Blok_No +
-                                    "</td><td>" + data[i].Plaka +
-                                    "</td><td>" + data[i].Gecis_Modu +
-                                    "</td><td>" + data[i].Visitor_Grup_No +
-                                    "</td></tr>");
-                            }
-
-                        }
-                    });
-                    $("#myTable tbody tr").click(function () {
-                        var kayitNo = $(this).children("td").data("kayitno");
-                        var name = $(this).children("td").data("visitor");
-                        $("#Ziyaretci").attr('value', name);
-                        $("#Visitor").attr('value', kayitNo);
-                        $("#alert").text(name + " Seçildi!");
-                    });
-
-                });
-
-            }
-
-        });
-        $.ajax({
-            url: '/ReportPersonel/AktifZiyaretciler',
-            type: 'GET',
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#zyrt").html("");
-
-                for (var i in data) {
-                    $("#zyrt").append("<tr><td data-kayitno=" +
-                        data[i].Kayit_No +
-                        " data-visitor=" +
-                        data[i].Adi + '-' + data[i].Soyadi + ">" +
-                        data[i].Kayit_No +
-                        "</td><td>" + data[i].ID +
-                        "</td><td>" + data[i].Kart_ID +
-                        "</td><td>" + data[i].Adi +
-                        "</td><td>" + data[i].Soyadi +
-                        "</td><td>" + data[i].Sirket_No +
-                        "</td><td>" + data[i].Departman_No +
-                        "</td><td>" + data[i].Blok_No +
-                        "</td><td>" + data[i].Plaka +
-                        "</td><td>" + data[i].Gecis_Modu +
-                        "</td><td>" + data[i].Visitor_Grup_No +
-                        "</td></tr>");
-                }
-
-            },
-            error: function () {
-                alert('error body');
-            }
-        });
-        $.ajax({
-            url: '/ReportPersonel/KapiListesi',
-            type: 'GET',
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $("#Kapilar").html("");
-                if (data.length == 0 || data.length < 0) {
-                    for (var i = 1; i < 9; i++) {
-                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-                            + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
-                            + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
-                            + "</div>");
-                    }
-                } else {
-                    for (var i in data) {
-                        $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-                            + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
-                            + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
-                            + "</div>");
-                    }
-                }
-            },
-            error: function () {
-                alert('error body');
-            }
-
-        });
-        $("#TumKapi").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Kapi1").attr("disabled", true);
-                $("#Kapi1").prop("checked", false);
-                $("#Kapi2").attr("disabled", true);
-                $("#Kapi2").prop("checked", false);
-                $("#Kapi3").attr("disabled", true);
-                $("#Kapi3").prop("checked", false);
-                $("#Kapi4").attr("disabled", true);
-                $("#Kapi4").prop("checked", false);
-                $("#Kapi5").attr("disabled", true);
-                $("#Kapi5").prop("checked", false);
-                $("#Kapi6").attr("disabled", true);
-                $("#Kapi6").prop("checked", false);
-                $("#Kapi7").attr("disabled", true);
-                $("#Kapi7").prop("checked", false);
-                $("#Kapi8").attr("disabled", true);
-                $("#Kapi8").prop("checked", false);
-            } else {
-                $("#Kapi1").attr("disabled", false);
-                $("#Kapi2").attr("disabled", false);
-                $("#Kapi3").attr("disabled", false);
-                $("#Kapi4").attr("disabled", false);
-                $("#Kapi5").attr("disabled", false);
-                $("#Kapi6").attr("disabled", false);
-                $("#Kapi7").attr("disabled", false);
-                $("#Kapi8").attr("disabled", false);
-            }
-
-        });
-        $("#TümPanel").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Paneller").attr("disabled", true);
-            } else {
-                $("#Paneller").attr("disabled", false);
-            }
-        });
-        $("#TümDepartman").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Departmanlar").attr("disabled", true);
-            } else {
-                $("#Departmanlar").attr("disabled", false);
-            }
-        });
-        $("#TümBlok").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Bloklar").attr("disabled", true);
-            } else {
-                $("#Bloklar").attr("disabled", false);
-            }
-        });
-        $("#TümSirket").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Sirketler").attr("disabled", true);
-            } else {
-                $("#Sirketler").attr("disabled", false);
-            }
-        });
-        $("#TümGlobal").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Global_Bolge_Adi").attr("disabled", true);
-            } else {
-                $("#Global_Bolge_Adi").attr("disabled", false);
-            }
-        });
-        $("#TümKullanici").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Ziyaretci").attr("disabled", true);
-                $("#Visitor").attr("value", null);
-                $("#Ziyaretci").attr("value", null);
-            } else {
-                $("#Ziyaretci").attr("disabled", false);
-            }
-        });
-        $("#TümGecis").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Groupsdetail").attr("disabled", true);
-            } else {
-                $("#Groupsdetail").attr("disabled", false);
-            }
-        });
-        $("#TümTarih").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#ikiTarih").attr("disabled", true);
-                $("#ikiSaat").attr("disabled", true);
-                $("#Tarih1").attr("disabled", true);
-                $("#Tarih2").attr("disabled", true);
-                $("#Saat1").attr("disabled", true);
-                $("#Saat2").attr("disabled", true);
-            } else {
-                $("#ikiTarih").attr("disabled", false);
-                $("#ikiSaat").attr("disabled", false);
-                $("#Tarih1").attr("disabled", false);
-            }
-
-        });
-        $("#ikiSaat").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Saat1").attr("disabled", false);
-                $("#Saat2").attr("disabled", false);
-            } else {
-                $("#Saat1").attr("disabled", true);
-                $("#Saat2").attr("disabled", true);
-            }
-
-        });
-        $("#ikiTarih").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Tarih2").attr("disabled", false);
-            } else {
-                $("#Tarih2").attr("disabled", true);
-            }
-
-        });
-        $("#btnPrint").click(function () {
-            var contents = $("#print_div").html();
-            var frame1 = $('<iframe />');
-            frame1[0].name = "frame1";
-            frame1.css({ "position": "absolute" });
-            $("body").append(frame1);
-            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
-            frameDoc.document.open();
-            //Create a new HTML document.
-            frameDoc.document.write('<html><head><title>Personel Raporları</title>');
-            frameDoc.document.write('</head><body>');
-            //Append the external CSS file.
-            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
-            //Append the DIV contents.
-            frameDoc.document.write(contents);
-            frameDoc.document.write('</body></html>');
-            frameDoc.document.close();
-            setTimeout(function () {
-
-                window.frames["frame1"].focus();
-                window.frames["frame1"].print();
-                frame1.remove();
-            }, 500);
-
-        });
-        $("#Ziyaretci").focus(function () {
-            $("#exampleModal").modal("show");
-            $("#myTable tbody tr").click(function () {
-                var kayitNo = $(this).children("td").data("kayitno");
-                var name = $(this).children("td").data("visitor");
-                $("#Ziyaretci").attr('value', name);
-                $("#Visitor").attr('value', kayitNo);
-                $("#alert").text(name + " Seçildi!");
-            });
-        });
-        $("#aktif").change(function () {
-            if ($(this).prop("checked") == true) {
-                $.ajax({
-                    url: '/ReportPersonel/AktifZiyaretciler',
-                    type: 'GET',
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        $("#zyrt").html("");
-
-                        for (var i in data) {
-                            $("#zyrt").append("<tr><td data-kayitno=" +
-                                data[i].Kayit_No +
-                                " data-visitor=" +
-                                data[i].Adi + '-' + data[i].Soyadi + ">" +
-                                data[i].Kayit_No +
-                                "</td><td>" + data[i].ID +
-                                "</td><td>" + data[i].Kart_ID +
-                                "</td><td>" + data[i].Adi +
-                                "</td><td>" + data[i].Soyadi +
-                                "</td><td>" + data[i].Sirket_No +
-                                "</td><td>" + data[i].Departman_No +
-                                "</td><td>" + data[i].Blok_No +
-                                "</td><td>" + data[i].Plaka +
-                                "</td><td>" + data[i].Gecis_Modu +
-                                "</td><td>" + data[i].Visitor_Grup_No +
-                                "</td></tr>");
-                        }
-                    },
-                    error: function () {
-                        alert('error buddy');
-                    }
-                });
-            }
-
-        });
-        $("#eski").change(function () {
-            if ($(this).prop("checked") == true) {
-                $.ajax({
-                    url: '/ReportPersonel/EskiZiyaretciler',
-                    type: 'GET',
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function (data) {
-                        $("#zyrt").html("");
-
-                        for (var i in data) {
-                            $("#zyrt").append("<tr><td data-kayitno=" +
-                                data[i].Kayit_No +
-                                " data-visitor=" +
-                                data[i].Adi + '-' + data[i].Soyadi + ">" +
-                                data[i].Kayit_No +
-                                "</td><td>" + data[i].ID +
-                                "</td><td>" + data[i].Kart_ID +
-                                "</td><td>" + data[i].Adi +
-                                "</td><td>" + data[i].Soyadi +
-                                "</td><td>" + data[i].Sirket_No +
-                                "</td><td>" + data[i].Departman_No +
-                                "</td><td>" + data[i].Blok_No +
-                                "</td><td>" + data[i].Plaka +
-                                "</td><td>" + data[i].Gecis_Modu +
-                                "</td><td>" + data[i].Visitor_Grup_No +
-                                "</td></tr>");
-                        }
-
-                    },
-                    error: function () {
-                        alert('error buddy');
-                    }
-                });
-            }
-
-        });
-
-
-        //Tablodaki satıra tıklanıldığında resim gösterme
-        //$("#myTable tbody tr").click(function () {
-        //    var kartID = $(this).children("td").data("kart");
-        //    $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
-        //    $("#change-image-canli").attr('src', '/Canli_Images/' + kartID + '.jpg');
-        //});
-
-
-        //Tarih Formatına Bugünün Tarihini Getime Kodları
-        var today = new Date();
-        $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
-        $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
     });
+
+    //if ($("#aktif").prop("checked") == true) {
+    //    $("#zyrt").html("");
+    //    $("#SearchBtn").click(function () {
+    //        var arama = $("#Search").val();
+    //        $("#Search").val("");
+    //        $.ajax({
+    //            url: '/ReportPersonel/AktifZiyaretciler',
+    //            type: 'GET',
+    //            data: { Search: arama },
+    //            dataType: 'json',
+    //            success: function (data) {
+    //                $("#zyrt").html("");
+    //                $("#Search").html("");
+    //                for (var i in data) {
+    //                    $("#zyrt").append("<tr><td data-kayitno=" +
+    //                        data[i].Kayit_No +
+    //                        " data-visitor=" +
+    //                        data[i].Adi + '-' + data[i].Soyadi + ">" +
+    //                        data[i].Kayit_No +
+    //                        "</td><td>" + data[i].ID +
+    //                        "</td><td>" + data[i].Kart_ID +
+    //                        "</td><td>" + data[i].Adi +
+    //                        "</td><td>" + data[i].Soyadi +
+    //                        "</td><td>" + data[i].Sirket_No +
+    //                        "</td><td>" + data[i].Departman_No +
+    //                        "</td><td>" + data[i].Blok_No +
+    //                        "</td><td>" + data[i].Plaka +
+    //                        "</td><td>" + data[i].Gecis_Modu +
+    //                        "</td><td>" + data[i].Visitor_Grup_No +
+    //                        "</td></tr>");
+    //                }
+
+    //            }
+    //        });
+    //        $("#myTable tbody tr").click(function () {
+    //            var kayitNo = $(this).children("td").data("kayitno");
+    //            var name = $(this).children("td").data("visitor");
+    //            $("#Ziyaretci").attr('value', name);
+    //            $("#Visitor").attr('value', kayitNo);
+    //            $("#alert").text(name + " Seçildi!");
+    //        });
+    //    });
+    //} else if ($("#eski").prop("checked") == true) {
+    //    $("#zyrt").html("");
+    //    $("#SearchBtn").click(function () {
+    //        var arama = $("#Search").val();
+    //        $("#Search").val("");
+    //        $.ajax({
+    //            url: '/ReportPersonel/EskiZiyaretciler',
+    //            type: 'GET',
+    //            data: { Search: arama },
+    //            dataType: 'json',
+    //            success: function (data) {
+    //                $("#zyrt").html("");
+    //                $("#Search").html("");
+    //                for (var i in data) {
+    //                    $("#zyrt").append("<tr><td data-kayitno=" +
+    //                        data[i].Kayit_No +
+    //                        " data-visitor=" +
+    //                        data[i].Adi + '-' + data[i].Soyadi + ">" +
+    //                        data[i].Kayit_No +
+    //                        "</td><td>" + data[i].ID +
+    //                        "</td><td>" + data[i].Kart_ID +
+    //                        "</td><td>" + data[i].Adi +
+    //                        "</td><td>" + data[i].Soyadi +
+    //                        "</td><td>" + data[i].Sirket_No +
+    //                        "</td><td>" + data[i].Departman_No +
+    //                        "</td><td>" + data[i].Blok_No +
+    //                        "</td><td>" + data[i].Plaka +
+    //                        "</td><td>" + data[i].Gecis_Modu +
+    //                        "</td><td>" + data[i].Visitor_Grup_No +
+    //                        "</td></tr>");
+    //                }
+
+    //            }
+    //        });
+    //    });
+    //}
+    $("#ikiTarih").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Tarih2").attr("disabled", false);
+        } else {
+            $("#Tarih2").attr("disabled", true);
+        }
+
+    });
+    $("#TumKapi").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Kapi1").attr("disabled", true);
+            $("#Kapi1").prop("checked", false);
+            $("#Kapi2").attr("disabled", true);
+            $("#Kapi2").prop("checked", false);
+            $("#Kapi3").attr("disabled", true);
+            $("#Kapi3").prop("checked", false);
+            $("#Kapi4").attr("disabled", true);
+            $("#Kapi4").prop("checked", false);
+            $("#Kapi5").attr("disabled", true);
+            $("#Kapi5").prop("checked", false);
+            $("#Kapi6").attr("disabled", true);
+            $("#Kapi6").prop("checked", false);
+            $("#Kapi7").attr("disabled", true);
+            $("#Kapi7").prop("checked", false);
+            $("#Kapi8").attr("disabled", true);
+            $("#Kapi8").prop("checked", false);
+        } else {
+            $("#Kapi1").attr("disabled", false);
+            $("#Kapi2").attr("disabled", false);
+            $("#Kapi3").attr("disabled", false);
+            $("#Kapi4").attr("disabled", false);
+            $("#Kapi5").attr("disabled", false);
+            $("#Kapi6").attr("disabled", false);
+            $("#Kapi7").attr("disabled", false);
+            $("#Kapi8").attr("disabled", false);
+        }
+
+    });
+    $("#TümPanel").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Paneller").attr("disabled", true);
+        } else {
+            $("#Paneller").attr("disabled", false);
+        }
+    });
+    $("#TümDepartman").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Departmanlar").attr("disabled", true);
+        } else {
+            $("#Departmanlar").attr("disabled", false);
+        }
+    });
+    $("#TümBlok").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Bloklar").attr("disabled", true);
+        } else {
+            $("#Bloklar").attr("disabled", false);
+        }
+    });
+    $("#TümSirket").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Sirketler").attr("disabled", true);
+        } else {
+            $("#Sirketler").attr("disabled", false);
+        }
+    });
+    $("#TümGlobal").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Global_Bolge_Adi").attr("disabled", true);
+        } else {
+            $("#Global_Bolge_Adi").attr("disabled", false);
+        }
+    });
+    $("#TümKullanici").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Ziyaretci").attr("disabled", true);
+            $("#Visitor").attr("value", null);
+            $("#Ziyaretci").attr("value", null);
+        } else {
+            $("#Ziyaretci").attr("disabled", false);
+        }
+    });
+    $("#temizle").click(function () {
+        $("#Visitor").attr("value", null);
+        $("#Ziyaretci").attr("value", null);
+        $("#alert").text("");
+        $("#alertMain").prop("hidden", true);
+    });
+    $("#TümGecis").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Groupsdetail").attr("disabled", true);
+        } else {
+            $("#Groupsdetail").attr("disabled", false);
+        }
+    });
+    $("#TümTarih").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#ikiTarih").attr("disabled", true);
+            $("#ikiSaat").attr("disabled", true);
+            $("#Tarih1").attr("disabled", true);
+            $("#Tarih2").attr("disabled", true);
+            $("#Saat1").attr("disabled", true);
+            $("#Saat2").attr("disabled", true);
+        } else {
+            $("#ikiTarih").attr("disabled", false);
+            $("#ikiSaat").attr("disabled", false);
+            $("#Tarih1").attr("disabled", false);
+        }
+
+    });
+    $("#ikiSaat").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Saat1").attr("disabled", false);
+            $("#Saat2").attr("disabled", false);
+        } else {
+            $("#Saat1").attr("disabled", true);
+            $("#Saat2").attr("disabled", true);
+        }
+
+    });
+
+    $.ajax({
+        url: '/ReportPersonel/AktifZiyaretciler',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            $("#zyrt").html("");
+            for (var i in data) {
+                $("#zyrt").append("<tr><td data-kayitno=" +
+                    data[i].Kayit_No +
+                    " data-visitor=" +
+                    data[i].Adi + '-' + data[i].Soyadi + ">" +
+                    data[i].Kayit_No +
+                    "</td><td>" + data[i].ID +
+                    "</td><td>" + data[i].Kart_ID +
+                    "</td><td>" + data[i].Adi +
+                    "</td><td>" + data[i].Soyadi +
+                    "</td><td>" + data[i].Sirket +
+                    "</td><td>" + data[i].Departman +
+                    "</td><td>" + data[i].Blok +
+                    "</td><td>" + data[i].Plaka +
+                    "</td><td>" + data[i].Gecis_Grubu +
+                    "</td><td>" + data[i].Ziyaretci_Grubu +
+                    "</td></tr>");
+            }
+
+        },
+        error: function () {
+            alert('error body');
+        }
+    });
+
+    $("#btnPrint").click(function () {
+        var contents = $("#print_div").html();
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        frame1.css({ "position": "absolute" });
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+        frameDoc.document.open();
+        //Create a new HTML document.
+        frameDoc.document.write('<html><head><title>Personel Raporları</title>');
+        frameDoc.document.write('</head><body><hr />');
+        //Append the external CSS file.
+        frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+        //Append the DIV contents.
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            frame1.remove();
+        }, 500);
+
+    });
+    $("#Ziyaretci").focus(function () {
+        $("#exampleModal").modal("show");
+        $("#myTable tbody tr").click(function () {
+            $("#alertMain").prop("hidden", false);
+            var kayitNo = $(this).children("td").data("kayitno");
+            var name = $(this).children("td").data("visitor");
+            $("#Ziyaretci").attr('value', name);
+            $("#Visitor").attr('value', kayitNo);
+            $("#alert").text(name + " Seçildi!");
+        });
+    });
+    $("#aktif").change(function () {
+        if ($(this).prop("checked") == true) {
+            $.ajax({
+                url: '/ReportPersonel/AktifZiyaretciler',
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#zyrt").html("");
+
+                    for (var i in data) {
+                        $("#zyrt").append("<tr><td data-kayitno=" +
+                            data[i].Kayit_No +
+                            " data-visitor=" +
+                            data[i].Adi + '-' + data[i].Soyadi + ">" +
+                            data[i].Kayit_No +
+                            "</td><td>" + data[i].ID +
+                            "</td><td>" + data[i].Kart_ID +
+                            "</td><td>" + data[i].Adi +
+                            "</td><td>" + data[i].Soyadi +
+                            "</td><td>" + data[i].Sirket +
+                            "</td><td>" + data[i].Departman +
+                            "</td><td>" + data[i].Blok +
+                            "</td><td>" + data[i].Plaka +
+                            "</td><td>" + data[i].Gecis_Grubu +
+                            "</td><td>" + data[i].Ziyaretci_Grubu +
+                            "</td></tr>");
+                    }
+                },
+                error: function () {
+                    alert('error buddy');
+                }
+            });
+        }
+
+    });
+    $("#eski").change(function () {
+        if ($(this).prop("checked") == true) {
+            $.ajax({
+                url: '/ReportPersonel/EskiZiyaretciler',
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $("#zyrt").html("");
+
+                    for (var i in data) {
+                        $("#zyrt").append("<tr><td data-kayitno=" +
+                            data[i].Kayit_No +
+                            " data-visitor=" +
+                            data[i].Adi + '-' + data[i].Soyadi + ">" +
+                            data[i].Kayit_No +
+                            "</td><td>" + data[i].ID +
+                            "</td><td>" + data[i].Kart_ID +
+                            "</td><td>" + data[i].Adi +
+                            "</td><td>" + data[i].Soyadi +
+                            "</td><td>" + data[i].Sirket +
+                            "</td><td>" + data[i].Departman +
+                            "</td><td>" + data[i].Blok +
+                            "</td><td>" + data[i].Plaka +
+                            "</td><td>" + data[i].Gecis_Grubu +
+                            "</td><td>" + data[i].Ziyaretci_Grubu +
+                            "</td></tr>");
+                    }
+
+                },
+                error: function () {
+                    alert('error buddy');
+                }
+            });
+        }
+
+    });
+    $("input[type='number']").inputSpinner()
 </script>
+
+
+
+
 <script src="./src/bootstrap-input-spinner.js"></script>
 @*Personel Raporları*@
 

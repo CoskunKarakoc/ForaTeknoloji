@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,9 +27,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _globalZoneDal.Delete(globalZones);
         }
 
-        public List<GlobalZones> GetAllGlobalZones()
+        public List<GlobalZones> GetAllGlobalZones(Expression<Func<GlobalZones, bool>> filter = null)
         {
-            return _globalZoneDal.GetList();
+            return filter == null ? _globalZoneDal.GetList() : _globalZoneDal.GetList(filter);
         }
 
         public GlobalZones GetById(int id)

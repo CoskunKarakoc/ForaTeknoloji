@@ -95,7 +95,7 @@
                         @if (Model.Gelmeyenler.Count > 0)
                         {
                             @webGrid.GetHtml(
-                   htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                   htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
                    footerStyle: "table-pager",
                    columns: webGrid.Columns(
                        webGrid.Column("ID", "ID"),
@@ -186,8 +186,8 @@
             var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
             frameDoc.document.open();
             //Create a new HTML document.
-            frameDoc.document.write('<html><head><title>Gelen Kişi Raporları</title>');
-            frameDoc.document.write('</head><body>');
+            frameDoc.document.write('<html><head><title>Gelmeyen Kişi Raporları</title>');
+            frameDoc.document.write('</head><body><hr />');
             //Append the external CSS file.
             frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
             //Append the DIV contents.

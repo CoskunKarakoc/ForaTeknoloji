@@ -3,14 +3,11 @@ using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 //TODO:Satırlara tıklanıldığında data attributeları alınacak
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Excp]
     public class HomeController : Controller
     {
         private IDBUsersService _dBUsersService;
@@ -57,6 +54,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             Session.Clear();
             return RedirectToAction("Login");
+        }
+
+        public ActionResult HassError()
+        {
+            return View();
+
         }
 
     }

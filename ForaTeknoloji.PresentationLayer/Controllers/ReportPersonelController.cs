@@ -7,12 +7,12 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
     [Auth]
+    [Excp]
     public class ReportPersonelController : Controller
     {
         private IUserService _userService;
@@ -20,17 +20,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDepartmanService _departmanService;
         private IBloklarService _bloklarService;
         private IVisitorsService _visitorsService;
-        private IGroupsDetailService _groupsDetailService;
+        private IGroupMasterService _groupMasterService;
         private IPanelSettingsService _panelSettingsService;
         private IGlobalZoneService _globalZoneService;
-        private IGroupMasterService _groupMasterService;
         private IReportService _reportService;
         private IUsersOLDService _usersOLDService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
-        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IGroupsDetailService groupsDetailService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
+        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -42,7 +41,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _departmanService = departmanService;
             _bloklarService = bloklarService;
             _visitorsService = visitorsService;
-            _groupsDetailService = groupsDetailService;
             _panelSettingsService = panelSettingsService;
             _globalZoneService = globalZoneService;
             _groupMasterService = groupMasterService;
@@ -54,10 +52,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: ReportPersonel
-        public ActionResult Index(List<string> Kapi = null, bool? Günlük = null, bool? Tümü = null, bool? TümKullanici = null, int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, bool? TümPanel = null, int? Visitors = null, int? Panel = null, int? Groupsdetail = null, int? Daire = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = null, string Plaka = null, string Kullanici = null, string Kayit = null)
+        public ActionResult Index(List<string> Kapi = null, bool? Günlük = null, bool? Tümü = null, bool? TümKullanici = null, int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, bool? TümPanel = null, int? Visitors = null, int? Panel = null, int? Groupsdetail = null, int? Daire = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = null, string Plaka = null, string Kullanici = null, string Kayit = null, bool TümTarih = false)
         {
+            if (TümTarih != true)
+            {
+                Tarih1 = Tarih1 ?? DateTime.Now.Date;
+            }
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
@@ -76,7 +78,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
+                    Value = a.Grup_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
@@ -120,20 +122,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult AktifZiyaretciler(string Search)//Popup'a Aktif Kulanıcı Yükleniyor
         {
 
-            var liste = _userService.GetAllUsers().OrderBy(x => x.Kayit_No);
+            var liste = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
+
             if (Search != null && Search != "")
             {
-                liste = _userService.GetAllUsers(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim())).OrderBy(x => x.Kayit_No);
+                liste = _userService.GetAllUsersWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
             }
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult EskiZiyaretciler(string Search)//Popup'a Eski Kullanıcı Yükleniyor
         {
-            var liste = _usersOLDService.GetAllUsersOLD().OrderBy(x => x.Kayit_No);
+            var liste = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
             if (Search != null && Search != "")
             {
-                liste = _usersOLDService.GetAllUsersOLD(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim())).OrderBy(x => x.Kayit_No);
+                liste = _usersOLDService.GetAllUserOLDWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
             }
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
@@ -143,6 +146,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
             return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
         }
+
 
         //EXCELL EXPORT
         public void PersonelRaporları()
@@ -158,7 +162,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Personel Raporları";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -197,7 +201,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("M{0}", rowStart)].Value = item.Panel_ID;
                 worksheet.Cells[string.Format("N{0}", rowStart)].Value = item.Kapi;
                 worksheet.Cells[string.Format("O{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
-                worksheet.Cells[string.Format("P{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih); 
+                worksheet.Cells[string.Format("P{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
                 rowStart++;
 
             }

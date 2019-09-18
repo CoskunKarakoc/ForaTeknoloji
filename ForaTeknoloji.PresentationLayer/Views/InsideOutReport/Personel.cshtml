@@ -101,7 +101,7 @@
             @if (Model.IcerdeDısardaPersonel.Count > 0)
             {
                 @webGrid.GetHtml(
-    htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+    htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
     footerStyle:"table-pager",
     columns: webGrid.Columns(
      webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
@@ -190,8 +190,8 @@
             var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
             frameDoc.document.open();
             //Create a new HTML document.
-            frameDoc.document.write('<html><head><title>Personel Raporları</title>');
-            frameDoc.document.write('</head><body>');
+            frameDoc.document.write('<html><head><title>İçerde Dışarda-Personel Raporları</title>');
+            frameDoc.document.write('</head><body><hr />');
             //Append the external CSS file.
             frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
             //Append the DIV contents.

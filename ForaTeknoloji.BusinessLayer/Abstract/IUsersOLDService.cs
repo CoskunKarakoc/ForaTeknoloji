@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal;
 
 namespace ForaTeknoloji.BusinessLayer.Abstract
 {
@@ -15,5 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         UsersOLD AddUsersOLD(UsersOLD usersOLD);
         void DeleteUsersOLD(UsersOLD usersOLD);
         UsersOLD UpdateUsersOLD(UsersOLD usersOLD);
+        List<ComplexUserOld> GetAllUserOLDWithOuther(Expression<Func<ComplexUserOld, bool>> filter = null);
     }
 }

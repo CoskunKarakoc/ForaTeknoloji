@@ -7,24 +7,23 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
     [Auth]
+    [Excp]
     public class InsideOutReportController : Controller
     {
         private IVisitorsService _visitorsService;
         private IPanelSettingsService _panelSettingsService;
-        private IGroupsDetailService _groupsDetailService;
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
         private IReaderSettingsService _readerSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
-        public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService, IDBUsersPanelsService dBUsersPanelsService)
+        public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
             //TODO: Tablodan seçilen kayıtlar yeniden accesdatasa kaydolacak
 
@@ -36,7 +35,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             _visitorsService = visitorsService;
             _panelSettingsService = panelSettingsService;
-            _groupsDetailService = groupsDetailService;
             _globalZoneService = globalZoneService;
             _reportService = reportService;
             _readerSettingsService = readerSettingsService;
@@ -172,7 +170,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi-Ziyaretçi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Kart ID";
             worksheet.Cells["B6"].Value = "Adı";
             worksheet.Cells["C6"].Value = "Soyadı";
@@ -189,7 +187,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Adi;
                 worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Soyadi;
                 worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Ziyaret_Sebebi;
-                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih);
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
                 rowStart++;
 
             }
@@ -201,6 +199,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             Response.BinaryWrite(package.GetAsByteArray());
             Response.End();
         }
+
 
         //Export Excell Personel
         public void IcerdeDısardaPersonel()
@@ -215,7 +214,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi-Personel";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Kayıt No";
             worksheet.Cells["B6"].Value = "ID";
             worksheet.Cells["C6"].Value = "Kart ID";
@@ -239,7 +238,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Soyadi;
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Sirket;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.Departman;
-                worksheet.Cells[string.Format("H{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih);
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
                 worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
                 rowStart++;
 
@@ -267,7 +266,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "İçerde Dışarda Rapor Listesi-Tümü";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -293,8 +292,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Ziyaretci_Soyadi;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.Sirket;
                 worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Departman;
-                worksheet.Cells[string.Format("I{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih);
-                worksheet.Cells[string.Format("J{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Ziyaret_Tarihi);
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Ziyaret_Tarihi);
 
                 rowStart++;
 

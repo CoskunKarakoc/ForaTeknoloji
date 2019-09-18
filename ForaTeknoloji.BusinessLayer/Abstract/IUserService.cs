@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUserDal;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal;
 
 namespace ForaTeknoloji.BusinessLayer.Abstract
 {
@@ -18,6 +19,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         Users AddUsers(Users users);
         void DeleteUsers(Users users);
         Users UpdateUsers(Users users);
-        List<ComplexUser> GetAllUsersWithOuther();
+        List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null);
     }
 }

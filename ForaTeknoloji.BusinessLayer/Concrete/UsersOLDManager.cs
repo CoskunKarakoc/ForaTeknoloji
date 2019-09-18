@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal;
 
 namespace ForaTeknoloji.BusinessLayer.Concrete
 {
@@ -40,6 +41,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public UsersOLD UpdateUsersOLD(UsersOLD usersOLD)
         {
             return _usersOLDDal.Update(usersOLD);
+        }
+
+        public List<ComplexUserOld> GetAllUserOLDWithOuther(Expression<Func<ComplexUserOld, bool>> filter = null)
+        {
+
+            return filter == null ? _usersOLDDal.GetAllUserOLDWithOuther() : _usersOLDDal.GetAllUserOLDWithOuther(filter);
         }
     }
 }

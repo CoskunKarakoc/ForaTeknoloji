@@ -101,7 +101,7 @@
                         @if (Model.Pasif.Count > 0)
                         {
                             @webGrid.GetHtml(
-           htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+           htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
            footerStyle:"table-pager",
            columns: webGrid.Columns(
                webGrid.Column("ID", "ID"),
@@ -114,6 +114,7 @@
                webGrid.Column("Plaka", "Plaka"),
                webGrid.Column("BlokAdi", "Blok"),
                webGrid.Column("Daire", "Daire"),
+               webGrid.Column("Grup_Adi", "Geçiş Grubu"),
                webGrid.Column("Global_Bolge_Adi", "Global Bölge")))
                         }
                         else
@@ -197,7 +198,7 @@
             frameDoc.document.open();
             //Create a new HTML document.
             frameDoc.document.write('<html><head><title>Pasif Kullanıcı Raporları</title>');
-            frameDoc.document.write('</head><body>');
+            frameDoc.document.write('</head><body><hr />');
             //Append the external CSS file.
             frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
             //Append the DIV contents.

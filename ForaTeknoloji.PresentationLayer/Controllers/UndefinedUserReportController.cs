@@ -6,12 +6,12 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
     [Auth]
+    [Excp]
     public class UndefinedUserReportController : Controller
     {
         private IAccessDatasService _accessDatasService;
@@ -37,8 +37,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: UndefinedUserReport
-        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, bool? TümPanel = null, int? Panel = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = "")
+        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, bool? TümPanel = null, int? Panel = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = "", bool TümTarih = false)
         {
+            if (TümTarih != true)
+            {
+                Tarih1 = Tarih1 ?? DateTime.Now.Date;
+            }
             //TODO: satırlara data Attribute'u gelecek buna ve reportpoersonele
             var list = _reportService.GetTanimsizListesi(Kapi, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
 
@@ -67,6 +71,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+
         //Export Excell
         public void TanimsizKullaniciListesi()
         {
@@ -82,7 +87,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             worksheet.Cells["A1"].Value = "Tanımzsız Kullanıcı Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Kart ID";
             worksheet.Cells["B6"].Value = "Panel";
             worksheet.Cells["C6"].Value = "Kapı";
@@ -99,7 +104,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Panel_ID;
                 worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Kapi_Adi;
                 worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
-                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:HH: mm tt}", item.Tarih);
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
                 rowStart++;
 
             }

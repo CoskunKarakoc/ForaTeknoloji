@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,9 +27,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _groupsDetailDal.Delete(groupsDetail);
         }
 
-        public List<GroupsDetail> GetAllGroupsDetail()
+        public List<GroupsDetail> GetAllGroupsDetail(Expression<Func<GroupsDetail, bool>> filter = null)
         {
-            return _groupsDetailDal.GetList();
+            return filter == null ? _groupsDetailDal.GetList() : _groupsDetailDal.GetList(filter);
         }
 
         public GroupsDetail GetById(int id)

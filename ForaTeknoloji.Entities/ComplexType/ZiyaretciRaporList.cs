@@ -20,7 +20,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Ziyaret_Sebebi { get; set; }
         public string Grup_Adi { get; set; }
         public int? Panel_ID { get; set; }
-        public int? Kapi_ID { get; set; }
+        public string Kapi { get; set; }
         public int? Gecis_Tipi { get; set; }
         public DateTime? Tarih { get; set; }
         public string Personel_Adi { get; set; }

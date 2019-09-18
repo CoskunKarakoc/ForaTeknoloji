@@ -46,10 +46,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _userDal.Update(users);
         }
 
-        public List<ComplexUser> GetAllUsersWithOuther()
+        public List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null)
         {
 
-            return _userDal.GetAllUsersWithOuther();
+            return filter == null ? _userDal.GetAllUsersWithOuther() : _userDal.GetAllUsersWithOuther(filter);
         }
 
     }

@@ -7,13 +7,13 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
 
     [Auth]//Authentication İçin Yazılmış Filtre
+    [Excp]
     public class OutherReportController : Controller
     {
         private IAccessDatasService _accessDatasService;
@@ -43,9 +43,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: OutherReport
-        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, bool? TümPanel = null, int? Paneller = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, int Tetikleme = 100, string KapiYon = "")
+        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, bool? TümPanel = null, int? Paneller = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, int Tetikleme = 100, string KapiYon = "", bool TümTarih = false)
         {
-
+            if (TümTarih != true)
+            {
+                Tarih1 = Tarih1 ?? DateTime.Now.Date;
+            }
             if (Tetikleme == 26)
             {
                 var listKulAlarm = _reportService.GetDigerGecisRaporListKullaniciAlarms(Kapi, Tümü, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, 26, KapiYon);
@@ -98,6 +101,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+
         //Export Excell
         public void DigerGecisListesi()
         {
@@ -112,7 +116,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Diğer Geçiş Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Panel";
             worksheet.Cells["B6"].Value = "Kapı";
             worksheet.Cells["C6"].Value = "Geçiş";
@@ -129,7 +133,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Kapi;
                 worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
                 worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Operasyon;
-                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih); 
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
                 rowStart++;
 
             }
@@ -141,6 +145,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             Response.BinaryWrite(package.GetAsByteArray());
             Response.End();
         }
+
 
         //Export Excell Alarm
         public void DigerGecisListesiAlarm()
@@ -157,7 +162,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Diğer Geçiş Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Kayıt No";
             worksheet.Cells["B6"].Value = "ID";
             worksheet.Cells["C6"].Value = "Kart ID";
@@ -187,7 +192,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Kapi_ID;
                 worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
                 worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Operasyon;
-                worksheet.Cells[string.Format("K{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih); 
+                worksheet.Cells[string.Format("K{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
                 rowStart++;
 
             }

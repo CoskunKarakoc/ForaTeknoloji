@@ -11,5 +11,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
     public class EfGroupsMasterDal : EfEntityRepositoryBase<GroupsMaster, ForaContext>, IGroupMasterDal
     {
+       
     }
 }

@@ -4,29 +4,26 @@ using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
-using Rotativa;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
     [Auth]
+    [Excp]
     public class PersonelListReportController : Controller
     {
         private IUserService _userService;
         private IDepartmanService _departmanService;
         private IBloklarService _bloklarService;
-        private IGroupsDetailService _groupsDetailService;
+        private IGroupMasterService _groupMasterService;
         private ISirketService _sirketService;
         private IGlobalZoneService _globalZoneService;
-        private IGroupMasterService _groupMasterService;
         private IReportService _reportService;
         public DBUsers user;
-        public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupsDetailService groupsDetailService, ISirketService sirketService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IReportService reportService)
+        public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupMasterService groupMasterService, ISirketService sirketService, IGlobalZoneService globalZoneService, IReportService reportService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -36,10 +33,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _userService = userService;
             _departmanService = departmanService;
             _bloklarService = bloklarService;
-            _groupsDetailService = groupsDetailService;
+            _groupMasterService = groupMasterService;
             _sirketService = sirketService;
             _globalZoneService = globalZoneService;
-            _groupMasterService = groupMasterService;
             _reportService = reportService;
 
 
@@ -50,11 +46,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: PersonelListReport
         public ActionResult Index(int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, int? Groupsdetail = null, int? Global_Bolge_Adi = null, int? Daire = null, string Plaka = "")
         {
-
             var personelLists = _reportService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
             var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
@@ -80,7 +75,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
+                    Value = a.Grup_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
@@ -98,6 +93,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
+
         //EXCELL EXPORT
         public void PersonelListesi()
         {
@@ -113,7 +109,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Personel Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";

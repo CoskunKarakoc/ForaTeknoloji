@@ -7,24 +7,24 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
     [Auth]
+    [Excp]
     public class VisitorReportController : Controller
     {
         private IVisitorsService _visitorsService;
         private IPanelSettingsService _panelSettingsService;
-        private IGroupsDetailService _groupsDetailService;
+        private IGroupMasterService _groupMasterService;
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
-        public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupsDetailService groupsDetailService, IGlobalZoneService globalZoneService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
+        public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -33,7 +33,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             _visitorsService = visitorsService;
             _panelSettingsService = panelSettingsService;
-            _groupsDetailService = groupsDetailService;
+            _groupMasterService = groupMasterService;
             _globalZoneService = globalZoneService;
             _reportService = reportService;
             _dBUsersPanelsService = dBUsersPanelsService;
@@ -42,8 +42,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: VisitorReport
-        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, int? Visitors = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, bool? TümPanel = null, int? Paneller = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string Kayit = "", string KapiYon = "", string Search = "")
+        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, int? Visitors = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, bool? TümPanel = null, int? Paneller = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string Kayit = "", string KapiYon = "", string Search = "", bool TümTarih = false)
         {
+            if (TümTarih != true)
+            {
+                Tarih1 = Tarih1 ?? DateTime.Now.Date;
+            }
             List<Visitors> visitors = new List<Visitors>();
             //TODO:Search olayıda yapılacak
             var liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Visitors, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
@@ -57,7 +61,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 visitors = _visitorsService.GetAllVisitors();
             }
-            var groupsdetail = _groupsDetailService.GetAllGroupsDetail();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new VisitorsList
             {
@@ -72,7 +76,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Groupsdetail = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
-                    Value = a.Kayit_No.ToString()
+                    Value = a.Grup_No.ToString()
                 }),
                 Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
                 {
@@ -95,6 +99,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+
         //EXCELL EXPORT
         public void ZiyaretciListesi()
         {
@@ -110,7 +115,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Ziyaretçi Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -143,9 +148,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Ziyaret_Sebebi;
                 worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Grup_Adi;
                 worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Panel_ID;
-                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Kapi_ID;
+                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Kapi;
                 worksheet.Cells[string.Format("L{0}", rowStart)].Value = item.Gecis_Tipi;
-                worksheet.Cells[string.Format("M{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", item.Tarih);
+                worksheet.Cells[string.Format("M{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
                 worksheet.Cells[string.Format("N{0}", rowStart)].Value = item.Personel_Adi;
                 worksheet.Cells[string.Format("O{0}", rowStart)].Value = item.Personel_Soyadi;
                 rowStart++;
