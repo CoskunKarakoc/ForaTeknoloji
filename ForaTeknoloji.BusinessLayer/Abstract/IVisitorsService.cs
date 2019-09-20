@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfVisitorsDal;
 
 namespace ForaTeknoloji.BusinessLayer.Abstract
 {
@@ -16,6 +17,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         Visitors AddVisitor(Visitors visitors);
         void DeleteVisitor(Visitors visitors);
         Visitors UpdateVisitor(Visitors visitors);
-      
+       
     }
 }

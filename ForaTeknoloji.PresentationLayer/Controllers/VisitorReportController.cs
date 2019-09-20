@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfVisitorsDal;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
@@ -49,7 +50,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Tarih1 = Tarih1 ?? DateTime.Now.Date;
             }
             List<Visitors> visitors = new List<Visitors>();
-            //TODO:Search olayıda yapılacak
+
             var liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Visitors, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
 
@@ -88,14 +89,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
-
-
-
-        //DoorNames Tablosundan Ajax ile Kapılar Çekiliyor JQuery ile Ekrana Basılıyor 
-        public ActionResult KapiListesi()
+        //Ziyaretci Listesi ve Search İşlemi
+        public ActionResult ComplexVisitors(string Search)
         {
-            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
-            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
+            List<Visitors> liste = new List<Visitors>();
+            if (Search == null || Search == "")
+            {
+                liste = _visitorsService.GetAllVisitors();
+            }
+            else
+            {
+                liste = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()));
+
+            }
+            return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
 

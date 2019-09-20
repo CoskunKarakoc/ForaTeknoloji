@@ -25,6 +25,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                         join u in context.Users
                         on v.ID equals u.ID into tb3
                         from tbl3 in tb3.DefaultIfEmpty()
+                        join d in context.DoorNames
+                        on tbl1.Kapi_ID equals d.Kapi_No into tb4
+                        from tbl4 in tb4.DefaultIfEmpty()
                         where tbl1.Kullanici_Tipi == 1
                         select new ZiyaretciRaporList
                         {
@@ -42,7 +45,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             Ziyaretci_Resim = v.Resim,
                             Ziyaretci_TCKimlik = v.TCKimlik,
                             Ziyaretci_Telefon = v.Telefon,
-                            Kapi = tbl1.Kapi_Adi,
+                            Kapi = tbl4.Kapi_Adi,
                             Kart_ID = tbl1.Kart_ID,
                             Panel_ID = tbl1.Panel_ID,
                             Kayit_No = tbl1.Kayit_No
@@ -50,5 +53,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                         };
             return liste.Distinct();
         }
+
     }
 }

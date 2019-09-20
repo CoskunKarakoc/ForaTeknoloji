@@ -94,7 +94,7 @@
     </div>
 </div>
 <div class="card mt-2 shadow-lg">
-    @using (Html.BeginForm("ManuelCikis", "InsideOutReport", FormMethod.Post))
+    @using (Html.BeginForm("ManuelCikisTumu", "InsideOutReport", FormMethod.Post))
     {
         <div id="print_div" class="card-body">
             @if (Model.TumuListesi.Count > 0)
@@ -104,16 +104,16 @@
               footerStyle:"table-pager",
               columns: webGrid.Columns(
                   webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                               webGrid.Column("ID", "ID"),
-                               webGrid.Column("Kart_ID", "Kart ID"),
-                               webGrid.Column("Adi", "Adı"),
-                               webGrid.Column("Soyadi", "Soyadı"),
-                               webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
-                               webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadi"),
-                               webGrid.Column("Sirket", "Şirket"),
-                               webGrid.Column("Departman", "Departman"),
-                               webGrid.Column("Tarih", "Tarih"),
-                               webGrid.Column("Ziyaret_Tarihi", "Tarihi")))
+                                  webGrid.Column("ID", "ID"),
+                                  webGrid.Column("Kart_ID", "Kart ID"),
+                                  webGrid.Column("Adi", "Adı"),
+                                  webGrid.Column("Soyadi", "Soyadı"),
+                                  webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
+                                  webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadi"),
+                                  webGrid.Column("Sirket", "Şirket"),
+                                  webGrid.Column("Departman", "Departman"),
+                                  webGrid.Column("Tarih", "Tarih"),
+                                  webGrid.Column("Ziyaret_Tarihi", "Tarihi")))
             }
             else
             {
@@ -123,68 +123,6 @@
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-            @*<table class="table table-hover text-center table-striped">
-                    <thead class="table-info">
-                        <tr>
-                            <td>Seçim</td>
-                            <td>ID</td>
-                            <td>Kart ID</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>Ziyaretçi Adı</td>
-                            <td>Ziyaretçi Soyadı</td>
-                            <td>Şirket</td>
-                            <td>Departman</td>
-                            <td>Tarih</td>
-                            <td>Tarih</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.TumuListesi.Count == 0)
-                        {
-                            <tr>
-                                <td class="text-warning" rowspan="11" colspan="11"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
-                            </tr>
-                        }
-                        else
-                        {
-                            foreach (var item in Model.TumuListesi)
-                            {
-                                <tr>
-                                    <td><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></td>
-                                    <td>@item.ID</td>
-                                    <td>@item.Kart_ID</td>
-                                    <td>@item.Adi</td>
-                                    <td>@item.Soyadi</td>
-                                    <td>@item.Ziyaretci_Adi</td>
-                                    <td>@item.Ziyaretci_Soyadi</td>
-                                    <td>@item.Sirket</td>
-                                    <td>@item.Departman</td>
-                                    <td>@item.Tarih</td>
-                                    <td>@item.Ziyaret_Tarihi</td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="11">
-                                <input type="submit" id="CikisVer" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" />
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>*@
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -238,6 +176,7 @@
                     console.log(data);
                     $("#reader").html("");
                     $("#readerCikis").html("");
+                    $('#reader').append("<option value=''>Okuyucu Seç</option>");
                     $.each(data, function (index,value) {
                         if (value.WKapi1_Lokal_Bolge != 0) {
 

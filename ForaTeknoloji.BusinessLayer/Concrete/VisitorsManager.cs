@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfVisitorsDal;
 
 namespace ForaTeknoloji.BusinessLayer.Concrete
 {
@@ -44,7 +45,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _visitorsDal.Update(visitors);
         }
-
 
     }
 }

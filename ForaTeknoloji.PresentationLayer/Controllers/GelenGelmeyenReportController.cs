@@ -208,8 +208,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
-      
-
+       
 
         public ActionResult IlkGirisSonCikis(int? Sirketler = null, int? Departmanlar = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, int? UserID = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null)
         {
@@ -250,6 +249,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
+
+
+        public ActionResult ComplexUser(string Search)
+        {
+            List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser> liste = new List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser>();
+            if (Search == null || Search == "")
+            {
+                liste = _userService.GetAllUsersWithOuther();
+            }
+            else
+            {
+                liste = _userService.GetAllUsersWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim()));
+            }
+            return Json(liste, JsonRequestBehavior.AllowGet);
+        }
 
 
 
@@ -304,6 +318,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             Response.BinaryWrite(package.GetAsByteArray());
             Response.End();
         }
+      
         //Gelmeyenler Excell
         public void GelmeyenlerExcell()
         {

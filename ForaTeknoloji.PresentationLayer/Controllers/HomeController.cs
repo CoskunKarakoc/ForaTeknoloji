@@ -4,7 +4,6 @@ using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System.Web.Mvc;
-//TODO:Satırlara tıklanıldığında data attributeları alınacak
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
     [Excp]

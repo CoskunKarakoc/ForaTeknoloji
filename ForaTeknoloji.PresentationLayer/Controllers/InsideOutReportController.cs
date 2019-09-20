@@ -25,7 +25,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         DBUsers user;
         public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            //TODO: Tablodan seçilen kayıtlar yeniden accesdatasa kaydolacak
+           
 
             user = CurrentSession.User;
             if (user == null)
@@ -48,7 +48,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: InsideOutReport
         public ActionResult Personel(int? Global_Bolge_Adi = 1, int? Paneller = 1, string Bolge = "Lokal", string Gecis = "0", string Kapi = "0")
         {
-            //TODO: Table satıra checkbox ve data attribute gelecek
+           
             var liste = _reportService.GetIcerdeDisardaPersonels(Global_Bolge_Adi, Paneller, Kapi, Bolge, Gecis);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && x.Seri_No != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -132,8 +132,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        //Seçilen Kullanıcılar AccessDatas'a yeniden Geçiş Tipi 1 Olacak Şekilde Kaydediliyor
-        public ActionResult ManuelCikis(List<int> Kayit_No)
+        //Personel-Seçilen Kullanıcılar AccessDatas'a yeniden Geçiş Tipi 1 Olacak Şekilde Kaydediliyor
+        public ActionResult ManuelCikisPersonel(List<int> Kayit_No)
         {
             if (Kayit_No != null)
             {
@@ -143,6 +143,38 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return RedirectToAction("Personel");
         }
+
+
+
+        //Tumu-Seçilen Kullanıcılar AccessDatas'a yeniden Geçiş Tipi 1 Olacak Şekilde Kaydediliyor
+        public ActionResult ManuelCikisTumu(List<int> Kayit_No)
+        {
+            if (Kayit_No != null)
+            {
+                _reportService.Guncelle(Kayit_No);
+            }
+
+            return RedirectToAction("Tumu");
+        }
+
+
+
+        //Ziyaretci-Seçilen Kullanıcılar AccessDatas'a yeniden Geçiş Tipi 1 Olacak Şekilde Kaydediliyor
+        public ActionResult ManuelCikisZiyaretci(List<int> Kayit_No)
+        {
+            if (Kayit_No != null)
+            {
+                _reportService.Guncelle(Kayit_No);
+            }
+
+            return RedirectToAction("Ziyaretci");
+        }
+
+
+
+
+
+
 
         //Dropdown'dan seçilen Panel'e göre Reader'ları Reader DropdownList'e gönderiyor
         [HttpPost]

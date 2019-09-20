@@ -2,7 +2,7 @@
 @using GridMvc.Html;
 @using ForaTeknoloji.Entities.ComplexType
 @{
-    ViewBag.Title = "Personel Raporları";
+    ViewBag.Title = "Eski Personel Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.ReportPersonel, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
     webGrid.Pager(WebGridPagerModes.NextPrevious);
@@ -35,10 +35,10 @@
 </style>
 <div class="card mt-1 shadow-lg">
     <div class="card-header-tabs mt-1">
-        <h3 class="text-center text-muted">Aktif Kullanıcı Raporları</h3>
+        <h3 class="text-center text-muted">Eski Kullanıcı Raporları</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Index", "ReportPersonel", FormMethod.Get))
+        @using (Html.BeginForm("OldStaff", "ReportPersonel", FormMethod.Get))
         {
 
             <div class="row">
@@ -209,7 +209,7 @@
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="TümKullanici" class="custom-control-input" id="TümKullanici" />
-                            <label class="custom-control-label" for="TümKullanici">Tüm Aktif Kullanıcılar</label>
+                            <label class="custom-control-label" for="TümKullanici">Tüm Eski Kullanıcılar</label>
                         </div>
                         <div class="form-group">
                             <input type="text" id="Ziyaretci" class="form-control" name="Ziyaret" />
@@ -291,7 +291,6 @@ webGrid.Column("Tarih", "Tarih")))
                 </div>
 
             }
-
         </div>
     </div>
 </div>
@@ -333,7 +332,7 @@ webGrid.Column("Tarih", "Tarih")))
                         </tr>
                     </thead>
                     <tbody id="zyrt">
-                        @foreach (var item in Model.Kullanıcı)
+                        @foreach (var item in Model.EskiKullanicilar)
                         {
                             <tr>
                                 <td data-kayitno="@item.Kayit_No" data-visitor="@(item.Adi+" "+item.Soyadi )">@item.Kayit_No</td>
@@ -363,74 +362,8 @@ webGrid.Column("Tarih", "Tarih")))
 </div>
 
 
-<!-- Modal Eski -->
-<div class="modal fade" id="exampleModalEski" tabindex="-1" role="dialog" aria-labelledby="exampleModalEskiLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="text-muted">Eski Kullanıcı Arama</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body ">
-                <div hidden id="alertMainEski" class="alert-success alert">
-                    <h2 id="alertEski" class="text-center text-muted"></h2>
-                </div>
-                <!-- Search form -->
-                <div class="input-group md-form form-sm form-2 pl-0">
-                    <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="SearchEski" aria-label="Search">
-                    <button class="btn btn-sm btn-success" id="SearchBtnEski">Ara</button>
-                </div>
-                <hr />
-                <table id="myTableEski" class="table table-hover text-center table-striped">
-                    <thead class="table-info">
-                        <tr>
-                            <td>Kayıt No</td>
-                            <td>ID</td>
-                            <td>Kart ID</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>Şirket</td>
-                            <td>Departman</td>
-                            <td>Blok</td>
-                            <td>Plaka</td>
-                            <td>Geçiş Grubu</td>
-                            <td>Ziyaretçi Grubu</td>
-                        </tr>
-                    </thead>
-                    <tbody id="zyrt">
-                        @foreach (var item in Model.EskiKullanicilar)
-                        {
-                            <tr>
-                                <td data-kayitno="@item.Kayit_No" data-visitor="@(item.Adi+" "+item.Soyadi )">@item.Kayit_No</td>
-                                <td>@item.ID</td>
-                                <td>@item.Kart_ID</td>
-                                <td>@item.Adi</td>
-                                <td>@item.Soyadi</td>
-                                <td>@item.Sirket</td>
-                                <td>@item.Departman</td>
-                                <td>@item.Blok</td>
-                                <td>@item.Plaka</td>
-                                <td>@item.Gecis_Grubu</td>
-                                <td>@item.Ziyaretci_Grubu</td>
-                            </tr>
-
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="yenileEski"><i class="fas fa-refresh"></i> Listeyi Yenile</button>
-                <button type="button" id="temizleEski" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
-                <button type="button" id="closeEski" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
-            </div>
-        </div>
-    </div>
-</div>
+<script src="./src/bootstrap-input-spinner.js"></script>
 <script>
-
     $(document).ready(function () {
 
         $("#myTable tbody tr").click(function () {
@@ -447,7 +380,7 @@ webGrid.Column("Tarih", "Tarih")))
             $("#Search").val("");
             $("#zyrt").html("");
             $.ajax({
-                url: '/ReportPersonel/AktifZiyaretciler',
+                url: '/ReportPersonel/EskiZiyaretciler',
                 type: 'GET',
                 dataType: 'json',
                 data: { Search: arama }
@@ -487,7 +420,7 @@ webGrid.Column("Tarih", "Tarih")))
         $("#yenile").click(function () {
             $("#zyrt").html("");
             $.ajax({
-                url: '/ReportPersonel/AktifZiyaretciler',
+                url: '/ReportPersonel/EskiZiyaretciler',
                 type: 'GET',
                 dataType: 'json',
                 data: { Search: null }
@@ -525,21 +458,7 @@ webGrid.Column("Tarih", "Tarih")))
 
 
 
-
-
-
-
-
-
-
-
-
     });
-
-
-
-
-
 </script>
 
 
@@ -708,16 +627,8 @@ webGrid.Column("Tarih", "Tarih")))
         }, 500);
 
     });
-
-
-
-
     $("input[type='number']").inputSpinner()
 </script>
 
-
-
-
-<script src="./src/bootstrap-input-spinner.js"></script>
 @*Personel Raporları*@
 

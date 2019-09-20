@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -43,7 +44,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 Tarih1 = Tarih1 ?? DateTime.Now.Date;
             }
-            //TODO: satırlara data Attribute'u gelecek buna ve reportpoersonele
+           
             var list = _reportService.GetTanimsizListesi(Kapi, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
 
             var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
@@ -63,21 +64,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        //DoorNames Tablosundan Ajax ile Kapılar Çekiliyor JQuery ile Ekrana Basılıyor 
-        public ActionResult KapiListesi()
-        {
-            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
-            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
-        }
-
+        
 
 
         //Export Excell
         public void TanimsizKullaniciListesi()
         {
-            List<AccessDatas> list = new List<AccessDatas>();
+            List<AccessDatasComplex> list = new List<AccessDatasComplex>();
 
-            list = TempData["Tanimsiz"] as List<AccessDatas>;
+            list = TempData["Tanimsiz"] as List<AccessDatasComplex>;
             if (list == null || list.Count == 0)
             {
                 list = _reportService.GetTanimsizListesi(null, null, null, null, null, null, null, null, "");

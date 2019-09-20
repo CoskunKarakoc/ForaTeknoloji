@@ -52,5 +52,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return filter == null ? _userDal.GetAllUsersWithOuther() : _userDal.GetAllUsersWithOuther(filter);
         }
 
+        public Users GetByKayitNo(int? Kayit_No)
+        {
+            return _userDal.Get(x => x.Kayit_No == Kayit_No);
+        }
     }
 }

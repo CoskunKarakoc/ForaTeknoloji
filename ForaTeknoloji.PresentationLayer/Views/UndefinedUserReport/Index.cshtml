@@ -9,8 +9,8 @@
     string canlimg = "#";
     if (webGrid.HasSelection)
     {
-        var sonuc = (ForaTeknoloji.Entities.Entities.AccessDatas)webGrid.Rows[webGrid.SelectedIndex].Value;
-        canlimg = "/Canli_Images/" + sonuc.Kart_ID + ".jpg";
+        var sonuc = (ForaTeknoloji.Entities.ComplexType.AccessDatasComplex)webGrid.Rows[webGrid.SelectedIndex].Value;
+        canlimg = "/Canli_Images/" + sonuc.Canli_Resim;
 
     }
 }
@@ -185,52 +185,6 @@
             </div>
         }
 
-
-
-
-
-        @*<table id="myTable" class="table-borderless table table table-striped text-center  table-hover">
-                <thead class="table-info">
-                    <tr>
-                        <td>Kart ID</td>
-                        <td>Panel</td>
-                        <td>Kapı</td>
-                        <td>Geçiş</td>
-                        <td>Tarih</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.Liste.Count == 0)
-                    {
-                        <tr>
-                            <td class="text-warning" rowspan="13" colspan="13"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
-                        </tr>
-                    }
-                    else
-                    {
-                        foreach (var item in Model.Liste)
-                        {
-                            <tr class="deneme">
-                                <td data-kart="@item.Kart_ID">@item.Kart_ID</td>
-                                <td>@item.Panel_ID</td>
-                                <td>@item.Kapi_ID</td>
-                                @if (item.Gecis_Tipi == 0)
-                                {
-
-                                    <td>Giriş</td>
-                                }
-                                else
-                                {
-                                    <td>Çıkış</td>
-                                }
-                                <td>@item.Tarih</td>
-                            </tr>
-                        }
-                    }
-
-                </tbody>
-            </table>*@
-
     </div>
 </div>
 <script>
@@ -335,33 +289,7 @@
             var kartID = $(this).children("td").data("kart");
             $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
         });
-        //$.ajax({
-        //    url: '/UndefinedUserReport/KapiListesi',
-        //    type: 'GET',
-        //    dataType: 'json',
-        //    contentType: 'application/json; charset=utf-8',
-        //    success: function (data) {
-        //        $("#Kapilar").html("");
-        //        if (data.length == 0 || data.length < 0) {
-        //            for (var i = 1; i < 9; i++) {
-        //                $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-        //                    + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
-        //                    + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
-        //                    + "</div>");
-        //            }
-        //        } else {
-        //            for (var i in data) {
-        //                $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-        //                    + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
-        //                    + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
-        //                    + "</div>");
-        //            }
-        //        }
-        //    },
-        //    error: function () {
-        //        alert("Kapı Listesi Yüklenemedi");
-        //    }
-        //});
+
 
 
         var today = new Date();

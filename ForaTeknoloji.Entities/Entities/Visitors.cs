@@ -7,7 +7,7 @@ namespace ForaTeknoloji.Entities.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Visitors:IEntity
+    public partial class Visitors : IEntity
     {
         [Key]
         [Column("Kayit No")]

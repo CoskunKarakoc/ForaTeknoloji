@@ -472,6 +472,7 @@
     <Content Include="Images\801324018.jpg" />
     <Content Include="Images\15491735.jpg" />
     <Content Include="Images\6300990.jpg" />
+    <Content Include="Images\LoginPageImage.jpg" />
     <Content Include="Images\Logo.jpg" />
     <Content Include="Images\MavisoftYatayOrta2.jpg" />
     <Content Include="Images\MavisoftYatayOrtaLogo.png" />
@@ -2548,6 +2549,7 @@
     <Content Include="Views\OutherReport\KullaniciAlarm.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\HassError.cshtml" />
+    <Content Include="Views\ReportPersonel\OldStaff.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

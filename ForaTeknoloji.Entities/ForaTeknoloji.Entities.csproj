@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexType\AccessDatasComplex.cs" />
     <Compile Include="ComplexType\DigerGecisRaporList.cs" />
     <Compile Include="ComplexType\DigerGecisRaporListKullaniciAlarm.cs" />
     <Compile Include="ComplexType\GelenGelmeyenRaporList.cs" />

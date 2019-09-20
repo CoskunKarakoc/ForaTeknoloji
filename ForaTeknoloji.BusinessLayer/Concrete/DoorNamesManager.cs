@@ -44,8 +44,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
         public List<DoorNames> GetByPanelNo(int panelNo)
         {
-            return _doorNamesDal.GetList(x=>x.Panel_No==panelNo);
+            return _doorNamesDal.GetList(x => x.Panel_No == panelNo);
         }
 
+        public DoorNames GetByKapiAdiAndPanelID(int? KapiID, int? PanelID)
+        {
+            return _doorNamesDal.Get(x => x.Kapi_No == KapiID && x.Panel_No == PanelID);
+        }
     }
 }

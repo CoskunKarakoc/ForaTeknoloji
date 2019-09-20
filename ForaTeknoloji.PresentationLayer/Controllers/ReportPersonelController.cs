@@ -51,8 +51,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
 
         }
-        // GET: ReportPersonel
-        public ActionResult Index(List<string> Kapi = null, bool? Günlük = null, bool? Tümü = null, bool? TümKullanici = null, int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, bool? TümPanel = null, int? Visitors = null, int? Panel = null, int? Groupsdetail = null, int? Daire = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = null, string Plaka = null, string Kullanici = null, string Kayit = null, bool TümTarih = false)
+        // GET: ReportPersonelAktif
+        public ActionResult Index(List<string> Kapi = null, bool? Günlük = null, bool? Tümü = null, bool? TümKullanici = null, int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, bool? TümPanel = null, int? Visitors = null, int? Panel = null, int? Groupsdetail = null, int? Daire = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = null, string Plaka = null, string Kayit = null, bool TümTarih = false)
         {
             if (TümTarih != true)
             {
@@ -66,10 +66,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
-            var liste = _reportService.GetReportPersonelLists(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kullanici, Kayit);
+            var liste = _reportService.GetReportPersonelLists(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kayit);
+            var kullanicilar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            var eskiKullanicilar = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
             var model = new ReportPersonelViewModel
             {
                 ReportPersonel = liste,
+                Kullanıcı = kullanicilar,
+                EskiKullanicilar = eskiKullanicilar,
                 Paneller = panel.Select(a => new SelectListItem
                 {
                     Text = a.Panel_Name,
@@ -114,38 +118,111 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
+        // GET: ReportPersonelEski
+        public ActionResult OldStaff(List<string> Kapi = null, bool? Günlük = null, bool? Tümü = null, bool? TümKullanici = null, int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, bool? TümPanel = null, int? Visitors = null, int? Panel = null, int? Groupsdetail = null, int? Daire = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = null, string Plaka = null, string Kayit = null, bool TümTarih = false)
+        {
+            if (TümTarih != true)
+            {
+                Tarih1 = Tarih1 ?? DateTime.Now.Date;
+            }
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
+            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var bloklar = _bloklarService.GetAllBloklar();
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var groupMaster = _groupMasterService.GetAllGroupsMaster();
+            var visitors = _visitorsService.GetAllVisitors();
+            var liste = _reportService.GetReportPersonelListsEski(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kayit);
+            var kullanicilar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            var eskiKullanicilar = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            var model = new ReportPersonelViewModel
+            {
+                ReportPersonel = liste,
+                Kullanıcı = kullanicilar,
+                EskiKullanicilar = eskiKullanicilar,
+                Paneller = panel.Select(a => new SelectListItem
+                {
+                    Text = a.Panel_Name,
+                    Value = a.Panel_ID.ToString()
+                }),
+                Groupsdetail = groupsdetail.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Grup_No.ToString()
+                }),
+                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                {
+                    Text = a.Global_Bolge_Adi,
+                    Value = a.Global_Bolge_No.ToString()
+                }),
+                Departmanlar = departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
+                Bloklar = bloklar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Blok_No.ToString()
+                }),
+                Sirketler = sirketler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
+                Gecis_Grubu = groupMaster.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Grup_No.ToString()
+                })
 
 
+
+            };
+            TempData["ReportPersonel"] = liste;
+            return View(model);
+        }
 
 
 
         public ActionResult AktifZiyaretciler(string Search)//Popup'a Aktif Kulanıcı Yükleniyor
         {
 
-            var liste = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser> liste = new List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser>();
 
             if (Search != null && Search != "")
             {
-                liste = _userService.GetAllUsersWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
+                liste = _userService.GetAllUsersWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
             }
+            else
+            {
+                liste = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            }
+
             return Json(liste, JsonRequestBehavior.AllowGet);
+
+
+
+
         }
 
         public ActionResult EskiZiyaretciler(string Search)//Popup'a Eski Kullanıcı Yükleniyor
         {
-            var liste = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            List<DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal.ComplexUserOld> liste = new List<DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal.ComplexUserOld>();
+
             if (Search != null && Search != "")
             {
                 liste = _usersOLDService.GetAllUserOLDWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
             }
+            else
+            {
+                liste = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            }
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult KapiListesi()//Kullanıcıya ait olan panellerin kapıları listeleniyor
-        {
-            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
-            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
-        }
+      
 
 
         //EXCELL EXPORT

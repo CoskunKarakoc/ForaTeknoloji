@@ -9,8 +9,8 @@
     if (webGrid.HasSelection)
     {
         var sonuc = (ForaTeknoloji.Entities.ComplexType.ZiyaretciRaporList)webGrid.Rows[webGrid.SelectedIndex].Value;
-        img = "/Images/" + sonuc.Kart_ID + ".jpg";
-        canlimg = "/Canli_Images/" + sonuc.Kart_ID + ".jpg";
+        img = "/Canli_Images/" + sonuc.Ziyaretci_Resim;
+        canlimg = "/Canli_Images/" + sonuc.Ziyaretci_Resim;
 
     }
 }
@@ -201,8 +201,11 @@
                     </div>
 
                 </div>
-                <div class="col-md-4">
-                    <img id="change-image" src="@img" alt="Kayıtlı Fotoğraf" />
+                <div class="col-md-4 text-center">
+                    <p class="text-center text-muted">Kayıtlı Fotoğraf</p>
+                    <hr />
+                    <img  id="change-image" src="@img" alt="Kayıtlı Fotoğraf" />
+                    <p class="text-center text-muted">Canlı Fotoğraf</p>
                     <hr />
                     <img id="change-image-canli" src="@canlimg" alt="Canlı Fotoğraf" />
 
@@ -244,62 +247,6 @@
                     <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
                 </div>
             }
-
-
-
-
-            @*<table id="tableNon" class="table table-hover text-center table-striped">
-                    <thead class="table-info">
-                        <tr>
-                            <td>ID</td>
-                            <td>Kart ID</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>TC Kimlik No</td>
-                            <td>Telefon</td>
-                            <td>Plaka</td>
-                            <td>Ziyaret Sebebi</td>
-                            <td>Grup Adı</td>
-                            <td>Panel</td>
-                            <td>Kapı</td>
-                            <td>Geçiş</td>
-                            <td>Tarih</td>
-                            <td>Personel Adı</td>
-                            <td>Personel Soyadı</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.ComplexVisitorsListesi.Count == 0)
-                        {
-                            <tr>
-                                <td class="text-warning" rowspan="15" colspan="15"><h3>Kriterlere Uygun Kayıt Bulunamadı!</h3></td>
-                            </tr>
-                        }
-                        else
-                        {
-                            foreach (var item in Model.ComplexVisitorsListesi)
-                            {
-                                <tr>
-                                    <td data-kart="@item.Kart_ID">@item.ID</td>
-                                    <td>@item.Kart_ID</td>
-                                    <td>@item.Ziyaretci_Adi</td>
-                                    <td>@item.Ziyaretci_Soyadi</td>
-                                    <td>@item.Ziyaretci_TCKimlik</td>
-                                    <td>@item.Ziyaretci_Telefon</td>
-                                    <td>@item.Ziyaretci_Plaka</td>
-                                    <td>@item.Ziyaret_Sebebi</td>
-                                    <td>@item.Grup_Adi</td>
-                                    <td>@item.Panel_ID</td>
-                                    <td>@item.Kapi_ID</td>
-                                    <td>@item.Gecis_Tipi</td>
-                                    <td>@item.Tarih</td>
-                                    <td>@item.Personel_Adi</td>
-                                    <td>@item.Personel_Soyadi</td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>*@
         </div>
     </div>
 </div>
@@ -309,16 +256,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="text-muted">Ziyaretçi Arama</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body ">
                 <div hidden id="alertMain" class="alert-success">
                     <h2 id="alert" class="text-center text-muted"></h2>
                 </div>
-
-
+                <!-- Search form -->
+                <div class="input-group md-form form-sm form-2 pl-0">
+                    <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
+                    <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
+                </div>
+                <hr />
                 <table id="myTable" class="table table-hover text-center table-striped table-sm">
                     <thead class="table-info">
                         <tr>
@@ -339,7 +287,7 @@
                             <td>Resim</td>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="SearchTable">
                         @foreach (var item in Model.Visitors)
                         {
                             <tr>
@@ -349,8 +297,8 @@
                                 <td>@item.Soyadi</td>
                                 <td>@item.TCKimlik</td>
                                 <td>@item.Plaka</td>
-                                <td>@item.Tarih</td>
-                                <td>@item.Saat</td>
+                                <td>@item.Tarih.Value.ToShortDateString()</td>
+                                <td>@item.Saat.Value.ToLongTimeString()</td>
                                 <td>@item.Ziyaret_Sebebi</td>
                                 <td>@item.Grup_No</td>
                                 <td>@item.ID</td>
@@ -358,13 +306,16 @@
                                 <td>@item.UseUserGroup</td>
                                 <td>@item.Telefon</td>
                                 <td>@item.Resim</td>
+
                             </tr>
+
                         }
                     </tbody>
 
                 </table>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="yenile"><i class="fas fa-refresh"></i> Listeyi Yenile</button>
                 <button type="button" class="btn btn-success" id="temizle"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
                 <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
             </div>
@@ -374,32 +325,6 @@
 
 <script>
     $(function () {
-        //$.ajax({
-        //    url: '/VisitorReport/KapiListesi',
-        //    type: 'GET',
-        //    dataType: 'json',
-        //    contentType: 'application/json; charset=utf-8',
-        //    success: function (data) {
-        //        $("#Kapilar").html("");
-        //        if (data.length == 0 || data.length < 0) {
-        //            for (var i = 1; i < 9; i++) {
-        //                $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-        //                    + "<input type='checkbox' value='" + i + "' name='Kapi' class='custom-control-input' id='Kapi" + i + "' />"
-        //                    + "<label class='custom-control-label' for='Kapi" + i + "'>Kapı " + i + "</label>"
-        //                    + "</div>");
-        //            }
-        //        } else {
-        //            for (var i in data) {
-        //                $("#Kapilar").append("<div class='custom-control custom-checkbox'>"
-        //                    + "<input type='checkbox' value='" + data[i].Kapi_No + "' name='Kapi' class='custom-control-input' id='Kapi" + data[i].Kapi_No + "' />"
-        //                    + "<label class='custom-control-label' for='Kapi" + data[i].Kapi_No + "'>" + data[i].Kapi_Adi + "</label>"
-        //                    + "</div>");
-        //            }
-        //        }
-        //    }, error: function () {
-        //        alert("Kapı Listesi Yüklenemedi");
-        //    }
-        //});
         $("#TümKapi").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#Kapi1").attr("disabled", true);
@@ -538,5 +463,124 @@
         var today = new Date();
         $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
         $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+
+
+
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#SearchBtn").click(function () {
+            var arama = $("#Search").val();
+            $("#Search").val("");
+            $.ajax({
+                url: '/VisitorReport/ComplexVisitors',
+                type: 'GET',
+                data: { Search: arama },
+                dataType: 'json',
+            }).done(function (data) {
+                function dateFormat(d) {
+                    return ((d.getDate() + "").padStart(2, "0") + "/" + (d.getMonth() + 1) + "").padStart(2, "0") + "/" + d.getFullYear();
+                };
+                function timeFormat(dt) {
+                    var d = new Date(dt);
+                    return (d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
+                }
+                $("#SearchTable").html("");
+                $("#Search").html("");
+                for (var i in data) {
+                    $("#SearchTable").append("<tr><td data-kayitno=" +
+                        data[i].Kayit_No +
+                        " data-visitor=" +
+                        data[i].Adi + '-' + data[i].Soyadi + ">" +
+                        data[i].Kayit_No +
+
+                        "</td><td>" + data[i].Kart_ID +
+                        "</td><td>" + data[i].Adi +
+                        "</td><td>" + data[i].Soyadi +
+                        "</td><td>" + data[i].TCKimlik +
+                        "</td><td>" + data[i].Plaka +
+                        "</td><td>" + dateFormat(new Date(parseInt((data[i].Tarih).match(/\d+/)[0]))) +
+                        "</td><td>" + data[i].Saat +
+                        "</td><td>" + data[i].Ziyaret_Sebebi +
+                        "</td><td>" + data[i].Grup_No +
+                        "</td><td>" + data[i].ID +
+                        "</td><td>" + data[i].User_ID +
+                        "</td><td>" + data[i].UseUserGroup +
+                        "</td><td>" + data[i].Telefon +
+                        "</td><td>" + data[i].Resim +
+                        "</td></tr>");
+                }
+            }).always(function () {
+                $("#myTable tbody tr").click(function () {
+                    $("#alertMain").prop("hidden", false);
+                    var kayitNo = $(this).children("td").data("kayitno");
+                    var name = $(this).children("td").data("visitor");
+                    $("#Ziyaretci").attr('value', name);
+                    $("#Visitor").attr('value', kayitNo);
+                    $("#alert").text(name + " Seçildi!");
+
+                });
+
+
+
+            })
+
+
+        });
+        $("#yenile").click(function () {
+            $.ajax({
+                url: '/VisitorReport/ComplexVisitors',
+                type: 'GET',
+                data: { Search: null },
+                dataType: 'json',
+            }).done(function (data) {
+                function dateFormat(d) {
+                    return ((d.getDate() + "").padStart(2, "0") + "." + (d.getMonth() + 1) + "").padStart(2, "0") + "." + d.getFullYear();
+                };
+                function timeFormat(d) {
+                    return ((d.getUTCHours() + "").padStart(2, "0") + ":" + (d.getUTCMinutes() + 1) + "").padStart(2, "0") + ":" + d.getUTCSeconds();
+                }
+                $("#SearchTable").html("");
+                $("#Search").html("");
+                for (var i in data) {
+                    $("#SearchTable").append("<tr><td data-kayitno=" +
+                        data[i].Kayit_No +
+                        " data-visitor=" +
+                        data[i].Adi + '-' + data[i].Soyadi + ">" +
+                        data[i].Kayit_No +
+                        "</td><td>" + data[i].Kart_ID +
+                        "</td><td>" + data[i].Adi +
+                        "</td><td>" + data[i].Soyadi +
+                        "</td><td>" + data[i].TCKimlik +
+                        "</td><td>" + data[i].Plaka +
+                        "</td><td>" + dateFormat(new Date(parseInt((data[i].Tarih).match(/\d+/)[0]))) +
+                        "</td><td>" + timeFormat(new Date(parseInt((data[i].Saat).match(/\d+/)[0]))) +
+                        "</td><td>" + data[i].Ziyaret_Sebebi +
+                        "</td><td>" + data[i].Grup_No +
+                        "</td><td>" + data[i].ID +
+                        "</td><td>" + data[i].User_ID +
+                        "</td><td>" + data[i].UseUserGroup +
+                        "</td><td>" + data[i].Telefon +
+                        "</td><td>" + data[i].Resim +
+                        "</td></tr>");
+                }
+            }).always(function () {
+                $("#myTable tbody tr").click(function () {
+                    $("#alertMain").prop("hidden", false);
+                    var kayitNo = $(this).children("td").data("kayitno");
+                    var name = $(this).children("td").data("visitor");
+                    $("#Ziyaretci").attr('value', name);
+                    $("#Visitor").attr('value', kayitNo);
+                    $("#alert").text(name + " Seçildi!");
+
+                });
+
+
+
+            })
+
+
+        });
     });
 </script>

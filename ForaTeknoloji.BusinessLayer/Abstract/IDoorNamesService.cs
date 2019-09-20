@@ -16,5 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteDoorNames(DoorNames doorNames);
         DoorNames UpdateDoorNames(DoorNames doorNames);
         List<DoorNames> GetByPanelNo(int panelNo);
+        DoorNames GetByKapiAdiAndPanelID(int? KapiID, int? PanelID);
     }
 }

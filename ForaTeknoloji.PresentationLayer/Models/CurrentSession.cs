@@ -18,6 +18,7 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public static void Set<T>(string key, T obj)
         {
             HttpContext.Current.Session[key] = obj;
+            HttpContext.Current.Session.Timeout = 80;
         }
 
         public static T Get<T>(string key) where T : class, new()

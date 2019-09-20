@@ -62,15 +62,16 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Personel ve Ziyaretçi</h6>
+                        <h6 class="collapse-header">Personel ve Kullanıcı</h6>
                         <a class="collapse-item" href="@Url.Action("Index","PersonelListReport")">Personel Listesi</a>
-                        <a class="collapse-item" href="@Url.Action("Index","ReportPersonel")">Personel Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","VisitorReport")">Ziyaretçi Raporları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","ReportPersonel")">Aktif Kullanıcı Raporları</a>
+                        <a class="collapse-item" href="@Url.Action("OldStaff","ReportPersonel")">Eski Kullanıcı Raporları</a>
                         <hr />
-                        <a class="collapse-item" href="@Url.Action("Gelenler","GelenGelmeyenReport")">Gelen Kişi Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("Gelmeyenler","GelenGelmeyenReport")">Gelmeyen Kişi Raporları</a>
+                        <h6 class="collapse-header">Genel Raporlar</h6>
                         <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">İlk Giriş Son Çıkış</a>
                         <a class="collapse-item" href="@Url.Action("ToplamIcerdeKalma","GelenGelmeyenReport")">Toplam İçerde Kalma</a>
+                        <a class="collapse-item" href="@Url.Action("Gelenler","GelenGelmeyenReport")">Gelen Kişi Raporları</a>
+                        <a class="collapse-item" href="@Url.Action("Gelmeyenler","GelenGelmeyenReport")">Gelmeyen Kişi Raporları</a>
                         <a class="collapse-item" href="@Url.Action("PasifKullanici","GelenGelmeyenReport")">Pasif Kullanıcı Raporları</a>
 
                         <h6 class="collapse-header">İçerde Dışarda Raporları</h6>
@@ -80,6 +81,7 @@
                         <hr />
 
                         <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Diğer Raporlar</a>
+                        <a class="collapse-item" href="@Url.Action("Index","VisitorReport")">Ziyaretçi Raporları</a>
                         <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Tanımsız Kullanıcı Raporları</a>
                     </div>
 
@@ -87,20 +89,20 @@
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             @*<li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-file-invoice"></i>
-                    <span>Hızlı Raporlar</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Hızlı Rapor Sayfaları</h6>
-                        <a class="collapse-item" href="utilities-color.html">Hangi Kapıdan<br />Kim Geçmiş?</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-file-invoice"></i>
+                        <span>Hızlı Raporlar</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Hızlı Rapor Sayfaları</h6>
+                            <a class="collapse-item" href="utilities-color.html">Hangi Kapıdan<br />Kim Geçmiş?</a>
+                            <a class="collapse-item" href="utilities-border.html">Borders</a>
+                            <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                            <a class="collapse-item" href="utilities-other.html">Other</a>
+                        </div>
                     </div>
-                </div>
-            </li>*@
+                </li>*@
             <!-- LogOut -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Logout","Home")">

@@ -93,12 +93,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        //Veritabanındaki DoorNames Tablosundan Kapılar Çekiliyor
-        public ActionResult KapiListesi()
-        {
-            var liste = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
-            return Json(_doorNamesService.GetAllDoorNames(x => liste.Contains(x.Panel_No)), JsonRequestBehavior.AllowGet);
-        }
 
 
 

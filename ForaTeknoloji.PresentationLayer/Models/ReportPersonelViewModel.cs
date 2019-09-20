@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 
@@ -15,5 +16,7 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> Sirketler { get; set; }
         public IEnumerable<SelectListItem> Gecis_Grubu { get; set; }
         public List<ReportPersonelList> ReportPersonel { get; internal set; }
+        public List<EfUserDal.ComplexUser> Kullanıcı { get; internal set; }
+        public List<EfUsersOLDDal.ComplexUserOld> EskiKullanicilar { get; internal set; }
     }
 }

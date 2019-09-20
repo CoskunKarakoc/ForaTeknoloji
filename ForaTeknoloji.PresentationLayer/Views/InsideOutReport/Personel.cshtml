@@ -93,7 +93,7 @@
     </div>
 </div>
 <div class="card mt-2 shadow-lg">
-    @using (Html.BeginForm("ManuelCikis", "InsideOutReport", FormMethod.Post))
+    @using (Html.BeginForm("ManuelCikisPersonel", "InsideOutReport", FormMethod.Post))
     {
 
         <div id="print_div" class="card-body">
@@ -105,15 +105,15 @@
     footerStyle:"table-pager",
     columns: webGrid.Columns(
      webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                webGrid.Column("Kayit_No", "Kayıt No"),
-                webGrid.Column("ID", "ID"),
-                webGrid.Column("Kart_ID", "Kart ID"),
-                webGrid.Column("Adi", "Adı"),
-                webGrid.Column("Soyadi", "Soyadı"),
-                webGrid.Column("Sirket", "Şirket"),
-                webGrid.Column("Departman", "Departman"),
-                webGrid.Column("Tarih", "Tarih"),
-                webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
+                        webGrid.Column("Kayit_No", "Kayıt No"),
+                        webGrid.Column("ID", "ID"),
+                        webGrid.Column("Kart_ID", "Kart ID"),
+                        webGrid.Column("Adi", "Adı"),
+                        webGrid.Column("Soyadi", "Soyadı"),
+                        webGrid.Column("Sirket", "Şirket"),
+                        webGrid.Column("Departman", "Departman"),
+                        webGrid.Column("Tarih", "Tarih"),
+                        webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
             }
             else
             {
@@ -122,53 +122,6 @@
                 </div>
             }
 
-
-
-
-
-
-
-            @*<table class="table table-hover text-center table-sm table-striped">
-                    <thead class="table-info">
-                        <tr>
-                            <td>Seçim</td>
-                            <td>Kayıt No</td>
-                            <td>ID</td>
-                            <td>Kart ID</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>Şirket Adı</td>
-                            <td>Departman Adı</td>
-                            <td>Tarih</td>
-                            <td>Geçiş Tipi</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.IcerdeDısardaPersonel)
-                        {
-                            <tr>
-
-                                <td><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></td>
-                                <td>@item.Kayit_No</td>
-                                <td>@item.ID</td>
-                                <td>@item.Kart_ID</td>
-                                <td>@item.Adi</td>
-                                <td>@item.Soyadi</td>
-                                <td>@item.Sirket</td>
-                                <td>@item.Departman</td>
-                                <td>@item.Tarih</td>
-                                <td>@item.Gecis_Tipi</td>
-                            </tr>
-                        }
-
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="10"><input type="submit" id="CikisVer" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" /></td>
-                        </tr>
-                    </tfoot>
-
-                </table>*@
 
         </div>
         <div class="row">
@@ -220,6 +173,7 @@
                 success: function (data) {
                     $("#reader").html("");
                     $("#readerCikis").html("");
+                    $('#reader').append("<option value=''>Okuyucu Seç</option>");
                     $.each(data, function (index, value) {
                         if (value.WKapi1_Lokal_Bolge != 0) {
 
