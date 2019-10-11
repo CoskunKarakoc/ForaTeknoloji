@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.Bloklar>
+@{
+    ViewBag.Title = "Blok Tanımları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3 mt-xl-5 my-xl-5">
+        <div class=" card shadow-lg mt-2">
+            <div class="card-header-tabs">
+                <h3 class="text-muted text-center">Blok Tanımları</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "Block"))
+                {
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="blokAdi" name="Adi" placeholder="Blok Tanımlama" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="Blok No" hidden value="" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="submit" id="newBlock"><i class="fas fa-plus mr-2"></i>Yeni Blok</button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <hr />
+                <table class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Blok No</td>
+                            <td>Blok Adı</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Blok_No</td>
+                                <td>@item.Adi</td>
+                                <td>
+                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Block",new { id=item.Blok_No})"><i class="fas fa-edit text-info mr-5"></i></a>
+                                    <a title="Delete" onclick="return confirm('Silmek İstediğinize Emin misiniz?')" href="@Url.Action("Delete","Block",new { id=item.Blok_No})"><i class="fas fa-trash-alt text-danger"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

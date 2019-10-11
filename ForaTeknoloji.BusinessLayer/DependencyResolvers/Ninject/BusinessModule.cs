@@ -40,7 +40,6 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IDoorNamesDal>().To<EfDoorNamesDal>().InSingletonScope();
 
 
-
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
             Bind<IDepartmanService>().To<DepartmanManager>().InSingletonScope();
@@ -62,7 +61,6 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IDBUsersPanelsService>().To<DBUsersPanelsManager>().InSingletonScope();
             Bind<IDBUsersDepartmanService>().To<DBUsersDepartmanManager>().InSingletonScope();
             Bind<IDoorNamesService>().To<DoorNamesManager>().InSingletonScope();
-
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

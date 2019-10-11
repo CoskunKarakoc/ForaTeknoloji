@@ -570,7 +570,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //Gelen-Gelmeyen İlk Giriş-Son Çıkış
         public List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
         {
-          
+
             string address = ConfigurationManager.AppSettings["ForaConnection"];
             string queryString = "SELECT AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi, "
                    + " Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman,"
@@ -744,7 +744,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
-        //=====>Tamamlandı<=====
+    
         //PersonelListReport Controller
         public List<PersonelList> GetPersonelLists(int? Sirketler, int? Departmanlar, int? Bloklar, int? Groupsdetail, int? GlobalBolgeNo, int? Daire, string Plaka = null)
         {
@@ -1419,7 +1419,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
             if (Bolge == "Lokal")
             {
-                if (Kapi == null)
+                if (Kapi == "" || Kapi == null)
                 {
                     Kapi = "1";
                 }
@@ -1489,7 +1489,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             if (Bolge == "Lokal")
             {
                 //TODO: Lokal Bölge Gelecek
-                if (Kapi == null && Kapi == "")
+                if (Kapi == "" || Kapi == null)
                 {
                     Kapi = "1";
                 }
@@ -1552,7 +1552,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
             if (Bolge == "Lokal")
             {
-                if (Kapi == null)
+                if (Kapi == "" || Kapi == null)
                 {
                     Kapi = "1";
                 }

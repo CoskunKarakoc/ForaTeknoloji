@@ -1,0 +1,307 @@
+﻿@model ForaTeknoloji.Entities.Entities.PanelSettings
+@{
+    ViewBag.Title = "Genel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-center text-muted">Panel Ayarları-Genel</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Genel", "PanelSettings", FormMethod.Post))
+                {
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Panel Seri No</label>
+                                            <input type="text" placeholder="Mac Adres Son 4 Hane" id="PanelSeriNo" class="form-control" name="Seri_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Panel No</label>
+                                            <input type="text" placeholder="0" id="SiraNo" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Panel Adı</label>
+                                            <input type="text" id="PanelName" class="form-control" name="Panel_Name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="ButonTetiklemeSuresi">Buton Dedektör Tetikleme Süresi</label>
+                                        <input type="number" class="form-control" id="ButonTetiklemeSuresi" placeholder="1" name="Panel_Button_Detector_Time" value="1" min="0" max="99" step="1" />
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="text-muted">Panel Modeli</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="5" class="custom-control-input" id="Kapi301" checked name="Panel_Model">
+                                    <label class="custom-control-label" for="Kapi301">MW-301(8 Kapı)</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="6" class="custom-control-input" id="Kapi304" name="Panel_Model">
+                                    <label class="custom-control-label" for="Kapi304">MW-304(4 Kapı)</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="7" class="custom-control-input" id="Kapi302" name="Panel_Model">
+                                    <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label class="text-muted">Panel Kontrol Modu</label>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="StandAlone" class="custom-control-input" id="StandAlone" checked name="Kontrol_Modu">
+                                    <label class="custom-control-label" for="StandAlone">Stand-Alone</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="Online" class="custom-control-input" id="Online" name="Kontrol_Modu">
+                                    <label class="custom-control-label" for="Online">Online</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="text-muted">Lokal Bölge Antipassback</label>
+                                <div class="custom-control custom-checkbox">
+                                    <div id="Kapilar"></div>
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="Lokal1" />
+                                    <label class="custom-control-label" for="Lokal1">Lokal Bölge 1</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Lokal2" />
+                                    <label class="custom-control-label" for="Lokal2">Lokal Bölge 2</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB3" class="custom-control-input" id="Lokal3" />
+                                    <label class="custom-control-label" for="Lokal3">Lokal Bölge 3</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB4" class="custom-control-input" id="Lokal4" />
+                                    <label class="custom-control-label" for="Lokal4">Lokal Bölge 4</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB5" class="custom-control-input" id="Lokal5" />
+                                    <label class="custom-control-label" for="Lokal5">Lokal Bölge 5</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB6" class="custom-control-input" id="Lokal6" />
+                                    <label class="custom-control-label" for="Lokal6">Lokal Bölge 6</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB7" class="custom-control-input" id="Lokal7" />
+                                    <label class="custom-control-label" for="Lokal7">Lokal Bölge 7</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB8" class="custom-control-input" id="Lokal8" />
+                                    <label class="custom-control-label" for="Lokal8">Lokal Bölge 8</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="text-muted">Alarm/Yangın Giriş Kontrolü</label>
+                                <div class="custom-control custom-checkbox">
+                                    <div id="Kapilar"></div>
+                                    <input type="checkbox" value="1" name="Panel_Alarm_Mode_Role_Ok" class="custom-control-input" id="HirsizMod" />
+                                    <label class="custom-control-label" for="HirsizMod">Hırsız Alarm Modu</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Panel_Fire_Mode_Role_Ok" class="custom-control-input" id="YanginMod" />
+                                    <label class="custom-control-label" for="YanginMod">Yangın Modu</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Panel_Door_Alarm_Role_Ok" class="custom-control-input" id="KapiMod" />
+                                    <label class="custom-control-label" for="KapiMod">Kapı Alarm Modu</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Panel_Alarm_Broadcast_Ok" class="custom-control-input" id="AlarmYayin" />
+                                    <label class="custom-control-label" for="AlarmYayin">Alarm Yayın Modu</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB5" class="custom-control-input" id="KapiKitle" />
+                                    <label class="custom-control-label" for="KapiKitle">Seçilen Kapıları Kilitle</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB6" class="custom-control-input" id="KapiAc" />
+                                    <label class="custom-control-label" for="KapiAc">Seçilen Kapıları Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Panel_Fire_Broadcast_Ok" class="custom-control-input" id="YanginAlarm" />
+                                    <label class="custom-control-label" for="YanginAlarm">Yangın Alarmı Yayın</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Panel_Door_Alarm_Broadcast_Ok" class="custom-control-input" id="KapiAlarm" />
+                                    <label class="custom-control-label" for="KapiAlarm">Kapı Alarmı Yayın</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted">Genel Kontrol</label>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <div id="Kapilar"></div>
+                                    <input type="checkbox" value="1" name="Global_APB" class="custom-control-input" id="GloabalAPB" />
+                                    <label class="custom-control-label" for="GloabalAPB">Global Antipassback</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Same_Door_Multiple_Reader" class="custom-control-input" id="MultiRead" />
+                                    <label class="custom-control-label" for="MultiRead">Tek Kapı Çok Okuyuculu Mod Aktif</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Interlock_Active" class="custom-control-input" id="LokalInt" />
+                                    <label class="custom-control-label" for="LokalInt">Lokal Interlock</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Global_Zone_Interlock_Active" class="custom-control-input" id="GlobalInt" />
+                                    <label class="custom-control-label" for="GlobalInt">Global Bölge Interlock</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Global_Access_Count_Control" class="custom-control-input" id="GirisSayisi" />
+                                    <label class="custom-control-label" for="GirisSayisi">Global Giriş Sayısı Kontrol</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Global_MaxIn_Count_Control" class="custom-control-input" id="AracSayisi" />
+                                    <label class="custom-control-label" for="AracSayisi">Global İçerdeki Kişi/Araç Sayısı Kontrol</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Global_Sequental_Access_Control" class="custom-control-input" id="SiraliGecis" />
+                                    <label class="custom-control-label" for="SiraliGecis">Global Bölge Sıralı Geçiş Kontrol</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Panel_Button_Detector" class="custom-control-input" id="Dedektor" />
+                                    <label class="custom-control-label" for="Dedektor">Buton Dedektör Mod Aktif</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted">Mükerrer Geçiş Engelleme Süresi Ayarları</label>
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="EngellemeSuresi" placeholder="Engelleme Süresi" name="Status_Data_Update_Time" value="" min="0" max="99" step="1" />
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="saniye" class="custom-control-input" id="Saniye" checked name="Status_Data_Update_Type">
+                                    <label class="custom-control-label" for="Saniye">Saniye</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="dakika" class="custom-control-input" id="Dakika" name="Status_Data_Update_Type">
+                                    <label class="custom-control-label" for="Dakika">Dakika</label>
+                                </div>
+                                <div class="custom-control custom-radio ">
+                                    <input type="radio" value="saat" class="custom-control-input" id="Saat" name="Status_Data_Update_Type">
+                                    <label class="custom-control-label" for="Saat">Saat</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="saniye" class="custom-control-input" id="TumYon" checked name="Yon">
+                                    <label class="custom-control-label" for="TumYon">Tüm Yönler İçin</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="dakika" class="custom-control-input" id="Cıkıs" name="Yon">
+                                    <label class="custom-control-label" for="Cıkıs">Sadece Çıkıştan Sonra</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-2 my-sm-4">
+                            <h5 class="text-muted">Master Role Süreleri</h5>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="Role1">Role 1</label>
+                                <input type="text" class="form-control form-control-sm" id="Role1" name="Panel_M1_Role" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="Role2">Role 2</label>
+                                <input type="text" class="form-control form-control-sm" id="Role2" name="Panel_M2_Role" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="Role3">Role 3</label>
+                                <input type="text" class="form-control form-control-sm" id="Role3" name="Panel_M3_Role" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="Role4">Role 4</label>
+                                <input type="text" class="form-control form-control-sm" id="Role4" name="Panel_M4_Role" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="Role5">Role 5</label>
+                                <input type="text" class="form-control form-control-sm" id="Role5" name="Panel_M5_Role" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="Role6">Role 6</label>
+                                <input type="text" class="form-control form-control-sm" id="Role6" name="Panel_M6_Role" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="Role7">Role 7</label>
+                                <input type="text" class="form-control form-control-sm" id="Role7" name="Panel_M7_Role" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label for="Role8">Role 8</label>
+                                <input type="text" class="form-control form-control-sm" id="Role8" name="Panel_M8_Role" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="YAlarm">Yardımcı/Alarm Çıkışı</label>
+                                <input type="text" class="form-control form-control-sm" id="YAlarm" name="Panel_Alarm_Role" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn  btn-outline-primary"><i class="fas fa-save"></i> Kaydet</button>
+                            <button type="submit" class="btn  btn-outline-danger"><i class="fas fa-minus-circle"></i> Paneli Kaldır</button>
+                            <button type="submit" class="btn  btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("input[type='number']").inputSpinner()
+    });
+</script>

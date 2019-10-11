@@ -2491,10 +2491,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BlockController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\GelenGelmeyenReportController.cs" />
+    <Compile Include="Controllers\GlobalZoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsideOutReportController.cs" />
     <Compile Include="Controllers\OutherReportController.cs" />
+    <Compile Include="Controllers\PanelSettingsController.cs" />
     <Compile Include="Controllers\PersonelListReportController.cs" />
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
@@ -2550,6 +2555,12 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\HassError.cshtml" />
     <Content Include="Views\ReportPersonel\OldStaff.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\Block\Index.cshtml" />
+    <Content Include="Views\GlobalZone\Index.cshtml" />
+    <Content Include="Views\PanelSettings\Genel.cshtml" />
+    <Content Include="Views\PanelSettings\Haberlesme.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2559,6 +2570,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\GlobalRegion\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForaTeknoloji.BusinessLayer\ForaTeknoloji.BusinessLayer.csproj">

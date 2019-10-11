@@ -56,6 +56,61 @@
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fas fa-bookmark"></i>
+                    <span>Genel</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("Index","Company")">Şirket Tanımları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Department")">Departman Tanımları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Block")">Blok Tanımları</a>
+                        <hr />
+                        <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">Dış Veri Al</a>
+                        <a class="collapse-item" href="@Url.Action("ToplamIcerdeKalma","GelenGelmeyenReport")">Kullanıcı Alarm Tanımları</a>
+                        <a class="collapse-item" href="@Url.Action("Gelenler","GelenGelmeyenReport")">Kameralar</a>
+                        <a class="collapse-item" href="@Url.Action("Gelmeyenler","GelenGelmeyenReport")">Haritalar</a>
+                        <a class="collapse-item" href="@Url.Action("PasifKullanici","GelenGelmeyenReport")">Asansör Geçiş Grup Tanımları</a>
+                        <a class="collapse-item text-muted" href="#">Geçiş Grup Takvimi</a>
+                        <a class="collapse-item" href="@Url.Action("Index","GlobalZone")">Global Bölgeler</a>
+                        <a class="collapse-item text-muted" href="#">Global Bölge Interlock</a>
+                        <hr />
+                        <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Plaka Tanıma Kameraları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","VisitorReport")">Kapı İşlemleri</a>
+                        <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Güvenlik Ayarları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Harici Okuyucu</a>
+                        <a class="collapse-item text-muted" href="#">Panel Saat Ayarı</a>
+                        <a class="collapse-item" href="#">E-Mail Gönderme Ayarları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">SMS Gönderme Ayarları</a>
+
+                    </div>
+
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTree" aria-expanded="true" aria-controls="collapseTree">
+                    <i class="fas fa-cogs"></i>
+                    <span>Panel Ayarları</span>
+                </a>
+                <div id="collapseTree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Panel Ayarları</h6>
+                        <a class="collapse-item" href="@Url.Action("Genel","PanelSettings")">Genel</a>
+                        <a class="collapse-item" href="@Url.Action("Index","PanelSettings")">Haberleşme</a>
+                        <a class="collapse-item" href="@Url.Action("Index","PanelSettings")">Kapılar</a>
+                        <a class="collapse-item" href="@Url.Action("Index","PanelSettings")">Kapasite</a>
+                        <a class="collapse-item" href="@Url.Action("Index","PanelSettings")">Global Bölgeler</a>
+                        <a class="collapse-item" href="@Url.Action("Index","PanelSettings")">LPR Kameralar</a>
+                        <a class="collapse-item" href="@Url.Action("Index","PanelSettings")">Interlock</a>
+                        <a class="collapse-item" href="@Url.Action("Index","PanelSettings")">Diğer</a>
+
+
+
+                    </div>
+
+                </div>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-file-signature"></i>
                     <span>Genel Raporlar</span>
@@ -87,22 +142,22 @@
 
                 </div>
             </li>
-            <!-- Nav Item - Utilities Collapse Menu -->
-            @*<li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-file-invoice"></i>
-                        <span>Hızlı Raporlar</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Hızlı Rapor Sayfaları</h6>
-                            <a class="collapse-item" href="utilities-color.html">Hangi Kapıdan<br />Kim Geçmiş?</a>
-                            <a class="collapse-item" href="utilities-border.html">Borders</a>
-                            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                            <a class="collapse-item" href="utilities-other.html">Other</a>
-                        </div>
-                    </div>
-                </li>*@
+            @*Nav Item - Utilities Collapse Menu
+            <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-file-invoice"></i>
+                <span>Hızlı Raporlar</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Hızlı Rapor Sayfaları</h6>
+                    <a class="collapse-item" href="utilities-color.html">Hangi Kapıdan<br />Kim Geçmiş?</a>
+                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                </div>
+            </div>
+        </li>*@
             <!-- LogOut -->
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("Logout","Home")">
