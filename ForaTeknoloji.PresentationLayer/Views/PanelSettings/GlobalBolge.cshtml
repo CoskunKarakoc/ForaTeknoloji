@@ -1,0 +1,64 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.GlobalBolgePanelSettingsListViewModel
+@{
+    ViewBag.Title = "Global Bölgeler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card shadow-lg  mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-center text-muted">Panel Ayarları-Global Bölgeler</h3>
+            </div>
+            <div class="card-body">
+                <label class="text-center text-info">Lokal Bölge 1 İçin</label>
+                <hr />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Bölgesi Seçimi", new { @class = "form-control" })
+                </div>
+                <label class="text-center text-info">Lokal Bölge 2 İçin</label>
+                <hr />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Bölgesi Seçimi", new { @class = "form-control" })
+                </div>
+                <label class="text-center text-info">Lokal Bölge 3 İçin</label>
+                <hr />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Bölgesi Seçimi", new { @class = "form-control" })
+                </div>
+                <label class="text-center text-info">Lokal Bölge 4 İçin</label>
+                <hr />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Bölgesi Seçimi", new { @class = "form-control" })
+                </div>
+                <label class="text-center text-info">Lokal Bölge 5 İçin</label>
+                <hr />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Bölgesi Seçimi", new { @class = "form-control" })
+                </div>
+                <label class="text-center text-info">Lokal Bölge 6 İçin</label>
+                <hr />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Bölgesi Seçimi", new { @class = "form-control" })
+                </div>
+                <label class="text-center text-info">Lokal Bölge 7 İçin</label>
+                <hr />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Bölgesi Seçimi", new { @class = "form-control" })
+                </div>
+                <label class="text-center text-info">Lokal Bölge 8 İçin</label>
+                <hr />
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Bölgesi Seçimi", new { @class = "form-control" })
+                </div>
+                <hr />
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn  btn-outline-primary"><i class="fas fa-save"></i> Kaydet</button>
+                    <button type="submit" class="btn  btn-outline-danger"><i class="fas fa-minus-circle"></i> Paneli Kaldır</button>
+                    <button type="submit" class="btn  btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

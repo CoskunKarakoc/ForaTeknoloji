@@ -48,5 +48,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             List<int?> liste = _dBUsersDepartmanDal.GetList(x => x.Kullanici_Adi == kullaniciAdi).Select(x => x.Departman_No).ToList();
             return _departmanDal.GetList(x => liste.Contains(x.Departman_No));
         }
+
+        public Departmanlar GetByDepartmanAdi(string departmanAdi)
+        {
+            return _departmanDal.Get(x => x.Adi == departmanAdi);
+        }
     }
 }

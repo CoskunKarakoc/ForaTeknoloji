@@ -16,5 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteDepartmanlar(Departmanlar departman);
         Departmanlar UpdateDepartman(Departmanlar departman);
         List<Departmanlar> GetByKullaniciAdi(string kullaniciAdi);
+        Departmanlar GetByDepartmanAdi(string departmanAdi);
     }
 }

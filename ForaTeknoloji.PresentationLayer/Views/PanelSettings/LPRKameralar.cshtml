@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "LPR Kameralar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg  mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-center text-muted">Panel Ayarları-LPR Kameralar</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-hover text-center table-striped table-sm">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Aktif</td>
+                                    <td>IP Adres</td>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Pasif</td>
+                                    <td>0.0.0.0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Pasif</td>
+                                    <td>0.0.0.0</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Pasif</td>
+                                    <td>0.0.0.0</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Pasif</td>
+                                    <td>0.0.0.0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif" />
+                                    <label class="custom-control-label" for="Aktif">Aktif</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Lokal IP Adres</label>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-sm" id="IP1" name="Panel_IP1" value="" />
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-sm" id="IP2" name="Panel_IP2" value="" />
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-sm" id="IP3" name="Panel_IP3" value="" />
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-sm" id="IP4" name="Panel_IP4" value="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 text-right">
+                                <button class="btn btn-sm btn-success">Güncelle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn  btn-outline-primary"><i class="fas fa-save"></i> Kaydet</button>
+                    <button type="submit" class="btn  btn-outline-danger"><i class="fas fa-minus-circle"></i> Paneli Kaldır</button>
+                    <button type="submit" class="btn  btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

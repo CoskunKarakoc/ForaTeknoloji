@@ -1,0 +1,314 @@
+﻿@model ForaTeknoloji.Entities.Entities.ReaderSettings
+
+@{
+    ViewBag.Title = "Kapılar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-center text-muted">Panel Ayarları-Kapilar</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Kapilar", "PanelSettings", FormMethod.Post))
+                {
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-hover text-center table-striped">
+                                <thead class="table-info">
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>Aktif</td>
+                                        <td>Adi</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        @if (Model.WKapi1_Aktif == true)
+                                        {
+                                            <td class="font-weight-bold">Evet</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Hayır</td>
+                                        }
+                                        <td>@Model.WKapi1_Adi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        @if (Model.WKapi2_Aktif == true)
+                                        {
+                                            <td class="font-weight-bold">Evet</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Hayır</td>
+                                        }
+                                        <td>@Model.WKapi2_Adi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        @if (Model.WKapi3_Aktif == true)
+                                        {
+                                            <td class="font-weight-bold">Evet</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Hayır</td>
+                                        }
+                                        <td>@Model.WKapi3_Adi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        @if (Model.WKapi4_Aktif == true)
+                                        {
+                                            <td class="font-weight-bold">Evet</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Hayır</td>
+                                        }
+                                        <td>@Model.WKapi4_Adi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        @if (Model.WKapi5_Aktif == true)
+                                        {
+                                            <td class="font-weight-bold">Evet</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Hayır</td>
+                                        }
+                                        <td>@Model.WKapi5_Adi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        @if (Model.WKapi6_Aktif == true)
+                                        {
+                                            <td class="font-weight-bold">Evet</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Hayır</td>
+                                        }
+                                        <td>@Model.WKapi6_Adi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        @if (Model.WKapi7_Aktif == true)
+                                        {
+                                            <td class="font-weight-bold">Evet</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Hayır</td>
+                                        }
+                                        <td>@Model.WKapi7_Adi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        @if (Model.WKapi8_Aktif == true)
+                                        {
+                                            <td class="font-weight-bold">Evet</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Hayır</td>
+                                        }
+                                        <td>@Model.WKapi8_Adi</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="Aktif" />
+                                    <label class="custom-control-label" for="Aktif">Kapı Aktif</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>Kapı Adı</label>
+                                    <input type="text" id="KapiAdi" class="form-control" name="Panel_Name" />
+                                </div>
+                            </div>
+                            <select class="browser-default custom-select">
+                                <option selected>Master Röle No</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                            </select>
+                            <label class="text-muted">Kapı Geçiş Tipi</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="5" class="custom-control-input" id="Giris" checked name="KapiType">
+                                <label class="custom-control-label" for="Giris">Giriş</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="5" class="custom-control-input" id="Cikis" name="KapiType">
+                                <label class="custom-control-label" for="Cikis">Çıkış</label>
+                            </div>
+
+                            <label class="text-muted">Wiegand Tipi</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="5" class="custom-control-input" id="26" checked name="Wiegand">
+                                <label class="custom-control-label" for="26">26</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="5" class="custom-control-input" id="34" name="Wiegand">
+                                <label class="custom-control-label" for="34">34</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="5" class="custom-control-input" id="34INV" name="Wiegand">
+                                <label class="custom-control-label" for="34INV">34 INV</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="5" class="custom-control-input" id="64" name="Wiegand">
+                                <label class="custom-control-label" for="64">64</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="5" class="custom-control-input" id="64INV" name="Wiegand">
+                                <label class="custom-control-label" for="64INV">64 INV</label>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="OtoparkKapisi" />
+                                    <label class="custom-control-label" for="OtoparkKapisi">Otopark Kapısı</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="SifreDogrulama" />
+                                    <label class="custom-control-label" for="SifreDogrulama">Şifre Doğrulama</label>
+                                </div>
+                            </div>
+                            <select class="browser-default custom-select">
+                                <option selected>Lokal Bölge No</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>Global Bölge</label>
+                                    <input type="text" id="GlobalBolge" class="form-control" name="Panel_Name" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="OtoparkKapisi" />
+                                    <label class="custom-control-label" for="OtoparkKapisi">Ana Giriş/Çıkış(Bu Global Bölge İçin Sıralı Geçişte)</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="CokluOnay" />
+                                    <label class="custom-control-label" for="CokluOnay">Çoklu Onay Aktif</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="Dedektor" />
+                                    <label class="custom-control-label" for="Dedektor">Buton Dedektör</label>
+                                </div>
+                            </div>
+                            <select class="browser-default custom-select">
+                                <option selected>Kullanıcı Sayısı(Çoklu Onay İçin Gerekli)</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                            <hr />
+                            <h4 class="text-danger text-center">Kapı Alarmları</h4>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="AlarmKilit" />
+                                    <label class="custom-control-label" for="AlarmKilit">Alarm'da Kilitle</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="AcikKalmaSuresi">Açık Kalma Süresi</label>
+                                <input type="number" class="form-control" id="AcikKalmaSuresi" placeholder="20" name="Panel_Button_Detector_Time" value="20" min="20" max="999" step="1" />
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="AcikKalma" />
+                                    <label class="custom-control-label" for="AcikKalma">Açık Kalma Alarmı</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="Zorlama" />
+                                    <label class="custom-control-label" for="Zorlama">Zorlama Alarmı</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="Acilma" />
+                                    <label class="custom-control-label" for="Acilma">Açılma Alarmı</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="Panik" />
+                                    <label class="custom-control-label" for="Panik">Panik Buton</label>
+                                </div>
+                            </div>
+                            <select class="browser-default custom-select">
+                                <option selected>Harici Alarm Rolesi</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                            </select>
+                            <div class="form-group">
+                                <label for="AcikKalmaSuresi">İtme Gecikmesi</label>
+                                <input type="number" class="form-control" id="AcikKalmaSuresi" placeholder="1 ile 9 saniye arası" name="Panel_Button_Detector_Time" value="3" min="1" max="9" step="1" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,100 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.KullaniciListViewModelModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card shadow-lg  mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-muted text-center">Blok Düzenleme</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ComplexUser.ID)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ComplexUser.ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.ComplexUser.ID, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ComplexUser.ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ComplexUser.Kart_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.ComplexUser.Kart_ID, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ComplexUser.Kart_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ComplexUser.Plaka, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.ComplexUser.Plaka, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ComplexUser.Plaka, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ComplexUser.Adi, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.ComplexUser.Adi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ComplexUser.Adi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ComplexUser.Soyadi, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.ComplexUser.Soyadi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ComplexUser.Soyadi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ComplexUser.Sirket, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.ComplexUser.Sirket, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ComplexUser.Sirket, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Departmanlar, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.Departmanlar, Model.Departmanlar, "Departman Seçiniz..", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Departmanlar, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ComplexUser.Blok, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.ComplexUser.Blok, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ComplexUser.Blok, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Güncelle</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

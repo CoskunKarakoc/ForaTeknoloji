@@ -1,0 +1,344 @@
+﻿
+@{
+    ViewBag.Title = "Kapasite";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-center text-muted">Panel Ayarları-Kapasite</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Kapasite", "PanelSettings", FormMethod.Post))
+                {
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GlobalKapasite" />
+                        <label class="custom-control-label" for="GlobalKapasite">Global Kapasite Kontrolü</label>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="text-info">Lokal Bölge 1-Kapasite Ayarları</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif1" />
+                                        <label class="custom-control-label" for="Aktif1">Aktif</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GeceSil1" />
+                                        <label class="custom-control-label" for="GeceSil1">Gece Sil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Kapasite</label>
+                                            <input type="text" placeholder="0" id="Kapasite" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="0" id="SayacOku" class="form-control" name="Sira_No" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="0" id="Sayac" class="form-control" name="Sira_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="text-info">Lokal Bölge 3-Kapasite Ayarları</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif3" />
+                                        <label class="custom-control-label" for="Aktif3">Aktif</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GeceSil3" />
+                                        <label class="custom-control-label" for="GeceSil3">Gece Sil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Kapasite</label>
+                                            <input type="text" placeholder="0" id="Kapasite3" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="0" id="SayacOku" class="form-control" name="Sira_No" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="0" id="Sayac" class="form-control" name="Sira_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="text-info">Lokal Bölge 5-Kapasite Ayarları</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif5" />
+                                        <label class="custom-control-label" for="Aktif5">Aktif</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GeceSil5" />
+                                        <label class="custom-control-label" for="GeceSil5">Gece Sil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Kapasite</label>
+                                            <input type="text" placeholder="0" id="Kapasite" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="0" id="SayacOku" class="form-control" name="Sira_No" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="0" id="Sayac" class="form-control" name="Sira_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="text-info">Lokal Bölge 7-Kapasite Ayarları</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif7" />
+                                        <label class="custom-control-label" for="Aktif7">Aktif</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GeceSil7" />
+                                        <label class="custom-control-label" for="GeceSil7">Gece Sil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Kapasite</label>
+                                            <input type="text" placeholder="0" id="Kapasite7" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="0" id="SayacOku" class="form-control" name="Sira_No" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="0" id="Sayac" class="form-control" name="Sira_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-info">Lokal Bölge 2-Kapasite Ayarları</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif2" />
+                                        <label class="custom-control-label" for="Aktif2">Aktif</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GeceSil2" />
+                                        <label class="custom-control-label" for="GeceSil2">Gece Sil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Kapasite</label>
+                                            <input type="text" placeholder="0" id="Kapasite2" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="0" id="SayacOku" class="form-control" name="Sira_No" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="0" id="Sayac" class="form-control" name="Sira_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="text-info">Lokal Bölge 4-Kapasite Ayarları</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif4" />
+                                        <label class="custom-control-label" for="Aktif4">Aktif</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GeceSil4" />
+                                        <label class="custom-control-label" for="GeceSil4">Gece Sil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Kapasite</label>
+                                            <input type="text" placeholder="0" id="Kapasite4" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="0" id="SayacOku" class="form-control" name="Sira_No" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="0" id="Sayac" class="form-control" name="Sira_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="text-info">Lokal Bölge 6-Kapasite Ayarları</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif6" />
+                                        <label class="custom-control-label" for="Aktif6">Aktif</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GeceSil6" />
+                                        <label class="custom-control-label" for="GeceSil6">Gece Sil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Kapasite</label>
+                                            <input type="text" placeholder="0" id="Kapasite6" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="0" id="SayacOku" class="form-control" name="Sira_No" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="0" id="Sayac" class="form-control" name="Sira_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="text-info">Lokal Bölge 8-Kapasite Ayarları</label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Aktif8" />
+                                        <label class="custom-control-label" for="Aktif8">Aktif</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="GeceSil8" />
+                                        <label class="custom-control-label" for="GeceSil8">Gece Sil</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>Kapasite</label>
+                                            <input type="text" placeholder="0" id="Kapasite8" class="form-control" name="Sira_No" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="0" id="SayacOku" class="form-control" name="Sira_No" />
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="0" id="Sayac" class="form-control" name="Sira_No" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <button type="submit" class="btn  btn-outline-primary"><i class="fas fa-save"></i> Kaydet</button>
+                            <button type="submit" class="btn  btn-outline-danger"><i class="fas fa-minus-circle"></i> Paneli Kaldır</button>
+                            <button type="submit" class="btn  btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

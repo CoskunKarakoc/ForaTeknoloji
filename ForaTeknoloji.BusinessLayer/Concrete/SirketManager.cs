@@ -51,5 +51,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             liste = _dBUsersSirketDal.GetList(x => x.Kullanici_Adi == kullaniciAdi).Select(a => a.Sirket_No).ToList();
             return _sirketDal.GetList(x => liste.Contains(x.Sirket_No));
         }
+
+        public Sirketler GetBySirketAdi(string SirketAdi)
+        {
+            return _sirketDal.Get(x => x.Adi == SirketAdi);
+        }
     }
 }

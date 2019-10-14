@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Excp]
     public class GlobalZoneController : Controller
     {
         private IGlobalZoneService _globalZoneService;
@@ -24,12 +26,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-      
+
         public ActionResult Edit(GlobalZones globalZones)
         {
             if (ModelState.IsValid)
             {
-                _globalZoneService.UpdateGlobalZones(globalZones);
+                if (globalZones.Global_Bolge_Adi != null && globalZones.Global_Bolge_Adi != "")
+                {
+                    _globalZoneService.UpdateGlobalZones(globalZones);
+                    return RedirectToAction("Index");
+                }
+                throw new Exception("Upps! Yanlış giden birşeyler var.");
             }
             return RedirectToAction("Index");
         }

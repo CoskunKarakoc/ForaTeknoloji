@@ -2503,6 +2503,7 @@
     <Compile Include="Controllers\PersonelListReportController.cs" />
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VisitorReportController.cs" />
     <Compile Include="Filters\Auth.cs" />
     <Compile Include="Filters\Excp.cs" />
@@ -2519,12 +2520,15 @@
     <Compile Include="Models\GelenGelmeyen_IlkGirisSonCikisListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_PasifListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_ToplamIcerdeKalmaListViewModel.cs" />
+    <Compile Include="Models\GlobalBolgePanelSettingsListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaPersonelListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaTumuListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaZiyaretciListViewModel.cs" />
+    <Compile Include="Models\KullaniciListViewModelModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
+    <Compile Include="Models\UsersListViewModel.cs" />
     <Compile Include="Models\VisitorsList.cs" />
     <Compile Include="Models\ZiyaretciListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2561,6 +2565,17 @@
     <Content Include="Views\GlobalZone\Index.cshtml" />
     <Content Include="Views\PanelSettings\Genel.cshtml" />
     <Content Include="Views\PanelSettings\Haberlesme.cshtml" />
+    <Content Include="Views\PanelSettings\Kapilar.cshtml" />
+    <Content Include="Views\PanelSettings\Kapasite.cshtml" />
+    <Content Include="Views\PanelSettings\GlobalBolge.cshtml" />
+    <Content Include="Views\PanelSettings\Interlock.cshtml" />
+    <Content Include="Views\PanelSettings\Diger.cshtml" />
+    <Content Include="Views\PanelSettings\LPRKameralar.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Department\Edit.cshtml" />
+    <Content Include="Views\Block\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

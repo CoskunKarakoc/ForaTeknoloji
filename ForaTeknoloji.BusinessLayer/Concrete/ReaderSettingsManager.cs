@@ -49,5 +49,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _readerSettingDal.Update(readerSettings);
         }
+
+        public ReaderSettings GetByQuery(Expression<Func<ReaderSettings, bool>> filter = null)
+        {
+            return filter == null ? _readerSettingDal.Get(x => x.Seri_No > 0 && x.Panel_ID > 0) : _readerSettingDal.Get(filter);
+        }
     }
 }

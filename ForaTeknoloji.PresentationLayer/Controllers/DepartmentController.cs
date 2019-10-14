@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Excp]
     public class DepartmentController : Controller
     {
         private IDepartmanService _departmanService;
@@ -30,7 +32,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                _departmanService.AddDepartman(departmanlar);
+                if (departmanlar.Adi != null)
+                {
+                    _departmanService.AddDepartman(departmanlar);
+                    return RedirectToAction("Index");
+                }
+                throw new Exception("Yanlış yada eksik karakter girdiniz.");
             }
             return RedirectToAction("Index");
         }
@@ -49,13 +56,34 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                throw new Exception("Upps! Yanlış giden birşeyler var.");
+            }
+            Departmanlar departmanlar = _departmanService.GetById((int)id);
+            if (departmanlar == null)
+            {
+                return HttpNotFound();
+            }
+            return View(departmanlar);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Departmanlar departmanlar)
         {
             if (ModelState.IsValid)
             {
-                _departmanService.UpdateDepartman(departmanlar);
+                var departman = _departmanService.GetById(departmanlar.Departman_No);
+                if (departmanlar != null)
+                {
+                    _departmanService.UpdateDepartman(departmanlar);
+                    return RedirectToAction("Index");
+                }
             }
-            return RedirectToAction("Index");
+            return View(departmanlar);
         }
 
 

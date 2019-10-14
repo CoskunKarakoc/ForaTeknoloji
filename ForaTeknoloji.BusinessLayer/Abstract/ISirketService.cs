@@ -16,5 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteSirket(Sirketler sirket);
         Sirketler UpdateSirket(Sirketler sirket);
         List<Sirketler> GetByKullaniciAdi(string kullaniciAdi);
+        Sirketler GetBySirketAdi(string SirketAdi);
     }
 }

@@ -14,5 +14,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         Bloklar AddBloklar(Bloklar bloklar);
         void DeleteBloklar(Bloklar bloklar);
         Bloklar UpdateBloklar(Bloklar bloklar);
+        Bloklar GetByBlokAdi(string blokAdi);
     }
 }

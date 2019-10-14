@@ -31,6 +31,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _bloklarDal.GetList();
         }
 
+        public Bloklar GetByBlokAdi(string blokAdi)
+        {
+            return _bloklarDal.Get(x => x.Adi == blokAdi);
+        }
+
         public Bloklar GetById(int id)
         {
            return _bloklarDal.Get(x => x.Blok_No == id);

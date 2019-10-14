@@ -71,6 +71,7 @@
     <Compile Include="Abstract\ISirketDal.cs" />
     <Compile Include="Abstract\IUserDal.cs" />
     <Compile Include="Abstract\IUsersOLDDal.cs" />
+    <Compile Include="Abstract\IUserTypesDal.cs" />
     <Compile Include="Abstract\IVisitorsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessDatasDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfBloklarDal.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUserDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUsersOLDDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfUserTypesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfVisitorsDal.cs" />
     <Compile Include="Concrete\EntityFramework\ForaContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

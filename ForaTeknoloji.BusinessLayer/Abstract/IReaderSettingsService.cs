@@ -16,5 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeletereaderSettings(ReaderSettings readerSettings);
         ReaderSettings UpdatereaderSettings(ReaderSettings readerSettings);
         List<ReaderSettings> GetReaderName(DBUsers kullaniciAdi);
+        ReaderSettings GetByQuery(Expression<Func<ReaderSettings, bool>> filter = null);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Excp]
     public class BlockController : Controller
     {
         private IBloklarService _bloklarService;
@@ -30,7 +32,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                _bloklarService.AddBloklar(bloklar);
+                if (bloklar.Adi!=null)
+                {
+                    _bloklarService.AddBloklar(bloklar);
+                    return RedirectToAction("Index");
+                }
+                throw new Exception("Yanlış yada eksik karakter girdiniz");
             }
             return RedirectToAction("Index");
         }
@@ -49,13 +56,34 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                throw new Exception("Upps! Yanlış giden birşeyler var.");
+            }
+            Bloklar bloklar = _bloklarService.GetById((int)id);
+            if (bloklar == null)
+            {
+                return HttpNotFound();
+            }
+            return View(bloklar);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Bloklar bloklar)
         {
             if (ModelState.IsValid)
             {
-                _bloklarService.UpdateBloklar(bloklar);
+                var blok = _bloklarService.GetById(bloklar.Blok_No);
+                if (blok != null)
+                {
+                    _bloklarService.UpdateBloklar(bloklar);
+                    return RedirectToAction("Index");
+                }
             }
-            return RedirectToAction("Index");
+            return View(bloklar);
         }
 
 

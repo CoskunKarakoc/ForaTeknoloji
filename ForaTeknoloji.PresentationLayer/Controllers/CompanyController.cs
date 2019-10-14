@@ -1,13 +1,16 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Excp]
     public class CompanyController : Controller
     {
         private ISirketService _sirketService;
@@ -29,7 +32,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                _sirketService.AddSirket(Sirket);
+                if (Sirket.Adi != null)
+                {
+                    _sirketService.AddSirket(Sirket);
+                    return RedirectToAction("Index");
+                }
+                throw new Exception("Yanlış yada eksik karakter girdiniz.");
             }
             return RedirectToAction("Index");
         }
@@ -39,7 +47,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (id != -1)
             {
                 Sirketler sirket = _sirketService.GetById(id);
-                if (sirket!=null)
+                if (sirket != null)
                 {
                     _sirketService.DeleteSirket(sirket);
                     return RedirectToAction("Index");
@@ -48,15 +56,35 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                throw new Exception("Upps! Yanlış giden birşeyler var.");
+            }
+            Sirketler sirketler = _sirketService.GetById((int)id);
+            if (sirketler == null)
+            {
+                return HttpNotFound();
+            }
+            return View(sirketler);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Sirketler sirketler)
         {
             if (ModelState.IsValid)
             {
-                _sirketService.UpdateSirket(sirketler);
+                var sirket = _sirketService.GetById(sirketler.Sirket_No);
+                if (sirket != null)
+                {
+                    _sirketService.UpdateSirket(sirketler);
+                    return RedirectToAction("Index");
+                }
             }
-            return RedirectToAction("Index");
+            return View(sirketler);
         }
-
 
     }
 }
