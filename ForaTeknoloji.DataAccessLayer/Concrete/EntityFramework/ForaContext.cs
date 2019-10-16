@@ -57,6 +57,10 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<UsersOLD> UsersOLD { get; set; }
         public virtual DbSet<UserTypes> UserTypes { get; set; }
         public virtual DbSet<Visitors> Visitors { get; set; }
+        public virtual DbSet<StatusCode> StatusCodes { get; set; }
+        public virtual DbSet<TaskCode> TaskCodes { get; set; }
+        public virtual DbSet<TaskList> TaskLists { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

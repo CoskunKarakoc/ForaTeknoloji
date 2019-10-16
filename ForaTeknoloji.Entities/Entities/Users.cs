@@ -111,6 +111,9 @@ namespace ForaTeknoloji.Entities.Entities
         [Column("Bitis Tarihi")]
         public DateTime? Bitis_Tarihi { get; set; }
 
+        [Column("Bitis Saati")]
+        public DateTime? Bitis_Saati { get; set; }
+
         [StringLength(50)]
         public string Telefon { get; set; }
 

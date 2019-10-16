@@ -1,8 +1,10 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.UsersListViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Kullanıcı-Panel İşlemleri";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 <div class="row">
     <div class="col-md-12">
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
@@ -34,7 +36,11 @@
                             <td>Plaka</td>
                             <td>Geçiş Grubu</td>
                             <td>Ziyaretçi Grubu</td>
-                            <td></td>
+                            <td>
+                                <a title="Tümünü Panelden Sil" onclick="return confirm('Tüm Kullanıcıları Panelden Silmek İstediğinize Emin Misiniz?')" id="PanelDelete" href="@Url.Action("PanelDeleteAll","Users")"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
+                                <a title="Tüm Geçiş Sayacını Sil" onclick="return confirm('Tüm Geçiş Sayaçlarını Silmek İstediğinize Emin Misiniz?')" id="AccessDelete" href="@Url.Action("AccessCounterDeleteAll","Users")"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
+                                <a title="Tüm Antipassback Sayacını Sil" onclick="return confirm('Tüm Antipassback Sayaçlarını Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("AntiCounterDeleteAll","Users")"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,10 +58,10 @@
                                 <td>@item.Gecis_Grubu</td>
                                 <td>@item.Ziyaretci_Grubu</td>
                                 <td>
-                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a title="Send To Panel" id="send" href="@Url.Action("Send","Users",new { UserID=item.ID})"><i class="fas fa-share text-success mr-2"></i></a>
-                                    <a title="Receive From Panel" id="send" href="@Url.Action("Receive","Users",new { UserID=item.ID})"><i class="fas fa-reply text-success mr-2"></i></a>
+                                    <a title="Panelden Sil" onclick="return confirm('Panelden Kullanıcıyı Silmek İstediğinize Emin Misiniz?')" id="PanelDelete" href="@Url.Action("PanelDelete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                    <a title="Geçiş Sayacı Sil" onclick="return confirm('Kullanıcının Geçiş Sayacını Silmek İstediğinize Emin Misiniz?')" id="AccessDelete" href="@Url.Action("AccessCounterDelete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-warning mr-2"></i></a>
+                                    <a title="Antipassback Sayacı Sil" onclick="return confirm('Kullanıcının Antipassback Sayacını Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("AntiCounterDelete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-dark mr-2"></i></a>
+                                    <a title="Kullanıcıyı Tüm Sistemden Kaldır" onclick="return confirm('Kullanıcıyı Tüm Sistemden Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("DeleteAllSystem","Users",new { id=item.ID})"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
                                 </td>
                             </tr>
                         }
@@ -67,6 +73,7 @@
         </div>
     </div>
 </div>
+
 
 
 

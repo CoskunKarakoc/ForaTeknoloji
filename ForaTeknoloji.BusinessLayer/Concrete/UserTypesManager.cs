@@ -28,7 +28,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _userTypesDal.Delete(userTypes);
         }
 
-        public List<UserTypes> GetAllUserTypes(Expression<Func<UserTypes, bool>> filter)
+        public List<UserTypes> GetAllUserTypes(Expression<Func<UserTypes, bool>> filter=null)
         {
             return filter == null ? _userTypesDal.GetList() : _userTypesDal.GetList(filter);
         }

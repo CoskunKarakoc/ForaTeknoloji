@@ -16,7 +16,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
-        [Auth]
+        //[Auth]
         // GET: Home
         public ActionResult Index()
         {

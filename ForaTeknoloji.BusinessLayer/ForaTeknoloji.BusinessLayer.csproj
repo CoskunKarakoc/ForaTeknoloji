@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAccessDatasService.cs" />
+    <Compile Include="Abstract\IAccessModesService.cs" />
     <Compile Include="Abstract\IBloklarService.cs" />
     <Compile Include="Abstract\ICodeOperationService.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanService.cs" />
@@ -72,11 +73,14 @@
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
     <Compile Include="Abstract\ISirketService.cs" />
+    <Compile Include="Abstract\ITaskListService.cs" />
+    <Compile Include="Abstract\ITimeZoneCalendarService.cs" />
     <Compile Include="Abstract\IUserService.cs" />
     <Compile Include="Abstract\IUsersOLDService.cs" />
     <Compile Include="Abstract\IUserTypesService.cs" />
     <Compile Include="Abstract\IVisitorsService.cs" />
     <Compile Include="Concrete\AccessDatasManager.cs" />
+    <Compile Include="Concrete\AccessModesManager.cs" />
     <Compile Include="Concrete\BloklarManager.cs" />
     <Compile Include="Concrete\CodeOperationManager.cs" />
     <Compile Include="Concrete\DBUsersDepartmanManager.cs" />
@@ -93,6 +97,8 @@
     <Compile Include="Concrete\ReaderSettingsManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />
     <Compile Include="Concrete\SirketManager.cs" />
+    <Compile Include="Concrete\TaskListManager.cs" />
+    <Compile Include="Concrete\TimeZoneCalendarManager.cs" />
     <Compile Include="Concrete\UserManager.cs" />
     <Compile Include="Concrete\UsersOLDManager.cs" />
     <Compile Include="Concrete\UserTypesManager.cs" />

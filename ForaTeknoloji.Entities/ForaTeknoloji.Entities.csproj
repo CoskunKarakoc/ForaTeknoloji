@@ -101,6 +101,9 @@
     <Compile Include="Entities\RawUsers.cs" />
     <Compile Include="Entities\ReaderSettings.cs" />
     <Compile Include="Entities\Sirketler.cs" />
+    <Compile Include="Entities\StatusCode.cs" />
+    <Compile Include="Entities\TaskCode.cs" />
+    <Compile Include="Entities\TaskList.cs" />
     <Compile Include="Entities\TimeGroups.cs" />
     <Compile Include="Entities\TimeZoneCalendar.cs" />
     <Compile Include="Entities\TimeZoneIDs.cs" />

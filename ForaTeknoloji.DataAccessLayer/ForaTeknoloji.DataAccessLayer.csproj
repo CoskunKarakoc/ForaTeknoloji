@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAccessDatasDal.cs" />
+    <Compile Include="Abstract\IAccessModesDal.cs" />
     <Compile Include="Abstract\IBloklarDal.cs" />
     <Compile Include="Abstract\ICodeOperationDal.cs" />
     <Compile Include="Abstract\IDBUsersDal.cs" />
@@ -69,11 +70,14 @@
     <Compile Include="Abstract\IPanelSettingsDal.cs" />
     <Compile Include="Abstract\IReaderSettingDal.cs" />
     <Compile Include="Abstract\ISirketDal.cs" />
+    <Compile Include="Abstract\ITaskListDal.cs" />
+    <Compile Include="Abstract\ITimeZoneCalendarDal.cs" />
     <Compile Include="Abstract\IUserDal.cs" />
     <Compile Include="Abstract\IUsersOLDDal.cs" />
     <Compile Include="Abstract\IUserTypesDal.cs" />
     <Compile Include="Abstract\IVisitorsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessDatasDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfAccessModesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfBloklarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCodeOperationDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersDal.cs" />
@@ -89,6 +93,8 @@
     <Compile Include="Concrete\EntityFramework\EfPanelSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfTaskListDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfTimeZoneCalendarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUserDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUsersOLDDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUserTypesDal.cs" />

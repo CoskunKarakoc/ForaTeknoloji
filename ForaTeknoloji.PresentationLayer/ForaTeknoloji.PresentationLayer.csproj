@@ -2504,6 +2504,7 @@
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Controllers\VisitorReportController.cs" />
     <Compile Include="Filters\Auth.cs" />
     <Compile Include="Filters\Excp.cs" />
@@ -2528,6 +2529,7 @@
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
+    <Compile Include="Models\UsersAddViewModel.cs" />
     <Compile Include="Models\UsersListViewModel.cs" />
     <Compile Include="Models\VisitorsList.cs" />
     <Compile Include="Models\ZiyaretciListViewModel.cs" />
@@ -2576,6 +2578,9 @@
     <Content Include="Views\Block\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\PanelOperation.cshtml" />
+    <Content Include="Views\Visitor\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
