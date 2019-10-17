@@ -66,6 +66,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -92,6 +93,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(users);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Users entity)
@@ -109,6 +111,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(entity);
         }
 
+
         public ActionResult Grup(int DeleteID)
         {
             if (DeleteID > 0)
@@ -121,6 +124,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return RedirectToAction("Index");
         }
+
 
         public ActionResult Send(int UserID = -1)
         {
@@ -153,6 +157,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
+
         public ActionResult Receive(int UserID = -1)
         {
             if (UserID != -1)
@@ -177,6 +182,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     ViewBag.status = "Başarısız";
                 }
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Delete(int id = -1)
+        {
+            if (id != -1)
+            {
+                Users users = _userService.GetById(id);
+                _userService.DeleteUsers(users);
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
@@ -247,19 +264,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
-        public ActionResult Delete(int id = -1)
-        {
-            if (id != -1)
-            {
-                Users users = _userService.GetById(id);
-                _userService.DeleteUsers(users);
-                return RedirectToAction("Index");
-            }
-            return RedirectToAction("Index");
-        }
-
-
-
 
         [HttpPost]
         public ActionResult Create(Users user)
@@ -271,6 +275,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return View(user);
         }
+
 
         public ActionResult PanelOperation(string Search)
         {
@@ -322,6 +327,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("PanelOperation");
         }
 
+
         public ActionResult AccessCounterDelete(int id = -1)
         {
             if (id != -1)
@@ -350,6 +356,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return RedirectToAction("PanelOperation");
         }
+
 
         public ActionResult AntiCounterDelete(int id = -1)
         {

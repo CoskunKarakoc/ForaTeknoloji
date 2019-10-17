@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="Abstract\IAccessDatasService.cs" />
     <Compile Include="Abstract\IAccessModesService.cs" />
+    <Compile Include="Abstract\IAlarmlarService.cs" />
+    <Compile Include="Abstract\IAlarmTipleriService.cs" />
     <Compile Include="Abstract\IBloklarService.cs" />
     <Compile Include="Abstract\ICodeOperationService.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanService.cs" />
@@ -81,6 +83,8 @@
     <Compile Include="Abstract\IVisitorsService.cs" />
     <Compile Include="Concrete\AccessDatasManager.cs" />
     <Compile Include="Concrete\AccessModesManager.cs" />
+    <Compile Include="Concrete\AlarmlarManager.cs" />
+    <Compile Include="Concrete\AlarmTipleriManager.cs" />
     <Compile Include="Concrete\BloklarManager.cs" />
     <Compile Include="Concrete\CodeOperationManager.cs" />
     <Compile Include="Concrete\DBUsersDepartmanManager.cs" />

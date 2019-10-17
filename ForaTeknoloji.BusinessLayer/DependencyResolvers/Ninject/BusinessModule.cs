@@ -42,6 +42,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IAccessModesDal>().To<EfAccessModesDal>().InSingletonScope();
             Bind<ITimeZoneCalendarDal>().To<EfTimeZoneCalendarDal>().InSingletonScope();
             Bind<ITaskListDal>().To<EfTaskListDal>().InSingletonScope();
+            Bind<IAlarmlarDal>().To<EfAlarmlarDal>().InSingletonScope();
+            Bind<IAlarmTipleriDal>().To<EfAlarmTipleriDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -68,6 +70,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IAccessModesService>().To<AccessModesManager>().InSingletonScope();
             Bind<ITimeZoneCalendarService>().To<TimeZoneCalendarManager>().InSingletonScope();
             Bind<ITaskListService>().To<TaskListManager>().InSingletonScope();
+            Bind<IAlarmlarService>().To<AlarmlarManager>().InSingletonScope();
+            Bind<IAlarmTipleriService>().To<AlarmTipleriManager>().InSingletonScope();
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

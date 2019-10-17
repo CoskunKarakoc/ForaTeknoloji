@@ -2491,6 +2491,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
@@ -2512,6 +2513,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Init\WebCommon.cs" />
+    <Compile Include="Models\AlarmListViewModel.cs" />
+    <Compile Include="Models\CreateVisitorViewModel.cs" />
     <Compile Include="Models\CurrentSession.cs" />
     <Compile Include="Models\DigerGecisRaporAlarmListViewModel.cs" />
     <Compile Include="Models\DigerGecisRaporListViewModel.cs" />
@@ -2531,6 +2534,7 @@
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
     <Compile Include="Models\UsersAddViewModel.cs" />
     <Compile Include="Models\UsersListViewModel.cs" />
+    <Compile Include="Models\VisitorEditViewModel.cs" />
     <Compile Include="Models\VisitorsList.cs" />
     <Compile Include="Models\ZiyaretciListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2581,6 +2585,9 @@
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\PanelOperation.cshtml" />
     <Content Include="Views\Visitor\Index.cshtml" />
+    <Content Include="Views\Alarm\Index.cshtml" />
+    <Content Include="Views\Visitor\Edit.cshtml" />
+    <Content Include="Views\Visitor\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

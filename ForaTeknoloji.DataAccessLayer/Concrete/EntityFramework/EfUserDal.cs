@@ -30,6 +30,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             join g in context.GroupsMaster
                             on u.Grup_No equals g.Grup_No into tb4
                             from tbl4 in tb4.DefaultIfEmpty()
+                            join gm in context.GroupsMaster
+                            on u.Visitor_Grup_No equals gm.Grup_No into tb5
+                            from tbl5 in tb5.DefaultIfEmpty()
                             select new ComplexUser
                             {
                                 Kayit_No = u.Kayit_No,
@@ -42,7 +45,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Blok = tbl3.Adi,
                                 Plaka = u.Plaka,
                                 Gecis_Grubu = tbl4.Grup_Adi,
-                                Ziyaretci_Grubu = u.Visitor_Grup_No
+                                Ziyaretci_Grubu = u.Visitor_Grup_No,
+                                String_Ziyaretci_Grubu=tbl5.Grup_Adi
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();
@@ -65,7 +69,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Plaka { get; set; }
             public string Gecis_Grubu { get; set; }
             public int? Ziyaretci_Grubu { get; set; }
-
+            public string String_Ziyaretci_Grubu { get; set; }
 
         }
     }

@@ -48,8 +48,8 @@
                                 <td>@item.Tarih</td>
                                 <td>@item.Ziyaret_Sebebi</td>
                                 <td>
-                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Visitor",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Visitor",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
                                 </td>
                             </tr>
                         }
