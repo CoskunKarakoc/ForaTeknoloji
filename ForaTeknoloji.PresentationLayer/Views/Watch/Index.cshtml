@@ -1,0 +1,551 @@
+﻿
+@{
+    ViewBag.Title = "Canlı İzle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow-lg col-md-8 offset-md-2 mt-xl-5 mb-xl-5">
+    <div class="card-body">
+        <nav>
+            <div class="nav nav-tabs col-md-12" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-normal" role="tab" aria-controls="nav-normal" aria-selected="true">Normal Geçiş</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-coklu" role="tab" aria-controls="nav-coklu" aria-selected="false">Çoklu Geçiş</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-anti" role="tab" aria-controls="nav-anti" aria-selected="false">Antipassback</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-engellenen" role="tab" aria-controls="nav-engellenen" aria-selected="false">Engellenen</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-tanimsiz" role="tab" aria-controls="nav-tanimsiz" aria-selected="false">Tanımsız</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-tum" role="tab" aria-controls="nav-tum" aria-selected="false">Tüm Geçişler</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-manuel" role="tab" aria-controls="nav-manuel" aria-selected="false">Manuel İşlem</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-prog" role="tab" aria-controls="nav-prog" aria-selected="false">Prog.İşlem</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-buton" role="tab" aria-controls="nav-buton" aria-selected="false">Buton İşlem</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-islem" role="tab" aria-controls="nav-islem" aria-selected="false">Tüm İşlemler</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-alarm" role="tab" aria-controls="nav-alarm" aria-selected="false">Alarm/Yangın</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-diger" role="tab" aria-controls="nav-diger" aria-selected="false">Diğer Alarm</a>
+                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-ayar" role="tab" aria-controls="nav-ayar" aria-selected="false">Canlı İzleme Ayarları</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-normal" role="tabpanel" aria-labelledby="nav-normal-tab">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Kart ID</label>
+                            <input type="text" name="Kart_ID" class="form-control" value="" />
+                       
+                            <label class="control-label">Adı</label>
+                            <input type="text" name="Adi" class="form-control" value="" />
+                      
+                            <label class="control-label">Soyadı</label>
+                            <input type="text" name="Soyadi" class="form-control" value="" />
+                     
+                            <label class="control-label">TC Kimlik</label>
+                            <input type="text" name="TCKimlik" class="form-control" value="" />
+                       
+                            <label class="control-label">Şirket</label>
+                            <input type="text" name="Sirket_Adi" class="form-control" value="" />
+                   
+                            <label class="control-label">Bölüm</label>
+                            <input type="text" name="Bolum_Adi" class="form-control" value="" />
+                      
+                            <label class="control-label">Plaka</label>
+                            <input type="text" name="Plaka" class="form-control" value="" />
+                   
+                            <label class="control-label">Blok</label>
+                            <input type="text" name="Blok_Adi" class="form-control" value="" />
+                       
+                            <label class="control-label">Daire</label>
+                            <input type="text" name="Daire" class="form-control" value="" />
+                     
+                            <label class="control-label">Tarih</label>
+                            <input type="date" name="Tarih" class="form-control" value="" />
+                      
+                            <label class="control-label">Panel</label>
+                            <input type="text" name="Panel_ID" class="form-control" value="" />
+                      
+                            <label class="control-label">Geçiş Tipi</label>
+                            <input type="text" name="Gecis_Tİpi" class="form-control" value="" />
+                       
+                            <label class="control-label">Kapı</label>
+                            <input type="text" name="Kapi_ID" class="form-control" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-4 text-center">
+                        <img src="~/Images/6300990.jpg" class="img-fluid img-thumbnail card-img " alt="Alternate Text" />
+                        <br />
+                        <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
+                            <label class="btn btn-outline-info active">
+                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kayıtlı Resim
+                            </label>
+                            <label class="btn btn-outline-info">
+                                <input type="radio" name="options" id="option2" autocomplete="off"> Canlı Resim
+                            </label>
+                            <label class="btn btn-outline-info">
+                                <input type="radio" name="options" id="option3" autocomplete="off"> Yanyana Göster
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <table class="table-borderless table table-hover text-center table-striped table-sm">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Adi</td>
+                                    <td>Soyadi</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>TCKimlik</td>
+                                    <td>Plaka</td>
+                                    <td>Blok</td>
+                                    <td>Daire</td>
+                                    <td>Grup Adi</td>
+                                    <td>Panel</td>
+                                    <td>Geçiş</td>
+                                    <td>Tarih</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-success">
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-coklu" role="tabpanel" aria-labelledby="nav-coklu-tab">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Kart ID</label>
+                            <input type="text" name="Kart_ID" class="form-control" value="" />
+                       
+                            <label class="control-label">Adı</label>
+                            <input type="text" name="Adi" class="form-control" value="" />
+                       
+                            <label class="control-label">Soyadı</label>
+                            <input type="text" name="Soyadi" class="form-control" value="" />
+                      
+                            <label class="control-label">TC Kimlik</label>
+                            <input type="text" name="TCKimlik" class="form-control" value="" />
+                     
+                            <label class="control-label">Şirket</label>
+                            <input type="text" name="Sirket_Adi" class="form-control" value="" />
+                   
+                            <label class="control-label">Bölüm</label>
+                            <input type="text" name="Bolum_Adi" class="form-control" value="" />
+                    
+                            <label class="control-label">Plaka</label>
+                            <input type="text" name="Plaka" class="form-control" value="" />
+                      
+                            <label class="control-label">Blok</label>
+                            <input type="text" name="Blok_Adi" class="form-control" value="" />
+                     
+                            <label class="control-label">Daire</label>
+                            <input type="text" name="Daire" class="form-control" value="" />
+                     
+                            <label class="control-label">Tarih</label>
+                            <input type="date" name="Tarih" class="form-control" value="" />
+                       
+                            <label class="control-label">Panel</label>
+                            <input type="text" name="Panel_ID" class="form-control" value="" />
+                       
+                            <label class="control-label">Geçiş Tipi</label>
+                            <input type="text" name="Gecis_Tİpi" class="form-control" value="" />
+                       
+                            <label class="control-label">Kapı</label>
+                            <input type="text" name="Kapi_ID" class="form-control" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-4 text-center">
+                        <img src="~/Images/6300990.jpg" class="img-fluid img-thumbnail card-img " alt="Alternate Text" />
+                        <br />
+                        <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
+                            <label class="btn btn-outline-info active">
+                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kayıtlı Resim
+                            </label>
+                            <label class="btn btn-outline-info">
+                                <input type="radio" name="options" id="option2" autocomplete="off"> Canlı Resim
+                            </label>
+                            <label class="btn btn-outline-info">
+                                <input type="radio" name="options" id="option3" autocomplete="off"> Yanyana Göster
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <table class="table-borderless table table-hover text-center table-striped table-sm">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Adi</td>
+                                    <td>Soyadi</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>TCKimlik</td>
+                                    <td>Plaka</td>
+                                    <td>Blok</td>
+                                    <td>Daire</td>
+                                    <td>Grup Adi</td>
+                                    <td>Panel</td>
+                                    <td>Geçiş</td>
+                                    <td>Tarih</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-secondary">
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                </tr>
+
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-anti" role="tabpanel" aria-labelledby="nav-anti-tab">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Kart ID</label>
+                            <input type="text" name="Kart_ID" class="form-control" value="" />
+
+                            <label class="control-label">Adı</label>
+                            <input type="text" name="Adi" class="form-control" value="" />
+
+                            <label class="control-label">Soyadı</label>
+                            <input type="text" name="Soyadi" class="form-control" value="" />
+
+                            <label class="control-label">TC Kimlik</label>
+                            <input type="text" name="TCKimlik" class="form-control" value="" />
+
+                            <label class="control-label">Şirket</label>
+                            <input type="text" name="Sirket_Adi" class="form-control" value="" />
+
+                            <label class="control-label">Bölüm</label>
+                            <input type="text" name="Bolum_Adi" class="form-control" value="" />
+
+                            <label class="control-label">Plaka</label>
+                            <input type="text" name="Plaka" class="form-control" value="" />
+
+                            <label class="control-label">Blok</label>
+                            <input type="text" name="Blok_Adi" class="form-control" value="" />
+
+                            <label class="control-label">Daire</label>
+                            <input type="text" name="Daire" class="form-control" value="" />
+
+                            <label class="control-label">Tarih</label>
+                            <input type="date" name="Tarih" class="form-control" value="" />
+
+                            <label class="control-label">Panel</label>
+                            <input type="text" name="Panel_ID" class="form-control" value="" />
+
+                            <label class="control-label">Geçiş Tipi</label>
+                            <input type="text" name="Gecis_Tİpi" class="form-control" value="" />
+
+                            <label class="control-label">Kapı</label>
+                            <input type="text" name="Kapi_ID" class="form-control" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-4 text-center">
+                        <img src="~/Images/6300990.jpg" class="img-fluid img-thumbnail card-img " alt="Alternate Text" />
+                        <br />
+                        <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
+                            <label class="btn btn-outline-info active">
+                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kayıtlı Resim
+                            </label>
+                            <label class="btn btn-outline-info">
+                                <input type="radio" name="options" id="option2" autocomplete="off"> Canlı Resim
+                            </label>
+                            <label class="btn btn-outline-info">
+                                <input type="radio" name="options" id="option3" autocomplete="off"> Yanyana Göster
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <table class="table-borderless table table-hover text-center table-striped table-sm">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Adi</td>
+                                    <td>Soyadi</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>TCKimlik</td>
+                                    <td>Plaka</td>
+                                    <td>Blok</td>
+                                    <td>Daire</td>
+                                    <td>Grup Adi</td>
+                                    <td>Panel</td>
+                                    <td>Geçiş</td>
+                                    <td>Tarih</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-danger">
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                </tr>
+
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-engellenen" role="tabpanel" aria-labelledby="nav-engellenen-tab">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Kart ID</label>
+                            <input type="text" name="Kart_ID" class="form-control" value="" />
+
+                            <label class="control-label">Adı</label>
+                            <input type="text" name="Adi" class="form-control" value="" />
+
+                            <label class="control-label">Soyadı</label>
+                            <input type="text" name="Soyadi" class="form-control" value="" />
+
+                            <label class="control-label">TC Kimlik</label>
+                            <input type="text" name="TCKimlik" class="form-control" value="" />
+
+                            <label class="control-label">Şirket</label>
+                            <input type="text" name="Sirket_Adi" class="form-control" value="" />
+
+                            <label class="control-label">Bölüm</label>
+                            <input type="text" name="Bolum_Adi" class="form-control" value="" />
+
+                            <label class="control-label">Plaka</label>
+                            <input type="text" name="Plaka" class="form-control" value="" />
+
+                            <label class="control-label">Blok</label>
+                            <input type="text" name="Blok_Adi" class="form-control" value="" />
+
+                            <label class="control-label">Daire</label>
+                            <input type="text" name="Daire" class="form-control" value="" />
+
+                            <label class="control-label">Tarih</label>
+                            <input type="date" name="Tarih" class="form-control" value="" />
+
+                            <label class="control-label">Panel</label>
+                            <input type="text" name="Panel_ID" class="form-control  form-control-sm" value="" />
+
+                            <label class="control-label">Geçiş Tipi</label>
+                            <input type="text" name="Gecis_Tİpi" class="form-control" value="" />
+
+                            <label class="control-label">Kapı</label>
+                            <input type="text" name="Kapi_ID" class="form-control" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-4 text-center">
+                        <img src="~/Images/6300990.jpg" class="img-fluid img-thumbnail card-img " alt="Alternate Text" />
+                        <br />
+                        <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
+                            <label class="btn btn-outline-info active">
+                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kayıtlı Resim
+                            </label>
+                            <label class="btn btn-outline-info">
+                                <input type="radio" name="options" id="option2" autocomplete="off"> Canlı Resim
+                            </label>
+                            <label class="btn btn-outline-info">
+                                <input type="radio" name="options" id="option3" autocomplete="off"> Yanyana Göster
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <table class="table-borderless table table-hover text-center table-striped table-sm">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Adi</td>
+                                    <td>Soyadi</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>TCKimlik</td>
+                                    <td>Plaka</td>
+                                    <td>Blok</td>
+                                    <td>Daire</td>
+                                    <td>Grup Adi</td>
+                                    <td>Panel</td>
+                                    <td>Geçiş</td>
+                                    <td>Tarih</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table-warning">
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                </tr>
+
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-tanimsiz" role="tabpanel" aria-labelledby="nav-tanimsiz-tab">
+                tanimsiz
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-tum" role="tabpanel" aria-labelledby="nav-tum-tab">
+                tum
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-manuel" role="tabpanel" aria-labelledby="nav-manuel-tab">
+                manuel
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-prog" role="tabpanel" aria-labelledby="nav-prog-tab">
+                prog
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-buton" role="tabpanel" aria-labelledby="nav-buton-tab">
+                buton
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-islem" role="tabpanel" aria-labelledby="nav-islem-tab">
+                islem
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-alarm" role="tabpanel" aria-labelledby="nav-alarm-tab">
+                alarm
+            </div>
+
+
+
+            <div class="tab-pane fade" id="nav-diger" role="tabpanel" aria-labelledby="nav-diger-tab">
+                diger
+            </div>
+
+
+            <div class="tab-pane fade" id="nav-ayar" role="tabpanel" aria-labelledby="nav-ayar-tab">
+                <div class="row">
+                    <div class="col-md-8 mt-xl-5">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Antipassback" />
+                                <label class="custom-control-label" for="Antipassback">Antipassback İhlal Mesajları Alma</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Engelllenen" />
+                                <label class="custom-control-label" for="Engelllenen">Engellenen İstek Mesajları Alma</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Tanimsiz" />
+                                <label class="custom-control-label" for="Tanimsiz">Tanımsız Geçiş Mesajları Alma</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Manuel" />
+                                <label class="custom-control-label" for="Manuel">Manuel İşlemler "Tetikleme/Açma/Kapatma/Serbest Mesajları Alma</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="ButtonTetikleme" />
+                                <label class="custom-control-label" for="ButtonTetikleme">Buton Tetikleme Mesajları Alma</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Programlı" />
+                                <label class="custom-control-label" for="Programlı">Programlı İşlemler "Açma/Kapatma" Mesajları Alma</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-sm btn-success"><i class="fas fa-save text-white"></i> Kaydet</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>

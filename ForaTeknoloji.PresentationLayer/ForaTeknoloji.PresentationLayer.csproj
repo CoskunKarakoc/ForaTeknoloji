@@ -2507,6 +2507,7 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Controllers\VisitorReportController.cs" />
+    <Compile Include="Controllers\WatchController.cs" />
     <Compile Include="Filters\Auth.cs" />
     <Compile Include="Filters\Excp.cs" />
     <Compile Include="Global.asax.cs">
@@ -2588,6 +2589,7 @@
     <Content Include="Views\Alarm\Index.cshtml" />
     <Content Include="Views\Visitor\Edit.cshtml" />
     <Content Include="Views\Visitor\Create.cshtml" />
+    <Content Include="Views\Watch\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
