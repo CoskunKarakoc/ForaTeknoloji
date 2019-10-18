@@ -5,6 +5,7 @@ using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUserDal;
@@ -45,14 +46,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: Users
-        public ActionResult Index(string Search = null)
+        public ActionResult Index(string Search = null,int Status=-1)
         {
 
             if (Search != null && Search != "")
             {
                 var model = new UsersListViewModel
                 {
-                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim()))
+                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    StatusControl=Status
                 };
                 return View(model);
             }
@@ -60,7 +62,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    Users = _userService.GetAllUsersWithOuther()
+                    Users = _userService.GetAllUsersWithOuther(),
+                    StatusControl = Status
                 };
                 return View(model);
             }
@@ -145,16 +148,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    ViewBag.status = "Başarılı";
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus();
+                    if (Durum == 2)
+                        return RedirectToAction("Index", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("Index", new { @Status = 1 });
+                    else
+                        return RedirectToAction("Index", new { @Status = 3 });
                 }
                 catch (Exception)
                 {
-
-                    ViewBag.status = "Başarısız";
+                    return RedirectToAction("Index", new { @Status = 3 });
                 }
-                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { @Status = 3 });
         }
 
 
@@ -176,15 +184,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    ViewBag.status = "Başarılı";
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus();
+                    if (Durum == 2)
+                        return RedirectToAction("Index", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("Index", new { @Status = 1 });
+                    else
+                        return RedirectToAction("Index", new { @Status = 3 });
                 }
                 catch (Exception)
                 {
-                    ViewBag.status = "Başarısız";
+                    return RedirectToAction("Index", new { @Status = 3 });
                 }
-                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { @Status = 3 });
         }
 
 
@@ -277,13 +291,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult PanelOperation(string Search)
+        public ActionResult PanelOperation(string Search,int Status=-1)
         {
             if (Search != null && Search != "")
             {
                 var model = new UsersListViewModel
                 {
-                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim()))
+                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    StatusControl=Status
                 };
                 return View(model);
             }
@@ -291,7 +306,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    Users = _userService.GetAllUsersWithOuther()
+                    Users = _userService.GetAllUsersWithOuther(),
+                    StatusControl = Status
                 };
                 return View(model);
             }
@@ -316,15 +332,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    ViewBag.status = "Başarılı";
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus();
+                    if (Durum == 2)
+                        return RedirectToAction("PanelOperation", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("PanelOperation", new { @Status = 1 });
+                    else
+                        return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
                 catch (Exception)
                 {
-                    ViewBag.status = "Başarısız";
+                    return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
-                return RedirectToAction("PanelOperation");
             }
-            return RedirectToAction("PanelOperation");
+            return RedirectToAction("PanelOperation", new { @Status = 3 });
         }
 
 
@@ -346,15 +368,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    ViewBag.status = "Başarılı";
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus();
+                    if (Durum == 2)
+                        return RedirectToAction("PanelOperation", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("PanelOperation", new { @Status = 1 });
+                    else
+                        return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
                 catch (Exception)
                 {
-                    ViewBag.status = "Başarısız";
+                    return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
-                return RedirectToAction("PanelOperation");
             }
-            return RedirectToAction("PanelOperation");
+            return RedirectToAction("PanelOperation", new { @Status = 3 });
         }
 
 
@@ -376,15 +404,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    ViewBag.status = "Başarılı";
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus();
+                    if (Durum == 2)
+                        return RedirectToAction("PanelOperation", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("PanelOperation", new { @Status = 1 });
+                    else
+                        return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
                 catch (Exception)
                 {
-                    ViewBag.status = "Başarısız";
+                    return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
-                return RedirectToAction("PanelOperation");
             }
-            return RedirectToAction("PanelOperation");
+            return RedirectToAction("PanelOperation", new { @Status = 3 });
         }
 
 
@@ -405,19 +439,133 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                     Users users = _userService.GetById(id);
                     _userService.DeleteUsers(users);
-                    ViewBag.status = "Başarılı";
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus();
+                    if (Durum == 2)
+                        return RedirectToAction("PanelOperation", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("PanelOperation", new { @Status = 1 });
+                    else
+                        return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
                 catch (Exception)
                 {
-                    ViewBag.status = "Başarısız";
+                    return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
-                return RedirectToAction("PanelOperation");
+              
             }
-            return RedirectToAction("PanelOperation");
+            return RedirectToAction("PanelOperation", new { @Status = 3 });
         }
+
+
+        public ActionResult PanelDeleteAll()
+        {
+            try
+            {
+                TaskList taskList = new TaskList
+                {
+                    Deneme_Sayisi = 1,
+                    Durum_Kodu = 1,
+                    Gorev_Kodu = 2629,
+                    IntParam_1 = 1,
+                    Kullanici_Adi = "coskun",
+                    Panel_No = 8,
+                    Tablo_Guncelle = true,
+                    Tarih = DateTime.Now
+                };
+                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                Thread.Sleep(2000);
+                var Durum = CheckStatus();
+                if (Durum == 2)
+                    return RedirectToAction("PanelOperation", new { @Status = 2 });
+                else if (Durum == 1)
+                    return RedirectToAction("PanelOperation", new { @Status = 1 });
+                else
+                    return RedirectToAction("PanelOperation", new { @Status = 3 });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("PanelOperation", new { @Status = 3 });
+            }
+        }
+
+
+        public ActionResult AccessCounterDeleteAll()
+        {
+            try
+            {
+                TaskList taskList = new TaskList
+                {
+                    Deneme_Sayisi = 1,
+                    Durum_Kodu = 1,
+                    Gorev_Kodu = 2702,
+                    IntParam_1 = 1,
+                    Kullanici_Adi = "coskun",
+                    Panel_No = 8,
+                    Tablo_Guncelle = true,
+                    Tarih = DateTime.Now
+                };
+                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                Thread.Sleep(2000);
+                var Durum = CheckStatus();
+                if (Durum == 2)
+                    return RedirectToAction("PanelOperation", new { @Status = 2 });
+                else if(Durum==1)
+                    return RedirectToAction("PanelOperation", new { @Status = 1 });
+                else
+                    return RedirectToAction("PanelOperation", new { @Status = 3 });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("PanelOperation", new { @Status = 3 });
+            }
+        }
+
+
+        public ActionResult AntiCounterDeleteAll()
+        {
+            try
+            {
+                TaskList taskList = new TaskList
+                {
+                    Deneme_Sayisi = 1,
+                    Durum_Kodu = 1,
+                    Gorev_Kodu = 2711,
+                    IntParam_1 = 1,
+                    Kullanici_Adi = "coskun",
+                    Panel_No = 8,
+                    Tablo_Guncelle = true,
+                    Tarih = DateTime.Now
+                };
+                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                Thread.Sleep(2000);
+                var Durum = CheckStatus();
+                if (Durum == 2)
+                    return RedirectToAction("PanelOperation", new { @Status = 2 });
+                else if (Durum == 1)
+                    return RedirectToAction("PanelOperation", new { @Status = 1 });
+                else
+                    return RedirectToAction("PanelOperation", new { @Status = 3 });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("PanelOperation", new { @Status = 3 });
+            }
+        }
+
+
+
+        public int CheckStatus()
+        {
+            var GrupNo = _taskListService.GetAllTaskList().Max(x => x.Grup_No);
+            return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
+        }
+
+
+
     }
 
 }

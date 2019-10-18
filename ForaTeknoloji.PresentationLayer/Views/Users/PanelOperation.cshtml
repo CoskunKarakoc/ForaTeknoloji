@@ -10,6 +10,21 @@
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center">Kullanıcı Ayarları</h3>
+                @if (Model.StatusControl != -1)
+                {
+                    if (Model.StatusControl == 2)
+                    {
+                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
+                    }
+                    else if (Model.StatusControl == 1)
+                    {
+                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
+                    }
+                    else
+                    {
+                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
+                    }
+                }
             </div>
             <div class="card-body">
 
@@ -56,7 +71,7 @@
                                 <td>@item.Blok</td>
                                 <td>@item.Plaka</td>
                                 <td>@item.Gecis_Grubu</td>
-                                <td>@item.Ziyaretci_Grubu</td>
+                                <td>@item.String_Ziyaretci_Grubu</td>
                                 <td>
                                     <a title="Panelden Sil" onclick="return confirm('Panelden Kullanıcıyı Silmek İstediğinize Emin Misiniz?')" id="PanelDelete" href="@Url.Action("PanelDelete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
                                     <a title="Geçiş Sayacı Sil" onclick="return confirm('Kullanıcının Geçiş Sayacını Silmek İstediğinize Emin Misiniz?')" id="AccessDelete" href="@Url.Action("AccessCounterDelete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-warning mr-2"></i></a>
@@ -73,7 +88,15 @@
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready(function () {
+        if ($("#Status").prop("hidden") == false) {
+            setTimeout(function () {
+                $("#Status").prop("hidden", true);
+            }, 1000);
+        }
+    });
+</script>
 
 
 
