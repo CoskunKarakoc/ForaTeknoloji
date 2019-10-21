@@ -68,8 +68,8 @@
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
                                     <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a title="Send To Panel" id="send" href="@Url.Action("Send","Users",new { UserID=item.ID})"><i class="fas fa-share text-success mr-2"></i></a>
-                                    <a title="Receive From Panel" id="send" href="@Url.Action("Receive","Users",new { UserID=item.ID})"><i class="fas fa-reply text-success mr-2"></i></a>
+                                    <a title="Send To Panel" onclick="return confirm('Kullanıcıyı Panele Göndermek İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Send","Users",new { UserID=item.ID})"><i class="fas fa-share text-success mr-2"></i></a>
+                                    <a title="Receive From Panel" onclick="return confirm('Kullanıcıyı Panelden Almak İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Receive","Users",new { UserID=item.ID})"><i class="fas fa-reply text-success mr-2"></i></a>
                                 </td>
                             </tr>
                         }

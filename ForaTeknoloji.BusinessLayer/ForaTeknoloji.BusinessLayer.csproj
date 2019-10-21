@@ -76,7 +76,9 @@
     <Compile Include="Abstract\IReportService.cs" />
     <Compile Include="Abstract\ISirketService.cs" />
     <Compile Include="Abstract\ITaskListService.cs" />
+    <Compile Include="Abstract\ITimeGroupsService.cs" />
     <Compile Include="Abstract\ITimeZoneCalendarService.cs" />
+    <Compile Include="Abstract\ITimeZoneIDsService.cs" />
     <Compile Include="Abstract\IUserService.cs" />
     <Compile Include="Abstract\IUsersOLDService.cs" />
     <Compile Include="Abstract\IUserTypesService.cs" />
@@ -102,7 +104,9 @@
     <Compile Include="Concrete\ReportManager.cs" />
     <Compile Include="Concrete\SirketManager.cs" />
     <Compile Include="Concrete\TaskListManager.cs" />
+    <Compile Include="Concrete\TimeGroupsManager.cs" />
     <Compile Include="Concrete\TimeZoneCalendarManager.cs" />
+    <Compile Include="Concrete\TimeZoneIDsManager.cs" />
     <Compile Include="Concrete\UserManager.cs" />
     <Compile Include="Concrete\UsersOLDManager.cs" />
     <Compile Include="Concrete\UserTypesManager.cs" />

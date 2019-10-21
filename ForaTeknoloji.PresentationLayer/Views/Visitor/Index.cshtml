@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.Visitors>
+﻿@model ForaTeknoloji.PresentationLayer.Models.VisitorListViewModel
 @{
     ViewBag.Title = "Ziyaretçiler";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,6 +9,21 @@
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center">Ziyaretçi Ayarları</h3>
+                @if (Model.StatusControl != -1)
+                {
+                    if (Model.StatusControl == 2)
+                    {
+                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
+                    }
+                    else if (Model.StatusControl == 1)
+                    {
+                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
+                    }
+                    else
+                    {
+                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
+                    }
+                }
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Index", "Visitor", FormMethod.Get))
@@ -20,7 +35,7 @@
                         </div>
                     </div>
                 }
-                    <hr />
+                <hr />
                 <table class="table-borderless table table-hover text-center table-striped table-sm">
                     <thead class="table-info">
                         <tr>
@@ -36,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Visitor)
                         {
                             <tr>
                                 <td>@item.Adi</td>
@@ -50,6 +65,7 @@
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Visitor",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
                                     <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Visitor",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                    <a title="Visitor Send To Panel" onclick="return confirm('Ziyaretçiyi Panele Göndermek İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Send","Visitor",new { VisitorID=item.ID})"><i class="fas fa-share text-success mr-2"></i></a>
                                 </td>
                             </tr>
                         }
@@ -59,3 +75,16 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        if ($("#Status").prop("hidden") == false) {
+            setTimeout(function () {
+                $("#Status").prop("hidden", true);
+            }, 1000);
+        }
+    });
+</script>
+
+
+

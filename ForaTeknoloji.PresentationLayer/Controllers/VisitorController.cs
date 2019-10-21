@@ -4,6 +4,7 @@ using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,29 +15,41 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IVisitorsService _visitorsService;
         private IUserService _userService;
         private IGroupMasterService _groupMasterService;
-        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService)
+        private ITaskListService _taskListService;
+        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService)
         {
             _visitorsService = visitorsService;
             _userService = userService;
             _groupMasterService = groupMasterService;
+            _taskListService = taskListService;
         }
 
 
 
         // GET: Visitor
-        public ActionResult Index(string Search)
+        public ActionResult Index(string Search, int Status = -1)
         {
             if (Search != null && Search != "")
             {
-                var model = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim()));
+                var model = new VisitorListViewModel
+                {
+                    Visitor = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim())),
+                    StatusControl = Status
+                };
+
                 return View(model);
             }
             else
             {
-                var model = _visitorsService.GetAllVisitors();
+                var model = new VisitorListViewModel
+                {
+                    Visitor = _visitorsService.GetAllVisitors(),
+                    StatusControl = Status
+                };
                 return View(model);
             }
         }
+
 
 
         public ActionResult Create()
@@ -134,6 +147,42 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult Send(int VisitorID = -1)
+        {
+            if (VisitorID != -1)
+            {
+                try
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = 2620,
+                        IntParam_1 = VisitorID,
+                        Kullanici_Adi = "coskun",
+                        Panel_No = 8,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskReceive = _taskListService.AddTaskList(taskList);
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus();
+                    if (Durum == 2)
+                        return RedirectToAction("Index", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("Index", new { @Status = 1 });
+                    else
+                        return RedirectToAction("Index", new { @Status = 3 });
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index", new { @Status = 3 });
+                }
+            }
+            return RedirectToAction("Index", new { @Status = 3 });
+        }
+
+
         public ActionResult Personeller(string Search)
         {
             List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser> liste = new List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser>();
@@ -149,6 +198,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return Json(liste, JsonRequestBehavior.AllowGet);
 
+        }
+
+
+        public int CheckStatus()
+        {
+            var GrupNo = _taskListService.GetAllTaskList().Max(x => x.Grup_No);
+            return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
         }
 
 

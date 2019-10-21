@@ -2503,6 +2503,7 @@
     <Compile Include="Controllers\PanelSettingsController.cs" />
     <Compile Include="Controllers\PersonelListReportController.cs" />
     <Compile Include="Controllers\ReportPersonelController.cs" />
+    <Compile Include="Controllers\TimeGroupsController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VisitorController.cs" />
@@ -2525,7 +2526,9 @@
     <Compile Include="Models\GelenGelmeyen_IlkGirisSonCikisListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_PasifListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_ToplamIcerdeKalmaListViewModel.cs" />
+    <Compile Include="Models\GenelPanelSettingsListViewModel.cs" />
     <Compile Include="Models\GlobalBolgePanelSettingsListViewModel.cs" />
+    <Compile Include="Models\HaberlesmeListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaPersonelListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaTumuListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaZiyaretciListViewModel.cs" />
@@ -2536,6 +2539,7 @@
     <Compile Include="Models\UsersAddViewModel.cs" />
     <Compile Include="Models\UsersListViewModel.cs" />
     <Compile Include="Models\VisitorEditViewModel.cs" />
+    <Compile Include="Models\VisitorListViewModel.cs" />
     <Compile Include="Models\VisitorsList.cs" />
     <Compile Include="Models\ZiyaretciListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2590,6 +2594,7 @@
     <Content Include="Views\Visitor\Edit.cshtml" />
     <Content Include="Views\Visitor\Create.cshtml" />
     <Content Include="Views\Watch\Index.cshtml" />
+    <Content Include="Views\TimeGroups\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

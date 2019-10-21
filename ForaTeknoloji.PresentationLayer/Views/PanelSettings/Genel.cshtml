@@ -1,4 +1,4 @@
-﻿@model ForaTeknoloji.Entities.Entities.PanelSettings
+﻿@model ForaTeknoloji.PresentationLayer.Models.GenelPanelSettingsListViewModel
 @{
     ViewBag.Title = "Genel";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,7 +22,7 @@
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label>Panel Seri No</label>
-                                            <input type="text" placeholder="Mac Adres Son 4 Hane" id="PanelSeriNo" class="form-control" name="Seri_No" />
+                                            @Html.TextBox("Seri_No", Convert.ToInt32(Model.GenelAyar.Seri_No).ToString("X4"), new { @class = "form-control" })
                                         </div>
                                     </div>
                                 </div>
@@ -30,7 +30,7 @@
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label>Panel No</label>
-                                            <input type="text" placeholder="0" id="SiraNo" class="form-control" name="Sira_No" />
+                                            @Html.TextBox("Sira_No", Model.GenelAyar.Sira_No, new { @class = "form-control" })
                                         </div>
                                     </div>
                                 </div>
@@ -38,14 +38,15 @@
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label>Panel Adı</label>
-                                            <input type="text" id="PanelName" class="form-control" name="Panel_Name" />
+                                            @Html.TextBox("Panel_Name", Model.GenelAyar.Panel_Name, new { @class = "form-control" })
+
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="ButonTetiklemeSuresi">Buton Dedektör Tetikleme Süresi</label>
-                                        <input type="number" class="form-control" id="ButonTetiklemeSuresi" placeholder="1" name="Panel_Button_Detector_Time" value="1" min="0" max="99" step="1" />
+                                        @Html.TextBox("Panel_Button_Detector_Time", Model.GenelAyar.Panel_Button_Detector_Time, new { @class = "form-control", type = "number" })
                                     </div>
                                 </div>
                             </div>
@@ -54,67 +55,117 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label class="text-muted">Panel Modeli</label>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="5" class="custom-control-input" id="Kapi301" checked name="Panel_Model">
-                                    <label class="custom-control-label" for="Kapi301">MW-301(8 Kapı)</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="6" class="custom-control-input" id="Kapi304" name="Panel_Model">
-                                    <label class="custom-control-label" for="Kapi304">MW-304(4 Kapı)</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="7" class="custom-control-input" id="Kapi302" name="Panel_Model">
-                                    <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
-                                </div>
+                                @if (Model.GenelAyar.Panel_Model == 5)
+                                {
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="5" class="custom-control-input" id="Kapi301" checked name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi301">MW-301(8 Kapı)</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="6" class="custom-control-input" id="Kapi304" name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi304">MW-304(4 Kapı)</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="7" class="custom-control-input" id="Kapi302" name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
+                                    </div>
+                                }
+                                else if (Model.GenelAyar.Panel_Model == 6)
+                                {
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="5" class="custom-control-input" id="Kapi301" name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi301">MW-301(8 Kapı)</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="6" class="custom-control-input" checked id="Kapi304" name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi304">MW-304(4 Kapı)</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="7" class="custom-control-input" id="Kapi302" name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="5" class="custom-control-input" id="Kapi301" name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi301">MW-301(8 Kapı)</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="6" class="custom-control-input" id="Kapi304" name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi304">MW-304(4 Kapı)</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="7" class="custom-control-input" id="Kapi302" checked name="Panel_Model">
+                                        <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
+                                    </div>
+                                }
                             </div>
                             <hr />
-                            <div class="form-group">
-                                <label class="text-muted">Panel Kontrol Modu</label>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="StandAlone" class="custom-control-input" id="StandAlone" checked name="Kontrol_Modu">
-                                    <label class="custom-control-label" for="StandAlone">Stand-Alone</label>
+                            @if (Model.GenelAyar.Kontrol_Modu == 0)
+                            {
+                                <div class="form-group">
+                                    <label class="text-muted">Panel Kontrol Modu</label>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="StandAlone" class="custom-control-input" id="StandAlone" checked name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="StandAlone">Stand-Alone</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="Online" class="custom-control-input" id="Online" name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="Online">Online</label>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="Online" class="custom-control-input" id="Online" name="Kontrol_Modu">
-                                    <label class="custom-control-label" for="Online">Online</label>
+                            }
+                            else
+                            {
+                                <div class="form-group">
+                                    <label class="text-muted">Panel Kontrol Modu</label>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="StandAlone" class="custom-control-input" id="StandAlone" name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="StandAlone">Stand-Alone</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="Online" class="custom-control-input" checked id="Online" name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="Online">Online</label>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label class="text-muted">Lokal Bölge Antipassback</label>
                                 <div class="custom-control custom-checkbox">
-                                    <div id="Kapilar"></div>
-                                    <input type="checkbox" value="1" name="Lokal_APB1" class="custom-control-input" id="Lokal1" />
-                                    <label class="custom-control-label" for="Lokal1">Lokal Bölge 1</label>
+                                    @Html.CheckBox("Lokal_APB1", Model.GenelAyar.Lokal_APB1 == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Lokal_APB1">Lokal Bölge 1</label>
+                                </div>
+                                <input type="checkbox" class="custom-control-input" name="Lokal_APB1" value="" />
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Lokal_APB2", Model.GenelAyar.Lokal_APB2 == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Lokal_APB2">Lokal Bölge 2</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB2" class="custom-control-input" id="Lokal2" />
-                                    <label class="custom-control-label" for="Lokal2">Lokal Bölge 2</label>
+                                    @Html.CheckBox("Lokal_APB3", Model.GenelAyar.Lokal_APB3 == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Lokal_APB3">Lokal Bölge 3</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB3" class="custom-control-input" id="Lokal3" />
-                                    <label class="custom-control-label" for="Lokal3">Lokal Bölge 3</label>
+                                    @Html.CheckBox("Lokal_APB4", Model.GenelAyar.Lokal_APB4 == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Lokal_APB4">Lokal Bölge 4</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB4" class="custom-control-input" id="Lokal4" />
-                                    <label class="custom-control-label" for="Lokal4">Lokal Bölge 4</label>
+                                    @Html.CheckBox("Lokal_APB5", Model.GenelAyar.Lokal_APB5 == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Lokal_APB5">Lokal Bölge 5</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB5" class="custom-control-input" id="Lokal5" />
-                                    <label class="custom-control-label" for="Lokal5">Lokal Bölge 5</label>
+                                    @Html.CheckBox("Lokal_APB6", Model.GenelAyar.Lokal_APB6 == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Lokal_APB6">Lokal Bölge 6</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB6" class="custom-control-input" id="Lokal6" />
-                                    <label class="custom-control-label" for="Lokal6">Lokal Bölge 6</label>
+                                    @Html.CheckBox("Lokal_APB7", Model.GenelAyar.Lokal_APB7 == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Lokal_APB7">Lokal Bölge 7</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB7" class="custom-control-input" id="Lokal7" />
-                                    <label class="custom-control-label" for="Lokal7">Lokal Bölge 7</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB8" class="custom-control-input" id="Lokal8" />
-                                    <label class="custom-control-label" for="Lokal8">Lokal Bölge 8</label>
+                                    @Html.CheckBox("Lokal_APB8", Model.GenelAyar.Lokal_APB8 == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Lokal_APB8">Lokal Bölge 8</label>
                                 </div>
                             </div>
                         </div>
@@ -123,36 +174,37 @@
                                 <label class="text-muted">Alarm/Yangın Giriş Kontrolü</label>
                                 <div class="custom-control custom-checkbox">
                                     <div id="Kapilar"></div>
-                                    <input type="checkbox" value="1" name="Panel_Alarm_Mode_Role_Ok" class="custom-control-input" id="HirsizMod" />
-                                    <label class="custom-control-label" for="HirsizMod">Hırsız Alarm Modu</label>
+                                    @Html.CheckBox("Panel_Alarm_Mode_Role_Ok", Model.GenelAyar.Panel_Alarm_Mode_Role_Ok == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Alarm_Mode_Role_Ok">Hırsız Alarm Modu</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Panel_Fire_Mode_Role_Ok" class="custom-control-input" id="YanginMod" />
-                                    <label class="custom-control-label" for="YanginMod">Yangın Modu</label>
+                                    @Html.CheckBox("Panel_Fire_Mode_Role_Ok", Model.GenelAyar.Panel_Fire_Mode_Role_Ok == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Fire_Mode_Role_Ok">Yangın Modu</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Panel_Door_Alarm_Role_Ok" class="custom-control-input" id="KapiMod" />
-                                    <label class="custom-control-label" for="KapiMod">Kapı Alarm Modu</label>
+                                    @Html.CheckBox("Panel_Door_Alarm_Role_Ok", Model.GenelAyar.Panel_Door_Alarm_Role_Ok == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Door_Alarm_Role_Ok">Kapı Alarm Modu</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" value="1" name="Panel_Alarm_Broadcast_Ok" class="custom-control-input" id="AlarmYayin" />
-                                    <label class="custom-control-label" for="AlarmYayin">Alarm Yayın Modu</label>
+                                    @Html.CheckBox("Panel_Alarm_Broadcast_Ok", Model.GenelAyar.Panel_Alarm_Broadcast_Ok == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Alarm_Broadcast_Ok">Alarm Yayın Modu</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB5" class="custom-control-input" id="KapiKitle" />
-                                    <label class="custom-control-label" for="KapiKitle">Seçilen Kapıları Kilitle</label>
+                                    @Html.CheckBox("Panel_Alarm_Mode", Model.GenelAyar.Panel_Alarm_Mode == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Alarm_Mode">Seçilen Kapıları Kilitle</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Lokal_APB6" class="custom-control-input" id="KapiAc" />
-                                    <label class="custom-control-label" for="KapiAc">Seçilen Kapıları Aç</label>
+                                    @Html.CheckBox("Panel_Fire_Mode", Model.GenelAyar.Panel_Fire_Mode == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Fire_Mode">Seçilen Kapıları Aç</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Panel_Fire_Broadcast_Ok" class="custom-control-input" id="YanginAlarm" />
-                                    <label class="custom-control-label" for="YanginAlarm">Yangın Alarmı Yayın</label>
+                                    @Html.CheckBox("Panel_Fire_Broadcast_Ok", Model.GenelAyar.Panel_Fire_Broadcast_Ok == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Fire_Broadcast_Ok">Yangın Alarmı Yayın</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Panel_Door_Alarm_Broadcast_Ok" class="custom-control-input" id="KapiAlarm" />
-                                    <label class="custom-control-label" for="KapiAlarm">Kapı Alarmı Yayın</label>
+                                    @Html.CheckBox("Panel_Door_Alarm_Broadcast_Ok", Model.GenelAyar.Panel_Door_Alarm_Broadcast_Ok == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Door_Alarm_Broadcast_Ok">Kapı Alarmı Yayın</label>
                                 </div>
                             </div>
                         </div>
@@ -161,68 +213,120 @@
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <div id="Kapilar"></div>
-                                    <input type="checkbox" value="1" name="Global_APB" class="custom-control-input" id="GloabalAPB" />
-                                    <label class="custom-control-label" for="GloabalAPB">Global Antipassback</label>
+                                    @Html.CheckBox("Global_APB", Model.GenelAyar.Global_APB == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Global_APB">Global Antipassback</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Same_Door_Multiple_Reader" class="custom-control-input" id="MultiRead" />
-                                    <label class="custom-control-label" for="MultiRead">Tek Kapı Çok Okuyuculu Mod Aktif</label>
+                                    @Html.CheckBox("Same_Door_Multiple_Reader", Model.GenelAyar.Same_Door_Multiple_Reader == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Same_Door_Multiple_Reader">Tek Kapı Çok Okuyuculu Mod Aktif</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Interlock_Active" class="custom-control-input" id="LokalInt" />
-                                    <label class="custom-control-label" for="LokalInt">Lokal Interlock</label>
+                                    @Html.CheckBox("Interlock_Active", Model.GenelAyar.Interlock_Active == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Interlock_Active">Lokal Interlock</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Global_Zone_Interlock_Active" class="custom-control-input" id="GlobalInt" />
-                                    <label class="custom-control-label" for="GlobalInt">Global Bölge Interlock</label>
+                                    @Html.CheckBox("Global_Zone_Interlock_Active", Model.GenelAyar.Global_Zone_Interlock_Active == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Global_Zone_Interlock_Active">Global Bölge Interlock</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Global_Access_Count_Control" class="custom-control-input" id="GirisSayisi" />
-                                    <label class="custom-control-label" for="GirisSayisi">Global Giriş Sayısı Kontrol</label>
+                                    @Html.CheckBox("Global_Access_Count_Control", Model.GenelAyar.Global_Access_Count_Control == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Global_Access_Count_Control">Global Giriş Sayısı Kontrol</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Global_MaxIn_Count_Control" class="custom-control-input" id="AracSayisi" />
-                                    <label class="custom-control-label" for="AracSayisi">Global İçerdeki Kişi/Araç Sayısı Kontrol</label>
+                                    @Html.CheckBox("Global_MaxIn_Count_Control", Model.GenelAyar.Global_MaxIn_Count_Control == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Global_MaxIn_Count_Control">Global İçerdeki Kişi/Araç Sayısı Kontrol</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Global_Sequental_Access_Control" class="custom-control-input" id="SiraliGecis" />
-                                    <label class="custom-control-label" for="SiraliGecis">Global Bölge Sıralı Geçiş Kontrol</label>
+                                    @Html.CheckBox("Global_Sequental_Access_Control", Model.GenelAyar.Global_Sequental_Access_Control == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Global_Sequental_Access_Control">Global Bölge Sıralı Geçiş Kontrol</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="1" name="Panel_Button_Detector" class="custom-control-input" id="Dedektor" />
-                                    <label class="custom-control-label" for="Dedektor">Buton Dedektör Mod Aktif</label>
+                                    @Html.CheckBox("Panel_Button_Detector", Model.GenelAyar.Panel_Button_Detector == 1 ? true : false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="Panel_Button_Detector">Buton Dedektör Mod Aktif</label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <label class="text-muted">Mükerrer Geçiş Engelleme Süresi Ayarları</label>
                             <div class="form-group">
-                                <input type="number" class="form-control" id="EngellemeSuresi" placeholder="Engelleme Süresi" name="Status_Data_Update_Time" value="" min="0" max="99" step="1" />
+                                @Html.TextBox("Panel_Same_Tag_Block", Model.GenelAyar.Panel_Same_Tag_Block, new { @class = "form-control",type="number" })
                             </div>
                             <div class="form-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="saniye" class="custom-control-input" id="Saniye" checked name="Status_Data_Update_Type">
-                                    <label class="custom-control-label" for="Saniye">Saniye</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="dakika" class="custom-control-input" id="Dakika" name="Status_Data_Update_Type">
-                                    <label class="custom-control-label" for="Dakika">Dakika</label>
-                                </div>
-                                <div class="custom-control custom-radio ">
-                                    <input type="radio" value="saat" class="custom-control-input" id="Saat" name="Status_Data_Update_Type">
-                                    <label class="custom-control-label" for="Saat">Saat</label>
-                                </div>
+                                @if (Model.GenelAyar.Panel_Same_Tag_Block_HourMinSec == 0)
+                                {
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="saniye" class="custom-control-input" id="Saniye" checked name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Saniye">Saniye</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="dakika" class="custom-control-input" id="Dakika" name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Dakika">Dakika</label>
+                                    </div>
+                                    <div class="custom-control custom-radio ">
+                                        <input type="radio" value="saat" class="custom-control-input" id="Saat" name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Saat">Saat</label>
+                                    </div>
+                                }
+                                else if (Model.GenelAyar.Panel_Same_Tag_Block_HourMinSec == 1)
+                                {
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="saniye" class="custom-control-input" id="Saniye" name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Saniye">Saniye</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="dakika" class="custom-control-input" id="Dakika" checked name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Dakika">Dakika</label>
+                                    </div>
+                                    <div class="custom-control custom-radio ">
+                                        <input type="radio" value="saat" class="custom-control-input" id="Saat" name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Saat">Saat</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="saniye" class="custom-control-input" id="Saniye" name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Saniye">Saniye</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="dakika" class="custom-control-input" id="Dakika" name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Dakika">Dakika</label>
+                                    </div>
+                                    <div class="custom-control custom-radio ">
+                                        <input type="radio" value="saat" class="custom-control-input" checked id="Saat" name="Status_Data_Update_Type">
+                                        <label class="custom-control-label" for="Saat">Saat</label>
+                                    </div>
+                                }
+
+
                             </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="saniye" class="custom-control-input" id="TumYon" checked name="Yon">
-                                    <label class="custom-control-label" for="TumYon">Tüm Yönler İçin</label>
+                            @if (Model.GenelAyar.Panel_Same_Tag_Block_Type == 0)
+                            {
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="saniye" class="custom-control-input" id="TumYon" checked name="Yon">
+                                        <label class="custom-control-label" for="TumYon">Tüm Yönler İçin</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="dakika" class="custom-control-input" id="Cıkıs" name="Yon">
+                                        <label class="custom-control-label" for="Cıkıs">Sadece Çıkıştan Sonra</label>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" value="dakika" class="custom-control-input" id="Cıkıs" name="Yon">
-                                    <label class="custom-control-label" for="Cıkıs">Sadece Çıkıştan Sonra</label>
+                            }
+                            else
+                            {
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="saniye" class="custom-control-input" id="TumYon" name="Yon">
+                                        <label class="custom-control-label" for="TumYon">Tüm Yönler İçin</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="dakika" checked class="custom-control-input" id="Cıkıs" name="Yon">
+                                        <label class="custom-control-label" for="Cıkıs">Sadece Çıkıştan Sonra</label>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+
                         </div>
                     </div>
                     <hr />
@@ -233,55 +337,55 @@
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label for="Role1">Role 1</label>
-                                <input type="text" class="form-control form-control-sm" id="Role1" name="Panel_M1_Role" value="" />
+                                @Html.TextBox("Panel_M1_Role", Model.GenelAyar.Panel_M1_Role, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label for="Role2">Role 2</label>
-                                <input type="text" class="form-control form-control-sm" id="Role2" name="Panel_M2_Role" value="" />
+                                @Html.TextBox("Panel_M2_Role", Model.GenelAyar.Panel_M2_Role, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label for="Role3">Role 3</label>
-                                <input type="text" class="form-control form-control-sm" id="Role3" name="Panel_M3_Role" value="" />
+                                @Html.TextBox("Panel_M3_Role", Model.GenelAyar.Panel_M3_Role, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label for="Role4">Role 4</label>
-                                <input type="text" class="form-control form-control-sm" id="Role4" name="Panel_M4_Role" value="" />
+                                @Html.TextBox("Panel_M4_Role", Model.GenelAyar.Panel_M4_Role, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label for="Role5">Role 5</label>
-                                <input type="text" class="form-control form-control-sm" id="Role5" name="Panel_M5_Role" value="" />
+                                @Html.TextBox("Panel_M5_Role", Model.GenelAyar.Panel_M5_Role, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label for="Role6">Role 6</label>
-                                <input type="text" class="form-control form-control-sm" id="Role6" name="Panel_M6_Role" value="" />
+                                @Html.TextBox("Panel_M6_Role", Model.GenelAyar.Panel_M6_Role, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label for="Role7">Role 7</label>
-                                <input type="text" class="form-control form-control-sm" id="Role7" name="Panel_M7_Role" value="" />
+                                @Html.TextBox("Panel_M7_Role", Model.GenelAyar.Panel_M7_Role, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                 <label for="Role8">Role 8</label>
-                                <input type="text" class="form-control form-control-sm" id="Role8" name="Panel_M8_Role" value="" />
+                                @Html.TextBox("Panel_M8_Role", Model.GenelAyar.Panel_M8_Role, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="YAlarm">Yardımcı/Alarm Çıkışı</label>
-                                <input type="text" class="form-control form-control-sm" id="YAlarm" name="Panel_Alarm_Role" value="" />
+                                @Html.TextBox("Panel_Alarm_Role", Model.GenelAyar.Panel_Alarm_Role, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -293,6 +397,29 @@
                             <button type="submit" class="btn  btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</button>
                         </div>
                     </div>
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_TCP_Port)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_GW1)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_GW2)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_GW3)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_GW4)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_Subnet1)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_Subnet2)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_Subnet3)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_Subnet4)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_IP1)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_IP2)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_IP3)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_IP4)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_Remote_IP1)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_Remote_IP2)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_Remote_IP3)
+                    @Html.HiddenFor(model => model.GenelAyar.Panel_Remote_IP4)
+
+
+
+
+
+
                 }
             </div>
         </div>
@@ -302,6 +429,7 @@
 <script>
     $(document).ready(function () {
 
-        $("input[type='number']").inputSpinner()
+        $("input[type='number']").inputSpinner();
+
     });
 </script>

@@ -41,5 +41,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _panelSettingsDal.Update(panelSettings);
         }
+
+        public PanelSettings GetByQuery(Expression<Func<PanelSettings, bool>> filter = null)
+        {
+            return filter == null ? _panelSettingsDal.GetList().FirstOrDefault(x => x.Seri_No != null) : _panelSettingsDal.Get(filter);
+        }
+
     }
 }

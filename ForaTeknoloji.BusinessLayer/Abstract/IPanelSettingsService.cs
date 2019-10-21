@@ -15,5 +15,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         PanelSettings AddPanelSetting(PanelSettings panelSettings);
         void DeletePanelSetting(PanelSettings panelSettings);
         PanelSettings UpdatePanelSetting(PanelSettings panelSettings);
+        PanelSettings GetByQuery(Expression<Func<PanelSettings, bool>> filter = null);
     }
 }

@@ -14,25 +14,31 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettings;
         private IReaderSettingsService _readerSettingsService;
         private IGlobalZoneService _globalZoneService;
-        public PanelSettingsController(IPanelSettingsService panelSettings, IReaderSettingsService readerSettingsService,IGlobalZoneService globalZoneService)
+        public PanelSettingsController(IPanelSettingsService panelSettings, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService)
         {
             _panelSettings = panelSettings;
             _readerSettingsService = readerSettingsService;
             _globalZoneService = globalZoneService;
         }
 
+
         // GET: PanelSettings
         public ActionResult Genel()
         {
-            return View();
+            var model = new GenelPanelSettingsListViewModel
+            {
+                GenelAyar = _panelSettings.GetAllPanelSettings().FirstOrDefault(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_ID != null && x.Seri_No != 0)
+
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Genel(PanelSettings panelSettings)
+        public ActionResult Genel(GenelPanelSettingsListViewModel genelPanelSettingsListView)
         {
             if (ModelState.IsValid)
             {
-                _panelSettings.AddPanelSetting(panelSettings);
+                _panelSettings.AddPanelSetting(genelPanelSettingsListView.GenelAyar);
                 return RedirectToAction("Genel");
             }
             return RedirectToAction("Genel");
@@ -41,9 +47,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Haberlesme()
         {
+            var model = new HaberlesmeListViewModel
+            {
+                HaberlesmeAyar = _panelSettings.GetAllPanelSettings().FirstOrDefault(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_ID != null && x.Seri_No != 0)
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Haberlesme(HaberlesmeListViewModel haberlesmeListView)
+        {
             return View();
         }
-
 
         public ActionResult Kapilar()
         {
