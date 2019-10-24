@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfTimeGroupsDal;
 
 namespace ForaTeknoloji.BusinessLayer.Abstract
 {
@@ -15,5 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         TimeGroups AddTimeGroups(TimeGroups timeGroups);
         void DeleteTimeGroups(TimeGroups timeGroups);
         TimeGroups UpdateTimeGroups(TimeGroups timeGroups);
+        List<ComplexTimeGroups> GetComplexTimeGroups(Expression<Func<ComplexTimeGroups, bool>> filter = null);
     }
 }

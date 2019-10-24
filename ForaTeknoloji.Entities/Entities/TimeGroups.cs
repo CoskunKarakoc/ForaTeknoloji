@@ -38,17 +38,17 @@ namespace ForaTeknoloji.Entities.Entities
         public DateTime? Bitis_Saati { get; set; }
 
         public bool? Pazartesi { get; set; }
-
+                 
         public bool? Sali { get; set; }
-
+                  
         public bool? Carsamba { get; set; }
-
+                 
         public bool? Persembe { get; set; }
-
+                 
         public bool? Cuma { get; set; }
-
+                 
         public bool? Cumartesi { get; set; }
-
+                 
         public bool? Pazar { get; set; }
 
         public bool? Gun1 { get; set; }

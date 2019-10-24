@@ -2515,6 +2515,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Init\WebCommon.cs" />
+    <Compile Include="Models\AddTimeGroupsListViewModel.cs" />
     <Compile Include="Models\AlarmListViewModel.cs" />
     <Compile Include="Models\CreateVisitorViewModel.cs" />
     <Compile Include="Models\CurrentSession.cs" />
@@ -2536,6 +2537,7 @@
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
+    <Compile Include="Models\TimeGroupsListViewModel.cs" />
     <Compile Include="Models\UsersAddViewModel.cs" />
     <Compile Include="Models\UsersListViewModel.cs" />
     <Compile Include="Models\VisitorEditViewModel.cs" />
@@ -2595,6 +2597,8 @@
     <Content Include="Views\Visitor\Create.cshtml" />
     <Content Include="Views\Watch\Index.cshtml" />
     <Content Include="Views\TimeGroups\Index.cshtml" />
+    <Content Include="Views\TimeGroups\Edit.cshtml" />
+    <Content Include="Views\TimeGroups\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
