@@ -1,23 +1,25 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.AddTimeGroupsListViewModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
-                <h3 class="text-muted text-center">Yeni Zaman Bölgesi</h3>
+                <h3 class="text-muted text-center">Zaman Bölgesi Ayarları</h3>
             </div>
             <div class="card-body">
-                @using (Html.BeginForm("Create", "TimeGroups", FormMethod.Post))
+                @using (Html.BeginForm("Add","TimeGroups",FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Zaman_Grup_No)
+
                     <hr />
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label col-md-12">Zaman Bölge No</label>
                                 <div class="col-md-12">
@@ -34,7 +36,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-12">Zaman Bölge Tipi</label>
                                 <div class="col-md-12">
@@ -51,15 +52,15 @@
                             </div>
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div hidden id="Tarih">
                                 <div class="form-group">
                                     <label class="control-label col-md-12"> Başlangıç Tarihi</label>
-                                    <input type="date" name="Baslangic_Tarihi" class="form-control" value="" />
+                                    <input type="date" class="form-control" name="Baslangic_Tarihi" id="Baslangic_Tarihi" />
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Bitiş Tarihi</label>
-                                    <input type="date" name="Bitis_Tarihi" class="form-control" value="" />
+                                    <input type="date" class="form-control" name="Bitis_Tarihi" id="Bitis_Tarihi" />
                                 </div>
                             </div>
                             <div hidden id="Saat">
@@ -80,40 +81,41 @@
                                                 <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="TumGun" />
                                                 <label class="custom-control-label" for="TumGun">Tüm Günler</label>
                                             </div>
+
                                             <div class="custom-control custom-checkbox">
-                                                <div id="Kapilar"></div>
-                                                <input type="checkbox" value="true" name="Pazartesi" class="custom-control-input" id="Pazartesi" />
+                                                @Html.CheckBox("Pazartesi", new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Pazartesi">Pazartesi</label>
                                             </div>
+
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" name="Sali" class="custom-control-input" id="Sali" />
+                                                @Html.CheckBox("Sali", new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Sali">Salı</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" name="Carsamba" class="custom-control-input" id="Carsamba" />
+                                                @Html.CheckBox("Carsamba", new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Carsamba">Çarşamba</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" name="Persembe" class="custom-control-input" id="Persembe" />
+                                                @Html.CheckBox("Persembe", new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Persembe">Perşembe</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" name="Cuma" class="custom-control-input" id="Cuma" />
+                                                @Html.CheckBox("Cuma", new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Cuma">Cuma</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" name="Cumartesi" class="custom-control-input" id="Cumartesi" />
+                                                @Html.CheckBox("Cumartesi", new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Cumartesi">Cumartesi</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" name="Pazar" class="custom-control-input" id="Pazar" />
+                                                @Html.CheckBox("Pazar", new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Pazar">Pazar</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div id="HaftalikEk" class="col-md-6">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Ilave_Saat_Kontrolu" class="custom-control-input" id="IlaveSaat" />
+                                            @Html.CheckBox("Ilave_Saat_Kontrolu", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="IlaveSaat">İlave Saat Kontrolü</label>
                                         </div>
                                         <div class="form-group">
@@ -135,132 +137,130 @@
                                             <label class="custom-control-label" for="TumAy">Tümünü Seç</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <div id="Kapilar"></div>
-                                            <input type="checkbox" value="true" name="Gun1" class="custom-control-input" id="Gun1" />
+                                            @Html.CheckBox("Gun1", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun1">1.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun2" class="custom-control-input" id="Gun2" />
+                                            @Html.CheckBox("Gun2", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun2">2.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun3" class="custom-control-input" id="Gun3" />
+                                            @Html.CheckBox("Gun3", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun3">3.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun4" class="custom-control-input" id="Gun4" />
+                                            @Html.CheckBox("Gun4", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun4">4.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun5" class="custom-control-input" id="Gun5" />
+                                            @Html.CheckBox("Gun5", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun5">5.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun6" class="custom-control-input" id="Gun6" />
+                                            @Html.CheckBox("Gun6", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun6">6.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun7" class="custom-control-input" id="Gun7" />
+                                            @Html.CheckBox("Gun7", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun7">7.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun8" class="custom-control-input" id="Gun8" />
+                                            @Html.CheckBox("Gun8", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun8">8.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun9" class="custom-control-input" id="Gun9" />
+                                            @Html.CheckBox("Gun9", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun9">9.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun10" class="custom-control-input" id="Gun10" />
+                                            @Html.CheckBox("Gun10", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun10">10.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun11" class="custom-control-input" id="Gun11" />
+                                            @Html.CheckBox("Gun11", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun11">11.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun12" class="custom-control-input" id="Gun12" />
+                                            @Html.CheckBox("Gun12", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun12">12.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun13" class="custom-control-input" id="Gun13" />
+                                            @Html.CheckBox("Gun13", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun13">13.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun14" class="custom-control-input" id="Gun14" />
+                                            @Html.CheckBox("Gun14", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun14">14.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun15" class="custom-control-input" id="Gun15" />
+                                            @Html.CheckBox("Gun15", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun15">15.Gün</label>
                                         </div>
-
-
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun16" class="custom-control-input" id="Gun16" />
+                                            @Html.CheckBox("Gun16", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun16">16.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun17" class="custom-control-input" id="Gun17" />
+                                            @Html.CheckBox("Gun17", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun17">17.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun18" class="custom-control-input" id="Gun18" />
+                                            @Html.CheckBox("Gun18", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun18">18.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun19" class="custom-control-input" id="Gun19" />
+                                            @Html.CheckBox("Gun19", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun19">19.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun20" class="custom-control-input" id="Gun20" />
+                                            @Html.CheckBox("Gun20", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun20">20.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun21" class="custom-control-input" id="Gun21" />
+                                            @Html.CheckBox("Gun21", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun21">21.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun22" class="custom-control-input" id="Gun22" />
+                                            @Html.CheckBox("Gun22", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun22">22.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun23" class="custom-control-input" id="Gun23" />
+                                            @Html.CheckBox("Gun23", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun23">23.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun24" class="custom-control-input" id="Gun24" />
+                                            @Html.CheckBox("Gun24", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun24">24.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun25" class="custom-control-input" id="Gun25" />
+                                            @Html.CheckBox("Gun25", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun25">25.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun26" class="custom-control-input" id="Gun26" />
+                                            @Html.CheckBox("Gun26", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun26">26.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun27" class="custom-control-input" id="Gun27" />
+                                            @Html.CheckBox("Gun27", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun27">27.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun28" class="custom-control-input" id="Gun28" />
+                                            @Html.CheckBox("Gun28", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun28">28.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun29" class="custom-control-input" id="Gun29" />
+                                            @Html.CheckBox("Gun29", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun29">29.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun30" class="custom-control-input" id="Gun30" />
+                                            @Html.CheckBox("Gun30", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun30">30.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" name="Gun31" class="custom-control-input" id="Gun31" />
+                                            @Html.CheckBox("Gun31", new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun31">31.Gün</label>
                                         </div>
                                     </div>
@@ -282,39 +282,43 @@
                                             <input type="time" class="form-control" name="Baslangic_Saati_3" value="" />
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div hidden id="EkSaat">
+                                <div class="row">
                                     <div class="col-md-12">
                                         <label class="control-label col-md-12">Ek Saat(1-8 Arası)</label>
                                         <hr />
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" value="1" class="form-check-input" id="1" name="Ek_Kayit">
+                                            <input type="radio" value="1" class="form-check-input" id="1" name="Ek_Saat">
                                             <label class="form-check-label" for="1">1</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" value="2" class="form-check-input" id="2" name="Ek_Kayit">
+                                            <input type="radio" value="2" class="form-check-input" id="2" name="Ek_Saat">
                                             <label class="form-check-label" for="2">2</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" value="3" class="form-check-input" id="3" name="Ek_Kayit">
+                                            <input type="radio" value="3" class="form-check-input" id="3" name="Ek_Saat">
                                             <label class="form-check-label" for="3">3</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" value="4" class="form-check-input" id="4" name="Ek_Kayit">
+                                            <input type="radio" value="4" class="form-check-input" id="4" name="Ek_Saat">
                                             <label class="form-check-label" for="4">4</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" value="5" class="form-check-input" id="5" name="Ek_Kayit">
+                                            <input type="radio" value="5" class="form-check-input" id="5" name="Ek_Saat">
                                             <label class="form-check-label" for="5">5</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" value="6" class="form-check-input" id="6" name="Ek_Kayit">
+                                            <input type="radio" value="6" class="form-check-input" id="6" name="Ek_Saat">
                                             <label class="form-check-label" for="6">6</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" value="7" class="form-check-input" id="7" name="Ek_Kayit">
+                                            <input type="radio" value="7" class="form-check-input" id="7" name="Ek_Saat">
                                             <label class="form-check-label" for="7">7</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" value="8" class="form-check-input" checked id="8" name="Ek_Kayit">
+                                            <input type="radio" value="8" class="form-check-input" id="8" name="Ek_Saat">
                                             <label class="form-check-label" for="8">8</label>
                                         </div>
                                     </div>
@@ -408,39 +412,9 @@
                             </div>
                             <div hidden id="HaftalikPlanHergunSaat">
                                 <div class="row">
-                                    <div class="col-md-4 mt-4">
-                                        <div class="custom-control custom-checkbox">
-                                            <div id="Kapilar"></div>
-                                            <input type="checkbox" value="true" checked name="PazartesiSaat" class="custom-control-input" id="PazartesiSaat" />
-                                            <label class="custom-control-label" for="PazartesiSaat">Pazartesi</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" checked name="SaliSaat" class="custom-control-input" id="SaliSaat" />
-                                            <label class="custom-control-label" for="SaliSaat">Salı</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" checked name="CarsambaSaat" class="custom-control-input" id="CarsambaSaat" />
-                                            <label class="custom-control-label" for="CarsambaSaat">Çarşamba</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" checked name="PersembeSaat" class="custom-control-input" id="PersembeSaat" />
-                                            <label class="custom-control-label" for="PersembeSaat">Perşembe</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" checked name="CumaSaat" class="custom-control-input" id="CumaSaat" />
-                                            <label class="custom-control-label" for="CumaSaat">Cuma</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" checked name="CumartesiSaat" class="custom-control-input" id="CumartesiSaat" />
-                                            <label class="custom-control-label" for="CumartesiSaat">Cumartesi</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="true" checked name="PazarSaat" class="custom-control-input" id="PazarSaat" />
-                                            <label class="custom-control-label" for="PazarSaat">Pazar</label>
-                                        </div>
-                                    </div>
                                     <div class="col-md-8">
                                         <div class="row">
+                                            <div class="col-md-12"><hr /></div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Başlangıç Saat</label>
@@ -547,6 +521,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div hidden id="IkiliSaatHergunAyri">
+
+                            </div>
                         </div>
                     </div>
                 }
@@ -554,8 +531,219 @@
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
+        var nesneBaslangic = $("#Gecis_Sinirlama_Tipi").val();
+        if (nesneBaslangic == 0) {
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#Tarih").prop("hidden", true);
+            $("#EkSaat").prop("hidden", true);
+        }
+        if (nesneBaslangic == 1 || nesneBaslangic == 2) {
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#Tarih").prop("hidden", false);
+        }
+        if (nesneBaslangic == 3 || nesneBaslangic == 4) {
+            $("#Tarih").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#Saat").prop("hidden", false);
+        }
+        if (nesneBaslangic == 5) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", false);
+            $("#TumGun").change(function () {
+                if ($(this).prop("checked") == true) {
+                    $("#Pazartesi").prop("checked", true);
+                    $("#Sali").prop("checked", true);
+                    $("#Carsamba").prop("checked", true);
+                    $("#Persembe").prop("checked", true);
+                    $("#Cuma").prop("checked", true);
+                    $("#Cumartesi").prop("checked", true);
+                    $("#Pazar").prop("checked", true);
+                } else {
+                    $("#Pazartesi").prop("checked", false);
+                    $("#Sali").prop("checked", false);
+                    $("#Carsamba").prop("checked", false);
+                    $("#Persembe").prop("checked", false);
+                    $("#Cuma").prop("checked", false);
+                    $("#Cumartesi").prop("checked", false);
+                    $("#Pazar").prop("checked", false);
+                }
+            });
+        }
+        if (nesneBaslangic == 6) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", false);
+            $("#TumAy").change(function () {
+                if ($(this).prop("checked") == true) {
+                    $("#Gun1").prop("checked", true);
+                    $("#Gun2").prop("checked", true);
+                    $("#Gun3").prop("checked", true);
+                    $("#Gun4").prop("checked", true);
+                    $("#Gun5").prop("checked", true);
+                    $("#Gun6").prop("checked", true);
+                    $("#Gun7").prop("checked", true);
+                    $("#Gun8").prop("checked", true);
+                    $("#Gun9").prop("checked", true);
+                    $("#Gun10").prop("checked", true);
+                    $("#Gun11").prop("checked", true);
+                    $("#Gun12").prop("checked", true);
+                    $("#Gun13").prop("checked", true);
+                    $("#Gun14").prop("checked", true);
+                    $("#Gun15").prop("checked", true);
+                    $("#Gun16").prop("checked", true);
+                    $("#Gun17").prop("checked", true);
+                    $("#Gun18").prop("checked", true);
+                    $("#Gun19").prop("checked", true);
+                    $("#Gun20").prop("checked", true);
+                    $("#Gun21").prop("checked", true);
+                    $("#Gun22").prop("checked", true);
+                    $("#Gun23").prop("checked", true);
+                    $("#Gun24").prop("checked", true);
+                    $("#Gun25").prop("checked", true);
+                    $("#Gun26").prop("checked", true);
+                    $("#Gun27").prop("checked", true);
+                    $("#Gun28").prop("checked", true);
+                    $("#Gun29").prop("checked", true);
+                    $("#Gun30").prop("checked", true);
+                    $("#Gun31").prop("checked", true);
+
+                } else {
+                    $("#Gun1").prop("checked", false);
+                    $("#Gun2").prop("checked", false);
+                    $("#Gun3").prop("checked", false);
+                    $("#Gun4").prop("checked", false);
+                    $("#Gun5").prop("checked", false);
+                    $("#Gun6").prop("checked", false);
+                    $("#Gun7").prop("checked", false);
+                    $("#Gun8").prop("checked", false);
+                    $("#Gun9").prop("checked", false);
+                    $("#Gun10").prop("checked", false);
+                    $("#Gun11").prop("checked", false);
+                    $("#Gun12").prop("checked", false);
+                    $("#Gun13").prop("checked", false);
+                    $("#Gun14").prop("checked", false);
+                    $("#Gun15").prop("checked", false);
+                    $("#Gun16").prop("checked", false);
+                    $("#Gun17").prop("checked", false);
+                    $("#Gun18").prop("checked", false);
+                    $("#Gun19").prop("checked", false);
+                    $("#Gun20").prop("checked", false);
+                    $("#Gun21").prop("checked", false);
+                    $("#Gun22").prop("checked", false);
+                    $("#Gun23").prop("checked", false);
+                    $("#Gun24").prop("checked", false);
+                    $("#Gun25").prop("checked", false);
+                    $("#Gun26").prop("checked", false);
+                    $("#Gun27").prop("checked", false);
+                    $("#Gun28").prop("checked", false);
+                    $("#Gun29").prop("checked", false);
+                    $("#Gun30").prop("checked", false);
+                    $("#Gun31").prop("checked", false);
+                }
+            });
+        }
+        if (nesneBaslangic == 7) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#EkSaat").prop("hidden", true);
+        }
+        if (nesneBaslangic == 8 || nesneBaslangic == 9) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", false);
+            $("#EkSaat").prop("hidden", false);
+        }
+        if (nesneBaslangic == 11 || nesneBaslangic == 12) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", false);
+        }
+        if (nesneBaslangic == 13) {
+            $("#EkSaat").prop("hidden", true);
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", false);
+            $("#HaftalikEk").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", false);
+        }
+        if (nesneBaslangic == 14 || nesneBaslangic == 15) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", false);
+            $("#HaftalikEk").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", false);
+            $("#EkSaat").prop("hidden", false);
+        }
+        if (nesneBaslangic == 18 || nesneBaslangic == 19) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", false);
+        }
+
+
+
+
+
         $("#Gecis_Sinirlama_Tipi").change(function () {
             var nesne = $("#Gecis_Sinirlama_Tipi").val();
             if (nesne == 0) {
@@ -567,6 +755,7 @@
                 $("#HaftalikPlanHergunSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
+                $("#EkSaat").prop("hidden", true);
             }
             if (nesne == 1 || nesne == 2) {
                 $("#Saat").prop("hidden", true);
@@ -589,6 +778,7 @@
                 $("#Saat").prop("hidden", false);
             }
             if (nesne == 5) {
+                $("#EkSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
                 $("#AylikPlan").prop("hidden", true);
@@ -597,6 +787,7 @@
                 $("#HaftalikPlanHergunSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", false);
+                $("#HaftalikEk").prop("hidden", false);
                 $("#TumGun").change(function () {
                     if ($(this).prop("checked") == true) {
                         $("#Pazartesi").prop("checked", true);
@@ -704,6 +895,7 @@
                 $("#HaftalikPlanHergunSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", true);
+                $("#EkSaat").prop("hidden", true);
             }
             if (nesne == 8 || nesne == 9) {
                 $("#Tarih").prop("hidden", true);
@@ -714,8 +906,10 @@
                 $("#HaftalikPlanHergunSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#CokluSaat").prop("hidden", false);
+                $("#EkSaat").prop("hidden", false);
             }
             if (nesne == 11 || nesne == 12) {
+                $("#EkSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", true);
@@ -726,16 +920,31 @@
                 $("#6LiSaat").prop("hidden", false);
             }
             if (nesne == 13) {
+                $("#EkSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
-                $("#HaftalikPlan").prop("hidden", true);
+                $("#HaftalikPlan").prop("hidden", false);
+                $("#HaftalikEk").prop("hidden", true);
                 $("#AylikPlan").prop("hidden", true);
                 $("#CokluSaat").prop("hidden", true);
                 $("#6LiSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#HaftalikPlanHergunSaat").prop("hidden", false);
             }
+            if (nesneBaslangic == 14 || nesneBaslangic == 15) {
+                $("#Tarih").prop("hidden", true);
+                $("#Saat").prop("hidden", true);
+                $("#HaftalikPlan").prop("hidden", false);
+                $("#HaftalikEk").prop("hidden", true);
+                $("#AylikPlan").prop("hidden", true);
+                $("#CokluSaat").prop("hidden", true);
+                $("#6LiSaat").prop("hidden", true);
+                $("#TarihSaat").prop("hidden", true);
+                $("#HaftalikPlanHergunSaat").prop("hidden", false);
+                $("#EkSaat").prop("hidden", false);
+            }
             if (nesne == 18 || nesne == 19) {
+                $("#EkSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", true);
@@ -746,7 +955,5 @@
                 $("#TarihSaat").prop("hidden", false);
             }
         });
-
-
     });
 </script>

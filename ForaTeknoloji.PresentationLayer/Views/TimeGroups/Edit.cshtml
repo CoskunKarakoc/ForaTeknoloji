@@ -112,40 +112,34 @@
                                                 <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="TumGun" />
                                                 <label class="custom-control-label" for="TumGun">Tüm Günler</label>
                                             </div>
-                                            
+
                                             <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" hidden value="@Model.Pazartesi" name="PazartesiHidden" class="custom-control-input" id="PazartesiHidden" />
-                                                    <input type="checkbox" value="true" name="Pazartesi" class="custom-control-input" id="Pazartesi" />
-                                                    <label class="custom-control-label" for="Pazartesi">Pazartesi</label>
-                                                </div>
+                                                @Html.CheckBox("Pazartesi", Model.Pazartesi ?? false, new { @class = "custom-control-input" })
+                                                <label class="custom-control-label" for="Pazartesi">Pazartesi</label>
+                                            </div>
+
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="@Model.Sali" hidden name="SaliHidden" class="custom-control-input" id="SaliHidden" />
-                                                <input type="checkbox" value="true" name="Sali" class="custom-control-input" id="Sali" />
+                                                @Html.CheckBox("Sali", Model.Sali ?? false, new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Sali">Salı</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="@Model.Carsamba" hidden name="CarsambaHidden" class="custom-control-input" id="CarsambaHidden" />
-                                                <input type="checkbox" value="true" name="Carsamba" class="custom-control-input" id="Carsamba" />
+                                                @Html.CheckBox("Carsamba", Model.Carsamba ?? false, new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Carsamba">Çarşamba</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="@Model.Persembe" hidden name="PersembeHidden" class="custom-control-input" id="PersembeHidden" />
-                                                <input type="checkbox" value="true" name="Persembe" class="custom-control-input" id="Persembe" />
+                                                @Html.CheckBox("Persembe", Model.Persembe ?? false, new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Persembe">Perşembe</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="@Model.Cuma" hidden name="CumaHidden" class="custom-control-input" id="CumaHidden" />
-                                                <input type="checkbox" value="true" name="Cuma" class="custom-control-input" id="Cuma" />
+                                                @Html.CheckBox("Cuma", Model.Cuma ?? false, new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Cuma">Cuma</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="@Model.Cumartesi" hidden name="CumartesiHidden" class="custom-control-input" id="CumartesiHidden" />
-                                                <input type="checkbox" value="true" name="Cumartesi" class="custom-control-input" id="Cumartesi" />
+                                                @Html.CheckBox("Cumartesi", Model.Cumartesi ?? false, new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Cumartesi">Cumartesi</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="@Model.Pazar" hidden name="PazarHidden" class="custom-control-input" id="PazarHidden" />
-                                                <input type="checkbox" value="true" name="Pazar" class="custom-control-input" id="Pazar" />
+                                                @Html.CheckBox("Pazar", Model.Pazar ?? false, new { @class = "custom-control-input" })
                                                 <label class="custom-control-label" for="Pazar">Pazar</label>
                                             </div>
                                         </div>
@@ -190,78 +184,63 @@
                                             <label class="custom-control-label" for="TumAy">Tümünü Seç</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun1" hidden name="Gun1Hidden" class="custom-control-input" id="Gun1Hidden" />
-                                            <input type="checkbox" value="true" name="Gun1" class="custom-control-input" id="Gun1" />
+                                            @Html.CheckBox("Gun1", Model.Gun1 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun1">1.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun2" hidden name="Gun2Hidden" class="custom-control-input" id="Gun2Hidden" />
-                                            <input type="checkbox" value="true" name="Gun2" class="custom-control-input" id="Gun2" />
+                                            @Html.CheckBox("Gun2", Model.Gun2 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun2">2.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun3" hidden name="Gun3Hidden" class="custom-control-input" id="Gun3Hidden" />
-                                            <input type="checkbox" value="true" name="Gun3" class="custom-control-input" id="Gun3" />
+                                            @Html.CheckBox("Gun3", Model.Gun3 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun3">3.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun4" hidden name="Gun4Hidden" class="custom-control-input" id="Gun4Hidden" />
-                                            <input type="checkbox" value="true" name="Gun4" class="custom-control-input" id="Gun4" />
+                                            @Html.CheckBox("Gun4", Model.Gun4 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun4">4.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun5" hidden name="Gun5Hidden" class="custom-control-input" id="Gun5Hidden" />
-                                            <input type="checkbox" value="true" name="Gun5" class="custom-control-input" id="Gun5" />
+                                            @Html.CheckBox("Gun5", Model.Gun5 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun5">5.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun6" hidden name="Gun6Hidden" class="custom-control-input" id="Gun6Hidden" />
-                                            <input type="checkbox" value="true" name="Gun6" class="custom-control-input" id="Gun6" />
+                                            @Html.CheckBox("Gun6", Model.Gun6 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun6">6.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun7" hidden name="Gun7Hidden" class="custom-control-input" id="Gun7Hidden" />
-                                            <input type="checkbox" value="true" name="Gun7" class="custom-control-input" id="Gun7" />
+                                            @Html.CheckBox("Gun7", Model.Gun7 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun7">7.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun8" hidden name="Gun8Hidden" class="custom-control-input" id="Gun8Hidden" />
-                                            <input type="checkbox" value="true" name="Gun8" class="custom-control-input" id="Gun8" />
+                                            @Html.CheckBox("Gun8", Model.Gun8 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun8">8.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun9" hidden name="Gun9Hidden" class="custom-control-input" id="Gun9Hidden" />
-                                            <input type="checkbox" value="true" name="Gun9" class="custom-control-input" id="Gun9" />
+                                            @Html.CheckBox("Gun9", Model.Gun9 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun9">9.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun10" hidden name="Gun10Hidden" class="custom-control-input" id="Gun10Hidden" />
-                                            <input type="checkbox" value="true" name="Gun10" class="custom-control-input" id="Gun10" />
+                                            @Html.CheckBox("Gun10", Model.Gun10 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun10">10.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun11" hidden name="Gun11Hidden" class="custom-control-input" id="Gun11Hidden" />
-                                            <input type="checkbox" value="true" name="Gun11" class="custom-control-input" id="Gun11" />
+                                            @Html.CheckBox("Gun11", Model.Gun11 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun11">11.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun12" hidden name="Gun12Hidden" class="custom-control-input" id="Gun12Hidden" />
-                                            <input type="checkbox" value="true" name="Gun12" class="custom-control-input" id="Gun12" />
+                                            @Html.CheckBox("Gun12", Model.Gun12 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun12">12.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun13" hidden name="Gun13Hidden" class="custom-control-input" id="Gun13Hidden" />
-                                            <input type="checkbox" value="true" name="Gun13" class="custom-control-input" id="Gun13" />
+                                            @Html.CheckBox("Gun13", Model.Gun13 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun13">13.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun14" hidden name="Gun14Hidden" class="custom-control-input" id="Gun14Hidden" />
-                                            <input type="checkbox" value="true" name="Gun14" class="custom-control-input" id="Gun14" />
+                                            @Html.CheckBox("Gun14", Model.Gun14 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun14">14.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun15" hidden name="Gun15Hidden" class="custom-control-input" id="Gun15Hidden" />
-                                            <input type="checkbox" value="true" name="Gun15" class="custom-control-input" id="Gun15" />
+                                            @Html.CheckBox("Gun15", Model.Gun15 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun15">15.Gün</label>
                                         </div>
 
@@ -269,83 +248,67 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun16" hidden name="Gun16Hidden" class="custom-control-input" id="Gun16Hidden" />
-                                            <input type="checkbox" value="true" name="Gun16" class="custom-control-input" id="Gun16" />
+                                            @Html.CheckBox("Gun16", Model.Gun16 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun16">16.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun17" hidden name="Gun17Hidden" class="custom-control-input" id="Gun17Hidden" />
-                                            <input type="checkbox" value="true" name="Gun17" class="custom-control-input" id="Gun17" />
+                                            @Html.CheckBox("Gun17", Model.Gun17 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun17">17.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun18" hidden name="Gun18Hidden" class="custom-control-input" id="Gun18Hidden" />
-                                            <input type="checkbox" value="true" name="Gun18" class="custom-control-input" id="Gun18" />
+                                            @Html.CheckBox("Gun18", Model.Gun18 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun18">18.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun19" hidden name="Gun19Hidden" class="custom-control-input" id="Gun19Hidden" />
-                                            <input type="checkbox" value="true" name="Gun19" class="custom-control-input" id="Gun19" />
+                                            @Html.CheckBox("Gun19", Model.Gun19 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun19">19.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun20" hidden name="Gun20Hidden" class="custom-control-input" id="Gun20Hidden" />
-                                            <input type="checkbox" value="true" name="Gun20" class="custom-control-input" id="Gun20" />
+                                            @Html.CheckBox("Gun20", Model.Gun20 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun20">20.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun21" hidden name="Gun21Hidden" class="custom-control-input" id="Gun21Hidden" />
-                                            <input type="checkbox" value="true" name="Gun21" class="custom-control-input" id="Gun21" />
+                                            @Html.CheckBox("Gun21", Model.Gun21 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun21">21.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun22" hidden name="Gun22Hidden" class="custom-control-input" id="Gun22Hidden" />
-                                            <input type="checkbox" value="true" name="Gun22" class="custom-control-input" id="Gun22" />
+                                            @Html.CheckBox("Gun22", Model.Gun22 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun22">22.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun23" hidden name="Gun23Hidden" class="custom-control-input" id="Gun23Hidden" />
-                                            <input type="checkbox" value="true" name="Gun23" class="custom-control-input" id="Gun23" />
+                                            @Html.CheckBox("Gun23", Model.Gun23 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun23">23.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun24" hidden name="Gun24Hidden" class="custom-control-input" id="Gun24Hidden" />
-                                            <input type="checkbox" value="true" name="Gun24" class="custom-control-input" id="Gun24" />
+                                            @Html.CheckBox("Gun24", Model.Gun24 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun24">24.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun25" hidden name="Gun25Hidden" class="custom-control-input" id="Gun25Hidden" />
-                                            <input type="checkbox" value="true" name="Gun25" class="custom-control-input" id="Gun25" />
+                                            @Html.CheckBox("Gun25", Model.Gun25 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun25">25.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun26" hidden name="Gun26Hidden" class="custom-control-input" id="Gun26Hidden" />
-                                            <input type="checkbox" value="true" name="Gun26" class="custom-control-input" id="Gun26" />
+                                            @Html.CheckBox("Gun26", Model.Gun26 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun26">26.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun27" hidden name="Gun27Hidden" class="custom-control-input" id="Gun27Hidden" />
-                                            <input type="checkbox" value="true" name="Gun27" class="custom-control-input" id="Gun27" />
+                                            @Html.CheckBox("Gun27", Model.Gun27 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun27">27.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun28" hidden name="Gun28Hidden" class="custom-control-input" id="Gun28Hidden" />
-                                            <input type="checkbox" value="true" name="Gun28" class="custom-control-input" id="Gun28" />
+                                            @Html.CheckBox("Gun28", Model.Gun28 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun28">28.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun29" hidden name="Gun29Hidden" class="custom-control-input" id="Gun29Hidden" />
-                                            <input type="checkbox" value="true" name="Gun29" class="custom-control-input" id="Gun29" />
+                                            @Html.CheckBox("Gun29", Model.Gun29 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun29">29.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun30" hidden name="Gun30Hidden" class="custom-control-input" id="Gun30Hidden" />
-                                            <input type="checkbox" value="true" name="Gun30" class="custom-control-input" id="Gun30" />
+                                            @Html.CheckBox("Gun30", Model.Gun30 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun30">30.Gün</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" value="@Model.Gun31" hidden name="Gun31Hidden" class="custom-control-input" id="Gun31Hidden" />
-                                            <input type="checkbox" value="true" name="Gun31" class="custom-control-input" id="Gun31" />
+                                            @Html.CheckBox("Gun31", Model.Gun31 ?? false, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="Gun31">31.Gün</label>
                                         </div>
                                     </div>
@@ -388,6 +351,10 @@
                                             }
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div hidden id="EkSaat">
+                                <div class="row">
                                     <div class="col-md-12">
                                         <label class="control-label col-md-12">Ek Saat(1-8 Arası)</label>
                                         <hr />
@@ -671,6 +638,41 @@
                                                 <label class="form-check-label" for="8">8</label>
                                             </div>
                                         }
+                                        else
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="1" class="form-check-input" id="1" name="Ek_Saat">
+                                                <label class="form-check-label" for="1">1</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="2" class="form-check-input" id="2" name="Ek_Saat">
+                                                <label class="form-check-label" for="2">2</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="3" class="form-check-input" id="3" name="Ek_Saat">
+                                                <label class="form-check-label" for="3">3</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="4" class="form-check-input" id="4" name="Ek_Saat">
+                                                <label class="form-check-label" for="4">4</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="5" class="form-check-input" id="5" name="Ek_Saat">
+                                                <label class="form-check-label" for="5">5</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="6" class="form-check-input" id="6" name="Ek_Saat">
+                                                <label class="form-check-label" for="6">6</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="7" class="form-check-input" id="7" name="Ek_Saat">
+                                                <label class="form-check-label" for="7">7</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" value="8" class="form-check-input" id="8" name="Ek_Saat">
+                                                <label class="form-check-label" for="8">8</label>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -846,38 +848,9 @@
                             </div>
                             <div hidden id="HaftalikPlanHergunSaat">
                                 <div class="row">
-                                    <div class="col-md-4 mt-4">
-                                        @*<div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" checked name="PazartesiSaat" class="custom-control-input" id="PazartesiSaat" />
-                                                <label class="custom-control-label" for="PazartesiSaat">Pazartesi</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" checked name="SaliSaat" class="custom-control-input" id="SaliSaat" />
-                                                <label class="custom-control-label" for="SaliSaat">Salı</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" checked name="CarsambaSaat" class="custom-control-input" id="CarsambaSaat" />
-                                                <label class="custom-control-label" for="CarsambaSaat">Çarşamba</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" checked name="PersembeSaat" class="custom-control-input" id="PersembeSaat" />
-                                                <label class="custom-control-label" for="PersembeSaat">Perşembe</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" checked name="CumaSaat" class="custom-control-input" id="CumaSaat" />
-                                                <label class="custom-control-label" for="CumaSaat">Cuma</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" checked name="CumartesiSaat" class="custom-control-input" id="CumartesiSaat" />
-                                                <label class="custom-control-label" for="CumartesiSaat">Cumartesi</label>
-                                            </div>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" value="true" checked name="PazarSaat" class="custom-control-input" id="PazarSaat" />
-                                                <label class="custom-control-label" for="PazarSaat">Pazar</label>
-                                            </div>*@
-                                    </div>
                                     <div class="col-md-8">
                                         <div class="row">
+                                            <div class="col-md-12"><hr /></div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Başlangıç Saat</label>
@@ -1099,6 +1072,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div hidden id="IkiliSaatHergunAyri">
+
+                            </div>
                         </div>
                     </div>
                 }
@@ -1119,6 +1095,7 @@
             $("#HaftalikPlanHergunSaat").prop("hidden", true);
             $("#TarihSaat").prop("hidden", true);
             $("#Tarih").prop("hidden", true);
+            $("#EkSaat").prop("hidden", true);
         }
         if (nesneBaslangic == 1 || nesneBaslangic == 2) {
             $("#Saat").prop("hidden", true);
@@ -1256,6 +1233,7 @@
             $("#HaftalikPlanHergunSaat").prop("hidden", true);
             $("#TarihSaat").prop("hidden", true);
             $("#HaftalikPlan").prop("hidden", true);
+            $("#EkSaat").prop("hidden", true);
         }
         if (nesneBaslangic == 8 || nesneBaslangic == 9) {
             $("#Tarih").prop("hidden", true);
@@ -1266,6 +1244,7 @@
             $("#HaftalikPlanHergunSaat").prop("hidden", true);
             $("#TarihSaat").prop("hidden", true);
             $("#CokluSaat").prop("hidden", false);
+            $("#EkSaat").prop("hidden", false);
         }
         if (nesneBaslangic == 11 || nesneBaslangic == 12) {
             $("#Tarih").prop("hidden", true);
@@ -1278,15 +1257,28 @@
             $("#6LiSaat").prop("hidden", false);
         }
         if (nesneBaslangic == 13) {
+            $("#EkSaat").prop("hidden", true);
             $("#Tarih").prop("hidden", true);
             $("#Saat").prop("hidden", true);
-            $("#HaftalikPlan").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", false);
             $("#HaftalikEk").prop("hidden", true);
             $("#AylikPlan").prop("hidden", true);
             $("#CokluSaat").prop("hidden", true);
             $("#6LiSaat").prop("hidden", true);
             $("#TarihSaat").prop("hidden", true);
             $("#HaftalikPlanHergunSaat").prop("hidden", false);
+        }
+        if (nesneBaslangic == 14 || nesneBaslangic == 15) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", false);
+            $("#HaftalikEk").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", false);
+            $("#EkSaat").prop("hidden", false);
         }
         if (nesneBaslangic == 18 || nesneBaslangic == 19) {
             $("#Tarih").prop("hidden", true);
@@ -1298,6 +1290,11 @@
             $("#HaftalikPlanHergunSaat").prop("hidden", true);
             $("#TarihSaat").prop("hidden", false);
         }
+
+
+
+
+
         $("#Gecis_Sinirlama_Tipi").change(function () {
             var nesne = $("#Gecis_Sinirlama_Tipi").val();
             if (nesne == 0) {
@@ -1309,6 +1306,7 @@
                 $("#HaftalikPlanHergunSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
+                $("#EkSaat").prop("hidden", true);
             }
             if (nesne == 1 || nesne == 2) {
                 $("#Saat").prop("hidden", true);
@@ -1331,6 +1329,7 @@
                 $("#Saat").prop("hidden", false);
             }
             if (nesne == 5) {
+                $("#EkSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
                 $("#AylikPlan").prop("hidden", true);
@@ -1339,6 +1338,7 @@
                 $("#HaftalikPlanHergunSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", false);
+                $("#HaftalikEk").prop("hidden", false);
                 $("#TumGun").change(function () {
                     if ($(this).prop("checked") == true) {
                         $("#Pazartesi").prop("checked", true);
@@ -1446,6 +1446,7 @@
                 $("#HaftalikPlanHergunSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", true);
+                $("#EkSaat").prop("hidden", true);
             }
             if (nesne == 8 || nesne == 9) {
                 $("#Tarih").prop("hidden", true);
@@ -1456,8 +1457,10 @@
                 $("#HaftalikPlanHergunSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#CokluSaat").prop("hidden", false);
+                $("#EkSaat").prop("hidden", false);
             }
             if (nesne == 11 || nesne == 12) {
+                $("#EkSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", true);
@@ -1468,16 +1471,31 @@
                 $("#6LiSaat").prop("hidden", false);
             }
             if (nesne == 13) {
+                $("#EkSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
-                $("#HaftalikPlan").prop("hidden", true);
+                $("#HaftalikPlan").prop("hidden", false);
+                $("#HaftalikEk").prop("hidden", true);
                 $("#AylikPlan").prop("hidden", true);
                 $("#CokluSaat").prop("hidden", true);
                 $("#6LiSaat").prop("hidden", true);
                 $("#TarihSaat").prop("hidden", true);
                 $("#HaftalikPlanHergunSaat").prop("hidden", false);
             }
+            if (nesneBaslangic == 14 || nesneBaslangic == 15) {
+                $("#Tarih").prop("hidden", true);
+                $("#Saat").prop("hidden", true);
+                $("#HaftalikPlan").prop("hidden", false);
+                $("#HaftalikEk").prop("hidden", true);
+                $("#AylikPlan").prop("hidden", true);
+                $("#CokluSaat").prop("hidden", true);
+                $("#6LiSaat").prop("hidden", true);
+                $("#TarihSaat").prop("hidden", true);
+                $("#HaftalikPlanHergunSaat").prop("hidden", false);
+                $("#EkSaat").prop("hidden", false);
+            }
             if (nesne == 18 || nesne == 19) {
+                $("#EkSaat").prop("hidden", true);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", true);
@@ -1488,357 +1506,5 @@
                 $("#TarihSaat").prop("hidden", false);
             }
         });
-
-        var Pazartesi = $("#PazartesiHidden").attr("value");
-        if (Pazartesi) {
-            $("#Pazartesi").prop("checked", true);
-            $("#Pazartesi").attr("value", true);
-        } else {
-            $("#Pazartesi").prop("checked", false);
-            $("#Pazartesi").attr("value", false);
-        }
-        var Sali = $("#SaliHidden").attr("value");
-        if (Sali) {
-            $("#Sali").prop("checked", true);
-            $("#Sali").attr("value", true);
-        } else {
-            $("#Sali").prop("checked", false);
-            $("#Sali").attr("value", false);
-        }
-        var Carsamba = $("#CarsambaHidden").attr("value");
-        if (Carsamba) {
-            $("#Carsamba").prop("checked", true);
-            $("#Carsamba").attr("value", true);
-        } else {
-            $("#Carsamba").prop("checked", false);
-            $("#Carsamba").attr("value", false);
-        }
-        var Persembe = $("#PersembeHidden").attr("value");
-        if (Persembe) {
-            $("#Persembe").prop("checked", true);
-            $("#Persembe").attr("value", true);
-        } else {
-            $("#Persembe").prop("checked", false);
-            $("#Persembe").attr("value", false);
-        }
-        var Cuma = $("#CumaHidden").attr("value");
-        if (Cuma) {
-            $("#Cuma").prop("checked", true);
-            $("#Cuma").attr("value", true);
-        } else {
-            $("#Cuma").prop("checked", false);
-            $("#Cuma").attr("value", false);
-        }
-        var Cumartesi = $("#CumartesiHidden").attr("value");
-        if (Cumartesi) {
-            $("#Cumartesi").prop("checked", true);
-            $("#Cumartesi").attr("value", true);
-        } else {
-            $("#Cumartesi").prop("checked", false);
-            $("#Cumartesi").attr("value", false);
-        }
-        var Pazar = $("#PazarHidden").attr("value");
-        if (Pazar) {
-            $("#Pazar").prop("checked", true);
-            $("#Pazar").attr("value", true);
-        } else {
-            $("#Pazar").prop("checked", false);
-            $("#Pazar").attr("value", false);
-        }
-
-        var IlaveSaatKontrol = $("#IlaveSaatHidden").attr("value");
-        if (IlaveSaatKontrol) {
-            $("#IlaveSaat").prop("checked", true);
-            $("#IlaveSaat").attr("value", true);
-        } else {
-            $("#IlaveSaat").prop("checked", false);
-            $("#IlaveSaat").attr("value", false);
-        }
-
-        var Gun1 = $("#Gun1Hidden").attr("value");
-        if (Gun1) {
-            $("#Gun1").prop("checked", true);
-            $("#Gun1").attr("value", true);
-        } else {
-            $("#Gun1").prop("checked", false);
-            $("#Gun1").attr("value", false);
-        }
-
-        var Gun2 = $("#Gun2Hidden").attr("value");
-        if (Gun2) {
-            $("#Gun2").prop("checked", true);
-            $("#Gun2").attr("value", true);
-        } else {
-            $("#Gun2").prop("checked", false);
-            $("#Gun2").attr("value", false);
-        }
-
-        var Gun3 = $("#Gun3Hidden").attr("value");
-        if (Gun3) {
-            $("#Gun3").prop("checked", true);
-            $("#Gun3").attr("value", true);
-        } else {
-            $("#Gun3").prop("checked", false);
-            $("#Gun3").attr("value", false);
-        }
-
-        var Gun4 = $("#Gun4Hidden").attr("value");
-        if (Gun4) {
-            $("#Gun4").prop("checked", true);
-            $("#Gun4").attr("value", true);
-        } else {
-            $("#Gun4").prop("checked", false);
-            $("#Gun4").attr("value", false);
-        }
-
-        var Gun5 = $("#Gun5Hidden").attr("value");
-        if (Gun5) {
-            $("#Gun5").prop("checked", true);
-            $("#Gun5").attr("value", true);
-        } else {
-            $("#Gun5").prop("checked", false);
-            $("#Gun5").attr("value", false);
-        }
-
-        var Gun6 = $("#Gun6Hidden").attr("value");
-        if (Gun6) {
-            $("#Gun6").prop("checked", true);
-            $("#Gun6").attr("value", true);
-        } else {
-            $("#Gun6").prop("checked", false);
-            $("#Gun6").attr("value", false);
-        }
-
-        var Gun7 = $("#Gun7Hidden").attr("value");
-        if (Gun7) {
-            $("#Gun7").prop("checked", true);
-            $("#Gun7").attr("value", true);
-        } else {
-            $("#Gun7").prop("checked", false);
-            $("#Gun7").attr("value", false);
-        }
-
-        var Gun8 = $("#Gun8Hidden").attr("value");
-        if (Gun8) {
-            $("#Gun8").prop("checked", true);
-            $("#Gun8").attr("value", true);
-        } else {
-            $("#Gun8").prop("checked", false);
-            $("#Gun8").attr("value", false);
-        }
-
-        var Gun9 = $("#Gun9Hidden").attr("value");
-        if (Gun9) {
-            $("#Gun9").prop("checked", true);
-            $("#Gun9").attr("value", true);
-        } else {
-            $("#Gun9").prop("checked", false);
-            $("#Gun9").attr("value", false);
-        }
-
-        var Gun10 = $("#Gun10Hidden").attr("value");
-        if (Gun10) {
-            $("#Gun10").prop("checked", true);
-            $("#Gun10").attr("value", true);
-        } else {
-            $("#Gun10").prop("checked", false);
-            $("#Gun10").attr("value", false);
-        }
-
-        var Gun11 = $("#Gun11Hidden").attr("value");
-        if (Gun11) {
-            $("#Gun11").prop("checked", true);
-            $("#Gun11").attr("value", true);
-        } else {
-            $("#Gun11").prop("checked", false);
-            $("#Gun11").attr("value", false);
-        }
-
-        var Gun12 = $("#Gun12Hidden").attr("value");
-        if (Gun12) {
-            $("#Gun12").prop("checked", true);
-            $("#Gun12").attr("value", true);
-        } else {
-            $("#Gun12").prop("checked", false);
-            $("#Gun12").attr("value", false);
-        }
-
-        var Gun13 = $("#Gun13Hidden").attr("value");
-        if (Gun13) {
-            $("#Gun13").prop("checked", true);
-            $("#Gun13").attr("value", true);
-        } else {
-            $("#Gun13").prop("checked", false);
-            $("#Gun13").attr("value", false);
-        }
-
-        var Gun14 = $("#Gun14Hidden").attr("value");
-        if (Gun14) {
-            $("#Gun14").prop("checked", true);
-            $("#Gun14").attr("value", true);
-        } else {
-            $("#Gun14").prop("checked", false);
-            $("#Gun14").attr("value", false);
-        }
-
-        var Gun15 = $("#Gun15Hidden").attr("value");
-        if (Gun15) {
-            $("#Gun15").prop("checked", true);
-            $("#Gun15").attr("value", true);
-        } else {
-            $("#Gun15").prop("checked", false);
-            $("#Gun15").attr("value", false);
-        }
-
-        var Gun16 = $("#Gun16Hidden").attr("value");
-        if (Gun16) {
-            $("#Gun16").prop("checked", true);
-            $("#Gun16").attr("value", true);
-        } else {
-            $("#Gun16").prop("checked", false);
-            $("#Gun16").attr("value", false);
-        }
-
-        var Gun17 = $("#Gun17Hidden").attr("value");
-        if (Gun17) {
-            $("#Gun17").prop("checked", true);
-            $("#Gun17").attr("value", true);
-        } else {
-            $("#Gun17").prop("checked", false);
-            $("#Gun17").attr("value", false);
-        }
-
-        var Gun18 = $("#Gun18Hidden").attr("value");
-        if (Gun18) {
-            $("#Gun18").prop("checked", true);
-            $("#Gun18").attr("value", true);
-        } else {
-            $("#Gun18").prop("checked", false);
-            $("#Gun18").attr("value", false);
-        }
-
-        var Gun19 = $("#Gun19Hidden").attr("value");
-        if (Gun19) {
-            $("#Gun19").prop("checked", true);
-            $("#Gun19").attr("value", true);
-        } else {
-            $("#Gun19").prop("checked", false);
-            $("#Gun19").attr("value", false);
-        }
-
-        var Gun20 = $("#Gun20Hidden").attr("value");
-        if (Gun20) {
-            $("#Gun20").prop("checked", true);
-            $("#Gun20").attr("value", true);
-        } else {
-            $("#Gun20").prop("checked", false);
-            $("#Gun20").attr("value", false);
-        }
-
-        var Gun21 = $("#Gun21Hidden").attr("value");
-        if (Gun21) {
-            $("#Gun21").prop("checked", true);
-            $("#Gun21").attr("value", true);
-        } else {
-            $("#Gun21").prop("checked", false);
-            $("#Gun21").attr("value", false);
-        }
-
-        var Gun22 = $("#Gun22Hidden").attr("value");
-        if (Gun22) {
-            $("#Gun22").prop("checked", true);
-            $("#Gun22").attr("value", true);
-        } else {
-            $("#Gun22").prop("checked", false);
-            $("#Gun22").attr("value", false);
-        }
-
-        var Gun23 = $("#Gun23Hidden").attr("value");
-        if (Gun23) {
-            $("#Gun23").prop("checked", true);
-            $("#Gun23").attr("value", true);
-        } else {
-            $("#Gun23").prop("checked", false);
-            $("#Gun23").attr("value", false);
-        }
-
-        var Gun24 = $("#Gun24Hidden").attr("value");
-        if (Gun24) {
-            $("#Gun24").prop("checked", true);
-            $("#Gun24").attr("value", true);
-        } else {
-            $("#Gun24").prop("checked", false);
-            $("#Gun24").attr("value", false);
-        }
-
-        var Gun25 = $("#Gun25Hidden").attr("value");
-        if (Gun25) {
-            $("#Gun25").prop("checked", true);
-            $("#Gun25").attr("value", true);
-        } else {
-            $("#Gun25").prop("checked", false);
-            $("#Gun25").attr("value", false);
-        }
-
-        var Gun26 = $("#Gun26Hidden").attr("value");
-        if (Gun26) {
-            $("#Gun26").prop("checked", true);
-            $("#Gun26").attr("value", true);
-        } else {
-            $("#Gun26").prop("checked", false);
-            $("#Gun26").attr("value", false);
-        }
-
-        var Gun27 = $("#Gun27Hidden").attr("value");
-        if (Gun27) {
-            $("#Gun27").prop("checked", true);
-            $("#Gun27").attr("value", true);
-        } else {
-            $("#Gun27").prop("checked", false);
-            $("#Gun27").attr("value", false);
-        }
-
-        var Gun28 = $("#Gun28Hidden").attr("value");
-        if (Gun28) {
-            $("#Gun28").prop("checked", true);
-            $("#Gun28").attr("value", true);
-        } else {
-            $("#Gun28").prop("checked", false);
-            $("#Gun28").attr("value", false);
-        }
-
-        var Gun29 = $("#Gun29Hidden").attr("value");
-        if (Gun29) {
-            $("#Gun29").prop("checked", true);
-            $("#Gun29").attr("value", true);
-        } else {
-            $("#Gun29").prop("checked", false);
-            $("#Gun29").attr("value", false);
-        }
-
-        var Gun30 = $("#Gun30Hidden").attr("value");
-        if (Gun30) {
-            $("#Gun30").prop("checked", true);
-            $("#Gun30").attr("value", true);
-        } else {
-            $("#Gun30").prop("checked", false);
-            $("#Gun30").attr("value", false);
-        }
-
-        var Gun31 = $("#Gun31Hidden").attr("value");
-        if (Gun31) {
-            $("#Gun31").prop("checked", true);
-            $("#Gun31").attr("value", true);
-        } else {
-            $("#Gun31").prop("checked", false);
-            $("#Gun31").attr("value", false);
-        }
-
-
-
-
-
-
-
     });
 </script>

@@ -2598,7 +2598,7 @@
     <Content Include="Views\Watch\Index.cshtml" />
     <Content Include="Views\TimeGroups\Index.cshtml" />
     <Content Include="Views\TimeGroups\Edit.cshtml" />
-    <Content Include="Views\TimeGroups\Create.cshtml" />
+    <Content Include="Views\TimeGroups\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

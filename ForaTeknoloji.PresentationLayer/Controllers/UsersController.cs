@@ -46,7 +46,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: Users
-        public ActionResult Index(string Search = null,int Status=-1)
+        public ActionResult Index(string Search = null, int Status = -1)
         {
 
             if (Search != null && Search != "")
@@ -54,7 +54,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new UsersListViewModel
                 {
                     Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
-                    StatusControl=Status
+                    StatusControl = Status
                 };
                 return View(model);
             }
@@ -216,7 +216,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Create()
         {
-            var MaxID = _userService.GetAllUsers().Max(x => x.ID);
+            int MaxID;
+            if (_userService.GetAllUsers().Count == 0)
+                MaxID = 0;
+            else
+                MaxID = _userService.GetAllUsers().Max(x => x.ID);
+
             var Sirketler = _sirketService.GetAllSirketler();
             var Departmanlar = _departmanService.GetAllDepartmanlar();
             var Bloklar = _bloklarService.GetAllBloklar();
@@ -291,14 +296,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult PanelOperation(string Search,int Status=-1)
+        public ActionResult PanelOperation(string Search, int Status = -1)
         {
             if (Search != null && Search != "")
             {
                 var model = new UsersListViewModel
                 {
                     Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
-                    StatusControl=Status
+                    StatusControl = Status
                 };
                 return View(model);
             }
@@ -455,7 +460,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     return RedirectToAction("PanelOperation", new { @Status = 3 });
                 }
-              
+
             }
             return RedirectToAction("PanelOperation", new { @Status = 3 });
         }
@@ -513,7 +518,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var Durum = CheckStatus();
                 if (Durum == 2)
                     return RedirectToAction("PanelOperation", new { @Status = 2 });
-                else if(Durum==1)
+                else if (Durum == 1)
                     return RedirectToAction("PanelOperation", new { @Status = 1 });
                 else
                     return RedirectToAction("PanelOperation", new { @Status = 3 });

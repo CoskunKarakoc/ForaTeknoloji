@@ -6,5 +6,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
     public class TimeGroupsListViewModel
     {
         public List<EfTimeGroupsDal.ComplexTimeGroups> TimeGroups { get; set; }
+        public int StatusControl { get; internal set; }
     }
 }

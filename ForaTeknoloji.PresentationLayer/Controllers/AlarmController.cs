@@ -27,11 +27,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: Alarm
         public ActionResult Index()
         {
+            int ID;
+
+            if (_alarmlarService.GetAllAlarmlar().Count == 0)
+                ID = 0;
+            else
+                ID = _alarmlarService.GetAllAlarmlar().Max(x => x.Alarm_No);
+
             var Alarm = _alarmlarService.AlarmAndTip();
             var AlarmTip = _alarmTipleriService.GetAllAlarmlar();
             var User = _userService.GetAllUsers();
             var Panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP2 != null && x.Panel_IP3 != null && x.Seri_No != null && x.Panel_ID != null);
-            var ID = _alarmlarService.GetAllAlarmlar().Max(x => x.Alarm_No);
             var model = new AlarmListViewModel
             {
                 MaxID = ID + 1,

@@ -1,9 +1,11 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,22 +15,37 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
         private ITimeGroupsService _timeGroupsService;
         private ITimeZoneIDsService _timeZoneIDsService;
-        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService)
+        private ITaskListService _taskListService;
+        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService)
         {
             _timeGroupsService = timeGroupsService;
             _timeZoneIDsService = timeZoneIDsService;
+            _taskListService = taskListService;
         }
 
 
         // GET: TimeGroups
-        public ActionResult Index()
+        public ActionResult Index(string Search = null, int Status = -1)
         {
-            var model = new TimeGroupsListViewModel
+            if (Search != null && Search != "")
             {
-                TimeGroups = _timeGroupsService.GetComplexTimeGroups().OrderBy(x => x.Zaman_Grup_No).ToList()
-            };
+                var model = new TimeGroupsListViewModel
+                {
+                    TimeGroups = _timeGroupsService.GetComplexTimeGroups(x => x.Zaman_Grup_Adi.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim())).OrderBy(x => x.Zaman_Grup_No).ToList(),
+                    StatusControl = Status
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new TimeGroupsListViewModel
+                {
+                    TimeGroups = _timeGroupsService.GetComplexTimeGroups().OrderBy(x => x.Zaman_Grup_No).ToList(),
+                    StatusControl = Status
+                };
+                return View(model);
+            }
 
-            return View(model);
         }
 
 
@@ -48,6 +65,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
         }
+
+
+
 
         public ActionResult Edit(int id = -1)
         {
@@ -89,9 +109,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(timeGroups);
         }
 
-        public ActionResult Create()
+
+
+
+
+        public ActionResult Add()
         {
-            var MaxID = _timeGroupsService.GetAllTimeGroups().Max(x => x.Zaman_Grup_No);
+            int MaxID;
+
+            if (_timeGroupsService.GetAllTimeGroups().Count == 0)
+                MaxID = 0;
+            else
+                MaxID = _timeGroupsService.GetAllTimeGroups().Max(x => x.Zaman_Grup_No);
+
             var Sinirlama = _timeZoneIDsService.GetAllTimeZoneIDs();
             var model = new AddTimeGroupsListViewModel
             {
@@ -105,7 +135,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult Create(TimeGroups timeGroups, DateTime? Baslangic_Tarihi_Two = null, DateTime? Baslangic_Saati_Two = null, DateTime? Bitis_Tarihi_Two = null, DateTime? Bitis_Saati_Two = null)
+        public ActionResult Add(TimeGroups timeGroups, DateTime? Baslangic_Tarihi_Two = null, DateTime? Baslangic_Saati_Two = null, DateTime? Bitis_Tarihi_Two = null, DateTime? Bitis_Saati_Two = null)
         {
             if (ModelState.IsValid)
             {
@@ -137,6 +167,50 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 return RedirectToAction("Index");
             }
             return View(timeGroups);
+        }
+
+
+        public ActionResult Send(int ZamanGrupNo = -1)
+        {
+            if (ZamanGrupNo != -1)
+            {
+                try
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = 2600,
+                        IntParam_1 = ZamanGrupNo,
+                        Kullanici_Adi = "coskun",
+                        Panel_No = 8,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus();
+                    if (Durum == 2)
+                        return RedirectToAction("Index", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("Index", new { @Status = 1 });
+                    else
+                        return RedirectToAction("Index", new { @Status = 3 });
+                }
+                catch (Exception)
+                {
+
+                    return RedirectToAction("Index", new { @Status = 3 });
+                }
+            }
+            return RedirectToAction("Index", new { @Status = 3 });
+        }
+
+
+        public int CheckStatus()
+        {
+            var GrupNo = _taskListService.GetAllTaskList().Max(x => x.Grup_No);
+            return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
         }
 
     }
