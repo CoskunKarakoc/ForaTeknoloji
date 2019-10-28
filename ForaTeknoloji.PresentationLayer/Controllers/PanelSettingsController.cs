@@ -14,21 +14,29 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettings;
         private IReaderSettingsService _readerSettingsService;
         private IGlobalZoneService _globalZoneService;
+        PanelSettings PanelSettings;
         public PanelSettingsController(IPanelSettingsService panelSettings, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService)
         {
+            PanelSettings = CurrentSession.Panel;
             _panelSettings = panelSettings;
             _readerSettingsService = readerSettingsService;
             _globalZoneService = globalZoneService;
         }
 
 
+
+
         // GET: PanelSettings
         public ActionResult Genel()
         {
+            if (PanelSettings == null)
+            {
+                return RedirectToAction("Orientation", "Home");
+            }
             var model = new GenelPanelSettingsListViewModel
             {
-                GenelAyar = _panelSettings.GetAllPanelSettings().FirstOrDefault(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_ID != null && x.Seri_No != 0)
-
+                GenelAyar = _panelSettings.GetAllPanelSettings().FirstOrDefault(x => x.Seri_No == PanelSettings.Seri_No && x.Seri_No != null && x.Panel_ID == PanelSettings.Panel_ID && x.Seri_No != 0),
+                Panel = PanelSettings
             };
             return View(model);
         }

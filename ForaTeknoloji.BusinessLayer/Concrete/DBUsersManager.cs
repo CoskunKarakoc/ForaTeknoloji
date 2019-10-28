@@ -54,5 +54,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return user;
         }
 
+        public DBUsers GetBySifre(string Sifre)
+        {
+            return _dBUsersDal.Get(x => x.Sifre == Sifre);
+        }
     }
 }

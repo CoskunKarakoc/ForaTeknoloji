@@ -14,6 +14,10 @@ namespace ForaTeknoloji.PresentationLayer.Models
 
         }
 
+        public static PanelSettings Panel
+        {
+            get { return Get<PanelSettings>("Panel"); }
+        }
 
         public static void Set<T>(string key, T obj)
         {

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.PanelSettings>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="alert alert-secondary">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <table id="panel" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <td>Seri No</td>
+                                <td>Panel No</td>
+                                <td>Adı</td>
+                                <td>IP Adres</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td data-panelid="@item.Panel_ID">@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                    <td>@(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#panel tbody tr").click(function () {
+            $("#panel tbody tr").removeClass("table-success");
+            $(this).addClass("table-success");
+            var panelID = $(this).children("td").data("panelid");
+            $.ajax({
+                url: '/Panel/SetSession',
+                type: 'POST',
+                data: { ID: panelID },
+                dataType:'json'
+            });
+        });
+    });
+</script>
+

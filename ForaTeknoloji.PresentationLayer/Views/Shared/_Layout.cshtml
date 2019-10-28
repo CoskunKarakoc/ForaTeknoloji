@@ -76,8 +76,8 @@
                         <a class="collapse-item text-muted" href="#">Global Bölge Interlock</a>
                         <hr />
                         <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Plaka Tanıma Kameraları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","VisitorReport")">Kapı İşlemleri</a>
-                        <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Güvenlik Ayarları</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı İşlemleri</a>
+                        <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Güvenlik Ayarları</a>
                         <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Harici Okuyucu</a>
                         <a class="collapse-item text-muted" href="#">Panel Saat Ayarı</a>
                         <a class="collapse-item" href="#">E-Mail Gönderme Ayarları</a>
@@ -95,6 +95,7 @@
                 <div id="collapsePanel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Panel Ayarları</h6>
+                        <a class="collapse-item" href="@Url.Action("Index","Panel")">Panel Seç</a>
                         <a class="collapse-item" href="@Url.Action("Genel","PanelSettings")">Genel</a>
                         <a class="collapse-item" href="@Url.Action("Haberlesme","PanelSettings")">Haberleşme</a>
                         <a class="collapse-item" href="@Url.Action("Kapilar","PanelSettings")">Kapılar</a>
@@ -271,6 +272,8 @@
             <div class="content">
                 <div class="container-fluid">
                     @RenderBody()
+                    @RenderSection("camera", false)
+
                 </div>
             </div>
             <!-- End of Main Content -->
@@ -303,5 +306,7 @@
     <script src="~/Templete/TempleteDosyalari/js/demo/chart-area-demo.js"></script>
     <script src="~/Templete/TempleteDosyalari/js/demo/chart-pie-demo.js"></script>
 
+
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 </body>
 </html>

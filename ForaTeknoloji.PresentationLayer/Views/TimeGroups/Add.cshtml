@@ -8,10 +8,10 @@
     <div class="col-md-8 offset-md-2">
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
-                <h3 class="text-muted text-center">Zaman Bölgesi Ayarları</h3>
+                <h3 class="text-muted text-center">Yeni Zaman Bölgesi</h3>
             </div>
             <div class="card-body">
-                @using (Html.BeginForm("Add","TimeGroups",FormMethod.Post))
+                @using (Html.BeginForm("Add", "TimeGroups", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })

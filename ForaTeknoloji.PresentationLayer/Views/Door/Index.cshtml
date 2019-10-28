@@ -1,0 +1,1340 @@
+﻿
+@{
+                /**/
+
+                /**/
+
+                ViewBag.Title = "Door Operations";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-muted text-center">Kapı İşlemleri</h3>
+                <div class="col-md-6 offset-md-3">
+                    <div hidden id="SuccessAlert" class="text-success text-center">
+
+                    </div>
+                    <div hidden id="WarningAlert" class="text-warning text-center">
+
+                    </div>
+                    <div hidden id="DangerAlert" class="text-danger text-center">
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group mx-2"><input id="Kapi1" type="checkbox" name="Kapi1" data-toggle="toggle" data-on="Kapı 1" data-off="Kapı 1" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi2" type="checkbox" name="Kapi2" data-toggle="toggle" data-on="Kapı 2" data-off="Kapı 2" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi3" type="checkbox" name="Kapi3" data-toggle="toggle" data-on="Kapı 3" data-off="Kapı 3" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi4" type="checkbox" name="Kapi4" data-toggle="toggle" data-on="Kapı 4" data-off="Kapı 4" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi5" type="checkbox" name="Kapi5" data-toggle="toggle" data-on="Kapı 5" data-off="Kapı 5" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi6" type="checkbox" name="Kapi6" data-toggle="toggle" data-on="Kapı 6" data-off="Kapı 6" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi7" type="checkbox" name="Kapi7" data-toggle="toggle" data-on="Kapı 7" data-off="Kapı 7" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi8" type="checkbox" name="Kapi8" data-toggle="toggle" data-on="Kapı 8" data-off="Kapı 8" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi9" type="checkbox" name="Kapi9" data-toggle="toggle" data-on="Kapı 9" data-off="Kapı 9" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi10" type="checkbox" name="Kapi10" data-toggle="toggle" data-on="Kapı 10" data-off="Kapı 10" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi11" type="checkbox" name="Kapi11" data-toggle="toggle" data-on="Kapı 11" data-off="Kapı 11" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi12" type="checkbox" name="Kapi12" data-toggle="toggle" data-on="Kapı 12" data-off="Kapı 12" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi13" type="checkbox" name="Kapi13" data-toggle="toggle" data-on="Kapı 13" data-off="Kapı 13" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi14" type="checkbox" name="Kapi14" data-toggle="toggle" data-on="Kapı 14" data-off="Kapı 14" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi15" type="checkbox" name="Kapi15" data-toggle="toggle" data-on="Kapı 15" data-off="Kapı 15" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-2"><input id="Kapi16" type="checkbox" name="Kapi16" data-toggle="toggle" data-on="Kapı 16" data-off="Kapı 16" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+                            <div class="form-group mx-4"><input id="Alarm" type="checkbox" name="Alarm" data-toggle="toggle" data-on="Alarm" data-off="Alarm" data-size="sm" data-onstyle="outline-success" data-offstyle="outline-danger"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $("#Kapi1").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi1',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 1 Açıldı");
+                        $("#Kapi1").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 1 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi1").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 1 Açılamadı");
+                        $("#Kapi1").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi1',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 1 Kapandı");
+                        $("#Kapi1").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 1 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi1").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 1 Kapatılamadı");
+                        $("#Kapi1").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi2").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi2',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 2 Açıldı");
+                        $("#Kapi2").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 2 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi2").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 2 Açılamadı");
+                        $("#Kapi2").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi2',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 2 Kapandı");
+                        $("#Kapi2").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 2 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi2").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 2 Kapanamadı");
+                        $("#Kapi2").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi3").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi3',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 3 Açıldı");
+                        $("#Kapi3").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 3 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi3").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 3 Açılamadı");
+                        $("#Kapi3").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi3',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 3 Kapandı");
+                        $("#Kapi3").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 3 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi3").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 3 Kapanamadı");
+                        $("#Kapi3").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi4").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi4',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 4 Açıldı");
+                        $("#Kapi4").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 4 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi4").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 4 Açılamadı");
+                        $("#Kapi4").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi4',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 4 Kapandı");
+                        $("#Kapi4").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 4 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi4").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 4 Kapanamadı");
+                        $("#Kapi4").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi5").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi5',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 5 Açıldı");
+                        $("#Kapi5").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 5 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi5").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 5 Açılamadı");
+                        $("#Kapi5").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi5',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 5 Kapandı");
+                        $("#Kapi5").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 5 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi5").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 5 Kapanamadı");
+                        $("#Kapi5").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi6").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi6',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 6 Açıldı");
+                        $("#Kapi6").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 6 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi6").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 6 Açılamadı");
+                        $("#Kapi6").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi6',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 6 Kapandı");
+                        $("#Kapi6").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 6 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi6").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 6 Kapanamadı");
+                        $("#Kapi6").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi7").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi7',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 7 Açıldı");
+                        $("#Kapi7").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 7 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi7").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 7 Açılamadı");
+                        $("#Kapi7").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi7',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 7 Kapandı");
+                        $("#Kapi7").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 7 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi7").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 7 Kapanamadı");
+                        $("#Kapi7").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi8").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi8',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 8 Açıldı");
+                        $("#Kapi8").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 8 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi8").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 8 Açılamadı");
+                        $("#Kapi8").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi8',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 8 Kapandı");
+                        $("#Kapi8").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 8 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi8").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 8 Kapanamadı");
+                        $("#Kapi8").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi9").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi9',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 9 Açıldı");
+                        $("#Kapi9").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 9 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi9").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 9 Açılamadı");
+                        $("#Kapi9").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi9',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 9 Kapandı");
+                        $("#Kapi9").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 9 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi9").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 9 Kapanamadı");
+                        $("#Kapi9").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi10").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi10',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 10 Açıldı");
+                        $("#Kapi10").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 10 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi10").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 10 Açılamadı");
+                        $("#Kapi10").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi10',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 10 Kapandı");
+                        $("#Kapi10").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 10 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi10").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 10 Kapanamadı");
+                        $("#Kapi10").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi11").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi11',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 11 Açıldı");
+                        $("#Kapi11").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 11 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi11").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 11 Açılamadı");
+                        $("#Kapi11").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi11',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 11 Kapandı");
+                        $("#Kapi11").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 11 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi11").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 11 Kapanamadı");
+                        $("#Kapi11").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi12").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi12',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 12 Açıldı");
+                        $("#Kapi12").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 12 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi12").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 12 Açılamadı");
+                        $("#Kapi12").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi12',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 12 Kapandı");
+                        $("#Kapi12").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 12 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi12").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 12 Kapanamadı");
+                        $("#Kapi12").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi13").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi13',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 13 Açıldı");
+                        $("#Kapi13").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 13 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi13").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 13 Açılamadı");
+                        $("#Kapi13").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi13',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 13 Kapandı");
+                        $("#Kapi13").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 13 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi13").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 13 Kapanamadı");
+                        $("#Kapi13").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi14").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi14',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 14 Açıldı");
+                        $("#Kapi14").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 14 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi14").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 14 Açılamadı");
+                        $("#Kapi14").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi14',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 14 Kapandı");
+                        $("#Kapi14").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 14 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi14").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 14 Kapanamadı");
+                        $("#Kapi14").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi15").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi15',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 15 Açıldı");
+                        $("#Kapi15").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 15 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi15").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 15 Açılamadı");
+                        $("#Kapi15").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi15',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 15 Kapandı");
+                        $("#Kapi15").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 15 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi15").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 15 Kapanamadı");
+                        $("#Kapi15").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Kapi16").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi16',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 16 Açıldı");
+                        $("#Kapi16").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 16 Açılma İşlemi Sıraya Alındı");
+                        $("#Kapi16").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 16 Açılamadı");
+                        $("#Kapi16").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Kapi16',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Kapi 16 Kapandı");
+                        $("#Kapi16").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Kapi 16 Kapanma İşlemi Sıraya Alındı");
+                        $("#Kapi16").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Kapi 16 Kapanamadı");
+                        $("#Kapi16").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+        $("#Alarm").change(function () {
+            var Kapi = false;
+            if ($(this).prop("checked") == true) {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Alarm',
+                        Kapi: true
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Alarm Açıldı");
+                        $("#Alarm").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#WarningAlert").text("Alarm Açılma İşlemi Sıraya Alındı");
+                        $("#Alarm").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Alarm Açılamadı");
+                        $("#Alarm").prop("checked", false);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/Door/OpenDoor',
+                    type: 'POST',
+                    data: {
+                        Door: 'Alarm',
+                        Kapi: false
+                    },
+                    dataType: 'json',
+                }).done(function (response) {
+                    if (response.Result == 2) {
+                        $("#SuccessAlert").prop("hidden", false);
+                        $("#WarningAlert").prop("hidden", true);
+                        $("#DangerAlert").prop("hidden", true);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#SuccessAlert").text("Alarm Kapandı");
+                        $("#Alarm").prop("checked", true);
+                    } else if (response.Result == 1) {
+                        $("#WarningAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("Alarm Kapanma İşlemi Sıraya Alındı");
+                        $("#Alarm").prop("checked", false);
+                    } else {
+                        $("#DangerAlert").prop("hidden", false);
+                        $("#SuccessAlert").text("");
+                        $("#WarningAlert").text("");
+                        $("#DangerAlert").text("");
+                        $("#DangerAlert").text("Alarm Kapanamadı");
+                        $("#Alarm").prop("checked", false);
+                    }
+                });
+            }
+        });
+
+    });
+</script>

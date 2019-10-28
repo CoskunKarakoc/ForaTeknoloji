@@ -664,6 +664,7 @@
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include="libman.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.tr.js" />
@@ -673,6 +674,9 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jquery.webcam.js" />
+    <Content Include="Scripts\jscam.swf" />
+    <Content Include="Scripts\jscam_canvas_only.swf" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
@@ -2493,16 +2497,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
+    <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\DoorController.cs" />
     <Compile Include="Controllers\GelenGelmeyenReportController.cs" />
     <Compile Include="Controllers\GlobalZoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsideOutReportController.cs" />
     <Compile Include="Controllers\OutherReportController.cs" />
+    <Compile Include="Controllers\PanelController.cs" />
     <Compile Include="Controllers\PanelSettingsController.cs" />
     <Compile Include="Controllers\PersonelListReportController.cs" />
     <Compile Include="Controllers\ReportPersonelController.cs" />
+    <Compile Include="Controllers\SecuritySettingsController.cs" />
     <Compile Include="Controllers\TimeGroupsController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -2521,6 +2529,7 @@
     <Compile Include="Models\CurrentSession.cs" />
     <Compile Include="Models\DigerGecisRaporAlarmListViewModel.cs" />
     <Compile Include="Models\DigerGecisRaporListViewModel.cs" />
+    <Compile Include="Models\EditSecurityListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyenViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_GelenlerListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_GelmeyenlerListViewModel.cs" />
@@ -2536,6 +2545,8 @@
     <Compile Include="Models\KullaniciListViewModelModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
+    <Compile Include="Models\SecurityCreateViewModel.cs" />
+    <Compile Include="Models\SecuritySettingsListViewModel.cs" />
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
     <Compile Include="Models\TimeGroupsListViewModel.cs" />
     <Compile Include="Models\UsersAddViewModel.cs" />
@@ -2599,6 +2610,13 @@
     <Content Include="Views\TimeGroups\Index.cshtml" />
     <Content Include="Views\TimeGroups\Edit.cshtml" />
     <Content Include="Views\TimeGroups\Add.cshtml" />
+    <Content Include="Views\SecuritySettings\Index.cshtml" />
+    <Content Include="Views\SecuritySettings\Create.cshtml" />
+    <Content Include="Views\SecuritySettings\Edit.cshtml" />
+    <Content Include="Views\Panel\Index.cshtml" />
+    <Content Include="Views\Home\Orientation.cshtml" />
+    <Content Include="Views\Door\Index.cshtml" />
+    <Content Include="Views\Camera\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

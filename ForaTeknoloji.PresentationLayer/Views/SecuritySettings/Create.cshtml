@@ -1,0 +1,206 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.SecurityCreateViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-muted text-center">Güvenlik Ayarları</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "SecuritySettings", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group row">
+                                <label for="Adi" class="col-sm-4 col-form-label">Adı</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="Adi" class="form-control form-control-sm" id="Adi" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Soyadi" class="col-sm-4 col-form-label">Soyadı</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="Soyadi" class="form-control form-control-sm" id="Soyadi" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Adi" class="col-sm-4 col-form-label">Kullanıcı Adı</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="Kullanici_Adi" class="form-control form-control-sm" id="Kullanici_Adi" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Sifre" class="col-sm-4 col-form-label">Şifre</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="Sifre" class="form-control form-control-sm" id="Sifre" value="">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Kullanıcı İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Kullanici_Islemleri", Model.Roller, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.Roller, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Geçiş Grup İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Grup_Islemleri", Model.Roller, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.Roller, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Kapı İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Programli_Kapi_Islemleri", Model.Roller, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.Roller, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Geçiş Verileri-Raporlar</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Gecis_Verileri_Rapor_Islemleri", Model.Roller, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.Roller, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Ziyaretçi İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Ziyaretci_Islemleri", Model.Roller, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.Roller, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Canlı İzleme</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Canli_Izleme", Model.Roller, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.Roller, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Alarm İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Alarm_Islemleri", Model.Roller, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.Roller, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("OtherDeviceReports", new { @class = "custom-control-input" })
+                                    <label class="custom-control-label ml-2 mr-4" for="OtherDeviceReports">Diğer Cihaz Raporları</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("SysAdmin", new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="SysAdmin">Sistem Yöneticisi</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 offset-md-1">
+                                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                                        <label class="custom-control-label" for="AllPanel"></label>
+                                                    </div>
+                                                </td>
+                                                <td>Panel ID</td>
+                                                <td>Panel Adı</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Paneller)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@item.Panel_ID</td>
+                                                    <td>@item.Panel_Name</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-md-4 offset-md-1 ">
+                                    <table id="SirketTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="AllSirket" />
+                                                        <label class="custom-control-label" for="AllSirket"></label>
+                                                    </div>
+                                                </td>
+                                                <td>Şirket No</td>
+                                                <td>Adı</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Sirketler)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" name="Sirketler" id="@item.Sirket_No" value="@item.Sirket_No">
+                                                            <label class="custom-control-label" for="@item.Sirket_No"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@item.Sirket_No</td>
+                                                    <td>@item.Adi</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-user-plus"></i> Kullanıcıyı Ekle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#AllPanel").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
+        $("#AllSirket").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#SirketTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#SirketTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
+    });
+</script>
+
+

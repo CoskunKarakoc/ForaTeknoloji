@@ -20,8 +20,6 @@
                     <hr />
                     <div class="row">
                         <div class="col-md-8">
-
-
                             <div class="form-group">
                                 <label class="control-label col-md-5">Ziyaretçi Kart ID</label>
                                 <div class="col-md-12">
@@ -110,6 +108,11 @@
                                 </div>
                             </div>
 
+                        </div>
+                        <div class="col-md-2">
+                            <img src="~/Images/6300990.jpg" class="img-profile img-fluid img-thumbnail" alt="Alternate Text" />
+                            <button class="btn btn-outline-info btn-sm mt-2"><i class="fas fa-download"></i> Resim Yükle</button>
+                            <a href="/Camera/Index" class="btn btn-sm btn-outline-secondary mt-2"><i class="fas fa-camera"></i> Resim Çek&nbsp;&nbsp;&nbsp;</a>
                         </div>
                     </div>
                     <div class="row">
@@ -264,6 +267,10 @@
             $("#Personel_Adi").attr('value', Adi);
             $("#Personel_Soyadi").attr('value', Soyadi);
             $("#alert").text(Adi + " " + Soyadi + " Seçildi!");
+            var selected = $(this).hasClass("table-success");
+            $("#myTable tbody tr").removeClass("table-success");
+            if (!selected)
+                $(this).addClass("table-success");
         });
 
 

@@ -61,5 +61,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
+
+        public ActionResult Orientation()
+        {
+            return View();
+        }
+
+
+
     }
 }

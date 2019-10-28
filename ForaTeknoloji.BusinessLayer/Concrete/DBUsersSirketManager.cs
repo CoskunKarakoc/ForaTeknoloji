@@ -37,6 +37,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _dBUsersSirketDal.Get(x => x.Kayit_No == id);
         }
 
+        public DBUsersSirket GetByQuery(Expression<Func<DBUsersSirket,bool>> filter=null)
+        {
+            return filter == null ? null : _dBUsersSirketDal.Get(filter);
+        }
+
         public DBUsersSirket UpdateDBUsersSirket(DBUsersSirket dBUsersSirket)
         {
             return _dBUsersSirketDal.Update(dBUsersSirket);

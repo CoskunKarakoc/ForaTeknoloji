@@ -8,7 +8,7 @@
     <div class="col-md-8 offset-md-2 mt-xl-5 my-xl-5">
         <div class=" card shadow-lg mt-2">
             <div class="card-header-tabs">
-                <h3 class="text-muted text-center">Blok Tanımları</h3>
+                <h3 class="text-muted text-center">Global Bölgeler</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Edit", "GlobalZone"))
@@ -56,6 +56,8 @@
             var globalAdi = $(this).children("td").data("adi");
             $("#gBAdi").attr('value', globalAdi);
             $("#gBNo").attr('value', globalNo);
+            $("#mytable tbody tr").removeClass("table-success");
+            $(this).addClass("table-success");
         });
     });
 </script>

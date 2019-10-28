@@ -60,7 +60,7 @@
                                 <td>@item.TCKimlik</td>
                                 <td>@item.Telefon</td>
                                 <td>@item.Plaka</td>
-                                <td>@item.Tarih</td>
+                                <td>@item.Tarih.Value.ToShortDateString()</td>
                                 <td>@item.Ziyaret_Sebebi</td>
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Visitor",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>

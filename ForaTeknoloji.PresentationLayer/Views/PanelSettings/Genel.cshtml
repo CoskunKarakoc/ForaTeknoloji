@@ -10,6 +10,14 @@
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-center text-muted">Panel Ayarları-Genel</h3>
+                @if (Model.Panel != null)
+                {
+                    <h1 class="text-success text-center">Seçili Panel:@Model.Panel.Panel_ID - @Model.Panel.Panel_Name</h1>
+                }
+                else
+                {
+                    <h1 class="text-center  text-danger">Seçili Panel Bulunmuyor!</h1>
+                }
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Genel", "PanelSettings", FormMethod.Post))
@@ -249,7 +257,7 @@
                         <div class="col-md-3">
                             <label class="text-muted">Mükerrer Geçiş Engelleme Süresi Ayarları</label>
                             <div class="form-group">
-                                @Html.TextBox("Panel_Same_Tag_Block", Model.GenelAyar.Panel_Same_Tag_Block, new { @class = "form-control",type="number" })
+                                @Html.TextBox("Panel_Same_Tag_Block", Model.GenelAyar.Panel_Same_Tag_Block, new { @class = "form-control", type = "number" })
                             </div>
                             <div class="form-group">
                                 @if (Model.GenelAyar.Panel_Same_Tag_Block_HourMinSec == 0)

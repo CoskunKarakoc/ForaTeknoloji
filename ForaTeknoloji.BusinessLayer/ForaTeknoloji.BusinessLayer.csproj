@@ -61,6 +61,7 @@
     <Compile Include="Abstract\IAlarmTipleriService.cs" />
     <Compile Include="Abstract\IBloklarService.cs" />
     <Compile Include="Abstract\ICodeOperationService.cs" />
+    <Compile Include="Abstract\IDBRolesService.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanService.cs" />
     <Compile Include="Abstract\IDBUsersPanelsService.cs" />
     <Compile Include="Abstract\IDBUsersService.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Concrete\AlarmTipleriManager.cs" />
     <Compile Include="Concrete\BloklarManager.cs" />
     <Compile Include="Concrete\CodeOperationManager.cs" />
+    <Compile Include="Concrete\DBRolesManager.cs" />
     <Compile Include="Concrete\DBUsersDepartmanManager.cs" />
     <Compile Include="Concrete\DBUsersManager.cs" />
     <Compile Include="Concrete\DBUsersPanelsManager.cs" />

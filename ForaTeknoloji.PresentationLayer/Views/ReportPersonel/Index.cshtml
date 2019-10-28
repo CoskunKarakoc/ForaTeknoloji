@@ -439,6 +439,10 @@ webGrid.Column("Tarih", "Tarih")))
             $("#Ziyaretci").attr('value', name);
             $("#Visitor").attr('value', kayitNo);
             $("#alert").text(name + " Seçildi!");
+            var selected = $(this).hasClass("table-success");
+            $("#myTable tbody tr").removeClass("table-success");
+            if (!selected)
+                $(this).addClass("table-success");
         });
 
         $("#SearchBtn").click(function () {

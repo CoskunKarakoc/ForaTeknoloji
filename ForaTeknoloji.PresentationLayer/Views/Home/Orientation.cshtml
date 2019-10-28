@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Orientation";
+}
+<body class="bg-gradient-primary">
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9" style="height:900px;">
+                <div class="card o-hidden border-0 shadow-lg my-5 mt-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-md-12 mt-2">
+                                <hr />
+                                <div class="mt-5">
+                                    <div class="text-center">
+                                        <h1 class="text-info"><i class="fas fa-exclamation-triangle"></i></h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="p-3">
+                                    <div class="text-center">
+                                        <h1 class="h4  mb-5 text-info">Panel Seçimine Yönlendiriliyorsunuz!</h1>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+
+<script>
+    setTimeout(function () {
+        window.location.assign("/Panel/Index");
+        //2 saniye sonra yönlenecek
+    }, 2000);
+</script>

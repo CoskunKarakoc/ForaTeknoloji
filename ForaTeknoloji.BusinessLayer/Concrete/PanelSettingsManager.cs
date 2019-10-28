@@ -34,7 +34,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
         public PanelSettings GetById(int id)
         {
-            return _panelSettingsDal.Get(x => x.Kayit_No == id);
+            return _panelSettingsDal.Get(x => x.Panel_ID == id);
         }
 
         public PanelSettings UpdatePanelSetting(PanelSettings panelSettings)

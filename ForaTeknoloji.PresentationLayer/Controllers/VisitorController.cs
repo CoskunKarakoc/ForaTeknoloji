@@ -166,7 +166,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     };
                     TaskList taskReceive = _taskListService.AddTaskList(taskList);
                     Thread.Sleep(2000);
-                    var Durum = CheckStatus();
+                    var Durum = CheckStatus(taskReceive.Grup_No);
                     if (Durum == 2)
                         return RedirectToAction("Index", new { @Status = 2 });
                     else if (Durum == 1)
@@ -201,10 +201,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public int CheckStatus()
+        public int CheckStatus(int GrupNo = -1)
         {
-            var GrupNo = _taskListService.GetAllTaskList().Max(x => x.Grup_No);
-            return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
+            if (GrupNo != -1)
+            {
+                return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
+            }
+            return 3;
         }
 
 

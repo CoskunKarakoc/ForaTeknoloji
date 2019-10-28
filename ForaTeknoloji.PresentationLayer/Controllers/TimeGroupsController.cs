@@ -16,8 +16,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITimeGroupsService _timeGroupsService;
         private ITimeZoneIDsService _timeZoneIDsService;
         private ITaskListService _taskListService;
+        public DBUsers user;
         public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _timeGroupsService = timeGroupsService;
             _timeZoneIDsService = timeZoneIDsService;
             _taskListService = taskListService;
@@ -170,6 +176,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+
         public ActionResult Send(int ZamanGrupNo = -1)
         {
             if (ZamanGrupNo != -1)
@@ -189,7 +196,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                     Thread.Sleep(2000);
-                    var Durum = CheckStatus();
+                    var Durum = CheckStatus(taskListReceive.Grup_No);
                     if (Durum == 2)
                         return RedirectToAction("Index", new { @Status = 2 });
                     else if (Durum == 1)
@@ -207,10 +214,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public int CheckStatus()
+
+        public int CheckStatus(int GrupNo = -1)
         {
-            var GrupNo = _taskListService.GetAllTaskList().Max(x => x.Grup_No);
-            return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
+            if (GrupNo != -1)
+            {
+                return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
+            }
+
+            return 3;
         }
 
     }

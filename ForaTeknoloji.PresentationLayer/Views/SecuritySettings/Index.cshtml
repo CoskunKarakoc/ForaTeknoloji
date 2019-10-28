@@ -1,0 +1,47 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.SecuritySettingsListViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header-tabs mt-1">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <a href="@Url.Action("Create","SecuritySettings")" class="btn btn-sm btn-outline-success mr-5"><i class="fas fa-user-plus"></i> Yeni Kullanıcı</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Kullanıcı Adı</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Diğer Cihaz Raporları</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Kullanıcılar)
+                        {
+                            <tr>
+                                <td>@item.Kullanici_Adi</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                <td>@item.OtherDeviceReports</td>
+                                <td>
+                                    <a title="Edit" id="edit" href="@Url.Action("Edit","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

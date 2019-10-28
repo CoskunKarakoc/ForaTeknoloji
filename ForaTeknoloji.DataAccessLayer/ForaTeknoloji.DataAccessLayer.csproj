@@ -59,6 +59,7 @@
     <Compile Include="Abstract\IAlarmTipleriDal.cs" />
     <Compile Include="Abstract\IBloklarDal.cs" />
     <Compile Include="Abstract\ICodeOperationDal.cs" />
+    <Compile Include="Abstract\IDBRolesDal.cs" />
     <Compile Include="Abstract\IDBUsersDal.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanDal.cs" />
     <Compile Include="Abstract\IDBUsersPanelsDal.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Concrete\EntityFramework\EfAlarmTipleriDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfBloklarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCodeOperationDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDBRolesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersDepartmanDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersPanelsDal.cs" />
