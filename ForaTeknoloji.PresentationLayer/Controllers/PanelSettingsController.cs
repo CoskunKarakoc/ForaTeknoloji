@@ -21,6 +21,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettings = panelSettings;
             _readerSettingsService = readerSettingsService;
             _globalZoneService = globalZoneService;
+
         }
 
 
@@ -29,7 +30,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: PanelSettings
         public ActionResult Genel()
         {
-            if (PanelSettings == null)
+            if (PanelSettings == null || PanelSettings.Panel_ID == 0 || (PanelSettings.Panel_IP1 == 0 && PanelSettings.Panel_IP2 == 0 && PanelSettings.Panel_IP3 == 0 && PanelSettings.Panel_IP4 == 0))
             {
                 return RedirectToAction("Orientation", "Home");
             }

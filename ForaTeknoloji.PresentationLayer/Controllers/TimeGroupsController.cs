@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,18 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
+    [Excp]
     public class TimeGroupsController : Controller
     {
         private ITimeGroupsService _timeGroupsService;
         private ITimeZoneIDsService _timeZoneIDsService;
         private ITaskListService _taskListService;
         public DBUsers user;
+        public PanelSettings panelSettings;
         public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService)
         {
+            panelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
             if (user == null)
             {
@@ -54,71 +59,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
-
-
-
-        public ActionResult Delete(int id = -1)
-        {
-            if (id != -1)
-            {
-                var entity = _timeGroupsService.GetById(id);
-                if (entity != null)
-                {
-                    _timeGroupsService.DeleteTimeGroups(entity);
-                    return RedirectToAction("Index");
-                }
-                throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
-            }
-            throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
-        }
-
-
-
-
-        public ActionResult Edit(int id = -1)
-        {
-            if (id != -1)
-            {
-                var entity = _timeGroupsService.GetById(id);
-                if (entity != null)
-                {
-                    ViewBag.Gecis_Sinirlama_Tipi = new SelectList(_timeZoneIDsService.GetAllTimeZoneIDs(), "Gecis_Sinirlama_Tipi", "Adi", entity.Gecis_Sinirlama_Tipi);
-                    ViewBag.Baslangic_Tarihi = entity.Baslangic_Tarihi;
-                    return View(entity);
-                }
-                throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
-            }
-            throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(TimeGroups timeGroups, DateTime? Baslangic_Saati_Two = null, DateTime? Bitis_Saati_Two = null)
-        {
-            if (ModelState.IsValid)
-            {
-                if (Baslangic_Saati_Two != null)
-                {
-                    timeGroups.Baslangic_Saati = Baslangic_Saati_Two;
-                }
-                if (Bitis_Saati_Two != null)
-                {
-                    timeGroups.Bitis_Saati = Bitis_Saati_Two;
-                }
-                var entity = _timeGroupsService.GetById(timeGroups.Zaman_Grup_No);
-                if (entity != null)
-                {
-                    _timeGroupsService.UpdateTimeGroups(timeGroups);
-                    return RedirectToAction("Index");
-                }
-                throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
-            }
-            return View(timeGroups);
-        }
-
-
-
-
-
         public ActionResult Add()
         {
             int MaxID;
@@ -140,6 +80,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             };
             return View(model);
         }
+
         [HttpPost]
         public ActionResult Add(TimeGroups timeGroups, DateTime? Baslangic_Tarihi_Two = null, DateTime? Baslangic_Saati_Two = null, DateTime? Bitis_Tarihi_Two = null, DateTime? Bitis_Saati_Two = null)
         {
@@ -175,12 +116,69 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(timeGroups);
         }
 
+        public ActionResult Delete(int id = -1)
+        {
+            if (id != -1)
+            {
+                var entity = _timeGroupsService.GetById(id);
+                if (entity != null)
+                {
+                    _timeGroupsService.DeleteTimeGroups(entity);
+                    return RedirectToAction("Index");
+                }
+                throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
+            }
+            throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
+        }
 
+        public ActionResult Edit(int id = -1)
+        {
+            if (id != -1)
+            {
+                var entity = _timeGroupsService.GetById(id);
+                if (entity != null)
+                {
+                    ViewBag.Gecis_Sinirlama_Tipi = new SelectList(_timeZoneIDsService.GetAllTimeZoneIDs(), "Gecis_Sinirlama_Tipi", "Adi", entity.Gecis_Sinirlama_Tipi);
+                    ViewBag.Baslangic_Tarihi = entity.Baslangic_Tarihi;
+                    return View(entity);
+                }
+                throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
+            }
+            throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(TimeGroups timeGroups, DateTime? Baslangic_Saati_Two = null, DateTime? Bitis_Saati_Two = null)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Baslangic_Saati_Two != null)
+                {
+                    timeGroups.Baslangic_Saati = Baslangic_Saati_Two;
+                }
+                if (Bitis_Saati_Two != null)
+                {
+                    timeGroups.Bitis_Saati = Bitis_Saati_Two;
+                }
+                var entity = _timeGroupsService.GetById(timeGroups.Zaman_Grup_No);
+                if (entity != null)
+                {
+                    _timeGroupsService.UpdateTimeGroups(timeGroups);
+                    return RedirectToAction("Index");
+                }
+                throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
+            }
+            return View(timeGroups);
+        }
 
         public ActionResult Send(int ZamanGrupNo = -1)
         {
             if (ZamanGrupNo != -1)
             {
+                if (panelSettings == null || panelSettings.Panel_ID == 0 || (panelSettings.Panel_IP1 == 0 && panelSettings.Panel_IP2 == 0 && panelSettings.Panel_IP3 == 0 && panelSettings.Panel_IP4 == 0))
+                    return RedirectToAction("Orientation", "Home");
+
                 try
                 {
                     TaskList taskList = new TaskList
@@ -189,8 +187,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = 2600,
                         IntParam_1 = ZamanGrupNo,
-                        Kullanici_Adi = "coskun",
-                        Panel_No = 8,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = panelSettings.Panel_ID,
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
@@ -212,7 +210,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return RedirectToAction("Index", new { @Status = 3 });
         }
-
 
 
         public int CheckStatus(int GrupNo = -1)

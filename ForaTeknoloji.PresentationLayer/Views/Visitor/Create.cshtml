@@ -13,7 +13,7 @@
 
             <div class="card-body">
                 <hr />
-                @using (Html.BeginForm("Create", "Visitor", FormMethod.Post))
+                @using (Html.BeginForm("Create", "Visitor", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="row">
                         <div class="col-md-8">
@@ -101,9 +101,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <img src="~/Images/6300990.jpg" class="img-profile img-fluid img-thumbnail" alt="Alternate Text" />
-                            <button class="btn btn-outline-info btn-sm mt-2"><i class="fas fa-download"></i> Resim Yükle</button>
+                        <div class="col-md-3">
+                            <img src="~/Images/BaseUser.jpg" class="img-profile img-fluid img-thumbnail" alt="Alternate Text" />
+                            <input type="file" name="ProfileImage" id="ProfileImage" class="form-control btn btn-sm btn-secondary" value="" /><br />
+                            <span class="fas fa-info-circle">&nbsp;</span>
+                            <span><i>Lütfen jpg,jpeg ya da png formatı kullanın</i></span><br />
                             <a href="/Camera/Index" class="btn btn-sm btn-outline-secondary mt-2"><i class="fas fa-camera"></i> Resim Çek&nbsp;&nbsp;&nbsp;</a>
                         </div>
                     </div>

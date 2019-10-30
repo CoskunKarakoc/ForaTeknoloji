@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
+    [Excp]
     public class VisitorController : Controller
     {
         private IVisitorsService _visitorsService;
@@ -51,7 +54,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-
         public ActionResult Create()
         {
 
@@ -75,8 +77,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Visitors visitors)
+        public ActionResult Create(Visitors visitors, HttpPostedFileBase ProfileImage)
         {
+            if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" || ProfileImage.ContentType == "image/jpg" || ProfileImage.ContentType == "image/png"))
+            {
+                string filename = $"visitor_{visitors.ID}.{ProfileImage.ContentType.Split('/')[1]}";
+                ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
+                visitors.Resim = filename;
+            }
+
             if (ModelState.IsValid)
             {
                 _visitorsService.AddVisitor(visitors);
@@ -94,6 +103,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
             }
             Visitors visitors = _visitorsService.GetById((int)id);
+            if (visitors.Resim == null)
+                visitors.Resim = "BaseUser.jpg";
             Users users = _userService.GetById((int)visitors.User_ID);
             if (visitors == null)
             {
@@ -117,8 +128,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Visitors entity)
+        public ActionResult Edit(Visitors entity, HttpPostedFileBase ProfileImage)
         {
+            if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" || ProfileImage.ContentType == "image/jpg" || ProfileImage.ContentType == "image/png"))
+            {
+                string filename = $"visitor_{entity.ID}.{ProfileImage.ContentType.Split('/')[1]}";
+                ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
+                entity.Resim = filename;
+            }
             if (ModelState.IsValid)
             {
                 var visitor = _visitorsService.GetById((int)entity.ID);
