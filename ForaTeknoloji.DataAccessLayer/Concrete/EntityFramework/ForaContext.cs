@@ -47,6 +47,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<RawGroups> RawGroups { get; set; }
         public virtual DbSet<RawUsers> RawUsers { get; set; }
         public virtual DbSet<ReaderSettings> ReaderSettings { get; set; }
+        public virtual DbSet<ReaderSettingsNew> ReaderSettingsNews { get; set; }
         public virtual DbSet<Sirketler> Sirketler { get; set; }
         public virtual DbSet<TimeGroups> TimeGroups { get; set; }
         public virtual DbSet<TimeZoneCalendar> TimeZoneCalendar { get; set; }

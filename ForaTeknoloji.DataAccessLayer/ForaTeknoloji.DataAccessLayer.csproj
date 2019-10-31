@@ -72,6 +72,7 @@
     <Compile Include="Abstract\IGroupsDetailDal.cs" />
     <Compile Include="Abstract\IPanelSettingsDal.cs" />
     <Compile Include="Abstract\IReaderSettingDal.cs" />
+    <Compile Include="Abstract\IReaderSettingsNewDal.cs" />
     <Compile Include="Abstract\ISirketDal.cs" />
     <Compile Include="Abstract\ITaskListDal.cs" />
     <Compile Include="Abstract\ITimeGroupsDal.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Concrete\EntityFramework\EfGroupsMasterDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfPanelSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTaskListDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTimeGroupsDal.cs" />

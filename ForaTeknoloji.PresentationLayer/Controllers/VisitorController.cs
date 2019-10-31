@@ -19,8 +19,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUserService _userService;
         private IGroupMasterService _groupMasterService;
         private ITaskListService _taskListService;
+        private PanelSettings PanelSettings;
+        private DBUsers user;
         public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService)
         {
+            PanelSettings = CurrentSession.Panel;
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _visitorsService = visitorsService;
             _userService = userService;
             _groupMasterService = groupMasterService;
@@ -168,6 +176,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (VisitorID != -1)
             {
+                if (PanelSettings == null)
+                    return RedirectToAction("Orientation", "Home");
                 try
                 {
                     TaskList taskList = new TaskList
@@ -176,8 +186,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = 2620,
                         IntParam_1 = VisitorID,
-                        Kullanici_Adi = "coskun",
-                        Panel_No = 8,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };

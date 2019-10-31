@@ -73,6 +73,7 @@
     <Compile Include="Abstract\IGroupMasterService.cs" />
     <Compile Include="Abstract\IGroupsDetailService.cs" />
     <Compile Include="Abstract\IPanelSettingsService.cs" />
+    <Compile Include="Abstract\IReaderSettingsNewService.cs" />
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
     <Compile Include="Abstract\ISirketService.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Concrete\GroupsMasterManager.cs" />
     <Compile Include="Concrete\PanelSettingsManager.cs" />
     <Compile Include="Concrete\ReaderSettingsManager.cs" />
+    <Compile Include="Concrete\ReaderSettingsNewManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />
     <Compile Include="Concrete\SirketManager.cs" />
     <Compile Include="Concrete\TaskListManager.cs" />

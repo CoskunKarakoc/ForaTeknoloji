@@ -26,8 +26,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITimeZoneCalendarService _timeZoneCalendarService;
         private ITaskListService _taskListService;
         public DBUsers user;
+        private PanelSettings PanelSettings;
         public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService)
         {
+            PanelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
             if (user == null)
             {
@@ -241,6 +243,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (UserID != -1)
             {
+                if (PanelSettings == null)
+                    return RedirectToAction("Orientation", "Home");
+
                 try
                 {
 
@@ -250,8 +255,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = 2620,
                         IntParam_1 = UserID,
-                        Kullanici_Adi = "coskun",
-                        Panel_No = 8,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
@@ -278,6 +283,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (UserID != -1)
             {
+                if (PanelSettings == null)
+                    return RedirectToAction("Orientation", "Home");
+
                 try
                 {
                     TaskList taskList = new TaskList
@@ -286,8 +294,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = 2624,
                         IntParam_1 = UserID,
-                        Kullanici_Adi = "coskun",
-                        Panel_No = 8,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
@@ -308,7 +316,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return RedirectToAction("Index", new { @Status = 3 });
         }
-      
+
 
         public ActionResult PanelOperation(string Search, int Status = -1)
         {
@@ -337,6 +345,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (PanelSettings == null)
+                    return RedirectToAction("Orientation", "Home");
+
                 try
                 {
                     TaskList taskList = new TaskList
@@ -345,8 +356,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = 2628,
                         IntParam_1 = id,
-                        Kullanici_Adi = "coskun",
-                        Panel_No = 8,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
@@ -373,6 +384,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (PanelSettings == null)
+                    return RedirectToAction("Orientation", "Home");
+
                 try
                 {
                     TaskList taskList = new TaskList
@@ -381,8 +395,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = 2701,
                         IntParam_1 = id,
-                        Kullanici_Adi = "coskun",
-                        Panel_No = 8,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
@@ -409,6 +423,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (PanelSettings == null)
+                    return RedirectToAction("Orientation", "Home");
+
                 try
                 {
                     TaskList taskList = new TaskList
@@ -417,8 +434,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = 2710,
                         IntParam_1 = id,
-                        Kullanici_Adi = "coskun",
-                        Panel_No = 8,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
@@ -443,6 +460,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult DeleteAllSystem(int id = -1)
         {
+            if (PanelSettings == null)
+                return RedirectToAction("Orientation", "Home");
+
             if (id != -1)
             {
                 try
@@ -453,8 +473,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = 2628,
                         IntParam_1 = id,
-                        Kullanici_Adi = "coskun",
-                        Panel_No = 8,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
@@ -482,6 +502,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PanelDeleteAll()
         {
+            if (PanelSettings == null)
+                return RedirectToAction("Orientation", "Home");
+
             try
             {
                 TaskList taskList = new TaskList
@@ -490,8 +513,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Durum_Kodu = 1,
                     Gorev_Kodu = 2629,
                     IntParam_1 = 1,
-                    Kullanici_Adi = "coskun",
-                    Panel_No = 8,
+                    Kullanici_Adi = user.Kullanici_Adi,
+                    Panel_No = PanelSettings.Panel_ID,
                     Tablo_Guncelle = true,
                     Tarih = DateTime.Now
                 };
@@ -514,6 +537,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult AccessCounterDeleteAll()
         {
+            if (PanelSettings == null)
+                return RedirectToAction("Orientation", "Home");
+
             try
             {
                 TaskList taskList = new TaskList
@@ -522,8 +548,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Durum_Kodu = 1,
                     Gorev_Kodu = 2702,
                     IntParam_1 = 1,
-                    Kullanici_Adi = "coskun",
-                    Panel_No = 8,
+                    Kullanici_Adi = user.Kullanici_Adi,
+                    Panel_No = PanelSettings.Panel_ID,
                     Tablo_Guncelle = true,
                     Tarih = DateTime.Now
                 };
@@ -546,6 +572,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult AntiCounterDeleteAll()
         {
+            if (PanelSettings == null)
+                return RedirectToAction("Orientation", "Home");
+
             try
             {
                 TaskList taskList = new TaskList
@@ -554,8 +583,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Durum_Kodu = 1,
                     Gorev_Kodu = 2711,
                     IntParam_1 = 1,
-                    Kullanici_Adi = "coskun",
-                    Panel_No = 8,
+                    Kullanici_Adi = user.Kullanici_Adi,
+                    Panel_No = PanelSettings.Panel_ID,
                     Tablo_Guncelle = true,
                     Tarih = DateTime.Now
                 };

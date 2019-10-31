@@ -42,46 +42,46 @@ namespace ForaTeknoloji.Entities.Entities
         public int? Lokal_APB { get; set; }
 
         [Column("Lokal APB1")]
-        public int? Lokal_APB1 { get; set; }
+        public bool? Lokal_APB1 { get; set; }
 
         [Column("Lokal APB2")]
-        public int? Lokal_APB2 { get; set; }
+        public bool? Lokal_APB2 { get; set; }
 
         [Column("Lokal APB3")]
-        public int? Lokal_APB3 { get; set; }
+        public bool? Lokal_APB3 { get; set; }
 
         [Column("Lokal APB4")]
-        public int? Lokal_APB4 { get; set; }
+        public bool? Lokal_APB4 { get; set; }
 
         [Column("Lokal APB5")]
-        public int? Lokal_APB5 { get; set; }
+        public bool? Lokal_APB5 { get; set; }
 
         [Column("Lokal APB6")]
-        public int? Lokal_APB6 { get; set; }
+        public bool? Lokal_APB6 { get; set; }
 
         [Column("Lokal APB7")]
-        public int? Lokal_APB7 { get; set; }
+        public bool? Lokal_APB7 { get; set; }
 
         [Column("Lokal APB8")]
-        public int? Lokal_APB8 { get; set; }
+        public bool? Lokal_APB8 { get; set; }
 
         [Column("Global APB")]
-        public int? Global_APB { get; set; }
+        public bool? Global_APB { get; set; }
 
         [Column("Global Bolge No")]
         public int? Global_Bolge_No { get; set; }
 
         [Column("Global Capacity Control")]
-        public int? Global_Capacity_Control { get; set; }
+        public bool? Global_Capacity_Control { get; set; }
 
         [Column("Global Access Count Control")]
-        public int? Global_Access_Count_Control { get; set; }
+        public bool? Global_Access_Count_Control { get; set; }
 
         [Column("Global MaxIn Count Control")]
-        public int? Global_MaxIn_Count_Control { get; set; }
+        public bool? Global_MaxIn_Count_Control { get; set; }
 
         [Column("Global Sequental Access Control")]
-        public int? Global_Sequental_Access_Control { get; set; }
+        public bool? Global_Sequental_Access_Control { get; set; }
 
         [Column("Panel Same Tag Block")]
         public int? Panel_Same_Tag_Block { get; set; }
@@ -129,28 +129,28 @@ namespace ForaTeknoloji.Entities.Entities
         public int? Panel_Alarm_Role { get; set; }
 
         [Column("Panel Alarm Mode Role Ok")]
-        public int? Panel_Alarm_Mode_Role_Ok { get; set; }
+        public bool? Panel_Alarm_Mode_Role_Ok { get; set; }
 
         [Column("Panel Alarm Mode")]
-        public int? Panel_Alarm_Mode { get; set; }
+        public bool? Panel_Alarm_Mode { get; set; }
 
         [Column("Panel Fire Mode Role Ok")]
-        public int? Panel_Fire_Mode_Role_Ok { get; set; }
+        public bool? Panel_Fire_Mode_Role_Ok { get; set; }
 
         [Column("Panel Fire Mode")]
-        public int? Panel_Fire_Mode { get; set; }
+        public bool? Panel_Fire_Mode { get; set; }
 
         [Column("Panel Door Alarm Role Ok")]
-        public int? Panel_Door_Alarm_Role_Ok { get; set; }
+        public bool? Panel_Door_Alarm_Role_Ok { get; set; }
 
         [Column("Panel Alarm Broadcast Ok")]
-        public int? Panel_Alarm_Broadcast_Ok { get; set; }
+        public bool? Panel_Alarm_Broadcast_Ok { get; set; }
 
         [Column("Panel Fire Broadcast Ok")]
-        public int? Panel_Fire_Broadcast_Ok { get; set; }
+        public bool? Panel_Fire_Broadcast_Ok { get; set; }
 
         [Column("Panel Door Alarm Broadcast Ok")]
-        public int? Panel_Door_Alarm_Broadcast_Ok { get; set; }
+        public bool? Panel_Door_Alarm_Broadcast_Ok { get; set; }
 
         [Column("Panel Global Bolge1")]
         public int? Panel_Global_Bolge1 { get; set; }
@@ -177,73 +177,73 @@ namespace ForaTeknoloji.Entities.Entities
         public int? Panel_Global_Bolge8 { get; set; }
 
         [Column("Panel Local Capacity1")]
-        public int? Panel_Local_Capacity1 { get; set; }
+        public bool? Panel_Local_Capacity1 { get; set; }
 
         [Column("Panel Local Capacity Clear1")]
-        public int? Panel_Local_Capacity_Clear1 { get; set; }
+        public bool? Panel_Local_Capacity_Clear1 { get; set; }
 
         [Column("Panel Local Capacity Value1")]
         public int? Panel_Local_Capacity_Value1 { get; set; }
 
         [Column("Panel Local Capacity2")]
-        public int? Panel_Local_Capacity2 { get; set; }
+        public bool? Panel_Local_Capacity2 { get; set; }
 
         [Column("Panel Local Capacity Clear2")]
-        public int? Panel_Local_Capacity_Clear2 { get; set; }
+        public bool? Panel_Local_Capacity_Clear2 { get; set; }
 
         [Column("Panel Local Capacity Value2")]
         public int? Panel_Local_Capacity_Value2 { get; set; }
 
         [Column("Panel Local Capacity3")]
-        public int? Panel_Local_Capacity3 { get; set; }
+        public bool? Panel_Local_Capacity3 { get; set; }
 
         [Column("Panel Local Capacity Clear3")]
-        public int? Panel_Local_Capacity_Clear3 { get; set; }
+        public bool? Panel_Local_Capacity_Clear3 { get; set; }
 
         [Column("Panel Local Capacity Value3")]
         public int? Panel_Local_Capacity_Value3 { get; set; }
 
         [Column("Panel Local Capacity4")]
-        public int? Panel_Local_Capacity4 { get; set; }
+        public bool? Panel_Local_Capacity4 { get; set; }
 
         [Column("Panel Local Capacity Clear4")]
-        public int? Panel_Local_Capacity_Clear4 { get; set; }
+        public bool? Panel_Local_Capacity_Clear4 { get; set; }
 
         [Column("Panel Local Capacity Value4")]
         public int? Panel_Local_Capacity_Value4 { get; set; }
 
         [Column("Panel Local Capacity5")]
-        public int? Panel_Local_Capacity5 { get; set; }
+        public bool? Panel_Local_Capacity5 { get; set; }
 
         [Column("Panel Local Capacity Clear5")]
-        public int? Panel_Local_Capacity_Clear5 { get; set; }
+        public bool? Panel_Local_Capacity_Clear5 { get; set; }
 
         [Column("Panel Local Capacity Value5")]
         public int? Panel_Local_Capacity_Value5 { get; set; }
 
         [Column("Panel Local Capacity6")]
-        public int? Panel_Local_Capacity6 { get; set; }
+        public bool? Panel_Local_Capacity6 { get; set; }
 
         [Column("Panel Local Capacity Clear6")]
-        public int? Panel_Local_Capacity_Clear6 { get; set; }
+        public bool? Panel_Local_Capacity_Clear6 { get; set; }
 
         [Column("Panel Local Capacity Value6")]
         public int? Panel_Local_Capacity_Value6 { get; set; }
 
         [Column("Panel Local Capacity7")]
-        public int? Panel_Local_Capacity7 { get; set; }
+        public bool? Panel_Local_Capacity7 { get; set; }
 
         [Column("Panel Local Capacity Clear7")]
-        public int? Panel_Local_Capacity_Clear7 { get; set; }
+        public bool? Panel_Local_Capacity_Clear7 { get; set; }
 
         [Column("Panel Local Capacity Value7")]
         public int? Panel_Local_Capacity_Value7 { get; set; }
 
         [Column("Panel Local Capacity8")]
-        public int? Panel_Local_Capacity8 { get; set; }
+        public bool? Panel_Local_Capacity8 { get; set; }
 
         [Column("Panel Local Capacity Clear8")]
-        public int? Panel_Local_Capacity_Clear8 { get; set; }
+        public bool? Panel_Local_Capacity_Clear8 { get; set; }
 
         [Column("Panel Local Capacity Value8")]
         public int? Panel_Local_Capacity_Value8 { get; set; }
@@ -303,18 +303,60 @@ namespace ForaTeknoloji.Entities.Entities
         public int? Lift_Capacity { get; set; }
 
         [Column("Interlock Active")]
-        public int? Interlock_Active { get; set; }
+        public bool? Interlock_Active { get; set; }
 
         [Column("Same Door Multiple Reader")]
-        public int? Same_Door_Multiple_Reader { get; set; }
+        public bool? Same_Door_Multiple_Reader { get; set; }
 
         [Column("Global Zone Interlock Active")]
-        public int? Global_Zone_Interlock_Active { get; set; }
+        public bool? Global_Zone_Interlock_Active { get; set; }
 
         [Column("Panel Button Detector")]
-        public int? Panel_Button_Detector { get; set; }
+        public bool? Panel_Button_Detector { get; set; }
 
         [Column("Panel Button Detector Time")]
         public int? Panel_Button_Detector_Time { get; set; }
+
+        [Column("Offline Antipassback")]
+        public bool? Offline_Antipassback { get; set; }
+
+        [Column("Offline Blocked Request")]
+        public bool? Offline_Blocked_Request { get; set; }
+
+        [Column("Offline Undefined Transition")]
+        public bool? Offline_Undefined_Transition { get; set; }
+
+        [Column("Offline Manuel Operations")]
+        public bool? Offline_Manuel_Operations { get; set; }
+
+        [Column("Offline Button Triggering")]
+        public bool? Offline_Button_Triggering { get; set; }
+
+        [Column("Offline Scheduled Transactions")]
+        public bool? Offline_Scheduled_Transactions { get; set; }
+
+        [Column("LocalInterlock G1-1")]
+        public int? LocalInterlock_G1_1 { get; set; }
+
+        [Column("LocalInterlock G1-2")]
+        public int? LocalInterlock_G1_2 { get; set; }
+
+        [Column("LocalInterlock G2-1")]
+        public int? LocalInterlock_G2_1 { get; set; }
+
+        [Column("LocalInterlock G2-2")]
+        public int? LocalInterlock_G2_2 { get; set; }
+
+        [Column("LocalInterlock G3-1")]
+        public int? LocalInterlock_G3_1 { get; set; }
+
+        [Column("LocalInterlock G3-2")]
+        public int? LocalInterlock_G3_2 { get; set; }
+
+        [Column("LocalInterlock G4-1")]
+        public int? LocalInterlock_G4_1 { get; set; }
+
+        [Column("LocalInterlock G4-2")]
+        public int? LocalInterlock_G4_2 { get; set; }
     }
 }

@@ -1,14 +1,18 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
+    [Excp]
     public class PanelController : Controller
     {
         private IPanelSettingsService _panelSettingsService;
@@ -26,14 +30,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(_panelSettingsService.GetAllPanelSettings());
         }
 
-        public ActionResult SetSession(int ID)
+        public ActionResult SetSession(int ID = -1)
         {
-
-            PanelSettings panelSettings = _panelSettingsService.GetById(ID);
-
-            CurrentSession.Set<PanelSettings>("Panel", panelSettings);
-
-            var sonuc = CurrentSession.Get<PanelSettings>("Panel");
+            if (ID != -1)
+            {
+                PanelSettings panelSettings = _panelSettingsService.GetById(ID);
+                if (panelSettings != null)
+                {
+                    CurrentSession.Remove("Panel");
+                    CurrentSession.Set<PanelSettings>("Panel", panelSettings);
+                }
+            }
             return View("Index");
         }
 

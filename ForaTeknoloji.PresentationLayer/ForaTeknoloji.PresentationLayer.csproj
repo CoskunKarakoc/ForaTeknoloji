@@ -2543,6 +2543,7 @@
     <Compile Include="Models\IcerdeDısardaTumuListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaZiyaretciListViewModel.cs" />
     <Compile Include="Models\KullaniciListViewModelModel.cs" />
+    <Compile Include="Models\PanelSettingsViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\SecurityCreateViewModel.cs" />
@@ -2587,14 +2588,6 @@
     <Content Include="Views\Department\Index.cshtml" />
     <Content Include="Views\Block\Index.cshtml" />
     <Content Include="Views\GlobalZone\Index.cshtml" />
-    <Content Include="Views\PanelSettings\Genel.cshtml" />
-    <Content Include="Views\PanelSettings\Haberlesme.cshtml" />
-    <Content Include="Views\PanelSettings\Kapilar.cshtml" />
-    <Content Include="Views\PanelSettings\Kapasite.cshtml" />
-    <Content Include="Views\PanelSettings\GlobalBolge.cshtml" />
-    <Content Include="Views\PanelSettings\Interlock.cshtml" />
-    <Content Include="Views\PanelSettings\Diger.cshtml" />
-    <Content Include="Views\PanelSettings\LPRKameralar.cshtml" />
     <Content Include="Views\Company\Edit.cshtml" />
     <Content Include="Views\Department\Edit.cshtml" />
     <Content Include="Views\Block\Edit.cshtml" />
@@ -2617,6 +2610,9 @@
     <Content Include="Views\Home\Orientation.cshtml" />
     <Content Include="Views\Door\Index.cshtml" />
     <Content Include="Views\Camera\Index.cshtml" />
+    <Content Include="Views\PanelSettings\Settings.cshtml" />
+    <Content Include="Views\PanelSettings\ReaderSettings.cshtml" />
+    <Content Include="Views\PanelSettings\ReaderEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

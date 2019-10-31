@@ -1,0 +1,383 @@
+﻿@model ForaTeknoloji.Entities.Entities.ReaderSettingsNew
+@{
+    ViewBag.Title = "Okuyucu Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-9 offset-md-1">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-info text-center">Seçilen Kapı Ayarları</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("ReaderEdit", "PanelSettings", FormMethod.Post))
+                {
+                    @Html.HiddenFor(x => x.WKapi_ID)
+                    @Html.HiddenFor(x => x.Panel_ID)
+                    @Html.HiddenFor(x => x.Panel_Name)
+                    @Html.HiddenFor(x => x.Seri_No)
+                    @Html.HiddenFor(x => x.Sira_No)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Kapı Adı</label>
+                                        @Html.TextBoxFor(model => model.WKapi_Adi, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Master Role No</label>
+                                        @Html.DropDownList("WKapi_Role_No", null, "Master Role", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.WKapi_Role_No, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Lokal Bölge No</label>
+                                        @Html.DropDownList("WKapi_Lokal_Bolge", null, "Lokal Bölge No", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.WKapi_Lokal_Bolge, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Kullanıcı Sayısı</label>
+                                        @Html.DropDownList("WKapi_User_Count", null, "Kullanıcı Sayısı", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.WKapi_User_Count, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Aktif", Model.WKapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Aktif">Kapı Aktif</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Lift_Aktif", Model.WKapi_Lift_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Lift_Aktif">Otopark Kapısı</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Pin_Dogrulama", Model.WKapi_Pin_Dogrulama ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Pin_Dogrulama">Şifre Doğrulama</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Sirali_Gecis_Ana_Kapi", Model.WKapi_Sirali_Gecis_Ana_Kapi ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Sirali_Gecis_Ana_Kapi">Ana Giriş/Çıkış</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Coklu_Onay", Model.WKapi_Coklu_Onay ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Coklu_Onay">Çoklu Onay Aktif</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="Button_Dedektor" value="" id="ButtonDedektor" />
+                                        <label class="custom-control-label" for="ButtonDedektor">Button Dedektör</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                @if (Model.WKapi_Kapi_Tipi == 0)
+                                {
+                                    <label>Kapı Geçiş Tipi:</label>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="0" class="custom-control-input" id="Giris" checked name="WKapi_Kapi_Tipi">
+                                            <label class="custom-control-label" for="Giris">Giriş</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="1" class="custom-control-input" id="Cikis" name="WKapi_Kapi_Tipi">
+                                            <label class="custom-control-label" for="Cikis">Çıkış</label>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label>Kapı Geçiş Tipi:</label>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="0" class="custom-control-input" id="Giris" name="WKapi_Kapi_Tipi">
+                                            <label class="custom-control-label" for="Giris">Giriş</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="1" class="custom-control-input" id="Cikis" checked name="WKapi_Kapi_Tipi">
+                                            <label class="custom-control-label" for="Cikis">Çıkış</label>
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.WKapi_WIGType == 0)
+                                {
+                                    <label class="offset-2">Wiegand Tipi:</label>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="0" class="custom-control-input" id="26" checked name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="26">26</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="1" class="custom-control-input" id="34" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34">34</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="2" class="custom-control-input" id="34INV" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34INV">34INV</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="3" class="custom-control-input" id="64" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64">64</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="4" class="custom-control-input" id="64INV" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64INV">64INV</label>
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model.WKapi_WIGType == 1)
+                                {
+                                    <label class="offset-2">Wiegand Tipi:</label>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="0" class="custom-control-input" id="26" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="26">26</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="1" class="custom-control-input" id="34" checked name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34">34</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="2" class="custom-control-input" id="34INV" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34INV">34INV</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="3" class="custom-control-input" id="64" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64">64</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="4" class="custom-control-input" id="64INV" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64INV">64INV</label>
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model.WKapi_WIGType == 2)
+                                {
+                                    <label class="offset-2">Wiegand Tipi:</label>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="0" class="custom-control-input" id="26" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="26">26</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="1" class="custom-control-input" id="34" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34">34</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="2" class="custom-control-input" id="34INV" checked name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34INV">34INV</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="3" class="custom-control-input" id="64" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64">64</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="4" class="custom-control-input" id="64INV" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64INV">64INV</label>
+                                        </div>
+                                    </div>
+                                }
+                                else if (Model.WKapi_WIGType == 3)
+                                {
+                                    <label class="offset-2">Wiegand Tipi:</label>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="0" class="custom-control-input" id="26" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="26">26</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="1" class="custom-control-input" id="34" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34">34</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="2" class="custom-control-input" id="34INV" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34INV">34INV</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="3" class="custom-control-input" id="64" checked name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64">64</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="4" class="custom-control-input" id="64INV" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64INV">64INV</label>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="offset-2">Wiegand Tipi:</label>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="0" class="custom-control-input" id="26" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="26">26</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="1" class="custom-control-input" id="34" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34">34</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="2" class="custom-control-input" id="34INV" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="34INV">34INV</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="3" class="custom-control-input" id="64" name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64">64</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="4" class="custom-control-input" id="64INV" checked name="WKapi_WIGType">
+                                            <label class="custom-control-label" for="64INV">64INV</label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr />
+                            <h3 class="text-center text-info">Kapı Alarmları</h3>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2 offset-3">
+                                    <div class="form-group">
+                                        <label>Açık Kalma Süresi</label>
+                                        @Html.TextBoxFor(model => model.WKapi_Acik_Sure, new { @class = "form-control", type = "number", min = "20", max = "999" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Kullanıcı Sayısı</label>
+                                        @Html.DropDownList("WKapi_Harici_Alarm_Rolesi", null, "Harici Alarm Rolesi", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.WKapi_Harici_Alarm_Rolesi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>İtme Gecikmesi</label>
+                                        @Html.TextBoxFor(model => model.WKapi_Itme_Gecikmesi, new { @class = "form-control", type = "number", min = "1", max = "9" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Ana_Alarm_Rolesi", Model.WKapi_Ana_Alarm_Rolesi ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Ana_Alarm_Rolesi">Alarm'da Kilitle</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Yangin_Modu", Model.WKapi_Yangin_Modu ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Yangin_Modu">Yangın'da Aç</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Acik_Sure_Alarmi", Model.WKapi_Acik_Sure_Alarmi ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Acik_Sure_Alarmi">Açık Kalma Alarmı</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Zorlama_Alarmi", Model.WKapi_Zorlama_Alarmi ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Zorlama_Alarmi">Zorlama Alarmı</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Acilma_Alarmi", Model.WKapi_Acilma_Alarmi ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Acilma_Alarmi">Açılma Alarmı</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_Panik_Buton_Alarmi", Model.WKapi_Panik_Buton_Alarmi ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Panik_Buton_Alarmi">Panik Buton</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <button type="submit" class="btn  btn-outline-primary"><i class="fas fa-save"></i> Ayarları Kaydet</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

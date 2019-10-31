@@ -101,6 +101,7 @@
     <Compile Include="Entities\RawGroups.cs" />
     <Compile Include="Entities\RawUsers.cs" />
     <Compile Include="Entities\ReaderSettings.cs" />
+    <Compile Include="Entities\ReaderSettingsNew.cs" />
     <Compile Include="Entities\Sirketler.cs" />
     <Compile Include="Entities\StatusCode.cs" />
     <Compile Include="Entities\TaskCode.cs" />

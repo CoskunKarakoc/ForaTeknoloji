@@ -47,7 +47,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ITimeGroupsDal>().To<EfTimeGroupsDal>().InSingletonScope();
             Bind<ITimeZoneIDsDal>().To<EfTimeZoneIDsDal>().InSingletonScope();
             Bind<IDBRolesDal>().To<EfDBRolesDal>().InSingletonScope();
-
+            Bind<IReaderSettingsNewDal>().To<EfReaderSettingsNewDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -79,6 +79,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ITimeGroupsService>().To<TimeGroupsManager>().InSingletonScope();
             Bind<ITimeZoneIDsService>().To<TimeZoneIDsManager>().InSingletonScope();
             Bind<IDBRolesService>().To<DBRolesManager>().InSingletonScope();
+            Bind<IReaderSettingsNewService>().To<ReaderSettingsNewManager>().InSingletonScope();
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

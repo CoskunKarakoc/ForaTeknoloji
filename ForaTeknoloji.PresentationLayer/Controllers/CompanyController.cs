@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     [Excp]
     public class CompanyController : Controller
     {
