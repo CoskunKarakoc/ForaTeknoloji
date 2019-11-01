@@ -82,9 +82,25 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 return RedirectToAction("Orientation", "Home");
             }
-            var model = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelSettings.Panel_ID && x.Seri_No == PanelSettings.Seri_No);
+            var model = _settingsNewService.GetAllReaderSettingsNew(x => x.Seri_No == PanelSettings.Seri_No);
             return View(model);
         }
+
+
+
+
+
+        public ActionResult Reader(int id)
+        {
+            ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew();
+            ViewBag.Seri_No = PanelSettings.Seri_No;
+            ViewBag.Sira_No = PanelSettings.Sira_No;
+            ViewBag.Panel_Name = PanelSettings.Panel_Name;
+            ViewBag.Panel_ID = PanelSettings.Panel_ID;
+            return View(readerSettingsNew);
+        }
+
+
 
 
         public ActionResult ReaderEdit(int id = -1)

@@ -744,7 +744,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
-    
+
         //PersonelListReport Controller
         public List<PersonelList> GetPersonelLists(int? Sirketler, int? Departmanlar, int? Bloklar, int? Groupsdetail, int? GlobalBolgeNo, int? Daire, string Plaka = null)
         {
@@ -1680,8 +1680,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             return liste;
         }
-
-
 
 
         //Kullanıcı adına göre Sirket Listesi döndürüyor

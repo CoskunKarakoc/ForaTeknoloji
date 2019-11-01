@@ -35,6 +35,9 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<GelenGelmeyen_ToplamIcerdeKalma> GelenGelmeyen_ToplamIcerdeKalmas(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2);
         List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2);
 
+
+
+
         void Guncelle(List<int> KayitNo);
         void GetPanelList(DBUsers user);
         void GetSirketList(DBUsers users);

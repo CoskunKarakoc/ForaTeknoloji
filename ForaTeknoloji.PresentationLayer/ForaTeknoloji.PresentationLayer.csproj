@@ -2613,6 +2613,8 @@
     <Content Include="Views\PanelSettings\Settings.cshtml" />
     <Content Include="Views\PanelSettings\ReaderSettings.cshtml" />
     <Content Include="Views\PanelSettings\ReaderEdit.cshtml" />
+    <Content Include="Views\PanelSettings\Reader.cshtml" />
+    <Content Include="Views\Watch\WatchSettings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

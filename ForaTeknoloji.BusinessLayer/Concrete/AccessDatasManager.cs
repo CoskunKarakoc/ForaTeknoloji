@@ -35,9 +35,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return filter == null ? _accessDatasDal.GetList() : _accessDatasDal.GetList(filter);
         }
 
-        public AccessDatas GetById(int id)
+        public List<AccessDatas> GetById(int id)
         {
-            return _accessDatasDal.Get(x => x.Kayit_No == id);
+            return _accessDatasDal.GetList(x => x.ID==id);
         }
 
         public AccessDatas GetByKayit_No(int Kayit_No)
@@ -60,6 +60,14 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _accessDatasDal.GetList().Select(x => x.Gecis_Tipi).ToList();
         }
 
+        public AccessDatas GetByQuery(Expression<Func<AccessDatas, bool>> filter = null)
+        {
+            return filter == null ? null : _accessDatasDal.Get(filter);
+        }
 
+        public IQueryable<AccessDatas> GetByQueryable(Expression<Func<AccessDatas, bool>> filter = null)
+        {
+            return _accessDatasDal.Queryable();
+        }
     }
 }

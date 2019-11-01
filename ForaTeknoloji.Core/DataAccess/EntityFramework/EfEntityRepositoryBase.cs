@@ -58,5 +58,14 @@ namespace ForaTeknoloji.Core.DataAccess.EntityFramework
                 return entity;
             }
         }
+
+        public IQueryable<TEntity> Queryable()
+        {
+            using (var context = new TContex())
+            {
+                return context.Set<TEntity>();
+            }
+        }
+
     }
 }

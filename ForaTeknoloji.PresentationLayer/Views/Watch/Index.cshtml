@@ -1,551 +1,635 @@
-﻿
+﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.AccessDatas>
 @{
     ViewBag.Title = "Canlı İzle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card shadow-lg col-md-8 offset-md-2 mt-xl-5 mb-xl-5">
-    <div class="card-body">
-        <nav>
-            <div class="nav nav-tabs col-md-12" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-normal" role="tab" aria-controls="nav-normal" aria-selected="true">Normal Geçiş</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-coklu" role="tab" aria-controls="nav-coklu" aria-selected="false">Çoklu Geçiş</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-anti" role="tab" aria-controls="nav-anti" aria-selected="false">Antipassback</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-engellenen" role="tab" aria-controls="nav-engellenen" aria-selected="false">Engellenen</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-tanimsiz" role="tab" aria-controls="nav-tanimsiz" aria-selected="false">Tanımsız</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-tum" role="tab" aria-controls="nav-tum" aria-selected="false">Tüm Geçişler</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-manuel" role="tab" aria-controls="nav-manuel" aria-selected="false">Manuel İşlem</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-prog" role="tab" aria-controls="nav-prog" aria-selected="false">Prog.İşlem</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-buton" role="tab" aria-controls="nav-buton" aria-selected="false">Buton İşlem</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-islem" role="tab" aria-controls="nav-islem" aria-selected="false">Tüm İşlemler</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-alarm" role="tab" aria-controls="nav-alarm" aria-selected="false">Alarm/Yangın</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-diger" role="tab" aria-controls="nav-diger" aria-selected="false">Diğer Alarm</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-ayar" role="tab" aria-controls="nav-ayar" aria-selected="false">Canlı İzleme Ayarları</a>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header text-right">
+                <a href="@Url.Action("WatchSettings","Watch")"><i class="fas fa-cogs fa-2x text-secondary"></i></a>
             </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-normal" role="tabpanel" aria-labelledby="nav-normal-tab">
+            <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">Kart ID</label>
-                            <input type="text" name="Kart_ID" class="form-control" value="" />
-                       
-                            <label class="control-label">Adı</label>
-                            <input type="text" name="Adi" class="form-control" value="" />
-                      
-                            <label class="control-label">Soyadı</label>
-                            <input type="text" name="Soyadi" class="form-control" value="" />
-                     
-                            <label class="control-label">TC Kimlik</label>
-                            <input type="text" name="TCKimlik" class="form-control" value="" />
-                       
-                            <label class="control-label">Şirket</label>
-                            <input type="text" name="Sirket_Adi" class="form-control" value="" />
-                   
-                            <label class="control-label">Bölüm</label>
-                            <input type="text" name="Bolum_Adi" class="form-control" value="" />
-                      
-                            <label class="control-label">Plaka</label>
-                            <input type="text" name="Plaka" class="form-control" value="" />
-                   
-                            <label class="control-label">Blok</label>
-                            <input type="text" name="Blok_Adi" class="form-control" value="" />
-                       
-                            <label class="control-label">Daire</label>
-                            <input type="text" name="Daire" class="form-control" value="" />
-                     
-                            <label class="control-label">Tarih</label>
-                            <input type="date" name="Tarih" class="form-control" value="" />
-                      
-                            <label class="control-label">Panel</label>
-                            <input type="text" name="Panel_ID" class="form-control" value="" />
-                      
-                            <label class="control-label">Geçiş Tipi</label>
-                            <input type="text" name="Gecis_Tİpi" class="form-control" value="" />
-                       
-                            <label class="control-label">Kapı</label>
-                            <input type="text" name="Kapi_ID" class="form-control" value="" />
-                        </div>
-                    </div>
-                    <div class="col-md-6 mt-4 text-center">
-                        <img src="~/Images/6300990.jpg" class="img-fluid img-thumbnail card-img " alt="Alternate Text" />
-                        <br />
-                        <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
-                            <label class="btn btn-outline-info active">
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kayıtlı Resim
-                            </label>
-                            <label class="btn btn-outline-info">
-                                <input type="radio" name="options" id="option2" autocomplete="off"> Canlı Resim
-                            </label>
-                            <label class="btn btn-outline-info">
-                                <input type="radio" name="options" id="option3" autocomplete="off"> Yanyana Göster
-                            </label>
-                        </div>
-                    </div>
                     <div class="col-md-12">
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Tumu" class="custom-control-input" id="Tumu" />
+                            <label class="custom-control-label" for="Tumu">Tümü</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Normal" class="custom-control-input" id="Normal" />
+                            <label class="custom-control-label text-success" for="Normal">Normal</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Coklu" class="custom-control-input" id="Coklu" />
+                            <label class="custom-control-label text-info" for="Coklu">Çoklu Geçiş</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Antipassback" class="custom-control-input" id="Antipassback" />
+                            <label class="custom-control-label text-danger" for="Antipassback">Antipassback</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Manuel" class="custom-control-input" id="Manuel" />
+                            <label class="custom-control-label text-warning" for="Manuel">Manuel İşlem</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="AlarmYangin" class="custom-control-input" id="AlarmYangin" />
+                            <label class="custom-control-label text-secondary" for="AlarmYangin">Alarm Yangın</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Tanimsiz" class="custom-control-input" id="Tanimsiz" />
+                            <label class="custom-control-label text-primary" for="Tanimsiz">Tanımsız</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Programli" class="custom-control-input" id="Programli" />
+                            <label class="custom-control-label text-success" for="Programli">Programlı İşlem</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="KapiAlarm" class="custom-control-input" id="KapiAlarm" />
+                            <label class="custom-control-label text-info" for="KapiAlarm">Kapı Alarmları</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Engellenen" class="custom-control-input" id="Engellenen" />
+                            <label class="custom-control-label text-danger" for="Engellenen">Engellenen</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Button" class="custom-control-input" id="Button" />
+                            <label class="custom-control-label text-warning" for="Button">Buton İşlemi</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="DigerAlarm" class="custom-control-input" id="DigerAlarm" />
+                            <label class="custom-control-label text-secondary" for="DigerAlarm">Diğer Alarmlar</label>
+                        </div>
+                        <div class="custom-control-inline custom-checkbox ml-2">
+                            <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
+                            <label class="custom-control-label text-dark" for="Operator">Operatör Logları</label>
+                        </div>
                         <hr />
-                        <table class="table-borderless table table-hover text-center table-striped table-sm">
-                            <thead class="table-info">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Kart ID</td>
-                                    <td>Adi</td>
-                                    <td>Soyadi</td>
-                                    <td>Şirket</td>
-                                    <td>Departman</td>
-                                    <td>TCKimlik</td>
-                                    <td>Plaka</td>
-                                    <td>Blok</td>
-                                    <td>Daire</td>
-                                    <td>Grup Adi</td>
-                                    <td>Panel</td>
-                                    <td>Geçiş</td>
-                                    <td>Tarih</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="table-success">
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                </tr>
-
-
-                            </tbody>
-
-
-                        </table>
                     </div>
-                </div>
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-coklu" role="tabpanel" aria-labelledby="nav-coklu-tab">
-                <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">Kart ID</label>
-                            <input type="text" name="Kart_ID" class="form-control" value="" />
-                       
-                            <label class="control-label">Adı</label>
-                            <input type="text" name="Adi" class="form-control" value="" />
-                       
-                            <label class="control-label">Soyadı</label>
-                            <input type="text" name="Soyadi" class="form-control" value="" />
-                      
-                            <label class="control-label">TC Kimlik</label>
-                            <input type="text" name="TCKimlik" class="form-control" value="" />
-                     
-                            <label class="control-label">Şirket</label>
-                            <input type="text" name="Sirket_Adi" class="form-control" value="" />
-                   
-                            <label class="control-label">Bölüm</label>
-                            <input type="text" name="Bolum_Adi" class="form-control" value="" />
-                    
-                            <label class="control-label">Plaka</label>
-                            <input type="text" name="Plaka" class="form-control" value="" />
-                      
-                            <label class="control-label">Blok</label>
-                            <input type="text" name="Blok_Adi" class="form-control" value="" />
-                     
-                            <label class="control-label">Daire</label>
-                            <input type="text" name="Daire" class="form-control" value="" />
-                     
-                            <label class="control-label">Tarih</label>
-                            <input type="date" name="Tarih" class="form-control" value="" />
-                       
-                            <label class="control-label">Panel</label>
-                            <input type="text" name="Panel_ID" class="form-control" value="" />
-                       
-                            <label class="control-label">Geçiş Tipi</label>
-                            <input type="text" name="Gecis_Tİpi" class="form-control" value="" />
-                       
-                            <label class="control-label">Kapı</label>
-                            <input type="text" name="Kapi_ID" class="form-control" value="" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Kart ID</label>
+                                    <input type="text" name="Kart_ID" id="Kart_ID" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Adı</label>
+                                    <input type="text" name="Adi" id="Adi" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Şirket</label>
+                                    <input type="text" name="Sirket_Adi" id="Sirket_Adi" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Plaka</label>
+                                    <input type="text" name="Plaka" id="Plaka" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Daire</label>
+                                    <input type="number" name="Daire" id="Daire" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Panel</label>
+                                    <input type="text" name="Panel_ID" id="Panel_ID" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Geçiş Tipi</label>
+                                    <input type="text" name="Gecis_Tipi" id="Gecis_Tipi" value="" class="form-control form-control-sm" />
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>TC Kimlik</label>
+                                    <input type="text" name="TCKimlik" id="TCKimlik" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Soyadı</label>
+                                    <input type="text" name="Soyadi" id="Soyadi" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Bölüm</label>
+                                    <input type="text" name="Grup_No" id="Grup_No" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Blok</label>
+                                    <input type="text" name="Blok_Adi" id="Blok_Adi" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Tarih</label>
+                                    <input type="text" name="Tarih" id="Tarih" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Kapı</label>
+                                    <input type="text" name="Kapi_ID" id="Kapi_ID" value="" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Kayıt Tipi</label>
+                                    <input type="text" name="Kayit_Tipi" id="Kayit_Tipi" value="" class="form-control form-control-sm" />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mt-4 text-center">
-                        <img src="~/Images/6300990.jpg" class="img-fluid img-thumbnail card-img " alt="Alternate Text" />
-                        <br />
-                        <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
-                            <label class="btn btn-outline-info active">
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kayıtlı Resim
-                            </label>
-                            <label class="btn btn-outline-info">
-                                <input type="radio" name="options" id="option2" autocomplete="off"> Canlı Resim
-                            </label>
-                            <label class="btn btn-outline-info">
-                                <input type="radio" name="options" id="option3" autocomplete="off"> Yanyana Göster
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4 offset-1">
+                        <img class="img-profile card-img-bottom card-img" src="~/Images/803551058.jpg" alt="Alternate Text" />
                         <hr />
-                        <table class="table-borderless table table-hover text-center table-striped table-sm">
-                            <thead class="table-info">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Kart ID</td>
-                                    <td>Adi</td>
-                                    <td>Soyadi</td>
-                                    <td>Şirket</td>
-                                    <td>Departman</td>
-                                    <td>TCKimlik</td>
-                                    <td>Plaka</td>
-                                    <td>Blok</td>
-                                    <td>Daire</td>
-                                    <td>Grup Adi</td>
-                                    <td>Panel</td>
-                                    <td>Geçiş</td>
-                                    <td>Tarih</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="table-secondary">
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                </tr>
-
-
-                            </tbody>
-
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-anti" role="tabpanel" aria-labelledby="nav-anti-tab">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">Kart ID</label>
-                            <input type="text" name="Kart_ID" class="form-control" value="" />
-
-                            <label class="control-label">Adı</label>
-                            <input type="text" name="Adi" class="form-control" value="" />
-
-                            <label class="control-label">Soyadı</label>
-                            <input type="text" name="Soyadi" class="form-control" value="" />
-
-                            <label class="control-label">TC Kimlik</label>
-                            <input type="text" name="TCKimlik" class="form-control" value="" />
-
-                            <label class="control-label">Şirket</label>
-                            <input type="text" name="Sirket_Adi" class="form-control" value="" />
-
-                            <label class="control-label">Bölüm</label>
-                            <input type="text" name="Bolum_Adi" class="form-control" value="" />
-
-                            <label class="control-label">Plaka</label>
-                            <input type="text" name="Plaka" class="form-control" value="" />
-
-                            <label class="control-label">Blok</label>
-                            <input type="text" name="Blok_Adi" class="form-control" value="" />
-
-                            <label class="control-label">Daire</label>
-                            <input type="text" name="Daire" class="form-control" value="" />
-
-                            <label class="control-label">Tarih</label>
-                            <input type="date" name="Tarih" class="form-control" value="" />
-
-                            <label class="control-label">Panel</label>
-                            <input type="text" name="Panel_ID" class="form-control" value="" />
-
-                            <label class="control-label">Geçiş Tipi</label>
-                            <input type="text" name="Gecis_Tİpi" class="form-control" value="" />
-
-                            <label class="control-label">Kapı</label>
-                            <input type="text" name="Kapi_ID" class="form-control" value="" />
-                        </div>
-                    </div>
-                    <div class="col-md-6 mt-4 text-center">
-                        <img src="~/Images/6300990.jpg" class="img-fluid img-thumbnail card-img " alt="Alternate Text" />
-                        <br />
-                        <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
+                        <div class="btn-group btn-group-toggle offset-2" data-toggle="buttons">
                             <label class="btn btn-outline-info active">
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kayıtlı Resim
+                                <input type="radio" name="Kayitli" id="Kayitli" autocomplete="off" checked> Kayıtlı Resim
                             </label>
                             <label class="btn btn-outline-info">
-                                <input type="radio" name="options" id="option2" autocomplete="off"> Canlı Resim
+                                <input type="radio" name="Canli" id="Canli" autocomplete="off"> Canlı Resim
                             </label>
                             <label class="btn btn-outline-info">
-                                <input type="radio" name="options" id="option3" autocomplete="off"> Yanyana Göster
+                                <input type="radio" name="Yanyana" id="Yanyana" autocomplete="off"> Yanyana Göster
                             </label>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <hr />
-                        <table class="table-borderless table table-hover text-center table-striped table-sm">
-                            <thead class="table-info">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Kart ID</td>
-                                    <td>Adi</td>
-                                    <td>Soyadi</td>
-                                    <td>Şirket</td>
-                                    <td>Departman</td>
-                                    <td>TCKimlik</td>
-                                    <td>Plaka</td>
-                                    <td>Blok</td>
-                                    <td>Daire</td>
-                                    <td>Grup Adi</td>
-                                    <td>Panel</td>
-                                    <td>Geçiş</td>
-                                    <td>Tarih</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="table-danger">
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                </tr>
-
-
-                            </tbody>
-
-
-                        </table>
-                    </div>
+                    <div class="col-md-12"><hr /></div>
+                </div>
+                <div class="col-md-12">
+                    <table id="table" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Plaka</td>
+                                <td>Blok</td>
+                                <td>Panel</td>
+                                <td>Kapı</td>
+                                <td>Geçiş</td>
+                                <td>Tarih</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.Kod == 0)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="engellenenSatir" class="table-danger">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 1)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="normalSatir" class="table-success">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 2)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="antipassbackSatir" class="table-danger">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 3)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="cokluGecisSatir" class="table-info">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 4)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="tanimsizSatir" class="table-primary">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 5 || item.Kod == 6 || item.Kod == 7 || item.Kod == 13)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="manuelSatir" class="table-warning">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 8 || item.Kod == 25 || item.Kod == 14)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="butonSatir" class="table-warning">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 9 || item.Kod == 10 || item.Kod == 14)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="programliSatir" class="table-success">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 20 || item.Kod == 21)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="alarmYanginSatir" class="text-muted">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod == 22 || item.Kod == 23 || item.Kod == 24)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="kapiAlarmSatir" class="table-info">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                                else if (item.Kod > 24)
+                                {
+                                    <tr data-kayitno="@item.Kayit_No" hidden id="digerSatir" class="table-dark">
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@item.Plaka</td>
+                                        <td></td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        @if (item.Gecis_Tipi == 0)
+                                        {
+                                            <td>Giriş</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Çıkış</td>
+                                        }
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-
-
-            <div class="tab-pane fade" id="nav-engellenen" role="tabpanel" aria-labelledby="nav-engellenen-tab">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">Kart ID</label>
-                            <input type="text" name="Kart_ID" class="form-control" value="" />
-
-                            <label class="control-label">Adı</label>
-                            <input type="text" name="Adi" class="form-control" value="" />
-
-                            <label class="control-label">Soyadı</label>
-                            <input type="text" name="Soyadi" class="form-control" value="" />
-
-                            <label class="control-label">TC Kimlik</label>
-                            <input type="text" name="TCKimlik" class="form-control" value="" />
-
-                            <label class="control-label">Şirket</label>
-                            <input type="text" name="Sirket_Adi" class="form-control" value="" />
-
-                            <label class="control-label">Bölüm</label>
-                            <input type="text" name="Bolum_Adi" class="form-control" value="" />
-
-                            <label class="control-label">Plaka</label>
-                            <input type="text" name="Plaka" class="form-control" value="" />
-
-                            <label class="control-label">Blok</label>
-                            <input type="text" name="Blok_Adi" class="form-control" value="" />
-
-                            <label class="control-label">Daire</label>
-                            <input type="text" name="Daire" class="form-control" value="" />
-
-                            <label class="control-label">Tarih</label>
-                            <input type="date" name="Tarih" class="form-control" value="" />
-
-                            <label class="control-label">Panel</label>
-                            <input type="text" name="Panel_ID" class="form-control  form-control-sm" value="" />
-
-                            <label class="control-label">Geçiş Tipi</label>
-                            <input type="text" name="Gecis_Tİpi" class="form-control" value="" />
-
-                            <label class="control-label">Kapı</label>
-                            <input type="text" name="Kapi_ID" class="form-control" value="" />
-                        </div>
-                    </div>
-                    <div class="col-md-6 mt-4 text-center">
-                        <img src="~/Images/6300990.jpg" class="img-fluid img-thumbnail card-img " alt="Alternate Text" />
-                        <br />
-                        <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
-                            <label class="btn btn-outline-info active">
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kayıtlı Resim
-                            </label>
-                            <label class="btn btn-outline-info">
-                                <input type="radio" name="options" id="option2" autocomplete="off"> Canlı Resim
-                            </label>
-                            <label class="btn btn-outline-info">
-                                <input type="radio" name="options" id="option3" autocomplete="off"> Yanyana Göster
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <hr />
-                        <table class="table-borderless table table-hover text-center table-striped table-sm">
-                            <thead class="table-info">
-                                <tr>
-                                    <td>ID</td>
-                                    <td>Kart ID</td>
-                                    <td>Adi</td>
-                                    <td>Soyadi</td>
-                                    <td>Şirket</td>
-                                    <td>Departman</td>
-                                    <td>TCKimlik</td>
-                                    <td>Plaka</td>
-                                    <td>Blok</td>
-                                    <td>Daire</td>
-                                    <td>Grup Adi</td>
-                                    <td>Panel</td>
-                                    <td>Geçiş</td>
-                                    <td>Tarih</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="table-warning">
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>2</td>
-                                </tr>
-
-
-                            </tbody>
-
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-tanimsiz" role="tabpanel" aria-labelledby="nav-tanimsiz-tab">
-                tanimsiz
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-tum" role="tabpanel" aria-labelledby="nav-tum-tab">
-                tum
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-manuel" role="tabpanel" aria-labelledby="nav-manuel-tab">
-                manuel
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-prog" role="tabpanel" aria-labelledby="nav-prog-tab">
-                prog
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-buton" role="tabpanel" aria-labelledby="nav-buton-tab">
-                buton
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-islem" role="tabpanel" aria-labelledby="nav-islem-tab">
-                islem
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-alarm" role="tabpanel" aria-labelledby="nav-alarm-tab">
-                alarm
-            </div>
-
-
-
-            <div class="tab-pane fade" id="nav-diger" role="tabpanel" aria-labelledby="nav-diger-tab">
-                diger
-            </div>
-
-
-            <div class="tab-pane fade" id="nav-ayar" role="tabpanel" aria-labelledby="nav-ayar-tab">
-                <div class="row">
-                    <div class="col-md-8 mt-xl-5">
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Antipassback" />
-                                <label class="custom-control-label" for="Antipassback">Antipassback İhlal Mesajları Alma</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Engelllenen" />
-                                <label class="custom-control-label" for="Engelllenen">Engellenen İstek Mesajları Alma</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Tanimsiz" />
-                                <label class="custom-control-label" for="Tanimsiz">Tanımsız Geçiş Mesajları Alma</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Manuel" />
-                                <label class="custom-control-label" for="Manuel">Manuel İşlemler "Tetikleme/Açma/Kapatma/Serbest Mesajları Alma</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="ButtonTetikleme" />
-                                <label class="custom-control-label" for="ButtonTetikleme">Buton Tetikleme Mesajları Alma</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="Programlı" />
-                                <label class="custom-control-label" for="Programlı">Programlı İşlemler "Açma/Kapatma" Mesajları Alma</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 text-right">
-                        <button class="btn btn-sm btn-success"><i class="fas fa-save text-white"></i> Kaydet</button>
-                    </div>
-                </div>
-            </div>
-
-
-
         </div>
-    </div>
 
+    </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#Tumu").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Normal").prop("checked", true);
+                $("#Coklu").prop("checked", true);
+                $("#Antipassback").prop("checked", true);
+                $("#Manuel").prop("checked", true);
+                $("#AlarmYangin").prop("checked", true);
+                $("#Tanimsiz").prop("checked", true);
+                $("#Programli").prop("checked", true);
+                $("#KapiAlarm").prop("checked", true);
+                $("#Engellenen").prop("checked", true);
+                $("#Button").prop("checked", true);
+                $("#DigerAlarm").prop("checked", true);
+                $("#Operator").prop("checked", true);
+                $("#table tbody tr#normalSatir").prop("hidden", false);
+                $("#table tbody tr#cokluGecisSatir").prop("hidden", false);
+                $("#table tbody tr#antipassbackSatir").prop("hidden", false);
+                $("#table tbody tr#manuelSatir").prop("hidden", false);
+                $("#table tbody tr#alarmYanginSatir").prop("hidden", false);
+                $("#table tbody tr#tanimsizSatir").prop("hidden", false);
+                $("#table tbody tr#programliSatir").prop("hidden", false);
+                $("#table tbody tr#kapiAlarmSatir").prop("hidden", false);
+                $("#table tbody tr#engellenenSatir").prop("hidden", false);
+                $("#table tbody tr#butonSatir").prop("hidden", false);
+                $("#table tbody tr#digerSatir").prop("hidden", false);
+
+
+
+            } else {
+                $("#Normal").prop("checked", false);
+                $("#Coklu").prop("checked", false);
+                $("#Antipassback").prop("checked", false);
+                $("#Manuel").prop("checked", false);
+                $("#AlarmYangin").prop("checked", false);
+                $("#Tanimsiz").prop("checked", false);
+                $("#Programli").prop("checked", false);
+                $("#KapiAlarm").prop("checked", false);
+                $("#Engellenen").prop("checked", false);
+                $("#Button").prop("checked", false);
+                $("#DigerAlarm").prop("checked", false);
+                $("#Operator").prop("checked", false);
+                $("#table tbody tr#normalSatir").prop("hidden", true);
+                $("#table tbody tr#cokluGecisSatir").prop("hidden", true);
+                $("#table tbody tr#antipassbackSatir").prop("hidden", true);
+                $("#table tbody tr#manuelSatir").prop("hidden", true);
+                $("#table tbody tr#alarmYanginSatir").prop("hidden", true);
+                $("#table tbody tr#tanimsizSatir").prop("hidden", true);
+                $("#table tbody tr#programliSatir").prop("hidden", true);
+                $("#table tbody tr#kapiAlarmSatir").prop("hidden", true);
+                $("#table tbody tr#engellenenSatir").prop("hidden", true);
+                $("#table tbody tr#butonSatir").prop("hidden", true);
+                $("#table tbody tr#digerSatir").prop("hidden", true);
+
+
+            }
+        });
+        $("#Normal").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#normalSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#normalSatir").prop("hidden", true);
+            }
+
+        });
+        $("#Coklu").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#cokluGecisSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#cokluGecisSatir").prop("hidden", true);
+            }
+        });
+        $("#Antipassback").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#antipassbackSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#antipassbackSatir").prop("hidden", true);
+            }
+
+        });
+        $("#Manuel").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#manuelSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#manuelSatir").prop("hidden", true);
+            }
+        });
+        $("#AlarmYangin").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#alarmYanginSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#alarmYanginSatir").prop("hidden", true);
+            }
+        });
+        $("#Tanimsiz").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#tanimsizSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#tanimsizSatir").prop("hidden", true);
+            }
+
+        });
+        $("#Programli").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#programliSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#programliSatir").prop("hidden", true);
+            }
+
+        });
+        $("#KapiAlarm").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#kapiAlarmSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#kapiAlarmSatir").prop("hidden", true);
+            }
+        });
+        $("#Engellenen").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#engellenenSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#engellenenSatir").prop("hidden", true);
+            }
+
+        });
+        $("#Button").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#butonSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#butonSatir").prop("hidden", true);
+            }
+
+        });
+        $("#DigerAlarm").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#table tbody tr#digerSatir").prop("hidden", false);
+            } else {
+                $("#table tbody tr#digerSatir").prop("hidden", true);
+            }
+
+        });
+        $("#Operator").click(function () {
+            //if ($(this).prop("checked") == true) {
+            //    $("#table tbody tr").prop("hidden", false);
+            //} else {
+            //    $("#table tbody tr").prop("hidden", true);
+            //}
+
+        });
+
+        $("#table tbody tr").click(function () {
+            var kayitNo = $(this).data("kayitno");
+            $.ajax({
+                url: '/Watch/Deneme',
+                type: 'GET',
+                dataType: 'json',
+                data: { KayitNo: kayitNo },
+            }).done(function (data) {
+                console.log(data);
+                $("#Kart_ID").prop("value", data.Kart_ID);
+                $("#TCKimlik").prop("value", 11111111111);
+                $("#Adi").prop("value", "Deneme Ad");
+                $("#Soyadi").prop("value", "Deneme Soyad");
+                $("#Plaka").prop("value", data.Plaka);
+                $("#Panel_ID").prop("value", data.Panel_ID);
+                $("#Tarih").prop("value", dateFormat(new Date(parseInt((data.Tarih).match(/\d+/)[0]))));
+                if (data.Gecis_Tipi == 0) {
+                    $("#Gecis_Tipi").prop("value", "Giriş");
+                } else {
+                    $("#Gecis_Tipi").prop("value", "Çıkış");
+                }
+                if (data.Kod == 0) {
+                    $("#Kayit_Tipi").prop("value", "Engellenen Geçiş");
+                } else if (data.Kod == 1) {
+                    $("#Kayit_Tipi").prop("value", "Normal Geçiş");
+                } else if (data.Kod == 2) {
+                    $("#Kayit_Tipi").prop("value", "Antipassback");
+                } else if (data.Kod == 3) {
+                    $("#Kayit_Tipi").prop("value", "Çoklu Geçiş");
+                } else if (data.Kod == 4) {
+                    $("#Kayit_Tipi").prop("value", "Tanımsız Kullanıcı");
+                } else if (data.Kod == 5) {
+                    $("#Kayi_Tipi").prop("value", "Manuel Tatikleme");
+                }
+            });
+        });
+
+        function dateFormat(d) {
+            return ((d.getMonth() + 1) + "").padStart(2, "0")
+                + "/" + (d.getDate() + "").padStart(2, "0")
+                + "/" + d.getFullYear();
+        }
+
+    });
+</script>
