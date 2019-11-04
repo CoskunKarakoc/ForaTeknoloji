@@ -59,5 +59,15 @@ namespace ForaTeknoloji.Entities.Entities
         [StringLength(50)]
         public string Plaka { get; set; }
 
+        [Column("Kullanici Adi")]
+        [StringLength(50)]
+        public string Kullanici_Adi { get; set; }
+
+        [Column("Islem Verisi 1")]
+        public int? Islem_Verisi_1 { get; set; }
+
+        [Column("Islem Verisi 2")]
+        public int? Islem_Verisi_2 { get; set; }
+
     }
 }

@@ -9,6 +9,7 @@ namespace ForaTeknoloji.Entities.ComplexType
     public class AccessDatasComplex
     {
 
+
         public int Kayit_No { get; set; }
 
         public int? ID { get; set; }
@@ -55,5 +56,6 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Plaka { get; set; }
 
         public string Kapi_Adi { get; set; }
+
     }
 }

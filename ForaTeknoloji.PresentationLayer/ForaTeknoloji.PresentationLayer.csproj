@@ -2555,6 +2555,7 @@
     <Compile Include="Models\VisitorEditViewModel.cs" />
     <Compile Include="Models\VisitorListViewModel.cs" />
     <Compile Include="Models\VisitorsList.cs" />
+    <Compile Include="Models\WatchIndexViewModel.cs" />
     <Compile Include="Models\ZiyaretciListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagHelpers\PagingTagHelper.cs" />

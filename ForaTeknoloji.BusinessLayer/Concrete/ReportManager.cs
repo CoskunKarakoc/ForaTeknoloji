@@ -1682,6 +1682,165 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
+        //Watch-List
+        public List<WatchEntityComplex> GetWatch()
+        {
+            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string queryString = "";
+            queryString = "SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+                " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
+                " Departmanlar.Adi AS Departman," +
+                " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
+                " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+                " DoorNames.[Kapi Adi] As Kapi," +
+                " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
+                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
+                " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No] AND AccessDatas.[Panel ID]=DoorNames.[Panel No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
+                " AND Users.[Sirket No] IN(10000," + sirketListesi + ")";
+            queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
+            List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var nesne = new WatchEntityComplex
+                        {
+                            Kayit_No = reader[0] as int? ?? default(int),
+                            ID = reader[1] as int? ?? default(int),
+                            Kart_ID = reader[2].ToString(),
+                            Adi = reader[3].ToString(),
+                            Soyadi = reader[4].ToString(),
+                            TCKimlik = reader[5].ToString(),
+                            Sirket_Adi = reader[6].ToString(),
+                            Departman_Adi = reader[7].ToString(),
+                            Plaka = reader[8].ToString(),
+                            Blok_Adi = reader[9].ToString(),
+                            Daire = reader[10] as int? ?? default(int),
+                            Grup_Adi = reader[11].ToString(),
+                            Panel_ID = reader[12] as int? ?? default(int),
+                            Kapi_Adi = reader[13].ToString(),
+                            Tarih = reader[14] as DateTime? ?? default(DateTime),
+                            Kod = reader[15] as int? ?? default(int),
+                            Resim = reader[16].ToString(),
+                            Operasyon = reader[17].ToString(),
+                            Operator = reader[18].ToString(),
+                            Islem_Verisi_1 = reader[19] as int? ?? default(int),
+                            Islem_Verisi_2 = reader[20] as int? ?? default(int),
+                            Gecis_Tipi = reader[21] as int? ?? default(int),
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return liste;
+        }
+
+        public WatchEntityComplex LastRecordWatch(int? Kayit_No)
+        {
+            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string queryString = "";
+            if (Kayit_No != null && Kayit_No > 0)
+            {
+                queryString = "SELECT DISTINCT TOP 1 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+                                  " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
+                                  " Departmanlar.Adi AS Departman," +
+                                  " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
+                                  " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+                                  " DoorNames.[Kapi Adi] As Kapi," +
+                                  " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
+                                  " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
+                                  " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No] AND AccessDatas.[Panel ID]=DoorNames.[Panel No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                                  " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
+                                  " AND Users.[Sirket No] IN(10000," + sirketListesi + ")" +
+                                  " AND AccessDatas.[Kayit No] = " + Kayit_No;
+            }
+            else
+            {
+                queryString = "SELECT DISTINCT TOP 1 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+                                   " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
+                                   " Departmanlar.Adi AS Departman," +
+                                   " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
+                                   " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+                                   " DoorNames.[Kapi Adi] As Kapi," +
+                                   " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
+                                   " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
+                                   " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No] AND AccessDatas.[Panel ID]=DoorNames.[Panel No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                                   " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
+                                   " AND Users.[Sirket No] IN(10000," + sirketListesi + ")";
+            }
+
+            queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
+
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var nesne = new WatchEntityComplex
+                        {
+                            Kayit_No = reader[0] as int? ?? default(int),
+                            ID = reader[1] as int? ?? default(int),
+                            Kart_ID = reader[2].ToString(),
+                            Adi = reader[3].ToString(),
+                            Soyadi = reader[4].ToString(),
+                            TCKimlik = reader[5].ToString(),
+                            Sirket_Adi = reader[6].ToString(),
+                            Departman_Adi = reader[7].ToString(),
+                            Plaka = reader[8].ToString(),
+                            Blok_Adi = reader[9].ToString(),
+                            Daire = reader[10] as int? ?? default(int),
+                            Grup_Adi = reader[11].ToString(),
+                            Panel_ID = reader[12] as int? ?? default(int),
+                            Kapi_Adi = reader[13].ToString(),
+                            Tarih = reader[14] as DateTime? ?? default(DateTime),
+                            Kod = reader[15] as int? ?? default(int),
+                            Resim = reader[16].ToString(),
+                            Operasyon = reader[17].ToString(),
+                            Operator = reader[18].ToString(),
+                            Islem_Verisi_1 = reader[19] as int? ?? default(int),
+                            Islem_Verisi_2 = reader[20] as int? ?? default(int),
+                            Gecis_Tipi = reader[21] as int? ?? default(int),
+                        };
+                        return nesne;
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                return null;
+            }
+        }
+
+
+
+
         //Kullanıcı adına göre Sirket Listesi döndürüyor
         public void GetSirketList(DBUsers users)
         {

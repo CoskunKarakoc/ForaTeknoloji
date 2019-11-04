@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.AccessDatas>
+﻿@model ForaTeknoloji.PresentationLayer.Models.WatchIndexViewModel
 @{
     ViewBag.Title = "Canlı İzle";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,55 +14,55 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Tumu" class="custom-control-input" id="Tumu" />
+                            <input type="checkbox" checked value="" name="Tumu" class="custom-control-input" id="Tumu" />
                             <label class="custom-control-label" for="Tumu">Tümü</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Normal" class="custom-control-input" id="Normal" />
+                            <input type="checkbox" checked value="0" name="Normal" class="custom-control-input" id="Normal" />
                             <label class="custom-control-label text-success" for="Normal">Normal</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Coklu" class="custom-control-input" id="Coklu" />
+                            <input type="checkbox" checked value="3" name="Coklu" class="custom-control-input" id="Coklu" />
                             <label class="custom-control-label text-info" for="Coklu">Çoklu Geçiş</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Antipassback" class="custom-control-input" id="Antipassback" />
+                            <input type="checkbox" checked value="" name="Antipassback" class="custom-control-input" id="Antipassback" />
                             <label class="custom-control-label text-danger" for="Antipassback">Antipassback</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Manuel" class="custom-control-input" id="Manuel" />
+                            <input type="checkbox" checked value="" name="Manuel" class="custom-control-input" id="Manuel" />
                             <label class="custom-control-label text-warning" for="Manuel">Manuel İşlem</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="AlarmYangin" class="custom-control-input" id="AlarmYangin" />
+                            <input type="checkbox" checked value="" name="AlarmYangin" class="custom-control-input" id="AlarmYangin" />
                             <label class="custom-control-label text-secondary" for="AlarmYangin">Alarm Yangın</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Tanimsiz" class="custom-control-input" id="Tanimsiz" />
+                            <input type="checkbox" checked value="" name="Tanimsiz" class="custom-control-input" id="Tanimsiz" />
                             <label class="custom-control-label text-primary" for="Tanimsiz">Tanımsız</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Programli" class="custom-control-input" id="Programli" />
+                            <input type="checkbox" checked value="" name="Programli" class="custom-control-input" id="Programli" />
                             <label class="custom-control-label text-success" for="Programli">Programlı İşlem</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="KapiAlarm" class="custom-control-input" id="KapiAlarm" />
+                            <input type="checkbox" checked value="" name="KapiAlarm" class="custom-control-input" id="KapiAlarm" />
                             <label class="custom-control-label text-info" for="KapiAlarm">Kapı Alarmları</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Engellenen" class="custom-control-input" id="Engellenen" />
+                            <input type="checkbox" checked value="" name="Engellenen" class="custom-control-input" id="Engellenen" />
                             <label class="custom-control-label text-danger" for="Engellenen">Engellenen</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Button" class="custom-control-input" id="Button" />
+                            <input type="checkbox" checked value="" name="Button" class="custom-control-input" id="Button" />
                             <label class="custom-control-label text-warning" for="Button">Buton İşlemi</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="DigerAlarm" class="custom-control-input" id="DigerAlarm" />
+                            <input type="checkbox" checked value="" name="DigerAlarm" class="custom-control-input" id="DigerAlarm" />
                             <label class="custom-control-label text-secondary" for="DigerAlarm">Diğer Alarmlar</label>
                         </div>
                         <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
+                            <input type="checkbox" checked value="" name="Operator" class="custom-control-input" id="Operator" />
                             <label class="custom-control-label text-dark" for="Operator">Operatör Logları</label>
                         </div>
                         <hr />
@@ -70,33 +70,49 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
+                                @Html.HiddenFor(model => model.LastRecordWatch.Kayit_No)
                                 <div class="form-group">
                                     <label>Kart ID</label>
-                                    <input type="text" name="Kart_ID" id="Kart_ID" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Kart_ID, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Adı</label>
-                                    <input type="text" name="Adi" id="Adi" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Adi, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Şirket</label>
-                                    <input type="text" name="Sirket_Adi" id="Sirket_Adi" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Sirket_Adi, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Plaka</label>
-                                    <input type="text" name="Plaka" id="Plaka" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Plaka, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Daire</label>
-                                    <input type="number" name="Daire" id="Daire" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Daire, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Panel</label>
-                                    <input type="text" name="Panel_ID" id="Panel_ID" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Panel_ID, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Geçiş Tipi</label>
-                                    <input type="text" name="Gecis_Tipi" id="Gecis_Tipi" value="" class="form-control form-control-sm" />
+                                    @if (Model.LastRecordWatch == null)
+                                    {
+                                        <input type="text" id="LastRecordWatch_Gecis_Tipi" name="LastRecordWatch.Gecis_Tipi" value="GİRİŞ" class="form-control form-control-sm bg-success text-white text-center" />
+                                    }
+                                    else
+                                    {
+
+                                        if (Model.LastRecordWatch.Gecis_Tipi == 0)
+                                        {
+                                            @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-success text-white text-center" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-danger text-white text-center" })
+                                        }
+                                    }
                                 </div>
 
                             </div>
@@ -109,37 +125,53 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>TC Kimlik</label>
-                                    <input type="text" name="TCKimlik" id="TCKimlik" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.TCKimlik, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Soyadı</label>
-                                    <input type="text" name="Soyadi" id="Soyadi" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Soyadi, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Bölüm</label>
-                                    <input type="text" name="Grup_No" id="Grup_No" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Departman_Adi, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Blok</label>
-                                    <input type="text" name="Blok_Adi" id="Blok_Adi" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Blok_Adi, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Tarih</label>
-                                    <input type="text" name="Tarih" id="Tarih" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Tarih, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Kapı</label>
-                                    <input type="text" name="Kapi_ID" id="Kapi_ID" value="" class="form-control form-control-sm" />
+                                    @Html.TextBoxFor(model => model.LastRecordWatch.Kapi_Adi, "", new { @class = "form-control form-control-sm" })
                                 </div>
                                 <div class="form-group">
                                     <label>Kayıt Tipi</label>
-                                    <input type="text" name="Kayit_Tipi" id="Kayit_Tipi" value="" class="form-control form-control-sm" />
+                                    @if (Model.LastRecordWatch == null || Model.LastRecordWatch.Operasyon == "" || Model.LastRecordWatch.Operasyon == null)
+                                    {
+                                        <input type="text" id="LastRecordWatch_Operasyon" name="LastRecordWatch.Operasyon" value="" class="form-control form-control-sm" />
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.LastRecordWatch.Operasyon, Model.LastRecordWatch.Operasyon, new { @class = "form-control form-control-sm text-center bg-info text-white" })
+                                    }
+
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 offset-1">
-                        <img class="img-profile card-img-bottom card-img" src="~/Images/803551058.jpg" alt="Alternate Text" />
+                        @if (Model.LastRecordWatch == null || Model.LastRecordWatch.Resim == "" || Model.LastRecordWatch.Resim == null)
+                        {
+                            <img id="KayitliImage" class="img-profile card-img-bottom card-img" src="~/Images/BaseUser.jpg" alt="User Image" />
+                        }
+                        else
+                        {
+                            <img id="KayitliImage" class="img-profile card-img-bottom card-img" src="~/Images/@Model.LastRecordWatch.Resim" alt="User Image" />
+                        }
+                        <img id="CanliImage" src="~/Images/BaseUser.jpg" hidden class="img-profile card-img-bottom card-img" alt="Canlı Resim" />
                         <hr />
                         <div class="btn-group btn-group-toggle offset-2" data-toggle="buttons">
                             <label class="btn btn-outline-info active">
@@ -164,8 +196,12 @@
                                 <td>Adı</td>
                                 <td>Soyadı</td>
                                 <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>TCKimlik</td>
                                 <td>Plaka</td>
                                 <td>Blok</td>
+                                <td>Daire</td>
+                                <td>Grup Adı</td>
                                 <td>Panel</td>
                                 <td>Kapı</td>
                                 <td>Geçiş</td>
@@ -173,21 +209,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.ComplexAccessDatas)
                             {
                                 if (item.Kod == 0)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="engellenenSatir" class="table-danger">
+                                    <tr data-kayitno="@item.Kayit_No" id="engellenenSatir" class="table-danger">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -200,17 +240,21 @@
                                 }
                                 else if (item.Kod == 1)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="normalSatir" class="table-success">
+                                    <tr data-kayitno="@item.Kayit_No" id="normalSatir" class="table-success">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -223,17 +267,21 @@
                                 }
                                 else if (item.Kod == 2)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="antipassbackSatir" class="table-danger">
+                                    <tr data-kayitno="@item.Kayit_No" id="antipassbackSatir" class="table-danger">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -246,17 +294,21 @@
                                 }
                                 else if (item.Kod == 3)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="cokluGecisSatir" class="table-info">
+                                    <tr data-kayitno="@item.Kayit_No" id="cokluGecisSatir" class="table-info">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -269,17 +321,21 @@
                                 }
                                 else if (item.Kod == 4)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="tanimsizSatir" class="table-primary">
+                                    <tr data-kayitno="@item.Kayit_No" id="tanimsizSatir" class="table-primary">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -292,17 +348,21 @@
                                 }
                                 else if (item.Kod == 5 || item.Kod == 6 || item.Kod == 7 || item.Kod == 13)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="manuelSatir" class="table-warning">
+                                    <tr data-kayitno="@item.Kayit_No" id="manuelSatir" class="table-warning">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -315,17 +375,21 @@
                                 }
                                 else if (item.Kod == 8 || item.Kod == 25 || item.Kod == 14)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="butonSatir" class="table-warning">
+                                    <tr data-kayitno="@item.Kayit_No" id="butonSatir" class="table-warning">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -338,17 +402,21 @@
                                 }
                                 else if (item.Kod == 9 || item.Kod == 10 || item.Kod == 14)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="programliSatir" class="table-success">
+                                    <tr data-kayitno="@item.Kayit_No" id="programliSatir" class="table-success">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -361,17 +429,21 @@
                                 }
                                 else if (item.Kod == 20 || item.Kod == 21)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="alarmYanginSatir" class="text-muted">
+                                    <tr data-kayitno="@item.Kayit_No" id="alarmYanginSatir" class="text-muted">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -384,17 +456,21 @@
                                 }
                                 else if (item.Kod == 22 || item.Kod == 23 || item.Kod == 24)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="kapiAlarmSatir" class="table-info">
+                                    <tr data-kayitno="@item.Kayit_No" id="kapiAlarmSatir" class="table-info">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -407,17 +483,21 @@
                                 }
                                 else if (item.Kod > 24)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" hidden id="digerSatir" class="table-dark">
+                                    <tr data-kayitno="@item.Kayit_No" id="digerSatir" class="table-dark">
                                         <td>@item.ID</td>
                                         <td>@item.Kart_ID</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Sirket_Adi</td>
+                                        <td>@item.Departman_Adi</td>
+                                        <td>@item.TCKimlik</td>
                                         <td>@item.Plaka</td>
-                                        <td></td>
+                                        <td>@item.Blok_Adi</td>
+                                        <td>@item.Daire</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_ID</td>
-                                        @if (item.Gecis_Tipi == 0)
+                                        <td>@item.Kapi_Adi</td>
+                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -497,7 +577,16 @@
         });
         $("#Normal").click(function () {
             if ($(this).prop("checked") == true) {
+                var normal = $("#Normal").val();
+
                 $("#table tbody tr#normalSatir").prop("hidden", false);
+                $.ajax({
+                    url: '/Watch/WatcParameters',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { Normal: normal, Coklu: coklu }
+
+                });
             } else {
                 $("#table tbody tr#normalSatir").prop("hidden", true);
             }
@@ -588,39 +677,37 @@
 
         });
 
+
+
         $("#table tbody tr").click(function () {
             var kayitNo = $(this).data("kayitno");
             $.ajax({
-                url: '/Watch/Deneme',
+                url: '/Watch/SonKayit',
                 type: 'GET',
                 dataType: 'json',
                 data: { KayitNo: kayitNo },
             }).done(function (data) {
-                console.log(data);
-                $("#Kart_ID").prop("value", data.Kart_ID);
-                $("#TCKimlik").prop("value", 11111111111);
-                $("#Adi").prop("value", "Deneme Ad");
-                $("#Soyadi").prop("value", "Deneme Soyad");
-                $("#Plaka").prop("value", data.Plaka);
-                $("#Panel_ID").prop("value", data.Panel_ID);
-                $("#Tarih").prop("value", dateFormat(new Date(parseInt((data.Tarih).match(/\d+/)[0]))));
+                $("#LastRecordWatch_Kart_ID").prop("value", data.Kart_ID);
+                $("#LastRecordWatch_TCKimlik").prop("value", data.TCKimlik);
+                $("#LastRecordWatch_Adi").prop("value", data.Adi);
+                $("#LastRecordWatch_Soyadi").prop("value", data.Soyadi);
+                $("#LastRecordWatch_Sirket_Adi").prop("value", data.Sirket_Adi);
+                $("#LastRecordWatch_Grup_Adi").prop("value", data.Grup_Adi);
+                $("#LastRecordWatch_Plaka").prop("value", data.Plaka);
+                $("#LastRecordWatch_Blok_Adi").prop("value", data.Blok_Adi);
+                $("#LastRecordWatch_Daire").prop("value", data.Daire);
+                $("#LastRecordWatch_Tarih").prop("value", dateFormat(new Date(parseInt((data.Tarih).match(/\d+/)[0]))));
+                $("#LastRecordWatch_Panel_ID").prop("value", data.Panel_ID);
+                $("#LastRecordWatch_Kapi_ID").prop("value", data.Kapi_ID);
+                $("#LastRecordWatch_Operasyon").prop("value", data.Operasyon);
                 if (data.Gecis_Tipi == 0) {
-                    $("#Gecis_Tipi").prop("value", "Giriş");
+                    $("#LastRecordWatch_Gecis_Tipi").prop("value", "GİRİŞ");
+                    $("#LastRecordWatch_Gecis_Tipi").removeClass("bg-danger text-white text-center");
+                    $("#LastRecordWatch_Gecis_Tipi").addClass("bg-success text-white text-center");
                 } else {
-                    $("#Gecis_Tipi").prop("value", "Çıkış");
-                }
-                if (data.Kod == 0) {
-                    $("#Kayit_Tipi").prop("value", "Engellenen Geçiş");
-                } else if (data.Kod == 1) {
-                    $("#Kayit_Tipi").prop("value", "Normal Geçiş");
-                } else if (data.Kod == 2) {
-                    $("#Kayit_Tipi").prop("value", "Antipassback");
-                } else if (data.Kod == 3) {
-                    $("#Kayit_Tipi").prop("value", "Çoklu Geçiş");
-                } else if (data.Kod == 4) {
-                    $("#Kayit_Tipi").prop("value", "Tanımsız Kullanıcı");
-                } else if (data.Kod == 5) {
-                    $("#Kayi_Tipi").prop("value", "Manuel Tatikleme");
+                    $("#LastRecordWatch_Gecis_Tipi").prop("value", "ÇIKIŞ");
+                    $("#LastRecordWatch_Gecis_Tipi").removeClass("bg-success text-white text-center");
+                    $("#LastRecordWatch_Gecis_Tipi").addClass("bg-danger text-white text-center");
                 }
             });
         });
@@ -630,6 +717,38 @@
                 + "/" + (d.getDate() + "").padStart(2, "0")
                 + "/" + d.getFullYear();
         }
+        var count = 0;
+        $.ajax({
+            url: '/Watch/Count',
+            type: 'GET',
+            dataType: 'json',
+        }).done(function (data) {
+            count = data;
+        });
+
+
+
+        setInterval(function () {
+            $.ajax({
+                url: '/Watch/Count',
+                type: 'GET',
+                dataType: 'json',
+                data: { Kayit_No: kayit }
+            }).done(function (data) {
+                if (data != count) {
+                    window.location.assign("/Watch/Index");
+                    //2 saniye sonra yönlenecek
+                }
+            });
+        }, 500);
+
+
+
+
+
+
+
+
 
     });
 </script>
