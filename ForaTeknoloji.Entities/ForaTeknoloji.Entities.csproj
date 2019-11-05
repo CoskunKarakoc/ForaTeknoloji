@@ -66,6 +66,7 @@
     <Compile Include="ComplexType\ReportPersonelList.cs" />
     <Compile Include="ComplexType\TimeGroupsEdit.cs" />
     <Compile Include="ComplexType\WatchEntityComplex.cs" />
+    <Compile Include="ComplexType\WatchParameters.cs" />
     <Compile Include="ComplexType\ZiyaretciRaporList.cs" />
     <Compile Include="DataTransferObjects\LoginViewModel.cs" />
     <Compile Include="Entities\AccessCountTypes.cs" />

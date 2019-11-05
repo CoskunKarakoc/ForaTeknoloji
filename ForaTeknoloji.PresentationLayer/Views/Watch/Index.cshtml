@@ -11,62 +11,78 @@
                 <a href="@Url.Action("WatchSettings","Watch")"><i class="fas fa-cogs fa-2x text-secondary"></i></a>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="Tumu" class="custom-control-input" id="Tumu" />
-                            <label class="custom-control-label" for="Tumu">Tümü</label>
+
+                @using (Html.BeginForm("WatcParameters", "Watch", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Tumu", Model.WatchParam.Tumu ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Tumu">Tümü</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Normal", Model.WatchParam.Normal ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-success" for="Normal">Normal</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Coklu", Model.WatchParam.Coklu ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-info" for="Coklu">Çoklu Geçiş</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Antipassback", Model.WatchParam.Antipassback ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-danger" for="Antipassback">Antipassback</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Manuel", Model.WatchParam.Manuel ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-warning" for="Manuel">Manuel İşlem</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("AlarmYangin", Model.WatchParam.AlarmYangin ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-secondary" for="AlarmYangin">Alarm Yangın</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Tanimsiz", Model.WatchParam.Tanimsiz ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-primary" for="Tanimsiz">Tanımsız</label>
+                            </div>
                         </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="0" name="Normal" class="custom-control-input" id="Normal" />
-                            <label class="custom-control-label text-success" for="Normal">Normal</label>
+                        <div class="col-md-12">
+
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Programli", Model.WatchParam.Programli ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-success" for="Programli">Programlı İşlem</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("KapiAlarm", Model.WatchParam.KapiAlarm ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-info" for="KapiAlarm">Kapı Alarmları</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Engellenen", Model.WatchParam.Engellenen ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-danger" for="Engellenen">Engellenen</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Button", Model.WatchParam.Button ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-warning" for="Button">Buton İşlemi</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("DigerAlarm", Model.WatchParam.DigerAlarm ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-secondary" for="DigerAlarm">Diğer Alarmlar</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("OperatorLog", Model.WatchParam.Operatorlog ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-dark" for="OperatorLog">Operatör Logları</label>
+                            </div>
+
                         </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="3" name="Coklu" class="custom-control-input" id="Coklu" />
-                            <label class="custom-control-label text-info" for="Coklu">Çoklu Geçiş</label>
+                        <div class="col-md-12 text-right">
+                            <div class="form-group ml-2">
+                                <button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-filter"></i> Seçilenlere Göre Filtrele</button>
+                            </div>
+                            <hr />
                         </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="Antipassback" class="custom-control-input" id="Antipassback" />
-                            <label class="custom-control-label text-danger" for="Antipassback">Antipassback</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="Manuel" class="custom-control-input" id="Manuel" />
-                            <label class="custom-control-label text-warning" for="Manuel">Manuel İşlem</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="AlarmYangin" class="custom-control-input" id="AlarmYangin" />
-                            <label class="custom-control-label text-secondary" for="AlarmYangin">Alarm Yangın</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="Tanimsiz" class="custom-control-input" id="Tanimsiz" />
-                            <label class="custom-control-label text-primary" for="Tanimsiz">Tanımsız</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="Programli" class="custom-control-input" id="Programli" />
-                            <label class="custom-control-label text-success" for="Programli">Programlı İşlem</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="KapiAlarm" class="custom-control-input" id="KapiAlarm" />
-                            <label class="custom-control-label text-info" for="KapiAlarm">Kapı Alarmları</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="Engellenen" class="custom-control-input" id="Engellenen" />
-                            <label class="custom-control-label text-danger" for="Engellenen">Engellenen</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="Button" class="custom-control-input" id="Button" />
-                            <label class="custom-control-label text-warning" for="Button">Buton İşlemi</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="DigerAlarm" class="custom-control-input" id="DigerAlarm" />
-                            <label class="custom-control-label text-secondary" for="DigerAlarm">Diğer Alarmlar</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            <input type="checkbox" checked value="" name="Operator" class="custom-control-input" id="Operator" />
-                            <label class="custom-control-label text-dark" for="Operator">Operatör Logları</label>
-                        </div>
-                        <hr />
                     </div>
+                }
+
+                <div class="row">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
@@ -187,6 +203,7 @@
                     </div>
                     <div class="col-md-12"><hr /></div>
                 </div>
+
                 <div class="col-md-12">
                     <table id="table" class="table-borderless table table-hover text-center table-striped table-sm">
                         <thead class="table-info">
@@ -519,163 +536,620 @@
 </div>
 <script>
     $(document).ready(function () {
-        $("#Tumu").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Normal").prop("checked", true);
-                $("#Coklu").prop("checked", true);
-                $("#Antipassback").prop("checked", true);
-                $("#Manuel").prop("checked", true);
-                $("#AlarmYangin").prop("checked", true);
-                $("#Tanimsiz").prop("checked", true);
-                $("#Programli").prop("checked", true);
-                $("#KapiAlarm").prop("checked", true);
-                $("#Engellenen").prop("checked", true);
-                $("#Button").prop("checked", true);
-                $("#DigerAlarm").prop("checked", true);
-                $("#Operator").prop("checked", true);
-                $("#table tbody tr#normalSatir").prop("hidden", false);
-                $("#table tbody tr#cokluGecisSatir").prop("hidden", false);
-                $("#table tbody tr#antipassbackSatir").prop("hidden", false);
-                $("#table tbody tr#manuelSatir").prop("hidden", false);
-                $("#table tbody tr#alarmYanginSatir").prop("hidden", false);
-                $("#table tbody tr#tanimsizSatir").prop("hidden", false);
-                $("#table tbody tr#programliSatir").prop("hidden", false);
-                $("#table tbody tr#kapiAlarmSatir").prop("hidden", false);
-                $("#table tbody tr#engellenenSatir").prop("hidden", false);
-                $("#table tbody tr#butonSatir").prop("hidden", false);
-                $("#table tbody tr#digerSatir").prop("hidden", false);
+        if ($("#Tumu").prop("checked") == true) {
+            $("#table tbody tr#normalSatir").prop("hidden", false);
+            $("#table tbody tr#cokluSatir").prop("hidden", false);
+            $("#table tbody tr#antipassbackSatir").prop("hidden", false);
+            $("#table tbody tr#manuelSatir").prop("hidden", false);
+            $("#table tbody tr#alarmyanginSatir").prop("hidden", false);
+            $("#table tbody tr#tanimsizSatir").prop("hidden", false);
+            $("#table tbody tr#programliSatir").prop("hidden", false);
+            $("#table tbody tr#kapialarmSatir").prop("hidden", false);
+            $("#table tbody tr#engellenenSatir").prop("hidden", false);
+            $("#table tbody tr#buttonSatir").prop("hidden", false);
+            $("#table tbody tr#digeralarmSatir").prop("hidden", false);
+            $("#table tbody tr#operatorSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#normalSatir").prop("hidden", true);
+            $("#table tbody tr#cokluSatir").prop("hidden", true);
+            $("#table tbody tr#antipassbackSatir").prop("hidden", true);
+            $("#table tbody tr#manuelSatir").prop("hidden", true);
+            $("#table tbody tr#alarmyanginSatir").prop("hidden", true);
+            $("#table tbody tr#tanimsizSatir").prop("hidden", true);
+            $("#table tbody tr#programliSatir").prop("hidden", true);
+            $("#table tbody tr#kapialarmSatir").prop("hidden", true);
+            $("#table tbody tr#engellenenSatir").prop("hidden", true);
+            $("#table tbody tr#buttonSatir").prop("hidden", true);
+            $("#table tbody tr#digeralarmSatir").prop("hidden", true);
+            $("#table tbody tr#operatorSatir").prop("hidden", true);
+        }
+
+        if ($("#Normal").prop("checked") == true) {
+            $("#table tbody tr#normalSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#normalSatir").prop("hidden", true);
+        }
+
+        if ($("#Coklu").prop("checked") == true) {
+            $("#table tbody tr#cokluSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#cokluSatir").prop("hidden", true);
+        }
+
+        if ($("#Antipassback").prop("checked") == true) {
+            $("#table tbody tr#antipassbackSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#antipassbackSatir").prop("hidden", true);
+        }
+
+        if ($("#Manuel").prop("checked") == true) {
+            $("#table tbody tr#manuelSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#manuelSatir").prop("hidden", true);
+        }
+
+        if ($("#AlarmYangin").prop("checked") == true) {
+            $("#table tbody tr#alarmyanginSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#alarmyanginSatir").prop("hidden", true);
+        }
+
+        if ($("#Tanimsiz").prop("checked") == true) {
+            $("#table tbody tr#tanimsizSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#tanimsizSatir").prop("hidden", true);
+        }
+
+        if ($("#Programli").prop("checked") == true) {
+            $("#table tbody tr#programliSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#programliSatir").prop("hidden", true);
+        }
+
+        if ($("#KapiAlarm").prop("checked") == true) {
+            $("#table tbody tr#kapialarmSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#kapialarmSatir").prop("hidden", true);
+        }
+
+        if ($("#Engellenen").prop("checked") == true) {
+            $("#table tbody tr#engellenenSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#engellenenSatir").prop("hidden", true);
+        }
+
+        if ($("#Button").prop("checked") == true) {
+            $("#table tbody tr#buttonSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#buttonSatir").prop("hidden", true);
+        }
+
+        if ($("#DigerAlarm").prop("checked") == true) {
+            $("#table tbody tr#digeralarmSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#digeralarmSatir").prop("hidden", true);
+        }
+
+        if ($("#Operator").prop("checked") == true) {
+            $("#table tbody tr#operatorSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#operatorSatir").prop("hidden", true);
+        }
 
 
+        //normal = $("#Normal").val();
+        //coklu = $("#Coklu").val();
+        //antipassback = $("#Antipassback").val();
+        //manuel = $("#Manuel").val();
+        //alarmyangin = $("#AlarmYangin").val();
+        //tanimsiz = $("#Tanimsiz").val();
+        //programli = $("#Programli").val();
+        //kapialarm = $("#KapiAlarm").val();
+        //engellenen = $("#Engellenen").val();
+        //button = $("#Button").val();
+        //digeralarm = $("#DigerAlarm").val();
+        //operatorlog = $("#Operator").val();
 
-            } else {
-                $("#Normal").prop("checked", false);
-                $("#Coklu").prop("checked", false);
-                $("#Antipassback").prop("checked", false);
-                $("#Manuel").prop("checked", false);
-                $("#AlarmYangin").prop("checked", false);
-                $("#Tanimsiz").prop("checked", false);
-                $("#Programli").prop("checked", false);
-                $("#KapiAlarm").prop("checked", false);
-                $("#Engellenen").prop("checked", false);
-                $("#Button").prop("checked", false);
-                $("#DigerAlarm").prop("checked", false);
-                $("#Operator").prop("checked", false);
-                $("#table tbody tr#normalSatir").prop("hidden", true);
-                $("#table tbody tr#cokluGecisSatir").prop("hidden", true);
-                $("#table tbody tr#antipassbackSatir").prop("hidden", true);
-                $("#table tbody tr#manuelSatir").prop("hidden", true);
-                $("#table tbody tr#alarmYanginSatir").prop("hidden", true);
-                $("#table tbody tr#tanimsizSatir").prop("hidden", true);
-                $("#table tbody tr#programliSatir").prop("hidden", true);
-                $("#table tbody tr#kapiAlarmSatir").prop("hidden", true);
-                $("#table tbody tr#engellenenSatir").prop("hidden", true);
-                $("#table tbody tr#butonSatir").prop("hidden", true);
-                $("#table tbody tr#digerSatir").prop("hidden", true);
+        //$("#Tumu").change(function () {
+        //    if ($(this).prop("checked") == true) {
+        //        $("#Normal").prop("checked", true);
+        //        $("#Coklu").prop("checked", true);
+        //        $("#Antipassback").prop("checked", true);
+        //        $("#Manuel").prop("checked", true);
+        //        $("#AlarmYangin").prop("checked", true);
+        //        $("#Tanimsiz").prop("checked", true);
+        //        $("#Programli").prop("checked", true);
+        //        $("#KapiAlarm").prop("checked", true);
+        //        $("#Engellenen").prop("checked", true);
+        //        $("#Button").prop("checked", true);
+        //        $("#DigerAlarm").prop("checked", true);
+        //        $("#Operator").prop("checked", true);
+        //        $("#table tbody tr#normalSatir").prop("hidden", false);
+        //        $("#table tbody tr#cokluGecisSatir").prop("hidden", false);
+        //        $("#table tbody tr#antipassbackSatir").prop("hidden", false);
+        //        $("#table tbody tr#manuelSatir").prop("hidden", false);
+        //        $("#table tbody tr#alarmYanginSatir").prop("hidden", false);
+        //        $("#table tbody tr#tanimsizSatir").prop("hidden", false);
+        //        $("#table tbody tr#programliSatir").prop("hidden", false);
+        //        $("#table tbody tr#kapiAlarmSatir").prop("hidden", false);
+        //        $("#table tbody tr#engellenenSatir").prop("hidden", false);
+        //        $("#table tbody tr#butonSatir").prop("hidden", false);
+        //        $("#table tbody tr#digerSatir").prop("hidden", false);
+
+        //        $("#Tumu").prop("value", true);
+        //        tumu = $("#Tumu").val();
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+
+        //    } else {
+        //        $("#Normal").prop("checked", false);
+        //        $("#Coklu").prop("checked", false);
+        //        $("#Antipassback").prop("checked", false);
+        //        $("#Manuel").prop("checked", false);
+        //        $("#AlarmYangin").prop("checked", false);
+        //        $("#Tanimsiz").prop("checked", false);
+        //        $("#Programli").prop("checked", false);
+        //        $("#KapiAlarm").prop("checked", false);
+        //        $("#Engellenen").prop("checked", false);
+        //        $("#Button").prop("checked", false);
+        //        $("#DigerAlarm").prop("checked", false);
+        //        $("#Operator").prop("checked", false);
+        //        $("#table tbody tr#normalSatir").prop("hidden", true);
+        //        $("#table tbody tr#cokluGecisSatir").prop("hidden", true);
+        //        $("#table tbody tr#antipassbackSatir").prop("hidden", true);
+        //        $("#table tbody tr#manuelSatir").prop("hidden", true);
+        //        $("#table tbody tr#alarmYanginSatir").prop("hidden", true);
+        //        $("#table tbody tr#tanimsizSatir").prop("hidden", true);
+        //        $("#table tbody tr#programliSatir").prop("hidden", true);
+        //        $("#table tbody tr#kapiAlarmSatir").prop("hidden", true);
+        //        $("#table tbody tr#engellenenSatir").prop("hidden", true);
+        //        $("#table tbody tr#butonSatir").prop("hidden", true);
+        //        $("#table tbody tr#digerSatir").prop("hidden", true);
+
+        //        $("#Tumu").prop("value", false);
+        //        tumu = $("#Tumu").val();
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+        //        });
+        //    }
+        //});
+        //$("#Normal").change(function () {
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#normalSatir").prop("hidden", false);
+        //        normal = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+        //        }).done(function (data) {
+        //            window.location.assign("/Watch/Index");
+        //        });
+        //    } else {
+        //        $("#table tbody tr#normalSatir").prop("hidden", true);
+        //        normal = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+        //        }).done(function (data) {
+        //            window.location.assign("/Watch/Index");
+        //        });;
+        //    }
+
+        //});
+        //$("#Coklu").change(function () {
+        //    normal = $("#Normal").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#cokluGecisSatir").prop("hidden", false);
+        //        coklu = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+
+        //    } else {
+        //        $("#table tbody tr#cokluGecisSatir").prop("hidden", true);
+        //        coklu = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    }
+        //});
+        //$("#Antipassback").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#antipassbackSatir").prop("hidden", false);
+        //        antipassback = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    } else {
+        //        $("#table tbody tr#antipassbackSatir").prop("hidden", true);
+        //        antipassback = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    }
+
+        //});
+        //$("#Manuel").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#manuelSatir").prop("hidden", false);
+        //        manuel = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    } else {
+        //        $("#table tbody tr#manuelSatir").prop("hidden", true);
+        //        manuel = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    }
+        //});
+        //$("#AlarmYangin").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#alarmYanginSatir").prop("hidden", false);
+        //        alarmyangin = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    } else {
+        //        $("#table tbody tr#alarmYanginSatir").prop("hidden", true);
+        //        alarmyangin = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    }
+        //});
+        //$("#Tanimsiz").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#tanimsizSatir").prop("hidden", false);
+        //        tanimsiz = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+
+        //    } else {
+        //        $("#table tbody tr#tanimsizSatir").prop("hidden", true);
+        //        tanimsiz = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    }
+
+        //});
+        //$("#Programli").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#programliSatir").prop("hidden", false);
+        //        programli = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    } else {
+        //        $("#table tbody tr#programliSatir").prop("hidden", true);
+        //        programli = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    }
+
+        //});
+        //$("#KapiAlarm").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#kapiAlarmSatir").prop("hidden", false);
+        //        kapialarm = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+
+        //    } else {
+        //        $("#table tbody tr#kapiAlarmSatir").prop("hidden", true);
+        //        kapialarm = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    }
+        //});
+        //$("#Engellenen").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#engellenenSatir").prop("hidden", false);
+        //        engellenen = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        }).done(function (data) {
+        //            window.location.assign("/Watch/Index");
+        //        });;
+        //    } else {
+        //        $("#table tbody tr#engellenenSatir").prop("hidden", true);
+        //        engellenen = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        }).done(function (data) {
+        //            window.location.assign("/Watch/Index");
+        //        });;
+        //    }
+
+        //});
+        //$("#Button").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#butonSatir").prop("hidden", false);
+        //        button = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+
+        //    } else {
+        //        $("#table tbody tr#butonSatir").prop("hidden", true);
+        //        button = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
+        //    }
+
+        //});
+        //$("#DigerAlarm").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    operatorlog = $("#Operator").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr#digerSatir").prop("hidden", false);
+        //        digeralarm = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
+
+        //        });
 
 
-            }
-        });
-        $("#Normal").click(function () {
-            if ($(this).prop("checked") == true) {
-                var normal = $("#Normal").val();
+        //    } else {
+        //        $("#table tbody tr#digerSatir").prop("hidden", true);
+        //        digeralarm = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
 
-                $("#table tbody tr#normalSatir").prop("hidden", false);
-                $.ajax({
-                    url: '/Watch/WatcParameters',
-                    type: 'GET',
-                    dataType: 'json',
-                    data: { Normal: normal, Coklu: coklu }
+        //        });
+        //    }
 
-                });
-            } else {
-                $("#table tbody tr#normalSatir").prop("hidden", true);
-            }
+        //});
+        //$("#OperatorLog").change(function () {
+        //    normal = $("#Normal").val();
+        //    coklu = $("#Coklu").val();
+        //    antipassback = $("#Antipassback").val();
+        //    manuel = $("#Manuel").val();
+        //    alarmyangin = $("#AlarmYangin").val();
+        //    tanimsiz = $("#Tanimsiz").val();
+        //    programli = $("#Programli").val();
+        //    kapialarm = $("#KapiAlarm").val();
+        //    engellenen = $("#Engellenen").val();
+        //    button = $("#Button").val();
+        //    digeralarm = $("#DigerAlarm").val();
+        //    if ($(this).prop("checked") == true) {
+        //        $("#table tbody tr").prop("hidden", false);
+        //        operatorlog = true;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
 
-        });
-        $("#Coklu").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#cokluGecisSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#cokluGecisSatir").prop("hidden", true);
-            }
-        });
-        $("#Antipassback").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#antipassbackSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#antipassbackSatir").prop("hidden", true);
-            }
+        //        });
+        //    } else {
+        //        $("#table tbody tr").prop("hidden", true);
+        //        operatorlog = false;
+        //        $.ajax({
+        //            url: '/Watch/WatcParameters',
+        //            type: 'POST',
+        //            dataType: 'json',
+        //            data: { Tumu: tumu, Normal: normal, Coklu: coklu, Antipassback: antipassback, Manuel: manuel, AlarmYangin: alarmyangin, Tanimsiz: tanimsiz, Programli: programli, KapiAlarm: kapialarm, Engellenen: engellenen, Button: button, DigerAlarm: digeralarm, OperatorLog: operatorlog }
 
-        });
-        $("#Manuel").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#manuelSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#manuelSatir").prop("hidden", true);
-            }
-        });
-        $("#AlarmYangin").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#alarmYanginSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#alarmYanginSatir").prop("hidden", true);
-            }
-        });
-        $("#Tanimsiz").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#tanimsizSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#tanimsizSatir").prop("hidden", true);
-            }
+        //        });
+        //    }
 
-        });
-        $("#Programli").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#programliSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#programliSatir").prop("hidden", true);
-            }
-
-        });
-        $("#KapiAlarm").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#kapiAlarmSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#kapiAlarmSatir").prop("hidden", true);
-            }
-        });
-        $("#Engellenen").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#engellenenSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#engellenenSatir").prop("hidden", true);
-            }
-
-        });
-        $("#Button").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#butonSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#butonSatir").prop("hidden", true);
-            }
-
-        });
-        $("#DigerAlarm").click(function () {
-            if ($(this).prop("checked") == true) {
-                $("#table tbody tr#digerSatir").prop("hidden", false);
-            } else {
-                $("#table tbody tr#digerSatir").prop("hidden", true);
-            }
-
-        });
-        $("#Operator").click(function () {
-            //if ($(this).prop("checked") == true) {
-            //    $("#table tbody tr").prop("hidden", false);
-            //} else {
-            //    $("#table tbody tr").prop("hidden", true);
-            //}
-
-        });
+        //});
 
 
 
@@ -717,6 +1191,8 @@
                 + "/" + (d.getDate() + "").padStart(2, "0")
                 + "/" + d.getFullYear();
         }
+
+
         var count = 0;
         $.ajax({
             url: '/Watch/Count',
@@ -732,15 +1208,14 @@
             $.ajax({
                 url: '/Watch/Count',
                 type: 'GET',
-                dataType: 'json',
-                data: { Kayit_No: kayit }
+                dataType: 'json'
             }).done(function (data) {
                 if (data != count) {
                     window.location.assign("/Watch/Index");
                     //2 saniye sonra yönlenecek
                 }
             });
-        }, 500);
+        }, 1000);
 
 
 

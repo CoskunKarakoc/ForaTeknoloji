@@ -36,7 +36,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2);
 
 
-        List<WatchEntityComplex> GetWatch();
+        List<WatchEntityComplex> GetWatch(WatchParameters watchParameters);
         WatchEntityComplex LastRecordWatch(int? Kayit_No);
 
         void Guncelle(List<int> KayitNo);

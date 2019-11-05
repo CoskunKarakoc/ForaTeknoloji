@@ -8,5 +8,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
     {
         public List<WatchEntityComplex> ComplexAccessDatas { get; internal set; }
         public WatchEntityComplex LastRecordWatch { get; internal set; }
+        public WatchParameters WatchParam { get; internal set; }
     }
 }

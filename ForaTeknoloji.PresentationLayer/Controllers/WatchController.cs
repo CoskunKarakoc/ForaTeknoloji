@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
@@ -16,6 +17,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUserService _userService;
         private IReportService _reportService;
         DBUsers user;
+        WatchParameters WtchPrmtrs;
+        PanelSettings PanelSettings;
         public WatchController(IAccessDatasService accessDatasService, IUserService userService, IReportService reportService)
         {
             user = CurrentSession.User;
@@ -23,6 +26,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 user = new DBUsers();
             }
+            WtchPrmtrs = CurrentSession.Get<WatchParameters>("WatchParameter");
+            if (WtchPrmtrs == null)
+            {
+                WtchPrmtrs = new WatchParameters();
+            }
+
             _accessDatasService = accessDatasService;
             _userService = userService;
             _reportService = reportService;
@@ -35,10 +44,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index()
         {
             var lastrecordwatch = _reportService.LastRecordWatch(null);
+            var cmplxwatch = _reportService.GetWatch(WtchPrmtrs);
             var model = new WatchIndexViewModel
             {
-                ComplexAccessDatas = _reportService.GetWatch(),
-                LastRecordWatch = lastrecordwatch
+                ComplexAccessDatas = cmplxwatch,
+                LastRecordWatch = lastrecordwatch,
+                WatchParam = WtchPrmtrs
             };
             return View(model);
         }
@@ -63,9 +74,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(count, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult WatcParameters(int? Normal, int? Coklu)
+        [HttpPost]
+        public ActionResult WatcParameters(WatchParameters watchParameters)
         {
-            return null;
+            if (watchParameters != null)
+            {
+                CurrentSession.Set<WatchParameters>("WatchParameter", watchParameters);
+                var nesne = CurrentSession.Get<WatchParameters>("WatchParameter");
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
         }
 
 

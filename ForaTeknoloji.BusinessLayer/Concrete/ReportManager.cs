@@ -1683,10 +1683,73 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
         //Watch-List
-        public List<WatchEntityComplex> GetWatch()
+        public List<WatchEntityComplex> GetWatch(WatchParameters watchParameters)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
             string queryString = "";
+            string CodeString = "";
+            if (watchParameters != null)
+            {
+                if (watchParameters.Tumu != true)
+                {
+                    if (watchParameters.Normal == true)
+                        CodeString += "1,";
+                    if (watchParameters.Coklu == true)
+                        CodeString += "3,";
+                    if (watchParameters.Engellenen == true)
+                        CodeString += "0,";
+                    if (watchParameters.Antipassback == true)
+                        CodeString += "2,";
+                    if (watchParameters.Tanimsiz == true)
+                        CodeString += "4,";
+                    if (watchParameters.Manuel == true)
+                        CodeString += "5,6,7,";
+                    if (watchParameters.Programli == true)
+                        CodeString += "9,10,14,";
+                    if (watchParameters.Button == true)
+                        CodeString += "8,";
+                    if (watchParameters.AlarmYangin == true)
+                        CodeString += "20,21,";
+                    if (watchParameters.KapiAlarm == true)
+                        CodeString += "22,23,24,";
+                    if (watchParameters.DigerAlarm == true)
+                        CodeString += "25,26,27,";
+
+                    if (CodeString != "")
+                    {
+                        CodeString = CodeString.Substring(0, CodeString.Length - 1);
+                    }
+
+
+                    if (watchParameters.Operatorlog == true)
+                    {
+                        if (CodeString == "")
+                        {
+                            CodeString += " AccessDatas.Kod >= 100 ";
+                        }
+                        else
+                        {
+                            CodeString = " AND AccessDatas.Kod IN (" + CodeString + ")" + " OR AccessDatas.Kod >= 100 ";
+                        }
+                    }
+                    else
+                    {
+                        if (CodeString != "")
+                        {
+                            CodeString = " AND AccessDatas.Kod IN (" + CodeString + ") ";
+                        }
+                    }
+                }
+
+
+            }
+
+
+
+
+
+
+            //Client-Mod
             queryString = "SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
                 " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
                 " Departmanlar.Adi AS Departman," +
@@ -1695,9 +1758,24 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 " DoorNames.[Kapi Adi] As Kapi," +
                 " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
                 " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
-                " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No] AND AccessDatas.[Panel ID]=DoorNames.[Panel No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
                 " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
                 " AND Users.[Sirket No] IN(10000," + sirketListesi + ")";
+            //Server-Mod
+            //queryString = " SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+            //    "Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket, " +
+            //    " Departmanlar.Adi AS Departman, " +
+            //    " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, " +
+            //    " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+            //    " DoorNames.[Kapi Adi] As Kapi, " +
+            //    " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
+            //    " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi] " +
+            //    " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])" +
+            //    " LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])" +
+            //    " LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID)" +
+            //    " LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) " +
+            //    " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] ";
+            queryString += CodeString;
             queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
             List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
             using (SqlConnection connection = new SqlConnection(address))
@@ -1765,7 +1843,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                   " DoorNames.[Kapi Adi] As Kapi," +
                                   " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
                                   " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
-                                  " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No] AND AccessDatas.[Panel ID]=DoorNames.[Panel No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                                  " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
                                   " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
                                   " AND Users.[Sirket No] IN(10000," + sirketListesi + ")" +
                                   " AND AccessDatas.[Kayit No] = " + Kayit_No;
@@ -1780,7 +1858,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                    " DoorNames.[Kapi Adi] As Kapi," +
                                    " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
                                    " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
-                                   " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No] AND AccessDatas.[Panel ID]=DoorNames.[Panel No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                                   " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
                                    " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
                                    " AND Users.[Sirket No] IN(10000," + sirketListesi + ")";
             }
@@ -1837,8 +1915,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 return null;
             }
         }
-
-
 
 
         //Kullanıcı adına göre Sirket Listesi döndürüyor
