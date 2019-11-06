@@ -16,10 +16,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IAccessDatasService _accessDatasService;
         private IUserService _userService;
         private IReportService _reportService;
+        private IProgInitService _progInitService;
         DBUsers user;
         WatchParameters WtchPrmtrs;
-        PanelSettings PanelSettings;
-        public WatchController(IAccessDatasService accessDatasService, IUserService userService, IReportService reportService)
+        public WatchController(IAccessDatasService accessDatasService, IUserService userService, IReportService reportService, IProgInitService progInitService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -35,6 +35,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _accessDatasService = accessDatasService;
             _userService = userService;
             _reportService = reportService;
+            _progInitService = progInitService;
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
         }
@@ -58,8 +59,25 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult WatchSettings()
         {
-            return View();
+            return View(_progInitService.GetAllProgInit().LastOrDefault());
         }
+
+        [HttpPost]
+        public ActionResult WatchSettings(ProgInit progInit)
+        {
+            if (ModelState.IsValid)
+            {
+                if (progInit != null)
+                {
+                    _progInitService.AddProgInit(progInit);
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(progInit);
+        }
+
+
+
 
 
         public ActionResult SonKayit(int KayitNo)

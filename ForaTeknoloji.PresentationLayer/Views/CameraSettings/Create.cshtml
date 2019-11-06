@@ -1,0 +1,156 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.CameraAddListViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs">
+                <h3 class="text-muted text-center">Yeni Kamera</h3>
+                <hr />
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "CameraSettings", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Kamera_No)
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Kamera No</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.Kamera_No, null, new { @class = "form-control", disabled = true })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Kamera Tipi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kamera_Tipi", Model.Kamera_Tipi, "Kamera Seçiniz...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Kamera_Tipi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">TCP Port</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="TCP_Port" name="TCP_Port" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Login Adı</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Kamera_Admin" name="Kamera_Admin" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Kapı Seçimi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_ID",new SelectList(Model.Kapi_ID), "Kapı Seçiniz...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Kapi_ID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Kamera Adı</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="Kamera_Adi" id="Kamera_Adi" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">IP Adresi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="IP_Adres" id="IP_Adres" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">UDP Port</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="UDP_Port" id="UDP_Port" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Login Şifre</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" name="Kamera_Password" id="Kamera_Password" value="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Panel Seçimi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Panel_ID", Model.Panel_ID, "Panel Seçiniz...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Panel_ID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Açıklama</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea rows="3" cols="3" class="form-control" name="Aciklama" id="Aciklama"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                <input type="checkbox" class="custom-control-input" name="Geciste_Resim_Kayit" id="Geciste_Resim_Kayit" value="true" />
+                                <label class="custom-control-label ml-5" for="Geciste_Resim_Kayit">Geçişte Resim Kayıt</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                <input type="checkbox" class="custom-control-input" name="Antipassback_Resim_Kayit" id="Antipassback_Resim_Kayit" value="true" />
+                                <label class="custom-control-label ml-5" for="Antipassback_Resim_Kayit">Antipassback Resim Kayıt</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                <input type="checkbox" id="Engellenen_Resim_Kayit" name="Engellenen_Resim_Kayit" class="custom-control-input" value="true" />
+                                <label class="custom-control-label ml-5" for="Engellenen_Resim_Kayit">Engellenen Resim Kayıt</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                <input type="checkbox" id="Tanimsiz_Resim_Kayit" name="Tanimsiz_Resim_Kayit" class="custom-control-input" value="true" />
+                                <label class="custom-control-label ml-5" for="Tanimsiz_Resim_Kayit">Tanımsız Resim Kayıt</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-right mt-5">
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fa fa-save"></i> Kaydet</button>
+                            <a href="@Url.Action("Index","CameraSettings")" class="btn btn-sm btn-outline-info"><i class="fa fa-hand-point-left"></i> Listeye Geri Dön</a>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

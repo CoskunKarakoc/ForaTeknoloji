@@ -1750,31 +1750,31 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
             //Client-Mod
-            queryString = "SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
-                " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
-                " Departmanlar.Adi AS Departman," +
-                " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
-                " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
-                " DoorNames.[Kapi Adi] As Kapi," +
-                " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
-                " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
-                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
-                " AND Users.[Sirket No] IN(10000," + sirketListesi + ")";
-            //Server-Mod
-            //queryString = " SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
-            //    "Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket, " +
-            //    " Departmanlar.Adi AS Departman, " +
-            //    " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, " +
+            //queryString = "SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+            //    " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
+            //    " Departmanlar.Adi AS Departman," +
+            //    " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
             //    " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
-            //    " DoorNames.[Kapi Adi] As Kapi, " +
+            //    " DoorNames.[Kapi Adi] As Kapi," +
             //    " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-            //    " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi] " +
-            //    " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])" +
-            //    " LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])" +
-            //    " LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID)" +
-            //    " LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) " +
-            //    " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] ";
+            //    " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
+            //    " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+            //    " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
+            //    " AND Users.[Sirket No] IN(10000," + sirketListesi + ")";
+            //Server-Mod
+            queryString = " SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+                "Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket, " +
+                " Departmanlar.Adi AS Departman, " +
+                " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, " +
+                " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+                " DoorNames.[Kapi Adi] As Kapi, " +
+                " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
+                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi] " +
+                " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])" +
+                " LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])" +
+                " LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID)" +
+                " LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) " +
+                " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] ";
             queryString += CodeString;
             queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
             List<WatchEntityComplex> liste = new List<WatchEntityComplex>();

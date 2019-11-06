@@ -2498,6 +2498,7 @@
     <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
+    <Compile Include="Controllers\CameraSettingsController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DoorController.cs" />
@@ -2505,6 +2506,7 @@
     <Compile Include="Controllers\GlobalZoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsideOutReportController.cs" />
+    <Compile Include="Controllers\LiftController.cs" />
     <Compile Include="Controllers\OutherReportController.cs" />
     <Compile Include="Controllers\PanelController.cs" />
     <Compile Include="Controllers\PanelSettingsController.cs" />
@@ -2525,6 +2527,7 @@
     <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Models\AddTimeGroupsListViewModel.cs" />
     <Compile Include="Models\AlarmListViewModel.cs" />
+    <Compile Include="Models\CameraAddListViewModel.cs" />
     <Compile Include="Models\CreateVisitorViewModel.cs" />
     <Compile Include="Models\CurrentSession.cs" />
     <Compile Include="Models\DigerGecisRaporAlarmListViewModel.cs" />
@@ -2616,6 +2619,11 @@
     <Content Include="Views\PanelSettings\ReaderEdit.cshtml" />
     <Content Include="Views\PanelSettings\Reader.cshtml" />
     <Content Include="Views\Watch\WatchSettings.cshtml" />
+    <Content Include="Views\CameraSettings\Index.cshtml" />
+    <Content Include="Views\CameraSettings\Edit.cshtml" />
+    <Content Include="Views\CameraSettings\Create.cshtml" />
+    <Content Include="Views\Lift\FloorNames.cshtml" />
+    <Content Include="Views\Lift\FloorNamesEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

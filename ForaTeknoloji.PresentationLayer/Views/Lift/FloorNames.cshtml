@@ -1,0 +1,106 @@
+﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.FloorNames>
+@{
+    ViewBag.Title = "Floor Names";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-4 offset-4">
+        <div class="card shadow-lg my-lg-5">
+            <div class="card-header-tabs">
+                <h3 class="text-muted text-center">Kat Listesi</h3>
+
+                <div class="row">
+                    <div class="col-md-8 offset-2">
+                        <a onclick="return confirm('Tüm Kat İsimlerini Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("AllNameRemove","Lift")" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> Kat İsimlerini Sil</a>
+                        <a onclick="return confirm('Kat İsimlerini Sıralı Olarak Doldurmak İstediğinize Emin Misiniz?')" href="@Url.Action("AllNameAdd","Lift")" class="btn btn-sm btn-outline-info ml-5"><i class="fas fa-download"></i> Kat İsimlerini Doldur</a>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="table" class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Kat No</td>
+                            <td>Kat Adı</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Kat_No</td>
+                                <td>@item.Kat_Adi</td>
+                                <td>
+                                    <a id="@item.Kat_No" data-toggle="modal" data-target="#floorNamesEdit" data-katno="@item.Kat_No" data-katadi="@item.Kat_Adi" href="#" class="text-info"><i class="fas fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="floorNamesEdit" tabindex="-1" role="dialog" aria-labelledby="floorNamesEditLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="floorNamesEditLabel">Kat İsimlerini Güncelle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("FloorNamesEdit", "Lift", FormMethod.Post))
+            {
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Kat No</label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="Kat_No" name="Kat_No" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Kat İsmi</label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="Kat_Adi" name="Kat_Adi" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-edit"></i> Güncelle</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        for (var i = 1; i < 129; i++) {
+            var query = "#table tbody tr td a#" + i;
+            $(query).click(function () {
+                var katNo = $(this).data("katno");
+                var katAdi = $(this).data("katadi");
+                $("#Kat_Adi").prop("value", katAdi);
+                $("#Kat_No").prop("value", katNo);
+            });
+        }
+    });
+</script>

@@ -1,4 +1,4 @@
-﻿
+﻿@model ForaTeknoloji.Entities.Entities.ProgInit
 @{
     ViewBag.Title = "Watch Settings";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,121 +7,125 @@
 <div class="row">
     <div class="col-md-5 offset-4">
         <div class="card shadow-lg mx-lg-5 my-lg-5">
-            <div class="card-body">
-                <hr />
-                <h5 class="text-info text-center">Panel LOG Ayarları</h5>
-                <hr />
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Tumu" class="custom-control-input" id="Tumu" />
-                    <label class="custom-control-label ml-5" for="Tumu">Antipassback İhlal Mesajlarını Alma</label>
+            @using (Html.BeginForm("WatchSettings", "Watch", FormMethod.Post))
+            {
+                <div class="card-body">
+                    <hr />
+                    <h5 class="text-info text-center">Panel LOG Ayarları</h5>
+                    <hr />
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("LiveAPBInvalid", Model.LiveAPBInvalid ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="LiveAPBInvalid">Antipassback İhlal Mesajlarını Alma</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("LiveDeniedInvalid", Model.LiveDeniedInvalid ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="LiveDeniedInvalid">Engellenen İstek Mesajlarını Alma</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("LiveUnknownInvalid", Model.LiveUnknownInvalid ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="LiveUnknownInvalid">Tanımsız Geçiş Mesajlarını Alma</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("LiveManuelInvalid", Model.LiveManuelInvalid ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="LiveManuelInvalid">Manuel İşlemler "Tetikleme/Açma/Kapama" Mesajlarını Alma</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("LiveButtonInvalid", Model.LiveButtonInvalid ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="LiveButtonInvalid">Buton Tetikleme Mesajlarını Alma</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("LiveProgrammedInvalid", Model.LiveProgrammedInvalid ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="LiveProgrammedInvalid">Programlı İşlemler "Açma/Kapama" Mesajlarını Alma</label>
+                    </div>
+                    <hr />
+                    <h5 class="text-info text-center">Operatör LOG Ayarları</h5>
+                    <hr />
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogUser", Model.NoOpLogUser ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogUser">Kullanıcı İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogTimeZone", Model.NoOpLogTimeZone ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogTimeZone">Zaman Bölgesi İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogGroup", Model.NoOpLogGroup ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogGroup">Geçiş Grup İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogPanelLogs", Model.NoOpLogPanelLogs ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogPanelLogs">Panel Olay Hafıza İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogVisitor", Model.NoOpLogVisitor ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogVisitor">Ziyaretçi İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogUserAlarm", Model.NoOpLogUserAlarm ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogUserAlarm">Kullanıcı Alarmları İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogCamera", Model.NoOpLogCamera ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogCamera">Kamera İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogLift", Model.NoOpLogLift ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogLift">Asansör İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogProgrammedRelay", Model.NoOpLogProgrammedRelay ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogProgrammedRelay">Programlı Kapı İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogCompany", Model.NoOpLogCompany ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogCompany">Şirket İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogDepartment", Model.NoOpLogDepartment ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogDepartment">Departman İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogBlock", Model.NoOpLogBlock ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogBlock">Blok İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogImport", Model.NoOpLogImport ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogImport">Dış Veri Alma İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogEmailSMS", Model.NoOpLogEmailSMS ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogEmailSMS">E-Mail ve SMS İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogUserGlobalInterlock", Model.NoOpLogUserGlobalInterlock ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogUserGlobalInterlock">Global Interlock İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogGroupCalendar", Model.NoOpLogGroupCalendar ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogGroupCalendar">Grup Geçiş Takvimi İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogReports", Model.NoOpLogReports ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogReports">Rapor İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpLogDatabase", Model.NoOpLogDatabase ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpLogDatabase">Veritabanı İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpPanelSettings", Model.NoOpPanelSettings ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpPanelSettings">Panel Ayarı İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <div class="custom-control-inline custom-checkbox ml-2">
+                        @Html.CheckBox("NoOpOther", Model.NoOpOther ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label ml-5" for="NoOpOther">Diğer İşlem Log'larını Kaydetme</label>
+                    </div>
+                    <hr />
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-save"></i> Kaydet</button>
+                    </div>
                 </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Normal" class="custom-control-input" id="Normal" />
-                    <label class="custom-control-label ml-5" for="Normal">Engellenen İstek Mesajlarını Alma</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Coklu" class="custom-control-input" id="Coklu" />
-                    <label class="custom-control-label ml-5" for="Coklu">Tanımsız Geçiş Mesajlarını Alma</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Antipassback" class="custom-control-input" id="Antipassback" />
-                    <label class="custom-control-label ml-5" for="Antipassback">Manuel İşlemler "Tetikleme/Açma/Kapama" Mesajlarını Alma</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Manuel" class="custom-control-input" id="Manuel" />
-                    <label class="custom-control-label ml-5" for="Manuel">Buton Tetikleme Mesajlarını Alma</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="AlarmYangin" class="custom-control-input" id="AlarmYangin" />
-                    <label class="custom-control-label ml-5" for="AlarmYangin">Programlı İşlemler "Açma/Kapama" Mesajlarını Alma</label>
-                </div>
-                <hr />
-                <h5 class="text-info text-center">Operatör LOG Ayarları</h5>
-                <hr />
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Tanimsiz" class="custom-control-input" id="Tanimsiz" />
-                    <label class="custom-control-label ml-5" for="Tanimsiz">Kullanıcı İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Programli" class="custom-control-input" id="Programli" />
-                    <label class="custom-control-label ml-5" for="Programli">Zaman Bölgesi İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="KapiAlarm" class="custom-control-input" id="KapiAlarm" />
-                    <label class="custom-control-label ml-5" for="KapiAlarm">Geçiş Grup İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Engellenen" class="custom-control-input" id="Engellenen" />
-                    <label class="custom-control-label ml-5" for="Engellenen">Panel Olay Hafıza İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Button" class="custom-control-input" id="Button" />
-                    <label class="custom-control-label ml-5" for="Button">Ziyaretçi İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="DigerAlarm" class="custom-control-input" id="DigerAlarm" />
-                    <label class="custom-control-label ml-5" for="DigerAlarm">Kullanıcı Alarmları İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Kamera İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Asansör İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Programlı Kapı İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Şirket İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Departman İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Blok İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Dış Veri Alma İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">E-Mail ve SMS İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Global Interlock İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Grup Geçiş Takvimi İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Rapor İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Veritabanı İşlem Log'larını Kaydetme</label>
-                </div> <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Panel Ayarı İşlem Log'larını Kaydetme</label>
-                </div>
-                <div class="custom-control-inline custom-checkbox ml-2">
-                    <input type="checkbox" value="" name="Operator" class="custom-control-input" id="Operator" />
-                    <label class="custom-control-label ml-5" for="Operator">Diğer İşlem Log'larını Kaydetme</label>
-                </div>
-                <hr />
-                <div class="col-md-12 text-center">
-                    <a href="@Url.Action("Index","Watch")" class="btn btn-outline-success"><i class="fas fa-save"></i> Kaydet</a>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>

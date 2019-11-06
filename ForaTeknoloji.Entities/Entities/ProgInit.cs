@@ -139,5 +139,45 @@ namespace ForaTeknoloji.Entities.Entities
         public bool? LiveProgrammedInvalid { get; set; }
 
         public bool? UpdateAccessFile { get; set; }
+
+        public bool? NoOpLogUser { get; set; }
+
+        public bool? NoOpLogTimeZone { get; set; }
+
+        public bool? NoOpLogGroup { get; set; }
+
+        public bool? NoOpLogPanelLogs { get; set; }
+
+        public bool? NoOpLogVisitor { get; set; }
+
+        public bool? NoOpLogUserAlarm { get; set; }
+
+        public bool? NoOpLogCamera { get; set; }
+
+        public bool? NoOpLogLift { get; set; }
+
+        public bool? NoOpLogProgrammedRelay { get; set; }
+
+        public bool? NoOpLogCompany { get; set; }
+
+        public bool? NoOpLogDepartment { get; set; }
+
+        public bool? NoOpLogBlock { get; set; }
+
+        public bool? NoOpLogImport { get; set; }
+
+        public bool? NoOpLogEmailSMS { get; set; }
+
+        public bool? NoOpLogUserGlobalInterlock { get; set; }
+
+        public bool? NoOpLogGroupCalendar { get; set; }
+
+        public bool? NoOpLogReports { get; set; }
+
+        public bool? NoOpLogDatabase { get; set; }
+
+        public bool? NoOpPanelSettings { get; set; }
+
+        public bool? NoOpOther { get; set; }
     }
 }

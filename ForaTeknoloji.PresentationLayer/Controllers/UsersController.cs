@@ -72,7 +72,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
-        public ActionResult Create()
+        public ActionResult Create(string Kart_ID=null)
         {
             int MaxID;
             if (_userService.GetAllUsers().Count == 0)
@@ -136,7 +136,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Grup_Takvimi_Adi,
                     Value = a.Grup_Takvimi_No.ToString()
-                })
+                }),
+                Kart_ID=Kart_ID
             };
             return View(model);
         }

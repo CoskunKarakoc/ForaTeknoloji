@@ -60,6 +60,8 @@
     <Compile Include="Abstract\IAlarmlarService.cs" />
     <Compile Include="Abstract\IAlarmTipleriService.cs" />
     <Compile Include="Abstract\IBloklarService.cs" />
+    <Compile Include="Abstract\ICamerasService.cs" />
+    <Compile Include="Abstract\ICameraTypesService.cs" />
     <Compile Include="Abstract\ICodeOperationService.cs" />
     <Compile Include="Abstract\IDBRolesService.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanService.cs" />
@@ -68,11 +70,13 @@
     <Compile Include="Abstract\IDBUsersSirketService.cs" />
     <Compile Include="Abstract\IDepartmanService.cs" />
     <Compile Include="Abstract\IDoorNamesService.cs" />
+    <Compile Include="Abstract\IFloorNamesService.cs" />
     <Compile Include="Abstract\IGlobalZoneService.cs" />
     <Compile Include="Abstract\IGlobalZonesInterlockService.cs" />
     <Compile Include="Abstract\IGroupMasterService.cs" />
     <Compile Include="Abstract\IGroupsDetailService.cs" />
     <Compile Include="Abstract\IPanelSettingsService.cs" />
+    <Compile Include="Abstract\IProgInitService.cs" />
     <Compile Include="Abstract\IReaderSettingsNewService.cs" />
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
@@ -90,6 +94,8 @@
     <Compile Include="Concrete\AlarmlarManager.cs" />
     <Compile Include="Concrete\AlarmTipleriManager.cs" />
     <Compile Include="Concrete\BloklarManager.cs" />
+    <Compile Include="Concrete\CamerasManager.cs" />
+    <Compile Include="Concrete\CameraTypesManager.cs" />
     <Compile Include="Concrete\CodeOperationManager.cs" />
     <Compile Include="Concrete\DBRolesManager.cs" />
     <Compile Include="Concrete\DBUsersDepartmanManager.cs" />
@@ -98,11 +104,13 @@
     <Compile Include="Concrete\DBUsersSirketManager.cs" />
     <Compile Include="Concrete\DepartmanManager.cs" />
     <Compile Include="Concrete\DoorNamesManager.cs" />
+    <Compile Include="Concrete\FloorNamesManager.cs" />
     <Compile Include="Concrete\GlobalZoneManager.cs" />
     <Compile Include="Concrete\GlobalZonesInterlockManager.cs" />
     <Compile Include="Concrete\GroupsDetailManager.cs" />
     <Compile Include="Concrete\GroupsMasterManager.cs" />
     <Compile Include="Concrete\PanelSettingsManager.cs" />
+    <Compile Include="Concrete\ProgInitManager.cs" />
     <Compile Include="Concrete\ReaderSettingsManager.cs" />
     <Compile Include="Concrete\ReaderSettingsNewManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />

@@ -48,6 +48,10 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ITimeZoneIDsDal>().To<EfTimeZoneIDsDal>().InSingletonScope();
             Bind<IDBRolesDal>().To<EfDBRolesDal>().InSingletonScope();
             Bind<IReaderSettingsNewDal>().To<EfReaderSettingsNewDal>().InSingletonScope();
+            Bind<IProgInitDal>().To<EfProgInitDal>().InSingletonScope();
+            Bind<ICamerasDal>().To<EfCamerasDal>().InSingletonScope();
+            Bind<ICameraTypesDal>().To<EfCameraTypesDal>().InSingletonScope();
+            Bind<IFloorNamesDal>().To<EfFloorNamesDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -80,6 +84,10 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ITimeZoneIDsService>().To<TimeZoneIDsManager>().InSingletonScope();
             Bind<IDBRolesService>().To<DBRolesManager>().InSingletonScope();
             Bind<IReaderSettingsNewService>().To<ReaderSettingsNewManager>().InSingletonScope();
+            Bind<IProgInitService>().To<ProgInitManager>().InSingletonScope();
+            Bind<ICamerasService>().To<CamerasManager>().InSingletonScope();
+            Bind<ICameraTypesService>().To<CameraTypesManager>().InSingletonScope();
+            Bind<IFloorNamesService>().To<FloorNamesManager>().InSingletonScope();
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();
