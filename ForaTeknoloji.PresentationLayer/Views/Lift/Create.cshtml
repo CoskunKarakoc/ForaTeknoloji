@@ -1,0 +1,154 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.LiftGroupsAddViewModel
+@{
+    ViewBag.Title = "Yeni Asansör Grup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-muted text-center"><i>Yeni Asansör Geçiş Grubu</i></h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "Lift", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Asansor_Grup_No);
+                    <hr />
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Asansör Grup No</label>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.TextBox("Asansor_No", Model.Asansor_Grup_No, null, new { @class = "form-control", disabled = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Asansör Grup Adı</label>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="text" name="Asansor_Grup_Adi" id="Asansor_Grup_Adi" class="form-control" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Kat Sayısı</label>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="number" name="Kat_Sayisi" id="Kat_Sayisi" class="form-control" min="0" max="128" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group offset-4">
+                        <div class="custom-control-inline custom-radio ml-5 mr-5">
+                            <input type="radio" value="16" class="custom-control-input" id="16" name="Kat_Sayisi_Base">
+                            <label class="custom-control-label text-dark" for="16">16 Kat</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio mr-5">
+                            <input type="radio" value="32" class="custom-control-input" id="32" name="Kat_Sayisi_Base">
+                            <label class="custom-control-label text-dark" for="32">32 Kat</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio mr-5">
+                            <input type="radio" value="64" class="custom-control-input" id="64" name="Kat_Sayisi_Base">
+                            <label class="custom-control-label text-dark" for="64">64 Kat</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" id="Listele" class="btn btn-sm btn-outline-secondary mr-1"><i class="fas fa-list-ol"></i> Listele</button>
+                            <a href="@Url.Action("FloorNames","Lift")" class="btn btn-sm btn-outline-info mr-1"><i class="fas fa-stream"></i> Kat İsimleri</a>
+                            <a href="@Url.Action("LiftGroups","Lift")" title="Listeye Geri Dön" class="btn btn-sm btn-outline-primary mr-1"><i class="fas fa-long-arrow-alt-left"></i> Listeye Dön</a>
+                            <button type="submit" class="btn btn-sm btn-outline-success mr-1"><i class="fas fa-save"></i> Yeni Ekle</button>
+                        </div>
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="floorTop"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="floorLeft"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="floorRight"></div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div hidden id="alert" class="col-md-12">
+                        <div class="alert alert-danger text-center" role="alert">
+                            Lütfen geçerli kat sayısı giriniz.<b>(1 ile 128 arası)</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var end = 0;
+        $("#16").click(function () {
+            var value = $("#16").val();
+            $("#Kat_Sayisi").prop("value", value);
+        });
+        $("#32").click(function () {
+            var value = $("#32").val();
+            $("#Kat_Sayisi").prop("value", value);
+        });
+        $("#64").click(function () {
+            var value = $("#64").val();
+            $("#Kat_Sayisi").prop("value", value);
+        });
+        $("#Kat_Sayisi").focus(function () {
+            $("#16").prop("checked", false);
+            $("#32").prop("checked", false);
+            $("#64").prop("checked", false);
+        });
+        $("#Listele").click(function () {
+            end = $("#Kat_Sayisi").val();
+            $("#floorTop").html('');
+            $("#floorLeft").html('');
+            $("#floorRight").html('');
+            $.ajax({
+                url: '/Lift/FloorNamesList',
+                type: 'GET',
+                contentType: 'json'
+            }).done(function (data) {
+                if (end >= 1 && end <= 128) {
+                    $("#floorTop").append('<div class="form-group"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name="Tumu" id="Tumu" value="" /><label class="custom-control-label" for="Tumu">Tümünü Seç</label></div></div>');
+                    for (var i = 0; i < end; i++) {
+                        var sayac = i;
+                        $("#alert").prop("hidden", true);
+                        if (sayac % 2 == 0) {
+                            $("#floorLeft").append('<div class="form-group"><div class="custom-control custom-checkbox"><input type="checkbox" id="Kat_' + (i + 1) + '" name="Kat_' + (i + 1) + '" class="custom-control-input" value="true" /><label class="custom-control-label" for="Kat_' + (i + 1) + '">' + data[i].Kat_Adi + '</label></div></div>');
+                        } else {
+                            $("#floorRight").append('<div class="form-group"><div class="custom-control custom-checkbox"><input type="checkbox" id="Kat_' + (i + 1) + '" name="Kat_' + (i + 1) + '" class="custom-control-input" value="true" /><label class="custom-control-label" for="Kat_' + (i + 1) + '">' + data[i].Kat_Adi + '</label></div></div>');
+                        }
+                    }
+
+                } else {
+                    $("#alert").prop("hidden", false);
+                }
+                $("#Tumu").change(function () {
+                    if ($(this).prop("checked") == true) {
+                        for (var i = 0; i < end; i++) {
+                            $("#Kat_" + (i + 1)).prop("checked", true);
+                        }
+                    } else {
+                        for (var i = 0; i < end; i++) {
+                            $("#Kat_" + (i + 1)).prop("checked", false);
+                        }
+                    }
+
+                });
+            });
+            setTimeout(function () {
+                $("#alert").prop("hidden", true);
+            }, 2000);
+        });
+    });
+</script>

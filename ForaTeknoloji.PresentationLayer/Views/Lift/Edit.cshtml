@@ -1,0 +1,410 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.LiftEditViewModel
+@{
+    ViewBag.Title = "Asansör Grup Düzenleme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-muted text-center"><i>Asansör Geçiş Grup Düzenle</i></h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Edit", "Lift", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.Hidden("Asansor_Grup_No", Model.LiftGroup.Asansor_Grup_No)
+                    <hr />
+                    <input hidden type="text" id="Asansor_Kat_Sayisi" name="Asansor_Kat_Sayisi" value="@Model.LiftGroup.Kat_Sayisi" />
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Asansör Grup No</label>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.TextBox("Asansor_Grup_No", Model.LiftGroup.Asansor_Grup_No, null, new { @class = "form-control", disabled = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Asansör Grup Adı</label>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.TextBox("Asansor_Grup_Adi", Model.LiftGroup.Asansor_Grup_Adi, null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Kat Sayısı</label>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.TextBox("Kat_Sayisi", Model.LiftGroup.Kat_Sayisi, null, new { @class = "form-control", type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control-inline custom-radio ml-5 mr-5">
+                            <input type="radio" value="16" class="custom-control-input" id="16" name="Kat_Sayisi_Base">
+                            <label class="custom-control-label" for="16">16</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio mr-5">
+                            <input type="radio" value="32" class="custom-control-input" id="32" name="Kat_Sayisi_Base">
+                            <label class="custom-control-label" for="32">32</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio mr-5">
+                            <input type="radio" value="64" class="custom-control-input" id="64" name="Kat_Sayisi_Base">
+                            <label class="custom-control-label" for="64">64</label>
+                        </div>
+                    </div>
+                    <div class="row mb-5 mt-1">
+                        <div class="col-md-12 text-right">
+                            <button type="button" id="Listele" class="btn btn-sm btn-outline-secondary mr-1"><i class="fas fa-list-ol"></i> Listele</button>
+                            <a href="@Url.Action("FloorNames","Lift")" class="btn btn-sm btn-outline-info mr-1"><i class="fas fa-stream"></i> Kat İsimleri</a>
+                            <a href="@Url.Action("LiftGroups","Lift")" title="Listeye Geri Dön" class="btn btn-sm btn-outline-primary mr-1"><i class="fas fa-long-arrow-alt-left"></i> Listeye Dön</a>
+                            <button type="submit" class="btn btn-sm btn-outline-success mr-1"><i class="fas fa-edit"></i> Güncelle</button>
+                        </div>
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div id="floorTop">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="Tumu" name="Tumu" class="custom-control-input" value="" />
+                                        <label class="custom-control-label" for="Tumu">Tümünü Seç</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="floorLeft">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_1", Model.LiftGroup.Kat_1 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_1">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 1).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_3", Model.LiftGroup.Kat_3 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_3">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 3).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_5", Model.LiftGroup.Kat_5 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_5">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 5).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_7", Model.LiftGroup.Kat_7 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_7">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 7).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_9", Model.LiftGroup.Kat_9 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_9">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 9).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_11", Model.LiftGroup.Kat_11 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_11">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 11).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_13", Model.LiftGroup.Kat_13 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_13">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 13).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_15", Model.LiftGroup.Kat_15 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_15">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 15).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_17", Model.LiftGroup.Kat_17 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_17">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 17).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_19", Model.LiftGroup.Kat_19 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_19">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 19).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_21", Model.LiftGroup.Kat_21 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_21">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 21).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_23", Model.LiftGroup.Kat_23 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_23">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 23).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_25", Model.LiftGroup.Kat_25 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_25">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 25).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_27", Model.LiftGroup.Kat_27 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_27">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 27).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_29", Model.LiftGroup.Kat_29 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_29">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 29).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_31", Model.LiftGroup.Kat_31 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_31">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 31).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_33", Model.LiftGroup.Kat_33 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_33">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 33).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_35", Model.LiftGroup.Kat_35 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_35">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 35).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_37", Model.LiftGroup.Kat_37 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_37">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 37).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_39", Model.LiftGroup.Kat_39 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_39">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 39).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_41", Model.LiftGroup.Kat_41 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_41">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 41).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_43", Model.LiftGroup.Kat_43 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_43">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 43).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_45", Model.LiftGroup.Kat_45 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_45">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 45).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_47", Model.LiftGroup.Kat_47 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_47">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 47).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_49", Model.LiftGroup.Kat_49 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_49">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 49).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_51", Model.LiftGroup.Kat_51 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_51">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 51).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_53", Model.LiftGroup.Kat_53 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_53">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 53).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_55", Model.LiftGroup.Kat_55 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_55">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 55).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_57", Model.LiftGroup.Kat_57 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_57">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 57).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_59", Model.LiftGroup.Kat_59 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_59">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 59).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_61", Model.LiftGroup.Kat_61 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_61">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 61).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_63", Model.LiftGroup.Kat_63 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_63">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 63).Kat_Adi</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="floorRight">
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_2", Model.LiftGroup.Kat_2 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_2">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 2).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_4", Model.LiftGroup.Kat_4 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_4">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 4).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_6", Model.LiftGroup.Kat_6 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_6">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 6).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_8", Model.LiftGroup.Kat_8 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_8">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 8).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_10", Model.LiftGroup.Kat_10 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_10">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 10).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_12", Model.LiftGroup.Kat_12 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_12">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 12).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_14", Model.LiftGroup.Kat_14 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_14">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 14).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_16", Model.LiftGroup.Kat_16 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_16">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 16).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_18", Model.LiftGroup.Kat_18 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_18">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 18).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_20", Model.LiftGroup.Kat_20 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_20">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 20).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_22", Model.LiftGroup.Kat_22 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_22">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 22).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_24", Model.LiftGroup.Kat_24 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_24">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 24).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_26", Model.LiftGroup.Kat_26 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_26">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 26).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_28", Model.LiftGroup.Kat_28 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_28">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 28).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_30", Model.LiftGroup.Kat_30 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_30">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 30).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_32", Model.LiftGroup.Kat_32 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_32">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 32).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_34", Model.LiftGroup.Kat_34 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_34">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 34).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_36", Model.LiftGroup.Kat_36 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_36">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 36).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_38", Model.LiftGroup.Kat_38 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_38">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 38).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_40", Model.LiftGroup.Kat_40 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_40">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 40).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_42", Model.LiftGroup.Kat_42 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_42">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 42).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_44", Model.LiftGroup.Kat_44 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_44">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 44).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_46", Model.LiftGroup.Kat_46 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_46">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 46).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_48", Model.LiftGroup.Kat_48 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_48">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 48).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_50", Model.LiftGroup.Kat_50 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_50">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 50).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_52", Model.LiftGroup.Kat_52 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_52">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 52).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_54", Model.LiftGroup.Kat_54 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_54">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 54).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_56", Model.LiftGroup.Kat_56 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_56">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 56).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_58", Model.LiftGroup.Kat_58 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_58">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 58).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_60", Model.LiftGroup.Kat_60 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_60">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 60).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_62", Model.LiftGroup.Kat_62 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_62">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 62).Kat_Adi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kat_64", Model.LiftGroup.Kat_64 ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kat_64">@Model.FloorName.FirstOrDefault(x => x.Kat_No == 64).Kat_Adi</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div hidden id="alert" class="col-md-12">
+                            <div class="alert alert-danger text-center" role="alert">
+                                Lütfen geçerli kat sayısı giriniz.<b>(0 ile 128 arası)</b>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var end = $("#Asansor_Kat_Sayisi").val();
+        $("#Kat_Sayisi").prop("value", end);
+        $("#16").click(function () {
+            var value = $("#16").val();
+            $("#Kat_Sayisi").prop("value", value);
+        });
+        $("#32").click(function () {
+            var value = $("#32").val();
+            $("#Kat_Sayisi").prop("value", value);
+        });
+        $("#64").click(function () {
+            var value = $("#64").val();
+            $("#Kat_Sayisi").prop("value", "")
+            $("#Kat_Sayisi").prop("value", value);
+        });
+        $("#Kat_Sayisi").focus(function () {
+            $("#16").prop("checked", false);
+            $("#32").prop("checked", false);
+            $("#64").prop("checked", false);
+        });
+        $("#Tumu").change(function () {
+            if ($(this).prop("checked") == true) {
+                for (var i = 0; i < $("#Kat_Sayisi").val(); i++) {
+                    $("#Kat_" + (i + 1)).prop("checked", true);
+                }
+
+            } else {
+                for (var i = 0; i < $("#Kat_Sayisi").val(); i++) {
+                    $("#Kat_" + (i + 1)).prop("checked", false);
+                }
+            }
+        });
+
+        var viewCount = $("#Kat_Sayisi").val();
+        for (var i = viewCount; i < 64; i++) {
+            $("#Kat_" + (i + 1)).prop("disabled", true);
+        }
+        $("#Listele").click(function () {
+            var viewCount = $("#Kat_Sayisi").val();
+            for (var i = 1; i < viewCount; i++) {
+                $("#Kat_" + (i + 1)).prop("disabled", false);
+            }
+            for (var i = viewCount; i < 64; i++) {
+                $("#Kat_" + (i + 1)).prop("disabled", true);
+            }
+        });
+    });
+</script>

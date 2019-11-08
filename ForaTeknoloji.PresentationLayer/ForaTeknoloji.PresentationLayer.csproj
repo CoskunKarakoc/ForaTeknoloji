@@ -2546,6 +2546,9 @@
     <Compile Include="Models\IcerdeDısardaTumuListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaZiyaretciListViewModel.cs" />
     <Compile Include="Models\KullaniciListViewModelModel.cs" />
+    <Compile Include="Models\LiftEditViewModel.cs" />
+    <Compile Include="Models\LiftGroupsAddViewModel.cs" />
+    <Compile Include="Models\LiftGroupsListViewModel.cs" />
     <Compile Include="Models\PanelSettingsViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
@@ -2624,6 +2627,9 @@
     <Content Include="Views\CameraSettings\Create.cshtml" />
     <Content Include="Views\Lift\FloorNames.cshtml" />
     <Content Include="Views\Lift\FloorNamesEdit.cshtml" />
+    <Content Include="Views\Lift\LiftGroups.cshtml" />
+    <Content Include="Views\Lift\Create.cshtml" />
+    <Content Include="Views\Lift\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

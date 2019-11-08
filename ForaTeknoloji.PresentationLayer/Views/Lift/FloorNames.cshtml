@@ -9,8 +9,11 @@
     <div class="col-md-4 offset-4">
         <div class="card shadow-lg my-lg-5">
             <div class="card-header-tabs">
-                <h3 class="text-muted text-center">Kat Listesi</h3>
-
+                <div class="row">
+                    <div class="col-md-8 offset-2 mt-1">
+                        <h3 class="text-muted text-center">Kat İsimleri</h3>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-8 offset-2">
                         <a onclick="return confirm('Tüm Kat İsimlerini Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("AllNameRemove","Lift")" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> Kat İsimlerini Sil</a>
@@ -20,18 +23,25 @@
                 </div>
             </div>
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                    </div>
+                </div>
                 <table id="table" class="table-borderless table table-hover text-center table-striped table-sm">
                     <thead class="table-info">
                         <tr>
+                            <td><a title="Asansör Geçiş Grup Listesi" href="@Url.Action("LiftGroups","Lift")" class="text-info"><i class="fas fa-long-arrow-alt-left fa-2x"></i></a></td>
                             <td>Kat No</td>
                             <td>Kat Adı</td>
-                            <td></td>
+                            <td><a title="Yeni Asansör Geçiş Grubu" href="@Url.Action("Create","Lift")" class="text-info"><i class="fas fa-long-arrow-alt-right fa-2x"></i></a></td>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td></td>
                                 <td>@item.Kat_No</td>
                                 <td>@item.Kat_Adi</td>
                                 <td>
@@ -45,28 +55,26 @@
         </div>
     </div>
 </div>
-
-
-<!-- Modal -->
+<!-- Güncelleme Poppup -->
 <div class="modal fade" id="floorNamesEdit" tabindex="-1" role="dialog" aria-labelledby="floorNamesEditLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="floorNamesEditLabel">Kat İsimlerini Güncelle</h5>
+                <h5 class="modal-title text-center" id="floorNamesEditLabel"><i>Kat İsimlerini Güncelle</i></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             @using (Html.BeginForm("FloorNamesEdit", "Lift", FormMethod.Post))
             {
-
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="form-group">
                             <label class="control-label col-md-4">Kat No</label>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="Kat_No" name="Kat_No" value="" />
+                                    <input hidden type="text" name="Kat_No" id="Kat_No" class="form-control" value="" />
+                                    <input type="text" class="form-control" id="Kat_No_Visible" name="Kat_No_Visible" value="" disabled />
                                 </div>
                             </div>
                         </div>
@@ -81,7 +89,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-edit"></i> Güncelle</button>
@@ -90,7 +97,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         for (var i = 1; i < 129; i++) {
@@ -100,6 +106,7 @@
                 var katAdi = $(this).data("katadi");
                 $("#Kat_Adi").prop("value", katAdi);
                 $("#Kat_No").prop("value", katNo);
+                $("#Kat_No_Visible").prop("value", katNo);
             });
         }
     });

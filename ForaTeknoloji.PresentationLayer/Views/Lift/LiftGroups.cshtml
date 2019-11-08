@@ -1,0 +1,70 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.LiftGroupsListViewModel
+@{
+    ViewBag.Title = "Asansör Geçiş Grupları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs">
+                <h3 class="text-center text-muted"><i>Asansör Grupları</i></h3>
+                @if (Model.StatusControl != -1)
+                {
+                    if (Model.StatusControl == 2)
+                    {
+                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
+                    }
+                    else if (Model.StatusControl == 1)
+                    {
+                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
+                    }
+                    else
+                    {
+                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
+                    }
+                }
+            </div>
+            <div class="card-body">
+                <table class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Asansör Grup No</td>
+                            <td>Asansör Grup Adı</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.LiftGroup)
+                        {
+                            <tr>
+                                <td>@item.Asansor_Grup_No</td>
+                                <td>@item.Asansor_Grup_Adi</td>
+                                <td>
+                                    <a title="Düzenle" href="@Url.Action("Edit","Lift",new {Asansor_Grup_No=item.Asansor_Grup_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
+                                    <a title="Panelden Sil" onclick="return confirm('Panelden Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("PanelRemove","Lift",new {id=item.Asansor_Grup_No })" class="text-danger mr-2"><i class="fas fa-dumpster-fire"></i></a>
+                                    <a title="Veritabanından Sil" onclick="return confirm('Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("DatabaseRemove","Lift",new { id=item.Asansor_Grup_No})" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
+                                    <a title="Panele Gönder" onclick="return confirm('Panele Göndermek İstediğinize Emin Misiniz?')" class="text-success" href="@Url.Action("Send","Lift",new {id=item.Asansor_Grup_No })"><i class="fas fa-share"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="row mt-3">
+                    <div class="col-md-12 text-right">
+                        <a href="@Url.Action("FloorNames","Lift")" class="btn btn-sm btn-outline-info"><i class="fas fa-stream"></i> Kat İsimleri</a>
+                        <a href="@Url.Action("Create","Lift")" class="btn btn-sm btn-outline-success"><i class="fas fa-plus-square"></i> Yeni Asansör Grup</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        if ($("#Status").prop("hidden") == false) {
+            setTimeout(function () {
+                $("#Status").prop("hidden", true);
+            }, 1000);
+        }
+    });
+</script>

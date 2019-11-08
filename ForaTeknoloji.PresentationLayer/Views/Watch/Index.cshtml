@@ -371,7 +371,7 @@
                                         }
                                         <td>@item.Tarih</td>
                                         <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator <a title="Yeni Kullanıcı Olarak Ekle" href="@Url.Action("Create","Users",new {Kart_ID=item.Kart_ID })"><i class="fas fa-user-plus text-info ml-2"></i></a></td>
+                                        <td class="small">@item.Operator <a title="Yeni Kullanıcı Olarak Ekle" onclick="return confirm('Yeni Kullanıcı Olarak Eklemek İstiyormusunuz?')" href="@Url.Action("Create","Users",new {Kart_ID=item.Kart_ID })"><i class="fas fa-user-plus text-info ml-2"></i></a></td>
                                     </tr>
                                 }
                                 else if (item.Kod == 5 || item.Kod == 6 || item.Kod == 7 || item.Kod == 13)

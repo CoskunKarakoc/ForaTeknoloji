@@ -75,6 +75,7 @@
     <Compile Include="Abstract\IGlobalZonesInterlockService.cs" />
     <Compile Include="Abstract\IGroupMasterService.cs" />
     <Compile Include="Abstract\IGroupsDetailService.cs" />
+    <Compile Include="Abstract\ILiftGroupsService.cs" />
     <Compile Include="Abstract\IPanelSettingsService.cs" />
     <Compile Include="Abstract\IProgInitService.cs" />
     <Compile Include="Abstract\IReaderSettingsNewService.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Concrete\GlobalZonesInterlockManager.cs" />
     <Compile Include="Concrete\GroupsDetailManager.cs" />
     <Compile Include="Concrete\GroupsMasterManager.cs" />
+    <Compile Include="Concrete\LiftGroupsManager.cs" />
     <Compile Include="Concrete\PanelSettingsManager.cs" />
     <Compile Include="Concrete\ProgInitManager.cs" />
     <Compile Include="Concrete\ReaderSettingsManager.cs" />
