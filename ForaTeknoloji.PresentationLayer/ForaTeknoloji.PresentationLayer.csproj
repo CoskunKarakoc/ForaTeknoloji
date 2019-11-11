@@ -289,6 +289,7 @@
   <ItemGroup>
     <Content Include="Canli_Images\801324018.jpg" />
     <Content Include="Canli_Images\805791746.jpg" />
+    <Content Include="Content\Animate.css" />
     <Content Include="Content\bootstrap-1.1.0.css" />
     <Content Include="Content\bootstrap-1.1.0.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -2526,6 +2527,8 @@
     </Compile>
     <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Models\AddTimeGroupsListViewModel.cs" />
+    <Compile Include="Models\AlarmCreateViewModel.cs" />
+    <Compile Include="Models\AlarmEditListViewModel.cs" />
     <Compile Include="Models\AlarmListViewModel.cs" />
     <Compile Include="Models\CameraAddListViewModel.cs" />
     <Compile Include="Models\CreateVisitorViewModel.cs" />
@@ -2630,6 +2633,8 @@
     <Content Include="Views\Lift\LiftGroups.cshtml" />
     <Content Include="Views\Lift\Create.cshtml" />
     <Content Include="Views\Lift\Edit.cshtml" />
+    <Content Include="Views\Alarm\Edit.cshtml" />
+    <Content Include="Views\Alarm\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

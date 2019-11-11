@@ -1,0 +1,137 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.AlarmCreateViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row animated slideInLeft">
+    <div class="col-md-8 offset-md-2">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-muted text-center">Yeni Alarm Ayar</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "Alarm", FormMethod.Post))
+                {
+                    @Html.HiddenFor(model => model.Alarm_No)
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Alarm No</label>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" name="Alarm_No_Value" class="form-control" value="@Model.Alarm_No" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Alarm Adı</label>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" name="Alarm_Adi" class="form-control" value="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Alarm Tipi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Alarm_Tipi", Model.AlarmTipleri, "Alarm Tipi Seçimi...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.AlarmTipleri, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Panel Seçimi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Panel_No", Model.Paneller, "Panel Seçimi...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Paneller, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Kapı Seçimi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_No", Model.Kapilar.Select(a => new SelectListItem { }), "", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Kapilar, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-12">Harici Alarm Rolesi No</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Role_No", Model.AlarmRolesi.Select(a => new SelectListItem { }), "", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.AlarmRolesi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="text-center text-muted">Alarm Çıkış Ayarları</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="Alarm_Rolesi" id="Alarm_Rolesi" class="custom-control-input" value="true" />
+                                    <label class="custom-control-label" for="Alarm_Rolesi">Alarm Rolesi Aktif</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="Kapi_Rolesi" id="Kapi_Rolesi" class="custom-control-input" value="true" />
+                                    <label class="custom-control-label" for="Kapi_Rolesi">Harici Alarm Rolesi Aktif</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Kullanıcı ID</label>
+                                        <input type="text" name="User_ID" id="User_ID" class="form-control" value="" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Adı</label>
+                                        <input type="text" name="Adi" id="Adi" class="form-control" value="" />
+
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Kart ID</label>
+                                        <input type="text" name="Kart_ID" id="Kart_ID" class="form-control" value="" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Soyadı</label>
+                                        <input type="text" name="Soyadi" id="Soyadi" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mt-md-4">
+                                    <div class="mt-2">
+                                        <a class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#exampleModal" href="#"><i class="fas fa-user-check"></i> Kullanıcı Seç</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Grup No</label>
+                                        <input type="text" name="Grup_No" id="Grup_No" class="form-control" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <hr />
+                                    <button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-calendar-plus"></i> Alarm Kaydet</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

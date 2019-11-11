@@ -21,7 +21,7 @@
             }
 </style>
 
-<div class="card mt-2 shadow-lg">
+<div class="card mt-2 shadow-lg animated slideInLeft">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">İçerdekiler-Dışardakiler Tümü</h3>
     </div>
@@ -93,7 +93,7 @@
         }
     </div>
 </div>
-<div class="card mt-2 shadow-lg">
+<div class="card mt-2 shadow-lg animated slideInRight">
     @using (Html.BeginForm("ManuelCikisTumu", "InsideOutReport", FormMethod.Post))
     {
         <div id="print_div" class="card-body">
@@ -104,16 +104,16 @@
               footerStyle:"table-pager",
               columns: webGrid.Columns(
                   webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                                  webGrid.Column("ID", "ID"),
-                                  webGrid.Column("Kart_ID", "Kart ID"),
-                                  webGrid.Column("Adi", "Adı"),
-                                  webGrid.Column("Soyadi", "Soyadı"),
-                                  webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
-                                  webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadi"),
-                                  webGrid.Column("Sirket", "Şirket"),
-                                  webGrid.Column("Departman", "Departman"),
-                                  webGrid.Column("Tarih", "Tarih"),
-                                  webGrid.Column("Ziyaret_Tarihi", "Tarihi")))
+                                     webGrid.Column("ID", "ID"),
+                                     webGrid.Column("Kart_ID", "Kart ID"),
+                                     webGrid.Column("Adi", "Adı"),
+                                     webGrid.Column("Soyadi", "Soyadı"),
+                                     webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
+                                     webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadi"),
+                                     webGrid.Column("Sirket", "Şirket"),
+                                     webGrid.Column("Departman", "Departman"),
+                                     webGrid.Column("Tarih", "Tarih"),
+                                     webGrid.Column("Ziyaret_Tarihi", "Tarihi")))
             }
             else
             {
@@ -342,6 +342,8 @@
                 $("#readerCikis").attr("disabled", true);
             }
         });
-
+        setTimeout(function () {
+            $("h3").addClass("animated shake");
+        }, 500);
     });
 </script>

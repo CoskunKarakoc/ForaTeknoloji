@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row animated slideInLeft">
     <div class="col-md-8 offset-md-2">
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
@@ -1085,6 +1085,10 @@
 
 <script>
     $(document).ready(function () {
+        setTimeout(function () {
+            $("h3").addClass("animated shake");
+        }, 500);
+
         var nesneBaslangic = $("#Gecis_Sinirlama_Tipi").val();
         if (nesneBaslangic == 0) {
             $("#Saat").prop("hidden", true);

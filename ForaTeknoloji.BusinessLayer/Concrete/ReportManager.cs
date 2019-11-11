@@ -662,7 +662,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
-
+        //Gelen-Gelmeyen Toplam İçerde Kalma
         public List<GelenGelmeyen_ToplamIcerdeKalma> GelenGelmeyen_ToplamIcerdeKalmas(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];
@@ -1829,6 +1829,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
+        //Son Kart Basan Kişi Bilgisi
         public WatchEntityComplex LastRecordWatch(int? Kayit_No)
         {
             string address = ConfigurationManager.AppSettings["ForaConnection"];

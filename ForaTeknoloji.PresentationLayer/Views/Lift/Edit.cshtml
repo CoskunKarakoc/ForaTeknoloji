@@ -3,7 +3,7 @@
     ViewBag.Title = "Asansör Grup Düzenleme";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row animated slideInLeft">
     <div class="col-md-8 offset-2">
         <div class="card shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header-tabs mt-1">
@@ -406,5 +406,21 @@
                 $("#Kat_" + (i + 1)).prop("disabled", true);
             }
         });
+
+        setTimeout(function () {
+            $("#Listele").addClass("animated swing");
+            $("a.btn").addClass("animated swing");
+            $("button[type=submit]").addClass("animated swing");
+            $("label[for=16]").addClass("animated swing");
+            $("label[for=32]").addClass("animated swing");
+            $("label[for=64]").addClass("animated swing");
+            $("label[for=Tumu]").addClass("animated swing");
+            for (var i = 1; i < 65; i++) {
+                var attr = "label[for=Kat_" + i + "]";
+                $(attr).addClass("animated swing");
+            }
+        }, 500);
+
+
     });
 </script>

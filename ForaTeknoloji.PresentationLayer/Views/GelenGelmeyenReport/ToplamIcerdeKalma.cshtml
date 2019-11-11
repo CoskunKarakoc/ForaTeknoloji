@@ -22,7 +22,7 @@
 </style>
 
 
-<div class="card shadow-lg mt-2">
+<div class="card shadow-lg mt-2 animated slideInLeft">
     <div class="card-header-tabs">
         <h3 class="text-muted text-center">Toplam İçerde Kalma</h3>
     </div>
@@ -137,7 +137,7 @@
                         }
 
 
-                       
+
                     </div>
 
 
@@ -396,7 +396,9 @@
             });
 
         });
-
+        setTimeout(function () {
+            $("h3").addClass("animated shake");
+        }, 500);
     });
-   
+
 </script>

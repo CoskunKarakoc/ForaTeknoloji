@@ -3,7 +3,7 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row animated slideInLeft">
     <div class="col-md-8 offset-2">
         <div class="card shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header-tabs">
@@ -15,141 +15,158 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model=>model.Kamera_No)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Kamera No</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.EditorFor(model => model.Kamera_No, new { htmlAttributes = new { @class = "form-control", disabled = true } })
-                                    @Html.ValidationMessageFor(model => model.Kamera_No, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Kamera_No)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Kamera No</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.Kamera_No, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                                        @Html.ValidationMessageFor(model => model.Kamera_No, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Kamera Tipi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kamera_Tipi", null, "Kamera Seçiniz...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Kamera_Tipi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">TCP Port</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.TCP_Port, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.TCP_Port, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Login Adı</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.Kamera_Admin, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Kamera_Admin, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Kapı Seçimi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_ID", null, "Kapı Seçiniz...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Kapi_ID, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-5">Kamera Tipi</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kamera_Tipi", null, "Kamera Seçiniz...", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Kamera_Tipi, "", new { @class = "text-danger" })
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Kamera Adı</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.Kamera_Adi, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Kamera_Adi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">IP Adresi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.IP_Adres, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.IP_Adres, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">UDP Port</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.UDP_Port, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.UDP_Port, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Login Şifre</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.Kamera_Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                                        @Html.ValidationMessageFor(model => model.Kamera_Password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Panel Seçimi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Panel_ID", null, "Panel Seçiniz...", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Panel_ID, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">TCP Port</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.EditorFor(model => model.TCP_Port, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.TCP_Port, "", new { @class = "text-danger" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Açıklama</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Login Adı</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.EditorFor(model => model.Kamera_Admin, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Kamera_Admin, "", new { @class = "text-danger" })
-                                </div>
+                        <div class="col-md-12">
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Geciste_Resim_Kayit", Model.Geciste_Resim_Kayit ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label ml-5" for="Geciste_Resim_Kayit">Geçişte Resim Kayıt</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Antipassback_Resim_Kayit", Model.Antipassback_Resim_Kayit ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label ml-5" for="Antipassback_Resim_Kayit">Antipassback Resim Kayıt</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Engellenen_Resim_Kayit", Model.Engellenen_Resim_Kayit ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label ml-5" for="Engellenen_Resim_Kayit">Engellenen Resim Kayıt</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-2">
+                                @Html.CheckBox("Tanimsiz_Resim_Kayit", Model.Tanimsiz_Resim_Kayit ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label ml-5" for="Tanimsiz_Resim_Kayit">Tanımsız Resim Kayıt</label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-5">Kapı Seçimi</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_ID", null, "Kapı Seçiniz...", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Kapi_ID, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                        <div class="col-md-12 text-right mt-5">
+                            <button type="submit" class="btn btn-sm btn-outline-success mr-2"><i class="fa fa-edit"></i> Güncelle</button>
+                            <a href="@Url.Action("Index","CameraSettings")" class="btn btn-sm btn-outline-info"><i class="fa fa-hand-point-left"></i> Listeye Geri Dön</a>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Kamera Adı</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.EditorFor(model => model.Kamera_Adi, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Kamera_Adi, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">IP Adresi</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.EditorFor(model => model.IP_Adres, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.IP_Adres, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">UDP Port</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.EditorFor(model => model.UDP_Port, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.UDP_Port, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Login Şifre</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.EditorFor(model => model.Kamera_Password, new { htmlAttributes = new { @class = "form-control", type = "password" } })
-                                    @Html.ValidationMessageFor(model => model.Kamera_Password, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-5">Panel Seçimi</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.DropDownList("Panel_ID", null, "Panel Seçiniz...", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Panel_ID, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Açıklama</label>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            @Html.CheckBox("Geciste_Resim_Kayit", Model.Geciste_Resim_Kayit ?? false, new { @class = "custom-control-input" })
-                            <label class="custom-control-label ml-5" for="Geciste_Resim_Kayit">Geçişte Resim Kayıt</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            @Html.CheckBox("Antipassback_Resim_Kayit", Model.Antipassback_Resim_Kayit ?? false, new { @class = "custom-control-input" })
-                            <label class="custom-control-label ml-5" for="Antipassback_Resim_Kayit">Antipassback Resim Kayıt</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            @Html.CheckBox("Engellenen_Resim_Kayit", Model.Engellenen_Resim_Kayit ?? false, new { @class = "custom-control-input" })
-                            <label class="custom-control-label ml-5" for="Engellenen_Resim_Kayit">Engellenen Resim Kayıt</label>
-                        </div>
-                        <div class="custom-control-inline custom-checkbox ml-2">
-                            @Html.CheckBox("Tanimsiz_Resim_Kayit", Model.Tanimsiz_Resim_Kayit ?? false, new { @class = "custom-control-input" })
-                            <label class="custom-control-label ml-5" for="Tanimsiz_Resim_Kayit">Tanımsız Resim Kayıt</label>
-                        </div>
-                    </div>
-                    <div class="col-md-12 text-right mt-5">
-                        <button type="submit" class="btn btn-sm btn-outline-success"><i class="fa fa-edit"></i> Güncelle</button>
-                        <a href="@Url.Action("Index","CameraSettings")" class="btn btn-sm btn-outline-info"><i class="fa fa-hand-point-left"></i> Listeye Geri Dön</a>
-                    </div>
 
 
 
-                </div>
+                    </div>
                 }
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        setTimeout(function () {
+            $("button[type=submit]").addClass("animated swing");
+            $("a.btn").addClass("animated swing");
+            $("label[for=Tanimsiz_Resim_Kayit]").addClass("animated swing");
+            $("label[for=Engellenen_Resim_Kayit]").addClass("animated swing");
+            $("label[for=Antipassback_Resim_Kayit]").addClass("animated swing");
+            $("label[for=Geciste_Resim_Kayit]").addClass("animated swing");
+        }, 500);
+
+
+
+    });
+</script>

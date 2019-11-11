@@ -1,5 +1,7 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.VisitorsList
 @{
+    /**/
+
     ViewBag.Title = "Ziyaretçi Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.ComplexVisitorsListesi, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
@@ -30,7 +32,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card mt-1 shadow-lg">
+<div class="card mt-1 shadow-lg animated slideInLeft">
     <div class="card-header-tabs">
         <h3 class="text-muted text-center">Ziyaretçi Raporları</h3>
     </div>
@@ -204,7 +206,7 @@
                 <div class="col-md-4 text-center">
                     <p class="text-center text-muted">Kayıtlı Fotoğraf</p>
                     <hr />
-                    <img  id="change-image" src="@img" alt="Kayıtlı Fotoğraf" />
+                    <img id="change-image" src="@img" alt="Kayıtlı Fotoğraf" />
 
                     <p class="text-center text-muted">Canlı Fotoğraf</p>
                     <hr />
@@ -215,7 +217,7 @@
         }
     </div>
 </div>
-<div class="card mt-1 shadow-lg">
+<div class="card mt-1 shadow-lg animated slideInRight">
     <div class="card-body">
         <div id="print_div">
             @if (Model.ComplexVisitorsListesi.Count > 0)
@@ -298,8 +300,22 @@
                                 <td>@item.Soyadi</td>
                                 <td>@item.TCKimlik</td>
                                 <td>@item.Plaka</td>
-                                <td>@item.Tarih.Value.ToShortDateString()</td>
-                                <td>@item.Saat.Value.ToLongTimeString()</td>
+                                @if (item.Tarih == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@item.Tarih.Value.ToShortDateString()</td>
+                                }
+                                @if (item.Saat == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@item.Saat.Value.ToLongTimeString()</td>
+                                }
                                 <td>@item.Ziyaret_Sebebi</td>
                                 <td>@item.Grup_No</td>
                                 <td>@item.ID</td>
@@ -583,5 +599,8 @@
 
 
         });
+        setTimeout(function () {
+            $("h3").addClass("animated shake");
+        }, 500);
     });
 </script>

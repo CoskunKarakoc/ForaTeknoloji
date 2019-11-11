@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card shadow-lg col-md-12 mt-xl-5 mb-xl-5">
+<div class="card shadow-lg col-md-12 mt-xl-5 mb-xl-5 animated slideInLeft">
     <div class="card-body">
         <nav>
             <div class="nav nav-tabs col-md-12" id="nav-tab" role="tablist">
@@ -680,9 +680,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
-                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
-                                    <button class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
+                                    <button id="1buton" class="btn btn-sm btn-secondary my-1" type="button">Sayaç Oku</button><br />
+                                    <button id="2buton" class="btn btn-sm btn-secondary my-1" type="button">Sayaç Değiştir</button><br />
+                                    <button id="3buton" class="btn btn-sm btn-secondary my-1" type="button">Sayacı Sil</button>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -1038,8 +1038,6 @@
 
 <script>
     $(document).ready(function () {
-
         $("input[type='number']").inputSpinner();
-
     });
 </script>

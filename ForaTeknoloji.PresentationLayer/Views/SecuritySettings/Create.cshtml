@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row animated slideInLeft">
     <div class="col-md-12">
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
@@ -200,6 +200,11 @@
                 $("#SirketTable tbody tr input[type='checkbox']").prop("checked", false);
             }
         });
+        setTimeout(function () {
+            $("button[type=submit]").addClass("animated swing");
+            $("label[for=SysAdmin]").addClass("animated swing");
+            $("label[for=OtherDeviceReports]").addClass("animated swing");
+        }, 500);
     });
 </script>
 

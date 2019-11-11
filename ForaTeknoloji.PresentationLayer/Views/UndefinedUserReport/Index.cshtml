@@ -30,7 +30,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card shadow-lg mt-3">
+<div class="card shadow-lg mt-3 animated slideInLeft">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Tanımsız Kullanıcı</h3>
     </div>
@@ -162,7 +162,7 @@
         </div>
     </div>
 </div>
-<div class="card mt-1 shadow-lg">
+<div class="card mt-1 shadow-lg animated slideInRight">
     <div id="print_div" class="card-body">
         @if (Model.Liste.Count > 0)
         {
@@ -289,7 +289,9 @@
             var kartID = $(this).children("td").data("kart");
             $("#change-image").attr('src', '/Images/' + kartID + '.jpg');
         });
-
+        setTimeout(function () {
+            $("h3").addClass("animated shake");
+        }, 500);
 
 
         var today = new Date();

@@ -4,19 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-12">
+<div class="row animated slideInLeft">
+    <div class="col-md-8 offset-2">
         <div class="card shadow-lg mt-5">
             <div class="card-header-tabs mt-1">
-                <h3 class="text-muted text-center"></h3>
+                <h3 class="text-muted text-center"><i>Kullanıcı Alarm Tanımları</i></h3>
             </div>
             <div class="card-body">
-                <table class="">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <a href="@Url.Action("Create","Alarm")" class="btn btn-sm btn-outline-success my-3"><i class="fas fa-calendar-plus mr-2"></i> Yeni Alarm</a>
+                    </div>
+                </div>
+                <table class="table table-hover text-center table-striped table-sm">
                     <thead class="table-info">
                         <tr>
                             <td>Alarm No</td>
                             <td>Alarm Adi</td>
                             <td>Alarm Tipi Adi</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,6 +32,12 @@
                                 <td>@item.Alarm_No</td>
                                 <td>@item.Alarm_Adi</td>
                                 <td>@item.Adi</td>
+                                <td>
+                                    <a title="Düzenle" href="@Url.Action("Edit","Alarm",new {id=item.Alarm_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
+                                    <a title="Panelden Sil" onclick="return confirm('Panelden Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("PanelRemove","Alarm",new {id=item.Alarm_No })" class="text-danger mr-2"><i class="fas fa-dumpster-fire"></i></a>
+                                    <a title="Veritabanından Sil" onclick="return confirm('Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("DatabaseRemove","Alarm",new { id=item.Alarm_No})" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
+                                    <a title="Panele Gönder" onclick="return confirm('Panele Göndermek İstediğinize Emin Misiniz?')" class="text-success" href="@Url.Action("Send","Alarm",new {id=item.Alarm_No })"><i class="fas fa-share"></i></a>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -34,3 +46,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("h3").addClass("animated shake");
+
+    }, 500);
+</script>

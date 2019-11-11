@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row  animated slideInLeft">
     <div class="col-md-8 offset-2">
         <div class="card shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header-tabs">
@@ -57,7 +57,7 @@
                                 <label class="control-label col-md-5">Kapı Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_ID",new SelectList(Model.Kapi_ID), "Kapı Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Kapi_ID", new SelectList(Model.Kapi_ID), "Kapı Seçiniz...", new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Kapi_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                         </div>
 
                         <div class="col-md-12 text-right mt-5">
-                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fa fa-save"></i> Kaydet</button>
+                            <button type="submit" class="btn btn-sm btn-outline-success mr-2"><i class="fa fa-save"></i> Kaydet</button>
                             <a href="@Url.Action("Index","CameraSettings")" class="btn btn-sm btn-outline-info"><i class="fa fa-hand-point-left"></i> Listeye Geri Dön</a>
                         </div>
 
@@ -154,3 +154,16 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+
+        setTimeout(function () {
+            $("button[type=submit]").addClass("animated swing");
+            $("a.btn").addClass("animated swing");
+            $("label[for=Tanimsiz_Resim_Kayit]").addClass("animated swing");
+            $("label[for=Engellenen_Resim_Kayit]").addClass("animated swing");
+            $("label[for=Antipassback_Resim_Kayit]").addClass("animated swing");
+            $("label[for=Geciste_Resim_Kayit]").addClass("animated swing");
+        }, 500);
+    });
+</script>

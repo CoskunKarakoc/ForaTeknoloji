@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row animated slideInLeft">
     <div class="col-md-8 offset-md-2">
         <div class="card shadow-lg  mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
@@ -25,7 +25,7 @@
                                 <label class="control-label col-md-4">Kullanıcı ID</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.TextBoxFor(model => model.ID, null, new { @class = "form-control",disabled=true})
+                                        @Html.TextBoxFor(model => model.ID, null, new { @class = "form-control", disabled = true })
                                     </div>
                                 </div>
                             </div>
@@ -310,5 +310,11 @@
         </div>
     </div>
 </div>
-
-
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("h3").addClass("animated shake");
+            $("h5").addClass("animated shake");
+        }, 500);
+    });
+</script>

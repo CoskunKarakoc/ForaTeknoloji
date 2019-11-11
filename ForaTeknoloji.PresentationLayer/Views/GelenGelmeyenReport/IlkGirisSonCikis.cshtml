@@ -20,7 +20,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card shadow-lg mt-2">
+<div class="card shadow-lg mt-2 animated slideInLeft">
     <div class="card-header-tabs">
         <h3 class="text-muted text-center">İlk Giriş Son Çıkış</h3>
     </div>
@@ -394,6 +394,9 @@
         });
         $("#Ziyaretci").attr('value', null);
         $("#Visitor").attr('value', null);
+        setTimeout(function () {
+            $("h3").addClass("animated shake");
+        }, 500);
     });
 
 </script>
