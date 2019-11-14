@@ -74,10 +74,12 @@
     <Compile Include="Abstract\IGlobalZoneService.cs" />
     <Compile Include="Abstract\IGlobalZonesInterlockService.cs" />
     <Compile Include="Abstract\IGroupMasterService.cs" />
+    <Compile Include="Abstract\IGroupsDetailNewService.cs" />
     <Compile Include="Abstract\IGroupsDetailService.cs" />
     <Compile Include="Abstract\ILiftGroupsService.cs" />
     <Compile Include="Abstract\IPanelSettingsService.cs" />
     <Compile Include="Abstract\IProgInitService.cs" />
+    <Compile Include="Abstract\IProgRelay2Service.cs" />
     <Compile Include="Abstract\IReaderSettingsNewService.cs" />
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
@@ -109,10 +111,12 @@
     <Compile Include="Concrete\GlobalZoneManager.cs" />
     <Compile Include="Concrete\GlobalZonesInterlockManager.cs" />
     <Compile Include="Concrete\GroupsDetailManager.cs" />
+    <Compile Include="Concrete\GroupsDetailNewManager.cs" />
     <Compile Include="Concrete\GroupsMasterManager.cs" />
     <Compile Include="Concrete\LiftGroupsManager.cs" />
     <Compile Include="Concrete\PanelSettingsManager.cs" />
     <Compile Include="Concrete\ProgInitManager.cs" />
+    <Compile Include="Concrete\ProgRelay2Manager.cs" />
     <Compile Include="Concrete\ReaderSettingsManager.cs" />
     <Compile Include="Concrete\ReaderSettingsNewManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />

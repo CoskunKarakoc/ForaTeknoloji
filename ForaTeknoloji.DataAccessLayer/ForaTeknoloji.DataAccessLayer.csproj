@@ -73,9 +73,11 @@
     <Compile Include="Abstract\IGlobalZonesInterlockDal.cs" />
     <Compile Include="Abstract\IGroupMasterDal.cs" />
     <Compile Include="Abstract\IGroupsDetailDal.cs" />
+    <Compile Include="Abstract\IGroupsDetailNewDal.cs" />
     <Compile Include="Abstract\ILiftGroupsDal.cs" />
     <Compile Include="Abstract\IPanelSettingsDal.cs" />
     <Compile Include="Abstract\IProgInitDal.cs" />
+    <Compile Include="Abstract\IProgRelay2Dal.cs" />
     <Compile Include="Abstract\IReaderSettingDal.cs" />
     <Compile Include="Abstract\IReaderSettingsNewDal.cs" />
     <Compile Include="Abstract\ISirketDal.cs" />
@@ -106,10 +108,12 @@
     <Compile Include="Concrete\EntityFramework\EfGlobalZoneDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGlobalZonesInterlockDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGroupsDetailDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfGroupsDetailNewDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGroupsMasterDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfLiftGroupsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfPanelSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfProgInitDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfProgRelay2Dal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />

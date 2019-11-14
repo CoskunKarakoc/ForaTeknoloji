@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
@@ -185,7 +186,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         Deneme_Sayisi = 1,
                         Durum_Kodu = 1,
-                        Gorev_Kodu = 2600,
+                        Gorev_Kodu = (int)CommandConstants.CMD_SND_TIMEGROUP,
                         IntParam_1 = ZamanGrupNo,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = panelSettings.Panel_ID,

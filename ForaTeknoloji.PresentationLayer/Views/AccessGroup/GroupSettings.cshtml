@@ -1,0 +1,109 @@
+﻿@model ForaTeknoloji.Entities.Entities.GroupsMaster
+@{
+    ViewBag.Title = "Group Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="Liste" class="row animated slideInLeft">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs">
+                <h3 class="text-center text-muted">Geçiş Grup Ayarları</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("GroupSettings", "AccessGroup", FormMethod.Post))
+                {
+                    @Html.HiddenFor(model => model.Grup_No)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Geçiş Grup No</label>
+                                @Html.TextBoxFor(model => model.Grup_No, new { @class = "form-control", disabled = true })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @if (Model.Gunluk_Aylik == 1)
+                            {
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="Gunluk_Aylik">Günlük/Aylık Seçimi...</label>
+                                        <select class="form-control" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                            <option selected value="1">Günlük</option>
+                                            <option value="2">Aylık</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="Gunluk_Aylik">Günlük/Aylık Seçimi...</label>
+                                        <select class="form-control" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                            <option value="1">Günlük</option>
+                                            <option selected value="2">Aylık</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                            <div class="form-group">
+                                <label>Giriş Sayısı</label>
+                                @Html.TextBoxFor(model => model.Grup_Gecis_Sayisi, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Grup İçerdeki Kişi Sayısı Global Bölge No</label>
+                                @Html.DropDownList("Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Geçiş Grup Adı</label>
+                                @Html.TextBoxFor(model => model.Grup_Adi, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Kişi/Araç Sınırı</label>
+                                @Html.TextBoxFor(model => model.Grup_Icerdeki_Kisi_Sayisi, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Grup Geçiş Sayısı Global Bölge No</label>
+                                @Html.DropDownList("Grup_Gecis_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Grup_Gecis_Sayisi_Global_Bolge_No, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div class="custom-control-inline custom-checkbox">
+                                @Html.CheckBox("Antipassback_Gecersiz", Model.Antipassback_Gecersiz ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label mr-5" for="Antipassback_Gecersiz">Antipassback İptal</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox">
+                                @Html.CheckBox("Gece_Antipassback_Sil", Model.Gece_Antipassback_Sil ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label mr-5" for="Gece_Antipassback_Sil">Antipassback Sayaçlarını Gece Sıfırla</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox">
+                                @Html.CheckBox("Lokal_Kapasite_Gecersiz", Model.Lokal_Kapasite_Gecersiz ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label mr-5" for="Lokal_Kapasite_Gecersiz">Lokal Kapasite Kontrolü İptal</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox">
+                                @Html.CheckBox("Mukerrer_Engelleme_Gecersiz", Model.Mukerrer_Engelleme_Gecersiz ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label mr-5" for="Mukerrer_Engelleme_Gecersiz">Mükerrer Engelleme İptal</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox">
+                                @Html.CheckBox("Gece_Icerdeki_Kisi_Sayisini_Sil", Model.Gece_Icerdeki_Kisi_Sayisini_Sil ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label mr-5" for="Gece_Icerdeki_Kisi_Sayisini_Sil">İçerdeki Kişi/Araç Sayacını Gece Sıfırla</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <a href="@Url.Action("Groups","AccessGroup")" class="btn btn-outline-primary btn-sm"><i class="fas fa-hand-o-left"></i> Listeye Geri Dön</a>
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i> Grup Güncelle</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

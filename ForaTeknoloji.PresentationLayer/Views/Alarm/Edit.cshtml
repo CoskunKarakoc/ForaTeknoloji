@@ -62,7 +62,7 @@
                                 <label class="control-label col-md-5">Kapı Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_No", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Kapi_No", null, "Kapı Seçimi...", new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Alarm.Kapi_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                 <label class="control-label col-md-12">Harici Alarm Rolesi No</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_Role_No", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Kapi_Role_No", null, "Harici Alarm Rolesi...", new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Alarm.Kapi_Role_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -170,7 +170,7 @@
                     <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
                 </div>
                 <hr />
-                <table id="myTable" class="table table-hover text-center table-striped">
+                <table id="myTable" class="table table-hover text-center table-striped small">
                     <thead class="table-info">
                         <tr>
                             <td>ID</td>

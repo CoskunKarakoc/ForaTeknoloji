@@ -70,7 +70,7 @@
                         <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">Dış Veri Al</a>
                         <a class="collapse-item" href="@Url.Action("Index","Alarm")">Kullanıcı Alarm Tanımları</a>
                         <a class="collapse-item" href="@Url.Action("Index","CameraSettings")">Kameralar</a>
-                        <a class="collapse-item" href="@Url.Action("Gelmeyenler","GelenGelmeyenReport")">Haritalar</a>
+                        <a class="collapse-item" href="#">Haritalar</a>
                         <a class="collapse-item" href="@Url.Action("LiftGroups","Lift")">Asansör Geçiş Grupları</a>
                         <a class="collapse-item text-muted" href="#">Geçiş Grup Takvimi</a>
                         <a class="collapse-item" href="@Url.Action("Index","GlobalZone")">Global Bölgeler</a>
@@ -79,10 +79,10 @@
                         <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Plaka Tanıma Kameraları</a>
                         <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı İşlemleri</a>
                         <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Güvenlik Ayarları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Harici Okuyucu</a>
+                        <a class="collapse-item" href="#">Harici Okuyucu</a>
                         <a class="collapse-item text-muted" href="#">Panel Saat Ayarı</a>
                         <a class="collapse-item" href="#">E-Mail Gönderme Ayarları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">SMS Gönderme Ayarları</a>
+                        <a class="collapse-item" href="#">SMS Gönderme Ayarları</a>
 
                     </div>
 
@@ -102,6 +102,9 @@
                         <h6 class="collapse-header">Zaman Bölgeleri</h6>
                         <a class="collapse-item" href="@Url.Action("Add","TimeGroups")">Yeni Zaman Bölgesi</a>
                         <a class="collapse-item" href="@Url.Action("Index","TimeGroups")">Zaman Bölgesi Ayarları</a>
+                        <h6 class="collapse-header">Geçiş Grupları</h6>
+                        <a class="collapse-item" href="@Url.Action("Create","AccessGroup")">Yeni Geçiş Grubu</a>
+                        <a class="collapse-item" href="@Url.Action("Groups","AccessGroup")">Geçiş Grupları</a>
                     </div>
                 </div>
             </li>
@@ -183,17 +186,7 @@
                 <div id="collapseMaps" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Panel Ayarları</h6>
-                        <a class="collapse-item" href="@Url.Action("Genel","PanelSettings")">Genel</a>
-                        <a class="collapse-item" href="@Url.Action("Haberlesme","PanelSettings")">Haberleşme</a>
-                        <a class="collapse-item" href="@Url.Action("Kapilar","PanelSettings")">Kapılar</a>
-                        <a class="collapse-item" href="@Url.Action("Kapasite","PanelSettings")">Kapasite</a>
-                        <a class="collapse-item" href="@Url.Action("GlobalBolge","PanelSettings")">Global Bölgeler</a>
-                        <a class="collapse-item" href="@Url.Action("LPRKameralar","PanelSettings")">LPR Kameralar</a>
-                        <a class="collapse-item" href="@Url.Action("Interlock","PanelSettings")">Interlock</a>
-                        <a class="collapse-item" href="@Url.Action("Diger","PanelSettings")">Diğer</a>
-
-
-
+                        <a class="collapse-item" href="#">Harita Ayarları</a>
                     </div>
 
                 </div>

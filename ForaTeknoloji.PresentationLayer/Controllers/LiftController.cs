@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
@@ -130,7 +131,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         Deneme_Sayisi = 1,
                         Durum_Kodu = 1,
-                        Gorev_Kodu = 2644,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_LIFTGROUP,
                         IntParam_1 = (int)id,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = PanelSettings.Panel_ID,

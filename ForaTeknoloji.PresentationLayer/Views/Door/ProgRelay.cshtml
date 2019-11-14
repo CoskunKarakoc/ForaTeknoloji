@@ -1,0 +1,162 @@
+﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.ProgRelay2>
+@{
+    ViewBag.Title = "Prog Relay 2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs">
+                <h3 class="text-center text-muted">Programlı Röle Takvimi</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("ProgRelay", "Door", FormMethod.Get))
+                {
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="Aktif" name="Aktif" class="custom-control-input" value="true" />
+                                    <label class="custom-control-label" for="Aktif">Zaman Dilimi Aktif</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Başlangıç Saati</label>
+                                <input type="datetime" name="Saat1" id="Saat1" class="form-control" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Bitiş Saati</label>
+                                <input type="datetime" name="Saat2" id="Saat2" class="form-control" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="offset-2">Haftanın Günleri:</label>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" value="1" class="form-check-input" id="1" name="Haftanin_Gunu">
+                                <label class="form-check-label" for="1">Pazartesi</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input type="radio" value="2" class="form-check-input" id="2" name="Haftanin_Gunu">
+                                <label class="form-check-label" for="2">Salı</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" value="3" class="form-check-input" id="3" name="Haftanin_Gunu">
+                                <label class="form-check-label" for="3">Çarşamba</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" value="4" class="form-check-input" id="4" name="Haftanin_Gunu">
+                                <label class="form-check-label" for="4">Perşembe</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" value="5" class="form-check-input" id="5" name="Haftanin_Gunu">
+                                <label class="form-check-label" for="5">Cuma</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" value="6" class="form-check-input" id="6" name="Haftanin_Gunu">
+                                <label class="form-check-label" for="6">Cumartesi</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" value="7" class="form-check-input" id="7" name="Haftanin_Gunu">
+                                <label class="form-check-label" for="7">Pazar</label>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-filter"></i></button>
+                        </div>
+                    </div>
+                }
+
+
+
+
+                <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Panel No</td>
+                            <td>Zaman Dilimi</td>
+                            <td>Aktif</td>
+                            <td>Saat 1</td>
+                            <td>Saat 2</td>
+                            <td>Role 1</td>
+                            <td>Durum 1</td>
+                            <td>Role 2</td>
+                            <td>Durum 2</td>
+                            <td>Role 3</td>
+                            <td>Durum 3</td>
+                            <td>Role 4</td>
+                            <td>Durum 4</td>
+                            <td>Role 5</td>
+                            <td>Durum 5</td>
+                            <td>Role 6</td>
+                            <td>Durum 6</td>
+                            <td>Role 7</td>
+                            <td>Durum 7</td>
+                            <td>Role 8</td>
+                            <td>Durum 8</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-aktif="@item.Aktif" data-saat1="@item.Saat_1.Value.ToLongTimeString()" data-saat2="@item.Saat_2.Value.ToLongTimeString()">@item.Panel_No</td>
+                                <td>@item.Zaman_Dilimi</td>
+                                @if (item.Aktif == true)
+                                {
+                                    <td>EVET</td>
+                                }
+                                else
+                                {
+                                    <td>HAYIR</td>
+                                }
+                                <td>@item.Saat_1.Value.ToLongTimeString()</td>
+                                <td>@item.Saat_2.Value.ToLongTimeString()</td>
+                                <td>@(item.Role_1 == false ? "Pasif" : "Aktif")</td>
+                                <td>@(item.Durum_1 == false ? "Kapat" : "Aç")</td>
+                                <td>@(item.Role_2 == false ? "Pasif" : "Aktif")</td>
+                                <td>@(item.Durum_2 == false ? "Kapat" : "Aç")</td>
+                                <td>@(item.Role_3 == false ? "Pasif" : "Aktif")</td>
+                                <td>@(item.Durum_3 == false ? "Kapat" : "Aç")</td>
+                                <td>@(item.Role_4 == false ? "Pasif" : "Aktif")</td>
+                                <td>@(item.Durum_4 == false ? "Kapat" : "Aç")</td>
+                                <td>@(item.Role_5 == false ? "Pasif" : "Aktif")</td>
+                                <td>@(item.Durum_5 == false ? "Kapat" : "Aç")</td>
+                                <td>@(item.Role_6 == false ? "Pasif" : "Aktif")</td>
+                                <td>@(item.Durum_6 == false ? "Kapat" : "Aç")</td>
+                                <td>@(item.Role_7 == false ? "Pasif" : "Aktif")</td>
+                                <td>@(item.Durum_7 == false ? "Kapat" : "Aç")</td>
+                                <td>@(item.Role_8 == false ? "Pasif" : "Aktif")</td>
+                                <td>@(item.Durum_8 == false ? "Kapat" : "Aç")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#myTable tbody tr").click(function () {
+            var aktif = $(this).children("td").data("aktif");
+            var saat1 = $(this).children("td").data("saat1");
+            var saat2 = $(this).children("td").data("saat2");
+            $("#Saat1").prop("value", saat1);
+            $("#Saat2").prop("value", saat2);
+            if (aktif == true) {
+                $("#Aktif").prop("checked", true);
+            } else {
+                $("#Aktif").prop("checked", false);
+            }
+            $("#myTable tbody tr").removeClass("table-success");
+            $(this).addClass("table-success");
+        });
+    });
+
+</script>

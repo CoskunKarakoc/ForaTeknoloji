@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -72,7 +73,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
-        public ActionResult Create(string Kart_ID=null)
+        public ActionResult Create(string Kart_ID = null)
         {
             int MaxID;
             if (_userService.GetAllUsers().Count == 0)
@@ -137,7 +138,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Grup_Takvimi_Adi,
                     Value = a.Grup_Takvimi_No.ToString()
                 }),
-                Kart_ID=Kart_ID
+                Kart_ID = Kart_ID
             };
             return View(model);
         }
@@ -254,7 +255,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         Deneme_Sayisi = 1,
                         Durum_Kodu = 1,
-                        Gorev_Kodu = 2620,
+                        Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
                         IntParam_1 = UserID,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = PanelSettings.Panel_ID,
@@ -293,7 +294,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         Deneme_Sayisi = 1,
                         Durum_Kodu = 1,
-                        Gorev_Kodu = 2624,
+                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_USER,
                         IntParam_1 = UserID,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = PanelSettings.Panel_ID,
@@ -355,7 +356,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         Deneme_Sayisi = 1,
                         Durum_Kodu = 1,
-                        Gorev_Kodu = 2628,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_USER,
                         IntParam_1 = id,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = PanelSettings.Panel_ID,
@@ -394,7 +395,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         Deneme_Sayisi = 1,
                         Durum_Kodu = 1,
-                        Gorev_Kodu = 2701,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_ACCESSCOUNTERS,
                         IntParam_1 = id,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = PanelSettings.Panel_ID,
@@ -433,7 +434,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         Deneme_Sayisi = 1,
                         Durum_Kodu = 1,
-                        Gorev_Kodu = 2710,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_APBCOUNTERS,
                         IntParam_1 = id,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = PanelSettings.Panel_ID,
@@ -472,7 +473,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         Deneme_Sayisi = 1,
                         Durum_Kodu = 1,
-                        Gorev_Kodu = 2628,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_USER,
                         IntParam_1 = id,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = PanelSettings.Panel_ID,
@@ -512,7 +513,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Deneme_Sayisi = 1,
                     Durum_Kodu = 1,
-                    Gorev_Kodu = 2629,
+                    Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
                     IntParam_1 = 1,
                     Kullanici_Adi = user.Kullanici_Adi,
                     Panel_No = PanelSettings.Panel_ID,
@@ -547,7 +548,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Deneme_Sayisi = 1,
                     Durum_Kodu = 1,
-                    Gorev_Kodu = 2702,
+                    Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_ACCESSCOUNTERS,
                     IntParam_1 = 1,
                     Kullanici_Adi = user.Kullanici_Adi,
                     Panel_No = PanelSettings.Panel_ID,
@@ -582,7 +583,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Deneme_Sayisi = 1,
                     Durum_Kodu = 1,
-                    Gorev_Kodu = 2711,
+                    Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_APBCOUNTERS,
                     IntParam_1 = 1,
                     Kullanici_Adi = user.Kullanici_Adi,
                     Panel_No = PanelSettings.Panel_ID,

@@ -61,7 +61,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<StatusCode> StatusCodes { get; set; }
         public virtual DbSet<TaskCode> TaskCodes { get; set; }
         public virtual DbSet<TaskList> TaskLists { get; set; }
-
+        public virtual DbSet<GroupsDetailNew> GroupsDetailNews { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

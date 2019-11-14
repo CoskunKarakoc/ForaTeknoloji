@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ComplexType\AccessDatasComplex.cs" />
     <Compile Include="ComplexType\CamerasComplex.cs" />
+    <Compile Include="ComplexType\ComplexGroupsDetailNew.cs" />
     <Compile Include="ComplexType\DigerGecisRaporList.cs" />
     <Compile Include="ComplexType\DigerGecisRaporListKullaniciAlarm.cs" />
     <Compile Include="ComplexType\GelenGelmeyenRaporList.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Entities\GlobalZones.cs" />
     <Compile Include="Entities\GlobalZonesInterlock.cs" />
     <Compile Include="Entities\GroupsDetail.cs" />
+    <Compile Include="Entities\GroupsDetailNew.cs" />
     <Compile Include="Entities\GroupsMaster.cs" />
     <Compile Include="Entities\LiftGroups.cs" />
     <Compile Include="Entities\MapObjects.cs" />

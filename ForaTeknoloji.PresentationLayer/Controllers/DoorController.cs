@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     public class DoorController : Controller
     {
         private ITaskListService _taskListService;
-        public DoorController(ITaskListService taskListService)
+        private IProgRelay2Service _progRelay2Service;
+        public DBUsers user;
+        private PanelSettings PanelSettings;
+        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service)
         {
+            PanelSettings = CurrentSession.Panel;
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _taskListService = taskListService;
+            _progRelay2Service = progRelay2Service;
         }
         // GET: Door
         public ActionResult Index()
@@ -1288,6 +1299,27 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return Json(new { Result = "İşlem Gerçekleştirilemedi" });
         }
+
+
+        public ActionResult ProgRelay(int Haftanin_Gunu = -1)
+        {
+            if (PanelSettings == null)
+                return RedirectToAction("Orientation", "Home");
+
+            List<ProgRelay2> model;
+            if (Haftanin_Gunu != -1)
+            {
+                model = _progRelay2Service.GetAllProgRelay2(x => x.Haftanin_Gunu == Haftanin_Gunu && x.Panel_No == PanelSettings.Panel_ID);
+            }
+            else
+            {
+                model = _progRelay2Service.GetAllProgRelay2(x => x.Panel_No == PanelSettings.Panel_ID);
+            }
+            return View(model);
+        }
+
+
+
 
 
         public int CheckStatus(int GrupNo = -1)

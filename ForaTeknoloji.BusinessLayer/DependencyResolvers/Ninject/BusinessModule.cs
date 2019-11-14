@@ -53,6 +53,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ICameraTypesDal>().To<EfCameraTypesDal>().InSingletonScope();
             Bind<IFloorNamesDal>().To<EfFloorNamesDal>().InSingletonScope();
             Bind<ILiftGroupsDal>().To<EfLiftGroupsDal>().InSingletonScope();
+            Bind<IProgRelay2Dal>().To<EfProgRelay2Dal>().InSingletonScope();
+            Bind<IGroupsDetailNewDal>().To<EfGroupsDetailNewDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -90,6 +92,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ICameraTypesService>().To<CameraTypesManager>().InSingletonScope();
             Bind<IFloorNamesService>().To<FloorNamesManager>().InSingletonScope();
             Bind<ILiftGroupsService>().To<LiftGroupsManager>().InSingletonScope();
+            Bind<IProgRelay2Service>().To<ProgRelay2Manager>().InSingletonScope();
+            Bind<IGroupsDetailNewService>().To<GroupsDetailNewManager>().InSingletonScope();
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

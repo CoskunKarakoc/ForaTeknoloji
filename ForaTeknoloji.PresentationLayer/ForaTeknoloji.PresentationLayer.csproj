@@ -2496,6 +2496,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccessGroupController.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
@@ -2531,6 +2532,7 @@
     <Compile Include="Models\AlarmEditListViewModel.cs" />
     <Compile Include="Models\AlarmListViewModel.cs" />
     <Compile Include="Models\CameraAddListViewModel.cs" />
+    <Compile Include="Models\CreateReaderModel.cs" />
     <Compile Include="Models\CreateVisitorViewModel.cs" />
     <Compile Include="Models\CurrentSession.cs" />
     <Compile Include="Models\DigerGecisRaporAlarmListViewModel.cs" />
@@ -2544,6 +2546,7 @@
     <Compile Include="Models\GelenGelmeyen_ToplamIcerdeKalmaListViewModel.cs" />
     <Compile Include="Models\GenelPanelSettingsListViewModel.cs" />
     <Compile Include="Models\GlobalBolgePanelSettingsListViewModel.cs" />
+    <Compile Include="Models\GroupMasterCreateViewModel.cs" />
     <Compile Include="Models\HaberlesmeListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaPersonelListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaTumuListViewModel.cs" />
@@ -2635,6 +2638,11 @@
     <Content Include="Views\Lift\Edit.cshtml" />
     <Content Include="Views\Alarm\Edit.cshtml" />
     <Content Include="Views\Alarm\Create.cshtml" />
+    <Content Include="Views\Door\ProgRelay.cshtml" />
+    <Content Include="Views\AccessGroup\Groups.cshtml" />
+    <Content Include="Views\AccessGroup\GroupSettings.cshtml" />
+    <Content Include="Views\AccessGroup\Create.cshtml" />
+    <Content Include="Views\AccessGroup\GroupReaders.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

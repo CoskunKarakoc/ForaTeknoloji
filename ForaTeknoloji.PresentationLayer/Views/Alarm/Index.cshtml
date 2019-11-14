@@ -4,11 +4,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row animated slideInLeft">
+<div class="row animated flipInX">
     <div class="col-md-8 offset-2">
         <div class="card shadow-lg mt-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center"><i>Kullanıcı Alarm Tanımları</i></h3>
+                @if (Model.StatusControl != -1)
+                {
+                    if (Model.StatusControl == 2)
+                    {
+                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
+                    }
+                    else if (Model.StatusControl == 1)
+                    {
+                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
+                    }
+                    else
+                    {
+                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
+                    }
+                }
             </div>
             <div class="card-body">
                 <div class="row">
@@ -48,7 +63,10 @@
 </div>
 <script>
     $(document).ready(function () {
-        $("h3").addClass("animated shake");
-
-    }, 500);
+        if ($("#Status").prop("hidden") == false) {
+            setTimeout(function () {
+                $("#Status").prop("hidden", true);
+            }, 1500);
+        }
+    });
 </script>

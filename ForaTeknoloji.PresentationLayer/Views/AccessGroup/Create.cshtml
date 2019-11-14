@@ -1,0 +1,92 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.GroupMasterCreateViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row animated slideInLeft">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header-tabs">
+                <h3 class="text-center text-muted">Geçiş Grup Ayarları</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "AccessGroup", FormMethod.Post))
+                {
+                    @Html.HiddenFor(model => model.Grup_No)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Geçiş Grup No</label>
+                                @Html.TextBoxFor(model => model.Grup_No, new { @class = "form-control", disabled = true })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="Gunluk_Aylik">Günlük/Aylık Seçimi</label>
+                                    <select class="form-control" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                        <option selected value="">Günlük/Aylık Seçimi...</option>
+                                        <option value="1">Günlük</option>
+                                        <option value="2">Aylık</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Giriş Sayısı</label>
+                                <input type="number" name="Grup_Gecis_Sayisi" id="Grup_Gecis_Sayisi" class="form-control" min="0" value="" />
+                            </div>
+                            <div class="form-group">
+                                <label>Grup İçerdeki Kişi Sayısı Global Bölge No</label>
+                                @Html.DropDownList("Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No", Model.Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Geçiş Grup Adı</label>
+                                <input type="text" name="Grup_Adi" id="Grup_Adi" class="form-control" value="" />
+                            </div>
+                            <div class="form-group">
+                                <label>Kişi/Araç Sınırı</label>
+                                <input type="number" name="Grup_Icerdeki_Kisi_Sayisi" id="Grup_Icerdeki_Kisi_Sayisi" class="form-control" min="0" value="" />
+                            </div>
+                            <div class="form-group">
+                                <label>Grup Geçiş Sayısı Global Bölge No</label>
+                                @Html.DropDownList("Grup_Gecis_Sayisi_Global_Bolge_No", Model.Grup_Gecis_Sayisi_Global_Bolge_No, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Grup_Gecis_Sayisi_Global_Bolge_No, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div class="custom-control-inline custom-checkbox">
+                                <input type="checkbox" name="Antipassback_Gecersiz" id="Antipassback_Gecersiz" class="custom-control-input" value="true" />
+                                <label class="custom-control-label mr-5" for="Antipassback_Gecersiz">Antipassback İptal</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox">
+                                <input type="checkbox" name="Gece_Antipassback_Sil" id="Gece_Antipassback_Sil" class="custom-control-input" value="true" />
+                                <label class="custom-control-label mr-5" for="Gece_Antipassback_Sil">Antipassback Sayaçlarını Gece Sıfırla</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox">
+                                <input type="checkbox" name="Lokal_Kapasite_Gecersiz" id="Lokal_Kapasite_Gecersiz" class="custom-control-input" value="true" />
+                                <label class="custom-control-label mr-5" for="Lokal_Kapasite_Gecersiz">Lokal Kapasite Kontrolü İptal</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox">
+                                <input type="checkbox" name="Mukerrer_Engelleme_Gecersiz" id="Mukerrer_Engelleme_Gecersiz" class="custom-control-input" value="true" />
+                                <label class="custom-control-label mr-5" for="Mukerrer_Engelleme_Gecersiz">Mükerrer Engelleme İptal</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox">
+                                <input type="checkbox" name="Gece_Icerdeki_Kisi_Sayisini_Sil" id="Gece_Icerdeki_Kisi_Sayisini_Sil" class="custom-control-input" value="true" />
+                                <label class="custom-control-label mr-5" for="Gece_Icerdeki_Kisi_Sayisini_Sil">İçerdeki Kişi/Araç Sayacını Gece Sıfırla</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <a href="@Url.Action("Groups","AccessGroup")" class="btn btn-outline-primary btn-sm"><i class="fas fa-hand-o-left"></i> Listeye Geri Dön</a>
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-save"></i> Grup Kaydet</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

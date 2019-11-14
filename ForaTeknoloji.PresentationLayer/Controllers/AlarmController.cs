@@ -1,9 +1,11 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,18 +17,28 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IAlarmTipleriService _alarmTipleriService;
         private IUserService _userService;
         private IPanelSettingsService _panelSettingsService;
-        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService)
+        private ITaskListService _taskListService;
+        public DBUsers user;
+        private PanelSettings PanelSettings;
+        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService)
         {
+            PanelSettings = CurrentSession.Panel;
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _alarmlarService = alarmlarService;
             _alarmTipleriService = alarmTipleriService;
             _userService = userService;
             _panelSettingsService = panelSettingsService;
+            _taskListService = taskListService;
         }
 
 
 
         // GET: Alarm
-        public ActionResult Index()
+        public ActionResult Index(int Status = -1)
         {
             int ID;
 
@@ -54,30 +66,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Panel_Name,
                     Value = a.Seri_No.ToString()
                 }),
-
+                StatusControl = Status
             };
             return View(model);
         }
-
-
-
-        public ActionResult DatabaseRemove(int? id)
-        {
-            if (id != null)
-            {
-                var entity = _alarmlarService.GetById((int)id);
-                if (entity != null)
-                {
-                    _alarmlarService.DeleteAlarmlar(entity);
-                    return RedirectToAction("Index", "Alarm");
-                }
-                throw new Exception("Böyle bir kayıt bulunamadı!");
-            }
-            return RedirectToAction("Index", "Alarm");
-        }
-
-
-
 
         public ActionResult Edit(int? id)
         {
@@ -105,7 +97,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             throw new Exception("Upss! Yanliş giden birşeyler var.");
         }
 
-
         [HttpPost]
         public ActionResult Edit(Alarmlar alarmlar)
         {
@@ -120,7 +111,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(alarmlar);
         }
 
-
         public ActionResult Create()
         {
             var maxID = 0;
@@ -133,6 +123,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             List<int> KapıListesi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
             List<int> HariciAlarmRolesi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+            ViewBag.Kapi_No = new SelectList(KapıListesi);
+            ViewBag.Kapi_Role_No = new SelectList(HariciAlarmRolesi);
             var model = new AlarmCreateViewModel
             {
                 Alarm_No = maxID + 1,
@@ -148,6 +140,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
                 Kapilar = KapıListesi,
                 AlarmRolesi = HariciAlarmRolesi,
+                Kullanıcılar = kullanıcılar
             };
 
             return View(model);
@@ -164,9 +157,58 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(alarmlar);
         }
 
+        public ActionResult DatabaseRemove(int? id)
+        {
+            if (id != null)
+            {
+                var entity = _alarmlarService.GetById((int)id);
+                if (entity != null)
+                {
+                    _alarmlarService.DeleteAlarmlar(entity);
+                    return RedirectToAction("Index", "Alarm");
+                }
+                throw new Exception("Böyle bir kayıt bulunamadı!");
+            }
+            return RedirectToAction("Index", "Alarm");
+        }
 
+        public ActionResult PanelRemove(int id = -1)
+        {
+            if (id != -1)
+            {
+                if (PanelSettings == null)
+                    return RedirectToAction("Orientation", "Home");
+                try
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_USERALARM,
+                        IntParam_1 = id,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus(taskListReceive.Grup_No);
+                    if (Durum == 2)
+                        return RedirectToAction("Index", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("Index", new { @Status = 1 });
+                    else
+                        return RedirectToAction("Index", new { @Status = 3 });
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index", new { @Status = 3 });
+                }
+            }
+            return RedirectToAction("Index", new { @Status = 3 });
 
-
+        }
 
         public ActionResult Personeller(string Search)
         {
@@ -183,6 +225,51 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return Json(liste, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult Send(int AlarmID = -1)
+        {
+            if (AlarmID != -1)
+            {
+                if (PanelSettings == null)
+                    return RedirectToAction("Orientation", "Home");
+                try
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_SND_USERALARM,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelSettings.Panel_ID,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    Thread.Sleep(2000);
+                    var Durum = CheckStatus(taskListReceive.Grup_No);
+                    if (Durum == 2)
+                        return RedirectToAction("Index", new { @Status = 2 });
+                    else if (Durum == 1)
+                        return RedirectToAction("Index", new { @Status = 1 });
+                    else
+                        return RedirectToAction("Index", new { @Status = 3 });
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index", new { @Status = 3 });
+                }
+            }
+            return RedirectToAction("Index", new { @Status = 3 });
+        }
+
+        public int CheckStatus(int GrupNo = -1)
+        {
+            if (GrupNo != -1)
+            {
+                return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
+            }
+            return 3;
         }
 
     }
