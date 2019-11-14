@@ -39,6 +39,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _groupsDetailNewDal.Get(x => x.Grup_No == Grup_No);
         }
 
+        public GroupsDetailNew GetBy_GrupNo_AND_PanelID(int Grup_No, int Panel_ID)
+        {
+            return _groupsDetailNewDal.Get(x => x.Grup_No == Grup_No && x.Panel_No == Panel_ID);
+        }
+
         public List<ComplexGroupsDetailNew> GetComplexGroups()
         {
             return _groupsDetailNewDal.GetComplexGroups();

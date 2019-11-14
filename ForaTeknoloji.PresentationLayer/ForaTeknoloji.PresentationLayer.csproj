@@ -2527,6 +2527,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Init\WebCommon.cs" />
+    <Compile Include="Models\AccessGroupPanelListViewModel.cs" />
     <Compile Include="Models\AddTimeGroupsListViewModel.cs" />
     <Compile Include="Models\AlarmCreateViewModel.cs" />
     <Compile Include="Models\AlarmEditListViewModel.cs" />
@@ -2643,6 +2644,7 @@
     <Content Include="Views\AccessGroup\GroupSettings.cshtml" />
     <Content Include="Views\AccessGroup\Create.cshtml" />
     <Content Include="Views\AccessGroup\GroupReaders.cshtml" />
+    <Content Include="Views\AccessGroup\PanelList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
