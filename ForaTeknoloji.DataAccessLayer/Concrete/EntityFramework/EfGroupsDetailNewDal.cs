@@ -32,12 +32,13 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Grup_No = gd.Grup_No,
                                 Kapi_Adi = rs.WKapi_Adi,
                                 Kapi_Aktif = gd.Kapi_Aktif,
-                                Kapi_No = gd.Kapi_No,
+                                Kapi_No = rs.WKapi_ID,
                                 Panel_Adi = gd.Panel_Adi,
                                 Panel_No = gd.Panel_No,
                                 Seri_No = gd.Seri_No,
                                 Zaman_Grup_Adi = tg.Zaman_Grup_Adi,
-                                Zaman_Grup_No = gd.Zaman_Grup_No
+                                Zaman_Grup_No = gd.Zaman_Grup_No,
+                                Reader_Panel_No = rs.Panel_ID
                             };
                 return query.ToList();
             }

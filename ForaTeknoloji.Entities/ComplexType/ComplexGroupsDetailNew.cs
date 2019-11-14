@@ -18,6 +18,8 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public short? Panel_No { get; set; }
 
+        public int? Reader_Panel_No { get; set; }
+
         public string Panel_Adi { get; set; }
 
         public bool? Kapi_Aktif { get; set; }
