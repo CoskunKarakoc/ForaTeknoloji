@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Excp]
     public class AccessGroupController : Controller
     {
         private IGroupMasterService _groupMasterService;
@@ -70,6 +72,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _groupMasterService.UpdateGroupsMaster(groupsMaster);
+
+                foreach (var item in _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Grup_No == groupsMaster.Grup_No))
+                {
+                    var entity = item;
+                    entity.Grup_Adi = groupsMaster.Grup_Adi;
+                    _groupsDetailNewService.UpdateGroupsDetailNew(entity);
+                }
                 return RedirectToAction("Groups", "AccessGroup");
             }
             return View(groupsMaster);
@@ -111,10 +120,31 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _groupMasterService.AddGroupsMaster(groupsMaster);
+                foreach (var panel in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0))
+                {
+                    for (int i = 1; i < 17; i++)
+                    {
+                        GroupsDetailNew groupsDetailNew = new GroupsDetailNew
+                        {
+                            Asansor_Grup_No = 1,
+                            Global_Bolge_No = 1,
+                            Zaman_Grup_No = 1,
+                            Kapi_Aktif = false,
+                            Panel_Adi = panel.Panel_Name,
+                            Panel_No = (short)panel.Panel_ID,
+                            Seri_No = panel.Seri_No,
+                            Kapi_No = i,
+                            Grup_No = groupsMaster.Grup_No,
+                            Grup_Adi = groupsMaster.Grup_Adi
+                        };
+                        _groupsDetailNewService.AddGroupsDetailNew(groupsDetailNew);
+                    }
+                }
                 return RedirectToAction("Groups", "AccessGroup");
             }
             return View(groupsMaster);
         }
+
 
         public ActionResult Delete(int id = -1)
         {
@@ -245,6 +275,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
+
         public ActionResult GroupClone(int GrupNo, int PanelID)
         {
             var entity = _groupsDetailNewService.GetBy_GrupNo_AND_PanelID(GrupNo, PanelID);
@@ -255,8 +286,48 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Klone(List<int> Groups)
         {
-            //TODO:Groups view'den seçilen grupların değerini sessionda tuttuğumuz değerle dolduracaz
-            return null;
+            if (Groups != null)
+            {
+                var GroupKlone = CurrentSession.Get<GroupsDetailNew>("Klone");
+                if (GroupKlone == null)
+                {
+                    throw new Exception("Klonlanacak Grup Bulunamadı!");
+                }
+                else
+                {
+                    var ListGroup = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Panel_No == GroupKlone.Panel_No && x.Seri_No == GroupKlone.Seri_No && x.Grup_No == GroupKlone.Grup_No);
+                    foreach (var item in Groups)
+                    {
+                        foreach (var liste in ListGroup)
+                        {
+                            GroupsDetailNew groupsDetailNew = new GroupsDetailNew
+                            {
+                                Grup_No = item,
+                                Seri_No = liste.Seri_No,
+                                Panel_No = liste.Panel_No,
+                                Grup_Adi = liste.Grup_Adi,
+                                Kapi_Aktif = liste.Kapi_Aktif,
+                                Panel_Adi = liste.Panel_Adi,
+                                Asansor_Grup_No = liste.Asansor_Grup_No,
+                                Global_Bolge_No = liste.Global_Bolge_No,
+                                Kapi_No = liste.Kapi_No,
+                                Zaman_Grup_No = liste.Zaman_Grup_No
+                            };
+                            var entity = _groupsDetailNewService.GetBy_GrupNo_AND_PanelID(groupsDetailNew.Grup_No, (short)groupsDetailNew.Panel_No);
+                            if (entity == null)
+                            {
+                                _groupsDetailNewService.AddGroupsDetailNew(groupsDetailNew);
+                            }
+                            else
+                            {
+                                _groupsDetailNewService.DeleteGroupsDetailNew(entity);
+                                _groupsDetailNewService.AddGroupsDetailNew(groupsDetailNew);
+                            }
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("Groups", "AccessGroup");
         }
 
     }
