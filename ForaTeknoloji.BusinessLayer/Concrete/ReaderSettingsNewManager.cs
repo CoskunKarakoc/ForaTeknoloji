@@ -43,5 +43,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _readerSettingsNewDal.Update(readerSettingsNew);
         }
+
+
+        public ReaderSettingsNew GetByKapiANDPanel(int KapiID, int PanelID)
+        {
+            return _readerSettingsNewDal.Get(x => x.WKapi_ID == KapiID && x.Panel_ID == PanelID);
+        }
     }
 }

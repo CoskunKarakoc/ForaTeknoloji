@@ -6,6 +6,7 @@ using ForaTeknoloji.PresentationLayer.Models;
 using System.Web.Mvc;
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    /*Bismillahirahmanirahim*/
     [Excp]
     public class HomeController : Controller
     {

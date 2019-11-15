@@ -15,5 +15,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         ReaderSettingsNew AddReaderSettingsNew(ReaderSettingsNew readerSettingsNew);
         void DeleteReaderSettingsNew(ReaderSettingsNew readerSettingsNew);
         ReaderSettingsNew UpdateReaderSettingsNew(ReaderSettingsNew readerSettingsNew);
+        ReaderSettingsNew GetByKapiANDPanel(int KapiID, int PanelID);
     }
 }

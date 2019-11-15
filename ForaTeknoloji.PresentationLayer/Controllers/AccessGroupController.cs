@@ -154,6 +154,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _groupMasterService.DeleteGroupsMaster(entity);
+                    foreach (var item in _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Grup_Adi == entity.Grup_Adi))
+                    {
+                        _groupsDetailNewService.DeleteGroupsDetailNew(item);
+                    }
                     return RedirectToAction("Groups", "AccessGroup");
                 }
                 throw new Exception("Böyle bir kayıt bulunamadı");
@@ -327,8 +331,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     }
                 }
             }
+            CurrentSession.Remove("Klone");
             return RedirectToAction("Groups", "AccessGroup");
         }
+
+
+
 
     }
 }

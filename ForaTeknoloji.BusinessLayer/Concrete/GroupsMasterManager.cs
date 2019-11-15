@@ -40,5 +40,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _groupMasterDal.Update(groupsMaster);
         }
+
+
+
+
+
+
     }
 }
