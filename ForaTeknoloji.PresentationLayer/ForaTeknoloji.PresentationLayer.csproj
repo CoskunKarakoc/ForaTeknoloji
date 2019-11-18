@@ -2644,7 +2644,7 @@
     <Content Include="Views\AccessGroup\GroupSettings.cshtml" />
     <Content Include="Views\AccessGroup\Create.cshtml" />
     <Content Include="Views\AccessGroup\GroupReaders.cshtml" />
-    <Content Include="Views\AccessGroup\PanelList.cshtml" />
+    <Content Include="Views\Shared\_PartialPanelList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

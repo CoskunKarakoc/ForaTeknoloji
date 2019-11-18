@@ -4,13 +4,17 @@
     ViewBag.Title = "GroupReaders";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @using (Html.BeginForm("GroupReaders", "AccessGroup", FormMethod.Post))
 {
-    <div class="row animated slideInLeft">
-        <div class="col-md-8 offset-2">
-            <div class="card shadow-lg mx-lg-5 my-lg-5">
+    <div class="row ">
+        <div id="PanelList" class="col-md-3  mx-lg-4 my-lg-4 animated slideInLeft">
+            @Html.Partial("_PartialPanelList", Model.PanelList)
+        </div>
+        <div class="col-md-8 animated slideInRight">
+            <div class="card shadow-lg mx-lg-4 my-lg-4">
                 <div class="card-header-tabs mt-1">
-                    <h3 class="text-center text-muted">Geçiş Grup Kapı Ayarları</h3>
+                    <h3 class="text-center text-muted">Geçiş Grup Kapı Ayarları - <span class="text-primary"><i>@Model.Groups.FirstOrDefault().Grup_Adi</i></span></h3>
                 </div>
                 <div class="card-body">
                     @Html.HiddenFor(model => model.Panel_ID)
@@ -357,8 +361,7 @@
 
                         <div class="col-md-12 text-right">
                             <hr />
-                            <a href="@Url.Action("Groups","AccessGroup")" class="btn btn-sm btn-outline-primary"><i class="fas fa-hand-o-left"></i> Grup Listesi</a>
-                            <a href="@Url.Action("PanelList","AccessGroup",new {id=Model.Groups.FirstOrDefault().Grup_No })" class="btn btn-sm btn-outline-secondary"><i class="fas fa-hand-o-left"></i> Panel Listesi</a>
+                            <a href="@Url.Action("Groups","AccessGroup")" class="btn btn-sm btn-outline-info"><i class="fas fa-hand-o-left"></i> Grup Listesi</a>
                             <a href="@Url.Action("GroupClone","AccessGroup",new {GrupNo=Model.Groups.FirstOrDefault().Grup_No,PanelID=Model.Panel_ID })" class="btn btn-sm btn-outline-dark"><i class="fas fa-copy"></i> Grubu Klonla</a>
                             <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i> Geçiş Grupları Güncelle</button>
                         </div>
@@ -394,6 +397,10 @@
             }
 
         }
+
+        var currentPanel = $("#Panel_ID").val();
+        $("#" + currentPanel).toggleClass("active");
+
 
 
     });

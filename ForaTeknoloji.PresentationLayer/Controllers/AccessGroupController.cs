@@ -174,7 +174,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<ComplexGroupsDetailNew> nesne = new List<ComplexGroupsDetailNew>();
             if (PanelID == null)
             {
-                return RedirectToAction("PanelList", "AccessGroup");
+                PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).FirstOrDefault().Panel_ID;
+                if (PanelID == null)
+                    return RedirectToAction("Orientation", "Home");
+                nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
             }
             else
             {
@@ -192,7 +195,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Kapi_Asansor_Bolge_No = KapiAsansorBolgeNo,
                 Kapi_Zaman_Grup_No = KapiZamanGrupNo,
                 Groups = nesne,
-                Panel_ID = PanelID
+                Panel_ID = PanelID,
+                PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
             };
             return View(model);
         }
@@ -269,16 +273,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult PanelList(int id = -1)
-        {
-            var model = new AccessGroupPanelListViewModel
-            {
-                Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0),
-                Grup_No = id
-            };
-            return View(model);
-        }
-
 
         public ActionResult GroupClone(int GrupNo, int PanelID)
         {
@@ -306,10 +300,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             GroupsDetailNew groupsDetailNew = new GroupsDetailNew
                             {
+
                                 Grup_No = item,
                                 Seri_No = liste.Seri_No,
                                 Panel_No = liste.Panel_No,
-                                Grup_Adi = liste.Grup_Adi,
+                                Grup_Adi = _groupsDetailNewService.GetById(item).Grup_Adi,
                                 Kapi_Aktif = liste.Kapi_Aktif,
                                 Panel_Adi = liste.Panel_Adi,
                                 Asansor_Grup_No = liste.Asansor_Grup_No,

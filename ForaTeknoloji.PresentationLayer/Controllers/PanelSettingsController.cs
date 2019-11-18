@@ -153,6 +153,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(panel);
         }
 
+
+
+
+
         public ActionResult ReaderSettings()
         {
             if (PanelSettings == null || PanelSettings.Panel_ID == 0 || (PanelSettings.Panel_IP1 == 0 && PanelSettings.Panel_IP2 == 0 && PanelSettings.Panel_IP3 == 0 && PanelSettings.Panel_IP4 == 0))

@@ -15,14 +15,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a href="@Url.Action("Create","AccessGroup")" class="btn btn-sm btn-outline-success mb-2"><i class="fas fa-plus"></i> Yeni Geçiş Grubu</a>
+                            <a href="@Url.Action("Create","AccessGroup")" class="btn btn-sm btn-outline-success mb-2" title="Yeni Geçiş Grubu"><i class="fas fa-plus"></i> Yeni Geçiş Grubu</a>
                         </div>
                     </div>
                     <table id="GroupTable" class="table-borderless table table-hover text-center table-striped table-sm">
                         <thead class="table-info">
                             <tr>
                                 <td>
-                                    <button id="ButtonClone" type="submit" class="text-primary btn btn-sm"><i class="fas fa-copy"></i></button>
+                                    <button id="ButtonClone" type="submit" data-toggle="tooltip" data-placement="top" title="Kopyalanan Grubu Seçili Gruplara Aktar" class="text-primary btn btn-sm"><i class="fas fa-copy"></i></button>
                                     @*<a title="Seçilenlere Klon'dan Aktar" href="@Url.Action("Klone","AccessGroup")"><i class="fas fa-copy"></i></a>*@
                                     @*<div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="AllGroups" />
@@ -41,7 +41,7 @@
                                     <td>
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="Groups" id="@item.Grup_No" value="@item.Grup_No">
-                                          
+
 
                                             <label class="custom-control-label" for="@item.Grup_No"></label>
                                         </div>
@@ -49,9 +49,10 @@
                                     <td>@item.Grup_No</td>
                                     <td>@item.Grup_Adi</td>
                                     <td>
-                                        <a title="Grup Ayarları" href="@Url.Action("GroupSettings","AccessGroup",new {id=item.Grup_No })" class="text-success mr-2"><i class="fas fa-edit"></i></a>
-                                        <a title="Grup Kapı Ayarları" href="@Url.Action("PanelList","AccessGroup",new {id=item.Grup_No })" class="text-secondary mr-2"><i class="fas fa-door-open"></i></a>
+                                        <a title="Grup Ayarları" href="@Url.Action("GroupSettings","AccessGroup",new {id=item.Grup_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
+                                        <a title="Grup Kapı Ayarları" href="@Url.Action("GroupReaders","AccessGroup",new {id=item.Grup_No })" class="text-secondary mr-2"><i class="fas fa-door-open"></i></a>
                                         <a title="Veritabanından sil" onclick="return confirm('Silmek istediğinize emin misiniz?')" href="@Url.Action("Delete","AccessGroup",new {id=item.Grup_No })" class="text-danger mr-2"><i class="fas fa-trash-alt"></i></a>
+                                        <a title="Seçili Grubu Panele Gönder" onclick="return confirm('Seçili Grubu Panele Göndermek İstediğinize Emin Misiniz?')" href="@Url.Action("SendToPanel","AccessGroup",new {id=item.Grup_No })" class="text-success"><i class="fas fa-share"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -82,6 +83,5 @@
             alertify.set('notifier', 'delay', delay);
             //alertify.success('Kopylama İşlem, Gerçekleştirildi');
         });
-
     });
 </script>

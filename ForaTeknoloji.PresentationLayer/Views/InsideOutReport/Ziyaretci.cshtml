@@ -107,11 +107,11 @@
                 footerStyle:"table-pager",
                 columns: webGrid.Columns(
                     webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                                                 webGrid.Column("Kart_ID", "Kart ID"),
-                                                 webGrid.Column("Adi", "Adı"),
-                                                 webGrid.Column("Soyadi", "Soyadı"),
-                                                 webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
-                                                 webGrid.Column("Tarih", "Tarih")))
+                                                      webGrid.Column("Kart_ID", "Kart ID"),
+                                                      webGrid.Column("Adi", "Adı"),
+                                                      webGrid.Column("Soyadi", "Soyadı"),
+                                                      webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
+                                                      webGrid.Column("Tarih", "Tarih")))
 
             }
             else
@@ -343,8 +343,6 @@
                 $("#readerCikis").attr("disabled", true);
             }
         });
-        setTimeout(function () {
-            $("h3").addClass("animated shake");
-        }, 500);
+
     });
 </script>

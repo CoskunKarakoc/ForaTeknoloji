@@ -12,5 +12,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<SelectList> Kapi_Zaman_Grup_No { get; internal set; }
         public List<ComplexGroupsDetailNew> Groups { get; internal set; }
         public int? Panel_ID { get; internal set; }
+        public List<PanelSettings> PanelList { get; internal set; }
     }
 }

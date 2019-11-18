@@ -104,16 +104,16 @@
               footerStyle:"table-pager",
               columns: webGrid.Columns(
                   webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                                     webGrid.Column("ID", "ID"),
-                                     webGrid.Column("Kart_ID", "Kart ID"),
-                                     webGrid.Column("Adi", "Adı"),
-                                     webGrid.Column("Soyadi", "Soyadı"),
-                                     webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
-                                     webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadi"),
-                                     webGrid.Column("Sirket", "Şirket"),
-                                     webGrid.Column("Departman", "Departman"),
-                                     webGrid.Column("Tarih", "Tarih"),
-                                     webGrid.Column("Ziyaret_Tarihi", "Tarihi")))
+                                        webGrid.Column("ID", "ID"),
+                                        webGrid.Column("Kart_ID", "Kart ID"),
+                                        webGrid.Column("Adi", "Adı"),
+                                        webGrid.Column("Soyadi", "Soyadı"),
+                                        webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
+                                        webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadi"),
+                                        webGrid.Column("Sirket", "Şirket"),
+                                        webGrid.Column("Departman", "Departman"),
+                                        webGrid.Column("Tarih", "Tarih"),
+                                        webGrid.Column("Ziyaret_Tarihi", "Tarihi")))
             }
             else
             {
@@ -342,8 +342,6 @@
                 $("#readerCikis").attr("disabled", true);
             }
         });
-        setTimeout(function () {
-            $("h3").addClass("animated shake");
-        }, 500);
+
     });
 </script>

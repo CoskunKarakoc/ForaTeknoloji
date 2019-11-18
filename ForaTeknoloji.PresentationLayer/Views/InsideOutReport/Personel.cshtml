@@ -105,15 +105,15 @@
     footerStyle:"table-pager",
     columns: webGrid.Columns(
      webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                            webGrid.Column("Kayit_No", "Kayıt No"),
-                            webGrid.Column("ID", "ID"),
-                            webGrid.Column("Kart_ID", "Kart ID"),
-                            webGrid.Column("Adi", "Adı"),
-                            webGrid.Column("Soyadi", "Soyadı"),
-                            webGrid.Column("Sirket", "Şirket"),
-                            webGrid.Column("Departman", "Departman"),
-                            webGrid.Column("Tarih", "Tarih"),
-                            webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
+                                webGrid.Column("Kayit_No", "Kayıt No"),
+                                webGrid.Column("ID", "ID"),
+                                webGrid.Column("Kart_ID", "Kart ID"),
+                                webGrid.Column("Adi", "Adı"),
+                                webGrid.Column("Soyadi", "Soyadı"),
+                                webGrid.Column("Sirket", "Şirket"),
+                                webGrid.Column("Departman", "Departman"),
+                                webGrid.Column("Tarih", "Tarih"),
+                                webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
             }
             else
             {
@@ -339,8 +339,6 @@
                 $("#readerCikis").attr("disabled", true);
             }
         });
-        setTimeout(function () {
-            $("h3").addClass("animated shake");
-        }, 500);
+
     });
 </script>
