@@ -1,87 +1,144 @@
-﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.GroupsMaster>
-@{
-    ViewBag.Title = "Groups";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@using (Html.BeginForm("Klone", "AccessGroup", FormMethod.Post))
-{
+﻿@model ForaTeknoloji.PresentationLayer.Models.GecisGrupListViewModel
+    @{
+        ViewBag.Title = "Grup Listesi";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    @using (Html.BeginForm("Klone", "AccessGroup", FormMethod.Post))
+    {
 
-    <div class="row animated slideInDown fast">
-        <div class="col-md-4 offset-4">
-            <div class="card shadow-lg mx-xl-5 my-lg-5">
-                <div class="card-header-tabs">
-                    <h3 class="text-center text-muted">Geçiş Grupları</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12 text-right">
-                            <a href="@Url.Action("Create","AccessGroup")" class="btn btn-sm btn-outline-success mb-2" title="Yeni Geçiş Grubu"><i class="fas fa-plus"></i> Yeni Geçiş Grubu</a>
-                        </div>
+        <div class="row animated slideInDown fast">
+            <div class="col-md-4 offset-4">
+                <div class="card shadow-lg mx-xl-5 my-lg-5">
+                    <div class="card-header-tabs">
+                        <h3 class="text-center text-muted">Geçiş Grupları</h3>
                     </div>
-                    <table id="GroupTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                        <thead class="table-info">
-                            <tr>
-                                <td>
-                                    <button id="ButtonClone" type="submit" data-toggle="tooltip" data-placement="top" title="Kopyalanan Grubu Seçili Gruplara Aktar" class="text-primary btn btn-sm"><i class="fas fa-copy"></i></button>
-                                    @*<a title="Seçilenlere Klon'dan Aktar" href="@Url.Action("Klone","AccessGroup")"><i class="fas fa-copy"></i></a>*@
-                                    @*<div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="AllGroups" />
-                                            <label class="custom-control-label" for="AllGroups"></label>
-                                        </div>*@
-                                </td>
-                                <td>Grup No</td>
-                                <td>Grup Adı</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <a href="@Url.Action("Create","AccessGroup")" class="btn btn-sm btn-outline-success mb-2" title="Yeni Geçiş Grubu"><i class="fas fa-plus"></i> Yeni Geçiş Grubu</a>
+                            </div>
+                        </div>
+                        <table id="GroupTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>
+                                        <button id="ButtonClone" type="submit" data-toggle="tooltip" data-placement="top" title="Kopyalanan Grubu Seçili Gruplara Aktar" class="text-primary btn btn-sm"><i class="fas fa-copy"></i></button>
+                                        @*<a title="Seçilenlere Klon'dan Aktar" href="@Url.Action("Klone","AccessGroup")"><i class="fas fa-copy"></i></a>*@
+                                        @*<div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="AllGroups" />
+                                                <label class="custom-control-label" for="AllGroups"></label>
+                                            </div>*@
+                                    </td>
+                                    <td>Grup No</td>
+                                    <td>Grup Adı</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Gruplar)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" name="Groups" id="@item.Grup_No" value="@item.Grup_No">
+
+
+                                                <label class="custom-control-label" for="@item.Grup_No"></label>
+                                            </div>
+                                        </td>
+                                        <td>@item.Grup_No</td>
+                                        <td>@item.Grup_Adi</td>
+                                        <td>
+                                            <a title="Grup Ayarları" href="@Url.Action("GroupSettings","AccessGroup",new {id=item.Grup_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
+                                            <a title="Grup Kapı Ayarları" href="@Url.Action("GroupReaders","AccessGroup",new {id=item.Grup_No })" class="text-secondary mr-2"><i class="fas fa-door-open"></i></a>
+                                            <a title="Veritabanından sil" onclick="return confirm('Silmek istediğinize emin misiniz?')" href="@Url.Action("Delete","AccessGroup",new {id=item.Grup_No })" class="text-danger mr-2"><i class="fas fa-trash-alt"></i></a>
+                                            <a title="Seçili Grubu Panele Gönder" data-toggle="modal" data-target="#panelList" onclick="ekle(@item.Grup_No)" class="text-success"><i class="fas fa-share"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    <!--Panel List Modal -->
+    <div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Panel Listesi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("Send", "AccessGroup", FormMethod.Post))
+                {
+                    <div class="modal-body">
+                        <input id="gecisGrupNo" type="text" hidden name="GecisGrupNo" value="" />
+                        <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                            <thead class="table-info">
                                 <tr>
                                     <td>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="Groups" id="@item.Grup_No" value="@item.Grup_No">
-
-
-                                            <label class="custom-control-label" for="@item.Grup_No"></label>
+                                            <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                            <label class="custom-control-label" for="AllPanel"></label>
                                         </div>
                                     </td>
-                                    <td>@item.Grup_No</td>
-                                    <td>@item.Grup_Adi</td>
-                                    <td>
-                                        <a title="Grup Ayarları" href="@Url.Action("GroupSettings","AccessGroup",new {id=item.Grup_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
-                                        <a title="Grup Kapı Ayarları" href="@Url.Action("GroupReaders","AccessGroup",new {id=item.Grup_No })" class="text-secondary mr-2"><i class="fas fa-door-open"></i></a>
-                                        <a title="Veritabanından sil" onclick="return confirm('Silmek istediğinize emin misiniz?')" href="@Url.Action("Delete","AccessGroup",new {id=item.Grup_No })" class="text-danger mr-2"><i class="fas fa-trash-alt"></i></a>
-                                        <a title="Seçili Grubu Panele Gönder" onclick="return confirm('Seçili Grubu Panele Göndermek İstediğinize Emin Misiniz?')" href="@Url.Action("SendToPanel","AccessGroup",new {id=item.Grup_No })" class="text-success"><i class="fas fa-share"></i></a>
-                                    </td>
+                                    <td>Panel Seri No</td>
+                                    <td>Panel No</td>
+                                    <td>Panel Adı</td>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PanelListesi)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" name="PanelList" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                            </div>
+                                        </td>
+                                        <td>@item.Seri_No.Value.ToString("X4")</td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Panel_Name</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                    </div>
+                }
             </div>
         </div>
     </div>
 
-}
+    <script>
+        $(document).ready(function () {
+            $("#AllPanel").click(function () {
+                if ($(this).prop("checked") == true) {
+                    $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);
+                } else {
+                    $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
+                }
+            });
 
-
-<script>
-    $(document).ready(function () {
-        //$("#AllGroups").click(function () {
-        //    if ($(this).prop("checked") == true) {
-        //        $("#GroupTable tbody tr input[type='checkbox']").prop("checked", true);
-        //    } else {
-        //        $("#GroupTable tbody tr input[type='checkbox']").prop("checked", false);
-        //    }
-        //});
-        $("#ButtonClone").click(function () {
-            alertify.set('notifier', 'delay', 10);
-            var delay = alertify.get('notifier', 'delay');
-            alertify.set('notifier', 'position', 'top-right');
-            alertify.success('Kopylama İşlem, Gerçekleştirildi!');
-            alertify.set('notifier', 'delay', delay);
-            //alertify.success('Kopylama İşlem, Gerçekleştirildi');
+            $("#ButtonClone").click(function () {
+                alertify.set('notifier', 'delay', 10);
+                var delay = alertify.get('notifier', 'delay');
+                alertify.set('notifier', 'position', 'top-right');
+                alertify.success('Kopylama İşlem, Gerçekleştirildi!');
+                alertify.set('notifier', 'delay', delay);
+                //alertify.success('Kopylama İşlem, Gerçekleştirildi');
+            });
         });
-    });
-</script>
+        function ekle(grupNo) {
+            $("#gecisGrupNo").prop("value", grupNo);
+        }
+    </script>

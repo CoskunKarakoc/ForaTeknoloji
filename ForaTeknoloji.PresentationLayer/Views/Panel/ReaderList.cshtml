@@ -1,0 +1,66 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.ReaderEditViewModel
+@{
+    ViewBag.Title = "Reader List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    @Html.HiddenFor(model => model.Panel_ID)
+
+    <div class="col-md-3 mx-lg-4 my-lg-4 animated slideInLeft">
+        @Html.Partial("_PartialPanelSettingsList", Model.Paneller)
+    </div>
+
+    <div class="col-md-5 offset-1 mx-lg-4 my-lg-4 animated slideInRight">
+        <div class="card shadow-lg ml-5">
+            <div class="card-header-tabs">
+                <h3 class="text-muted text-center">Kapı Listesi</h3>
+            </div>
+            <div class="card-body">
+                <table class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>ID</td>
+                            <td>Aktif</td>
+                            <td>Adı</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Okuyucular)
+                        {
+
+                            <tr>
+                                <td>@item.WKapi_ID</td>
+                                @if (item.WKapi_Aktif == true)
+                                {
+                                    <td><b><i class="text-success">Evet</i></b></td>
+                                    <td><b><i class="text-success">@item.WKapi_Adi</i></b></td>
+                                    <td>
+                                        <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-danger">Hayır</td>
+                                    <td class="text-danger">@item.WKapi_Adi</td>
+                                    <td>
+                                        <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                    </td>
+                                }
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var currentPanel = $("#Panel_ID").val();
+        $("#" + currentPanel).toggleClass("active");
+    });
+</script>

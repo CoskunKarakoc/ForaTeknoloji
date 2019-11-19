@@ -55,7 +55,7 @@
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","TimeGroups",new { id=item.Zaman_Grup_No})"><i class="fas fa-edit text-info mr-2"></i></a>
                                     <a title="Delete" onclick="return confirm('Zaman Bölgesini Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","TimeGroups",new { id=item.Zaman_Grup_No})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a title="Send To Panel" onclick="return confirm('Zaman Bölgesini Panele Göndermek İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Send","TimeGroups",new { ZamanGrupNo=item.Zaman_Grup_No})"><i class="fas fa-share text-success mr-2"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(@item.Zaman_Grup_No)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
                                 </td>
                             </tr>
                         }
@@ -67,8 +67,69 @@
     </div>
 </div>
 
+
+<!--Panel List Modal -->
+<div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Send", "TimeGroups", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <input id="zamanGrupNo" type="text" hidden name="ZamanGrupNo" value="" />
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                        <label class="custom-control-label" for="AllPanel"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelList" id="@item.Panel_ID" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
+        $("#AllPanel").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
         if ($("#Status").prop("hidden") == false) {
             setTimeout(function () {
                 $("#Status").prop("hidden", true);
@@ -77,4 +138,7 @@
 
 
     });
+    function ekle(zamanGrupNo) {
+        $("#zamanGrupNo").prop("value", zamanGrupNo);
+    }
 </script>

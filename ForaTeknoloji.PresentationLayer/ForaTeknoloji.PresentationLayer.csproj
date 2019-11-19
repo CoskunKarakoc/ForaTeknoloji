@@ -2539,6 +2539,7 @@
     <Compile Include="Models\DigerGecisRaporAlarmListViewModel.cs" />
     <Compile Include="Models\DigerGecisRaporListViewModel.cs" />
     <Compile Include="Models\EditSecurityListViewModel.cs" />
+    <Compile Include="Models\GecisGrupListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyenViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_GelenlerListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_GelmeyenlerListViewModel.cs" />
@@ -2556,8 +2557,8 @@
     <Compile Include="Models\LiftEditViewModel.cs" />
     <Compile Include="Models\LiftGroupsAddViewModel.cs" />
     <Compile Include="Models\LiftGroupsListViewModel.cs" />
-    <Compile Include="Models\PanelSettingsViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
+    <Compile Include="Models\ReaderEditViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\SecurityCreateViewModel.cs" />
     <Compile Include="Models\SecuritySettingsListViewModel.cs" />
@@ -2625,9 +2626,6 @@
     <Content Include="Views\Door\Index.cshtml" />
     <Content Include="Views\Camera\Index.cshtml" />
     <Content Include="Views\PanelSettings\Settings.cshtml" />
-    <Content Include="Views\PanelSettings\ReaderSettings.cshtml" />
-    <Content Include="Views\PanelSettings\ReaderEdit.cshtml" />
-    <Content Include="Views\PanelSettings\Reader.cshtml" />
     <Content Include="Views\Watch\WatchSettings.cshtml" />
     <Content Include="Views\CameraSettings\Index.cshtml" />
     <Content Include="Views\CameraSettings\Edit.cshtml" />
@@ -2645,6 +2643,10 @@
     <Content Include="Views\AccessGroup\Create.cshtml" />
     <Content Include="Views\AccessGroup\GroupReaders.cshtml" />
     <Content Include="Views\Shared\_PartialPanelList.cshtml" />
+    <Content Include="Views\Panel\ReaderList.cshtml" />
+    <Content Include="Views\Shared\_PartialPanelSettingsList.cshtml" />
+    <Content Include="Views\Panel\ReaderEdit.cshtml" />
+    <Content Include="Views\PanelSettings\PanelSelectedSettings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

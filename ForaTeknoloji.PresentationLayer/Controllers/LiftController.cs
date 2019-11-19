@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,18 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
+    [Excp]
     public class LiftController : Controller
     {
         private IFloorNamesService _floorNamesService;
         private ILiftGroupsService _liftGroupsService;
         private ITaskListService _taskListService;
+        private IPanelSettingsService _panelSettingsService;
         private FloorNames tempFloor;
         private DBUsers user;
         private PanelSettings PanelSettings;
-        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService)
+        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService)
         {
             PanelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
@@ -30,7 +34,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _floorNamesService = floorNamesService;
             _liftGroupsService = liftGroupsService;
             _taskListService = taskListService;
-
+            _panelSettingsService = panelSettingsService;
         }
 
         // AGG Listesi
@@ -39,7 +43,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var model = new LiftGroupsListViewModel
             {
                 LiftGroup = _liftGroupsService.GetAllLiftGroups(),
-                StatusControl = Status
+                StatusControl = Status,
+                PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
             };
 
             return View(model);
@@ -212,6 +217,43 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return RedirectToAction("FloorNames");
         }
+
+
+        public ActionResult Send(List<int> PanelList, int AsansorGrupNo = -1)
+        {
+            if (AsansorGrupNo != -1)
+            {
+                try
+                {
+                    foreach (var item in PanelList)
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_LIFTGROUP,
+                            IntParam_1 = AsansorGrupNo,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = item,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    }
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("LiftGroups", new { @Status = 3 });
+                }
+            }
+
+            return RedirectToAction("LiftGroups");
+
+        }
+
+
+
+
 
         //Get Task Status
         public int CheckStatus(int GrupNo = -1)

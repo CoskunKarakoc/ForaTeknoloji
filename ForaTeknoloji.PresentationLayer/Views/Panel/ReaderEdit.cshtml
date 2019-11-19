@@ -3,20 +3,21 @@
     ViewBag.Title = "Okuyucu Güncelle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
+<div class="row animated slideInLeft">
     <div class="col-md-9 offset-md-1">
         <div class="card shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-info text-center">Seçilen Kapı Ayarları</h3>
             </div>
             <div class="card-body">
-                @using (Html.BeginForm("ReaderEdit", "PanelSettings", FormMethod.Post))
+                @using (Html.BeginForm("ReaderEdit", "Panel", FormMethod.Post))
                 {
                     @Html.HiddenFor(x => x.WKapi_ID)
                     @Html.HiddenFor(x => x.Panel_ID)
                     @Html.HiddenFor(x => x.Panel_Name)
                     @Html.HiddenFor(x => x.Seri_No)
                     @Html.HiddenFor(x => x.Sira_No)
+                    @Html.HiddenFor(x => x.Kayit_No)
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
@@ -84,8 +85,8 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="Button_Dedektor" value="" id="ButtonDedektor" />
-                                        <label class="custom-control-label" for="ButtonDedektor">Button Dedektör</label>
+                                        @Html.CheckBox("WKapi_Ana_Alarm_Rolesi", Model.WKapi_Ana_Alarm_Rolesi ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_Ana_Alarm_Rolesi">Buton Dedektör</label>
                                     </div>
                                 </div>
                             </div>
@@ -297,6 +298,92 @@
                                 }
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("WKapi_LPR_Kamera_Aktif", Model.WKapi_LPR_Kamera_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="WKapi_LPR_Kamera_Aktif">Kamera Aktif</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Lokal IP Adres</label>
+                                </div>
+                                <div class="col-md-1">
+
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.WKapi_LPR_Kamera_IP1, new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.WKapi_LPR_Kamera_IP2, new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.WKapi_LPR_Kamera_IP3, new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(model => model.WKapi_LPR_Kamera_IP4, new { @class = "form-control form-control-sm" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-right">
+                                    <label for="WKapi LPR Kamera Model">Kamera Model</label>
+                                </div>
+                                <div class="col-md-3 ">
+                                    @if (Model.WKapi_LPR_Kamera_Model == 1)
+                                    {
+                                        <div class="form-group">
+                                            <select class="form-control" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
+                                                <option value="">Kamera Tipi...</option>
+                                                <option selected value="1">Zavio-BiGES / Compact IP Cameras</option>
+                                                <option value="2">Haikon / IR Bullet 1.3M</option>
+                                                <option value="3">MaviPark LPR Camera</option>
+                                            </select>
+                                        </div>
+                                    }
+                                    else if (Model.WKapi_LPR_Kamera_Model == 2)
+                                    {
+                                        <div class="form-group">
+                                            <select class="form-control" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
+                                                <option value="">Kamera Tipi...</option>
+                                                <option value="1">Zavio-BiGES / Compact IP Cameras</option>
+                                                <option selected value="2">Haikon / IR Bullet 1.3M</option>
+                                                <option value="3">MaviPark LPR Camera</option>
+                                            </select>
+                                        </div>
+                                    }
+                                    else if (Model.WKapi_LPR_Kamera_Model == 3)
+                                    {
+                                        <div class="form-group">
+                                            <select class="form-control" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
+                                                <option value="">Kamera Tipi...</option>
+                                                <option value="1">Zavio-BiGES / Compact IP Cameras</option>
+                                                <option value="2">Haikon / IR Bullet 1.3M</option>
+                                                <option selected value="3">MaviPark LPR Camera</option>
+                                            </select>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <select class="form-control" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
+                                                <option selected value="">Kamera Tipi...</option>
+                                                <option value="1">Zavio-BiGES / Compact IP Cameras</option>
+                                                <option value="2">Haikon / IR Bullet 1.3M</option>
+                                                <option value="3">MaviPark LPR Camera</option>
+                                            </select>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -335,8 +422,8 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="custom-control custom-checkbox">
-                                        @Html.CheckBox("WKapi_Ana_Alarm_Rolesi", Model.WKapi_Ana_Alarm_Rolesi ?? false, new { @class = "custom-control-input" })
-                                        <label class="custom-control-label" for="WKapi_Ana_Alarm_Rolesi">Alarm'da Kilitle</label>
+                                        @Html.CheckBox("AlarmKilit", Model.WKapi_Ana_Alarm_Rolesi ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="AlarmKilit">Alarm'da Kilitle</label>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -373,7 +460,8 @@
                         </div>
                         <div class="col-md-12 text-right">
                             <hr />
-                            <button type="submit" class="btn  btn-outline-success"><i class="fas fa-edit"></i> Ayarları Güncelle</button>
+                            <a href="@Url.Action("ReaderList","Panel")" class="btn btn-sm btn-outline-info"><i class="fas fa-hand-point-left"></i> Listeye Dön</a>
+                            <button type="submit" class="btn  btn-outline-success btn-sm"><i class="fas fa-edit"></i> Ayarları Güncelle</button>
                         </div>
                     </div>
                 }

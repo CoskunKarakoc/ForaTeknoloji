@@ -1,17 +1,15 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.CreateReaderModel
-
 @{
-    ViewBag.Title = "GroupReaders";
+    ViewBag.Title = "Kapı ve Geçiş Ayarları";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @using (Html.BeginForm("GroupReaders", "AccessGroup", FormMethod.Post))
 {
     <div class="row ">
-        <div id="PanelList" class="col-md-3  mx-lg-4 my-lg-4 animated slideInLeft">
+        <div id="PanelList" class="col-md-3  mx-lg-4 my-lg-4 ">
             @Html.Partial("_PartialPanelList", Model.PanelList)
         </div>
-        <div class="col-md-8 animated slideInRight">
+        <div class="col-md-8 ">
             <div class="card shadow-lg mx-lg-4 my-lg-4">
                 <div class="card-header-tabs mt-1">
                     <h3 class="text-center text-muted">Geçiş Grup Kapı Ayarları - <span class="text-primary"><i>@Model.Groups.FirstOrDefault().Grup_Adi</i></span></h3>

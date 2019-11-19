@@ -7,5 +7,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
     {
         public List<LiftGroups> LiftGroup { get; set; }
         public int StatusControl { get; set; }
+        public List<PanelSettings> PanelListesi { get; internal set; }
     }
 }

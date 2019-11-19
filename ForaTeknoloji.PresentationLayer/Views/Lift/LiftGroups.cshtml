@@ -43,7 +43,7 @@
                                     <a title="Düzenle" href="@Url.Action("Edit","Lift",new {Asansor_Grup_No=item.Asansor_Grup_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
                                     <a title="Panelden Sil" onclick="return confirm('Panelden Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("PanelRemove","Lift",new {id=item.Asansor_Grup_No })" class="text-danger mr-2"><i class="fas fa-dumpster-fire"></i></a>
                                     <a title="Veritabanından Sil" onclick="return confirm('Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("DatabaseRemove","Lift",new { id=item.Asansor_Grup_No})" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
-                                    <a title="Panele Gönder" onclick="return confirm('Panele Göndermek İstediğinize Emin Misiniz?')" class="text-success" href="@Url.Action("Send","Lift",new {id=item.Asansor_Grup_No })"><i class="fas fa-share"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Panele Gönder" onclick="ekle(@item.Asansor_Grup_No)" class="text-success" href="#"><i class="fas fa-share"></i></a>
                                 </td>
                             </tr>
                         }
@@ -59,12 +59,78 @@
         </div>
     </div>
 </div>
+
+<!--Panel List Modal -->
+<div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Send", "Lift", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <input id="asansorGrupNo" type="text" hidden name="AsansorGrupNo" value="" />
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                        <label class="custom-control-label" for="AllPanel"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelList" id="@item.Panel_ID" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
+        $("#AllPanel").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
+
         if ($("#Status").prop("hidden") == false) {
             setTimeout(function () {
                 $("#Status").prop("hidden", true);
             }, 1000);
         }
     });
+    function ekle(asansorNo) {
+        $("#asansorGrupNo").prop("value", asansorNo);
+    }
 </script>

@@ -11,8 +11,8 @@ namespace ForaTeknoloji.Entities.Entities
     [Table("ReaderSettingsNew")]
     public partial class ReaderSettingsNew : IEntity
     {
+        [Key]
         [Column("Kayit No")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Kayit_No { get; set; }
 
         [Column("Seri No")]
@@ -28,10 +28,8 @@ namespace ForaTeknoloji.Entities.Entities
         [StringLength(50)]
         public string Panel_Name { get; set; }
 
-        [Key]
         [Column("WKapi ID")]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int WKapi_ID { get; set; }
+        public int? WKapi_ID { get; set; }
 
         [Column("WKapi Aktif")]
         public bool? WKapi_Aktif { get; set; }
@@ -99,5 +97,23 @@ namespace ForaTeknoloji.Entities.Entities
 
         [Column("WKapi User Count")]
         public int? WKapi_User_Count { get; set; }
+
+        [Column("WKapi LPR Kamera Aktif")]
+        public bool? WKapi_LPR_Kamera_Aktif { get; set; }
+
+        [Column("WKapi LPR Kamera Model")]
+        public int? WKapi_LPR_Kamera_Model { get; set; }
+
+        [Column("WKapi LPR Kamera IP1")]
+        public int? WKapi_LPR_Kamera_IP1 { get; set; }
+
+        [Column("WKapi LPR Kamera IP2")]
+        public int? WKapi_LPR_Kamera_IP2 { get; set; }
+
+        [Column("WKapi LPR Kamera IP3")]
+        public int? WKapi_LPR_Kamera_IP3 { get; set; }
+
+        [Column("WKapi LPR Kamera IP4")]
+        public int? WKapi_LPR_Kamera_IP4 { get; set; }
     }
 }

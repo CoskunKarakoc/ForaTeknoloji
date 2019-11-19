@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
     [Excp]
     public class AccessGroupController : Controller
     {
@@ -21,10 +23,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ILiftGroupsService _liftGroupsService;
         private IReaderSettingsNewService _readerSettingsNewService;
         private IPanelSettingsService _panelSettingsService;
+        private ITaskListService _taskListService;
 
         public DBUsers user;
         private PanelSettings PanelSettings;
-        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService)
+        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService)
         {
             PanelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
@@ -39,13 +42,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _liftGroupsService = liftGroupsService;
             _readerSettingsNewService = readerSettingsNewService;
             _panelSettingsService = panelSettingsService;
+            _taskListService = taskListService;
         }
 
 
         // GET: AccessGroup
         public ActionResult Groups()
         {
-            return View(_groupMasterService.GetAllGroupsMaster());
+            var model = new GecisGrupListViewModel
+            {
+                Gruplar = _groupMasterService.GetAllGroupsMaster(),
+                PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
+            };
+            return View(model);
         }
 
 
@@ -148,7 +157,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(int id = -1)
         {
-            if (id != 1)
+            if (id != -1)
             {
                 var entity = _groupMasterService.GetById(id);
                 if (entity != null)
@@ -330,7 +339,35 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Groups", "AccessGroup");
         }
 
-
+        public ActionResult Send(List<int> PanelList, int GecisGrupNo = -1)
+        {
+            if (GecisGrupNo != -1)
+            {
+                try
+                {
+                    foreach (var item in PanelList)
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_ACCESSGROUP,
+                            IntParam_1 = GecisGrupNo,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = item,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    }
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Groups");
+                }
+            }
+            return RedirectToAction("Groups");
+        }
 
 
     }

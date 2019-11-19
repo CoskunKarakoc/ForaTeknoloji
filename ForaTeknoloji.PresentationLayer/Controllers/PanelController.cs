@@ -16,9 +16,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     public class PanelController : Controller
     {
         private IPanelSettingsService _panelSettingsService;
-        public PanelController(IPanelSettingsService panelSettingsService)
+        private IReaderSettingsNewService _readerSettingsNewService;
+        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService)
         {
             _panelSettingsService = panelSettingsService;
+            _readerSettingsNewService = readerSettingsNewService;
         }
 
 
@@ -42,6 +44,115 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
             }
             return View("Index");
+        }
+
+
+
+
+        public ActionResult ReaderEdit(int PanelID, int id = -1)
+        {
+            if (id != -1)
+            {
+                List<int> role = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+                List<int> lokalBolge = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 };
+                List<int> userCount = new List<int> { 2, 3, 4, 5, 6 };
+                var model = _readerSettingsNewService.GetByKapiANDPanel(id, PanelID);
+                ViewBag.WKapi_Role_No = new SelectList(role, model.WKapi_Role_No);
+                ViewBag.WKapi_Lokal_Bolge = new SelectList(lokalBolge, model.WKapi_Lokal_Bolge);
+                ViewBag.WKapi_User_Count = new SelectList(userCount, model.WKapi_User_Count);
+                ViewBag.WKapi_Harici_Alarm_Rolesi = new SelectList(role, model.WKapi_Harici_Alarm_Rolesi);
+                return View(model);
+            }
+            return RedirectToAction("ReaderList");
+        }
+
+        [HttpPost]
+        public ActionResult ReaderEdit(ReaderSettingsNew readerSettingsNew)
+        {
+            if (ModelState.IsValid)
+            {
+                _readerSettingsNewService.UpdateReaderSettingsNew(readerSettingsNew);
+                return RedirectToAction("ReaderList", new { PanelID = readerSettingsNew.Panel_ID });
+            }
+            return View(readerSettingsNew);
+        }
+
+
+        public ActionResult ReaderList(int? PanelID)
+        {
+            PanelFill();
+            List<ReaderSettingsNew> okuyucular = new List<ReaderSettingsNew>();
+            if (PanelID == null)
+            {
+                PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).FirstOrDefault().Panel_ID;
+                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
+            }
+            else
+            {
+                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
+            }
+
+            if (okuyucular == null)
+                throw new Exception("Bu panele ait okuyucu bulunmamaktadır.");
+
+            var model = new ReaderEditViewModel
+            {
+                Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0),
+                Okuyucular = okuyucular.OrderBy(x => x.WKapi_ID).ToList(),
+                Panel_ID = PanelID
+            };
+
+
+
+            return View(model);
+        }
+
+
+
+        private void PanelFill()
+        {
+            var PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            foreach (var item in PanelList)
+            {
+                var entity = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == item.Panel_ID);
+                if (entity == null || entity.Count == 0)
+                {
+                    for (int i = 1; i < 17; i++)
+                    {
+                        ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                        {
+                            Panel_ID = item.Panel_ID,
+                            Panel_Name = item.Panel_Name,
+                            Seri_No = item.Seri_No,
+                            Sira_No = item.Sira_No,
+                            WKapi_Acik_Sure = 20,
+                            WKapi_Adi = "Kapı " + i,
+                            WKapi_Alarm_Modu = 1,
+                            WKapi_Gecis_Modu = 1,
+                            WKapi_Harici_Alarm_Rolesi = 1,
+                            WKapi_ID = i,
+                            WKapi_Itme_Gecikmesi = 1,
+                            WKapi_Kapi_Tipi = 0,
+                            WKapi_Lokal_Bolge = 1,
+                            WKapi_Role_No = 1,
+                            WKapi_User_Count = 1,
+                            WKapi_WIGType = 1,
+                            WKapi_Acik_Sure_Alarmi = false,
+                            WKapi_Acilma_Alarmi = false,
+                            WKapi_Aktif = false,
+                            WKapi_Ana_Alarm_Rolesi = false,
+                            WKapi_Coklu_Onay = false,
+                            WKapi_Lift_Aktif = false,
+                            WKapi_Panik_Buton_Alarmi = false,
+                            WKapi_Pin_Dogrulama = false,
+                            WKapi_Yangin_Modu = false,
+                            WKapi_Sirali_Gecis_Ana_Kapi = false,
+                            WKapi_Zorlama_Alarmi = false
+                        };
+                        _readerSettingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                    }
+                }
+            }
         }
 
     }

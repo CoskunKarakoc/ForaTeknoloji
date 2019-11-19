@@ -20,9 +20,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITimeGroupsService _timeGroupsService;
         private ITimeZoneIDsService _timeZoneIDsService;
         private ITaskListService _taskListService;
+        private IPanelSettingsService _panelSettingsService;
         public DBUsers user;
         public PanelSettings panelSettings;
-        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService)
+        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService)
         {
             panelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
@@ -33,6 +34,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _timeGroupsService = timeGroupsService;
             _timeZoneIDsService = timeZoneIDsService;
             _taskListService = taskListService;
+            _panelSettingsService = panelSettingsService;
         }
 
 
@@ -44,7 +46,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new TimeGroupsListViewModel
                 {
                     TimeGroups = _timeGroupsService.GetComplexTimeGroups(x => x.Zaman_Grup_Adi.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim())).OrderBy(x => x.Zaman_Grup_No).ToList(),
-                    StatusControl = Status
+                    StatusControl = Status,
+                    PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
                 };
                 return View(model);
             }
@@ -53,7 +56,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new TimeGroupsListViewModel
                 {
                     TimeGroups = _timeGroupsService.GetComplexTimeGroups().OrderBy(x => x.Zaman_Grup_No).ToList(),
-                    StatusControl = Status
+                    StatusControl = Status,
+                    PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
                 };
                 return View(model);
             }
@@ -173,43 +177,34 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(timeGroups);
         }
 
-        public ActionResult Send(int ZamanGrupNo = -1)
+        public ActionResult Send(List<int> PanelList, int ZamanGrupNo = -1)
         {
             if (ZamanGrupNo != -1)
             {
-                if (panelSettings == null || panelSettings.Panel_ID == 0 || (panelSettings.Panel_IP1 == 0 && panelSettings.Panel_IP2 == 0 && panelSettings.Panel_IP3 == 0 && panelSettings.Panel_IP4 == 0))
-                    return RedirectToAction("Orientation", "Home");
-
                 try
                 {
-                    TaskList taskList = new TaskList
+                    foreach (var item in PanelList)
                     {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_SND_TIMEGROUP,
-                        IntParam_1 = ZamanGrupNo,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = panelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("Index", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("Index", new { @Status = 1 });
-                    else
-                        return RedirectToAction("Index", new { @Status = 3 });
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_TIMEGROUP,
+                            IntParam_1 = ZamanGrupNo,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = item,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    }
                 }
                 catch (Exception)
                 {
-
                     return RedirectToAction("Index", new { @Status = 3 });
                 }
             }
-            return RedirectToAction("Index", new { @Status = 3 });
+            return RedirectToAction("Index");
         }
 
 

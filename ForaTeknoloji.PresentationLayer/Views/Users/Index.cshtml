@@ -68,7 +68,8 @@
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
                                     <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a title="Send To Panel" onclick="return confirm('Kullanıcıyı Panele Göndermek İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Send","Users",new { UserID=item.ID})"><i class="fas fa-share text-success mr-2"></i></a>
+                                    @*<a title="Send To Panel" onclick="return confirm('Kullanıcıyı Panele Göndermek İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Send","Users",new { UserID=item.ID})"><i class="fas fa-share text-success mr-2"></i></a>*@
+                                    <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(@item.ID)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
                                     <a title="Receive From Panel" onclick="return confirm('Kullanıcıyı Panelden Almak İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Receive","Users",new { UserID=item.ID})"><i class="fas fa-reply text-success mr-2"></i></a>
                                 </td>
                             </tr>
@@ -79,15 +80,84 @@
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Send", "Users", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <input id="userID" type="text" hidden name="UserID" value="" />
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                        <label class="custom-control-label" for="AllPanel"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelList" id="@item.Panel_ID" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
 <script>
     $(document).ready(function () {
+        $("#AllPanel").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
         if ($("#Status").prop("hidden") == false) {
             setTimeout(function () {
                 $("#Status").prop("hidden", true);
             }, 1000);
         }
+
     });
+    function ekle(userID) {
+        $("#userID").prop("value", userID);
+    }
 </script>
 
 

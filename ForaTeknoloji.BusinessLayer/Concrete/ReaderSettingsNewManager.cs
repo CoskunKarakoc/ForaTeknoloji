@@ -29,6 +29,16 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _readerSettingsNewDal.Delete(readerSettingsNew);
         }
 
+        public void DeleteReaderSettingsNewQuery(Expression<Func<ReaderSettingsNew, bool>> filter = null)
+        {
+            ReaderSettingsNew entity;
+            if (filter == null)
+            {
+                entity = _readerSettingsNewDal.Get(filter);
+                _readerSettingsNewDal.Delete(entity);
+            }
+        }
+
         public List<ReaderSettingsNew> GetAllReaderSettingsNew(Expression<Func<ReaderSettingsNew, bool>> filter = null)
         {
             return filter == null ? _readerSettingsNewDal.GetList() : _readerSettingsNewDal.GetList(filter);

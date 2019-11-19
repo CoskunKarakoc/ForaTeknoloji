@@ -358,5 +358,35 @@ namespace ForaTeknoloji.Entities.Entities
 
         [Column("LocalInterlock G4-2")]
         public int? LocalInterlock_G4_2 { get; set; }
+
+        [Column("DHCP Enabled")]
+        public int? DHCP_Enabled { get; set; }
+
+        [Column("Hastane Aktif")]
+        public bool? Hastane_Aktif { get; set; }
+
+        [Column("Hastane IP1")]
+        public int? Hastane_IP1 { get; set; }
+
+        [Column("Hastane IP2")]
+        public int? Hastane_IP2 { get; set; }
+
+        [Column("Hastane IP3")]
+        public int? Hastane_IP3 { get; set; }
+
+        [Column("Hastane IP4")]
+        public int? Hastane_IP4 { get; set; }
+
+        [Column("Hastane Server TCP Port")]
+        public int? Hastane_Server_TCP_Port { get; set; }
+
+        [Column("Hastane Lokal TCP Port")]
+        public int? Hastane_Lokal_TCP_Port { get; set; }
+
+        [Column("Hastane Acil Durum Yesil Kod")]
+        public bool? Hastane_Acil_Durum_Yesil_Kod { get; set; }
+
+        [Column("Hastane Yesil Kod Suresi")]
+        public int? Hastane_Yesil_Kod_Suresi { get; set; }
     }
 }

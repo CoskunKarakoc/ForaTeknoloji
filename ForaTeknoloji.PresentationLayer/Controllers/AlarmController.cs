@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+
+    [Auth]
+    [Excp]
     public class AlarmController : Controller
     {
         private IAlarmlarService _alarmlarService;
@@ -50,7 +54,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var Alarm = _alarmlarService.AlarmAndTip();
             var AlarmTip = _alarmTipleriService.GetAllAlarmlar();
             var User = _userService.GetAllUsers();
-            var Panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP2 != null && x.Panel_IP3 != null && x.Seri_No != null && x.Panel_ID != null);
+            var Panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Seri_No != 0 && x.Panel_ID != 0);
             var model = new AlarmListViewModel
             {
                 MaxID = ID + 1,
@@ -66,7 +70,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Panel_Name,
                     Value = a.Seri_No.ToString()
                 }),
-                StatusControl = Status
+                StatusControl = Status,
+                PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Seri_No != 0 && x.Panel_ID != 0)
             };
             return View(model);
         }
@@ -227,40 +232,34 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
-        public ActionResult Send(int AlarmID = -1)
+        public ActionResult Send(List<int> PanelList, int AlarmID = -1)
         {
             if (AlarmID != -1)
             {
-                if (PanelSettings == null)
-                    return RedirectToAction("Orientation", "Home");
                 try
                 {
-                    TaskList taskList = new TaskList
+                    foreach (var item in PanelList)
                     {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_SND_USERALARM,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("Index", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("Index", new { @Status = 1 });
-                    else
-                        return RedirectToAction("Index", new { @Status = 3 });
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_USERALARM,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            IntParam_1 = AlarmID,
+                            Panel_No = item,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    }
                 }
                 catch (Exception)
                 {
                     return RedirectToAction("Index", new { @Status = 3 });
                 }
             }
-            return RedirectToAction("Index", new { @Status = 3 });
+            return RedirectToAction("Index");
         }
 
         public int CheckStatus(int GrupNo = -1)

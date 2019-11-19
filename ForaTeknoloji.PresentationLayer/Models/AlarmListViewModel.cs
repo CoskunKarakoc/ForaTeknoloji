@@ -13,5 +13,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> Panels { get; internal set; }
         public int MaxID { get; internal set; }
         public int StatusControl { get; internal set; }
+        public List<PanelSettings> PanelListesi { get; internal set; }
     }
 }

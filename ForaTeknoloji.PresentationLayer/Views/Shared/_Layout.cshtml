@@ -59,14 +59,14 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index","Home")">
+            <a id="Logo" class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index","Home")">
                 <img class="img-thumbnail" src="~/Images/MavisoftYatayOrtaLogo.png" />
             </a>
-            <p class="text-center text-white">Geçiş Kontrol Sistemleri<sup> V3.0</sup></p>
+            <p id="Versiyon" class="text-center text-white">Geçiş Kontrol Sistemleri<sup> V3.0</sup></p>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item active ml-2">
                 <a class="nav-link" href="@Url.Action("Index","Home")">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Anasayfa</span>
@@ -74,12 +74,19 @@
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
+            <li class="nav-item ml-2 active">
+                <a class="nav-link " href="@Url.Action("Index","Watch")">
+                    <i class="fas fa-desktop"></i>
+                    <span>Canlı İzleme</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
             <!-- Heading -->
             <div class="sidebar-heading">
-                Rapor Sayfaları
+                Geçiş Kontrol Yönetim
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li id="Genel" class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGenel" aria-expanded="true" aria-controls="collapseGenel">
                     <i class="fas fa-bookmark"></i>
                     <span>Genel</span>
@@ -90,7 +97,7 @@
                         <a class="collapse-item" href="@Url.Action("Index","Department")">Departman Tanımları</a>
                         <a class="collapse-item" href="@Url.Action("Index","Block")">Blok Tanımları</a>
                         <hr />
-                        <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">Dış Veri Al</a>
+                        <a class="collapse-item" href="#">Dış Veri Al</a>
                         <a class="collapse-item" href="@Url.Action("Index","Alarm")">Kullanıcı Alarm Tanımları</a>
                         <a class="collapse-item" href="@Url.Action("Index","CameraSettings")">Kameralar</a>
                         <a class="collapse-item" href="#">Haritalar</a>
@@ -98,8 +105,7 @@
                         <a class="collapse-item text-muted" href="#">Geçiş Grup Takvimi</a>
                         <a class="collapse-item" href="@Url.Action("Index","GlobalZone")">Global Bölgeler</a>
                         <a class="collapse-item text-muted" href="#">Global Bölge Interlock</a>
-                        <hr />
-                        <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Plaka Tanıma Kameraları</a>
+                        <a class="collapse-item" href="#">Plaka Tanıma Kameraları</a>
                         <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı İşlemleri</a>
                         <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Güvenlik Ayarları</a>
                         <a class="collapse-item" href="#">Harici Okuyucu</a>
@@ -111,7 +117,8 @@
 
                 </div>
             </li>
-            <li class="nav-item">
+
+            <li id="Sistem" class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePanel" aria-expanded="true" aria-controls="collapsePanel">
                     <i class="fas fa-cogs"></i>
                     <span>Sistem Ayarları</span>
@@ -121,7 +128,7 @@
                         <h6 class="collapse-header">Panel Ayarları</h6>
                         <a class="collapse-item" href="@Url.Action("Index","Panel")">Panel Seç</a>
                         <a class="collapse-item" href="@Url.Action("Settings","PanelSettings")">Panel Ayarları</a>
-                        <a class="collapse-item" href="@Url.Action("ReaderSettings","PanelSettings")">Kapılar</a>
+                        <a class="collapse-item" href="@Url.Action("ReaderList","Panel")">Kapı Ayarları</a>
                         <h6 class="collapse-header">Zaman Bölgeleri</h6>
                         <a class="collapse-item" href="@Url.Action("Add","TimeGroups")">Yeni Zaman Bölgesi</a>
                         <a class="collapse-item" href="@Url.Action("Index","TimeGroups")">Zaman Bölgesi Ayarları</a>
@@ -131,21 +138,26 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCanli" aria-expanded="true" aria-controls="collapseCanli">
-                    <i class="fas fa-desktop"></i>
-                    <span>Canlı İzleme</span>
+
+
+            <li id="Door" class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDoor" aria-expanded="true" aria-controls="collapseDoor">
+                    <i class="fas fa-door-open"></i>
+                    <span>Kapı İşlemleri</span>
                 </a>
-                <div id="collapseCanli" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseDoor" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Panel Ayarları</h6>
-                        <a class="collapse-item" href="@Url.Action("Index","Watch")">Canlı İzle</a>
+                        <h6 class="collapse-header">Genel Ayarları</h6>
+                        <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı Operasyon</a>
+
+
                     </div>
 
                 </div>
             </li>
 
-            <li class="nav-item">
+
+            <li id="User" class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
                     <i class="fas fa-users"></i>
                     <span>Kullanıcılar</span>
@@ -160,7 +172,8 @@
 
                 </div>
             </li>
-            <li class="nav-item">
+
+            <li id="Visitor" class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisitor" aria-expanded="true" aria-controls="collapseVisitor">
                     <i class="fas fa-user-clock"></i>
                     <span>Ziyaretçiler</span>
@@ -177,31 +190,9 @@
 
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDoor" aria-expanded="true" aria-controls="collapseDoor">
-                    <i class="fas fa-door-open"></i>
-                    <span>Kapı İşlemleri</span>
-                </a>
-                <div id="collapseDoor" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Panel Ayarları</h6>
-                        <a class="collapse-item" href="@Url.Action("Genel","PanelSettings")">Genel</a>
-                        <a class="collapse-item" href="@Url.Action("Haberlesme","PanelSettings")">Haberleşme</a>
-                        <a class="collapse-item" href="@Url.Action("Kapilar","PanelSettings")">Kapılar</a>
-                        <a class="collapse-item" href="@Url.Action("Kapasite","PanelSettings")">Kapasite</a>
-                        <a class="collapse-item" href="@Url.Action("GlobalBolge","PanelSettings")">Global Bölgeler</a>
-                        <a class="collapse-item" href="@Url.Action("LPRKameralar","PanelSettings")">LPR Kameralar</a>
-                        <a class="collapse-item" href="@Url.Action("Interlock","PanelSettings")">Interlock</a>
-                        <a class="collapse-item" href="@Url.Action("Diger","PanelSettings")">Diğer</a>
 
 
-
-                    </div>
-
-                </div>
-            </li>
-
-            <li class="nav-item">
+            <li id="Map" class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaps" aria-expanded="true" aria-controls="collapseMaps">
                     <i class="fas fa-map-marked-alt"></i>
                     <span>Haritalar</span>
@@ -214,7 +205,8 @@
 
                 </div>
             </li>
-            <li class="nav-item">
+
+            <li id="Report" class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
                     <i class="fas fa-file-signature"></i>
                     <span>Raporlar</span>
@@ -321,3 +313,10 @@
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            $("#Logo").toggleClass("animated bounce slow");
+        }, 15000);
+    });
+</script>

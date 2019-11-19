@@ -20,9 +20,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUserService _userService;
         private IGroupMasterService _groupMasterService;
         private ITaskListService _taskListService;
+        private IPanelSettingsService _panelSettingsService;
         private PanelSettings PanelSettings;
         private DBUsers user;
-        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService)
+        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService)
         {
             PanelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
@@ -34,6 +35,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _userService = userService;
             _groupMasterService = groupMasterService;
             _taskListService = taskListService;
+            _panelSettingsService = panelSettingsService;
         }
 
 
@@ -46,7 +48,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new VisitorListViewModel
                 {
                     Visitor = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim())),
-                    StatusControl = Status
+                    StatusControl = Status,
+                    PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
                 };
 
                 return View(model);
@@ -56,7 +59,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new VisitorListViewModel
                 {
                     Visitor = _visitorsService.GetAllVisitors(),
-                    StatusControl = Status
+                    StatusControl = Status,
+                    PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
                 };
                 return View(model);
             }
@@ -173,41 +177,34 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult Send(int VisitorID = -1)
+        public ActionResult Send(List<int> PanelList, int VisitorID = -1)
         {
             if (VisitorID != -1)
             {
-                if (PanelSettings == null)
-                    return RedirectToAction("Orientation", "Home");
                 try
                 {
-                    TaskList taskList = new TaskList
+                    foreach (var item in PanelList)
                     {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
-                        IntParam_1 = VisitorID,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("Index", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("Index", new { @Status = 1 });
-                    else
-                        return RedirectToAction("Index", new { @Status = 3 });
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
+                            IntParam_1 = VisitorID,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = item,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskReceive = _taskListService.AddTaskList(taskList);
+                    }
                 }
                 catch (Exception)
                 {
                     return RedirectToAction("Index", new { @Status = 3 });
                 }
             }
-            return RedirectToAction("Index", new { @Status = 3 });
+            return RedirectToAction("Index");
         }
 
 

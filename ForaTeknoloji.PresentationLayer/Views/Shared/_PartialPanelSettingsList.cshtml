@@ -1,0 +1,18 @@
+﻿@model List<ForaTeknoloji.Entities.Entities.PanelSettings>
+
+<div class="list-group shadow-lg mr-5 ml-5">
+    <span class="list-group-item list-group-item-primary opacity-100 opct text-center shadow">Panel Listesi</span>
+    @foreach (var item in Model)
+    {
+        <a id="@item.Panel_ID" data-id="@item.Panel_ID" href="@Url.Action("ReaderList","Panel",new { PanelID=item.Panel_ID})" class="list-group-item list-group-item-action  text-center">@item.Panel_ID - @item.Panel_Name</a>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        $(".list-group-item").on('click', function () {
+            var $this = $(this);
+            $('.active').removeClass('active');
+            $this.toggleClass('active')
+        })
+    })
+</script>
