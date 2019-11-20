@@ -21,11 +21,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITimeZoneIDsService _timeZoneIDsService;
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
         public DBUsers user;
-        public PanelSettings panelSettings;
-        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService)
+        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            panelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
             if (user == null)
             {
@@ -35,6 +34,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _timeZoneIDsService = timeZoneIDsService;
             _taskListService = taskListService;
             _panelSettingsService = panelSettingsService;
+            _dBUsersPanelsService = dBUsersPanelsService;
         }
 
 
@@ -47,7 +47,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     TimeGroups = _timeGroupsService.GetComplexTimeGroups(x => x.Zaman_Grup_Adi.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim())).OrderBy(x => x.Zaman_Grup_No).ToList(),
                     StatusControl = Status,
-                    PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
+                    PanelListesi = UserPanelList()
                 };
                 return View(model);
             }
@@ -57,7 +57,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     TimeGroups = _timeGroupsService.GetComplexTimeGroups().OrderBy(x => x.Zaman_Grup_No).ToList(),
                     StatusControl = Status,
-                    PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
+                    PanelListesi = UserPanelList()
                 };
                 return View(model);
             }
@@ -218,6 +218,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return 3;
         }
 
+
+        private List<PanelSettings> UserPanelList()
+        {
+            List<PanelSettings> panels = new List<PanelSettings>();
+            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            {
+                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                if (panel != null)
+                    panels.Add(panel);
+            }
+            return panels;
+        }
     }
 
 }

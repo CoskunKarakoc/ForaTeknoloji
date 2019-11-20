@@ -52,9 +52,9 @@
                             <td>Geçiş Grubu</td>
                             <td>Ziyaretçi Grubu</td>
                             <td>
-                                <a title="Tümünü Panelden Sil" onclick="return confirm('Tüm Kullanıcıları Panelden Silmek İstediğinize Emin Misiniz?')" id="PanelDelete" href="@Url.Action("PanelDeleteAll","Users")"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
-                                <a title="Tüm Geçiş Sayacını Sil" onclick="return confirm('Tüm Geçiş Sayaçlarını Silmek İstediğinize Emin Misiniz?')" id="AccessDelete" href="@Url.Action("AccessCounterDeleteAll","Users")"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
-                                <a title="Tüm Antipassback Sayacını Sil" onclick="return confirm('Tüm Antipassback Sayaçlarını Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("AntiCounterDeleteAll","Users")"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
+                                <a data-toggle="modal" data-target="#panelList" title="Tümünü Panelden Sil" onclick="ekle(0,2629)" id="PanelDelete"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
+                                <a data-toggle="modal" data-target="#panelList" title="Tüm Geçiş Sayacını Sil" onclick="ekle(0,2702)" id="AccessDelete"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
+                                <a data-toggle="modal" data-target="#panelList" title="Tüm Antipassback Sayacını Sil" onclick="ekle(0,2711)" id="AntiDelete"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
                             </td>
                         </tr>
                     </thead>
@@ -73,29 +73,98 @@
                                 <td>@item.Gecis_Grubu</td>
                                 <td>@item.String_Ziyaretci_Grubu</td>
                                 <td>
-                                    <a title="Panelden Sil" onclick="return confirm('Panelden Kullanıcıyı Silmek İstediğinize Emin Misiniz?')" id="PanelDelete" href="@Url.Action("PanelDelete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a title="Geçiş Sayacı Sil" onclick="return confirm('Kullanıcının Geçiş Sayacını Silmek İstediğinize Emin Misiniz?')" id="AccessDelete" href="@Url.Action("AccessCounterDelete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-warning mr-2"></i></a>
-                                    <a title="Antipassback Sayacı Sil" onclick="return confirm('Kullanıcının Antipassback Sayacını Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("AntiCounterDelete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-dark mr-2"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(@item.ID,2628)" id="PanelDelete"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Geçiş Sayacı Sil" onclick="ekle(@item.ID,2701)" id="AccessDelete"><i class="fas fa-trash-alt text-warning mr-2"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Antipassback Sayacı Sil" onclick="ekle(@item.ID,2710)" id="AntiDelete"><i class="fas fa-trash-alt text-dark mr-2"></i></a>
                                     <a title="Kullanıcıyı Tüm Sistemden Kaldır" onclick="return confirm('Kullanıcıyı Tüm Sistemden Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("DeleteAllSystem","Users",new { id=item.ID})"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
                                 </td>
                             </tr>
                         }
                     </tbody>
-
-
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<!--Panel List Modal -->
+<div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Send", "Users", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <input id="userNo" type="text" hidden name="UserID" value="" />
+                    <input id="oprKod" type="number" hidden name="OprKod" value="" />
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                        <label class="custom-control-label" for="AllPanel"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelList" id="@item.Panel_ID" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <script>
     $(document).ready(function () {
+        $("#AllPanel").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
         if ($("#Status").prop("hidden") == false) {
             setTimeout(function () {
                 $("#Status").prop("hidden", true);
             }, 1000);
         }
     });
+    function ekle(userNo, oprKod) {
+        $("#userNo").prop("value", userNo);
+        $("#oprKod").prop("value", oprKod);
+    }
 </script>
 
 

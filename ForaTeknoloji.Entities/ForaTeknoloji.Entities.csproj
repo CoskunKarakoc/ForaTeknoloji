@@ -66,6 +66,7 @@
     <Compile Include="ComplexType\IcerdeDısardaZiyaretci.cs" />
     <Compile Include="ComplexType\PersonelList.cs" />
     <Compile Include="ComplexType\ReportPersonelList.cs" />
+    <Compile Include="ComplexType\TaskStatusWatch.cs" />
     <Compile Include="ComplexType\TimeGroupsEdit.cs" />
     <Compile Include="ComplexType\WatchEntityComplex.cs" />
     <Compile Include="ComplexType\WatchParameters.cs" />

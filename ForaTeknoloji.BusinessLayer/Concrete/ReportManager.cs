@@ -1681,7 +1681,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
-
         //Watch-List
         public List<WatchEntityComplex> GetWatch(WatchParameters watchParameters)
         {

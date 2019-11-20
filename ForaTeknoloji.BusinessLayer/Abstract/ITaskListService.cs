@@ -1,4 +1,5 @@
-﻿using ForaTeknoloji.Entities.Entities;
+﻿using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         TaskList GetByStatusCode(int StatusCode);
         TaskList GetByUserName(string kullaniciAdi);
         TaskList GetByGrupNo(int GrupNo);
+        List<TaskStatusWatch> TaskStatusWatch();
     }
 }

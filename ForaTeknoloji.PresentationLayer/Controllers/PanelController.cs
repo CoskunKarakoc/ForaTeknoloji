@@ -24,31 +24,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-
-        // GET: Panel
-        public ActionResult Index()
-        {
-
-            return View(_panelSettingsService.GetAllPanelSettings());
-        }
-
-        public ActionResult SetSession(int ID = -1)
-        {
-            if (ID != -1)
-            {
-                PanelSettings panelSettings = _panelSettingsService.GetById(ID);
-                if (panelSettings != null)
-                {
-                    CurrentSession.Remove("Panel");
-                    CurrentSession.Set<PanelSettings>("Panel", panelSettings);
-                }
-            }
-            return View("Index");
-        }
-
-
-
-
         public ActionResult ReaderEdit(int PanelID, int id = -1)
         {
             if (id != -1)

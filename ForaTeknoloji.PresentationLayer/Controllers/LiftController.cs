@@ -20,12 +20,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ILiftGroupsService _liftGroupsService;
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
         private FloorNames tempFloor;
         private DBUsers user;
-        private PanelSettings PanelSettings;
-        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService)
+        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            PanelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
             if (user == null)
             {
@@ -35,6 +34,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _liftGroupsService = liftGroupsService;
             _taskListService = taskListService;
             _panelSettingsService = panelSettingsService;
+            _dBUsersPanelsService = dBUsersPanelsService;
         }
 
         // AGG Listesi
@@ -44,7 +44,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 LiftGroup = _liftGroupsService.GetAllLiftGroups(),
                 StatusControl = Status,
-                PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
+                PanelListesi = UserPanelList()
             };
 
             return View(model);
@@ -122,45 +122,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(_floorNamesService.GetAllFloorNames(), JsonRequestBehavior.AllowGet);
         }
 
-        //Panelden AGG Silme
-        public ActionResult PanelRemove(int? id)
-        {
-            if (id != null)
-            {
-                if (PanelSettings == null)
-                    return RedirectToAction("Orientation", "Home");
-
-                try
-                {
-                    TaskList taskList = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_LIFTGROUP,
-                        IntParam_1 = (int)id,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("LiftGroups", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("LiftGroups", new { @Status = 1 });
-                    else
-                        return RedirectToAction("LiftGroups", new { @Status = 3 });
-                }
-                catch (Exception)
-                {
-                    return RedirectToAction("LiftGroups", new { @Status = 3 });
-                }
-            }
-            return RedirectToAction("LiftGroups", new { @Status = 3 });
-        }
-
         //Veritabanından AGG Silme
         public ActionResult DatabaseRemove(int? id)
         {
@@ -219,7 +180,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult Send(List<int> PanelList, int AsansorGrupNo = -1)
+        public ActionResult TaskSend(List<int> PanelList, CommandConstants OprKod, int AsansorGrupNo = -1)
         {
             if (AsansorGrupNo != -1)
             {
@@ -231,7 +192,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             Deneme_Sayisi = 1,
                             Durum_Kodu = 1,
-                            Gorev_Kodu = (int)CommandConstants.CMD_SND_LIFTGROUP,
+                            Gorev_Kodu = (int)OprKod,
                             IntParam_1 = AsansorGrupNo,
                             Kullanici_Adi = user.Kullanici_Adi,
                             Panel_No = item,
@@ -251,10 +212,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
-
-
-
-
         //Get Task Status
         public int CheckStatus(int GrupNo = -1)
         {
@@ -263,6 +220,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
             }
             return 3;
+        }
+
+        //Tanımlı Panellerin Listesi
+        private List<PanelSettings> UserPanelList()
+        {
+            List<PanelSettings> panels = new List<PanelSettings>();
+            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            {
+                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                if (panel != null)
+                    panels.Add(panel);
+            }
+            return panels;
         }
     }
 }

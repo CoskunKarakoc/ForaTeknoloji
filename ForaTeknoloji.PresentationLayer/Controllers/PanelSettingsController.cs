@@ -17,34 +17,34 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     [Excp]
     public class PanelSettingsController : Controller
     {
-        private IPanelSettingsService _panelSettings;
+        private IPanelSettingsService _panelSettingsService;
         private IReaderSettingsService _readerSettingsService;
         private IGlobalZoneService _globalZoneService;
         private IReaderSettingsNewService _settingsNewService;
         private ITaskListService _taskListService;
-        private PanelSettings PanelSettings;
+        private IDBUsersPanelsService _dBUsersPanelsService;
 
         public DBUsers user;
-        public PanelSettingsController(IPanelSettingsService panelSettings, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService)
+        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            PanelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
             if (user == null)
             {
                 user = new DBUsers();
             }
-            _panelSettings = panelSettings;
+            _panelSettingsService = panelSettingsService;
             _readerSettingsService = readerSettingsService;
             _globalZoneService = globalZoneService;
             _settingsNewService = settingsNewService;
             _taskListService = taskListService;
+            _dBUsersPanelsService = dBUsersPanelsService;
         }
 
         public ActionResult Settings(int? PanelID, int Status = -1)
         {
             if (PanelID == null)
             {
-                var list = _panelSettings.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+                var list = UserPanelList();
                 if (list.Count == 0)
                     throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
 
@@ -52,7 +52,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
 
             List<int> interlock = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-            PanelSettings selectedpanel = _panelSettings.GetById((int)PanelID);
+            //PanelSettings selectedpanel = _panelSettings.GetById((int)PanelID);
+            PanelSettings selectedpanel = UserPanelList().Find(x => x.Panel_ID == PanelID);
             var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == selectedpanel.Panel_ID).FirstOrDefault();
             if (readers == null)
             {
@@ -117,7 +118,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var updatePanel = _panelSettings.UpdatePanelSetting(panel);
+                var updatePanel = _panelSettingsService.UpdatePanelSetting(panel);
                 var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == updatePanel.Panel_ID);
                 if (readers == null)
                 {
@@ -164,7 +165,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PanelSelectedSettings()
         {
-            var model = _panelSettings.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            var model = UserPanelList();
             if (model.Count == 0)
             {
                 throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
@@ -174,7 +175,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(int? PanelID)
         {
-            var entity = _panelSettings.GetById((int)PanelID);
+            var entity = _panelSettingsService.GetById((int)PanelID);
             if (entity != null)
             {
                 entity.Seri_No = 0;
@@ -301,7 +302,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 entity.Hastane_Lokal_TCP_Port = null;
                 entity.Hastane_Acil_Durum_Yesil_Kod = null;
                 entity.Hastane_Yesil_Kod_Suresi = null;
-                _panelSettings.UpdatePanelSetting(entity);
+                _panelSettingsService.UpdatePanelSetting(entity);
                 return RedirectToAction("Settings");
             }
             throw new Exception("Silmek istenen kayıt veritabanında yok!");
@@ -346,6 +347,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
             }
             return 3;
+        }
+
+        private List<PanelSettings> UserPanelList()
+        {
+            List<PanelSettings> panels = new List<PanelSettings>();
+            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            {
+                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                if (panel != null)
+                    panels.Add(panel);
+            }
+            return panels;
         }
     }
 }

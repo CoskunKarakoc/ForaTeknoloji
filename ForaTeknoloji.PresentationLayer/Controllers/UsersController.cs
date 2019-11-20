@@ -27,11 +27,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITimeZoneCalendarService _timeZoneCalendarService;
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
         public DBUsers user;
-        private PanelSettings PanelSettings;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService)
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            PanelSettings = CurrentSession.Panel;
             user = CurrentSession.User;
             if (user == null)
             {
@@ -47,6 +46,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _timeZoneCalendarService = timeZoneCalendarService;
             _taskListService = taskListService;
             _panelSettingsService = panelSettingsService;
+            _dBUsersPanelsService = dBUsersPanelsService;
         }
 
 
@@ -60,7 +60,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new UsersListViewModel
                 {
                     Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
-                    StatusControl = Status
+                    StatusControl = Status,
+                    PanelListesi = UserPanelList()
                 };
                 return View(model);
             }
@@ -70,11 +71,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Users = _userService.GetAllUsersWithOuther(),
                     StatusControl = Status,
-                    PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
+                    PanelListesi = UserPanelList()
                 };
                 return View(model);
             }
         }
+
 
         public ActionResult Create(string Kart_ID = null)
         {
@@ -163,6 +165,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(user);
         }
 
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -218,6 +221,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(entity);
         }
 
+
         public ActionResult Delete(int id = -1)
         {
             if (id != -1)
@@ -244,7 +248,95 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult Send(List<int> PanelList, int UserID = -1)
+        public ActionResult PanelOperation(string Search, int Status = -1)
+        {
+            if (Search != null && Search != "")
+            {
+                var model = new UsersListViewModel
+                {
+                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    StatusControl = Status,
+                    PanelListesi = UserPanelList()
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new UsersListViewModel
+                {
+                    Users = _userService.GetAllUsersWithOuther(),
+                    StatusControl = Status,
+                    PanelListesi = UserPanelList()
+
+                };
+                return View(model);
+            }
+        }
+
+
+        public ActionResult Receive(int PanelListReceive, int ReceiveUserID = -1)
+        {
+            if (ReceiveUserID != -1)
+            {
+                try
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_USER,
+                        IntParam_1 = ReceiveUserID,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelListReceive,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index", new { @Status = 3 });
+                }
+            }
+            return RedirectToAction("Index", new { @Status = 3 });
+        }
+
+
+        public ActionResult DeleteAllSystem(int id = -1)
+        {
+            if (id != -1)
+            {
+                try
+                {
+                    foreach (var item in UserPanelList())
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_ERS_USER,
+                            IntParam_1 = id,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = item.Panel_ID,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    }
+                    Users users = _userService.GetById(id);
+                    _userService.DeleteUsers(users);
+
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("PanelOperation", new { @Status = 3 });
+                }
+            }
+            return RedirectToAction("PanelOperation", new { @Status = 3 });
+        }
+
+
+        public ActionResult Send(List<int> PanelList, CommandConstants OprKod, int UserID = -1)
         {
             if (UserID != -1)
             {
@@ -257,7 +349,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             Deneme_Sayisi = 1,
                             Durum_Kodu = 1,
-                            Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
+                            Gorev_Kodu = (int)OprKod,
                             IntParam_1 = UserID,
                             Kullanici_Adi = user.Kullanici_Adi,
                             Panel_No = item,
@@ -269,338 +361,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
                 catch (Exception)
                 {
-                    return RedirectToAction("Index", new { @Status = 3 });
-                }
-            }
-            return RedirectToAction("Index");
-        }
-
-
-        public ActionResult Receive(int UserID = -1)
-        {
-            if (UserID != -1)
-            {
-                if (PanelSettings == null)
-                    return RedirectToAction("Orientation", "Home");
-
-                try
-                {
-                    TaskList taskList = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_USER,
-                        IntParam_1 = UserID,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("Index", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("Index", new { @Status = 1 });
+                    if (OprKod == CommandConstants.CMD_ERS_USER || OprKod == CommandConstants.CMD_ERSALL_USER || OprKod == CommandConstants.CMD_ERS_ACCESSCOUNTERS || OprKod == CommandConstants.CMD_ERSALL_ACCESSCOUNTERS || OprKod == CommandConstants.CMD_ERS_APBCOUNTERS || OprKod == CommandConstants.CMD_ERSALL_APBCOUNTERS)
+                        return RedirectToAction("PanelOperation");
                     else
-                        return RedirectToAction("Index", new { @Status = 3 });
-                }
-                catch (Exception)
-                {
-                    return RedirectToAction("Index", new { @Status = 3 });
+                        return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Index", new { @Status = 3 });
-        }
-
-
-        public ActionResult PanelOperation(string Search, int Status = -1)
-        {
-            if (Search != null && Search != "")
-            {
-                var model = new UsersListViewModel
-                {
-                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
-                    StatusControl = Status
-                };
-                return View(model);
-            }
+            if (OprKod == CommandConstants.CMD_ERS_USER || OprKod == CommandConstants.CMD_ERSALL_USER || OprKod == CommandConstants.CMD_ERS_ACCESSCOUNTERS || OprKod == CommandConstants.CMD_ERSALL_ACCESSCOUNTERS || OprKod == CommandConstants.CMD_ERS_APBCOUNTERS || OprKod == CommandConstants.CMD_ERSALL_APBCOUNTERS)
+                return RedirectToAction("PanelOperation");
             else
-            {
-                var model = new UsersListViewModel
-                {
-                    Users = _userService.GetAllUsersWithOuther(),
-                    StatusControl = Status
-                };
-                return View(model);
-            }
+                return RedirectToAction("Index");
         }
-
-
-        public ActionResult PanelDelete(int id = -1)
-        {
-            if (id != -1)
-            {
-                if (PanelSettings == null)
-                    return RedirectToAction("Orientation", "Home");
-
-                try
-                {
-                    TaskList taskList = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_USER,
-                        IntParam_1 = id,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("PanelOperation", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("PanelOperation", new { @Status = 1 });
-                    else
-                        return RedirectToAction("PanelOperation", new { @Status = 3 });
-                }
-                catch (Exception)
-                {
-                    return RedirectToAction("PanelOperation", new { @Status = 3 });
-                }
-            }
-            return RedirectToAction("PanelOperation", new { @Status = 3 });
-        }
-
-
-        public ActionResult AccessCounterDelete(int id = -1)
-        {
-            if (id != -1)
-            {
-                if (PanelSettings == null)
-                    return RedirectToAction("Orientation", "Home");
-
-                try
-                {
-                    TaskList taskList = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_ACCESSCOUNTERS,
-                        IntParam_1 = id,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("PanelOperation", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("PanelOperation", new { @Status = 1 });
-                    else
-                        return RedirectToAction("PanelOperation", new { @Status = 3 });
-                }
-                catch (Exception)
-                {
-                    return RedirectToAction("PanelOperation", new { @Status = 3 });
-                }
-            }
-            return RedirectToAction("PanelOperation", new { @Status = 3 });
-        }
-
-
-        public ActionResult AntiCounterDelete(int id = -1)
-        {
-            if (id != -1)
-            {
-                if (PanelSettings == null)
-                    return RedirectToAction("Orientation", "Home");
-
-                try
-                {
-                    TaskList taskList = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_APBCOUNTERS,
-                        IntParam_1 = id,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("PanelOperation", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("PanelOperation", new { @Status = 1 });
-                    else
-                        return RedirectToAction("PanelOperation", new { @Status = 3 });
-                }
-                catch (Exception)
-                {
-                    return RedirectToAction("PanelOperation", new { @Status = 3 });
-                }
-            }
-            return RedirectToAction("PanelOperation", new { @Status = 3 });
-        }
-
-
-        public ActionResult DeleteAllSystem(int id = -1)
-        {
-            if (PanelSettings == null)
-                return RedirectToAction("Orientation", "Home");
-
-            if (id != -1)
-            {
-                try
-                {
-                    TaskList taskList = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_USER,
-                        IntParam_1 = id,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    Users users = _userService.GetById(id);
-                    _userService.DeleteUsers(users);
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("PanelOperation", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("PanelOperation", new { @Status = 1 });
-                    else
-                        return RedirectToAction("PanelOperation", new { @Status = 3 });
-                }
-                catch (Exception)
-                {
-                    return RedirectToAction("PanelOperation", new { @Status = 3 });
-                }
-
-            }
-            return RedirectToAction("PanelOperation", new { @Status = 3 });
-        }
-
-
-        public ActionResult PanelDeleteAll()
-        {
-            if (PanelSettings == null)
-                return RedirectToAction("Orientation", "Home");
-
-            try
-            {
-                TaskList taskList = new TaskList
-                {
-                    Deneme_Sayisi = 1,
-                    Durum_Kodu = 1,
-                    Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
-                    IntParam_1 = 1,
-                    Kullanici_Adi = user.Kullanici_Adi,
-                    Panel_No = PanelSettings.Panel_ID,
-                    Tablo_Guncelle = true,
-                    Tarih = DateTime.Now
-                };
-                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                Thread.Sleep(2000);
-                var Durum = CheckStatus(taskListReceive.Grup_No);
-                if (Durum == 2)
-                    return RedirectToAction("PanelOperation", new { @Status = 2 });
-                else if (Durum == 1)
-                    return RedirectToAction("PanelOperation", new { @Status = 1 });
-                else
-                    return RedirectToAction("PanelOperation", new { @Status = 3 });
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("PanelOperation", new { @Status = 3 });
-            }
-        }
-
-
-        public ActionResult AccessCounterDeleteAll()
-        {
-            if (PanelSettings == null)
-                return RedirectToAction("Orientation", "Home");
-
-            try
-            {
-                TaskList taskList = new TaskList
-                {
-                    Deneme_Sayisi = 1,
-                    Durum_Kodu = 1,
-                    Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_ACCESSCOUNTERS,
-                    IntParam_1 = 1,
-                    Kullanici_Adi = user.Kullanici_Adi,
-                    Panel_No = PanelSettings.Panel_ID,
-                    Tablo_Guncelle = true,
-                    Tarih = DateTime.Now
-                };
-                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                Thread.Sleep(2000);
-                var Durum = CheckStatus(taskListReceive.Grup_No);
-                if (Durum == 2)
-                    return RedirectToAction("PanelOperation", new { @Status = 2 });
-                else if (Durum == 1)
-                    return RedirectToAction("PanelOperation", new { @Status = 1 });
-                else
-                    return RedirectToAction("PanelOperation", new { @Status = 3 });
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("PanelOperation", new { @Status = 3 });
-            }
-        }
-
-
-        public ActionResult AntiCounterDeleteAll()
-        {
-            if (PanelSettings == null)
-                return RedirectToAction("Orientation", "Home");
-
-            try
-            {
-                TaskList taskList = new TaskList
-                {
-                    Deneme_Sayisi = 1,
-                    Durum_Kodu = 1,
-                    Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_APBCOUNTERS,
-                    IntParam_1 = 1,
-                    Kullanici_Adi = user.Kullanici_Adi,
-                    Panel_No = PanelSettings.Panel_ID,
-                    Tablo_Guncelle = true,
-                    Tarih = DateTime.Now
-                };
-                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                Thread.Sleep(2000);
-                var Durum = CheckStatus(taskListReceive.Grup_No);
-                if (Durum == 2)
-                    return RedirectToAction("PanelOperation", new { @Status = 2 });
-                else if (Durum == 1)
-                    return RedirectToAction("PanelOperation", new { @Status = 1 });
-                else
-                    return RedirectToAction("PanelOperation", new { @Status = 3 });
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("PanelOperation", new { @Status = 3 });
-            }
-        }
-
 
 
         public int CheckStatus(int GrupNo = -1)
@@ -613,6 +384,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        private List<PanelSettings> UserPanelList()
+        {
+            List<PanelSettings> panels = new List<PanelSettings>();
+            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            {
+                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                if (panel != null)
+                    panels.Add(panel);
+            }
+            return panels;
+        }
 
     }
 

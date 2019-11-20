@@ -2515,6 +2515,7 @@
     <Compile Include="Controllers\PersonelListReportController.cs" />
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\SecuritySettingsController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TimeGroupsController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -2621,7 +2622,6 @@
     <Content Include="Views\SecuritySettings\Index.cshtml" />
     <Content Include="Views\SecuritySettings\Create.cshtml" />
     <Content Include="Views\SecuritySettings\Edit.cshtml" />
-    <Content Include="Views\Panel\Index.cshtml" />
     <Content Include="Views\Home\Orientation.cshtml" />
     <Content Include="Views\Door\Index.cshtml" />
     <Content Include="Views\Camera\Index.cshtml" />
@@ -2647,6 +2647,7 @@
     <Content Include="Views\Shared\_PartialPanelSettingsList.cshtml" />
     <Content Include="Views\Panel\ReaderEdit.cshtml" />
     <Content Include="Views\PanelSettings\PanelSelectedSettings.cshtml" />
+    <Content Include="Views\Task\TaskTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

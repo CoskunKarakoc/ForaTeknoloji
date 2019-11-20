@@ -33,7 +33,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View();
         }
 
-
+        //TODO: Panel Seçimi Yapılacak
 
         [HttpPost]
         public ActionResult OpenDoor(string Door = null, bool Kapi = false)

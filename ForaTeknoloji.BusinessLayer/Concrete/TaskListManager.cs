@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.DataAccessLayer.Abstract;
+using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
@@ -63,5 +64,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _taskListDal.Update(taskList);
         }
+
+
+        public List<TaskStatusWatch> TaskStatusWatch()
+        {
+            return _taskListDal.GetAllTaskStatusWatch();
+        }
+
     }
 }

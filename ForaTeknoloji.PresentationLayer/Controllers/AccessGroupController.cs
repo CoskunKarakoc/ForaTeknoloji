@@ -24,12 +24,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReaderSettingsNewService _readerSettingsNewService;
         private IPanelSettingsService _panelSettingsService;
         private ITaskListService _taskListService;
-
+        private IDBUsersPanelsService _dBUsersPanelsService;
         public DBUsers user;
-        private PanelSettings PanelSettings;
-        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService)
+        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            PanelSettings = CurrentSession.Panel;
+        
             user = CurrentSession.User;
             if (user == null)
             {
@@ -43,6 +42,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _readerSettingsNewService = readerSettingsNewService;
             _panelSettingsService = panelSettingsService;
             _taskListService = taskListService;
+            _dBUsersPanelsService = dBUsersPanelsService;
         }
 
 
@@ -52,7 +52,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var model = new GecisGrupListViewModel
             {
                 Gruplar = _groupMasterService.GetAllGroupsMaster(),
-                PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
+                PanelListesi = UserPanelList()
             };
             return View(model);
         }
@@ -369,6 +369,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Groups");
         }
 
-
+        private List<PanelSettings> UserPanelList()
+        {
+            List<PanelSettings> panels = new List<PanelSettings>();
+            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            {
+                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                if (panel != null)
+                    panels.Add(panel);
+            }
+            return panels;
+        }
     }
 }

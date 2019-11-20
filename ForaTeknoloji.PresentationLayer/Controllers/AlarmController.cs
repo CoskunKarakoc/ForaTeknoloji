@@ -22,11 +22,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUserService _userService;
         private IPanelSettingsService _panelSettingsService;
         private ITaskListService _taskListService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
         public DBUsers user;
-        private PanelSettings PanelSettings;
-        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService)
+        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            PanelSettings = CurrentSession.Panel;
+
             user = CurrentSession.User;
             if (user == null)
             {
@@ -37,12 +37,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _userService = userService;
             _panelSettingsService = panelSettingsService;
             _taskListService = taskListService;
+            _dBUsersPanelsService = dBUsersPanelsService;
         }
 
 
 
         // GET: Alarm
-        public ActionResult Index(int Status = -1)
+        public ActionResult Index()
         {
             int ID;
 
@@ -70,11 +71,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Panel_Name,
                     Value = a.Seri_No.ToString()
                 }),
-                StatusControl = Status,
-                PanelListesi = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Seri_No != 0 && x.Panel_ID != 0)
+                PanelListesi = UserPanelList()
             };
             return View(model);
         }
+
+
 
         public ActionResult Edit(int? id)
         {
@@ -115,6 +117,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return View(alarmlar);
         }
+
+
 
         public ActionResult Create()
         {
@@ -162,6 +166,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(alarmlar);
         }
 
+
+
         public ActionResult DatabaseRemove(int? id)
         {
             if (id != null)
@@ -177,43 +183,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index", "Alarm");
         }
 
-        public ActionResult PanelRemove(int id = -1)
-        {
-            if (id != -1)
-            {
-                if (PanelSettings == null)
-                    return RedirectToAction("Orientation", "Home");
-                try
-                {
-                    TaskList taskList = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_USERALARM,
-                        IntParam_1 = id,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelSettings.Panel_ID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    Thread.Sleep(2000);
-                    var Durum = CheckStatus(taskListReceive.Grup_No);
-                    if (Durum == 2)
-                        return RedirectToAction("Index", new { @Status = 2 });
-                    else if (Durum == 1)
-                        return RedirectToAction("Index", new { @Status = 1 });
-                    else
-                        return RedirectToAction("Index", new { @Status = 3 });
-                }
-                catch (Exception)
-                {
-                    return RedirectToAction("Index", new { @Status = 3 });
-                }
-            }
-            return RedirectToAction("Index", new { @Status = 3 });
-
-        }
 
         public ActionResult Personeller(string Search)
         {
@@ -232,7 +201,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
-        public ActionResult Send(List<int> PanelList, int AlarmID = -1)
+
+        public ActionResult TaskSend(List<int> PanelList, CommandConstants OprKod, int AlarmID = -1)
         {
             if (AlarmID != -1)
             {
@@ -244,7 +214,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             Deneme_Sayisi = 1,
                             Durum_Kodu = 1,
-                            Gorev_Kodu = (int)CommandConstants.CMD_SND_USERALARM,
+                            Gorev_Kodu = (int)OprKod,
                             Kullanici_Adi = user.Kullanici_Adi,
                             IntParam_1 = AlarmID,
                             Panel_No = item,
@@ -253,23 +223,26 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                     }
+                    Thread.Sleep(2000);
                 }
                 catch (Exception)
                 {
-                    return RedirectToAction("Index", new { @Status = 3 });
+                    return RedirectToAction("Index");
                 }
             }
             return RedirectToAction("Index");
         }
 
-        public int CheckStatus(int GrupNo = -1)
+        private List<PanelSettings> UserPanelList()
         {
-            if (GrupNo != -1)
+            List<PanelSettings> panels = new List<PanelSettings>();
+            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
             {
-                return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
+                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                if (panel != null)
+                    panels.Add(panel);
             }
-            return 3;
+            return panels;
         }
-
     }
 }

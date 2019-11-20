@@ -68,9 +68,8 @@
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
                                     <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    @*<a title="Send To Panel" onclick="return confirm('Kullanıcıyı Panele Göndermek İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Send","Users",new { UserID=item.ID})"><i class="fas fa-share text-success mr-2"></i></a>*@
-                                    <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(@item.ID)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
-                                    <a title="Receive From Panel" onclick="return confirm('Kullanıcıyı Panelden Almak İstediğinize Emin Misiniz?')" id="send" href="@Url.Action("Receive","Users",new { UserID=item.ID})"><i class="fas fa-reply text-success mr-2"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(@item.ID,2620)" id="send"><i class="fas fa-share text-success mr-2"></i></a>
+                                    <a data-toggle="modal" data-target="#panelListReceive" title="Receive From Panel" onclick="receiveAdd(@item.ID)" id="send"><i class="fas fa-reply text-success mr-2"></i></a>
                                 </td>
                             </tr>
                         }
@@ -80,7 +79,7 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
+<!--Send User PanelSelect Modal -->
 <div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -94,6 +93,7 @@
             {
                 <div class="modal-body">
                     <input id="userID" type="text" hidden name="UserID" value="" />
+                    <input id="oprKod" type="number" hidden name="OprKod" value="" />
                     <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
                         <thead class="table-info">
                             <tr>
@@ -135,6 +135,54 @@
 </div>
 
 
+<!--Receive User PanelSelect Modal -->
+<div class="modal fade" id="panelListReceive" tabindex="-1" role="dialog" aria-labelledby="panelListReceiveTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Receive", "Users", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <input id="ReceiveUserID" type="text" hidden name="ReceiveUserID" value="" />
+                    <table id="PanelTableReceice" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td></td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="@item.Panel_ID" class="custom-control-input" id="@item.Panel_ID" name="PanelListReceive">
+                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçili Panelden Al</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
 
 
@@ -153,11 +201,22 @@
                 $("#Status").prop("hidden", true);
             }, 1000);
         }
-
+        $('.table tbody tr').click(function (event) {
+            if (event.target.type !== 'radio') {
+                $(':radio', this).trigger('click');
+            }
+        });
     });
-    function ekle(userID) {
+    function ekle(userID, oprKod) {
         $("#userID").prop("value", userID);
+        $("#oprKod").prop("value", oprKod);
     }
+    function receiveAdd(userIDRcv, oprKodRcv) {
+        $("#ReceiveUserID").prop("value", userIDRcv);
+        $("#ReceiveOprKod").prop("value", oprKodRcv);
+    }
+
+
 </script>
 
 

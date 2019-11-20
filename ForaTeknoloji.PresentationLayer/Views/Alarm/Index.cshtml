@@ -1,34 +1,21 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.AlarmListViewModel
+@using ForaTeknoloji.Common
 @{
     ViewBag.Title = "Alarmlar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row animated flipInX">
+
+<div class="row animated slideInDown">
     <div class="col-md-8 offset-2">
         <div class="card shadow-lg mt-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center"><i>Kullanıcı Alarm Tanımları</i></h3>
-                @if (Model.StatusControl != -1)
-                {
-                    if (Model.StatusControl == 2)
-                    {
-                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
-                    }
-                    else if (Model.StatusControl == 1)
-                    {
-                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
-                    }
-                    else
-                    {
-                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
-                    }
-                }
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 text-right">
-                        <a href="@Url.Action("Create","Alarm")" class="btn btn-sm btn-outline-success my-3"><i class="fas fa-calendar-plus mr-2"></i> Yeni Alarm</a>
+                        <a href="@Url.Action("Create", "Alarm")" class="btn btn-sm btn-outline-success my-3"><i class="fas fa-calendar-plus mr-2"></i> Yeni Alarm</a>
                     </div>
                 </div>
                 <table class="table table-hover text-center table-striped table-sm">
@@ -37,7 +24,7 @@
                             <td>Alarm No</td>
                             <td>Alarm Adi</td>
                             <td>Alarm Tipi Adi</td>
-                            <td></td>
+                            <td title="Görev Listesi" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,10 +35,10 @@
                                 <td>@item.Alarm_Adi</td>
                                 <td>@item.Adi</td>
                                 <td>
-                                    <a title="Düzenle" href="@Url.Action("Edit","Alarm",new {id=item.Alarm_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
-                                    <a title="Panelden Sil" onclick="return confirm('Panelden Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("PanelRemove","Alarm",new {id=item.Alarm_No })" class="text-danger mr-2"><i class="fas fa-dumpster-fire"></i></a>
-                                    <a title="Veritabanından Sil" onclick="return confirm('Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("DatabaseRemove","Alarm",new { id=item.Alarm_No})" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Panele Gönder" onclick="ekle(@item.Alarm_No)" class="text-success"><i class="fas fa-share"></i></a>
+                                    <a title="Düzenle" href="@Url.Action("Edit", "Alarm", new { id = item.Alarm_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(@item.Alarm_No,2654)" class="text-danger mr-2"><i class="fas fa-dumpster-fire"></i></a>
+                                    <a title="Veritabanından Sil" onclick="return confirm('Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("DatabaseRemove", "Alarm", new { id = item.Alarm_No })" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Panele Gönder" onclick="ekle(@item.Alarm_No,2650)" class="text-success"><i class="fas fa-share"></i></a>
                                 </td>
                             </tr>
                         }
@@ -61,7 +48,6 @@
         </div>
     </div>
 </div>
-
 <!--Panel List Modal -->
 <div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -72,10 +58,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @using (Html.BeginForm("Send", "Alarm", FormMethod.Post))
+            @using (Html.BeginForm("TaskSend", "Alarm", FormMethod.Post))
             {
                 <div class="modal-body">
+                    <div hidden id="message">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
                     <input id="alarmNo" type="text" hidden name="AlarmID" value="" />
+                    <input id="oprKod" type="number" hidden name="OprKod" value="" />
                     <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
                         <thead class="table-info">
                             <tr>
@@ -109,12 +100,14 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                    <button id="btnTask" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
                 </div>
             }
         </div>
     </div>
 </div>
+
+
 <script>
     $(document).ready(function () {
         $("#AllPanel").click(function () {
@@ -124,13 +117,15 @@
                 $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
             }
         });
-        if ($("#Status").prop("hidden") == false) {
+        $("#btnTask").click(function () {
+            $("#message").prop("hidden", false);
             setTimeout(function () {
-                $("#Status").prop("hidden", true);
-            }, 1500);
-        }
+                $("#message").prop("hidden", true);
+            }, 1000);
+        });
     });
-    function ekle(alarmNo) {
+    function ekle(alarmNo, oprKod) {
         $("#alarmNo").prop("value", alarmNo);
+        $("#oprKod").prop("value", oprKod);
     }
 </script>
