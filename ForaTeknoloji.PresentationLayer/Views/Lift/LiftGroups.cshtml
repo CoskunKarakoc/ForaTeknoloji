@@ -30,7 +30,7 @@
                         <tr>
                             <td>Asansör Grup No</td>
                             <td>Asansör Grup Adı</td>
-                            <td></td>
+                            <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,6 +73,10 @@
             @using (Html.BeginForm("TaskSend", "Lift", FormMethod.Post))
             {
                 <div class="modal-body">
+                    <div hidden id="message">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
                     <input id="asansorGrupNo" type="text" hidden name="AsansorGrupNo" value="" />
                     <input id="oprKod" type="number" hidden name="OprKod" value="" />
                     <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
@@ -108,7 +112,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                    <button id="btnTask" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
                 </div>
             }
         </div>
@@ -125,11 +129,12 @@
             }
         });
 
-        if ($("#Status").prop("hidden") == false) {
+        $("#btnTask").click(function () {
+            $("#message").prop("hidden", false);
             setTimeout(function () {
-                $("#Status").prop("hidden", true);
+                $("#message").prop("hidden", true);
             }, 1000);
-        }
+        });
     });
     function ekle(asansorNo, oprKod) {
         $("#asansorGrupNo").prop("value", asansorNo);

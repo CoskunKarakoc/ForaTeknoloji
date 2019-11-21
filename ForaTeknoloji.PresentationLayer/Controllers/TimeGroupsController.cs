@@ -39,14 +39,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: TimeGroups
-        public ActionResult Index(string Search = null, int Status = -1)
+        public ActionResult Index(string Search = null)
         {
             if (Search != null && Search != "")
             {
                 var model = new TimeGroupsListViewModel
                 {
                     TimeGroups = _timeGroupsService.GetComplexTimeGroups(x => x.Zaman_Grup_Adi.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim())).OrderBy(x => x.Zaman_Grup_No).ToList(),
-                    StatusControl = Status,
                     PanelListesi = UserPanelList()
                 };
                 return View(model);
@@ -56,7 +55,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new TimeGroupsListViewModel
                 {
                     TimeGroups = _timeGroupsService.GetComplexTimeGroups().OrderBy(x => x.Zaman_Grup_No).ToList(),
-                    StatusControl = Status,
                     PanelListesi = UserPanelList()
                 };
                 return View(model);
@@ -198,33 +196,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                     }
+                    Thread.Sleep(2000);
                 }
                 catch (Exception)
                 {
-                    return RedirectToAction("Index", new { @Status = 3 });
+                    return RedirectToAction("Index");
                 }
             }
             return RedirectToAction("Index");
         }
-
-
-        public int CheckStatus(int GrupNo = -1)
-        {
-            if (GrupNo != -1)
-            {
-                return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
-            }
-
-            return 3;
-        }
-
 
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();
             foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
                 if (panel != null)
                     panels.Add(panel);
             }

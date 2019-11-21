@@ -40,7 +40,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
         }
 
-        public ActionResult Settings(int? PanelID, int Status = -1)
+        public ActionResult Settings(int? PanelID)
         {
             if (PanelID == null)
             {
@@ -108,7 +108,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ViewBag.LocalInterlock_G3_2 = new SelectList(interlock, selectedpanel.LocalInterlock_G3_2);
             ViewBag.LocalInterlock_G4_1 = new SelectList(interlock, selectedpanel.LocalInterlock_G4_1);
             ViewBag.LocalInterlock_G4_2 = new SelectList(interlock, selectedpanel.LocalInterlock_G4_2);
-            ViewBag.Status = Status;
             return View(selectedpanel);
 
 
@@ -170,7 +169,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
             }
-            return PartialView(model);
+            return PartialView("PanelSelectedSettings", model);
         }
 
         public ActionResult Delete(int? PanelID)
@@ -325,19 +324,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 };
                 TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                 Thread.Sleep(2000);
-                var Durum = CheckStatus(taskListReceive.Grup_No);
-                if (Durum == 2)
-                    return RedirectToAction("Settings", new { @Status = 2 });
-                else if (Durum == 1)
-                    return RedirectToAction("Settings", new { @Status = 1 });
-                else
-                    return RedirectToAction("Settings", new { @Status = 3 });
             }
             catch (Exception)
             {
-
-                return RedirectToAction("Settings", new { @Status = 3 });
+                throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
             }
+            return RedirectToAction("Settings");
         }
 
         public int CheckStatus(int GrupNo = -1)
@@ -354,7 +346,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<PanelSettings> panels = new List<PanelSettings>();
             foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No!=null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
                 if (panel != null)
                     panels.Add(panel);
             }

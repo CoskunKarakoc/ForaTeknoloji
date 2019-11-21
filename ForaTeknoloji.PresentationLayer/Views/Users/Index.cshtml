@@ -8,21 +8,6 @@
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center">Kullanıcı Ayarları</h3>
-                @if (Model.StatusControl != -1)
-                {
-                    if (Model.StatusControl == 2)
-                    {
-                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
-                    }
-                    else if (Model.StatusControl == 1)
-                    {
-                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
-                    }
-                    else
-                    {
-                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
-                    }
-                }
             </div>
             <div class="card-body ">
                 @using (Html.BeginForm("Index", "Users", FormMethod.Get))
@@ -48,7 +33,7 @@
                             <td>Plaka</td>
                             <td>Geçiş Grubu</td>
                             <td>Ziyaretçi Grubu</td>
-                            <td></td>
+                            <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,6 +77,10 @@
             @using (Html.BeginForm("Send", "Users", FormMethod.Post))
             {
                 <div class="modal-body">
+                    <div hidden id="messageSnd">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
                     <input id="userID" type="text" hidden name="UserID" value="" />
                     <input id="oprKod" type="number" hidden name="OprKod" value="" />
                     <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
@@ -127,7 +116,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                    <button id="btnTaskSend" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
                 </div>
             }
         </div>
@@ -148,6 +137,10 @@
             @using (Html.BeginForm("Receive", "Users", FormMethod.Post))
             {
                 <div class="modal-body">
+                    <div hidden id="messageRcv">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
                     <input id="ReceiveUserID" type="text" hidden name="ReceiveUserID" value="" />
                     <table id="PanelTableReceice" class="table-borderless table table-hover text-center table-striped table-sm">
                         <thead class="table-info">
@@ -177,7 +170,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçili Panelden Al</button>
+                    <button id="btnTaskRcv" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçili Panelden Al</button>
                 </div>
             }
         </div>
@@ -206,6 +199,20 @@
                 $(':radio', this).trigger('click');
             }
         });
+        $("#btnTaskSend").click(function () {
+            $("#messageSnd").prop("hidden", false);
+            setTimeout(function () {
+                $("#messageSnd").prop("hidden", true);
+            }, 1000);
+        });
+        $("#btnTaskRcv").click(function () {
+            $("#messageRcv").prop("hidden", false);
+            setTimeout(function () {
+                $("#messageRcv").prop("hidden", true);
+            }, 1000);
+        });
+
+
     });
     function ekle(userID, oprKod) {
         $("#userID").prop("value", userID);

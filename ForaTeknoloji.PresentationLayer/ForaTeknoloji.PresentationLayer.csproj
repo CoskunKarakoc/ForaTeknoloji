@@ -2564,6 +2564,7 @@
     <Compile Include="Models\SecurityCreateViewModel.cs" />
     <Compile Include="Models\SecuritySettingsListViewModel.cs" />
     <Compile Include="Models\TanimsizKullaniciListViewModel.cs" />
+    <Compile Include="Models\TaskTableListViewModel.cs" />
     <Compile Include="Models\TimeGroupsListViewModel.cs" />
     <Compile Include="Models\UsersAddViewModel.cs" />
     <Compile Include="Models\UsersListViewModel.cs" />

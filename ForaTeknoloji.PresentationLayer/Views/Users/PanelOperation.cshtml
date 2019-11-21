@@ -10,24 +10,8 @@
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center">Kullanıcı Ayarları</h3>
-                @if (Model.StatusControl != -1)
-                {
-                    if (Model.StatusControl == 2)
-                    {
-                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
-                    }
-                    else if (Model.StatusControl == 1)
-                    {
-                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
-                    }
-                    else
-                    {
-                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
-                    }
-                }
             </div>
             <div class="card-body">
-
                 @using (Html.BeginForm("PanelOperation", "Users", FormMethod.Get))
                 {
                     <div class="input-group mb-3">
@@ -55,7 +39,9 @@
                                 <a data-toggle="modal" data-target="#panelList" title="Tümünü Panelden Sil" onclick="ekle(0,2629)" id="PanelDelete"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
                                 <a data-toggle="modal" data-target="#panelList" title="Tüm Geçiş Sayacını Sil" onclick="ekle(0,2702)" id="AccessDelete"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
                                 <a data-toggle="modal" data-target="#panelList" title="Tüm Antipassback Sayacını Sil" onclick="ekle(0,2711)" id="AntiDelete"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
+                                <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a>
                             </td>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -100,6 +86,10 @@
             @using (Html.BeginForm("Send", "Users", FormMethod.Post))
             {
                 <div class="modal-body">
+                    <div hidden id="message">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
                     <input id="userNo" type="text" hidden name="UserID" value="" />
                     <input id="oprKod" type="number" hidden name="OprKod" value="" />
                     <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
@@ -135,7 +125,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                    <button id="btnTask" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
                 </div>
             }
         </div>
@@ -155,11 +145,12 @@
                 $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
             }
         });
-        if ($("#Status").prop("hidden") == false) {
+        $("#btnTask").click(function () {
+            $("#message").prop("hidden", false);
             setTimeout(function () {
-                $("#Status").prop("hidden", true);
+                $("#message").prop("hidden", true);
             }, 1000);
-        }
+        });
     });
     function ekle(userNo, oprKod) {
         $("#userNo").prop("value", userNo);

@@ -84,6 +84,8 @@
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
     <Compile Include="Abstract\ISirketService.cs" />
+    <Compile Include="Abstract\IStatusCodesService.cs" />
+    <Compile Include="Abstract\ITaskCodeService.cs" />
     <Compile Include="Abstract\ITaskListService.cs" />
     <Compile Include="Abstract\ITimeGroupsService.cs" />
     <Compile Include="Abstract\ITimeZoneCalendarService.cs" />
@@ -121,6 +123,8 @@
     <Compile Include="Concrete\ReaderSettingsNewManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />
     <Compile Include="Concrete\SirketManager.cs" />
+    <Compile Include="Concrete\StatusCodesManager.cs" />
+    <Compile Include="Concrete\TaskCodeManager.cs" />
     <Compile Include="Concrete\TaskListManager.cs" />
     <Compile Include="Concrete\TimeGroupsManager.cs" />
     <Compile Include="Concrete\TimeZoneCalendarManager.cs" />

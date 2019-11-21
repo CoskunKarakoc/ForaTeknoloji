@@ -306,6 +306,16 @@
 </script>
 <script>
     $(document).ready(function () {
+        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
+        // buton aktif durum css
+        $("tfoot td")
+            .contents()
+            .filter(function () {
+                if (this.nodeType === 3 && this.length > 1) {
+                    return this.nodeType
+                }
+            })
+            .wrap('<span class=" btn btn-sm btn-primary" />');
         $("#yenile").click(function () {
             $.ajax({
                 url: '/GelenGelmeyenReport/ComplexUser',

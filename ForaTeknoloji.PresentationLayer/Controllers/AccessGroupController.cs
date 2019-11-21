@@ -7,6 +7,7 @@ using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -28,7 +29,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public DBUsers user;
         public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService)
         {
-        
+
             user = CurrentSession.User;
             if (user == null)
             {
@@ -360,6 +361,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                     }
+                    Thread.Sleep(2000);
                 }
                 catch (Exception)
                 {
@@ -374,7 +376,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<PanelSettings> panels = new List<PanelSettings>();
             foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
                 if (panel != null)
                     panels.Add(panel);
             }

@@ -81,6 +81,8 @@
     <Compile Include="Abstract\IReaderSettingDal.cs" />
     <Compile Include="Abstract\IReaderSettingsNewDal.cs" />
     <Compile Include="Abstract\ISirketDal.cs" />
+    <Compile Include="Abstract\IStatusCodesDal.cs" />
+    <Compile Include="Abstract\ITaskCodesDal.cs" />
     <Compile Include="Abstract\ITaskListDal.cs" />
     <Compile Include="Abstract\ITimeGroupsDal.cs" />
     <Compile Include="Abstract\ITimeZoneCalendarDal.cs" />
@@ -117,6 +119,8 @@
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfStatusCodesDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfTaskCodeDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTaskListDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTimeGroupsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTimeZoneCalendarDal.cs" />

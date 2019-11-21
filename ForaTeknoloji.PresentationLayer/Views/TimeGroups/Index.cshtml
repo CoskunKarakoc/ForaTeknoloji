@@ -9,21 +9,6 @@
         <div class="card shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center">Zaman Bölgesi Ayarları</h3>
-                @if (Model.StatusControl != -1)
-                {
-                    if (Model.StatusControl == 2)
-                    {
-                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
-                    }
-                    else if (Model.StatusControl == 1)
-                    {
-                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
-                    }
-                    else
-                    {
-                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
-                    }
-                }
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Index", "TimeGroups", FormMethod.Get))
@@ -42,7 +27,7 @@
                             <td>Zaman Grup No</td>
                             <td>Zaman Grup Adı</td>
                             <td>Adı</td>
-                            <td></td>
+                            <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,6 +66,10 @@
             @using (Html.BeginForm("Send", "TimeGroups", FormMethod.Post))
             {
                 <div class="modal-body">
+                    <div hidden id="message">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
                     <input id="zamanGrupNo" type="text" hidden name="ZamanGrupNo" value="" />
                     <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
                         <thead class="table-info">
@@ -115,7 +104,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                    <button id="btnTask" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
                 </div>
             }
         </div>
@@ -130,11 +119,13 @@
                 $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
             }
         });
-        if ($("#Status").prop("hidden") == false) {
+
+        $("#btnTask").click(function () {
+            $("#message").prop("hidden", false);
             setTimeout(function () {
-                $("#Status").prop("hidden", true);
+                $("#message").prop("hidden", true);
             }, 1000);
-        }
+        });
 
 
     });

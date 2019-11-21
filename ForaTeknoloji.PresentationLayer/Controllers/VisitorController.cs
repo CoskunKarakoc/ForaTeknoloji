@@ -41,7 +41,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: Visitor
-        public ActionResult Index(string Search, int Status = -1)
+        public ActionResult Index(string Search)
         {
 
             if (Search != null && Search != "")
@@ -49,7 +49,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new VisitorListViewModel
                 {
                     Visitor = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim())),
-                    StatusControl = Status,
                     PanelListesi = UserPanelList()
                 };
 
@@ -60,7 +59,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new VisitorListViewModel
                 {
                     Visitor = _visitorsService.GetAllVisitors(),
-                    StatusControl = Status,
                     PanelListesi = UserPanelList()
                 };
                 return View(model);
@@ -199,10 +197,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         };
                         TaskList taskReceive = _taskListService.AddTaskList(taskList);
                     }
+                    Thread.Sleep(2000);
                 }
                 catch (Exception)
                 {
-                    return RedirectToAction("Index", new { @Status = 3 });
+                    throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
                 }
             }
             return RedirectToAction("Index");
@@ -227,21 +226,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public int CheckStatus(int GrupNo = -1)
-        {
-            if (GrupNo != -1)
-            {
-                return _taskListService.GetByGrupNo(GrupNo).Durum_Kodu;
-            }
-            return 3;
-        }
-
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();
             foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
                 if (panel != null)
                     panels.Add(panel);
             }

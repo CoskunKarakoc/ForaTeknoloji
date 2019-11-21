@@ -17,10 +17,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
         private IPanelSettingsService _panelSettingsService;
         private IReaderSettingsNewService _readerSettingsNewService;
-        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService)
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        public DBUsers user;
+        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _panelSettingsService = panelSettingsService;
             _readerSettingsNewService = readerSettingsNewService;
+            _dBUsersPanelsService = dBUsersPanelsService;
         }
 
 
@@ -55,11 +63,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult ReaderList(int? PanelID)
         {
-            PanelFill();
+            ReaderFill();
             List<ReaderSettingsNew> okuyucular = new List<ReaderSettingsNew>();
             if (PanelID == null)
             {
-                PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).FirstOrDefault().Panel_ID;
+                PanelID = UserPanelList().FirstOrDefault().Panel_ID;
                 okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
             }
             else
@@ -72,7 +80,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var model = new ReaderEditViewModel
             {
-                Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0),
+                Paneller = UserPanelList(),
                 Okuyucular = okuyucular.OrderBy(x => x.WKapi_ID).ToList(),
                 Panel_ID = PanelID
             };
@@ -83,8 +91,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-
-        private void PanelFill()
+        private void ReaderFill()
         {
             var PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             foreach (var item in PanelList)
@@ -130,5 +137,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
+
+        private List<PanelSettings> UserPanelList()
+        {
+            List<PanelSettings> panels = new List<PanelSettings>();
+            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            {
+                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                if (panel != null)
+                    panels.Add(panel);
+            }
+            return panels;
+        }
     }
 }

@@ -55,6 +55,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ILiftGroupsDal>().To<EfLiftGroupsDal>().InSingletonScope();
             Bind<IProgRelay2Dal>().To<EfProgRelay2Dal>().InSingletonScope();
             Bind<IGroupsDetailNewDal>().To<EfGroupsDetailNewDal>().InSingletonScope();
+            Bind<IStatusCodesDal>().To<EfStatusCodesDal>().InSingletonScope();
+            Bind<ITaskCodesDal>().To<EfTaskCodeDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -94,6 +96,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ILiftGroupsService>().To<LiftGroupsManager>().InSingletonScope();
             Bind<IProgRelay2Service>().To<ProgRelay2Manager>().InSingletonScope();
             Bind<IGroupsDetailNewService>().To<GroupsDetailNewManager>().InSingletonScope();
+            Bind<IStatusCodesService>().To<StatusCodesManager>().InSingletonScope();
+            Bind<ITaskCodeService>().To<TaskCodeManager>().InSingletonScope();
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

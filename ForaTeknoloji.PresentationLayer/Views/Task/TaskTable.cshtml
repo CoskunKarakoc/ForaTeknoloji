@@ -1,79 +1,145 @@
-﻿@model IEnumerable<ForaTeknoloji.Entities.ComplexType.TaskStatusWatch>
+﻿@model ForaTeknoloji.PresentationLayer.Models.TaskTableListViewModel
 @{
     ViewBag.Title = "Göre Tablosu";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model.Liste, rowsPerPage: 10);
 }
+<style>
+    .table-pager > td {
+        padding-top: 10px;
+    }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card shadow-lg mx-lg-5 my-lg-5">
-            <div class="card-header-tabs mt-1">
-                <h3 class="text-center text-muted">Görev Listesi</h3>
+        .table-pager > td > a {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 3px 7px;
+        }
+
+            .table-pager > td > a:hover {
+                background-color: #f0f0f0;
+            }
+</style>
+<div class="row animated slideInLeft">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg mt-3 mb-3">
+            <div class="card-header-tabs">
+                <h3 class="text-center text-muted">Görev Durum Tablosu</h3>
             </div>
             <div class="card-body">
-                <table class="table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
-                        <tr>
-                            <td>Görev Adı</td>
-                            <td>Panel Adı</td>
-                            <td>Durumu</td>
-                            <td>Tarih</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
+                @using (Html.BeginForm("TaskTable", "Task", FormMethod.Get))
+                {
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Panel_ID">Panel Listesi</label>
+                                @Html.DropDownListFor(model => model.Panel, null, "Panel Seçiniz...", new { @class = "form-control form-control-sm" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Gorev_Kodu">Görev Adı</label>
+                                @Html.DropDownListFor(model => model.Gorev, null, "Görev Seçiniz...", new { @class = "form-control form-control-sm" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Durum_Kodu">Durum</label>
+                                @Html.DropDownListFor(model => model.Durum, null, "Durum Seçiniz...", new { @class = "form-control form-control-sm" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="custom-control">
+                                    <label for="exampleFormControlInput1">Tarih</label>
+                                    <input class="form-control form-control-sm" name="Tarih" type="date" value="" id="Tarih">
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.Liste.Count > 0)
                         {
-                            if (item.Durum_Kodu == 1)
-                            {
-                                <tr class="table-warning">
-                                    <td>@item.Gorev_Adi</td>
-                                    <td>@item.Panel_Adi</td>
-                                    <td>@item.Durum_Adi</td>
-                                    <td>@item.Tarih</td>
-                                    <td>@item.Adi</td>
-                                    <td>@item.Soyadi</td>
-                                </tr>
-                            }
-                            else if (item.Durum_Kodu == 2)
-                            {
-                                <tr class="table-success">
-                                    <td>@item.Gorev_Adi</td>
-                                    <td>@item.Panel_Adi</td>
-                                    <td>@item.Durum_Adi</td>
-                                    <td>@item.Tarih</td>
-                                    <td>@item.Adi</td>
-                                    <td>@item.Soyadi</td>
-                                </tr>
-                            }
-                            else if (item.Durum_Kodu == 3)
-                            {
-                                <tr class="table-danger">
-                                    <td>@item.Gorev_Adi</td>
-                                    <td>@item.Panel_Adi</td>
-                                    <td>@item.Durum_Adi</td>
-                                    <td>@item.Tarih</td>
-                                    <td>@item.Adi</td>
-                                    <td>@item.Soyadi</td>
-                                </tr>
-                            }
-                            else
-                            {
-                                <tr class="table-secondary">
-                                    <td>@item.Gorev_Adi</td>
-                                    <td>@item.Panel_Adi</td>
-                                    <td>@item.Durum_Adi</td>
-                                    <td>@item.Tarih</td>
-                                    <td>@item.Adi</td>
-                                    <td>@item.Soyadi</td>
-                                </tr>
-                            }
-
+                            <div class="col-md-12 text-right mt-4">
+                                <h4 class="text-info text-right">@Model.Liste.Count Adet Kayıt Listelendi</h4>
+                            </div>
                         }
-                    </tbody>
-                </table>
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
+
+
+
+<div class="row animated slideInRight">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg ">
+            <div class="card-body">
+                @if (Model.Liste.Count > 0)
+                {
+                    @webGrid.GetHtml(
+                    htmlAttributes: new {@id="table",@class= "table-borderless table table-hover text-center table-striped small" },
+                     footerStyle: "table-pager",
+                     columns:webGrid.Columns(
+                         webGrid.Column("Gorev_Adi",header:"Göre Adı"),
+                         webGrid.Column("Panel_Adi",header:"Panel Adı"),
+                         webGrid.Column("Durum_Adi",header:"Durum",format:@<text>@(SetStatus(item.Durum_Adi))</text>),
+webGrid.Column("Tarih", "Tarih"),
+webGrid.Column("Adi", "Adı"),
+webGrid.Column("Soyadi", "Soyadı")))
+                }
+                else
+                {
+                    <div class="alert alert-info alert-message ">
+                        <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr />
+                        <span class="fas fa-info-circle">&nbsp;</span>
+                        <span><i>Bu kullanıcıya ait görev listesinde sadece son 100 kayıt gösterilmektedir.</i></span><br />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@helper SetStatus(string value)
+{
+    if (value == "Beklemede")
+    {
+        <span class="text-warning"><b>Beklemede</b></span>
+    }
+    else if (value == "Tamamlandi")
+    {
+        <span class="text-success"><b>Tamamlandı</b></span>
+    }
+    else if (value == "Hata")
+    {
+        <span class="text-danger"><b>Hata</b></span>
+    }
+    else if (value == "Zaman Asimi")
+    {
+        <span class="text-secondary"><b>Zaman Aşımı</b></span>
+    }
+}
+
+
+<script>
+    $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
+    // buton aktif durum css
+    $("tfoot td")
+        .contents()
+        .filter(function () {
+            if (this.nodeType === 3 && this.length > 1) {
+                return this.nodeType
+            }
+        })
+        .wrap('<span class=" btn btn-sm btn-primary" />');
+</script>
