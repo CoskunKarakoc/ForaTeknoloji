@@ -23,8 +23,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private ITaskListService _taskListService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersService _dBUsers;
         public DBUsers user;
-        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService)
+        public DBUsers permissionUser;
+        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers)
         {
 
             user = CurrentSession.User;
@@ -38,6 +40,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _taskListService = taskListService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsers = dBUsers;
+            permissionUser = _dBUsers.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
 
@@ -45,8 +49,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: Alarm
         public ActionResult Index()
         {
+            if (permissionUser.Alarm_Islemleri == 3)
+                throw new Exception("Yetkisiz erişim!");
             int ID;
-
             if (_alarmlarService.GetAllAlarmlar().Count == 0)
                 ID = 0;
             else
@@ -82,6 +87,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != null)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Alarm değişikliklerine yetkiniz yok!");
+
                 var entity = _alarmlarService.GetById((int)id);
                 var paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0);
                 var kullanıcılar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
@@ -122,6 +130,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Create()
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Alarm oluşturmaya yetkiniz yok!");
+
             var maxID = 0;
             var paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0);
             var kullanıcılar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
@@ -160,6 +171,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 _alarmlarService.AddAlarmlar(alarmlar);
                 return RedirectToAction("Index", "Alarm");
             }
@@ -172,6 +184,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != null)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Alarm silmeye yetkiniz yok!");
+
                 var entity = _alarmlarService.GetById((int)id);
                 if (entity != null)
                 {
@@ -208,6 +223,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                        throw new Exception("Bu işleme yetkiniz yok!");
+
                     foreach (var item in PanelList)
                     {
                         TaskList taskList = new TaskList

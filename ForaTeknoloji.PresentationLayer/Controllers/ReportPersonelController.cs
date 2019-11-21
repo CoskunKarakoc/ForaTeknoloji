@@ -27,9 +27,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUsersOLDService _usersOLDService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
+        private IDBUsersService _dBUsersService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
-        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
+        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersService dBUsersService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -48,6 +49,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _usersOLDService = usersOLDService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _doorNamesService = doorNamesService;
+            _dBUsersService = dBUsersService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
 
         }
@@ -222,7 +224,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
-      
+
 
 
         //EXCELL EXPORT

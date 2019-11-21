@@ -26,8 +26,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private ITaskListService _taskListService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersService _dBUsersService;
         public DBUsers user;
-        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService)
+        public DBUsers permissionUser;
+        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
         {
 
             user = CurrentSession.User;
@@ -44,12 +46,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _taskListService = taskListService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
 
         // GET: AccessGroup
         public ActionResult Groups()
         {
+            if (permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Yetkisiz Erişim!");
+
             var model = new GecisGrupListViewModel
             {
                 Gruplar = _groupMasterService.GetAllGroupsMaster(),
@@ -65,6 +72,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (permissionUser.Grup_Islemleri == 2)
+                    throw new Exception("Grup düzenleme yetkiniz yok!");
                 var entity = _groupMasterService.GetById(id);
                 if (entity != null)
                 {
@@ -97,6 +106,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Create()
         {
+
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Grup oluşturma yetkiniz yok!");
+
             int maxID;
 
             if (_groupMasterService.GetAllGroupsMaster().Count > 0)
@@ -160,6 +173,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Grup silme yetkiniz yok!");
                 var entity = _groupMasterService.GetById(id);
                 if (entity != null)
                 {
@@ -178,7 +193,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult GroupReaders(int? PanelID, int id = -1)
         {
-
+            if (permissionUser.Grup_Islemleri == 2)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             List<SelectList> KapiZamanGrupNo = new List<SelectList>();
             List<SelectList> KapiAsansorBolgeNo = new List<SelectList>();
             List<ComplexGroupsDetailNew> nesne = new List<ComplexGroupsDetailNew>();
@@ -286,6 +302,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult GroupClone(int GrupNo, int PanelID)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             var entity = _groupsDetailNewService.GetBy_GrupNo_AND_PanelID(GrupNo, PanelID);
             CurrentSession.Remove("Klone");
             CurrentSession.Set<GroupsDetailNew>("Klone", entity);
@@ -296,6 +314,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (Groups != null)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+
                 var GroupKlone = CurrentSession.Get<GroupsDetailNew>("Klone");
                 if (GroupKlone == null)
                 {
@@ -346,6 +367,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                        throw new Exception("Bu işlem için yetkiniz yok!");
+
                     foreach (var item in PanelList)
                     {
                         TaskList taskList = new TaskList

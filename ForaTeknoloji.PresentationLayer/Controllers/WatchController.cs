@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,19 @@ using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
+    [Excp]
     public class WatchController : Controller
     {
         private IAccessDatasService _accessDatasService;
         private IUserService _userService;
         private IReportService _reportService;
         private IProgInitService _progInitService;
+        private IDBUsersService _dBUsersService;
         DBUsers user;
+        DBUsers permissionUser;
         WatchParameters WtchPrmtrs;
-        public WatchController(IAccessDatasService accessDatasService, IUserService userService, IReportService reportService, IProgInitService progInitService)
+        public WatchController(IAccessDatasService accessDatasService, IUserService userService, IReportService reportService, IProgInitService progInitService, IDBUsersService dBUsersService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -36,14 +41,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _userService = userService;
             _reportService = reportService;
             _progInitService = progInitService;
+            _dBUsersService = dBUsersService;
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
 
         // GET: Watch
         public ActionResult Index()
         {
+            if (permissionUser.Canli_Izleme == 3)
+                throw new Exception("Yetkisiz Erişim!");
             var lastrecordwatch = _reportService.LastRecordWatch(null);
             var cmplxwatch = _reportService.GetWatch(WtchPrmtrs);
             var model = new WatchIndexViewModel
@@ -69,6 +78,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 if (progInit != null)
                 {
+                    if (permissionUser.Canli_Izleme == 2 || permissionUser.Canli_Izleme == 3)
+                        throw new Exception("Değişiklik yapmaya yetkiniz yok!");
                     _progInitService.AddProgInit(progInit);
                     return RedirectToAction("Index");
                 }

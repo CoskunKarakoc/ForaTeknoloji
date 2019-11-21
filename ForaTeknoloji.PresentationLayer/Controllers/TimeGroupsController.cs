@@ -22,8 +22,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersService _dBUsersService;
         public DBUsers user;
-        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService)
+        public DBUsers permissionUser;
+        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -35,12 +37,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _taskListService = taskListService;
             _panelSettingsService = panelSettingsService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
 
         // GET: TimeGroups
         public ActionResult Index(string Search = null)
         {
+            if (permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Yetkisiz Erişim");
             if (Search != null && Search != "")
             {
                 var model = new TimeGroupsListViewModel
@@ -64,6 +70,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Add()
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
+
             int MaxID;
 
             if (_timeGroupsService.GetAllTimeGroups().Count == 0)
@@ -123,6 +132,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
                 var entity = _timeGroupsService.GetById(id);
                 if (entity != null)
                 {
@@ -138,6 +149,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
                 var entity = _timeGroupsService.GetById(id);
                 if (entity != null)
                 {
@@ -181,6 +194,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                        throw new Exception("Bu işlem için yetkiniz yok!");
                     foreach (var item in PanelList)
                     {
                         TaskList taskList = new TaskList

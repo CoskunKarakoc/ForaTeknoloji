@@ -28,8 +28,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersService _dBUsersService;
         public DBUsers user;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService)
+        public DBUsers permissionUser;
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -47,6 +49,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _taskListService = taskListService;
             _panelSettingsService = panelSettingsService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
 
@@ -54,6 +58,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: Users
         public ActionResult Index(string Search = null)
         {
+            if (permissionUser.Kullanici_Islemleri == 3)
+                throw new Exception("Yetkisiz Erişim!");
 
             if (Search != null && Search != "")
             {
@@ -78,6 +84,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Create(string Kart_ID = null)
         {
+            if (permissionUser.Kullanici_Islemleri == 2 || permissionUser.Kullanici_Islemleri == 3)
+                throw new Exception("Kullanıcı ekleme yetkiniz yok!");
             int MaxID;
             if (_userService.GetAllUsers().Count == 0)
                 MaxID = 0;
@@ -166,18 +174,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Edit(int? id)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Kullanıcı düzenleme yetkiniz yok!");
+
             if (id == null)
-            {
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
-            }
+
             Users users = _userService.GetById((int)id);
+
             if (users.Resim == null)
                 users.Resim = "BaseUser.jpg";
 
             if (users == null)
-            {
                 return HttpNotFound();
-            }
+
             ViewBag.Sirket_No = new SelectList(_sirketService.GetAllSirketler(), "Sirket_No", "Adi", users.Sirket_No);
             ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(), "Departman_No", "Adi", users.Departman_No);
             ViewBag.Blok_No = new SelectList(_bloklarService.GetAllBloklar(), "Blok_No", "Adi", users.Blok_No);
@@ -224,6 +234,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Kullanıcı silme işlemine yetkiniz yok!");
+
                 Users users = _userService.GetById(id);
                 _userService.DeleteUsers(users);
                 return RedirectToAction("Index");
@@ -248,6 +261,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PanelOperation(string Search)
         {
+            if (permissionUser.Kullanici_Islemleri == 3)
+                throw new Exception("Yetkisiz Erişim!");
+
             if (Search != null && Search != "")
             {
                 var model = new UsersListViewModel
@@ -276,6 +292,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                        throw new Exception("Kullanıcı alma işlemine yetkiniz yok!");
+
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
@@ -305,6 +324,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                        throw new Exception("Kullanıcı silme işlemine yetkiniz yok!");
+
                     foreach (var item in UserPanelList())
                     {
                         TaskList taskList = new TaskList
@@ -340,6 +362,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                        throw new Exception("Bu işleme yetkiniz yok!");
+
                     foreach (var item in PanelList)
                     {
 

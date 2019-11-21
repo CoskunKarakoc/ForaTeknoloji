@@ -22,8 +22,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersService _dBUsersService;
         private DBUsers user;
-        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService)
+        private DBUsers permissionUser;
+        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -36,6 +38,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _taskListService = taskListService;
             _panelSettingsService = panelSettingsService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
 
@@ -43,6 +47,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: Visitor
         public ActionResult Index(string Search)
         {
+            if (permissionUser.Ziyaretci_Islemleri == 3)
+                throw new Exception("Yetkisiz erişim!");
 
             if (Search != null && Search != "")
             {
@@ -68,6 +74,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Create()
         {
+            if (permissionUser.Ziyaretci_Islemleri == 2 || permissionUser.Ziyaretci_Islemleri == 3)
+                throw new Exception("Ziyaretçi eklemeye yetkiniz yok!");
 
             var Grup = _groupMasterService.GetAllGroupsMaster();
             var Personel = _userService.GetAllUsers();
@@ -110,26 +118,28 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Edit(int? id)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Ziyaretçi düzenlemeye yetkiniz yok!");
+
             if (id == null)
-            {
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
-            }
+
             Visitors visitors = _visitorsService.GetById((int)id);
+
             if (visitors.Resim == null)
                 visitors.Resim = "BaseUser.jpg";
+
             Users users = _userService.GetById((int)visitors.User_ID);
+
             if (visitors == null)
-            {
                 return HttpNotFound();
-            }
+
             var model = new VisitorEditViewModel
             {
                 Ziyaretci = visitors,
                 Personel = users,
                 Personeller = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList()
             };
-
-
 
             ViewBag.Grup_No = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", visitors.Grup_No);
             ViewBag.Tarih = visitors.Tarih;
@@ -165,6 +175,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != -1)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Ziyaretçi silmeye yetkiniz yok!");
+
                 Visitors visitor = _visitorsService.GetById(id);
                 if (visitor != null)
                 {
@@ -182,6 +195,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                        throw new Exception("Ziyaretçi göndermeye yetkiniz yok!");
+
                     foreach (var item in PanelList)
                     {
                         TaskList taskList = new TaskList

@@ -21,9 +21,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersService _dBUsersService;
         private FloorNames tempFloor;
         private DBUsers user;
-        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService)
+        private DBUsers permissionUser;
+        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -35,11 +37,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _taskListService = taskListService;
             _panelSettingsService = panelSettingsService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
         // AGG Listesi
         public ActionResult LiftGroups(int Status = -1)
         {
+            if (permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Yetkisiz Erişim!");
             var model = new LiftGroupsListViewModel
             {
                 LiftGroup = _liftGroupsService.GetAllLiftGroups(),
@@ -53,6 +59,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //AGG Ekleme
         public ActionResult Create()
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
+
             int MaxID;
             if (_liftGroupsService.GetAllLiftGroups().Count == 0)
                 MaxID = 0;
@@ -79,6 +88,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //AGG Güncelleme
         public ActionResult Edit(int? Asansor_Grup_No)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (Asansor_Grup_No == null)
             {
                 throw new Exception("Upss! Yanlış giden birşeyler var.");
@@ -127,6 +138,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (id != null)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
                 var entity = _liftGroupsService.GetById((int)id);
                 if (entity != null)
                 {
@@ -149,6 +162,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
                 _floorNamesService.UpdateFloorName(floorNames);
                 return RedirectToAction("FloorNames");
             }
@@ -158,7 +173,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //Tüm Kat İsimlerini Silme
         public ActionResult AllNameRemove()
         {
-
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             for (int i = 1; i <= 128; i++)
             {
                 tempFloor = new FloorNames { Kat_No = i, Kat_Adi = "" };
@@ -171,6 +187,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //Tüm Kat İsimlerini Sıralı Doldurma
         public ActionResult AllNameAdd()
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             for (int i = 1; i <= 128; i++)
             {
                 tempFloor = new FloorNames { Kat_No = i, Kat_Adi = "Kat " + i };
@@ -186,6 +204,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                        throw new Exception("Bu işlem için yetkiniz yok!");
                     foreach (var item in PanelList)
                     {
                         TaskList taskList = new TaskList
