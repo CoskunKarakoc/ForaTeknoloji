@@ -11,9 +11,9 @@ namespace ForaTeknoloji.Entities.Entities
     public partial class TaskList:IEntity
     {
         [Key]
-        [Column("Grup No")]
+        [Column("Kayit No")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Grup_No { get; set; }
+        public int Kayit_No { get; set; }
 
         [Column("Gorev Kodu")]
         public int Gorev_Kodu { get; set; }

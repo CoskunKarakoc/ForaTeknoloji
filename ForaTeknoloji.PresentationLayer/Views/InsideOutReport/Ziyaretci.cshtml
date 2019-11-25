@@ -20,7 +20,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card mt-2 shadow-lg animated slideInLeft">
+<div class="card border-info mt-2 shadow-lg animated slideInLeft">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">İçerdekiler-Dışardakiler Ziyaretçi</h3>
     </div>
@@ -94,7 +94,7 @@
         }
     </div>
 </div>
-<div class="card mt-2 shadow-lg animated slideInRight">
+<div class="card border-info mt-2 shadow-lg animated slideInRight">
 
     @using (Html.BeginForm("ManuelCikisZiyaretci", "InsideOutReport", FormMethod.Post))
     {
@@ -143,7 +143,7 @@
                     return this.nodeType
                 }
             })
-            .wrap('<span class=" btn btn-sm btn-primary" />');
+            .wrap('<span class=" btn btn-primary" />');
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
             var frame1 = $('<iframe />');

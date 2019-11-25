@@ -136,10 +136,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //Veritabanından AGG Silme
         public ActionResult DatabaseRemove(int? id)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (id != null)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Bu işlem için yetkiniz yok!");
                 var entity = _liftGroupsService.GetById((int)id);
                 if (entity != null)
                 {
@@ -160,10 +160,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]//Kat İsimlerini Güncelleme
         public ActionResult FloorNamesEdit(FloorNames floorNames)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (ModelState.IsValid)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Bu işlem için yetkiniz yok!");
                 _floorNamesService.UpdateFloorName(floorNames);
                 return RedirectToAction("FloorNames");
             }
@@ -200,12 +200,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult TaskSend(List<int> PanelList, CommandConstants OprKod, int AsansorGrupNo = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (AsansorGrupNo != -1)
             {
                 try
                 {
-                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                        throw new Exception("Bu işlem için yetkiniz yok!");
                     foreach (var item in PanelList)
                     {
                         TaskList taskList = new TaskList

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
     /*Bismillahirahmanirahim*/
+    //[Auth]
     [Excp]
     public class HomeController : Controller
     {
@@ -17,7 +18,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
-        //[Auth]
+        [Auth]
         // GET: Home
         public ActionResult Index()
         {

@@ -173,11 +173,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(int id = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Ziyaretçi silmeye yetkiniz yok!");
+
             if (id != -1)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Ziyaretçi silmeye yetkiniz yok!");
-
                 Visitors visitor = _visitorsService.GetById(id);
                 if (visitor != null)
                 {
@@ -191,12 +191,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Send(List<int> PanelList, int VisitorID = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Ziyaretçi göndermeye yetkiniz yok!");
+
             if (VisitorID != -1)
             {
                 try
                 {
-                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                        throw new Exception("Ziyaretçi göndermeye yetkiniz yok!");
 
                     foreach (var item in PanelList)
                     {

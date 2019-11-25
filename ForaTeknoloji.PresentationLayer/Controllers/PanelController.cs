@@ -64,6 +64,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult ReaderList(int? PanelID)
         {
             ReaderFill();
+            if (UserPanelList().Count == 0)
+                throw new Exception("Sistemde kayıtlı panel bulunamadı");
             List<ReaderSettingsNew> okuyucular = new List<ReaderSettingsNew>();
             if (PanelID == null)
             {
@@ -74,7 +76,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
             }
-
             if (okuyucular == null)
                 throw new Exception("Bu panele ait okuyucu bulunmamaktadır.");
 

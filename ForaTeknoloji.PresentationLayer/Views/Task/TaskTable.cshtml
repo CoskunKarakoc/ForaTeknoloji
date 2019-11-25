@@ -22,7 +22,7 @@
 </style>
 <div class="row animated slideInLeft">
     <div class="col-md-8 offset-2">
-        <div class="card shadow-lg mt-3 mb-3">
+        <div class="card shadow-lg mt-3 mb-3 border-info">
             <div class="card-header-tabs">
                 <h3 class="text-center text-muted">Görev Durum Tablosu</h3>
             </div>
@@ -77,7 +77,7 @@
 
 <div class="row animated slideInRight">
     <div class="col-md-8 offset-2">
-        <div class="card shadow-lg ">
+        <div class="card border-info shadow-lg ">
             <div class="card-body">
                 @if (Model.Liste.Count > 0)
                 {
@@ -85,7 +85,7 @@
                     htmlAttributes: new {@id="table",@class= "table-borderless table table-hover text-center table-striped small" },
                      footerStyle: "table-pager",
                      columns:webGrid.Columns(
-                         webGrid.Column("Gorev_Adi",header:"Göre Adı"),
+                         webGrid.Column("Gorev_Adi",header:"Görev Adı"),
                          webGrid.Column("Panel_Adi",header:"Panel Adı"),
                          webGrid.Column("Durum_Adi",header:"Durum",format:@<text>@(SetStatus(item.Durum_Adi))</text>),
 webGrid.Column("Tarih", "Tarih"),
@@ -141,5 +141,5 @@ webGrid.Column("Soyadi", "Soyadı")))
                 return this.nodeType
             }
         })
-        .wrap('<span class=" btn btn-sm btn-primary" />');
+        .wrap('<span class=" btn btn-primary" />');
 </script>

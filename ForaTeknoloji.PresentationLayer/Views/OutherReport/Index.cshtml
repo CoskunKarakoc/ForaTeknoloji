@@ -21,7 +21,7 @@
             }
 </style>
 
-<div class="card shadow-lg mt-1 animated slideInLeft">
+<div class="card border-info shadow-lg mt-1 animated slideInLeft">
     <div class="card-header-tabs">
         <h3 class="text-center text-muted">Diğer Geçiş Raporları</h3>
     </div>
@@ -230,7 +230,7 @@
         }
     </div>
 </div>
-<div class="card shadow-lg mt-1 animated slideInRight">
+<div class="card border-info shadow-lg mt-1 animated slideInRight">
     <div id="print_div" class="card-body">
         @if (Model.DigerGecisListesi.Count > 0)
         {
@@ -366,7 +366,7 @@
                     return this.nodeType
                 }
             })
-            .wrap('<span class=" btn btn-sm btn-primary" />');
+            .wrap('<span class=" btn btn-primary" />');
         var today = new Date();
         $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
         $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));

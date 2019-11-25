@@ -171,10 +171,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(int id = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Grup silme yetkiniz yok!");
             if (id != -1)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Grup silme yetkiniz yok!");
                 var entity = _groupMasterService.GetById(id);
                 if (entity != null)
                 {
@@ -312,11 +312,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Klone(List<int> Groups)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (Groups != null)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Bu işlem için yetkiniz yok!");
-
                 var GroupKlone = CurrentSession.Get<GroupsDetailNew>("Klone");
                 if (GroupKlone == null)
                 {
@@ -363,12 +362,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Send(List<int> PanelList, int GecisGrupNo = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (GecisGrupNo != -1)
             {
                 try
                 {
-                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                        throw new Exception("Bu işlem için yetkiniz yok!");
 
                     foreach (var item in PanelList)
                     {

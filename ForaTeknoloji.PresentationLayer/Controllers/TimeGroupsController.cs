@@ -130,10 +130,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(int id = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (id != -1)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Bu işlem için yetkiniz yok!");
                 var entity = _timeGroupsService.GetById(id);
                 if (entity != null)
                 {
@@ -147,10 +147,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Edit(int id = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (id != -1)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Bu işlem için yetkiniz yok!");
                 var entity = _timeGroupsService.GetById(id);
                 if (entity != null)
                 {
@@ -190,12 +190,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Send(List<int> PanelList, int ZamanGrupNo = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işlem için yetkiniz yok!");
             if (ZamanGrupNo != -1)
             {
                 try
                 {
-                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                        throw new Exception("Bu işlem için yetkiniz yok!");
                     foreach (var item in PanelList)
                     {
                         TaskList taskList = new TaskList

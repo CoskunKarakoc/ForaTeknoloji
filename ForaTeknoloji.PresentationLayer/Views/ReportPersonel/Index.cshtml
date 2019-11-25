@@ -33,7 +33,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card mt-1 shadow-lg animated slideInLeft">
+<div class="card border-info mt-1 shadow-lg animated slideInLeft">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Aktif Kullanıcı Raporları</h3>
     </div>
@@ -254,7 +254,7 @@
 
 
 <!-- Table -->
-<div class="card mt-1 shadow-lg animated slideInRight">
+<div class="card border-info mt-1 shadow-lg animated slideInRight">
     <div class="card-body">
         <div id="print_div">
             @if (Model.ReportPersonel.Count > 0)
@@ -440,7 +440,7 @@ webGrid.Column("Tarih", "Tarih")))
                     return this.nodeType
                 }
             })
-            .wrap('<span class=" btn btn-sm btn-primary" />');
+            .wrap('<span class=" btn btn-primary" />');
         $("#myTable tbody tr").click(function () {
             $("#alertMain").prop("hidden", false);
             var kayitNo = $(this).children("td").data("kayitno");

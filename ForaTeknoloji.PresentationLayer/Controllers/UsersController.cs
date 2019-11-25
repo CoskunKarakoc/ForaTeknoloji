@@ -218,10 +218,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (ModelState.IsValid)
             {
-                var User = _userService.GetAllUsersWithOuther().FirstOrDefault(x => x.ID == entity.ID);
+                var User = _userService.GetAllUsers().FirstOrDefault(x => x.ID == entity.ID);
                 if (User != null)
                 {
-
+                    if (_userService.GetAllUsers().Any(x => x.Kart_ID == entity.Kart_ID))
+                        throw new Exception("Kart ID'si daha önceden kullanılıyor.");
                     _userService.UpdateUsers(entity);
                     return RedirectToAction("Index");
                 }
@@ -232,11 +233,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(int id = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Kullanıcı silme işlemine yetkiniz yok!");
             if (id != -1)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Kullanıcı silme işlemine yetkiniz yok!");
-
                 Users users = _userService.GetById(id);
                 _userService.DeleteUsers(users);
                 return RedirectToAction("Index");
@@ -288,13 +288,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Receive(int PanelListReceive, int ReceiveUserID = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Kullanıcı alma işlemine yetkiniz yok!");
             if (ReceiveUserID != -1)
             {
                 try
                 {
-                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                        throw new Exception("Kullanıcı alma işlemine yetkiniz yok!");
-
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
@@ -320,12 +319,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult DeleteAllSystem(int id = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Kullanıcı silme işlemine yetkiniz yok!");
             if (id != -1)
             {
                 try
                 {
-                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                        throw new Exception("Kullanıcı silme işlemine yetkiniz yok!");
 
                     foreach (var item in UserPanelList())
                     {
@@ -358,30 +357,53 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Send(List<int> PanelList, CommandConstants OprKod, int UserID = -1)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işleme yetkiniz yok!");
             if (UserID != -1)
             {
                 try
                 {
-                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                        throw new Exception("Bu işleme yetkiniz yok!");
-
-                    foreach (var item in PanelList)
+                    if (OprKod == CommandConstants.CMD_SNDALL_USER)
                     {
-
-                        TaskList taskList = new TaskList
+                        foreach (var panel in PanelList)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)OprKod,
-                            IntParam_1 = UserID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = item,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                            foreach (var userID in _userService.GetAllUsers().Select(u => u.ID))
+                            {
+                                TaskList taskList = new TaskList
+                                {
+                                    Deneme_Sayisi = 1,
+                                    Durum_Kodu = 1,
+                                    Gorev_Kodu = (int)OprKod,
+                                    IntParam_1 = userID,
+                                    Kullanici_Adi = user.Kullanici_Adi,
+                                    Panel_No = panel,
+                                    Tablo_Guncelle = true,
+                                    Tarih = DateTime.Now
+                                };
+                                _taskListService.AddTaskList(taskList);
+                            }
+                        }
+                        Thread.Sleep(2000);
                     }
-                    Thread.Sleep(2000);
+                    else
+                    {
+                        foreach (var item in PanelList)
+                        {
+                            TaskList taskList = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)OprKod,
+                                IntParam_1 = UserID,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = item,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            _taskListService.AddTaskList(taskList);
+                        }
+                        Thread.Sleep(2000);
+                    }
                 }
                 catch (Exception)
                 {

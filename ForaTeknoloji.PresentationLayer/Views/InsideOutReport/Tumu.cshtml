@@ -21,7 +21,7 @@
             }
 </style>
 
-<div class="card mt-2 shadow-lg animated slideInLeft">
+<div class="card border-info mt-2 shadow-lg animated slideInLeft">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">İçerdekiler-Dışardakiler Tümü</h3>
     </div>
@@ -93,7 +93,7 @@
         }
     </div>
 </div>
-<div class="card mt-2 shadow-lg animated slideInRight">
+<div class="card border-info mt-2 shadow-lg animated slideInRight">
     @using (Html.BeginForm("ManuelCikisTumu", "InsideOutReport", FormMethod.Post))
     {
         <div id="print_div" class="card-body">
@@ -351,6 +351,6 @@
                     return this.nodeType
                 }
             })
-            .wrap('<span class=" btn btn-sm btn-primary" />');
+            .wrap('<span class=" btn btn-primary" />');
     });
 </script>

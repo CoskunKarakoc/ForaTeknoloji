@@ -35,9 +35,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return filter == null ? _taskListDal.GetList() : _taskListDal.GetList(filter);
         }
 
-        public TaskList GetByGrupNo(int GrupNo)
+        public TaskList GetByGrupNo(int KayitNo)
         {
-            return _taskListDal.Get(x => x.Grup_No == GrupNo);
+            return _taskListDal.Get(x => x.Kayit_No == KayitNo);
         }
 
         public TaskList GetByPanelNo(int PanelNo)

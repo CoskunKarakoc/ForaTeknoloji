@@ -21,7 +21,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card mt-2 shadow-lg animated slideInLeft">
+<div class="card border-info mt-2 shadow-lg animated slideInLeft">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Personel Listesi</h3>
     </div>
@@ -86,7 +86,7 @@
 
 
 
-<div class="card shadow-lg mt-2 mb-1 animated slideInRight">
+<div class="card border-info shadow-lg mt-2 mb-1 animated slideInRight">
 
     <div id="print_div" class="card-body">
         @if (Model.PersonelListesi.Count > 0)
@@ -130,7 +130,7 @@
                     return this.nodeType
                 }
             })
-            .wrap('<span class=" btn btn-sm btn-primary" />');
+            .wrap('<span class=" btn btn-primary" />');
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
             var frame1 = $('<iframe />');

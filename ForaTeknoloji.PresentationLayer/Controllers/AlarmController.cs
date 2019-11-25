@@ -85,11 +85,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Edit(int? id)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Alarm değişikliklerine yetkiniz yok!");
             if (id != null)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Alarm değişikliklerine yetkiniz yok!");
-
                 var entity = _alarmlarService.GetById((int)id);
                 var paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0);
                 var kullanıcılar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
@@ -171,7 +170,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 _alarmlarService.AddAlarmlar(alarmlar);
                 return RedirectToAction("Index", "Alarm");
             }
@@ -182,11 +181,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult DatabaseRemove(int? id)
         {
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Alarm silmeye yetkiniz yok!");
             if (id != null)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                    throw new Exception("Alarm silmeye yetkiniz yok!");
-
                 var entity = _alarmlarService.GetById((int)id);
                 if (entity != null)
                 {
@@ -219,13 +217,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult TaskSend(List<int> PanelList, CommandConstants OprKod, int AlarmID = -1)
         {
+
+            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                throw new Exception("Bu işleme yetkiniz yok!");
             if (AlarmID != -1)
             {
                 try
                 {
-                    if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                        throw new Exception("Bu işleme yetkiniz yok!");
-
                     foreach (var item in PanelList)
                     {
                         TaskList taskList = new TaskList

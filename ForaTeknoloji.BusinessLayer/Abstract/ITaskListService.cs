@@ -19,7 +19,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         TaskList GetByPanelNo(int PanelNo);
         TaskList GetByStatusCode(int StatusCode);
         TaskList GetByUserName(string kullaniciAdi);
-        TaskList GetByGrupNo(int GrupNo);
+        TaskList GetByGrupNo(int KayitNo);
         List<TaskStatusWatch> TaskStatusWatch();
     }
 }
