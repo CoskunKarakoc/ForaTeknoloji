@@ -8,7 +8,7 @@
     <div class="col-md-6 offset-md-3 mt-xl-5 my-xl-5">
         <div class=" card border-info shadow-lg mt-2">
             <div class="card-header-tabs">
-                <h3 class="text-muted text-center">Blok Tanımları</h3>
+                <h3 id="Title" class="text-muted text-center">Blok Tanımları</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Create", "Block"))
@@ -25,7 +25,18 @@
 
                 }
                 <hr />
-                <table class="table-borderless table table-hover text-center table-striped table-sm">
+                @if (Model.Count() == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">Geçerli blok kaydı bulunamadı.</p>
+                        <hr>
+                        <p class="mb-0 text-center">Dilerseniz yukarıdaki "Blok Tanımlama" kısmına blok adı girip "Yeni Blok" butonuna basarak blok ekleyebilirsiniz.</p>
+
+                    </div>
+                }
+                <input type="text" hidden id="BlockCount" name="name" value="@Model.Count()" />
+                <table id="BlockList" class="table-borderless table table-hover text-center table-striped table-sm">
                     <thead class="table-info">
                         <tr>
                             <td>Blok No</td>
@@ -53,3 +64,16 @@
     </div>
 </div>
 
+
+<script>
+    $(document).ready(function () {
+        var count = $("#BlockCount").val();
+        if (count == 0) {
+            $("#BlockList").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#BlockList").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
+    });
+</script>

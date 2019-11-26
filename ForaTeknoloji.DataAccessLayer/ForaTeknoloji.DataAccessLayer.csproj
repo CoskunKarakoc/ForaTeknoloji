@@ -130,6 +130,7 @@
     <Compile Include="Concrete\EntityFramework\EfUserTypesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfVisitorsDal.cs" />
     <Compile Include="Concrete\EntityFramework\ForaContext.cs" />
+    <Compile Include="Concrete\Initializer\DBInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@
     <div class="col-md-12">
         <div class="card border-info shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
-                <h3 class="text-muted text-center">Kullanıcı Ayarları</h3>
+                <h3 title="Title" class="text-muted text-center">Kullanıcı Ayarları</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("PanelOperation", "Users", FormMethod.Get))
@@ -22,7 +22,18 @@
                     </div>
                 }
                 <hr />
-                <table class="table-borderless table table-hover text-center table-striped table-sm">
+                @if (Model.Users.Count == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">Geçerli  'Kullanıcı'  kaydı bulunamadı.</p>
+                        <hr>
+                        <p class="mb-0 text-center">Dilerseniz açılır menüden 'Kullanıcılar' > 'Yeni Kullanıcı' butonuna basarak ekleyebilirsiniz.</p>
+
+                    </div>
+                }
+                <input type="text" hidden id="UserCount" name="name" value="@Model.Users.Count" />
+                <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm">
                     <thead class="table-info">
                         <tr>
                             <td>ID</td>
@@ -151,6 +162,14 @@
                 $("#message").prop("hidden", true);
             }, 1000);
         });
+        var count = $("#UserCount").val();
+        if (count == 0) {
+            $("#UserList").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#UserList").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
     });
     function ekle(userNo, oprKod) {
         $("#userNo").prop("value", userNo);

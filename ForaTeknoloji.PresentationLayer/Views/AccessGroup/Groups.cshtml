@@ -10,7 +10,7 @@
         <div class="col-md-4 offset-4">
             <div class="card border-info shadow-lg mx-xl-5 my-lg-5">
                 <div class="card-header-tabs">
-                    <h3 class="text-center text-muted">Geçiş Grupları</h3>
+                    <h3 id="Title" class="text-center text-muted">Geçiş Grupları</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -18,6 +18,18 @@
                             <a href="@Url.Action("Create","AccessGroup")" class="btn btn-sm btn-outline-success mb-2" title="Yeni Geçiş Grubu"><i class="fas fa-plus"></i> Yeni Geçiş Grubu</a>
                         </div>
                     </div>
+                    <hr />
+                    @if (Model.Gruplar.Count == 0)
+                    {
+                        <div class="alert alert-info" role="alert">
+                            <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                            <p class="text-center">Geçerli Geçiş Grup kaydı bulunamadı.</p>
+                            <hr>
+                            <p class="mb-0 text-center">Dilerseniz yukarıdaki "Yeni Geçiş Gurbu"  butonuna basarak geçiş grupları ekleyebilirsiniz.</p>
+
+                        </div>
+                    }
+                    <input type="text" hidden id="GrupCount" name="name" value="@Model.Gruplar.Count" />
                     <table id="GroupTable" class="table-borderless table table-hover text-center table-striped table-sm">
                         <thead class="table-info">
                             <tr>
@@ -141,6 +153,17 @@
             alertify.set('notifier', 'delay', delay);
             //alertify.success('Kopylama İşlem, Gerçekleştirildi');
         });
+
+        var count = $("#GrupCount").val();
+        if (count == 0) {
+            $("#GroupTable").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#GroupTable").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
+
+
     });
     function ekle(grupNo) {
         $("#gecisGrupNo").prop("value", grupNo);

@@ -5,12 +5,13 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using ForaTeknoloji.Entities.Entities;
+    using ForaTeknoloji.DataAccessLayer.Concrete.Initializer;
 
     public partial class ForaContext : DbContext
     {
         public ForaContext() : base("name=ForaContext")
         {
-
+            Database.SetInitializer(new DBInitializer());
         }
 
         public virtual DbSet<AccessCountTypes> AccessCountTypes { get; set; }

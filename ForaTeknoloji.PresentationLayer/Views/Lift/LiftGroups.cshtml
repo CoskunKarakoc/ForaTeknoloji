@@ -7,7 +7,7 @@
     <div class="col-md-6 offset-md-3">
         <div class="card border-info shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header-tabs">
-                <h3 class="text-center text-muted"><i>Asansör Grupları</i></h3>
+                <h3 id="Title" class="text-center text-muted"><i>Asansör Grupları</i></h3>
                 @if (Model.StatusControl != -1)
                 {
                     if (Model.StatusControl == 2)
@@ -25,7 +25,18 @@
                 }
             </div>
             <div class="card-body">
-                <table class="table-borderless table table-hover text-center table-striped table-sm">
+                @if (Model.LiftGroup.Count == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">Geçerli asansör geçiş grup kaydı bulunamadı.</p>
+                        <hr>
+                        <p class="mb-0 text-center">Dilerseniz aşağıdaki "Yeni Asansör Grup" butonuna basarak asansör grubu ekleyebilirsiniz.</p>
+
+                    </div>
+                }
+                <input type="text" id="LiftCount" hidden name="name" value="@Model.LiftGroup.Count" />
+                <table id="LiftList" class="table-borderless table table-hover text-center table-striped table-sm">
                     <thead class="table-info">
                         <tr>
                             <td>Asansör Grup No</td>
@@ -135,6 +146,19 @@
                 $("#message").prop("hidden", true);
             }, 1000);
         });
+
+        var count = $("#LiftCount").val();
+        if (count == 0) {
+            $("#LiftList").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#LiftList").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
+
+
+
+
     });
     function ekle(asansorNo, oprKod) {
         $("#asansorGrupNo").prop("value", asansorNo);
