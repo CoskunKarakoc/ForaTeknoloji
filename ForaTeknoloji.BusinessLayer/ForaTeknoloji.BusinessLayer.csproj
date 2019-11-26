@@ -70,6 +70,7 @@
     <Compile Include="Abstract\IDBUsersSirketService.cs" />
     <Compile Include="Abstract\IDepartmanService.cs" />
     <Compile Include="Abstract\IDoorNamesService.cs" />
+    <Compile Include="Abstract\IEmailSettingsService.cs" />
     <Compile Include="Abstract\IFloorNamesService.cs" />
     <Compile Include="Abstract\IGlobalZoneService.cs" />
     <Compile Include="Abstract\IGlobalZonesInterlockService.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
     <Compile Include="Abstract\ISirketService.cs" />
+    <Compile Include="Abstract\ISmsSettingsService.cs" />
     <Compile Include="Abstract\IStatusCodesService.cs" />
     <Compile Include="Abstract\ITaskCodeService.cs" />
     <Compile Include="Abstract\ITaskListService.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Concrete\DBUsersSirketManager.cs" />
     <Compile Include="Concrete\DepartmanManager.cs" />
     <Compile Include="Concrete\DoorNamesManager.cs" />
+    <Compile Include="Concrete\EMailSettingsManager.cs" />
     <Compile Include="Concrete\FloorNamesManager.cs" />
     <Compile Include="Concrete\GlobalZoneManager.cs" />
     <Compile Include="Concrete\GlobalZonesInterlockManager.cs" />
@@ -123,6 +126,7 @@
     <Compile Include="Concrete\ReaderSettingsNewManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />
     <Compile Include="Concrete\SirketManager.cs" />
+    <Compile Include="Concrete\SmsSettingsManager.cs" />
     <Compile Include="Concrete\StatusCodesManager.cs" />
     <Compile Include="Concrete\TaskCodeManager.cs" />
     <Compile Include="Concrete\TaskListManager.cs" />

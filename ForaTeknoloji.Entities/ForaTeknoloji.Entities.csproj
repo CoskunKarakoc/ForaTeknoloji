@@ -93,6 +93,7 @@
     <Compile Include="Entities\DoorGroupsDetail.cs" />
     <Compile Include="Entities\DoorGroupsMaster.cs" />
     <Compile Include="Entities\DoorNames.cs" />
+    <Compile Include="Entities\EMailSetting.cs" />
     <Compile Include="Entities\FloorNames.cs" />
     <Compile Include="Entities\GlobalZones.cs" />
     <Compile Include="Entities\GlobalZonesInterlock.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Entities\ReaderSettings.cs" />
     <Compile Include="Entities\ReaderSettingsNew.cs" />
     <Compile Include="Entities\Sirketler.cs" />
+    <Compile Include="Entities\SMSSetting.cs" />
     <Compile Include="Entities\StatusCode.cs" />
     <Compile Include="Entities\TaskCode.cs" />
     <Compile Include="Entities\TaskList.cs" />

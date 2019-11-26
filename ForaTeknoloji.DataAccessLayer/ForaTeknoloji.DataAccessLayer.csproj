@@ -68,6 +68,7 @@
     <Compile Include="Abstract\IDBUsersSirketDal.cs" />
     <Compile Include="Abstract\IDepartmanDal.cs" />
     <Compile Include="Abstract\IDoorNamesDal.cs" />
+    <Compile Include="Abstract\IEmailSettingsDal.cs" />
     <Compile Include="Abstract\IFloorNamesDal.cs" />
     <Compile Include="Abstract\IGlobalZoneDal.cs" />
     <Compile Include="Abstract\IGlobalZonesInterlockDal.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Abstract\IUsersOLDDal.cs" />
     <Compile Include="Abstract\IUserTypesDal.cs" />
     <Compile Include="Abstract\IVisitorsDal.cs" />
+    <Compile Include="Abstract\ISMSSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessDatasDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessModesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAlarmlarDal.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="Concrete\EntityFramework\EfDBUsersSirketDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDepartmanDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDoorNamesDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfEmailSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfFloorNamesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGlobalZoneDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGlobalZonesInterlockDal.cs" />
@@ -119,6 +122,7 @@
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfSmsSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfStatusCodesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTaskCodeDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTaskListDal.cs" />

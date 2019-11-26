@@ -1576,6 +1576,41 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gorev_Adi = "Kullanıcıları Gönderme"
             };
             context.TaskCodes.Add(taskCode262000);
+            EMailSetting eMailSetting = new EMailSetting
+            {
+                E_Mail_Adres = "sample@abcd.com",
+                Kullanici_Adi = "Fora Teknoloji",
+                Sifre = "12345",
+                SMPT_Server = "smpt.gmail.com",
+                SMPT_Server_Port = 465,
+                SSL_Kullan = true,
+                Authentication = 2,
+                Gonderme_Saati = DateTime.Now,
+                Gelmeyenler_Raporu = true,
+                Alici_1_E_Mail_Adres = "sample@forateknoloji.com",
+                Alici_1_E_Mail_Gonder = true
+            };
+            context.EMailSettings.Add(eMailSetting);
+            SMSSetting sMSSetting = new SMSSetting
+            {
+                Kullanici_Adi = "Fora Teknoloji",
+                Sifre = "12345",
+                Originator = "Fora",
+                Gelmeyenler_Gonder = false,
+                Gelmeyenler_Mesaj = "",
+                Gelmeyenler_Saat = DateTime.Now,
+                Gelmeyenler_Global_Bolge = 1,
+                IcerdeDisarda_Gonder = false,
+                Icerde_Mesaj = "",
+                Disarda_Mesaj = "",
+                IcerdeDisarda_Saat = DateTime.Now,
+                IcerdeDisarda_Global_Bolge = 1,
+                HerGirisCikista_Gonder = false,
+                HerGirisCikista_Mesaj = "TEST"
+            };
+            context.SMSSettings.Add(sMSSetting);
+
+
             context.SaveChanges();
         }
     }

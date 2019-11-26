@@ -2504,6 +2504,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DoorController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\GelenGelmeyenReportController.cs" />
     <Compile Include="Controllers\GlobalZoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2515,6 +2516,7 @@
     <Compile Include="Controllers\PersonelListReportController.cs" />
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\SecuritySettingsController.cs" />
+    <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TimeGroupsController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
@@ -2653,6 +2655,8 @@
     <Content Include="Views\Door\PartialDoorPanelList.cshtml" />
     <Content Include="Views\Door\ProgRelay.cshtml" />
     <Content Include="Views\Door\ProgRelayEdit.cshtml" />
+    <Content Include="Views\SMS\Add.cshtml" />
+    <Content Include="Views\Email\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,139 @@
+﻿@model ForaTeknoloji.Entities.Entities.EMailSetting
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <div class="card shadow-lg mx-lg-5 my-lg-5 animated slideInLeft">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-muted text-center">E-Mail Ayarları</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Add", "Email", FormMethod.Post))
+                {
+                    @Html.Hidden("Kayit_No", Model.Kayit_No)
+                    <div class="form-group">
+                        <label for="E_Mail_Adres">E-Mail Adres</label>
+                        @Html.TextBox("E_Mail_Adres", Model.E_Mail_Adres, new { @class = "form-control", type = "email" })
+                    </div>
+                    <div class="form-group">
+                        <label id="Kullanici_Adi">Kullanıcı Adı</label>
+                        @Html.TextBox("Kullanici_Adi", Model.Kullanici_Adi, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Sifre">Şifre</label>
+                        @Html.TextBox("Sifre", Model.Sifre, new { @class = "form-control", type = "password" })
+                    </div>
+                    <div class="form-group">
+                        <label for="SMPT_Server">SMPT Server</label>
+                        @Html.TextBox("SMPT_Server", Model.SMPT_Server, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label id="SMPT_Server_Port">SMPT Server Port</label>
+                        @Html.TextBox("SMPT_Server_Port", Model.SMPT_Server_Port, new { @class = "form-control", type = "number" })
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @Html.CheckBox("SSL_Kullan", Model.SSL_Kullan ?? false, new { @class = "custom-control-input" })
+                        <label for="SSL_Kullan" class="custom-control-label">SSL Kullan</label>
+                    </div>
+                    if (Model.Authentication == 1)
+                    {
+                        <div class="custom-control-inline custom-radio">
+                            <label class="mr-5">Authentication:</label>
+                            <input type="radio" value="1" class="custom-control-input" id="Yok" checked name="Authentication">
+                            <label class="custom-control-label mr-5" for="Yok">Yok</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio">
+                            <input type="radio" value="2" class="custom-control-input" id="Base" name="Authentication">
+                            <label class="custom-control-label mr-5" for="Base">Base 64 (Normal)</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio">
+                            <input type="radio" value="3" class="custom-control-input" id="NTLM" name="Authentication">
+                            <label class="custom-control-label mr-5" for="NTLM">NTLM</label>
+                        </div>
+
+                    }
+                    else if (Model.Authentication == 2)
+                    {
+                        <div class="custom-control-inline custom-radio">
+                            <label class="mr-5">Authentication:</label>
+                            <input type="radio" value="1" class="custom-control-input" id="Yok" name="Authentication">
+                            <label class="custom-control-label mr-5" for="Yok">Yok</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio">
+                            <input type="radio" value="2" class="custom-control-input" id="Base" checked name="Authentication">
+                            <label class="custom-control-label mr-5" for="Base">Base 64 (Normal)</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio">
+                            <input type="radio" value="3" class="custom-control-input" id="NTLM" name="Authentication">
+                            <label class="custom-control-label mr-5" for="NTLM">NTLM</label>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="custom-control-inline custom-radio">
+                            <label class="mr-5">Authentication:</label>
+                            <input type="radio" value="1" class="custom-control-input" id="Yok" name="Authentication">
+                            <label class="custom-control-label mr-5" for="Yok">Yok</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio">
+                            <input type="radio" value="2" class="custom-control-input" id="Base" name="Authentication">
+                            <label class="custom-control-label mr-5" for="Base">Base 64 (Normal)</label>
+                        </div>
+                        <div class="custom-control-inline custom-radio">
+                            <input type="radio" value="3" class="custom-control-input" id="NTLM" checked name="Authentication">
+                            <label class="custom-control-label mr-5" for="NTLM">NTLM</label>
+                        </div>
+
+                    }
+                    <div class="form-group">
+                        <label for="Gonderme_Saati">Gönderme Saati</label>
+                        <input type="time" id="Gonderme_Saati" name="Gonderme_Saati" class="form-control" value="@Model.Gonderme_Saati.Value.ToShortTimeString()" />
+                    </div>
+
+                    <div class="custom-control custom-checkbox">
+                        @Html.CheckBox("Gelmeyenler_Raporu", Model.Gelmeyenler_Raporu ?? false, new { @class = "custom-control-input" })
+                        <label for="Gelmeyenler_Raporu" class="custom-control-label">Gelmeyenler Raporu</label>
+                    </div>
+                    <hr />
+                    <label>Alıcı 1</label>
+                    <div class="form-group">
+                        <label>E-Mail Adres</label>
+                        @Html.TextBox("Alici_1_E_Mail_Adres", Model.Alici_1_E_Mail_Adres, new { @class = "form-control" })
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @Html.CheckBox("Alici_1_E_Mail_Gonder", Model.Alici_1_E_Mail_Gonder ?? false, new { @class = "custom-control-input" })
+                        <label for="Alici_1_E_Mail_Gonder" class="custom-control-label">E-Mail Gönder</label>
+                    </div>
+                    <hr />
+                    <label>Alıcı 2</label>
+                    <div class="form-group">
+                        <label>E-Mail Adres</label>
+                        @Html.TextBox("Alici_2_E_Mail_Adres", Model.Alici_2_E_Mail_Adres, new { @class = "form-control" })
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @Html.CheckBox("Alici_2_E_Mail_Gonder", Model.Alici_2_E_Mail_Gonder ?? false, new { @class = "custom-control-input" })
+                        <label for="Alici_2_E_Mail_Gonder" class="custom-control-label">Gönder</label>
+                    </div>
+                    <hr />
+                    <label>Alıcı 3</label>
+                    <div class="form-group">
+                        <label>E-Mail Adres</label>
+                        @Html.TextBox("Alici_3_E_Mail_Adres", Model.Alici_3_E_Mail_Adres, new { @class = "form-control" })
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        @Html.CheckBox("Alici_3_E_Mail_Gonder", Model.Alici_3_E_Mail_Gonder ?? false, new { @class = "custom-control-input" })
+                        <label class="custom-control-label" for="Alici_3_E_Mail_Gonder">Gönder</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i> E-Mail Güncelle</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

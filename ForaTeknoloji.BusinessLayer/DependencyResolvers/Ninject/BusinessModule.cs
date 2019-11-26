@@ -57,6 +57,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IGroupsDetailNewDal>().To<EfGroupsDetailNewDal>().InSingletonScope();
             Bind<IStatusCodesDal>().To<EfStatusCodesDal>().InSingletonScope();
             Bind<ITaskCodesDal>().To<EfTaskCodeDal>().InSingletonScope();
+            Bind<IEmailSettingsDal>().To<EfEmailSettingsDal>().InSingletonScope();
+            Bind<ISMSSettingsDal>().To<EfSmsSettingsDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -98,6 +100,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IGroupsDetailNewService>().To<GroupsDetailNewManager>().InSingletonScope();
             Bind<IStatusCodesService>().To<StatusCodesManager>().InSingletonScope();
             Bind<ITaskCodeService>().To<TaskCodeManager>().InSingletonScope();
+            Bind<IEmailSettingsService>().To<EMailSettingsManager>().InSingletonScope();
+            Bind<ISmsSettingsService>().To<SmsSettingsManager>().InSingletonScope();
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

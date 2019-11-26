@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
-    public class EfSirketDal : EfEntityRepositoryBase<Sirketler, ForaContext>, ISirketDal
+    public class EfEmailSettingsDal : EfEntityRepositoryBase<EMailSetting, ForaContext>, IEmailSettingsDal
     {
-
     }
 }
