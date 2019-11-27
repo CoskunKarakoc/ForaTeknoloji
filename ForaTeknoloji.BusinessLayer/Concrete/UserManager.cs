@@ -56,5 +56,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _userDal.Get(x => x.Kayit_No == Kayit_No);
         }
+
+
+        public void DeleteAllUsers()
+        {
+            _userDal.DeleteAllUsers();
+        }
     }
 }

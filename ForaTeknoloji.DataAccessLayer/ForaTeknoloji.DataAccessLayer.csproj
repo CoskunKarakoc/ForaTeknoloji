@@ -79,6 +79,8 @@
     <Compile Include="Abstract\IPanelSettingsDal.cs" />
     <Compile Include="Abstract\IProgInitDal.cs" />
     <Compile Include="Abstract\IProgRelay2Dal.cs" />
+    <Compile Include="Abstract\IRawGroupsDal.cs" />
+    <Compile Include="Abstract\IRawUsersDal.cs" />
     <Compile Include="Abstract\IReaderSettingDal.cs" />
     <Compile Include="Abstract\IReaderSettingsNewDal.cs" />
     <Compile Include="Abstract\ISirketDal.cs" />
@@ -119,6 +121,8 @@
     <Compile Include="Concrete\EntityFramework\EfPanelSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfProgInitDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfProgRelay2Dal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfRawGorupsDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfRawUsersDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />

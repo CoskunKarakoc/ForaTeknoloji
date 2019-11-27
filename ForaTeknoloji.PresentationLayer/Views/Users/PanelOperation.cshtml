@@ -50,6 +50,7 @@
                                 <a data-toggle="modal" data-target="#panelList" title="Tümünü Panelden Sil" onclick="ekle(0,2629)" id="PanelDelete"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
                                 <a data-toggle="modal" data-target="#panelList" title="Tüm Geçiş Sayacını Sil" onclick="ekle(0,2702)" id="AccessDelete"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
                                 <a data-toggle="modal" data-target="#panelList" title="Tüm Antipassback Sayacını Sil" onclick="ekle(0,2711)" id="AntiDelete"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
+                                <a title="Tüm Kullanıcıları Sil" onclick="return confirm('Kullanıcıların Tümünü Veritabanından Silmek İstediğinize Emin Misiniz?')" id="AllDataUser" href="@Url.Action("DeleteDatabaseAll","Users")"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
                                 <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a>
                             </td>
 

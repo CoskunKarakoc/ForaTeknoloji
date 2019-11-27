@@ -81,6 +81,8 @@
     <Compile Include="Abstract\IPanelSettingsService.cs" />
     <Compile Include="Abstract\IProgInitService.cs" />
     <Compile Include="Abstract\IProgRelay2Service.cs" />
+    <Compile Include="Abstract\IRawGroupsService.cs" />
+    <Compile Include="Abstract\IRawUsersService.cs" />
     <Compile Include="Abstract\IReaderSettingsNewService.cs" />
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
@@ -122,6 +124,8 @@
     <Compile Include="Concrete\PanelSettingsManager.cs" />
     <Compile Include="Concrete\ProgInitManager.cs" />
     <Compile Include="Concrete\ProgRelay2Manager.cs" />
+    <Compile Include="Concrete\RawGroupsManager.cs" />
+    <Compile Include="Concrete\RawUsersManager.cs" />
     <Compile Include="Concrete\ReaderSettingsManager.cs" />
     <Compile Include="Concrete\ReaderSettingsNewManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />

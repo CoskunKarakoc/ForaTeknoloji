@@ -55,6 +55,8 @@
     <Compile Include="ComplexType\ComplexGroupsDetailNew.cs" />
     <Compile Include="ComplexType\DigerGecisRaporList.cs" />
     <Compile Include="ComplexType\DigerGecisRaporListKullaniciAlarm.cs" />
+    <Compile Include="ComplexType\ExcelGroupType.cs" />
+    <Compile Include="ComplexType\ExcelUserType.cs" />
     <Compile Include="ComplexType\GelenGelmeyenRaporList.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_Gelenler.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_Gelmeyen.cs" />

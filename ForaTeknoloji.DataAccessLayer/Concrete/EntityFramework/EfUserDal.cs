@@ -13,6 +13,16 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<Users, ForaContext>, IUserDal
     {
+
+        public void DeleteAllUsers()
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("TRUNCATE TABLE [Users]");
+            }
+        }
+
+
         public List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null)
         {
             using (var context = new ForaContext())
@@ -46,7 +56,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Plaka = u.Plaka,
                                 Gecis_Grubu = tbl4.Grup_Adi,
                                 Ziyaretci_Grubu = u.Visitor_Grup_No,
-                                String_Ziyaretci_Grubu=tbl5.Grup_Adi
+                                String_Ziyaretci_Grubu = tbl5.Grup_Adi
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();

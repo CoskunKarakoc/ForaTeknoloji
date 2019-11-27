@@ -417,6 +417,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult DeleteDatabaseAll()
+        {
+            _userService.DeleteAllUsers();
+            return RedirectToAction("PanelOperation");
+        }
+
+
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();

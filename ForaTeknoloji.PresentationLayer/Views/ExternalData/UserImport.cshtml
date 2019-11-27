@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Kullanıcı Verisi Al";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-7 offset-2">
+        <div class="card shadow-lg border-info mx-lg-5 my-lg-5 animated slideInLeft">
+            <div class="card-header-tabs mt-1">
+                <h3 class="text-muted text-center">Dış Veri Al(Excel)</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="text-info">Kullanıcılar</h4>
+                        <hr />
+                        <div class="form-group">
+                            @using (Html.BeginForm("ImportUser", "ExternalData", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="excelFile" name="excelFile">
+                                    <label class="custom-file-label" for="excelFile">Dosya Seç</label>
+                                </div>
+                                <span class="text-danger">@Html.Raw(ViewBag.Error)</span>
+                                <hr />
+                                <p class="text-muted my-2">Excel Sütun Numaraları</p>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>ID</label>
+                                            <input type="text" name="ID" id="ID" value="1" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Kart ID</label>
+                                            <input type="text" name="Kart_ID" id="Kart_ID" value="2" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Adı</label>
+                                            <input type="text" name="Adi" id="Adi" value="3" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Soyadı</label>
+                                            <input type="text" name="Soyadi" id="Soyadi" value="4" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Grup No</label>
+                                            <input type="text" name="Grup_No" id="Grup_No" value="5" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Plaka</label>
+                                            <input type="text" name="Plaka" id="Plaka" value="6" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Şirket No</label>
+                                            <input type="text" name="Sirket_No" id="Sirket_No" value="7" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Departman No</label>
+                                            <input type="text" name="Departman_No" id="Departman_No" value="8" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Telefon</label>
+                                            <input type="text" name="Telefon" id="Telefon" value="9" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>TC Kimlik</label>
+                                            <input type="text" name="TC_Kimlik" id="TC_Kimlik" value="10" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right mt-5"><button type="submit" class="btn btn-sm btn-outline-secondary"> Dış Veri Al</button></div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="fas fa-info-circle">&nbsp;</span>
+                        <span><i>İlk satır sütun başlıkları olacak şekilde döküman hazırlayınız.</i></span><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -13,6 +13,7 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
     public interface IUserDal : IEntityRepository<Users>
     {
+        void DeleteAllUsers();
         List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null);
     }
 }

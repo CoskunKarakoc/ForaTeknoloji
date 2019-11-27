@@ -14,5 +14,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         GroupsMaster AddGroupsMaster(GroupsMaster groupsMaster);
         void DeleteGroupsMaster(GroupsMaster groupsMaster);
         GroupsMaster UpdateGroupsMaster(GroupsMaster groupsMaster);
+        void DeleteAll();
     }
 }

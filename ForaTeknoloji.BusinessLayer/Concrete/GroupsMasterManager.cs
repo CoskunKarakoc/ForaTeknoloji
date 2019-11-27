@@ -42,7 +42,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
-
+        public void DeleteAll()
+        {
+            _groupMasterDal.DeleteAll();
+        }
 
 
 

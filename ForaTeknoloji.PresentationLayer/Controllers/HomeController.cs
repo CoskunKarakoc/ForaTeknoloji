@@ -45,7 +45,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     return View(login);
                 }
                 CurrentSession.Set<DBUsers>("login", user);//Session'a bilgi saklama
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Watch");
 
             }
             return View(login);

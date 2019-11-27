@@ -21,5 +21,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         Users UpdateUsers(Users users);
         List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null);
         Users GetByKayitNo(int? Kayit_No);
+        void DeleteAllUsers();
     }
 }

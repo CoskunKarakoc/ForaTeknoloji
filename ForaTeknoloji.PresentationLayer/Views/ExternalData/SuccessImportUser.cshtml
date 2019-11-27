@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.RawUsers>
+    @{
+        ViewBag.Title = "Success";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <div class="card border-info shadow-lg mx-lg-5 my-lg-5 animated slideInLeft">
+                <div class="card-header-tabs mt-1">
+                    <h3 class="text-muted text-center">Kullanıcı Listesi</h3>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("AddUser", "ExternalData", FormMethod.Post))
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+
+                                    <input type="checkbox" id="TabloDelete" name="TabloDelete" value="true" class="custom-control-input" />
+                                    <label for="TabloDelete" class="custom-control-label">Önceki Kullanıcılar Tablosunu Sil</label>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-download"></i> Kullanıcılar Tablosuna Kaydet</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+
+                    <table class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>Kullanıcı ID</td>
+                                <td>Kart No</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Grup No</td>
+                                <td>Plaka</td>
+                                <td>Şirket No</td>
+                                <td>Departman No</td>
+                                <td>Telefon</td>
+                                <td>TC Kimlik</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.ID</td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Soyadi</td>
+                                    <td>@item.Grup_No</td>
+                                    <td>@item.Plaka</td>
+                                    <td>@item.Sirket_No</td>
+                                    <td>@item.Departman_No</td>
+                                    <td>@item.Telefon</td>
+                                    <td>@item.TCKimlik</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

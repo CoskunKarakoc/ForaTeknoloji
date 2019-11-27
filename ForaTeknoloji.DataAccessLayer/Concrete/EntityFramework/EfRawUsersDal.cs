@@ -9,14 +9,7 @@ using System.Threading.Tasks;
 
 namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
-    public class EfGroupsMasterDal : EfEntityRepositoryBase<GroupsMaster, ForaContext>, IGroupMasterDal
+    public class EfRawUsersDal : EfEntityRepositoryBase<RawUsers, ForaContext>, IRawUsersDal
     {
-        public void DeleteAll()
-        {
-            using (var context = new ForaContext())
-            {
-                context.Database.ExecuteSqlCommand("TRUNCATE TABLE [GroupsMaster]");
-            }
-        }
     }
 }
