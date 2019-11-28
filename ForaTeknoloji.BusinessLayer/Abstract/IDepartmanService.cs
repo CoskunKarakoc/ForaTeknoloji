@@ -14,6 +14,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         Departmanlar GetById(int id);
         Departmanlar AddDepartman(Departmanlar departman);
         void DeleteDepartmanlar(Departmanlar departman);
+        void DeleteAll();
         Departmanlar UpdateDepartman(Departmanlar departman);
         List<Departmanlar> GetByKullaniciAdi(string kullaniciAdi);
         Departmanlar GetByDepartmanAdi(string departmanAdi);

@@ -11,5 +11,15 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
     public class EfRawUsersDal : EfEntityRepositoryBase<RawUsers, ForaContext>, IRawUsersDal
     {
+
+        public void DeleteAll()
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("TRUNCATE TABLE [RawUsers]");
+            }
+        }
+
+
     }
 }

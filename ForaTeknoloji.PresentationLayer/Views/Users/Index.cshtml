@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 }
-                <hr />  
+                <hr />
                 @if (Model.Users.Count == 0)
                 {
                     <div class="alert alert-info" role="alert">
@@ -67,7 +67,7 @@
                                 <td>@item.String_Ziyaretci_Grubu</td>
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Users",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                    <a title="Delete" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
                                     <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(@item.ID,2620)" id="send"><i class="fas fa-share text-success mr-2"></i></a>
                                     <a data-toggle="modal" data-target="#panelListReceive" title="Receive From Panel" onclick="receiveAdd(@item.ID)" id="send"><i class="fas fa-reply text-success mr-2"></i></a>
                                 </td>
@@ -250,7 +250,45 @@
 </script>
 
 
+<script>
+    function Delete(id) {
 
+        swal({
+            title: "Silmek İstediğinize Emin Misiniz?",
+            text: "Seçilen kullanıcı veritabanından silinecek!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                      $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("Delete","Users")',
+                            data: JSON.stringify({ id: id }),
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                          success: function (data) {
+                              if (data) {
+                                  swal("Başarılı! Kullanıcı silme işlemi başarılı şekilde gerçekleştirildi!", {
+                                      icon: "success",
+                                  });
+                              } else {
+                                  //swal("Silme işleminden vazgeçildi!");
+                              }
+                              setTimeout(function () {
+                                  window.location.href = "/Users/Index";
+                              }, 2500);
+                            },
+                            error: function () {
+                                alert("Error while deleting data");
+                            }
+                        });
+                }
+            });
+    }
+
+</script>
 
 
 

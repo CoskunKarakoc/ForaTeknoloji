@@ -10,5 +10,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
     public interface IRawUsersDal : IEntityRepository<RawUsers>
     {
+        void DeleteAll();
     }
 }

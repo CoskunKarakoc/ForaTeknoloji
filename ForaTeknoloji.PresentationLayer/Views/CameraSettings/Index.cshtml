@@ -57,7 +57,7 @@
                                     <td>@item.Kapi_ID</td>
                                     <td>
                                         <a title="Edit" id="edit" href="@Url.Action("Edit","CameraSettings",new { id=item.Kamera_No})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                        <a title="Delete" onclick="return confirm('Kamerayı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","CameraSettings",new { id=item.Kamera_No})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                        <a title="Delete" onclick="Delete(@item.Kamera_No)"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -88,4 +88,45 @@
         }
 
     });
+</script>
+
+
+<script>
+    function Delete(id) {
+
+        swal({
+            title: "Silmek İstediğinize Emin Misiniz?",
+            text: "Seçilen kamera veritabanından silinecek!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                      $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("Delete","CameraSettings")',
+                            data: JSON.stringify({ id: id }),
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                          success: function (data) {
+                              if (data) {
+                                  swal("Başarılı! Kamera silme işlemi başarılı şekilde gerçekleştirildi!", {
+                                      icon: "success",
+                                  });
+                              } else {
+                                  //swal("Silme işleminden vazgeçildi!");
+                              }
+                              setTimeout(function () {
+                                  window.location.href = "/CameraSettings/Index";
+                              }, 2500);
+                            },
+                            error: function () {
+                                alert("Error while deleting data");
+                            }
+                        });
+                }
+            });
+    }
+
 </script>

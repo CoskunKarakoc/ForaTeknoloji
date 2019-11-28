@@ -14,6 +14,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         RawUsers GetById(int id);
         RawUsers AddRawUsers(RawUsers rawUsers);
         void DeleteRawUsers(RawUsers rawUsers);
+        void DeleteAll();
         RawUsers UpdateRawUsers(RawUsers rawUsers);
     }
 }

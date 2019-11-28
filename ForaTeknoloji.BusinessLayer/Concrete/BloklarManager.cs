@@ -21,6 +21,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _bloklarDal.Add(bloklar);
         }
 
+        public void DeleteAll()
+        {
+            _bloklarDal.DeleteAll();
+        }
+
         public void DeleteBloklar(Bloklar bloklar)
         {
             _bloklarDal.Delete(bloklar);
@@ -38,7 +43,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
         public Bloklar GetById(int id)
         {
-           return _bloklarDal.Get(x => x.Blok_No == id);
+            return _bloklarDal.Get(x => x.Blok_No == id);
         }
 
         public Bloklar UpdateBloklar(Bloklar bloklar)

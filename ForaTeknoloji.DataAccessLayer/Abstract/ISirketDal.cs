@@ -10,5 +10,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
     public interface ISirketDal : IEntityRepository<Sirketler>
     {
+        void DeleteAll();
     }
 }

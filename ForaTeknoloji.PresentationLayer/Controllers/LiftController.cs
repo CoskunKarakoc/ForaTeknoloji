@@ -144,7 +144,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _liftGroupsService.DeleteLiftGroup(new LiftGroups { Asansor_Grup_No = (int)id });
-                    return RedirectToAction("LiftGroups");
+                    return Json(true, JsonRequestBehavior.AllowGet);
                 }
             }
             throw new Exception("Upps! Yanlış giden birşeyler var.");

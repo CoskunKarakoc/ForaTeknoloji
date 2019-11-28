@@ -16,16 +16,21 @@
                 <div class="card-body">
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.Ziyaretci.ID)
+                    @Html.Hidden("Kayit_No", Model.Ziyaretci.Kayit_No)
+                    @Html.Hidden("Saat", Model.Ziyaretci.Saat)
                     <hr />
                     <div class="row">
                         <div class="col-md-7">
                             <div class="form-group">
                                 <label class="control-label col-md-5">Ziyaretçi Kart ID</label>
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.EditorFor(model => model.Ziyaretci.Kart_ID, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Ziyaretci.Kart_ID, "", new { @class = "text-danger" })
+                                    <div class="input-group mb-3">
+                                        <input type="text" id="Kart_ID" name="Kart_ID" hidden value="@Model.Ziyaretci.Kart_ID" />
+                                        <input type="text" id="User_ID" name="User_ID" hidden value="@Model.Ziyaretci.User_ID" />
+                                        <input type="text" class="form-control" value="@Model.Ziyaretci.Kart_ID" disabled name="HiddenKart_ID" id="HiddenKart_ID" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button data-toggle="modal" data-target="#userCardModal" class="btn btn-outline-success" type="button"><i class="fas fa-id-card"></i></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +40,7 @@
                                 <label class="control-label col-md-5">TC Kimlik No</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Ziyaretci.TCKimlik, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.TextBox("TCKimlik", Model.Ziyaretci.TCKimlik, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Ziyaretci.TCKimlik, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -46,7 +51,7 @@
                                 <label class="control-label col-md-5">Adı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Ziyaretci.Adi, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.TextBox("Adi", Model.Ziyaretci.Adi, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Ziyaretci.Adi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -57,7 +62,7 @@
                                 <label class="control-label col-md-5">Soyadı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Ziyaretci.Soyadi, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.TextBox("Soyadi", Model.Ziyaretci.Soyadi, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Ziyaretci.Soyadi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -68,7 +73,7 @@
                                 @Html.LabelFor(model => model.Ziyaretci.Plaka, htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Ziyaretci.Plaka, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.TextBox("Plaka", Model.Ziyaretci.Plaka, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Ziyaretci.Plaka, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -79,7 +84,7 @@
                                 <label class="control-label col-md-5">Telefon</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Ziyaretci.Telefon, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.TextBox("Telefon", Model.Ziyaretci.Telefon, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Ziyaretci.Telefon, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -94,7 +99,7 @@
                             else
                             {
                                 <label class="control-label col-md-5">Ziyaret Tarihi</label>
-                                @Html.TextBoxFor(model => model.Ziyaretci.Tarih, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                                @Html.TextBox("Tarih", Model.Ziyaretci.Tarih, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
                             }
 
 
@@ -102,7 +107,7 @@
                                 <label class="control-label col-md-5">Ziyaret Sebebi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.TextAreaFor(model => model.Ziyaretci.Ziyaret_Sebebi, new { @class = "form-control" })
+                                        @Html.TextArea("Ziyaret_Sebebi", Model.Ziyaretci.Ziyaret_Sebebi, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.Ziyaretci.Ziyaret_Sebebi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -129,7 +134,8 @@
                                 <label class="control-label col-md-5">Personel ID</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Personel.ID, new { htmlAttributes = new { @class = "form-control" } })
+                                        <input type="text" id="ID" name="ID" value="@Model.Personel.ID" class="form-control" />
+                                        @*@Html.TextBox("ID", Model.Personel.ID, new { @class = "form-control" })*@
                                         @Html.ValidationMessageFor(model => model.Personel.ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -162,8 +168,8 @@
                                 <label class="control-label col-md-4">Geçiş Grubu</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No", null, "", new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.Ziyaretci.Grup_No, "", new { @class = "text-danger" })
+                                        <input type="text" id="Grup_No" name="Grup_No" hidden value="@Model.Ziyaretci.Grup_No" />
+                                        <input type="text" id="Grup_Adi" name="Grup_Adi" value="@Model.GrupAdi" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +238,7 @@
                         @foreach (var item in Model.Personeller)
                         {
                             <tr>
-                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-personelsoyadi="@item.Soyadi">@item.ID</td>
+                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-personelsoyadi="@item.Soyadi" data-grup="@item.Grup_No" data-grupadi="@item.Gecis_Grubu">@item.ID</td>
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
@@ -257,6 +263,48 @@
 </div>
 
 
+<!--Card List Modal -->
+<div class="modal fade" id="userCardModal" tabindex="-1" role="dialog" aria-labelledby="userCardLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ziyaretçi Kartları</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="cardTable" class="table table-hover text-center table-striped small">
+                    <thead class="table-info">
+                        <tr>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Grup No</td>
+                            <td>Grup Adı</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.VisitorCardList)
+                        {
+                            <tr>
+                                <td data-userid="@item.ID" data-cardid="@item.Kart_ID">@item.ID</td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                <td>@item.Grup_No</td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     $(document).ready(function () {
@@ -265,7 +313,11 @@
             var ID = $(this).children("td").data("id");
             var Adi = $(this).children("td").data("personeladi");
             var Soyadi = $(this).children("td").data("personelsoyadi");
-            $("#Personel_ID").attr('value', ID);
+            var grup = $(this).children("td").data("grup");
+            var grupAdi = $(this).children("td").data("grupadi");
+            $("#Grup_No").attr("value", grup);
+            $("#Grup_Adi").attr("value", grupAdi);
+            $("#ID").attr('value', ID);
             $("#Personel_Adi").attr('value', Adi);
             $("#Personel_Soyadi").attr('value', Soyadi);
             $("#alert").text(Adi + " " + Soyadi + " Seçildi!");
@@ -275,6 +327,15 @@
                 $(this).addClass("table-success");
         });
 
+        $("#cardTable tbody tr").click(function () {
+            var cardID = $(this).children("td").data("cardid");
+            var userID = $(this).children("td").data("userid");
+            $("#Kart_ID").attr('value', cardID);
+            $("#User_ID").attr('value', userID);
+            $("#HiddenKart_ID").attr('value', cardID);
+            $("#cardTable tbody tr").removeClass("table-success");
+            $(this).toggleClass("table-success");
+        });
 
         $("#SearchBtn").click(function () {
             var arama = $("#Search").val();
@@ -305,7 +366,7 @@
                     var ID = $(this).children("td").data("id");
                     var Adi = $(this).children("td").data("personeladi");
                     var Soyadi = $(this).children("td").data("personelsoyadi");
-                    $("#Personel_ID").attr('value', ID);
+                    $("#ID").attr('value', ID);
                     $("#Personel_Adi").attr('value', Adi);
                     $("#Personel_Soyadi").attr('value', Soyadi);
                     $("#alert").text(Adi + " " + Soyadi + " Seçildi!");
@@ -344,7 +405,7 @@
                     var ID = $(this).children("td").data("id");
                     var Adi = $(this).children("td").data("personeladi");
                     var Soyadi = $(this).children("td").data("personelsoyadi");
-                    $("#Personel_ID").attr('value', ID);
+                    $("#ID").attr('value', ID);
                     $("#Personel_Adi").attr('value', Adi);
                     $("#Personel_Soyadi").attr('value', Soyadi);
                     $("#alert").text(Adi + " " + Soyadi + " Seçildi!");
@@ -361,7 +422,7 @@
 
 <script>
     $("#temizle").click(function () {
-        $("#Personel_ID").attr("value", null);
+        $("#ID").attr("value", null);
         $("#Personel_Adi").attr("value", null);
         $("#Personel_Soyadi").attr("value", null);
         $("#alert").text("");

@@ -1,4 +1,5 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.CreateVisitorViewModel
+@using ForaTeknoloji.BusinessLayer.Abstract;
 @{
     ViewBag.Title = "Yeni Ziyaretçi";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,9 +21,13 @@
                             <div class="form-group">
                                 <label class="control-label col-md-5">Ziyaretçi Kart ID</label>
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" name="Kart_ID" class="form-control" value="" />
-
+                                    <div class="input-group mb-3">
+                                        <input type="text" id="Kart_ID" name="Kart_ID" hidden value="" />
+                                        <input type="text" id="User_ID" name="User_ID" hidden value="" />
+                                        <input type="text" class="form-control" disabled name="HiddenKart_ID" id="HiddenKart_ID" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button data-toggle="modal" data-target="#userCardModal" class="btn btn-outline-success" type="button"><i class="fas fa-id-card"></i></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +126,7 @@
                                 <label class="control-label col-md-5">Personel ID</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="Personel_ID" name="User_ID" value="" />
+                                        <input type="text" class="form-control" id="Personel_ID" name="ID" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +156,11 @@
                                 <label class="control-label col-md-4">Geçiş Grubu</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No", Model.Grup_No, "Grup No Seçiniz...", new { @class = "form-control" })
+
+                                        <input type="text" id="Grup_No" name="Grup_No" hidden value="" />
+                                        <input type="text" id="Grup_Adi" name="Grup_Adi" value="" class="form-control" />
+
+                                        @*@Html.DropDownList("Grup_No", Model.Grup_No, "Grup No Seçiniz...", new { @class = "form-control" })*@
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +214,7 @@
                     <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
                 </div>
                 <hr />
-                <table id="myTable" class="table table-hover text-center table-striped">
+                <table id="myTable" class="table table-hover text-center table-striped small">
                     <thead class="table-info">
                         <tr>
                             <td>ID</td>
@@ -223,7 +232,7 @@
                         @foreach (var item in Model.ComplexPersoneller)
                         {
                             <tr>
-                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-personelsoyadi="@item.Soyadi" data-groupno="@item.Ziyaretci_Grubu">@item.ID</td>
+                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-personelsoyadi="@item.Soyadi" data-groupno="@item.Grup_No" data-groupadi="@item.Gecis_Grubu">@item.ID</td>
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
@@ -249,6 +258,51 @@
 
 
 
+
+<!--Card List Modal -->
+<div class="modal fade" id="userCardModal" tabindex="-1" role="dialog" aria-labelledby="userCardLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ziyaretçi Kartları</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="cardTable" class="table table-hover text-center table-striped small">
+                    <thead class="table-info">
+                        <tr>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Grup No</td>
+                            <td>Grup Adı</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.VisitorCardList)
+                        {
+                            <tr>
+                                <td data-userid="@item.ID" data-cardid="@item.Kart_ID">@item.ID</td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                <td>@item.Grup_No</td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <script>
     $(document).ready(function () {
         $("#myTable tbody tr").click(function () {
@@ -256,14 +310,25 @@
             var ID = $(this).children("td").data("id");
             var Adi = $(this).children("td").data("personeladi");
             var Soyadi = $(this).children("td").data("personelsoyadi");
-            var ZiyaretGrup = $(this).children("td").data("groupno");
+            var Grup = $(this).children("td").data("groupno");
+            var GrupAdi = $(this).children("td").data("groupadi");
             $("#Personel_ID").attr('value', ID);
             $("#Personel_Adi").attr('value', Adi);
             $("#Personel_Soyadi").attr('value', Soyadi);
-            $("#Grup_No").attr('value', ZiyaretGrup);
+            $("#Grup_No").attr('value', Grup);
+            $("#Grup_Adi").attr('value', GrupAdi);
             $("#alert").text(Adi + " " + Soyadi + " Seçildi!");
         });
 
+        $("#cardTable tbody tr").click(function () {
+            var cardID = $(this).children("td").data("cardid");
+            var userID = $(this).children("td").data("userid");
+            $("#Kart_ID").attr('value', cardID);
+            $("#User_ID").attr('value', userID);
+            $("#HiddenKart_ID").attr('value', cardID);
+            $("#cardTable tbody tr").removeClass("table-success");
+            $(this).toggleClass("table-success");
+        });
 
         $("#SearchBtn").click(function () {
             var arama = $("#Search").val();

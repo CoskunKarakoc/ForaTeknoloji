@@ -35,6 +35,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 if (departmanlar.Adi != null)
                 {
+                    var ID = _departmanService.GetAllDepartmanlar().Count;
+                    if (ID == 0)
+                        _departmanService.DeleteAll();
+
+
                     _departmanService.AddDepartman(departmanlar);
                     return RedirectToAction("Index");
                 }
@@ -51,10 +56,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (departman != null)
                 {
                     _departmanService.DeleteDepartmanlar(departman);
-                    return RedirectToAction("Index");
+                    return Json(true, JsonRequestBehavior.AllowGet);
                 }
             }
-            return RedirectToAction("Index");
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int? id)

@@ -23,6 +23,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _rawUsersDal.Add(rawUsers);
         }
 
+        public void DeleteAll()
+        {
+            _rawUsersDal.DeleteAll();
+        }
+
         public void DeleteRawUsers(RawUsers rawUsers)
         {
             _rawUsersDal.Delete(rawUsers);

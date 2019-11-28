@@ -56,5 +56,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _sirketDal.Get(x => x.Adi == SirketAdi);
         }
+
+        public void DeleteAll()
+        {
+            _sirketDal.DeleteAll();
+        }
     }
 }

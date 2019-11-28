@@ -53,5 +53,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _departmanDal.Get(x => x.Adi == departmanAdi);
         }
+
+        public void DeleteAll()
+        {
+            _departmanDal.DeleteAll();
+        }
     }
 }

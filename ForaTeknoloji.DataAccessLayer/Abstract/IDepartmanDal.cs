@@ -10,5 +10,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
     public interface IDepartmanDal : IEntityRepository<Departmanlar>
     {
+        void DeleteAll();
     }
 }

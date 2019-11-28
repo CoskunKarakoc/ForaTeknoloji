@@ -11,5 +11,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<Users> Personeller { get; set; }
         public List<Users> Ziyaretciler { get; set; }
         public List<EfUserDal.ComplexUser> ComplexPersoneller { get; internal set; }
+        public List<Users> VisitorCardList { get; internal set; }
     }
 }

@@ -33,8 +33,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (bloklar.Adi!=null)
+                if (bloklar.Adi != null)
                 {
+                    var ID = _bloklarService.GetAllBloklar().Count;
+                    if (ID == 0)
+                        _bloklarService.DeleteAll();
+
                     _bloklarService.AddBloklar(bloklar);
                     return RedirectToAction("Index");
                 }
@@ -51,10 +55,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (bloklar != null)
                 {
                     _bloklarService.DeleteBloklar(bloklar);
-                    return RedirectToAction("Index");
+                    return Json(true, JsonRequestBehavior.AllowGet);
                 }
             }
-            return RedirectToAction("Index");
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int? id)

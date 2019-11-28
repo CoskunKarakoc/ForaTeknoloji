@@ -56,7 +56,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Plaka = u.Plaka,
                                 Gecis_Grubu = tbl4.Grup_Adi,
                                 Ziyaretci_Grubu = u.Visitor_Grup_No,
-                                String_Ziyaretci_Grubu = tbl5.Grup_Adi
+                                String_Ziyaretci_Grubu = tbl5.Grup_Adi,
+                                Grup_No = tbl4.Grup_No
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();
@@ -65,6 +66,55 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 
 
         }
+
+
+        public List<ComplexUser> GetAllUsersWithOutherOnlyUser(Expression<Func<ComplexUser, bool>> filter = null)
+        {
+            using (var context = new ForaContext())
+            {
+                var query = from u in context.Users
+                            join s in context.Sirketler
+                            on u.Sirket_No equals s.Sirket_No into tb1
+                            from tbl1 in tb1.DefaultIfEmpty()
+                            join d in context.Departmanlar
+                            on u.Departman_No equals d.Departman_No into tb2
+                            from tbl2 in tb2.DefaultIfEmpty()
+                            join b in context.Bloklar
+                            on u.Blok_No equals b.Blok_No into tb3
+                            from tbl3 in tb3.DefaultIfEmpty()
+                            join g in context.GroupsMaster
+                            on u.Grup_No equals g.Grup_No into tb4
+                            from tbl4 in tb4.DefaultIfEmpty()
+                            join gm in context.GroupsMaster
+                            on u.Visitor_Grup_No equals gm.Grup_No into tb5
+                            from tbl5 in tb5.DefaultIfEmpty()
+                            where u.Kullanici_Tipi == 0
+                            select new ComplexUser
+                            {
+                                Kayit_No = u.Kayit_No,
+                                ID = u.ID,
+                                Kart_ID = u.Kart_ID,
+                                Adi = u.Adi,
+                                Soyadi = u.Soyadi,
+                                Sirket = tbl1.Adi,
+                                Departman = tbl2.Adi,
+                                Blok = tbl3.Adi,
+                                Plaka = u.Plaka,
+                                Gecis_Grubu = tbl4.Grup_Adi,
+                                Ziyaretci_Grubu = u.Visitor_Grup_No,
+                                String_Ziyaretci_Grubu = tbl5.Grup_Adi,
+                                Grup_No = tbl4.Grup_No
+                            };
+
+                return filter == null ? query.ToList() : query.Where(filter).ToList();
+
+            }
+
+
+        }
+
+
+
 
         public class ComplexUser
         {
@@ -78,6 +128,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Blok { get; set; }
             public string Plaka { get; set; }
             public string Gecis_Grubu { get; set; }
+            public int? Grup_No { get; set; }
             public int? Ziyaretci_Grubu { get; set; }
             public string String_Ziyaretci_Grubu { get; set; }
 

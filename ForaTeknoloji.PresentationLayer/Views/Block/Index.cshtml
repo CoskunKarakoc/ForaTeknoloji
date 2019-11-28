@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row animated flipInX">
+<div class="row animated slideInDown">
     <div class="col-md-6 offset-md-3 mt-xl-5 my-xl-5">
         <div class=" card border-info shadow-lg mt-2">
             <div class="card-header-tabs">
@@ -52,7 +52,7 @@
                                 <td>@item.Adi</td>
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Block",new { id=item.Blok_No})"><i class="fas fa-edit text-info mr-5"></i></a>
-                                    <a title="Delete" onclick="return confirm('Silmek İstediğinize Emin misiniz?')" href="@Url.Action("Delete","Block",new { id=item.Blok_No})"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    <a title="Delete" onclick="Delete(@item.Blok_No)"><i class="fas fa-trash-alt text-danger"></i></a>
                                 </td>
                             </tr>
                         }
@@ -76,4 +76,44 @@
             $("#Title").prop("hidden", false);
         }
     });
+</script>
+
+<script>
+    function Delete(id) {
+
+        swal({
+            title: "Silmek İstediğinize Emin Misiniz?",
+            text: "Seçilen blok veritabanından silinecek!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                      $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("Delete","Block")',
+                            data: JSON.stringify({ id: id }),
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                          success: function (data) {
+                              if (data) {
+                                  swal("Başarılı! Blok silme işlemi başarılı şekilde gerçekleştirildi!", {
+                                      icon: "success",
+                                  });
+                              } else {
+                                  //swal("Silme işleminden vazgeçildi!");
+                              }
+                              setTimeout(function () {
+                                  window.location.href = "/Block/Index";
+                              }, 2500);
+                            },
+                            error: function () {
+                                alert("Error while deleting data");
+                            }
+                        });
+                }
+            });
+    }
+
 </script>

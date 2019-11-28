@@ -25,7 +25,8 @@
                                 <label class="control-label col-md-4">Kullanıcı ID</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.TextBoxFor(model => model.ID, null, new { @class = "form-control", disabled = true })
+                                        <input type="text" id="ID" name="ID" hidden value="@Model.ID" />
+                                        @Html.TextBox("IDD", Model.ID, null, new { @class = "form-control", disabled = true })
                                     </div>
                                 </div>
                             </div>

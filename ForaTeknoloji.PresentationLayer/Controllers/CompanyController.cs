@@ -35,6 +35,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 if (Sirket.Adi != null)
                 {
+                    var ID = _sirketService.GetAllSirketler().Count;
+                    if (ID == 0)
+                        _sirketService.DeleteAll();
+
                     _sirketService.AddSirket(Sirket);
                     return RedirectToAction("Index");
                 }
@@ -51,10 +55,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (sirket != null)
                 {
                     _sirketService.DeleteSirket(sirket);
-                    return RedirectToAction("Index");
+                    return Json(true, JsonRequestBehavior.AllowGet);
                 }
             }
-            return RedirectToAction("Index");
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(int? id)

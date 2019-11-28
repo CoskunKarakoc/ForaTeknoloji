@@ -10,5 +10,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
     public interface IBloklarDal : IEntityRepository<Bloklar>
     {
+        void DeleteAll();
     }
 }

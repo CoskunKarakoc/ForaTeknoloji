@@ -62,5 +62,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             _userDal.DeleteAllUsers();
         }
+
+        public List<ComplexUser> GetAllUsersWithOutherOnlyUser(Expression<Func<ComplexUser, bool>> filter = null)
+        {
+            return filter == null ? _userDal.GetAllUsersWithOutherOnlyUser() : _userDal.GetAllUsersWithOutherOnlyUser(filter);
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new VisitorListViewModel
                 {
-                    Visitor = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim())),
+                    Visitor = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim())).OrderByDescending(x => x.Kayit_No).ToList(),
                     PanelListesi = UserPanelList()
                 };
 
@@ -64,7 +64,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new VisitorListViewModel
                 {
-                    Visitor = _visitorsService.GetAllVisitors(),
+                    Visitor = _visitorsService.GetAllVisitors().OrderByDescending(x => x.Kayit_No).ToList(),
                     PanelListesi = UserPanelList()
                 };
                 return View(model);
@@ -89,7 +89,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
                 Personeller = Personel,
                 Ziyaretciler = Ziyaretci,
-                ComplexPersoneller = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList()
+                ComplexPersoneller = _userService.GetAllUsersWithOutherOnlyUser().OrderBy(x => x.Kayit_No).ToList(),
+                VisitorCardList = _userService.GetAllUsers().Where(x => x.Kullanici_Tipi == 1).ToList()
             };
 
 
@@ -99,6 +100,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]
         public ActionResult Create(Visitors visitors, HttpPostedFileBase ProfileImage)
         {
+
+
+
             if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" || ProfileImage.ContentType == "image/jpg" || ProfileImage.ContentType == "image/png"))
             {
                 string filename = $"visitor_{visitors.ID}.{ProfileImage.ContentType.Split('/')[1]}";
@@ -108,6 +112,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (ModelState.IsValid)
             {
+                visitors.Saat = DateTime.Now;
                 _visitorsService.AddVisitor(visitors);
                 return RedirectToAction("Index");
             }
@@ -124,12 +129,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (id == null)
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
 
-            Visitors visitors = _visitorsService.GetById((int)id);
+            Visitors visitors = _visitorsService.GetAllVisitors().Find(x => x.Kayit_No == id);
 
             if (visitors.Resim == null)
                 visitors.Resim = "BaseUser.jpg";
 
-            Users users = _userService.GetById((int)visitors.User_ID);
+            Users users = _userService.GetById((int)visitors.ID);
 
             if (visitors == null)
                 return HttpNotFound();
@@ -137,8 +142,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var model = new VisitorEditViewModel
             {
                 Ziyaretci = visitors,
+                GrupAdi = _groupMasterService.GetById((int)visitors.Grup_No).Grup_Adi,
                 Personel = users,
-                Personeller = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList()
+                Personeller = _userService.GetAllUsersWithOutherOnlyUser().OrderBy(x => x.Kayit_No).ToList(),
+                VisitorCardList = _userService.GetAllUsers().Where(x => x.Kullanici_Tipi == 1).ToList()
             };
 
             ViewBag.Grup_No = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", visitors.Grup_No);
@@ -154,7 +161,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" || ProfileImage.ContentType == "image/jpg" || ProfileImage.ContentType == "image/png"))
             {
-                string filename = $"visitor_{entity.ID}.{ProfileImage.ContentType.Split('/')[1]}";
+                string filename = $"visitor_{entity.Kayit_No}.{ProfileImage.ContentType.Split('/')[1]}";
                 ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
                 entity.Resim = filename;
             }

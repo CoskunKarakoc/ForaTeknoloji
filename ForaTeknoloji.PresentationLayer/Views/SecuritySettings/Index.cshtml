@@ -35,7 +35,7 @@
                                 <td>@item.OtherDeviceReports</td>
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                    <a title="Delete" onclick="Delete(@item.Kullanici_Adi)"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
                                 </td>
                             </tr>
                         }
@@ -45,3 +45,44 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+    function Delete(kullaniciAdi) {
+        swal({
+            title: "Silmek İstediğinize Emin Misiniz?",
+            text: "Seçilen kullanıcı veritabanından silinecek!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                      $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("Delete", "SecuritySettings")',
+                            data: JSON.stringify({ kullaniciAdi: kullaniciAdi }),
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                          success: function (data) {
+                              if (data) {
+                                  swal("Başarılı! Kullanıcı silme işlemi başarılı şekilde gerçekleştirildi!", {
+                                      icon: "success",
+                                  });
+                              } else {
+                                  //swal("Silme işleminden vazgeçildi!");
+                              }
+                              setTimeout(function () {
+                                  window.location.href = "/SecuritySettings/Index";
+                              }, 2500);
+                            },
+                            error: function () {
+                                alert("Error while deleting data");
+                            }
+                        });
+                }
+            });
+    }
+
+</script>

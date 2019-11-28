@@ -221,7 +221,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var User = _userService.GetAllUsers().FirstOrDefault(x => x.ID == entity.ID);
                 if (User != null)
                 {
-                    if (_userService.GetAllUsers().Any(x => x.Kart_ID == entity.Kart_ID))
+                    if (_userService.GetAllUsers().Any(x => x.Kart_ID == entity.Kart_ID && x.ID != entity.ID))
                         throw new Exception("Kart ID'si daha önceden kullanılıyor.");
                     _userService.UpdateUsers(entity);
                     return RedirectToAction("Index");
@@ -239,9 +239,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 Users users = _userService.GetById(id);
                 _userService.DeleteUsers(users);
-                return RedirectToAction("Index");
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
-            return RedirectToAction("Index");
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -367,6 +367,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         foreach (var panel in PanelList)
                         {
+                            TaskList taskListRemove = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
+                                IntParam_1 = 0,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = panel,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            _taskListService.AddTaskList(taskListRemove);
+
                             foreach (var userID in _userService.GetAllUsers().Select(u => u.ID))
                             {
                                 TaskList taskList = new TaskList

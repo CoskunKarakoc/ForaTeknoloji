@@ -128,5 +128,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult Delete(string kullaniciAdi)
+        {
+            if (kullaniciAdi != null)
+            {
+                DBUsers user = _dBUsersService.GetById(kullaniciAdi);
+                if (user != null)
+                {
+                    _dBUsersService.DeleteDBUsers(user);
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
     }
 }
