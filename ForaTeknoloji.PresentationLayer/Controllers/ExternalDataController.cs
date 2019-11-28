@@ -51,7 +51,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (excelFile.FileName.EndsWith("xls") || excelFile.FileName.EndsWith("xlsx"))
                 {
 
-                    string path = Server.MapPath("~/ExcelFile/" + excelFile.FileName + Guid.NewGuid());
+                    string path = Server.MapPath("~/ExcelFile/" + Guid.NewGuid() + excelFile.FileName);
                     if (System.IO.File.Exists(path))
                         System.IO.File.Delete(path);
                     excelFile.SaveAs(path);
@@ -113,7 +113,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (excelFile.FileName.EndsWith("xls") || excelFile.FileName.EndsWith("xlsx"))
                 {
 
-                    string path = Server.MapPath("~/ExcelFile/" + excelFile.FileName + Guid.NewGuid());
+                    string path = Server.MapPath("~/ExcelFile/" + Guid.NewGuid() + excelFile.FileName);
                     if (System.IO.File.Exists(path))
                         System.IO.File.Delete(path);
                     excelFile.SaveAs(path);
