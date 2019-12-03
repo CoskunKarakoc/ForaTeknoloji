@@ -118,7 +118,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             WKapi_Kapi_Tipi = 0,
                             WKapi_Lokal_Bolge = 1,
                             WKapi_Role_No = 1,
-                            WKapi_User_Count = 1,
+                            WKapi_User_Count = 2,
                             WKapi_WIGType = 1,
                             WKapi_Acik_Sure_Alarmi = false,
                             WKapi_Acilma_Alarmi = false,

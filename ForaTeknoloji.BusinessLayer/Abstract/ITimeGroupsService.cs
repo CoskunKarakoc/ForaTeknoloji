@@ -15,6 +15,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         TimeGroups GetById(int ZamanGrupNo);
         TimeGroups AddTimeGroups(TimeGroups timeGroups);
         void DeleteTimeGroups(TimeGroups timeGroups);
+        void DeleteAll();
         TimeGroups UpdateTimeGroups(TimeGroups timeGroups);
         List<ComplexTimeGroups> GetComplexTimeGroups(Expression<Func<ComplexTimeGroups, bool>> filter = null);
     }

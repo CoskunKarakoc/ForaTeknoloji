@@ -116,7 +116,7 @@
                                     <div id="HaftalikEk" class="col-md-6">
                                         <div class="custom-control custom-checkbox">
                                             @Html.CheckBox("Ilave_Saat_Kontrolu", new { @class = "custom-control-input" })
-                                            <label class="custom-control-label" for="IlaveSaat">İlave Saat Kontrolü</label>
+                                            <label class="custom-control-label" for="Ilave_Saat_Kontrolu">İlave Saat Kontrolü</label>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-12">Başlangıç Saati</label>
@@ -718,6 +718,7 @@
             $("#HaftalikPlanHergunSaat").prop("hidden", false);
         }
         if (nesneBaslangic == 14 || nesneBaslangic == 15) {
+            $("#IkiliSaatHergunAyri").prop("hidden", false);
             $("#Tarih").prop("hidden", true);
             $("#Saat").prop("hidden", true);
             $("#HaftalikPlan").prop("hidden", false);
@@ -728,6 +729,7 @@
             $("#TarihSaat").prop("hidden", true);
             $("#HaftalikPlanHergunSaat").prop("hidden", false);
             $("#EkSaat").prop("hidden", false);
+
         }
         if (nesneBaslangic == 18 || nesneBaslangic == 19) {
             $("#Tarih").prop("hidden", true);
@@ -931,7 +933,8 @@
                 $("#TarihSaat").prop("hidden", true);
                 $("#HaftalikPlanHergunSaat").prop("hidden", false);
             }
-            if (nesneBaslangic == 14 || nesneBaslangic == 15) {
+            if (nesne == 14 || nesne == 15) {
+                $("#IkiliSaatHergunAyri").prop("hidden", false);
                 $("#Tarih").prop("hidden", true);
                 $("#Saat").prop("hidden", true);
                 $("#HaftalikPlan").prop("hidden", false);
@@ -942,6 +945,7 @@
                 $("#TarihSaat").prop("hidden", true);
                 $("#HaftalikPlanHergunSaat").prop("hidden", false);
                 $("#EkSaat").prop("hidden", false);
+
             }
             if (nesne == 18 || nesne == 19) {
                 $("#EkSaat").prop("hidden", true);

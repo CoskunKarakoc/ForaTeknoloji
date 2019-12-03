@@ -22,10 +22,12 @@
                         <div class="col-md-6">
                             @foreach (var item in Model)
                             {
+
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="@item.WKapi_ID" name="@("Kapi_"+item.WKapi_ID)" value="true" class="custom-control-input" />
-                                    <label class="custom-control-label" for="@item.WKapi_ID">@item.WKapi_Adi</label>
+                                    <input type="checkbox" id="@("Kapi_"+item.WKapi_ID)" name="@("Kapi_"+item.WKapi_ID)" value="true" class="custom-control-input" />
+                                    <label class="custom-control-label" for="@("Kapi_"+item.WKapi_ID)">@item.WKapi_Adi.Trim()</label>
                                 </div>
+
                             }
                             <hr />
                             <div class="custom-control custom-checkbox">
@@ -64,6 +66,7 @@
                             <div class="row">
                                 <div class="col-md-12 text-right">
                                     <hr />
+                                    <a href="@Url.Action("TaskTable","Task")" class="btn btn-sm btn-outline-secondary"><i class="fas fa-list"></i> Panel Durum Tablosu</a>
                                     <button type="submit" class="btn btn-sm btn-outline-success my-lg-4 mr-3"><i class="fa fa-check"></i> Kapı İşlemlerini Uygula</button>
                                 </div>
                             </div>

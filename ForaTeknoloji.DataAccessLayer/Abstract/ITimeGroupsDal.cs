@@ -13,5 +13,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     public interface ITimeGroupsDal : IEntityRepository<TimeGroups>
     {
         List<ComplexTimeGroups> GetComplexTimeGroups(Expression<Func<ComplexTimeGroups, bool>> filter = null);
+        void DeleteAll();
     }
 }

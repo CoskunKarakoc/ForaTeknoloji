@@ -93,7 +93,7 @@ namespace ForaTeknoloji.Entities.Entities
         public int? Panel_Same_Tag_Block_HourMinSec { get; set; }
 
         [Column("Status Data Update")]
-        public int? Status_Data_Update { get; set; }
+        public bool? Status_Data_Update { get; set; }
 
         [Column("Status Data Update Type")]
         public int? Status_Data_Update_Type { get; set; }
@@ -360,7 +360,7 @@ namespace ForaTeknoloji.Entities.Entities
         public int? LocalInterlock_G4_2 { get; set; }
 
         [Column("DHCP Enabled")]
-        public int? DHCP_Enabled { get; set; }
+        public bool? DHCP_Enabled { get; set; }
 
         [Column("Hastane Aktif")]
         public bool? Hastane_Aktif { get; set; }

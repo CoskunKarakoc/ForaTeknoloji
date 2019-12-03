@@ -291,7 +291,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 entity.LocalInterlock_G3_2 = null;
                 entity.LocalInterlock_G4_1 = null;
                 entity.LocalInterlock_G4_2 = null;
-                entity.DHCP_Enabled = 0;
+                entity.DHCP_Enabled = false;
                 entity.Hastane_Aktif = null;
                 entity.Hastane_IP1 = null;
                 entity.Hastane_IP2 = null;
@@ -315,7 +315,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Deneme_Sayisi = 1,
                     Durum_Kodu = 1,
-                    Gorev_Kodu = 2560,//TODO:Server Programda Panele Gönderme İşlemi Yok
+                    Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
                     IntParam_1 = (int)PanelID,
                     Kullanici_Adi = user.Kullanici_Adi,
                     Panel_No = PanelID,
@@ -346,7 +346,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<PanelSettings> panels = new List<PanelSettings>();
             foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No!=null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
                 if (panel != null)
                     panels.Add(panel);
             }

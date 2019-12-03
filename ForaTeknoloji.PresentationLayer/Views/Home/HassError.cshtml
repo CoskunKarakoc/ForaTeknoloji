@@ -31,6 +31,7 @@
                     {
                         <strong class="text-danger">Hata Detay : </strong>@ex.Message
                         <br /><br /><br />
+                        <input type="text" hidden value="@ex.Message" id="Message" />
                     }
                 </p>
                 <p class="col-md-offset-2">
@@ -48,11 +49,20 @@
     $(document).ready(function () {
         $("#errorModalCenter").modal('show')
 
-        setTimeout(function () {
+        if ($("#Message").val() == "Zaman Bölgesi Gerekli!") {
+            setTimeout(function () {
 
-            window.location.href = "/Home/Index";
+                window.location.href = "/TimeGroups/Add";
 
-        },2000);
+            }, 2000);
+        }
+        if ($("#Message").val() == "Asansör Geçiş Grubu Gerekli!") {
+            setTimeout(function () {
+
+                window.location.href = "/Lift/Create";
+
+            }, 2000);
+        }
 
 
 

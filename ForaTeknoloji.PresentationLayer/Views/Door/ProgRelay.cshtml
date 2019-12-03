@@ -33,7 +33,7 @@
                 }
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table-borderless table table-hover text-center table-striped table-sm">
+                        <table id="relayTable" class="table-borderless table table-hover text-center table-striped table-sm">
                             <thead class="table-info">
                                 <tr>
                                     <td>Panel No</td>
@@ -64,7 +64,7 @@
                                 @foreach (var item in Model.Liste)
                                 {
                                     <tr>
-                                        <td>@item.Panel_No</td>
+                                        <td data-panelid="@item.Panel_No" data-zamandilimi="@item.Zaman_Dilimi" data-hafta="@item.Haftanin_Gunu">@item.Panel_No</td>
                                         <td>@item.Zaman_Dilimi</td>
                                         @if (item.Aktif == true)
                                         {
@@ -101,8 +101,21 @@
                         </table>
                     </div>
                     <div class="col-md-12 text-right">
-                        <a href="@Url.Action("Send","Door",new {Panel_No=Model.Liste.FirstOrDefault().Panel_No})" class="btn btn-sm btn-outline-success"><i class="fas fa-share"></i> Seçili Panele Gönder</a>
-                        <a href="@Url.Action("Receive","Door",new {Panel_No=Model.Liste.FirstOrDefault().Panel_No})" class="btn btn-sm btn-outline-success"><i class="fas fa-reply"></i> Seçili Panelden Al</a>
+                        @using (Html.BeginForm("Send", "Door", FormMethod.Post))
+                        {
+                            <input type="text" name="Panel_No" id="Panel" hidden value="" />
+                            <input type="text" name="Hafta" id="Hafta" hidden value="" />
+                            <input type="text" name="ZamanDilimi" id="ZamanDilimi" hidden value="" />
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-share"></i> Seçili Panele Gönder</button>
+                        }
+
+                        @using (Html.BeginForm("Receive", "Door", FormMethod.Post))
+                        {
+                            <input type="text" name="Panel_No" id="PanelRcv" hidden value="" />
+                            <input type="text" name="Hafta" id="HaftaRcv" hidden value="" />
+                            <input type="text" name="ZamanDilimi" id="ZamanDilimiRcv" hidden value="" />
+                            <button type="submit" class="btn btn-sm btn-outline-success mt-3"><i class="fas fa-reply"></i> Seçili Panelden Al</button>
+                        }
                     </div>
                 </div>
             </div>
@@ -117,5 +130,26 @@
         $("#ListHaftanin_Gunu").change(function () {
             $("#SubmitBtn").click();
         });
+
+        $("#relayTable tbody tr").click(function () {
+            var HaftaninGunu = $(this).children("td").data("hafta");
+            var Panel = $(this).children("td").data("panelid");
+            var ZamanDilimi = $(this).children("td").data("zamandilimi");
+            $("#HaftaRcv").attr('value', HaftaninGunu);
+            $("#PanelRcv").attr('value', Panel);
+            $("#ZamanDilimiRcv").attr('value', ZamanDilimi);
+            $("#Hafta").attr('value', HaftaninGunu);
+            $("#Panel").attr('value', Panel);
+            $("#ZamanDilimi").attr('value', ZamanDilimi);
+            $("#relayTable tbody tr").removeClass("table-success");
+            $(this).addClass("table-success");
+        });
+
+
+
+
+
+
+
     });
 </script>

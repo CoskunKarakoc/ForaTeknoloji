@@ -2688,7 +2688,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ExcelFile\" />
-    <Folder Include="Views\GlobalRegion\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForaTeknoloji.BusinessLayer\ForaTeknoloji.BusinessLayer.csproj">

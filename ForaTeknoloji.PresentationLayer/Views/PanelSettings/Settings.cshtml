@@ -33,6 +33,7 @@
                     @*Genel Ayar Sayfası*@
                     @Html.HiddenFor(model => model.Sira_No)
                     @Html.HiddenFor(model => model.Kayit_No)
+                    @Html.HiddenFor(model => model.Seri_No)
                     <div class="tab-pane fade show active mt-5" id="nav-genel">
                         <div class="row">
                             <div class="col-md-3">
@@ -175,31 +176,37 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="text-muted">Alarm/Yangın Giriş Kontrolü</label>
+
+                                    <span class="text-dark"><b>Hırsız Alarm Mod</b></span>
                                     <div class="custom-control custom-checkbox">
                                         <div id="Kapilar"></div>
                                         @Html.CheckBox("Panel_Alarm_Mode_Role_Ok", Model.Panel_Alarm_Mode_Role_Ok ?? false, new { @class = "custom-control-input" })
-                                        <label class="custom-control-label" for="Panel_Alarm_Mode_Role_Ok">Hırsız Alarm Modu</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        @Html.CheckBox("Panel_Fire_Mode_Role_Ok", Model.Panel_Fire_Mode_Role_Ok ?? false, new { @class = "custom-control-input" })
-                                        <label class="custom-control-label" for="Panel_Fire_Mode_Role_Ok">Yangın Modu</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        @Html.CheckBox("Panel_Door_Alarm_Role_Ok", Model.Panel_Door_Alarm_Role_Ok ?? false, new { @class = "custom-control-input" })
-                                        <label class="custom-control-label" for="Panel_Door_Alarm_Role_Ok">Kapı Alarm Modu</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" value="1" name="Panel_Alarm_Broadcast_Ok" class="custom-control-input" id="AlarmYayin" />
-                                        @Html.CheckBox("Panel_Alarm_Broadcast_Ok", Model.Panel_Alarm_Broadcast_Ok ?? false, new { @class = "custom-control-input" })
-                                        <label class="custom-control-label" for="Panel_Alarm_Broadcast_Ok">Alarm Yayın Modu</label>
+                                        <label class="custom-control-label" for="Panel_Alarm_Mode_Role_Ok">Alarm Rolesini Çek</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
                                         @Html.CheckBox("Panel_Alarm_Mode", Model.Panel_Alarm_Mode ?? false, new { @class = "custom-control-input" })
                                         <label class="custom-control-label" for="Panel_Alarm_Mode">Seçilen Kapıları Kilitle</label>
                                     </div>
+                                    <span class="text-dark"><b>Yangın Alarm Mod</b></span>
+
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Panel_Fire_Mode_Role_Ok", Model.Panel_Fire_Mode_Role_Ok ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Panel_Fire_Mode_Role_Ok">Alarm Rolesini Çek</label>
+                                    </div>
                                     <div class="custom-control custom-checkbox">
                                         @Html.CheckBox("Panel_Fire_Mode", Model.Panel_Fire_Mode ?? false, new { @class = "custom-control-input" })
                                         <label class="custom-control-label" for="Panel_Fire_Mode">Seçilen Kapıları Aç</label>
+                                    </div>
+                                    <span class="text-dark"><b>Kapı Alarm Modu</b></span>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Panel_Door_Alarm_Role_Ok", Model.Panel_Door_Alarm_Role_Ok ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Panel_Door_Alarm_Role_Ok">Alarm Rolesini Çek</label>
+                                    </div>
+                                    <span class="text-dark"><b>Alarm Yayın Modu</b></span>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" value="1" name="Panel_Alarm_Broadcast_Ok" class="custom-control-input" id="AlarmYayin" />
+                                        @Html.CheckBox("Panel_Alarm_Broadcast_Ok", Model.Panel_Alarm_Broadcast_Ok ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Panel_Alarm_Broadcast_Ok">Hırsız Alarmı Yayın</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
                                         @Html.CheckBox("Panel_Fire_Broadcast_Ok", Model.Panel_Fire_Broadcast_Ok ?? false, new { @class = "custom-control-input" })
@@ -411,6 +418,12 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="custom-control custom-checkbox mb-4">
+                                                    @Html.CheckBox("DHCP_Enabled", Model.DHCP_Enabled ?? false, new { @class = "custom-control-input" })
+                                                    <label class="custom-control-label" for="DHCP_Enabled">DHCP Aktif</label>
+                                                </div>
+                                            </div>
                                             <div class="col-md-3">
                                                 <label>TCP Port</label>
                                             </div>
@@ -555,30 +568,62 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" value="true" name="Gonder" class="custom-control-input" id="Gonder" />
-                                                        <label class="custom-control-label" for="Gonder">Gönder</label>
+                                                        @Html.CheckBox("Status_Data_Update", Model.Status_Data_Update ?? false, new { @class = "custom-control-input" })
+                                                        <label class="custom-control-label" for="Status_Data_Update">Gönder</label>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" value="RemoteIP" class="custom-control-input" id="RemoteIP" checked name="Hedef">
-                                                        <label class="custom-control-label" for="RemoteIP">Remote IP'ye</label>
+                                                @if (Model.Status_Data_Update_Type == 0)
+                                                {
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" value="0" class="custom-control-input" id="RemoteIP" checked name="Status_Data_Update_Type">
+                                                            <label class="custom-control-label" for="RemoteIP">Remote IP'ye</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" value="1" class="custom-control-input" id="Yayin" name="Status_Data_Update_Type">
+                                                            <label class="custom-control-label" for="Yayin">Yayın</label>
+                                                        </div>
                                                     </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" value="Yayin" class="custom-control-input" id="Yayin" name="Hedef">
-                                                        <label class="custom-control-label" for="Yayin">Yayın</label>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" value="0" class="custom-control-input" id="RemoteIP" name="Status_Data_Update_Type">
+                                                            <label class="custom-control-label" for="RemoteIP">Remote IP'ye</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" value="1" class="custom-control-input" checked id="Yayin" name="Status_Data_Update_Type">
+                                                            <label class="custom-control-label" for="Yayin">Yayın</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" value="Degisimde" class="custom-control-input" id="Degisimde" checked name="Zaman">
-                                                        <label class="custom-control-label" for="Degisimde">Değişimde</label>
+                                                }
+                                                @if (Model.Status_Data_Update_Time == 0)
+                                                {
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" value="0" class="custom-control-input" id="Degisimde" checked name="Status_Data_Update_Time">
+                                                            <label class="custom-control-label" for="Degisimde">Değişimde</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" value="1" class="custom-control-input" id="Hersaniye" name="Status_Data_Update_Time">
+                                                            <label class="custom-control-label" for="Hersaniye">Her Saniye</label>
+                                                        </div>
                                                     </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" value="Hersaniye" class="custom-control-input" id="Hersaniye" name="Zaman">
-                                                        <label class="custom-control-label" for="Hersaniye">Her Saniye</label>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" value="0" class="custom-control-input" id="Degisimde" name="Status_Data_Update_Time">
+                                                            <label class="custom-control-label" for="Degisimde">Değişimde</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" value="1" class="custom-control-input" id="Hersaniye" checked name="Status_Data_Update_Time">
+                                                            <label class="custom-control-label" for="Hersaniye">Her Saniye</label>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>

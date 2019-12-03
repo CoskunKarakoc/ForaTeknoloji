@@ -48,5 +48,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _timeGroupsDal.Update(timeGroups);
         }
+
+        public void DeleteAll()
+        {
+            _timeGroupsDal.DeleteAll();
+        }
+
     }
 }

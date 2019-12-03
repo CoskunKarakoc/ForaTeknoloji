@@ -70,7 +70,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 1,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -86,7 +86,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 2,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -102,7 +102,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 3,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -118,7 +118,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 4,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -134,7 +134,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 5,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -150,7 +150,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 6,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -166,7 +166,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 7,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -182,7 +182,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 8,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -198,7 +198,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 9,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -214,7 +214,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 10,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -230,7 +230,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 11,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -246,7 +246,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 12,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -262,7 +262,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 13,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -278,7 +278,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 14,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -294,7 +294,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 15,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -310,7 +310,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 16,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -326,7 +326,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 IntParam_1 = 17,
                                 IntParam_2 = item.Panel_ID,
                                 Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = kapiOperasyon.Panel_ID,
+                                Panel_No = item.Panel_ID,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
@@ -692,7 +692,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult Send(int? Panel_No)
+        public ActionResult Send(int? Panel_No, int? Hafta, int? ZamanDilimi)
         {
             if (Panel_No != null)
             {
@@ -704,6 +704,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = (int)CommandConstants.CMD_SND_RELAYPROGRAM,
                         IntParam_1 = (int)Panel_No,
+                        IntParam_2 = (int)Hafta,
+                        IntParam_3 = (int)ZamanDilimi,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = (int)Panel_No,
                         Tablo_Guncelle = true,
@@ -722,7 +724,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult Receive(int? Panel_No)
+        public ActionResult Receive(int? Panel_No, int? Hafta, int? ZamanDilimi)
         {
             if (Panel_No != null)
             {
@@ -734,6 +736,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = (int)CommandConstants.CMD_RCV_RELAYPROGRAM,
                         IntParam_1 = (int)Panel_No,
+                        IntParam_2 = (int)Hafta,
+                        IntParam_3 = (int)ZamanDilimi,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = (int)Panel_No,
                         Tablo_Guncelle = true,

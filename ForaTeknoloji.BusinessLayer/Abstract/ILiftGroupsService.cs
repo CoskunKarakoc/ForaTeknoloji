@@ -15,5 +15,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         LiftGroups AddLiftGroup(LiftGroups liftGroups);
         void DeleteLiftGroup(LiftGroups liftGroups);
         LiftGroups UpdateLiftGroup(LiftGroups liftGroups);
+        void DeleteAll();
     }
 }

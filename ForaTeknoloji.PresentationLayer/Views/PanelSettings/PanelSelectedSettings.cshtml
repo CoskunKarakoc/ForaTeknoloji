@@ -4,7 +4,7 @@
     <span class="list-group-item list-group-item-primary text-center opacity-100 opct  shadow">Seri No - Panel No - Adı - IP Adres</span>
     @foreach (var item in Model)
     {
-        <a id="@item.Panel_ID" data-id="@item.Panel_ID" href="@Url.Action("Settings","PanelSettings",new { PanelID=item.Panel_ID})" class="list-group-item list-group-item-action  text-center">@item.Seri_No.Value.ToString("X4") - @item.Panel_ID - @item.Panel_Name - @(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</a>
+        <a id="@item.Panel_ID" data-id="@item.Panel_ID" href="@Url.Action("Settings","PanelSettings",new { PanelID=item.Panel_ID})" class="list-group-item list-group-item-action  text-center">@item.Seri_No.Value.ToString("X4") - @item.Panel_ID - @item.Panel_Name.Trim() - @(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</a>
     }
 </div>
 <script>

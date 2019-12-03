@@ -372,13 +372,26 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Deneme_Sayisi = 1,
                                 Durum_Kodu = 1,
                                 Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
-                                IntParam_1 = 0,
+                                IntParam_1 = 1,
                                 Kullanici_Adi = user.Kullanici_Adi,
                                 Panel_No = panel,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
                             _taskListService.AddTaskList(taskListRemove);
+                            TaskList maxUser = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)CommandConstants.CMD_SND_MAXUSERID,
+                                IntParam_1 = _userService.GetAllUsers().Max(x => x.ID),
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = panel,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            _taskListService.AddTaskList(maxUser);
+
 
                             foreach (var userID in _userService.GetAllUsers().Select(u => u.ID))
                             {
@@ -395,6 +408,25 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 };
                                 _taskListService.AddTaskList(taskList);
                             }
+                        }
+                        Thread.Sleep(2000);
+                    }
+                    else if (OprKod == CommandConstants.CMD_ERSALL_USER)
+                    {
+                        foreach (var item in PanelList)
+                        {
+                            TaskList taskList = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
+                                IntParam_1 = 1,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = item,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            _taskListService.AddTaskList(taskList);
                         }
                         Thread.Sleep(2000);
                     }

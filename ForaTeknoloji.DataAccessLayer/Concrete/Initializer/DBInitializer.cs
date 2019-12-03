@@ -1034,16 +1034,16 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                     LocalInterlock_G3_2 = null,
                     LocalInterlock_G4_1 = null,
                     LocalInterlock_G4_2 = null,
-                    DHCP_Enabled = 0,
+                    DHCP_Enabled = false,
                     Hastane_Aktif = false,
-                    Hastane_IP1 = null,
-                    Hastane_IP2 = null,
-                    Hastane_IP3 = null,
-                    Hastane_IP4 = null,
-                    Hastane_Server_TCP_Port = 0,
-                    Hastane_Lokal_TCP_Port = 0,
-                    Hastane_Acil_Durum_Yesil_Kod = false,
-                    Hastane_Yesil_Kod_Suresi = null
+                    Hastane_IP1 = 192,
+                    Hastane_IP2 = 168,
+                    Hastane_IP3 = 2,
+                    Hastane_IP4 = 1,
+                    Hastane_Server_TCP_Port = 2112,
+                    Hastane_Lokal_TCP_Port = 5950,
+                    Hastane_Acil_Durum_Yesil_Kod = true,
+                    Hastane_Yesil_Kod_Suresi = 30
                 };
                 context.PanelSettings.Add(panelSettings);
             }
@@ -1576,6 +1576,12 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gorev_Adi = "Kullanıcıları Gönderme"
             };
             context.TaskCodes.Add(taskCode262000);
+            TaskCode taskCode262200 = new TaskCode
+            {
+                Gorev_Kodu = 2622,
+                Gorev_Adi = "Tüm Kullanıcıları Gönderme"
+            };
+            context.TaskCodes.Add(taskCode262200);
             EMailSetting eMailSetting = new EMailSetting
             {
                 E_Mail_Adres = "sample@abcd.com",

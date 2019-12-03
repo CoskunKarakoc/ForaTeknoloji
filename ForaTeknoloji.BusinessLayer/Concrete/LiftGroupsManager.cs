@@ -42,5 +42,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _liftGroupsDal.Update(liftGroups);
         }
+        public void DeleteAll()
+        {
+            _liftGroupsDal.DeleteAll();
+        }
+
     }
 }

@@ -143,6 +143,30 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _groupMasterService.AddGroupsMaster(groupsMaster);
+                if (_liftGroupsService.GetAllLiftGroups().Count() == 0 || _liftGroupsService.GetAllLiftGroups() == null)
+                {
+                    _liftGroupsService.DeleteAll();
+                    LiftGroups liftGroups = new LiftGroups
+                    {
+                        Asansor_Grup_No = 1,
+                        Asansor_Grup_Adi = "Asansör",
+                        Kat_Sayisi = 16
+                    };
+                    _liftGroupsService.AddLiftGroup(liftGroups);
+                }
+                var count = _timeGroupsService.GetAllTimeGroups().Count;
+                var list = _timeGroupsService.GetAllTimeGroups();
+                if (_timeGroupsService.GetAllTimeGroups().Count() == 0 || _timeGroupsService.GetAllTimeGroups() == null)
+                {
+                    _timeGroupsService.DeleteAll();
+                    TimeGroups timeGroups = new TimeGroups
+                    {
+                        Zaman_Grup_No = 1,
+                        Zaman_Grup_Adi = "Sınırlama Yok",
+                        Gecis_Sinirlama_Tipi = 0,
+                    };
+                    _timeGroupsService.AddTimeGroups(timeGroups);
+                }
                 foreach (var panel in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0))
                 {
                     for (int i = 1; i < 17; i++)
@@ -201,8 +225,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (PanelID == null)
             {
                 PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).FirstOrDefault().Panel_ID;
-                if (PanelID == null)
-                    return RedirectToAction("Orientation", "Home");
+                var timezonegroupcount = _timeGroupsService.GetAllTimeGroups().Count;
+                if (timezonegroupcount == 0)
+                    throw new Exception("Zaman Bölgesi Gerekli!");
+                var liftgroupcount = _liftGroupsService.GetAllLiftGroups().Count;
+
+                if (liftgroupcount == 0)
+                    throw new Exception("Asansör Geçiş Grubu Gerekli!");
                 nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
             }
             else
@@ -214,8 +243,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 KapiZamanGrupNo.Add(new SelectList(_timeGroupsService.GetAllTimeGroups(), "Zaman_Grup_No", "Zaman_Grup_Adi", item.Zaman_Grup_No));
                 KapiAsansorBolgeNo.Add(new SelectList(_liftGroupsService.GetAllLiftGroups(), "Asansor_Grup_No", "Asansor_Grup_Adi", item.Asansor_Grup_No));
-
             }
+
+
+
             var model = new CreateReaderModel
             {
                 Kapi_Asansor_Bolge_No = KapiAsansorBolgeNo,

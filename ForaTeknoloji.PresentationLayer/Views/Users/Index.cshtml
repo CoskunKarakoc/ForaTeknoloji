@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Kullanıcı Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //WebGrid webGrid = new WebGrid(source: Model.Users, rowsPerPage: 50);
 }
 <div class="row">
     <div class="col-md-12">
@@ -75,10 +76,53 @@
                         }
                     </tbody>
                 </table>
+
+                @*<a data-toggle="modal" data-target="#panelList" onclick="ekle(0,2622)" class=" mr-2 btn btn-sm btn-outline-success text-success" title="Tüm Kullanıcıları Gönder"><i class="fas fa-users"></i> Tüm Kullanıcıları Gönder</a>
+                    <a href="@Url.Action("TaskTable","Task")" class="btn btn-sm btn-outline-secondary mr"><i class="fas fa-tasks"></i> Görev Durum Tablosu</a>
+                    <hr />
+                    @if (Model.Users.Count > 0)
+                    {
+                        @webGrid.GetHtml(
+                        htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
+                        headerStyle:"table-info table-sm",
+                        footerStyle: "table-pager",
+
+                        columns:webGrid.Columns(
+                            webGrid.Column("ID", header: "ID"),
+                            webGrid.Column("Kart_ID", header: "Kart ID"),
+                            webGrid.Column("Adi", header: "Adı"),
+                            webGrid.Column("Soyadi", header: "Soyadı"),
+                            webGrid.Column("Sirket", header: "Şirket"),
+                            webGrid.Column("Departman", header: "Departman"),
+                            webGrid.Column("Blok", header: "Blok"),
+                            webGrid.Column("Plaka", header: "Plaka"),
+                            webGrid.Column("Gecis_Grubu", header: "Geçiş Grubu"),
+                            webGrid.Column("String_Ziyaretci_Grubu", header:"Ziyaretçi Grubu"),
+                            webGrid.Column(format:@<text>@(SetBinding(item.ID))</text>)))
+                    }
+                    else
+                    {
+                        <div class="alert alert-info alert-message ">
+                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                        </div>
+                    }*@
             </div>
         </div>
     </div>
 </div>
+@*@helper SetBinding(int ID)
+    {
+        <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+        <a title="Delete" onclick="Delete(ID)"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+        <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(ID)" id="send"><i class="fas fa-share text-success mr-2"></i></a>
+        <a data-toggle="modal" data-target="#panelListReceive" title="Receive From Panel" onclick="receiveAdd(ID)" id="send"><i class="fas fa-reply text-success mr-2"></i></a>
+
+    }*@
+
+
+
+
+
 <!--Send User PanelSelect Modal -->
 <div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -252,7 +296,6 @@
 
 <script>
     function Delete(id) {
-
         swal({
             title: "Silmek İstediğinize Emin Misiniz?",
             text: "Seçilen kullanıcı veritabanından silinecek!",
@@ -291,4 +334,15 @@
 </script>
 
 
-
+@*<script>
+        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
+        // buton aktif durum css
+        $("tfoot td")
+            .contents()
+            .filter(function () {
+                if (this.nodeType === 3 && this.length > 1) {
+                    return this.nodeType
+                }
+            })
+            .wrap('<span class=" btn btn-primary" />');
+    </script>*@

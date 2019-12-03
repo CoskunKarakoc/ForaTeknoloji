@@ -1,5 +1,7 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.TaskTableListViewModel
 @{
+    /**/
+
     ViewBag.Title = "Göre Tablosu";
     Layout = "~/Views/Shared/_Layout.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.Liste, rowsPerPage: 10);
@@ -83,7 +85,8 @@
                 {
                     @webGrid.GetHtml(
                     htmlAttributes: new {@id="table",@class= "table-borderless table table-hover text-center table-striped small" },
-                     footerStyle: "table-pager",
+                    headerStyle:"table-info table-sm",
+                    footerStyle: "table-pager",
                      columns:webGrid.Columns(
                          webGrid.Column("Gorev_Adi",header:"Görev Adı"),
                          webGrid.Column("Panel_Adi",header:"Panel Adı"),
@@ -112,11 +115,13 @@ webGrid.Column("Soyadi", "Soyadı")))
 </div>
 @helper SetStatus(string value)
 {
+    /**/
+
     if (value == "Beklemede")
     {
         <span class="text-warning"><b>Beklemede</b></span>
     }
-    else if (value == "Tamamlandi")
+    else if (value == "Tamamlandı")
     {
         <span class="text-success"><b>Tamamlandı</b></span>
     }
@@ -124,7 +129,7 @@ webGrid.Column("Soyadi", "Soyadı")))
     {
         <span class="text-danger"><b>Hata</b></span>
     }
-    else if (value == "Zaman Asimi")
+    else if (value == "Zaman Aşımı")
     {
         <span class="text-secondary"><b>Zaman Aşımı</b></span>
     }
