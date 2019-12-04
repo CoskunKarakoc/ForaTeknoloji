@@ -52,7 +52,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
 
             List<int> interlock = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-            //PanelSettings selectedpanel = _panelSettings.GetById((int)PanelID);
             PanelSettings selectedpanel = UserPanelList().Find(x => x.Panel_ID == PanelID);
             var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == selectedpanel.Panel_ID).FirstOrDefault();
             if (readers == null)
@@ -332,6 +331,83 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Settings");
         }
 
+        public ActionResult Create()
+        {
+            List<int> interlock = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+
+            ViewBag.Panel_Global_Bolge1 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
+            ViewBag.Panel_Global_Bolge2 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
+            ViewBag.Panel_Global_Bolge3 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
+            ViewBag.Panel_Global_Bolge4 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
+            ViewBag.Panel_Global_Bolge5 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
+            ViewBag.Panel_Global_Bolge6 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
+            ViewBag.Panel_Global_Bolge7 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
+            ViewBag.Panel_Global_Bolge8 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
+            ViewBag.LocalInterlock_G1_1 = new SelectList(interlock);
+            ViewBag.LocalInterlock_G1_2 = new SelectList(interlock);
+            ViewBag.LocalInterlock_G2_1 = new SelectList(interlock);
+            ViewBag.LocalInterlock_G2_2 = new SelectList(interlock);
+            ViewBag.LocalInterlock_G3_1 = new SelectList(interlock);
+            ViewBag.LocalInterlock_G3_2 = new SelectList(interlock);
+            ViewBag.LocalInterlock_G4_1 = new SelectList(interlock);
+            ViewBag.LocalInterlock_G4_2 = new SelectList(interlock);
+
+            return View(new PanelSettings());
+        }
+
+        [HttpPost]
+        public ActionResult Create(PanelSettings panelSettings, string MacAdress)
+        {
+            if (ModelState.IsValid)
+            {
+                panelSettings.Sira_No = panelSettings.Panel_ID;
+                panelSettings.Seri_No = int.Parse(MacAdress, System.Globalization.NumberStyles.HexNumber);
+                var panel = _panelSettingsService.GetAllPanelSettings().Find(x => x.Panel_ID == panelSettings.Panel_ID && x.Sira_No == panelSettings.Sira_No);
+                if (panel.Panel_IP1 != 0)
+                {
+                    throw new Exception("Sistemde aynı panel numarasına ait panel var!");
+                }
+                else
+                {
+                    panelSettings.Kayit_No = panel.Kayit_No;
+                    _panelSettingsService.UpdatePanelSetting(panelSettings);
+                    return RedirectToAction("Settings", "PanelSettings");
+                }
+            }
+            return View(panelSettings);
+        }
+
+        public ActionResult ReceiveFromPanel(int? PanelID)
+        {
+            if (PanelID != null)
+            {
+                try
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
+                        IntParam_1 = (int)PanelID,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelID,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    Thread.Sleep(2000);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                }
+                return RedirectToAction("Settings", new { @PanelID = PanelID });
+            }
+            throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+        }
+
+
+
         public int CheckStatus(int GrupNo = -1)
         {
             if (GrupNo != -1)
@@ -344,11 +420,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();
-            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            if (user.SysAdmin == true)
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                if (panel != null)
-                    panels.Add(panel);
+                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            }
+            else
+            {
+                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                    if (panel != null)
+                        panels.Add(panel);
+                }
             }
             return panels;
         }

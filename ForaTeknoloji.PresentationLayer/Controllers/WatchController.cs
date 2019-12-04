@@ -51,8 +51,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: Watch
         public ActionResult Index()
         {
-            if (permissionUser.Canli_Izleme == 3)
-                throw new Exception("Yetkisiz Erişim!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Canli_Izleme == 3)
+                    throw new Exception("Yetkisiz Erişim!");
+            }
             var lastrecordwatch = _reportService.LastRecordWatch(null);
             var cmplxwatch = _reportService.GetWatch(WtchPrmtrs);
             var model = new WatchIndexViewModel

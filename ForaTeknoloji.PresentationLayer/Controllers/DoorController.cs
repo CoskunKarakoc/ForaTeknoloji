@@ -47,7 +47,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 PanelID = list.FirstOrDefault().Panel_ID;
             }
 
-            var model = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
+            var model = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
             return View(model);
         }
 
@@ -652,7 +652,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.Key.ToString()
                 }),
                 Liste = liste,
-                Kapilar = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == ListPanel_No)
+                Kapilar = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == ListPanel_No).OrderBy(x => x.WKapi_ID).ToList()
             };
             return View(model);
         }
@@ -669,7 +669,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             gunler.Add(6, "Cumartesi");
             gunler.Add(7, "Pazar");
             var editEntity = _progRelay2Service.GetAllProgRelay2().Find(x => x.Panel_No == Panel_No && x.Haftanin_Gunu == Haftanin_Gunu && x.Zaman_Dilimi == Zaman_Dilimi);
-            var doorNames = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Panel_No);
+            var doorNames = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Panel_No).OrderBy(x => x.WKapi_ID).ToList();
             var model = new ProgRelay2EditViewModel
             {
                 ProgRelay = editEntity,
@@ -759,12 +759,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();
-            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            if (user.SysAdmin == true)
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                if (panel != null)
-                    panels.Add(panel);
+                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             }
+            else
+            {
+                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                    if (panel != null)
+                        panels.Add(panel);
+                }
+            }
+
             return panels;
         }
 

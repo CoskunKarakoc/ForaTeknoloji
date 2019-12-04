@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using ForaTeknoloji.PresentationLayer.Models;
+@using ForaTeknoloji.Entities.Entities;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -127,6 +129,13 @@
                 <div id="collapsePanel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Panel Ayarları</h6>
+                        @{
+                            DBUsers users = CurrentSession.User;
+                            if (users.SysAdmin == true)
+                            {
+                                <a class="collapse-item" href="@Url.Action("Create","PanelSettings")">Panel Ekle</a>
+                            }
+                        }
                         <a class="collapse-item" href="@Url.Action("Settings","PanelSettings")">Panel Ayarları</a>
                         <a class="collapse-item" href="@Url.Action("ReaderList","Panel")">Kapı Ayarları</a>
                         <h6 class="collapse-header">Zaman Bölgeleri</h6>

@@ -44,8 +44,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // AGG Listesi
         public ActionResult LiftGroups(int Status = -1)
         {
-            if (permissionUser.Grup_Islemleri == 3)
-                throw new Exception("Yetkisiz Erişim!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Yetkisiz Erişim!");
+            }
+
+
             var model = new LiftGroupsListViewModel
             {
                 LiftGroup = _liftGroupsService.GetAllLiftGroups(),
@@ -59,8 +64,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //AGG Ekleme
         public ActionResult Create()
         {
-            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                throw new Exception("Bu işlem için yetkiniz yok!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
 
             int MaxID;
             if (_liftGroupsService.GetAllLiftGroups().Count == 0)
@@ -88,8 +96,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //AGG Güncelleme
         public ActionResult Edit(int? Asansor_Grup_No)
         {
-            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                throw new Exception("Bu işlem için yetkiniz yok!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
             if (Asansor_Grup_No == null)
             {
                 throw new Exception("Upss! Yanlış giden birşeyler var.");
@@ -136,8 +147,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //Veritabanından AGG Silme
         public ActionResult DatabaseRemove(int? id)
         {
-            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                throw new Exception("Bu işlem için yetkiniz yok!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
             if (id != null)
             {
                 var entity = _liftGroupsService.GetById((int)id);
@@ -160,8 +174,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]//Kat İsimlerini Güncelleme
         public ActionResult FloorNamesEdit(FloorNames floorNames)
         {
-            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                throw new Exception("Bu işlem için yetkiniz yok!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
             if (ModelState.IsValid)
             {
                 _floorNamesService.UpdateFloorName(floorNames);
@@ -173,8 +190,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //Tüm Kat İsimlerini Silme
         public ActionResult AllNameRemove()
         {
-            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                throw new Exception("Bu işlem için yetkiniz yok!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
             for (int i = 1; i <= 128; i++)
             {
                 tempFloor = new FloorNames { Kat_No = i, Kat_Adi = "" };
@@ -187,8 +207,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //Tüm Kat İsimlerini Sıralı Doldurma
         public ActionResult AllNameAdd()
         {
-            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                throw new Exception("Bu işlem için yetkiniz yok!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
             for (int i = 1; i <= 128; i++)
             {
                 tempFloor = new FloorNames { Kat_No = i, Kat_Adi = "Kat " + i };
@@ -200,8 +223,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult TaskSend(List<int> PanelList, CommandConstants OprKod, int AsansorGrupNo = -1)
         {
-            if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
-                throw new Exception("Bu işlem için yetkiniz yok!");
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
             if (AsansorGrupNo != -1)
             {
                 try
@@ -247,12 +273,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();
-            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            if (user.SysAdmin == true)
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                if (panel != null)
-                    panels.Add(panel);
+                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             }
+            else
+            {
+                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                    if (panel != null)
+                        panels.Add(panel);
+                }
+            }
+
             return panels;
         }
     }

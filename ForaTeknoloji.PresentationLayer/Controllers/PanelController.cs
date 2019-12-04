@@ -70,11 +70,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (PanelID == null)
             {
                 PanelID = UserPanelList().FirstOrDefault().Panel_ID;
-                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
+                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
             }
             else
             {
-                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
+                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
             }
             if (okuyucular == null)
                 throw new Exception("Bu panele ait okuyucu bulunmamaktadır.");
@@ -97,7 +97,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             foreach (var item in PanelList)
             {
-                var entity = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == item.Panel_ID);
+                var entity = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == item.Panel_ID).OrderBy(x => x.WKapi_ID).ToList();
                 if (entity == null || entity.Count == 0)
                 {
                     for (int i = 1; i < 17; i++)
@@ -109,7 +109,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Seri_No = item.Seri_No,
                             Sira_No = item.Sira_No,
                             WKapi_Acik_Sure = 20,
-                            WKapi_Adi = "Kapı " + i,
+                            WKapi_Adi = "Kapi " + i,
                             WKapi_Alarm_Modu = 1,
                             WKapi_Gecis_Modu = 1,
                             WKapi_Harici_Alarm_Rolesi = 1,
@@ -142,12 +142,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();
-            foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+            if (user.SysAdmin == true)
             {
-                var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                if (panel != null)
-                    panels.Add(panel);
+                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             }
+            else
+            {
+                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
+                    if (panel != null)
+                        panels.Add(panel);
+                }
+            }
+
             return panels;
         }
     }
