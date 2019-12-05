@@ -2679,6 +2679,7 @@
     <Content Include="Views\ExternalData\SuccessImportGroup.cshtml" />
     <Content Include="Views\ExternalData\GroupImport.cshtml" />
     <Content Include="Views\PanelSettings\Create.cshtml" />
+    <Content Include="Views\SecuritySettings\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

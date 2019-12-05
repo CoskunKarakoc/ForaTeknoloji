@@ -10,5 +10,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
     public interface IDBUsersPanelsDal : IEntityRepository<DBUsersPanels>
     {
+        void DeleteAllWithUserName(string UserName);
     }
 }

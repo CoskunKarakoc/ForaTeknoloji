@@ -21,20 +21,33 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBRolesService _dBRolesService;
         private IPanelSettingsService _panelSettingsService;
         private ISirketService _sirketService;
+        DBUsers user;
+        DBUsers permissionUser;
         public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _dBUsersService = dBUsersService;
             _dBUsersSirketService = dBUsersSirketService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBRolesService = dBRolesService;
             _panelSettingsService = panelSettingsService;
             _sirketService = sirketService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
 
         // GET: SecuritySettings
         public ActionResult Index()
         {
+            if (permissionUser.SysAdmin == false)
+            {
+                throw new Exception("Yetkisiz Erişim!");
+            }
+
             var model = new SecuritySettingsListViewModel
             {
                 Kullanıcılar = _dBUsersService.GetAllDBUsers()
@@ -45,11 +58,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Edit(string Kullanici_Adi)
         {
+            if (permissionUser.SysAdmin == false)
+            {
+                throw new Exception("Yetkisiz Erişim!");
+            }
+
 
             var kullanici = _dBUsersService.GetById(Kullanici_Adi);
+            var userPanel = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == Kullanici_Adi);
+            var userSirket = _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == Kullanici_Adi);
+            var panelList = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            var sirketList = _sirketService.GetAllSirketler();
             var model = new EditSecurityListViewModel
             {
-                Kullanicilar = kullanici
+                Kullanicilar = kullanici,
+                UserPanelList = userPanel,
+                PanelList = panelList,
+                UserSirketList = userSirket,
+                SirketList = sirketList
             };
             ViewBag.Kullanici_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Kullanici_Islemleri);
             ViewBag.Grup_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Grup_Islemleri);
@@ -60,13 +86,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ViewBag.Alarm_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Alarm_Islemleri);
             return View(model);
         }
+
+
         [HttpPost]
-        public ActionResult Edit(DBUsers dBUsers)
+        public ActionResult Edit(DBUsers dBUsers, List<int> Sirketler = null, List<int> Paneller = null)
         {
             if (ModelState.IsValid)
             {
                 if (dBUsers != null)
                 {
+                    DBUserSirketUpdate(dBUsers, Sirketler);
+                    DBUserPanelUpdate(dBUsers, Paneller);
                     _dBUsersService.UpdateDBUsers(dBUsers);
                 }
             }
@@ -77,6 +107,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Create()
         {
+            if (permissionUser.SysAdmin == false)
+            {
+                throw new Exception("Yetkisiz Erişim!");
+            }
+
             var model = new SecurityCreateViewModel
             {
                 Roller = _dBRolesService.GetAllDBRoles().Select(a => new SelectListItem
@@ -130,16 +165,78 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(string kullaniciAdi)
         {
+            if (permissionUser.SysAdmin == false)
+            {
+                throw new Exception("Yetkisiz Erişim!");
+            }
+
             if (kullaniciAdi != null)
             {
                 DBUsers user = _dBUsersService.GetById(kullaniciAdi);
                 if (user != null)
                 {
                     _dBUsersService.DeleteDBUsers(user);
-                    return Json(true, JsonRequestBehavior.AllowGet);
+                    return RedirectToAction("Index", "SecuritySettings");
                 }
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            throw new Exception("Böyle bir kullanıcı bulunamadı!");
         }
+
+
+
+        public ActionResult ChangePassword()
+        {
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(DBUsers dBUsers)
+        {
+            if (ModelState.IsValid)
+            {
+                _dBUsersService.UpdateDBUsers(dBUsers);
+                return RedirectToAction("Logout", "Home");
+            }
+            return View(dBUsers);
+        }
+
+
+
+
+        public void DBUserPanelUpdate(DBUsers dBUsers, List<int> Paneller)
+        {
+            _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            if (Paneller != null)
+            {
+                foreach (var panel in Paneller)
+                {
+                    DBUsersPanels dBUsersPanels = new DBUsersPanels
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Panel_No = panel
+                    };
+                    _dBUsersPanelsService.AddDBUsersPanels(dBUsersPanels);
+                }
+            }
+        }
+
+        public void DBUserSirketUpdate(DBUsers dBUsers, List<int> Sirketler)
+        {
+            _dBUsersSirketService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            if (Sirketler != null)
+            {
+                foreach (var sirket in Sirketler)
+                {
+                    DBUsersSirket dBUsersSirket = new DBUsersSirket
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Sirket_No = sirket
+                    };
+                    _dBUsersSirketService.AddDBUsersSirket(dBUsersSirket);
+                }
+            }
+        }
+
+
     }
 }

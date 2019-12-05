@@ -37,7 +37,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _dBUsersSirketDal.Get(x => x.Kayit_No == id);
         }
 
-        public DBUsersSirket GetByQuery(Expression<Func<DBUsersSirket,bool>> filter=null)
+        public DBUsersSirket GetByQuery(Expression<Func<DBUsersSirket, bool>> filter = null)
         {
             return filter == null ? null : _dBUsersSirketDal.Get(filter);
         }
@@ -46,5 +46,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _dBUsersSirketDal.Update(dBUsersSirket);
         }
+
+        public void DeleteAllWithUserName(string UserName)
+        {
+            _dBUsersSirketDal.DeleteAllWithUserName(UserName);
+        }
+
     }
 }

@@ -110,7 +110,17 @@
                         <a class="collapse-item text-muted" href="#">Global Bölge Interlock</a>
                         <a class="collapse-item" href="#">Plaka Tanıma Kameraları</a>
                         <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı İşlemleri</a>
-                        <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Güvenlik Ayarları</a>
+                        @{
+                            DBUsers Paswordusers = CurrentSession.User;
+                            if (Paswordusers.SysAdmin == true)
+                            {
+                                <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Güvenlik Ayarları</a>
+                            }
+                            else
+                            {
+                                <a class="collapse-item" href="@Url.Action("ChangePassword","SecuritySettings")">Güvenlik Ayarları</a>
+                            }
+                        }
                         <a class="collapse-item" href="#">Harici Okuyucu</a>
                         <a class="collapse-item text-muted" href="#">Panel Saat Ayarı</a>
                         <a class="collapse-item" href="@Url.Action("Add","EMail")">E-Mail Gönderme Ayarları</a>

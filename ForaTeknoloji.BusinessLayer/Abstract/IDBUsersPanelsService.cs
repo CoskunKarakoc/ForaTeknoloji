@@ -15,5 +15,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         DBUsersPanels AddDBUsersPanels(DBUsersPanels dBUsersPanels);
         void DeleteDBUsersPanels(DBUsersPanels dBUsersPanels);
         DBUsersPanels UpdateDBUsersPanels(DBUsersPanels dBUsersPanels);
+        void DeleteAllWithUserName(string UserName);
     }
 }

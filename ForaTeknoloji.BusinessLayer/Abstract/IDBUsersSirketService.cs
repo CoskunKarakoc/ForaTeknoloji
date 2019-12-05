@@ -15,6 +15,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         DBUsersSirket AddDBUsersSirket(DBUsersSirket dBUsersSirket);
         void DeleteDBUsersSirket(DBUsersSirket dBUsersSirket);
         DBUsersSirket UpdateDBUsersSirket(DBUsersSirket dBUsersSirket);
-        DBUsersSirket GetByQuery(Expression<Func<DBUsersSirket,bool>> filter = null);
+        DBUsersSirket GetByQuery(Expression<Func<DBUsersSirket, bool>> filter = null);
+        void DeleteAllWithUserName(string UserName);
     }
 }
