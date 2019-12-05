@@ -52,7 +52,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //OutherReport Controller
         public List<DigerGecisRaporList> GetDigerGecisListesi(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, int Tetikleme, string KapiYon)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.[Panel ID] As Panel,AccessDatas.[Kapi ID] As Kapi, AccessDatas.[Gecis Tipi] As Gecis,CodeOperation.Operasyon, AccessDatas.Tarih FROM CodeOperation RIGHT JOIN AccessDatas ON CodeOperation.TKod = AccessDatas.Kod WHERE AccessDatas.Kod >= 5 AND AccessDatas.Kod <= 27";
             if (Tetikleme == 100)
             {
@@ -198,7 +198,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //OutherReport Farklı Tipteki Liste                       
         public List<DigerGecisRaporListKullaniciAlarm> GetDigerGecisRaporListKullaniciAlarms(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, int Tetikleme, string KapiYon)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = " SELECT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi, "
                    + " Sirketler.Adi AS Sirket, AccessDatas.[Panel ID] As Panel, DoorNames.[Kapi Adi] As Kapi,"
                    + " AccessDatas.[Gecis Tipi] As Gecis, CodeOperation.Operasyon,"
@@ -307,7 +307,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //GelenGelmeyen-Gelmeyenler
         public List<GelenGelmeyen_Gelmeyen> GelenGelmeyen_Gelmeyens(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = " SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi], Users.Resim FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No])LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0";
 
             if (sirketListesi != null)
@@ -396,7 +396,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //Gelen-Gelmeyen Gelenler
         public List<GelenGelmeyen_Gelenler> GelenGelmeyen_Gelenlers(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Şirket,  Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi], Users.Resim FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0 ";
             queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             if (Sirketler != null)
@@ -483,7 +483,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //Gelen-Gelmeyen PasifKullanici
         public List<GelenGelmeyen_PasifKullanici> GelenGelmeyen_PasifKullanicis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, DateTime? Tarih, double? Fark)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "SELECT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi AS Departman, Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,GroupsMaster.[Grup Adi] AS [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((Users LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No])LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No] WHERE Users.ID > 0 ";
             queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             if (Sirketler != null)
@@ -571,7 +571,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
         {
 
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "SELECT AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi, "
                    + " Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman,"
                    + " GroupsMaster.[Grup Adi] AS Grup, CONVERT(VARCHAR(10), AccessDatas.Tarih, 103) AS[Tarih Değeri],"
@@ -665,7 +665,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //Gelen-Gelmeyen Toplam İçerde Kalma
         public List<GelenGelmeyen_ToplamIcerdeKalma> GelenGelmeyen_ToplamIcerdeKalmas(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "SELECT a.ID, a.[Kart ID], Users.Adi, Users.Soyadi, Sirketler.Adi AS Şirket, Departmanlar.Adi AS Departman, GroupsMaster.[Grup Adi] AS Grup, CONVERT(VARCHAR(10), a.Tarih, 103) AS [Tarih Değeri], a.Tarih AS log_in, COALESCE( (SELECT min(Tarih) FROM AccessDatas as b WHERE a.ID = b.ID AND CAST(a.Tarih AS DATE) = CAST(b.Tarih AS DATE) AND b.Tarih >= a.Tarih AND b.[Gecis Tipi] = 1), a.Tarih) as log_out FROM (AccessDatas AS a LEFT JOIN (((Users LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) ON a.ID = Users.ID) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] WHERE a.[Kullanici Tipi] = 0 AND a.Kod = 1 AND a.[Gecis Tipi] = 0 AND a.Tarih >= CONVERT(SMALLDATETIME,'" + Tarih1?.Date.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND a.Tarih <= CONVERT(SMALLDATETIME,'" + Tarih2?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
 
             queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
@@ -748,7 +748,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //PersonelListReport Controller
         public List<PersonelList> GetPersonelLists(int? Sirketler, int? Departmanlar, int? Bloklar, int? Groupsdetail, int? GlobalBolgeNo, int? Daire, string Plaka = null)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             var GlobalZone = _globalZoneDal.Get(x => x.Global_Bolge_No == GlobalBolgeNo);
             string queryString = "SELECT DISTINCT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi As Departman, Users.Plaka, Bloklar.Adi As Blok, Users.Daire,Users.[Grup No], GroupsDetail.[Grup Adi] As [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((GroupsDetail LEFT JOIN Users ON GroupsDetail.[Grup No] = Users.[Grup No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] WHERE Users.[Kullanici Tipi] = 0  AND Users.ID > 0";
 
@@ -850,7 +850,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<ReportPersonelList> GetReportPersonelLists(List<string> Kapi, bool? Günlük, bool? Tümü, bool? TümKullanici, int? Sirketler, int? Departmanlar, int? Bloklar, bool? TümPanel, int? Visitors, int? Panel, int? Groupsdetail, int? Daire, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon, string Plaka = null, string Kayit = null)
         {
 
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
 
 
@@ -1026,7 +1026,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<ReportPersonelList> GetReportPersonelListsEski(List<string> Kapi, bool? Günlük, bool? Tümü, bool? TümKullanici, int? Sirketler, int? Departmanlar, int? Bloklar, bool? TümPanel, int? Visitors, int? Panel, int? Groupsdetail, int? Daire, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon, string Plaka = null, string Kayit = null)
         {
 
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID],UsersOLD.Adi, UsersOLD.Soyadi, UsersOLD.TCKimlik, UsersOLD.Telefon, Sirketler.Adi AS Sirket,Departmanlar.Adi AS Departman,UsersOLD.Plaka, Bloklar.Adi AS Blok, UsersOLD.Daire,GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, AccessDatas.[Kapi ID] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, UsersOLD.Resim, AccessDatas.[Canli Resim] FROM ((((GroupsMaster RIGHT JOIN (UsersOLD LEFT JOIN AccessDatas ON UsersOLD.[User Kayit No] = AccessDatas.[User Kayit No]) ON GroupsMaster.[Grup No] = UsersOLD.[Grup No]) LEFT JOIN Sirketler ON UsersOLD.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON UsersOLD.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON UsersOLD.[Blok No] = Bloklar.[Blok No] ) LEFT JOIN DoorNames ON (AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) AND (AccessDatas.[Panel ID] = DoorNames.[Panel No]) WHERE AccessDatas.[Kullanici Tipi] = 0 ";
             if (TümKullanici == null)
             {
@@ -1187,7 +1187,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //UndefinedUserReport Controller
         public List<AccessDatasComplex> GetTanimsizListesi(List<string> Kapi, bool? Tümü, bool? TümPanel, int? Panel, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string KapiYon)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.[Kart ID],AccessDatas.[Panel ID] As Panel, DoorNames.[Kapi Adi] As Kapi,AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, AccessDatas.[Canli Resim] FROM AccessDatas RIGHT JOIN DoorNames ON AccessDatas.[Panel ID] = DoorNames.[Panel No] AND AccessDatas.[Kapi ID] = DoorNames.[Kapi No] WHERE AccessDatas.Kod = 4 ";
             if (Panel != null)
             {
@@ -1284,7 +1284,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<ZiyaretciRaporList> GetZiyaretciListesi(List<string> Kapi, bool? Tümü, int? Visitors, int? Global_Bolge_Adi, int? Groupsdetail, bool? TümPanel, int? Paneller, DateTime? Tarih1, DateTime? Tarih2, DateTime? Saat1, DateTime? Saat2, string Kayit, string KapiYon)
         {
             //TODO: Global Zone düzeltilecek
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             var GlobalZone = _globalZoneDal.Get(x => x.Global_Bolge_No == Global_Bolge_Adi);
             string queryString = " SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID],Visitors.Adi, Visitors.Soyadi, Visitors.TCKimlik, Visitors.Telefon, Visitors.Plaka,Visitors.[Ziyaret Sebebi], GroupsMaster.[Grup Adi],AccessDatas.[Panel ID] AS Panel, DoorNames.[Kapi Adi] AS Kapi,AccessDatas.[Gecis Tipi] AS Gecis, AccessDatas.Tarih,Users.Adi AS [Personel Adi], Users.Soyadi AS [Personel Soyadi], Visitors.Resim FROM (((Visitors RIGHT JOIN AccessDatas ON Visitors.[Kayit No] = AccessDatas.[Visitor Kayit No]) LEFT JOIN GroupsMaster ON Visitors.[Grup No] = GroupsMaster.[Grup No]) LEFT JOIN Users ON Visitors.ID = Users.ID) LEFT JOIN DoorNames ON (AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) AND (AccessDatas.[Panel ID] = DoorNames.[Panel No]) WHERE AccessDatas.[Kullanici Tipi] = 1 ";
             if (Visitors != null)
@@ -1412,7 +1412,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //İçerde-Dışarda Personel
         public List<IcerdeDisardaPersonel> GetIcerdeDisardaPersonels(int? Global_Bolge_Adi, int? Paneller, string Kapi, string Bolge, string Gecis)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
 
 
@@ -1484,7 +1484,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<IcerdeDısardaZiyaretci> GetIcerdeDısardaZiyaretci(int? Global_Bolge_Adi, int? Paneller, string Kapi, string Bolge, string Gecis)
         {
             //TODO: Sorguda hata var ve sorgu içinde değişken tanımlamaları yapılacak
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
             if (Bolge == "Lokal")
             {
@@ -1548,7 +1548,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<IcerdeDısardaTümü> GetIcerdeDısardaTümü(int? Global_Bolge_Adi, int? Paneller, string Kapi, string Bolge, string Gecis)
         {
             //TODO: Lokal Bölge Sirket numaraları ve geçiş tipleri gelecek
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
             if (Bolge == "Lokal")
             {
@@ -1684,7 +1684,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //Watch-List
         public List<WatchEntityComplex> GetWatch(WatchParameters watchParameters)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
             string CodeString = "";
             if (watchParameters != null)
@@ -1831,7 +1831,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //Son Kart Basan Kişi Bilgisi
         public WatchEntityComplex LastRecordWatch(int? Kayit_No)
         {
-            string address = ConfigurationManager.AppSettings["ForaConnection"];
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
             if (Kayit_No != null && Kayit_No > 0)
             {

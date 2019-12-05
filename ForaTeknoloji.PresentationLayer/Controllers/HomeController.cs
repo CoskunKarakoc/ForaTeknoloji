@@ -1,4 +1,5 @@
-﻿using ForaTeknoloji.BusinessLayer.Abstract;
+﻿/*Bismillahirrahmanirrahim*/
+using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
@@ -6,8 +7,7 @@ using ForaTeknoloji.PresentationLayer.Models;
 using System.Web.Mvc;
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
-    /*Bismillahirahmanirahim*/
-    //[Auth]
+
     [Excp]
     public class HomeController : Controller
     {
@@ -46,7 +46,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
                 CurrentSession.Set<DBUsers>("login", user);//Session'a bilgi saklama
                 return RedirectToAction("Index", "Home");
-
             }
             return View(login);
         }
