@@ -71,5 +71,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _taskListDal.GetAllTaskStatusWatch();
         }
 
+
+        public List<ComplexTaskList> ComplexTaskList(string UserName)
+        {
+            return _taskListDal.ComplexTaskList().OrderBy(x => x.Kayit_No).Where(x => x.Kullanici_Adi == UserName).ToList();
+        }
+
+
     }
 }

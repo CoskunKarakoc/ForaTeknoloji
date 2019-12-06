@@ -12,5 +12,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     public interface ITaskListDal : IEntityRepository<TaskList>
     {
         List<TaskStatusWatch> GetAllTaskStatusWatch();
+        List<ComplexTaskList> ComplexTaskList();
     }
 }

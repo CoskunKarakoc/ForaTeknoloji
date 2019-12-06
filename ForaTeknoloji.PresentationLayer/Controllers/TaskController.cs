@@ -93,6 +93,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public PartialViewResult TopManuTask()
+        {
+            var model = _taskListService.ComplexTaskList(user.Kullanici_Adi).Take(4).ToList();
+            return PartialView(model);
+        }
+
+
+
+
 
         private List<PanelSettings> UserPanelList()
         {
@@ -113,6 +122,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return panels;
         }
+
 
 
     }

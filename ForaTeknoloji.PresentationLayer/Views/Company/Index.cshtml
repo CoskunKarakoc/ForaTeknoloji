@@ -3,10 +3,9 @@
     ViewBag.Title = "Şirket Tanımları";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="row animated slideInDown">
     <div class="col-md-6 offset-md-3 mt-xl-5  mb-xl-5">
-        <div class=" card border-info shadow-lg mt-2">
+        <div class=" card border-left-info h-100 shadow-lg mt-2">
             <div class="card-header-tabs">
                 <h3 id="Title" class="text-muted text-center">Şirket Tanımları</h3>
             </div>
@@ -66,57 +65,52 @@
 
 
 <script>
-    $(document).ready(function () {
-        var count = $("#CompanyCount").val();
-        if (count == 0) {
-            $("#CompanyList").prop("hidden", true);
-            $("#Title").prop("hidden", true);
-        } else {
-            $("#CompanyList").prop("hidden", false);
-            $("#Title").prop("hidden", false);
-        }
+        $(document).ready(function () {
+            var count = $("#CompanyCount").val();
+            if (count == 0) {
+                $("#CompanyList").prop("hidden", true);
+                $("#Title").prop("hidden", true);
+            } else {
+                $("#CompanyList").prop("hidden", false);
+                $("#Title").prop("hidden", false);
+            }
     });
+
+      function Delete(id) {
+            swal({
+                title: "Silmek İstediğinize Emin Misiniz?",
+                text: "Seçilen şirket veritabanından silinecek!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                          $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("Delete","Company")',
+                                data: JSON.stringify({ id: id }), //use id here
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                              success: function (data) {
+                                  if (data) {
+                                      swal("Başarılı! Şirket silme işlemi başarılı şekilde gerçekleştirildi!", {
+                                          icon: "success",
+                                      });
+                                  } else {
+                                      //swal("Silme işleminden vazgeçildi!");
+                                  }
+                                  setTimeout(function () {
+                                      window.location.href = "/Company/Index";
+                                  }, 2500);
+                                },
+                                error: function () {
+                                    alert("Error while deleting data");
+                                }
+                            });
+                    }
+                });
+        }
 </script>
 
-
-
-<script>
-    function Delete(id) {
-
-        swal({
-            title: "Silmek İstediğinize Emin Misiniz?",
-            text: "Seçilen şirket veritabanından silinecek!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                      $.ajax({
-                            type: "POST",
-                            url: '@Url.Action("Delete","Company")',
-                            data: JSON.stringify({ id: id }), //use id here
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                          success: function (data) {
-                              if (data) {
-                                  swal("Başarılı! Şirket silme işlemi başarılı şekilde gerçekleştirildi!", {
-                                      icon: "success",
-                                  });
-                              } else {
-                                  //swal("Silme işleminden vazgeçildi!");
-                              }
-                              setTimeout(function () {
-                                  window.location.href = "/Company/Index";
-                              }, 2500);
-                            },
-                            error: function () {
-                                alert("Error while deleting data");
-                            }
-                        });
-                }
-            });
-    }
-
-</script>
 

@@ -21,5 +21,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         TaskList GetByUserName(string kullaniciAdi);
         TaskList GetByGrupNo(int KayitNo);
         List<TaskStatusWatch> TaskStatusWatch();
+        List<ComplexTaskList> ComplexTaskList(string UserName);
     }
 }

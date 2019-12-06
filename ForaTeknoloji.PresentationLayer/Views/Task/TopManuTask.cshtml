@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ForaTeknoloji.Entities.ComplexType.ComplexTaskList>
+
+
+@foreach (var item in Model)
+{
+
+    if (item.Durum_Kodu == 1)
+    {
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle badge-warning">
+                    <i title="Beklemede" class="fas fa-exclamation-triangle text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">@item.Tarih</div>
+                @item.Gorev_Adi
+            </div>
+        </a>
+    }
+    else if (item.Durum_Kodu == 2)
+    {
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle badge-success">
+                    <i title="Başarılı" class="fas fa-clipboard-check"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">@item.Tarih</div>
+                @item.Gorev_Adi
+            </div>
+        </a>
+    }
+    else if (item.Durum_Kodu == 3)
+    {
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle badge-danger">
+                    <i title="Hata" class="fas fa-exclamation-triangle text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">@item.Tarih</div>
+                @item.Gorev_Adi
+            </div>
+        </a>
+    }
+    else if (item.Durum_Kodu == 4)
+    {
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle badge-primary">
+                    <i title="Zaman Aşımı" class="fas fa-recycle"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">@item.Tarih</div>
+                @item.Gorev_Adi
+            </div>
+        </a>
+    }
+
+}
+
+

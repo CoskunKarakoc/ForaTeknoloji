@@ -6,14 +6,14 @@
 
 <div class="row animated slideInLeft">
     <div class="col-md-8 offset-md-2">
-        <div class="card border-info shadow-lg mx-lg-5 my-lg-5">
+        <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center">Alarm Ayarları</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Edit", "Alarm", FormMethod.Post))
                 {
-                    @Html.Hidden("Alarm_No",Model.Alarm.Alarm_No)
+                    @Html.Hidden("Alarm_No", Model.Alarm.Alarm_No)
                     <hr />
                     <div class="row">
                         <div class="col-md-4">
@@ -21,7 +21,7 @@
                                 <label class="control-label col-md-4">Alarm No</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text"  name="AlarmNo" value="@Model.Alarm.Alarm_No" class="form-control" disabled />
+                                        <input type="text" name="AlarmNo" value="@Model.Alarm.Alarm_No" class="form-control" disabled />
                                         @*@Html.TextBox("Alarm_No", Model.Alarm.Alarm_No, null, new { @class = "form-control",disabled=true })*@
                                         @Html.ValidationMessageFor(model => model.Alarm.Alarm_No, "", new { @class = "text-danger" })
                                     </div>
@@ -321,9 +321,7 @@
             });
         });
 
-    })
-</script>
-<script>
+    });
     $("#temizle").click(function () {
         $("#User_ID").attr("value", null);
         $("#SeciliKullanici_Adi").attr("value", null);
@@ -333,6 +331,5 @@
         $("#alert").text("");
         $("#alertMain").prop("hidden", true);
     });
-
 
 </script>

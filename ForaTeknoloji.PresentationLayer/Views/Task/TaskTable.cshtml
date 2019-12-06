@@ -2,7 +2,7 @@
 @{
     /**/
 
-    ViewBag.Title = "Göre Tablosu";
+    ViewBag.Title = "Görev Tablosu";
     Layout = "~/Views/Shared/_Layout.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.Liste, rowsPerPage: 10);
 }
@@ -24,7 +24,7 @@
 </style>
 <div class="row animated slideInLeft">
     <div class="col-md-8 offset-2">
-        <div class="card shadow-lg mt-3 mb-3 border-info">
+        <div class="card shadow-lg mt-3 mb-3 border-left-info h-100">
             <div class="card-header-tabs">
                 <h3 class="text-center text-muted">Görev Durum Tablosu</h3>
             </div>
@@ -79,7 +79,7 @@
 
 <div class="row animated slideInRight">
     <div class="col-md-8 offset-2">
-        <div class="card border-info shadow-lg ">
+        <div class="card border-left-info h-100 mt-4 shadow-lg ">
             <div class="card-body">
                 @if (Model.Liste.Count > 0)
                 {

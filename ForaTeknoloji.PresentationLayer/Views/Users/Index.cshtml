@@ -6,7 +6,7 @@
 }
 <div class="row">
     <div class="col-md-12">
-        <div class="card border-info shadow-lg mt-xl-5 mb-xl-5">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header-tabs mt-1">
                 <h3 id="Title" class="text-muted text-center">Kullanıcı Ayarları</h3>
             </div>
@@ -289,13 +289,7 @@
         $("#ReceiveUserID").prop("value", userIDRcv);
         $("#ReceiveOprKod").prop("value", oprKodRcv);
     }
-
-
-</script>
-
-
-<script>
-    function Delete(id) {
+      function Delete(id) {
         swal({
             title: "Silmek İstediğinize Emin Misiniz?",
             text: "Seçilen kullanıcı veritabanından silinecek!",
@@ -332,17 +326,3 @@
     }
 
 </script>
-
-
-@*<script>
-        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
-        // buton aktif durum css
-        $("tfoot td")
-            .contents()
-            .filter(function () {
-                if (this.nodeType === 3 && this.length > 1) {
-                    return this.nodeType
-                }
-            })
-            .wrap('<span class=" btn btn-primary" />');
-    </script>*@

@@ -1,9 +1,10 @@
 ﻿/* Made with love by Mutiullah Samim*/
 
-@import url('https://fonts.googleapis.com/css?family=Numans');
+/*@import url('https://fonts.googleapis.com/css?family=Numans');*/
 
 html, body {
-    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    /*background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');*/
+    background-image: url('/Images/LoginPageImage.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -46,7 +47,7 @@ html, body {
 
 .input-group-prepend span {
     width: 50px;
-    background-color: #FFC312;
+    background-color: #4e73df;
     color: black;
     border: 0 !important;
 }
@@ -69,7 +70,7 @@ input:focus {
 
 .login_btn {
     color: black;
-    background-color: #FFC312;
+    background-color: #4e73df;
     width: 100px;
 }
 

@@ -1,11 +1,11 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.AlarmCreateViewModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Yeni Alarm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row animated slideInLeft">
     <div class="col-md-8 offset-md-2">
-        <div class="card border-info shadow-lg mx-lg-5 my-lg-5">
+        <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header-tabs mt-1">
                 <h3 class="text-muted text-center">Yeni Alarm Ayarı</h3>
             </div>
@@ -317,9 +317,7 @@
             });
         });
 
-    })
-</script>
-<script>
+    });
     $("#temizle").click(function () {
         $("#User_ID").attr("value", null);
         $("#Adi").attr("value", null);
