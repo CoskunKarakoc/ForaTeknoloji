@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card border-left-info h-100 shadow-lg mx-lg-5 mt-1 ">
+        <div class="card border-left-info h-100 shadow-lg mx-lg-5 mt-1" style="height:inherit">
             <div class="card-header text-right">
                 <a href="@Url.Action("WatchSettings","Watch")"><i class="fas fa-cogs fa-2x text-secondary"></i></a>
             </div>
@@ -86,84 +86,86 @@
                         <div class="row">
                             <div class="col-md-6">
                                 @Html.HiddenFor(model => model.LastRecordWatch.Kayit_No)
-                                <div class="form-group">
-                                    <label>Kart ID</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Kart_ID, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Kart ID</label>
+                                    <div class="col-sm-9">@Html.TextBoxFor(model => model.LastRecordWatch.Kart_ID, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Adı</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Adi, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Adı</label>
+                                    <div class="col-md-9">  @Html.TextBoxFor(model => model.LastRecordWatch.Adi, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Şirket</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Sirket_Adi, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Şirket</label>
+                                    <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Sirket_Adi, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Plaka</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Plaka, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Plaka</label>
+                                    <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Plaka, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Daire</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Daire, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Daire</label>
+                                    <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Daire, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Panel</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Panel_ID, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Panel</label>
+                                    <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Panel_ID, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Geçiş Tipi</label>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Geçiş Tipi</label>
                                     @if (Model.LastRecordWatch == null)
                                     {
-                                        <input type="text" id="LastRecordWatch_Gecis_Tipi" name="LastRecordWatch.Gecis_Tipi" value="GİRİŞ" class="form-control form-control-sm bg-success text-white text-center" />
+                                        <div class="col-md-9"><input type="text" id="LastRecordWatch_Gecis_Tipi" name="LastRecordWatch.Gecis_Tipi" value="GİRİŞ" class="form-control form-control-sm bg-success text-white text-center" /></div>
                                     }
                                     else
                                     {
 
                                         if (Model.LastRecordWatch.Gecis_Tipi == 0)
                                         {
-                                            @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-success text-white text-center" })
+                                            <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-success text-white text-center" })</div>
                                         }
                                         else
                                         {
-                                            @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-danger text-white text-center" })
+                                            <div class="col-md-9">@Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-danger text-white text-center" })</div>
                                         }
                                     }
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>TC Kimlik</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.TCKimlik, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">TC Kimlik</label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(model => model.LastRecordWatch.TCKimlik, "", new { @class = "form-control form-control-sm" })
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Soyadı</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Soyadi, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Soyadı</label>
+                                    <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Soyadi, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Bölüm</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Departman_Adi, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Bölüm</label>
+                                    <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Departman_Adi, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Blok</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Blok_Adi, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Blok</label>
+                                    <div class="col-md-9">   @Html.TextBoxFor(model => model.LastRecordWatch.Blok_Adi, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Tarih</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Tarih, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Tarih</label>
+                                    <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Tarih, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Kapı</label>
-                                    @Html.TextBoxFor(model => model.LastRecordWatch.Kapi_Adi, "", new { @class = "form-control form-control-sm" })
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Kapı</label>
+                                    <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Kapi_Adi, "", new { @class = "form-control form-control-sm" })</div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Kayıt Tipi</label>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Kayıt Tipi</label>
                                     @if (Model.LastRecordWatch == null || Model.LastRecordWatch.Operasyon == "" || Model.LastRecordWatch.Operasyon == null)
                                     {
-                                        <input type="text" id="LastRecordWatch_Operasyon" name="LastRecordWatch.Operasyon" value="" class="form-control form-control-sm" />
+                                        <div class="col-md-9"> <input type="text" id="LastRecordWatch_Operasyon" name="LastRecordWatch.Operasyon" value="" class="form-control form-control-sm" /></div>
                                     }
                                     else
                                     {
-                                        @Html.TextBoxFor(model => model.LastRecordWatch.Operasyon, Model.LastRecordWatch.Operasyon, new { @class = "form-control form-control-sm text-center bg-info text-white" })
+                                        <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Operasyon, Model.LastRecordWatch.Operasyon, new { @class = "form-control form-control-sm text-center bg-info text-white" })</div>
                                     }
 
                                 </div>
@@ -173,13 +175,13 @@
                     <div class="col-md-4 offset-1">
                         @if (Model.LastRecordWatch == null || Model.LastRecordWatch.Resim == "" || Model.LastRecordWatch.Resim == null)
                         {
-                            <img id="KayitliImage" class="img-profile card-img-bottom card-img" src="~/Images/BaseUser.jpg" alt="User Image" />
+                            <img id="KayitliImage" style="height:350px;" class="img-profile card-img-bottom card-img" src="~/Images/BaseUser.jpg" alt="User Image" />
                         }
                         else
                         {
-                            <img id="KayitliImage" class="img-profile card-img-bottom card-img" src="~/Images/@Model.LastRecordWatch.Resim" alt="User Image" />
+                            <img id="KayitliImage" style="height:350px;" class="img-profile card-img-bottom card-img" src="~/Images/@Model.LastRecordWatch.Resim" alt="User Image" />
                         }
-                        <img id="CanliImage" src="~/Images/BaseUser.jpg" hidden class="img-profile card-img-bottom card-img" alt="Canlı Resim" />
+                        <img id="CanliImage" style="height:350px;" src="~/Images/BaseUser.jpg" hidden class="img-profile card-img-bottom card-img" alt="Canlı Resim" />
                         <hr />
                         <div id="Resimler" class="btn-group btn-group-toggle offset-2" data-toggle="buttons">
                             <label class="btn btn-outline-info active">

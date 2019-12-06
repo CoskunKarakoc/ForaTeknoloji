@@ -56,6 +56,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (kapiOperasyon.OprKod == null)
+                    throw new Exception("Operasyon seçilmedi!");
+
                 if (kapiOperasyon.Tum_Panel == true)
                 {
                     foreach (var item in UserPanelList())
