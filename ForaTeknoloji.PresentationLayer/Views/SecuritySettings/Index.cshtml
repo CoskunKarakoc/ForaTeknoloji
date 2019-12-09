@@ -4,17 +4,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row animated slideInDown">
+<div class="row animated slideInDown faster">
     <div class="col-md-12">
         <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
-            <div class="card-header-tabs mt-1">
+            <div class="card-header py-1 mt-1">
                 <div class="row">
-                    <div class="col-md-12 text-right">
-                        <a href="@Url.Action("Create","SecuritySettings")" class="btn btn-sm btn-outline-success mr-5"><i class="fas fa-user-plus"></i> Yeni Kullanıcı</a>
+                    <div class="col-md-12 text-center">
+                        <h3 class="m-0 font-weight-bold text-secondary text-center">Güvenlik Ayarları</h3>
                     </div>
                 </div>
             </div>
             <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <a href="@Url.Action("Create","SecuritySettings")" class="btn btn-sm btn-outline-success mb-2"><i class="fas fa-user-plus"></i> Yeni Kullanıcı</a>
+                    </div>
+                </div>
                 <table class="table-borderless table table-hover text-center table-striped table-sm">
                     <thead class="table-info">
                         <tr>

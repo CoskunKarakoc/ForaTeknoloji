@@ -3,11 +3,11 @@
     ViewBag.Title = "Asansör Grup Düzenleme";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row animated slideInLeft">
+<div class="row animated slideInLeft faster">
     <div class="col-md-8 offset-2">
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
-            <div class="card-header-tabs mt-1">
-                <h3 class="text-muted text-center"><i>Asansör Geçiş Grup Düzenle</i></h3>
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center"><i>Asansör Geçiş Grup Düzenle</i></h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Edit", "Lift", FormMethod.Post))
