@@ -119,13 +119,13 @@
                                     else
                                     {
 
-                                        if (Model.LastRecordWatch.Gecis_Tipi == 0)
+                                        if (Model.LastRecordWatch.Gecis_Tipi == 1)
                                         {
-                                            <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-success text-white text-center" })</div>
+                                            <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 1 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-success text-white text-center" })</div>
                                         }
                                         else
                                         {
-                                            <div class="col-md-9">@Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-danger text-white text-center" })</div>
+                                            <div class="col-md-9">@Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 1 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-danger text-white text-center" })</div>
                                         }
                                     }
                                 </div>
@@ -240,7 +240,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -269,7 +269,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -298,7 +298,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -327,7 +327,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -356,7 +356,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -385,7 +385,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -414,7 +414,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -443,7 +443,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -472,7 +472,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -501,7 +501,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -530,7 +530,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -559,7 +559,7 @@
                                         <td>@item.Grup_Adi</td>
                                         <td>@item.Panel_ID</td>
                                         <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
                                         {
                                             <td>Giriş</td>
                                         }
@@ -776,6 +776,7 @@
                 $("#LastRecordWatch_Adi").prop("value", data.Adi);
                 $("#LastRecordWatch_Soyadi").prop("value", data.Soyadi);
                 $("#LastRecordWatch_Sirket_Adi").prop("value", data.Sirket_Adi);
+                $("#KayitliImage").prop("src", "/Images/" + data.Resim);
                 $("#LastRecordWatch_Grup_Adi").prop("value", data.Grup_Adi);
                 $("#LastRecordWatch_Plaka").prop("value", data.Plaka);
                 $("#LastRecordWatch_Blok_Adi").prop("value", data.Blok_Adi);

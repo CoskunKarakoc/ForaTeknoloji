@@ -55,7 +55,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        // GET: Users
+        //Kullanıcıların Listelenmesi
         public ActionResult Index(string Search = null)
         {
             if (permissionUser.SysAdmin == false)
@@ -83,7 +83,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
-
+        //Yeni Kullanıcı Oluşturma
         public ActionResult Create(string Kart_ID = null)
         {
             if (permissionUser.SysAdmin == false)
@@ -158,7 +158,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             };
             return View(model);
         }
-
+        //Yeni Kullanıcı Oluşturma
         [HttpPost]
         public ActionResult Create(Users user, HttpPostedFileBase ProfileImage)
         {
@@ -176,7 +176,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(user);
         }
 
-
+        //Kullanıcı Güncelleme
         public ActionResult Edit(int? id)
         {
             if (permissionUser.SysAdmin == false)
@@ -209,7 +209,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ViewBag.Bitis_Saati = users.Bitis_Saati;
             return View(users);
         }
-
+        //Kullanıcı Güncelleme
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Users entity, HttpPostedFileBase ProfileImage)
@@ -269,7 +269,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
-
+        //Panel Silme Operasyonları Silme İşlemi
         public ActionResult PanelOperation(string Search)
         {
             if (permissionUser.SysAdmin == false)
@@ -277,6 +277,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (permissionUser.Kullanici_Islemleri == 3)
                     throw new Exception("Yetkisiz Erişim!");
             }
+
             if (Search != null && Search != "")
             {
                 var model = new UsersListViewModel
@@ -298,7 +299,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
-
+        //Panelden Kullanıcı Alma İşlemi
         public ActionResult Receive(int PanelListReceive, int ReceiveUserID = -1)
         {
 
@@ -399,7 +400,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             TaskList taskListRemove = new TaskList
                             {
-                                Deneme_Sayisi = 1,
+                                Deneme_Sayisi = 2,
                                 Durum_Kodu = 1,
                                 Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
                                 IntParam_1 = 1,
@@ -429,7 +430,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 {
                                     Deneme_Sayisi = 1,
                                     Durum_Kodu = 1,
-                                    Gorev_Kodu = (int)OprKod,
+                                    Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
                                     IntParam_1 = userID,
                                     Kullanici_Adi = user.Kullanici_Adi,
                                     Panel_No = panel,
@@ -447,7 +448,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             TaskList taskList = new TaskList
                             {
-                                Deneme_Sayisi = 1,
+                                Deneme_Sayisi = 2,
                                 Durum_Kodu = 1,
                                 Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
                                 IntParam_1 = 1,

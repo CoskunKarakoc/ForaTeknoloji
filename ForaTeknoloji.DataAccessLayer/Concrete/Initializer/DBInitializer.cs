@@ -1344,7 +1344,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
             context.TaskCodes.Add(taskCode2628);
             TaskCode taskCode26288 = new TaskCode
             {
-                Gorev_Kodu = 2628,
+                Gorev_Kodu = 2629,
                 Gorev_Adi = "Stand-Alone Kullanıcı Hafızasının Tamamını Silme"
             };
             context.TaskCodes.Add(taskCode26288);
