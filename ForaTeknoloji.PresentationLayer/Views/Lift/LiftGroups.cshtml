@@ -8,21 +8,6 @@
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header py-1">
                 <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center"><i>Asansör Grupları</i></h3>
-                @if (Model.StatusControl != -1)
-                {
-                    if (Model.StatusControl == 2)
-                    {
-                        <h3 id="Status" class="text-success text-center">İşlem Başarılı</h3>
-                    }
-                    else if (Model.StatusControl == 1)
-                    {
-                        <h3 id="Status" class="text-warning text-center">İşlem Sıraya Alındı</h3>
-                    }
-                    else
-                    {
-                        <h3 id="Status" class="text-danger text-center">İşlem Başarısız</h3>
-                    }
-                }
             </div>
             <div class="card-body">
                 @if (Model.LiftGroup.Count == 0)

@@ -42,7 +42,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         // AGG Listesi
-        public ActionResult LiftGroups(int Status = -1)
+        public ActionResult LiftGroups()
         {
             if (permissionUser.SysAdmin == false)
             {
@@ -54,7 +54,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var model = new LiftGroupsListViewModel
             {
                 LiftGroup = _liftGroupsService.GetAllLiftGroups(),
-                StatusControl = Status,
                 PanelListesi = UserPanelList()
             };
 
@@ -245,18 +244,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tablo_Guncelle = true,
                             Tarih = DateTime.Now
                         };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _taskListService.AddTaskList(taskList);
                     }
                     Thread.Sleep(2000);
                 }
                 catch (Exception)
                 {
-                    return RedirectToAction("LiftGroups", new { @Status = 3 });
+                    return RedirectToAction("LiftGroups");
                 }
             }
-
             return RedirectToAction("LiftGroups");
-
         }
 
         //Get Task Status

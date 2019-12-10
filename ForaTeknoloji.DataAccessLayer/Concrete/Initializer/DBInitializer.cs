@@ -1510,10 +1510,16 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gorev_Adi = "Asansör Gruplarının Alınması"
             };
             context.TaskCodes.Add(taskCode2642);
+            TaskCode taskCode2644 = new TaskCode
+            {
+                Gorev_Kodu = 2644,
+                Gorev_Adi = "Asansör Gruplarının Silinmesi(Tek)"
+            };
+            context.TaskCodes.Add(taskCode2644);
             TaskCode taskCode2645 = new TaskCode
             {
                 Gorev_Kodu = 2645,
-                Gorev_Adi = "Asansör Gruplarının Silinmesi"
+                Gorev_Adi = "Asansör Gruplarının Silinmesi(Tümü)"
             };
             context.TaskCodes.Add(taskCode2645);
             TaskCode taskCode2650 = new TaskCode
