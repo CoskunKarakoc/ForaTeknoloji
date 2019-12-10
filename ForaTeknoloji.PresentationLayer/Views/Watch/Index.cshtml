@@ -119,13 +119,13 @@
                                     else
                                     {
 
-                                        if (Model.LastRecordWatch.Gecis_Tipi == 1)
+                                        if (Model.LastRecordWatch.Gecis_Tipi == 0)
                                         {
-                                            <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 1 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-success text-white text-center" })</div>
+                                            <div class="col-md-9"> @Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-success text-white text-center" })</div>
                                         }
                                         else
                                         {
-                                            <div class="col-md-9">@Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 1 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-danger text-white text-center" })</div>
+                                            <div class="col-md-9">@Html.TextBoxFor(model => model.LastRecordWatch.Gecis_Tipi, Model.LastRecordWatch.Gecis_Tipi == 0 ? "GİRİŞ" : "ÇIKIŞ", new { @class = "form-control form-control-sm bg-danger text-white text-center" })</div>
                                         }
                                     }
                                 </div>
@@ -175,7 +175,7 @@
                     <div class="col-md-4 offset-1">
                         @if (Model.LastRecordWatch == null || Model.LastRecordWatch.Resim == "" || Model.LastRecordWatch.Resim == null)
                         {
-                            <img id="KayitliImage" style="height:350px;" class="img-profile card-img-bottom card-img" src="~/Images/BaseUser.jpg" alt="User Image" />
+                            <img id="KayitliImage" style="height:350px;" class="img-profile card-img-bottom card-img " src="~/Images/BaseUser.jpg" alt="User Image" />
                         }
                         else
                         {
@@ -199,382 +199,385 @@
                 </div>
 
                 <div class="col-md-12">
-                    <table id="table" class="table-borderless table table-hover text-center table-striped  small">
-                        <thead class="table-info table-sm">
-                            <tr>
-                                <td>ID</td>
-                                <td>Kart ID</td>
-                                <td>Adı</td>
-                                <td>Soyadı</td>
-                                <td>Şirket</td>
-                                <td>Departman</td>
-                                <td>TCKimlik</td>
-                                <td>Plaka</td>
-                                <td>Blok</td>
-                                <td>Daire</td>
-                                <td>Grup Adı</td>
-                                <td>Panel</td>
-                                <td>Kapı</td>
-                                <td>Geçiş</td>
-                                <td>Tarih</td>
-                                <td>Operasyon</td>
-                                <td>Operator</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.ComplexAccessDatas)
-                            {
-                                if (item.Kod == 0)
+                    <div class="table-responsive-md">
+                        @*<table id="table" class="table-borderless table table-hover text-center table-striped  small">*@
+                        <table class="table table-bordered table-hover text-center table-striped small " id="table" width="100%" cellspacing="0">
+                            <thead class="bg-gray-600 text-white table-sm">
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>TCKimlik</td>
+                                    <td>Plaka</td>
+                                    <td>Blok</td>
+                                    <td>Daire</td>
+                                    <td>Grup Adı</td>
+                                    <td>Panel</td>
+                                    <td>Kapı</td>
+                                    <td>Geçiş</td>
+                                    <td>Tarih</td>
+                                    <td>Operasyon</td>
+                                    <td>Operator</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ComplexAccessDatas)
                                 {
-                                    <tr data-kayitno="@item.Kayit_No" id="engellenenSatir" class="table-danger">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
+                                    if (item.Kod == 0)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="engellenenSatir" class="table-danger">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 1)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="normalSatir" class="table-success">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 2)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="antipassbackSatir" class="table-danger">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 3)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="cokluGecisSatir" class="table-info">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 4)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="tanimsizSatir" class="table-primary">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator <a title="Yeni Kullanıcı Olarak Ekle" onclick="return confirm('Yeni Kullanıcı Olarak Eklemek İstiyormusunuz?')" href="@Url.Action("Create","Users",new {Kart_ID=item.Kart_ID })"><i class="fas fa-user-plus text-info ml-2"></i></a></td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 5 || item.Kod == 6 || item.Kod == 7 || item.Kod == 13)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="manuelSatir" class="table-warning">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 8 || item.Kod == 25 || item.Kod == 14)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="butonSatir" class="table-warning">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 9 || item.Kod == 10 || item.Kod == 14)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="programliSatir" class="table-success">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 20 || item.Kod == 21)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="alarmYanginSatir" class="text-muted">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod == 22 || item.Kod == 23 || item.Kod == 24)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="kapiAlarmSatir" class="table-info">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod > 24 && item.Kod < 48)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="digerSatir" class="table-dark">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
+                                    else if (item.Kod >= 100)
+                                    {
+                                        <tr data-kayitno="@item.Kayit_No" id="operatorSatir" class="table-hover">
+                                            <td>@item.ID</td>
+                                            <td>@item.Kart_ID</td>
+                                            <td>@item.Adi</td>
+                                            <td>@item.Soyadi</td>
+                                            <td>@item.Sirket_Adi</td>
+                                            <td>@item.Departman_Adi</td>
+                                            <td>@item.TCKimlik</td>
+                                            <td>@item.Plaka</td>
+                                            <td>@item.Blok_Adi</td>
+                                            <td>@item.Daire</td>
+                                            <td>@item.Grup_Adi</td>
+                                            <td>@item.Panel_ID</td>
+                                            <td>@item.Kapi_Adi</td>
+                                            @if (item.Gecis_Tipi == 0 && item.Gecis_Tipi != null)
+                                            {
+                                                <td>Giriş</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Çıkış</td>
+                                            }
+                                            <td>@item.Tarih</td>
+                                            <td class="small">@item.Operasyon</td>
+                                            <td class="small">@item.Operator</td>
+                                        </tr>
+                                    }
                                 }
-                                else if (item.Kod == 1)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="normalSatir" class="table-success">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod == 2)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="antipassbackSatir" class="table-danger">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod == 3)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="cokluGecisSatir" class="table-info">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod == 4)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="tanimsizSatir" class="table-primary">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator <a title="Yeni Kullanıcı Olarak Ekle" onclick="return confirm('Yeni Kullanıcı Olarak Eklemek İstiyormusunuz?')" href="@Url.Action("Create","Users",new {Kart_ID=item.Kart_ID })"><i class="fas fa-user-plus text-info ml-2"></i></a></td>
-                                    </tr>
-                                }
-                                else if (item.Kod == 5 || item.Kod == 6 || item.Kod == 7 || item.Kod == 13)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="manuelSatir" class="table-warning">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod == 8 || item.Kod == 25 || item.Kod == 14)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="butonSatir" class="table-warning">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod == 9 || item.Kod == 10 || item.Kod == 14)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="programliSatir" class="table-success">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod == 20 || item.Kod == 21)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="alarmYanginSatir" class="text-muted">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod == 22 || item.Kod == 23 || item.Kod == 24)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="kapiAlarmSatir" class="table-info">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod > 24 && item.Kod < 48)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="digerSatir" class="table-dark">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                                else if (item.Kod >= 100)
-                                {
-                                    <tr data-kayitno="@item.Kayit_No" id="operatorSatir" class="table-hover">
-                                        <td>@item.ID</td>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.Sirket_Adi</td>
-                                        <td>@item.Departman_Adi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Plaka</td>
-                                        <td>@item.Blok_Adi</td>
-                                        <td>@item.Daire</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td>@item.Panel_ID</td>
-                                        <td>@item.Kapi_Adi</td>
-                                        @if (item.Gecis_Tipi == 1 && item.Gecis_Tipi != null)
-                                        {
-                                            <td>Giriş</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Çıkış</td>
-                                        }
-                                        <td>@item.Tarih</td>
-                                        <td class="small">@item.Operasyon</td>
-                                        <td class="small">@item.Operator</td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

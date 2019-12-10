@@ -750,7 +750,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             var GlobalZone = _globalZoneDal.Get(x => x.Global_Bolge_No == GlobalBolgeNo);
-            string queryString = "SELECT DISTINCT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi As Departman, Users.Plaka, Bloklar.Adi As Blok, Users.Daire,Users.[Grup No], GroupsDetail.[Grup Adi] As [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((GroupsDetail LEFT JOIN Users ON GroupsDetail.[Grup No] = Users.[Grup No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] WHERE Users.[Kullanici Tipi] = 0  AND Users.ID > 0";
+            string queryString = "SELECT DISTINCT Users.ID, Users.[Kart ID], Users.Adi, Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,Departmanlar.Adi As Departman, Users.Plaka, Bloklar.Adi As Blok, Users.Daire,Users.[Grup No], GroupsDetailNew.[Grup Adi] As [Geçiş Grubu], Users.Tmp AS [Global Bolge Adi] FROM (((GroupsDetailNew LEFT JOIN Users ON GroupsDetailNew.[Grup No] = Users.[Grup No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] WHERE Users.[Kullanici Tipi] = 0  AND Users.ID > 0";
 
             if (Departmanlar != null)
             {
@@ -778,22 +778,22 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             if (GlobalBolgeNo != null)
             {
-                queryString += " AND (( GroupsDetail.[Kapi1] = 1 AND GroupsDetail.[Kapi1 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi2] = 1 AND GroupsDetail.[Kapi2 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi3] = 1 AND GroupsDetail.[Kapi3 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi4] = 1 AND GroupsDetail.[Kapi4 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi5] = 1 AND GroupsDetail.[Kapi5 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi6] = 1 AND GroupsDetail.[Kapi6 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi7] = 1 AND GroupsDetail.[Kapi7 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi8] = 1 AND GroupsDetail.[Kapi8 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi9] = 1 AND GroupsDetail.[Kapi9 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi10] = 1 AND GroupsDetail.[Kapi10 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi11] = 1 AND GroupsDetail.[Kapi11 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi12] = 1 AND GroupsDetail.[Kapi12 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi13] = 1 AND GroupsDetail.[Kapi13 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi14] = 1 AND GroupsDetail.[Kapi14 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi15] = 1 AND GroupsDetail.[Kapi15 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
-                    + "  OR(GroupsDetail.[Kapi16] = 1 AND GroupsDetail.[Kapi16 Global Bolge No] = " + GlobalZone.Global_Bolge_No + "))";
+                queryString += " AND (( GroupsDetailNew.[Kapi No] = 1 AND GroupsDetailNew.[Kapi Aktif] = 1  AND GroupsDetailNew.[Kapi Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 2 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi2 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 3 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi3 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 4 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi4 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 5 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi5 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 6 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi6 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 7 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi7 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 8 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi8 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 9 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi9 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 10 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi10 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 11 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi11 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 12 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi12 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 13 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi13 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 14 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi14 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 15 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi15 Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
+                    + "  OR(GroupsDetailNew.[Kapi No] = 16 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetail.[Kapi16 Global Bolge No] = " + GlobalZone.Global_Bolge_No + "))";
             }
 
             queryString += " ORDER BY Users.ID";
