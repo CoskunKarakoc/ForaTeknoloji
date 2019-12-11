@@ -2518,6 +2518,7 @@
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\CameraSettingsController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DoorController.cs" />
@@ -2682,6 +2683,7 @@
     <Content Include="Views\PanelSettings\Create.cshtml" />
     <Content Include="Views\SecuritySettings\ChangePassword.cshtml" />
     <Content Include="Views\Task\TopManuTask.cshtml" />
+    <Content Include="Views\Chart\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

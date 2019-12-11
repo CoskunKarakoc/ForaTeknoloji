@@ -56,7 +56,7 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/bootstrap.rtl.min.css" />
     <!---Alertfy JS-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-   
+
 
 </head>
 <body id="page-top">
@@ -110,6 +110,7 @@
                         <a class="collapse-item" href="@Url.Action("LiftGroups","Lift")">Asansör Geçiş Grupları</a>
                         <a class="collapse-item text-muted" href="#">Geçiş Grup Takvimi</a>
                         <a class="collapse-item" href="@Url.Action("Index","GlobalZone")">Global Bölgeler</a>
+                        <a class="collapse-item" href="@Url.Action("VisitorCard","Users")">Ziyaretçi Kartı Ekle</a>
                         <a class="collapse-item text-muted" href="#">Global Bölge Interlock</a>
                         <a class="collapse-item" href="#">Plaka Tanıma Kameraları</a>
                         <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı İşlemleri</a>
@@ -207,9 +208,6 @@
                         <h6 class="collapse-header">Ziyaretçiler</h6>
                         <a class="collapse-item" href="@Url.Action("Create","Visitor")">Yeni Ziyaretçi</a>
                         <a class="collapse-item" href="@Url.Action("Index","Visitor")">Ziyaretçi Ayarları</a>
-
-
-
                     </div>
 
                 </div>
@@ -262,6 +260,15 @@
                     </div>
 
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="@Url.Action("Index","Chart")">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>İstatistik</span>
+                </a>
+
+
+
             </li>
             @*Nav Item - Utilities Collapse Menu
                     <li class="nav-item">

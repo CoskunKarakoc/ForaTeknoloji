@@ -11,7 +11,7 @@
     if (webGrid.HasSelection)
     {
         var sonuc = (ForaTeknoloji.Entities.ComplexType.ReportPersonelList)webGrid.Rows[webGrid.SelectedIndex].Value;
-        img = "/Images/" + sonuc.Kart_ID + ".jpg";
+        img = "/Images/" + sonuc.Resim;
         canlimg = "/Canli_Images/" + sonuc.Kart_ID + ".jpg";
 
     }
@@ -33,7 +33,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft">
+<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft faster">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Aktif Kullanıcı Raporları</h3>
     </div>
@@ -235,7 +235,7 @@
 
                 </div>
                 <div class="col-md-4">
-                    <img id="change-image" src="@img " alt="Kayıtlı Fotoğraf" />
+                    <img id="change-image" src="@img" style="height:300px; width:300px;" alt="Kayıtlı Fotoğraf" />
                     <hr />
                     <img id="change-image-canli" src="@canlimg" alt="Canlı Fotoğraf" />
                     <br /><br /><br />
@@ -254,7 +254,7 @@
 
 
 <!-- Table -->
-<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight">
+<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight faster">
     <div class="card-body">
         <div id="print_div">
             @if (Model.ReportPersonel.Count > 0)
@@ -353,7 +353,7 @@ webGrid.Column("Tarih", "Tarih")))
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info animated shake" id="yenile"><i class="fas fa-refresh"></i> Listeyi Yenile</button>
+                <button type="button" class="btn btn-info" id="yenile"><i class="fas fa-refresh"></i> Listeyi Yenile</button>
                 <button type="button" id="temizle" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
                 <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
             </div>

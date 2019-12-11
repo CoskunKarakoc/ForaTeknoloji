@@ -111,7 +111,7 @@
                         <div class="col-md-12"><hr /></div>
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-4 offset-md-1">
+                                <div class="col-md-4">
                                     <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
                                         <thead class="table-secondary">
                                             <tr>
@@ -143,7 +143,7 @@
                                     </table>
                                 </div>
 
-                                <div class="col-md-4 offset-md-1 ">
+                                <div class="col-md-4 ">
                                     <table id="SirketTable" class="table-borderless table table-hover text-center table-striped table-sm">
                                         <thead class="table-secondary">
                                             <tr>
@@ -168,6 +168,38 @@
                                                         </div>
                                                     </td>
                                                     <td>@item.Sirket_No</td>
+                                                    <td>@item.Adi</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-md-4 ">
+                                    <table id="DepartmanTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="AllDepartman" />
+                                                        <label class="custom-control-label" for="AllDepartman"></label>
+                                                    </div>
+                                                </td>
+                                                <td>Departman No</td>
+                                                <td>Adı</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Departmanlar)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" name="Departmanlar" id="@item.Departman_No" value="@item.Departman_No">
+                                                            <label class="custom-control-label" for="@item.Departman_No"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@item.Departman_No</td>
                                                     <td>@item.Adi</td>
                                                 </tr>
                                             }
@@ -199,7 +231,13 @@
                 $("#SirketTable tbody tr input[type='checkbox']").prop("checked", false);
             }
         });
-
+        $("#AllDepartman").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#DepartmanTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#DepartmanTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
     });
 </script>
 

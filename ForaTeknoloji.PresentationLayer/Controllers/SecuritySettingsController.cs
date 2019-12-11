@@ -21,9 +21,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBRolesService _dBRolesService;
         private IPanelSettingsService _panelSettingsService;
         private ISirketService _sirketService;
+        private IDepartmanService _departmanService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
         DBUsers user;
         DBUsers permissionUser;
-        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService)
+        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -36,6 +38,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBRolesService = dBRolesService;
             _panelSettingsService = panelSettingsService;
             _sirketService = sirketService;
+            _departmanService = departmanService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -67,15 +71,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var kullanici = _dBUsersService.GetById(Kullanici_Adi);
             var userPanel = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == Kullanici_Adi);
             var userSirket = _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == Kullanici_Adi);
+            var userDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == Kullanici_Adi);
             var panelList = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var sirketList = _sirketService.GetAllSirketler();
+            var departmanList = _departmanService.GetAllDepartmanlar();
             var model = new EditSecurityListViewModel
             {
                 Kullanicilar = kullanici,
                 UserPanelList = userPanel,
                 PanelList = panelList,
                 UserSirketList = userSirket,
-                SirketList = sirketList
+                SirketList = sirketList,
+                UserDepartmanList = userDepartman,
+                DepartmanList = departmanList
+
             };
             ViewBag.Kullanici_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Kullanici_Islemleri);
             ViewBag.Grup_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Grup_Islemleri);
@@ -89,7 +98,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(DBUsers dBUsers, List<int> Sirketler = null, List<int> Paneller = null)
+        public ActionResult Edit(DBUsers dBUsers, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +106,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     DBUserSirketUpdate(dBUsers, Sirketler);
                     DBUserPanelUpdate(dBUsers, Paneller);
+                    DBUserDepartmanUpdate(dBUsers, Departmanlar);
                     _dBUsersService.UpdateDBUsers(dBUsers);
                 }
             }
@@ -120,6 +130,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.Yetki_Tipi.ToString()
                 }),
                 Sirketler = _sirketService.GetAllSirketler(),
+                Departmanlar = _departmanService.GetAllDepartmanlar(),
                 Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
 
             };
@@ -128,7 +139,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Create(DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null)
+        public ActionResult Create(DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             DBUsers addedUser = new DBUsers();
             if (ModelState.IsValid)
@@ -157,6 +168,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         _dBUsersPanelsService.AddDBUsersPanels(new DBUsersPanels { Kullanici_Adi = addedUser.Kullanici_Adi, Panel_No = item });
                     }
                 }
+                if (Departmanlar != null)
+                {
+                    foreach (var item in Departmanlar)
+                    {
+                        _dBUsersDepartmanService.AddDBUsersDepartman(new DBUsersDepartman { Kullanici_Adi = addedUser.Kullanici_Adi, Departman_No = item });
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
             return View(dBUsers);
@@ -237,6 +256,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
-
+        public void DBUserDepartmanUpdate(DBUsers dBUsers, List<int> Departmanlar)
+        {
+            _dBUsersSirketService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            if (Departmanlar != null)
+            {
+                foreach (var departman in Departmanlar)
+                {
+                    DBUsersDepartman dBUsersDepartman = new DBUsersDepartman
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Departman_No = departman
+                    };
+                    _dBUsersDepartmanService.AddDBUsersDepartman(dBUsersDepartman);
+                }
+            }
+        }
     }
 }

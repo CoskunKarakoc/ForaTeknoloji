@@ -11,7 +11,7 @@
     if (webGrid.HasSelection)
     {
         var sonuc = (ForaTeknoloji.Entities.ComplexType.ZiyaretciRaporList)webGrid.Rows[webGrid.SelectedIndex].Value;
-        img = "/Canli_Images/" + sonuc.Ziyaretci_Resim;
+        img = "/Images/" + sonuc.Ziyaretci_Resim;
         canlimg = "/Canli_Images/" + sonuc.Ziyaretci_Resim;
 
     }
@@ -32,7 +32,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft">
+<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft faster">
     <div class="card-header-tabs">
         <h3 class="text-muted text-center">Ziyaretçi Raporları</h3>
     </div>
@@ -217,7 +217,7 @@
         }
     </div>
 </div>
-<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight">
+<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight faster">
     <div class="card-body">
         <div id="print_div">
             @if (Model.ComplexVisitorsListesi.Count > 0)

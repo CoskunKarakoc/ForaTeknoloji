@@ -54,6 +54,7 @@
     <Compile Include="ComplexType\CamerasComplex.cs" />
     <Compile Include="ComplexType\ComplexGroupsDetailNew.cs" />
     <Compile Include="ComplexType\ComplexTaskList.cs" />
+    <Compile Include="ComplexType\Count.cs" />
     <Compile Include="ComplexType\DigerGecisRaporList.cs" />
     <Compile Include="ComplexType\DigerGecisRaporListKullaniciAlarm.cs" />
     <Compile Include="ComplexType\ExcelGroupType.cs" />

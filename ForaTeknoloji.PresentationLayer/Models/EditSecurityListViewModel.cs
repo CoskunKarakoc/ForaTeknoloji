@@ -11,5 +11,7 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<PanelSettings> PanelList { get; internal set; }
         public List<DBUsersSirket> UserSirketList { get; internal set; }
         public List<Sirketler> SirketList { get; internal set; }
+        public List<DBUsersDepartman> UserDepartmanList { get; internal set; }
+        public List<Departmanlar> DepartmanList { get; internal set; }
     }
 }

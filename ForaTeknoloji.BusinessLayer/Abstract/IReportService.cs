@@ -43,5 +43,8 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void GetPanelList(DBUsers user);
         void GetSirketList(DBUsers users);
 
+
+
+
     }
 }
