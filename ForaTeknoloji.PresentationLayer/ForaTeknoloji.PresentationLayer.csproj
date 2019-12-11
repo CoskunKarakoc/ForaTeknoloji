@@ -493,6 +493,11 @@
     <Content Include="Images\Logo.jpg" />
     <Content Include="Images\MavisoftYatayOrta2.jpg" />
     <Content Include="Images\MavisoftYatayOrtaLogo.png" />
+    <Content Include="Images\user_1.jpeg" />
+    <Content Include="Images\user_2.jpeg" />
+    <Content Include="Images\user_3.jpeg" />
+    <Content Include="Images\user_5.png" />
+    <Content Include="Images\user_6.jpeg" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />

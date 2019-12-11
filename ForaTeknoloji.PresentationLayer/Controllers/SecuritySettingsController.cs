@@ -100,7 +100,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     _dBUsersService.UpdateDBUsers(dBUsers);
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Logout", "Home");
         }
 
 
@@ -173,7 +173,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (kullaniciAdi != null)
             {
                 DBUsers user = _dBUsersService.GetById(kullaniciAdi);
-                if (user != null)
+                if (user != null && user.Kullanici_Adi != "sa")
                 {
                     _dBUsersService.DeleteDBUsers(user);
                     return RedirectToAction("Index", "SecuritySettings");
