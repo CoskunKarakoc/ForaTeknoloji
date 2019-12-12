@@ -15,5 +15,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         DBUsersDepartman AddDBUsersDepartman(DBUsersDepartman dBUsersDepartman);
         void DeleteDBUsersDepartman(DBUsersDepartman dBUsersDepartman);
         DBUsersDepartman UpdateDBUsersDepartman(DBUsersDepartman dBUsersDepartman);
+        void DeleteAllWithUserName(string UserName);
     }
 }

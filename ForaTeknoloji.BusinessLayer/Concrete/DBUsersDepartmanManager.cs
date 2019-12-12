@@ -41,5 +41,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _dBUsersDepartmanDal.Update(dBUsersDepartman);
         }
+
+
+        public void DeleteAllWithUserName(string UserName)
+        {
+            _dBUsersDepartmanDal.DeleteAllWithUserName(UserName);
+        }
     }
 }

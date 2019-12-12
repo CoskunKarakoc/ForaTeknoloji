@@ -110,7 +110,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     _dBUsersService.UpdateDBUsers(dBUsers);
                 }
             }
-            return RedirectToAction("Logout", "Home");
+            return RedirectToAction("Index", "SecuritySettings");
         }
 
 
@@ -258,7 +258,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public void DBUserDepartmanUpdate(DBUsers dBUsers, List<int> Departmanlar)
         {
-            _dBUsersSirketService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
             if (Departmanlar != null)
             {
                 foreach (var departman in Departmanlar)

@@ -222,14 +222,14 @@
                                                         @if (Model.UserDepartmanList.Any(x => x.Departman_No == item.Departman_No))
                                                         {
                                                             <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" checked name="Sirketler" id="@item.Departman_No" value="@item.Departman_No">
+                                                                <input type="checkbox" class="custom-control-input" checked name="Departmanlar" id="@item.Departman_No" value="@item.Departman_No">
                                                                 <label class="custom-control-label" for="@item.Departman_No"></label>
                                                             </div>
                                                         }
                                                         else
                                                         {
                                                             <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="Sirketler" id="@item.Departman_No" value="@item.Departman_No">
+                                                                <input type="checkbox" class="custom-control-input" name="Departmanlar" id="@item.Departman_No" value="@item.Departman_No">
                                                                 <label class="custom-control-label" for="@item.Departman_No"></label>
                                                             </div>
                                                         }

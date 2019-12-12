@@ -11,5 +11,12 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
     public class EfDBUsersDepartmanDal : EfEntityRepositoryBase<DBUsersDepartman, ForaContext>, IDBUsersDepartmanDal
     {
+        public void DeleteAllWithUserName(string UserName)
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("DELETE FROM DBUsersDepartman WHERE [Kullanici Adi] = '" + UserName + "'");
+            }
+        }
     }
 }
