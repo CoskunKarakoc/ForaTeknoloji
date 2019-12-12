@@ -33,9 +33,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUsersOLDService _usersOLDService;
         private IBolumlerService _bolumlerService;
         private IGorevlerService _gorevlerService;
+        private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+
         public DBUsers user;
         public DBUsers permissionUser;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IBolumlerService bolumlerService, IGorevlerService gorevlerService)
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IBolumlerService bolumlerService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -57,6 +60,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _usersOLDService = usersOLDService;
             _bolumlerService = bolumlerService;
             _gorevlerService = gorevlerService;
+            _dBUsersSirketService = dBUsersSirketService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -74,7 +79,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    //Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
                     PanelListesi = UserPanelList()
                 };
                 return View(model);
@@ -83,7 +89,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    Users = _userService.GetAllUsersWithOuther(),
+                    //Users = _userService.GetAllUsersWithOuther(),
+                    Users = IndexViewUser(),
                     PanelListesi = UserPanelList()
                 };
                 return View(model);
@@ -104,8 +111,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             else
                 MaxID = _userService.GetAllUsers().Max(x => x.ID);
 
-            var Sirketler = _sirketService.GetAllSirketler();
-            var Departmanlar = _departmanService.GetAllDepartmanlar();
+            var Sirketler = UserSirketList();
+            var Departmanlar = UserDepartmanList();
             var Bloklar = _bloklarService.GetAllBloklar();
             var Bolumler = _bolumlerService.GetAllBolumler();
             var Gorevler = _gorevlerService.GetAllGorevler();
@@ -251,6 +258,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     if (_userService.GetAllUsers().Any(x => x.Kart_ID == entity.Kart_ID && x.ID != entity.ID))
                         throw new Exception("Kart ID'si daha önceden kullanılıyor.");
+                    if (!CheckSirket((int)entity.Sirket_No))
+                        throw new Exception("Yetkisiz Şirket Ataması!");
+                    if (!CheckDepartman((int)entity.Departman_No))
+                        throw new Exception("Yetkisiz Departman Ataması!");
                     _userService.UpdateUsers(entity);
                     return RedirectToAction("Index");
                 }
@@ -305,7 +316,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    //Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
                     PanelListesi = UserPanelList()
                 };
                 return View(model);
@@ -314,7 +326,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    Users = _userService.GetAllUsersWithOuther(),
+                    //Users = _userService.GetAllUsersWithOuther(),
+                    Users = IndexViewUser(),
                     PanelListesi = UserPanelList()
 
                 };
@@ -531,8 +544,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-
-
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();
@@ -553,6 +564,109 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return panels;
         }
 
+
+        public List<Sirketler> UserSirketList()
+        {
+            List<Sirketler> sirketler = new List<Sirketler>();
+            if (permissionUser.SysAdmin == true)
+            {
+                return _sirketService.GetAllSirketler();
+            }
+            else
+            {
+                foreach (var item in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    var sirket = _sirketService.GetById((int)item.Sirket_No);
+                    if (sirket != null)
+                        sirketler.Add(sirket);
+                }
+                return sirketler;
+            }
+
+
+
+        }
+
+        public List<Departmanlar> UserDepartmanList()
+        {
+            List<Departmanlar> departmanlar = new List<Departmanlar>();
+            if (permissionUser.SysAdmin == true)
+            {
+                return _departmanService.GetAllDepartmanlar();
+            }
+            else
+            {
+                foreach (var item in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    var departman = _departmanService.GetById((int)item.Departman_No);
+                    if (departman != null)
+                        departmanlar.Add(departman);
+                }
+                return departmanlar;
+            }
+        }
+
+        public List<ComplexUser> IndexViewUser()
+        {
+
+            List<ComplexUser> liste = new List<ComplexUser>();
+            List<ComplexUser> userList = _userService.GetAllUsersWithOuther();
+            if (permissionUser.SysAdmin == true)
+            {
+                return userList;
+            }
+            else
+            {
+                foreach (var sirket in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    foreach (var departman in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                    {
+                        foreach (var user in userList)
+                        {
+                            if (user.Sirket_No == sirket.Sirket_No && user.Departman_No == departman.Departman_No)
+                            {
+                                liste.Add(user);
+                            }
+                        }
+                    }
+                }
+                return liste;
+            }
+        }
+
+        public bool CheckSirket(int? Sirket_No)
+        {
+            if (Sirket_No != null)
+            {
+                var sirketList = _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi);
+                foreach (var sirket in sirketList)
+                {
+                    if (Sirket_No == sirket.Sirket_No)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckDepartman(int? Departman_No)
+        {
+            if (Departman_No != null)
+            {
+                var departmanList = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi);
+                foreach (var departman in departmanList)
+                {
+                    if (Departman_No == departman.Departman_No)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
 
     }
 

@@ -65,7 +65,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 String_Ziyaretci_Grubu = tbl5.Grup_Adi,
                                 Grup_No = tbl4.Grup_No,
                                 Bolum = tbl6.Adi,
-                                Gorev = tbl7.Adi
+                                Gorev = tbl7.Adi,
+                                Sirket_No = tbl1.Sirket_No,
+                                Departman_No = tbl2.Departman_No
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();
@@ -119,7 +121,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 String_Ziyaretci_Grubu = tbl5.Grup_Adi,
                                 Grup_No = tbl4.Grup_No,
                                 Bolum = tbl6.Adi,
-                                Gorev = tbl7.Adi
+                                Gorev = tbl7.Adi,
+                                Departman_No = tbl2.Departman_No,
+                                Sirket_No = tbl1.Sirket_No
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();
@@ -148,6 +152,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Gecis_Grubu { get; set; }
             public int? Grup_No { get; set; }
             public int? Ziyaretci_Grubu { get; set; }
+            public int? Sirket_No { get; set; }
+            public int? Departman_No { get; set; }
             public string String_Ziyaretci_Grubu { get; set; }
 
         }

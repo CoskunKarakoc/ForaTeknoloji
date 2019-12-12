@@ -23,9 +23,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersService _dBUsersService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+        private IDBUsersSirketService _dBUsersSirketService;
         private DBUsers user;
         private DBUsers permissionUser;
-        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
+        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -39,6 +41,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersService = dBUsersService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
+            _dBUsersSirketService = dBUsersSirketService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -97,7 +101,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Personeller = Personel,
                 Ziyaretciler = Ziyaretci,
                 ComplexPersoneller = _userService.GetAllUsersWithOutherOnlyUser().OrderBy(x => x.Kayit_No).ToList(),
-                VisitorCardList = _userService.GetAllUsers().Where(x => x.Kullanici_Tipi == 1).ToList()
+                VisitorCardList = CardModelUser()
             };
 
 
@@ -157,7 +161,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 GrupAdi = _groupMasterService.GetById((int)visitors.Grup_No).Grup_Adi,
                 Personel = users,
                 Personeller = _userService.GetAllUsersWithOutherOnlyUser().OrderBy(x => x.Kayit_No).ToList(),
-                VisitorCardList = _userService.GetAllUsers().Where(x => x.Kullanici_Tipi == 1).ToList()
+                VisitorCardList = CardModelUser()
             };
 
             ViewBag.Grup_No = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", visitors.Grup_No);
@@ -288,5 +292,37 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return panels;
         }
+
+
+        public List<Users> CardModelUser()
+        {
+
+            List<Users> liste = new List<Users>();
+            List<Users> userList = _userService.GetAllUsers().Where(x => x.Kullanici_Tipi == 1).ToList();
+            if (permissionUser.SysAdmin == true)
+            {
+                return userList;
+            }
+            else
+            {
+                foreach (var sirket in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    foreach (var departman in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                    {
+                        foreach (var user in userList)
+                        {
+                            if (user.Sirket_No == sirket.Sirket_No && user.Departman_No == departman.Departman_No)
+                            {
+                                liste.Add(user);
+                            }
+                        }
+                    }
+                }
+                return liste;
+            }
+        }
+
+
+
     }
 }
