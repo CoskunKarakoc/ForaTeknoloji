@@ -16,5 +16,7 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> Grup_Takvimi_No { get; internal set; }
         public int ID { get; internal set; }
         public string Kart_ID { get; internal set; }
+        public IEnumerable<SelectListItem> Gorev_No { get; internal set; }
+        public IEnumerable<SelectListItem> Bolum_No { get; internal set; }
     }
 }

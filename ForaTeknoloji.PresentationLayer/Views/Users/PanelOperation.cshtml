@@ -42,6 +42,8 @@
                             <td>Soyadı</td>
                             <td>Şirket</td>
                             <td>Departman</td>
+                            <td>Bölüm</td>
+                            <td>Görev</td>
                             <td>Blok</td>
                             <td>Plaka</td>
                             <td>Geçiş Grubu</td>
@@ -59,24 +61,26 @@
                     <tbody>
                         @foreach (var item in Model.Users)
                         {
-                            <tr>
-                                <td>@item.ID</td>
-                                <td>@item.Kart_ID</td>
-                                <td>@item.Adi</td>
-                                <td>@item.Soyadi</td>
-                                <td>@item.Sirket</td>
-                                <td>@item.Departman</td>
-                                <td>@item.Blok</td>
-                                <td>@item.Plaka</td>
-                                <td>@item.Gecis_Grubu</td>
-                                <td>@item.String_Ziyaretci_Grubu</td>
-                                <td>
-                                    <a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(@item.ID,2628)" id="PanelDelete"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Geçiş Sayacı Sil" onclick="ekle(@item.ID,2701)" id="AccessDelete"><i class="fas fa-trash-alt text-warning mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Antipassback Sayacı Sil" onclick="ekle(@item.ID,2710)" id="AntiDelete"><i class="fas fa-trash-alt text-dark mr-2"></i></a>
-                                    <a title="Kullanıcıyı Tüm Sistemden Kaldır" onclick="return confirm('Kullanıcıyı Tüm Sistemden Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("DeleteAllSystem","Users",new { id=item.ID})"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>@item.ID</td>
+                            <td>@item.Kart_ID</td>
+                            <td>@item.Adi</td>
+                            <td>@item.Soyadi</td>
+                            <td>@item.Sirket</td>
+                            <td>@item.Departman</td>
+                            <td>@item.Bolum</td>
+                            <td>@item.Gorev</td>
+                            <td>@item.Blok</td>
+                            <td>@item.Plaka</td>
+                            <td>@item.Gecis_Grubu</td>
+                            <td>@item.String_Ziyaretci_Grubu</td>
+                            <td>
+                                <a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(@item.ID,2628)" id="PanelDelete"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                <a data-toggle="modal" data-target="#panelList" title="Geçiş Sayacı Sil" onclick="ekle(@item.ID,2701)" id="AccessDelete"><i class="fas fa-trash-alt text-warning mr-2"></i></a>
+                                <a data-toggle="modal" data-target="#panelList" title="Antipassback Sayacı Sil" onclick="ekle(@item.ID,2710)" id="AntiDelete"><i class="fas fa-trash-alt text-dark mr-2"></i></a>
+                                <a title="Kullanıcıyı Tüm Sistemden Kaldır" onclick="return confirm('Kullanıcıyı Tüm Sistemden Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("DeleteAllSystem","Users",new { id=item.ID})"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

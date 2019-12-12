@@ -31,9 +31,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersService _dBUsersService;
         private IUsersOLDService _usersOLDService;
+        private IBolumlerService _bolumlerService;
+        private IGorevlerService _gorevlerService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService)
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IBolumlerService bolumlerService, IGorevlerService gorevlerService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -53,6 +55,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersService = dBUsersService;
             _usersOLDService = usersOLDService;
+            _bolumlerService = bolumlerService;
+            _gorevlerService = gorevlerService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -103,6 +107,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var Sirketler = _sirketService.GetAllSirketler();
             var Departmanlar = _departmanService.GetAllDepartmanlar();
             var Bloklar = _bloklarService.GetAllBloklar();
+            var Bolumler = _bolumlerService.GetAllBolumler();
+            var Gorevler = _gorevlerService.GetAllGorevler();
             var GecisTipi = _accessModesService.GetAllAccessModes();
             var KullaniciTipi = _userTypesService.GetAllUserTypes();
             var GecisGrubu2 = _groupMasterService.GetAllGroupsMaster();
@@ -126,6 +132,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Blok_No.ToString()
+                }),
+                Bolum_No = Bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
+                }),
+                Gorev_No = Gorevler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Gorev_No.ToString()
                 }),
                 Gecis_Modu = GecisTipi.Select(a => new SelectListItem
                 {
@@ -201,6 +217,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ViewBag.Sirket_No = new SelectList(_sirketService.GetAllSirketler(), "Sirket_No", "Adi", users.Sirket_No);
             ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(), "Departman_No", "Adi", users.Departman_No);
             ViewBag.Blok_No = new SelectList(_bloklarService.GetAllBloklar(), "Blok_No", "Adi", users.Blok_No);
+            ViewBag.Bolum_No = new SelectList(_bolumlerService.GetAllBolumler(), "Bolum_No", "Adi", users.Bolum_No);
+            ViewBag.Gorev_No = new SelectList(_gorevlerService.GetAllGorevler(), "Gorev_No", "Adi", users.Gorev_No);
             ViewBag.Grup_No = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No);
             ViewBag.Kullanici_Tipi = new SelectList(_userTypesService.GetAllUserTypes(), "Kullanici_Tipi", "Ad", users.Kullanici_Tipi);
             ViewBag.Gecis_Modu = new SelectList(_accessModesService.GetAllAccessModes(), "Gecis_Modu", "Adi", users.Gecis_Modu);

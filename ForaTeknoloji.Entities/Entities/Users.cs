@@ -73,6 +73,12 @@ namespace ForaTeknoloji.Entities.Entities
         [Column("Sirket No")]
         public int? Sirket_No { get; set; }
 
+        [Column("Gorev No")]
+        public int? Gorev_No { get; set; }
+
+        [Column("Bolum No")]
+        public int? Bolum_No { get; set; }
+
         [StringLength(255)]
         public string Aciklama { get; set; }
 
