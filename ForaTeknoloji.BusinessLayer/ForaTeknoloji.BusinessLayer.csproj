@@ -60,6 +60,7 @@
     <Compile Include="Abstract\IAlarmlarService.cs" />
     <Compile Include="Abstract\IAlarmTipleriService.cs" />
     <Compile Include="Abstract\IBloklarService.cs" />
+    <Compile Include="Abstract\IBolumlerService.cs" />
     <Compile Include="Abstract\ICamerasService.cs" />
     <Compile Include="Abstract\ICameraTypesService.cs" />
     <Compile Include="Abstract\ICodeOperationService.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Abstract\IFloorNamesService.cs" />
     <Compile Include="Abstract\IGlobalZoneService.cs" />
     <Compile Include="Abstract\IGlobalZonesInterlockService.cs" />
+    <Compile Include="Abstract\IGorevlerService.cs" />
     <Compile Include="Abstract\IGroupMasterService.cs" />
     <Compile Include="Abstract\IGroupsDetailNewService.cs" />
     <Compile Include="Abstract\IGroupsDetailService.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Concrete\AlarmlarManager.cs" />
     <Compile Include="Concrete\AlarmTipleriManager.cs" />
     <Compile Include="Concrete\BloklarManager.cs" />
+    <Compile Include="Concrete\BolumlerManager.cs" />
     <Compile Include="Concrete\CamerasManager.cs" />
     <Compile Include="Concrete\CameraTypesManager.cs" />
     <Compile Include="Concrete\CodeOperationManager.cs" />
@@ -117,6 +120,7 @@
     <Compile Include="Concrete\FloorNamesManager.cs" />
     <Compile Include="Concrete\GlobalZoneManager.cs" />
     <Compile Include="Concrete\GlobalZonesInterlockManager.cs" />
+    <Compile Include="Concrete\GorevlerManager.cs" />
     <Compile Include="Concrete\GroupsDetailManager.cs" />
     <Compile Include="Concrete\GroupsDetailNewManager.cs" />
     <Compile Include="Concrete\GroupsMasterManager.cs" />

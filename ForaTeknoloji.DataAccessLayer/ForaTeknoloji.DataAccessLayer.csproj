@@ -58,6 +58,7 @@
     <Compile Include="Abstract\IAlarmlarDal.cs" />
     <Compile Include="Abstract\IAlarmTipleriDal.cs" />
     <Compile Include="Abstract\IBloklarDal.cs" />
+    <Compile Include="Abstract\IBolumlerDal.cs" />
     <Compile Include="Abstract\ICamerasDal.cs" />
     <Compile Include="Abstract\ICameraTypesDal.cs" />
     <Compile Include="Abstract\ICodeOperationDal.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Abstract\IFloorNamesDal.cs" />
     <Compile Include="Abstract\IGlobalZoneDal.cs" />
     <Compile Include="Abstract\IGlobalZonesInterlockDal.cs" />
+    <Compile Include="Abstract\IGorevlerDal.cs" />
     <Compile Include="Abstract\IGroupMasterDal.cs" />
     <Compile Include="Abstract\IGroupsDetailDal.cs" />
     <Compile Include="Abstract\IGroupsDetailNewDal.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="Concrete\EntityFramework\EfAlarmlarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAlarmTipleriDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfBloklarDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfBolumlerDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCamerasDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCameraTypesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCodeOperationDal.cs" />
@@ -114,6 +117,7 @@
     <Compile Include="Concrete\EntityFramework\EfFloorNamesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGlobalZoneDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGlobalZonesInterlockDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfGorevlerDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGroupsDetailDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGroupsDetailNewDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGroupsMasterDal.cs" />

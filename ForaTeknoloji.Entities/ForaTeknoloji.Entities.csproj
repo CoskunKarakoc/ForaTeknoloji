@@ -83,6 +83,7 @@
     <Compile Include="Entities\Alarmlar.cs" />
     <Compile Include="Entities\AlarmTipleri.cs" />
     <Compile Include="Entities\Bloklar.cs" />
+    <Compile Include="Entities\Bolumler.cs" />
     <Compile Include="Entities\Cameras.cs" />
     <Compile Include="Entities\CameraTypes.cs" />
     <Compile Include="Entities\CodeOperation.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Entities\FloorNames.cs" />
     <Compile Include="Entities\GlobalZones.cs" />
     <Compile Include="Entities\GlobalZonesInterlock.cs" />
+    <Compile Include="Entities\Gorevler.cs" />
     <Compile Include="Entities\GroupsDetail.cs" />
     <Compile Include="Entities\GroupsDetailNew.cs" />
     <Compile Include="Entities\GroupsMaster.cs" />

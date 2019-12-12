@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.Gorevler>
+@{
+    ViewBag.Title = "Görev Tanımları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row animated slideInDown faster">
+    <div class="col-md-6 offset-md-3 mt-xl-5 mb-xl-5">
+        <div class=" card border-left-info h-100 shadow-lg mt-2">
+            <div class="card-header py-1">
+                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Görev Tanımları</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "Employment"))
+                {
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="sirketAdi" name="Adi" placeholder="Görev Tanımlama" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="Gorev No" hidden value="" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="submit" id="newEmployment"><i class="fas fa-plus mr-2"></i>Yeni Görev</button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <hr />
+                @if (Model.Count() == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">Geçerli görev kaydı bulunamadı.</p>
+                        <hr>
+                        <p class="mb-0 text-center">Dilerseniz yukarıdaki "Görev Tanımlama" kısmına görev adı girip "Yeni Görev" butonuna basarak görev ekleyebilirsiniz.</p>
+
+                    </div>
+                }
+                <input type="text" hidden id="EmploymentCount" name="name" value="@Model.Count()" />
+                <table id="EmploymentList" class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Görev No</td>
+                            <td>Görev Adı</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Gorev_No</td>
+                                <td>@item.Adi</td>
+                                <td>
+                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Employment",new { id=item.Gorev_No})"><i class="fas fa-edit text-info mr-5"></i></a>
+                                    <a title="Delete" onclick="Delete(@item.Gorev_No)" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        $(document).ready(function () {
+            var count = $("#EmploymentCount").val();
+            if (count == 0) {
+                $("#EmploymentList").prop("hidden", true);
+                $("#Title").prop("hidden", true);
+            } else {
+                $("#EmploymentList").prop("hidden", false);
+                $("#Title").prop("hidden", false);
+            }
+    });
+
+      function Delete(id) {
+            swal({
+                title: "Silmek İstediğinize Emin Misiniz?",
+                text: "Seçilen görev veritabanından silinecek!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                          $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("Delete","Employment")',
+                                data: JSON.stringify({ id: id }), //use id here
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                              success: function (data) {
+                                  if (data) {
+                                      swal("Başarılı! Görev silme işlemi başarılı şekilde gerçekleştirildi!", {
+                                          icon: "success",
+                                      });
+                                  } else {
+                                      //swal("Silme işleminden vazgeçildi!");
+                                  }
+                                  setTimeout(function () {
+                                      window.location.href = "/Employment/Index";
+                                  }, 2500);
+                                },
+                                error: function () {
+                                    alert("Error while deleting data");
+                                }
+                            });
+                    }
+                });
+        }
+</script>
+
+
