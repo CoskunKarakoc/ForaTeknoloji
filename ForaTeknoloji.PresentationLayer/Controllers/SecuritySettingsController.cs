@@ -16,16 +16,26 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
 
         private IDBUsersService _dBUsersService;
-        private IDBUsersSirketService _dBUsersSirketService;
-        private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBRolesService _dBRolesService;
+
         private IPanelSettingsService _panelSettingsService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+
         private ISirketService _sirketService;
+        private IDBUsersSirketService _dBUsersSirketService;
+
         private IDepartmanService _departmanService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
+
+        private IBolumlerService _bolumlerService;
+        private IDBUsersBolumService _dBUsersBolumService;
+
+        private IGorevlerService _gorevlerService;
+        private IDBUsersGorevService _dBUsersGorevService;
+
         DBUsers user;
         DBUsers permissionUser;
-        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService)
+        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IBolumlerService bolumlerService, IDBUsersBolumService dBUsersBolumService, IGorevlerService gorevlerService, IDBUsersGorevService dBUsersGorevService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -40,6 +50,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _sirketService = sirketService;
             _departmanService = departmanService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
+            _bolumlerService = bolumlerService;
+            _dBUsersBolumService = dBUsersBolumService;
+            _gorevlerService = gorevlerService;
+            _dBUsersGorevService = dBUsersGorevService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -72,9 +86,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var userPanel = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == Kullanici_Adi);
             var userSirket = _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == Kullanici_Adi);
             var userDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == Kullanici_Adi);
+            var userBolum = _dBUsersBolumService.GetAllDBUsersBolum(x => x.Kullanici_Adi == Kullanici_Adi);
+            var userGorev = _dBUsersGorevService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == Kullanici_Adi);
             var panelList = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var sirketList = _sirketService.GetAllSirketler();
             var departmanList = _departmanService.GetAllDepartmanlar();
+            var bolumList = _bolumlerService.GetAllBolumler();
+            var gorevList = _gorevlerService.GetAllGorevler();
+
             var model = new EditSecurityListViewModel
             {
                 Kullanicilar = kullanici,
@@ -83,7 +102,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 UserSirketList = userSirket,
                 SirketList = sirketList,
                 UserDepartmanList = userDepartman,
-                DepartmanList = departmanList
+                DepartmanList = departmanList,
+                UserBolumList = userBolum,
+                BolumList = bolumList,
+                UserGorevList = userGorev,
+                GorevList = gorevList
 
             };
             ViewBag.Kullanici_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Kullanici_Islemleri);
@@ -98,7 +121,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(DBUsers dBUsers, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
+        public ActionResult Edit(DBUsers dBUsers, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null, List<int> Bolumler = null, List<int> Gorevler = null)
         {
             if (ModelState.IsValid)
             {
@@ -107,6 +130,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     DBUserSirketUpdate(dBUsers, Sirketler);
                     DBUserPanelUpdate(dBUsers, Paneller);
                     DBUserDepartmanUpdate(dBUsers, Departmanlar);
+                    DBUserBolumUpdate(dBUsers, Bolumler);
+                    DBUserGorevUpdate(dBUsers, Gorevler);
                     _dBUsersService.UpdateDBUsers(dBUsers);
                 }
             }
@@ -131,6 +156,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
                 Sirketler = _sirketService.GetAllSirketler(),
                 Departmanlar = _departmanService.GetAllDepartmanlar(),
+                Bolumler = _bolumlerService.GetAllBolumler(),
+                Gorevler = _gorevlerService.GetAllGorevler(),
                 Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
 
             };
@@ -139,7 +166,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Create(DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
+        public ActionResult Create(DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null, List<int> Bolumler = null, List<int> Gorevler = null)
         {
             DBUsers addedUser = new DBUsers();
             if (ModelState.IsValid)
@@ -175,7 +202,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         _dBUsersDepartmanService.AddDBUsersDepartman(new DBUsersDepartman { Kullanici_Adi = addedUser.Kullanici_Adi, Departman_No = item });
                     }
                 }
-
+                if (Bolumler != null)
+                {
+                    foreach (var item in Bolumler)
+                    {
+                        _dBUsersBolumService.AddDBUsersBolum(new DBUsersBolum { Kullanici_Adi = addedUser.Kullanici_Adi, Bolum_No = item });
+                    }
+                }
+                if (Gorevler != null)
+                {
+                    foreach (var item in Gorevler)
+                    {
+                        _dBUsersGorevService.AddDBUsersGorev(new DBUsersGorev { Kullanici_Adi = addedUser.Kullanici_Adi, Gorev_No = item });
+                    }
+                }
                 return RedirectToAction("Index");
             }
             return View(dBUsers);
@@ -272,5 +312,40 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
             }
         }
+
+        public void DBUserBolumUpdate(DBUsers dBUsers, List<int> Bolumler)
+        {
+            _dBUsersBolumService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            if (Bolumler != null)
+            {
+                foreach (var bolum in Bolumler)
+                {
+                    DBUsersBolum dBUsersBolum = new DBUsersBolum
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Bolum_No = bolum
+                    };
+                    _dBUsersBolumService.AddDBUsersBolum(dBUsersBolum);
+                }
+            }
+        }
+
+        public void DBUserGorevUpdate(DBUsers dBUsers, List<int> Gorevler)
+        {
+            _dBUsersGorevService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            if (Gorevler != null)
+            {
+                foreach (var gorev in Gorevler)
+                {
+                    DBUsersGorev dBUsersGorev = new DBUsersGorev
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Gorev_No = gorev
+                    };
+                    _dBUsersGorevService.AddDBUsersGorev(dBUsersGorev);
+                }
+            }
+        }
+
     }
 }

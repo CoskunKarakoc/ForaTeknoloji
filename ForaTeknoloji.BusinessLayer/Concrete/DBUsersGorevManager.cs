@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.DataAccessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,41 +12,41 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 {
     public class DBUsersGorevManager : IDBUsersGorevService
     {
-        private IDBUsersGorevService _dBUsersGorevService;
-        public DBUsersGorevManager(IDBUsersGorevService dBUsersGorevService)
+        private IDBUsersGorevDal _dBUsersGorevDal;
+        public DBUsersGorevManager(IDBUsersGorevDal dBUsersGorevDal)
         {
-            _dBUsersGorevService = dBUsersGorevService;
+            _dBUsersGorevDal = dBUsersGorevDal;
         }
 
 
         public DBUsersGorev AddDBUsersGorev(DBUsersGorev dBUsersGorev)
         {
-            return _dBUsersGorevService.AddDBUsersGorev(dBUsersGorev);
+            return _dBUsersGorevDal.Add(dBUsersGorev);
         }
 
         public void DeleteAllWithUserName(string UserName)
         {
-            _dBUsersGorevService.DeleteAllWithUserName(UserName);
+            _dBUsersGorevDal.DeleteAllWithUserName(UserName);
         }
 
         public void DeleteDBUsersGorev(DBUsersGorev dBUsersGorev)
         {
-            _dBUsersGorevService.DeleteDBUsersGorev(dBUsersGorev);
+            _dBUsersGorevDal.Delete(dBUsersGorev);
         }
 
         public List<DBUsersGorev> GetAllDBUsersDepartman(Expression<Func<DBUsersGorev, bool>> filter = null)
         {
-            return filter == null ? _dBUsersGorevService.GetAllDBUsersDepartman() : _dBUsersGorevService.GetAllDBUsersDepartman(filter);
+            return filter == null ? _dBUsersGorevDal.GetList() : _dBUsersGorevDal.GetList(filter);
         }
 
         public DBUsersGorev GetById(int id)
         {
-            return _dBUsersGorevService.GetById(id);
+            return _dBUsersGorevDal.Get(x => x.Gorev_No == id);
         }
 
         public DBUsersGorev UpdateDBUsersGorev(DBUsersGorev dBUsersGorev)
         {
-            return _dBUsersGorevService.UpdateDBUsersGorev(dBUsersGorev);
+            return _dBUsersGorevDal.Update(dBUsersGorev);
         }
     }
 }

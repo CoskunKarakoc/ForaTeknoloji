@@ -363,13 +363,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 panelSettings.Sira_No = panelSettings.Panel_ID;
                 panelSettings.Seri_No = int.Parse(MacAdress, System.Globalization.NumberStyles.HexNumber);
                 var panel = _panelSettingsService.GetAllPanelSettings().Find(x => x.Panel_ID == panelSettings.Panel_ID && x.Sira_No == panelSettings.Sira_No);
-                if (panel.Panel_IP1 != 0)
+                if (panel != null && panel.Panel_IP1 != 0)
                 {
                     throw new Exception("Sistemde aynı panel numarasına ait panel var!");
                 }
                 else
                 {
-                    panelSettings.Kayit_No = panel.Kayit_No;
+
+                    var defaultPanel = _panelSettingsService.GetAllPanelSettings().Find(x=>x.Sira_No==panelSettings.Panel_ID);
+                    panelSettings.Kayit_No = defaultPanel.Kayit_No;
                     _panelSettingsService.UpdatePanelSetting(panelSettings);
                     return RedirectToAction("Settings", "PanelSettings");
                 }

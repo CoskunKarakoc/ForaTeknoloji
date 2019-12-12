@@ -13,7 +13,6 @@
                 @using (Html.BeginForm("Edit", "SecuritySettings", FormMethod.Post))
                 {
                     <div class="row">
-
                         <div class="col-md-3">
                             <div class="form-group row">
                                 <label for="Adi" class="col-sm-4 col-form-label">Adı</label>
@@ -43,7 +42,6 @@
                                     @Html.ValidationMessageFor(model => model.Kullanicilar.Sifre, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-
                         </div>
                         <div class="col-md-3">
                             <div class="form-group row">
@@ -115,147 +113,269 @@
                         <div class="col-md-12"><hr /></div>
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                        <thead class="table-secondary">
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
-                                                        <label class="custom-control-label" for="AllPanel"></label>
-                                                    </div>
-                                                </td>
-                                                <td>Panel ID</td>
-                                                <td>Panel Adı</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.PanelList)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @if (Model.UserPanelList.Any(x => x.Panel_No == item.Panel_ID))
+                                <div class="col-md-5 mt-3 mb-4 animated slideInRight faster">
+                                    <div class="card border-left-success shadow-lg h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Paneller</div>
+                                                </div>
+                                                <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                    <thead class="table-success">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                                                    <label class="custom-control-label" for="AllPanel"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Panel ID</td>
+                                                            <td>Panel Adı</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.PanelList)
                                                         {
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" checked name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
-                                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
-                                                            </div>
+                                                            <tr>
+                                                                <td>
+                                                                    @if (Model.UserPanelList.Any(x => x.Panel_No == item.Panel_ID))
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" checked name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                                                        </div>
+                                                                    }
+                                                                </td>
+                                                                <td>@item.Panel_ID</td>
+                                                                <td>@item.Panel_Name</td>
+                                                            </tr>
                                                         }
-                                                        else
-                                                        {
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
-                                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
-                                                            </div>
-                                                        }
-                                                    </td>
-                                                    <td>@item.Panel_ID</td>
-                                                    <td>@item.Panel_Name</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="col-md-4 ">
-                                    <table id="SirketTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                        <thead class="table-secondary">
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="AllSirket" />
-                                                        <label class="custom-control-label" for="AllSirket"></label>
-                                                    </div>
-                                                </td>
-                                                <td>Şirket No</td>
-                                                <td>Adı</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.SirketList)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @if (Model.UserSirketList.Any(x => x.Sirket_No == item.Sirket_No))
+                                <div class="offset-1 col-md-5 mt-3 mb-4 animated slideInLeft faster">
+                                    <div class="card border-left-danger shadow-lg h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Şirketler</div>
+                                                </div>
+                                                <table id="SirketTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                    <thead class="table-danger">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="AllSirket" />
+                                                                    <label class="custom-control-label" for="AllSirket"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Şirket No</td>
+                                                            <td>Adı</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.SirketList)
                                                         {
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" checked name="Sirketler" id="@item.Sirket_No" value="@item.Sirket_No">
-                                                                <label class="custom-control-label" for="@item.Sirket_No"></label>
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="Sirketler" id="@item.Sirket_No" value="@item.Sirket_No">
-                                                                <label class="custom-control-label" for="@item.Sirket_No"></label>
-                                                            </div>
-                                                        }
+                                                            <tr>
+                                                                <td>
+                                                                    @if (Model.UserSirketList.Any(x => x.Sirket_No == item.Sirket_No))
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" checked name="Sirketler" id="@("Sirket_"+item.Sirket_No)" value="@item.Sirket_No">
+                                                                            <label class="custom-control-label" for="@("Sirket_"+item.Sirket_No)"></label>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" name="Sirketler" id="@("Sirket_"+item.Sirket_No)" value="@item.Sirket_No">
+                                                                            <label class="custom-control-label" for="@("Sirket_"+item.Sirket_No)"></label>
+                                                                        </div>
+                                                                    }
 
-                                                    </td>
-                                                    <td>@item.Sirket_No</td>
-                                                    <td>@item.Adi</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+                                                                </td>
+                                                                <td>@item.Sirket_No</td>
+                                                                <td>@item.Adi</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="col-md-4 ">
-                                    <table id="DepartmanTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                        <thead class="table-secondary">
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="AllDepartman" />
-                                                        <label class="custom-control-label" for="AllDepartman"></label>
-                                                    </div>
-                                                </td>
-                                                <td>Departman No</td>
-                                                <td>Adı</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.DepartmanList)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @if (Model.UserDepartmanList.Any(x => x.Departman_No == item.Departman_No))
+                                <div class="col-md-5 mt-3 mb-4 animated slideInRight faster">
+                                    <div class="card border-left-warning shadow-lg h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Departmanlar</div>
+                                                </div>
+                                                <table id="DepartmanTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                    <thead class="table-warning">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="AllDepartman" />
+                                                                    <label class="custom-control-label" for="AllDepartman"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Departman No</td>
+                                                            <td>Adı</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.DepartmanList)
                                                         {
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" checked name="Departmanlar" id="@item.Departman_No" value="@item.Departman_No">
-                                                                <label class="custom-control-label" for="@item.Departman_No"></label>
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" name="Departmanlar" id="@item.Departman_No" value="@item.Departman_No">
-                                                                <label class="custom-control-label" for="@item.Departman_No"></label>
-                                                            </div>
-                                                        }
+                                                            <tr>
+                                                                <td>
+                                                                    @if (Model.UserDepartmanList.Any(x => x.Departman_No == item.Departman_No))
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" checked name="Departmanlar" id="@("Departman_"+item.Departman_No)" value="@item.Departman_No">
+                                                                            <label class="custom-control-label" for="@("Departman_"+item.Departman_No)"></label>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" name="Departmanlar" id="@("Departman_"+item.Departman_No)" value="@item.Departman_No">
+                                                                            <label class="custom-control-label" for="@("Departman_"+item.Departman_No)"></label>
+                                                                        </div>
+                                                                    }
 
-                                                    </td>
-                                                    <td>@item.Departman_No</td>
-                                                    <td>@item.Adi</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+                                                                </td>
+                                                                <td>@item.Departman_No</td>
+                                                                <td>@item.Adi</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="offset-1 col-md-5 mt-3 mb-4 animated slideInLeft faster">
+                                    <div class="card border-left-secondary shadow-lg h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Bölümler</div>
+                                                </div>
+                                                <table id="BolumTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                    <thead class="table-secondary">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="AllBolum" />
+                                                                    <label class="custom-control-label" for="AllBolum"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Bölüm No</td>
+                                                            <td>Adı</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.BolumList)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @if (Model.UserBolumList.Any(x => x.Bolum_No == item.Bolum_No))
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" checked name="Bolumler" id="@("Bolum_"+item.Bolum_No)" value="@item.Bolum_No">
+                                                                            <label class="custom-control-label" for="@("Bolum_"+item.Bolum_No)"></label>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" name="Bolumler" id="@("Bolum_"+item.Bolum_No)" value="@item.Bolum_No">
+                                                                            <label class="custom-control-label" for="@("Bolum_"+item.Bolum_No)"></label>
+                                                                        </div>
+                                                                    }
 
+                                                                </td>
+                                                                <td>@item.Bolum_No</td>
+                                                                <td>@item.Adi</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 mt-3 mb-4 animated slideInRight faster">
+                                    <div class="card border-left-info shadow-lg h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Görevler</div>
+                                                </div>
+                                                <table id="GorevTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                    <thead class="table-info">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="AllGorev" />
+                                                                    <label class="custom-control-label" for="AllGorev"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Görev No</td>
+                                                            <td>Adı</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in Model.GorevList)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @if (Model.UserGorevList.Any(x => x.Gorev_No == item.Gorev_No))
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" checked name="Gorevler" id="@("Gorev_"+item.Gorev_No)" value="@item.Gorev_No">
+                                                                            <label class="custom-control-label" for="@("Gorev_"+item.Gorev_No)"></label>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" name="Gorevler" id="@("Gorev_"+item.Gorev_No)" value="@item.Gorev_No">
+                                                                            <label class="custom-control-label" for="@("Gorev_"+item.Gorev_No)"></label>
+                                                                        </div>
+                                                                    }
 
-
+                                                                </td>
+                                                                <td>@item.Gorev_No</td>
+                                                                <td>@item.Adi</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
                     </div>
-
                 }
             </div>
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $("#AllPanel").click(function () {
@@ -272,7 +392,6 @@
                 $("#SirketTable tbody tr input[type='checkbox']").prop("checked", false);
             }
         });
-
         $("#AllDepartman").click(function () {
             if ($(this).prop("checked") == true) {
                 $("#DepartmanTable tbody tr input[type='checkbox']").prop("checked", true);
@@ -280,7 +399,20 @@
                 $("#DepartmanTable tbody tr input[type='checkbox']").prop("checked", false);
             }
         });
-
+        $("#AllBolum").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#BolumTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#BolumTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
+        $("#AllGorev").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#GorevTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#GorevTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
     });
 </script>
 
