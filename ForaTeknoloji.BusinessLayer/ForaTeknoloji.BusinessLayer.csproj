@@ -65,7 +65,9 @@
     <Compile Include="Abstract\ICameraTypesService.cs" />
     <Compile Include="Abstract\ICodeOperationService.cs" />
     <Compile Include="Abstract\IDBRolesService.cs" />
+    <Compile Include="Abstract\IDBUsersBolumService.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanService.cs" />
+    <Compile Include="Abstract\IDBUsersGorevService.cs" />
     <Compile Include="Abstract\IDBUsersPanelsService.cs" />
     <Compile Include="Abstract\IDBUsersService.cs" />
     <Compile Include="Abstract\IDBUsersSirketService.cs" />
@@ -110,7 +112,9 @@
     <Compile Include="Concrete\CameraTypesManager.cs" />
     <Compile Include="Concrete\CodeOperationManager.cs" />
     <Compile Include="Concrete\DBRolesManager.cs" />
+    <Compile Include="Concrete\DBUsersBolumManager.cs" />
     <Compile Include="Concrete\DBUsersDepartmanManager.cs" />
+    <Compile Include="Concrete\DBUsersGorevManager.cs" />
     <Compile Include="Concrete\DBUsersManager.cs" />
     <Compile Include="Concrete\DBUsersPanelsManager.cs" />
     <Compile Include="Concrete\DBUsersSirketManager.cs" />

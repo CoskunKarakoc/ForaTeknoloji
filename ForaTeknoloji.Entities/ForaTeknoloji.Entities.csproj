@@ -89,7 +89,9 @@
     <Compile Include="Entities\CodeOperation.cs" />
     <Compile Include="Entities\DBRoles.cs" />
     <Compile Include="Entities\DBUsers.cs" />
+    <Compile Include="Entities\DBUsersBolum.cs" />
     <Compile Include="Entities\DBUsersDepartman.cs" />
+    <Compile Include="Entities\DBUsersGorev.cs" />
     <Compile Include="Entities\DBUsersPanels.cs" />
     <Compile Include="Entities\DBUsersSirket.cs" />
     <Compile Include="Entities\Departmanlar.cs" />

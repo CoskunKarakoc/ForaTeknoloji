@@ -63,8 +63,10 @@
     <Compile Include="Abstract\ICameraTypesDal.cs" />
     <Compile Include="Abstract\ICodeOperationDal.cs" />
     <Compile Include="Abstract\IDBRolesDal.cs" />
+    <Compile Include="Abstract\IDBUsersBolumDal.cs" />
     <Compile Include="Abstract\IDBUsersDal.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanDal.cs" />
+    <Compile Include="Abstract\IDBUsersGorevDal.cs" />
     <Compile Include="Abstract\IDBUsersPanelsDal.cs" />
     <Compile Include="Abstract\IDBUsersSirketDal.cs" />
     <Compile Include="Abstract\IDepartmanDal.cs" />
@@ -107,8 +109,10 @@
     <Compile Include="Concrete\EntityFramework\EfCameraTypesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCodeOperationDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBRolesDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDBUsersBolumDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersDepartmanDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDBUsersGorevDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersPanelsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersSirketDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDepartmanDal.cs" />
