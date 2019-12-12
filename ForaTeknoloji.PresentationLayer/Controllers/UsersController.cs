@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Common;
+using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -29,9 +30,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersService _dBUsersService;
+        private IUsersOLDService _usersOLDService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -50,6 +52,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersService = dBUsersService;
+            _usersOLDService = usersOLDService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -249,6 +252,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (id != -1)
             {
                 Users users = _userService.GetById(id);
+                var userOld = ConvertUser.UserToUserOld(users);
+                _usersOLDService.AddUsersOLD(userOld);
                 _userService.DeleteUsers(users);
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
@@ -369,6 +374,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     }
                     Thread.Sleep(2000);
                     Users users = _userService.GetById(id);
+                    UsersOLD usersOLD = ConvertUser.UserToUserOld(users);
+                    _usersOLDService.AddUsersOLD(usersOLD);
                     _userService.DeleteUsers(users);
 
                 }
@@ -495,9 +502,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult DeleteDatabaseAll()
         {
+
+            foreach (var user in _userService.GetAllUsers())
+            {
+                UsersOLD usersOLD = ConvertUser.UserToUserOld(user);
+                _usersOLDService.AddUsersOLD(usersOLD);
+            }
             _userService.DeleteAllUsers();
             return RedirectToAction("PanelOperation");
         }
+
+
 
 
         private List<PanelSettings> UserPanelList()
@@ -519,6 +534,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return panels;
         }
+
 
     }
 
