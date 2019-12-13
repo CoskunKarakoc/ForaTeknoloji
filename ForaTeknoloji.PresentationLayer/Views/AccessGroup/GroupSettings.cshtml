@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                             }
-                            else
+                            else if (Model.Gunluk_Aylik == 1)
                             {
                                 <div class="form-group">
                                     <div class="form-group">
@@ -41,6 +41,19 @@
                                         <select class="form-control" name="Gunluk_Aylik" id="Gunluk_Aylik">
                                             <option value="0">Günlük</option>
                                             <option selected value="1">Aylık</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="Gunluk_Aylik">Günlük/Aylık Seçimi</label>
+                                        <select class="form-control" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                            <option selected value="">Günlük/Aylık Seçimi...</option>
+                                            <option value="0">Günlük</option>
+                                            <option value="1">Aylık</option>
                                         </select>
                                     </div>
                                 </div>
