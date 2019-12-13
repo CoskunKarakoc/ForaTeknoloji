@@ -1588,6 +1588,12 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gorev_Adi = "Tüm Kullanıcıları Gönderme"
             };
             context.TaskCodes.Add(taskCode262200);
+            TaskCode taskCode2761 = new TaskCode
+            {
+                Gorev_Kodu = 2761,
+                Gorev_Adi = "Panel Ayarlarının Alınması"
+            };
+            context.TaskCodes.Add(taskCode2761);
             EMailSetting eMailSetting = new EMailSetting
             {
                 E_Mail_Adres = "sample@abcd.com",
