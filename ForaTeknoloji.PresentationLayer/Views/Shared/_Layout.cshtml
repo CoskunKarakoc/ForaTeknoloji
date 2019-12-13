@@ -99,13 +99,17 @@
                 </a>
                 <div id="collapseGenel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","Company")">Şirket Tanımları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Department")">Departman Tanımları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Block")">Blok Tanımları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Employment")">Görev Tanımları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Section")">Bölüm Tanımları</a>
-                        <hr />
-
+                        @{
+                            DBUsers PaswordusersKayit = CurrentSession.User;
+                            if (PaswordusersKayit.SysAdmin == true)
+                            {
+                                <a class="collapse-item" href="@Url.Action("Index","Company")">Şirket Tanımları</a>
+                                <a class="collapse-item" href="@Url.Action("Index","Department")">Departman Tanımları</a>
+                                <a class="collapse-item" href="@Url.Action("Index","Block")">Blok Tanımları</a>
+                                <a class="collapse-item" href="@Url.Action("Index","Employment")">Görev Tanımları</a>
+                                <hr />
+                            }
+                        }
                         <a class="collapse-item" href="@Url.Action("Index","Alarm")">Kullanıcı Alarm Tanımları</a>
                         <a class="collapse-item" href="@Url.Action("Index","CameraSettings")">Kameralar</a>
                         <a class="collapse-item" href="#">Haritalar</a>

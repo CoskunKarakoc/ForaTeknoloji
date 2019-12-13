@@ -29,9 +29,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             join g in context.GroupsMaster
                             on u.Grup_No equals g.Grup_No into tb4
                             from tbl4 in tb4.DefaultIfEmpty()
-                            join blm in context.Bolumlers
-                            on u.Bolum_No equals blm.Bolum_No into tb5
-                            from tbl5 in tb5.DefaultIfEmpty()
                             join grv in context.Gorevlers
                             on u.Gorev_No equals grv.Gorev_No into tb6
                             from tbl6 in tb6.DefaultIfEmpty()
@@ -48,7 +45,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Plaka = u.Plaka,
                                 Gecis_Grubu = tbl4.Grup_Adi,
                                 Ziyaretci_Grubu = u.Visitor_Grup_No,
-                                Bolum = tbl5.Adi,
                                 Gorev = tbl6.Adi
                             };
 
@@ -75,7 +71,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Soyadi { get; set; }
             public string Sirket { get; set; }
             public string Departman { get; set; }
-            public string Bolum { get; set; }
             public string Gorev { get; set; }
             public string Blok { get; set; }
             public string Plaka { get; set; }

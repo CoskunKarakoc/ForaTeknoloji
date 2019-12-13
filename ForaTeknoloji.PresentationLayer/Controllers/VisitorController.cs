@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUserDal;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
@@ -100,7 +101,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
                 Personeller = Personel,
                 Ziyaretciler = Ziyaretci,
-                ComplexPersoneller = _userService.GetAllUsersWithOutherOnlyUser().OrderBy(x => x.Kayit_No).ToList(),
+                ComplexPersoneller = ModalUser(),
                 VisitorCardList = CardModelUser()
             };
 
@@ -160,7 +161,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Ziyaretci = visitors,
                 GrupAdi = _groupMasterService.GetById((int)visitors.Grup_No).Grup_Adi,
                 Personel = users,
-                Personeller = _userService.GetAllUsersWithOutherOnlyUser().OrderBy(x => x.Kayit_No).ToList(),
+                Personeller = ModalUser(),
                 VisitorCardList = CardModelUser()
             };
 
@@ -318,11 +319,37 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         }
                     }
                 }
-                return liste;
+                return liste.OrderByDescending(x => x.Kayit_No).ToList();
             }
         }
 
+        public List<ComplexUser> ModalUser()
+        {
 
+            List<ComplexUser> liste = new List<ComplexUser>();
+            List<ComplexUser> userList = _userService.GetAllUsersWithOuther();
+            if (permissionUser.SysAdmin == true)
+            {
+                return userList;
+            }
+            else
+            {
+                foreach (var sirket in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                {
+                    foreach (var departman in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                    {
+                        foreach (var user in userList)
+                        {
+                            if (user.Sirket_No == sirket.Sirket_No && user.Departman_No == departman.Departman_No)
+                            {
+                                liste.Add(user);
+                            }
+                        }
+                    }
+                }
+                return liste.OrderByDescending(x => x.Kayit_No).ToList();
+            }
+        }
 
     }
 }

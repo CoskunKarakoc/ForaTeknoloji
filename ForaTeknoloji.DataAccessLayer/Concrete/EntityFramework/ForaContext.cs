@@ -65,10 +65,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<GroupsDetailNew> GroupsDetailNews { get; set; }
         public virtual DbSet<EMailSetting> EMailSettings { get; set; }
         public virtual DbSet<SMSSetting> SMSSettings { get; set; }
-        public virtual DbSet<Bolumler> Bolumlers { get; set; }
         public virtual DbSet<Gorevler> Gorevlers { get; set; }
-        public virtual DbSet<DBUsersBolum> DBUsersBolums { get; set; }
-        public virtual DbSet<DBUsersGorev> DBUsersGorevs { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -265,7 +265,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Kapi_Zaman_Grup_No = KapiZamanGrupNo,
                 Groups = nesne,
                 Panel_ID = PanelID,
-                PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
+                PanelList = UserPanelList()
             };
             return View(model);
         }

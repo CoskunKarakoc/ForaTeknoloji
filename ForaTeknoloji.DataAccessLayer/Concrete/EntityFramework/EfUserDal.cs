@@ -43,9 +43,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             join gm in context.GroupsMaster
                             on u.Visitor_Grup_No equals gm.Grup_No into tb5
                             from tbl5 in tb5.DefaultIfEmpty()
-                            join blm in context.Bolumlers
-                            on u.Bolum_No equals blm.Bolum_No into tb6
-                            from tbl6 in tb6.DefaultIfEmpty()
                             join grv in context.Gorevlers
                             on u.Gorev_No equals grv.Gorev_No into tb7
                             from tbl7 in tb7.DefaultIfEmpty()
@@ -64,7 +61,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Ziyaretci_Grubu = u.Visitor_Grup_No,
                                 String_Ziyaretci_Grubu = tbl5.Grup_Adi,
                                 Grup_No = tbl4.Grup_No,
-                                Bolum = tbl6.Adi,
                                 Gorev = tbl7.Adi,
                                 Sirket_No = tbl1.Sirket_No,
                                 Departman_No = tbl2.Departman_No
@@ -98,9 +94,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             join gm in context.GroupsMaster
                             on u.Visitor_Grup_No equals gm.Grup_No into tb5
                             from tbl5 in tb5.DefaultIfEmpty()
-                            join blm in context.Bolumlers
-                            on u.Bolum_No equals blm.Bolum_No into tb6
-                            from tbl6 in tb6.DefaultIfEmpty()
                             join grv in context.Gorevlers
                             on u.Gorev_No equals grv.Gorev_No into tb7
                             from tbl7 in tb7.DefaultIfEmpty()
@@ -120,7 +113,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Ziyaretci_Grubu = u.Visitor_Grup_No,
                                 String_Ziyaretci_Grubu = tbl5.Grup_Adi,
                                 Grup_No = tbl4.Grup_No,
-                                Bolum = tbl6.Adi,
                                 Gorev = tbl7.Adi,
                                 Departman_No = tbl2.Departman_No,
                                 Sirket_No = tbl1.Sirket_No
@@ -144,7 +136,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Adi { get; set; }
             public string Soyadi { get; set; }
             public string Sirket { get; set; }
-            public string Bolum { get; set; }
             public string Gorev { get; set; }
             public string Departman { get; set; }
             public string Blok { get; set; }

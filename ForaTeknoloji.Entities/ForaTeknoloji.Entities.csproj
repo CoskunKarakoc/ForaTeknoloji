@@ -84,15 +84,12 @@
     <Compile Include="Entities\Alarmlar.cs" />
     <Compile Include="Entities\AlarmTipleri.cs" />
     <Compile Include="Entities\Bloklar.cs" />
-    <Compile Include="Entities\Bolumler.cs" />
     <Compile Include="Entities\Cameras.cs" />
     <Compile Include="Entities\CameraTypes.cs" />
     <Compile Include="Entities\CodeOperation.cs" />
     <Compile Include="Entities\DBRoles.cs" />
     <Compile Include="Entities\DBUsers.cs" />
-    <Compile Include="Entities\DBUsersBolum.cs" />
     <Compile Include="Entities\DBUsersDepartman.cs" />
-    <Compile Include="Entities\DBUsersGorev.cs" />
     <Compile Include="Entities\DBUsersPanels.cs" />
     <Compile Include="Entities\DBUsersSirket.cs" />
     <Compile Include="Entities\Departmanlar.cs" />

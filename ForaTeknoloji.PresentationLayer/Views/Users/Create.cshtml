@@ -26,7 +26,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input type="text" id="ID" name="ID" hidden value="@Model.ID" />
-                                        @Html.TextBox("IDD", Model.ID, null, new { @class = "form-control", disabled = true })
+                                        @Html.TextBox("IDD", Model.ID, null, new { @class = "form-control form-control-sm", disabled = true })
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                     <label class="control-label col-md-4">Kart ID</label>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" name="Kart_ID" class="form-control" value="" />
+                                            <input type="text" name="Kart_ID" class="form-control form-control-sm" value="" />
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                     <label class="control-label col-md-4">Kart ID</label>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" name="Kart_ID" class="form-control" value="@Model.Kart_ID" />
+                                            <input type="text" name="Kart_ID" class="form-control form-control-sm" value="@Model.Kart_ID" />
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                                 <label class="control-label col-md-4">Şifre</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" name="Sifre" class="form-control" value="" />
+                                        <input type="text" name="Sifre" class="form-control form-control-sm" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                 <label class="control-label col-md-4">Plaka</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" name="Plaka" class="form-control" value="" />
+                                        <input type="text" name="Plaka" class="form-control form-control-sm" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                 <label class="control-label col-md-6">Otopark Modu</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Gecis_Modu", Model.Gecis_Modu, "Geçiş Modu Seçiniz", new { @class = "form-control" })
+                                        @Html.DropDownList("Gecis_Modu", Model.Gecis_Modu, "Geçiş Modu Seçiniz", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Gecis_Modu, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@
                                 <label class="control-label col-md-6">Kullanıcı Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kullanici_Tipi", Model.Kullanici_Tipi, "Kullanıcı Tipi Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Kullanici_Tipi", Model.Kullanici_Tipi, "Kullanıcı Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Kullanici_Tipi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                 <label class="control-label col-md-12">Geçiş Grubu(Ana)</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No", Model.Grup_No_2, "Ana Grup Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Grup_No", Model.Grup_No_2, "Ana Grup Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Grup_No_2, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                                 <label class="control-label col-md-4">Geçiş Grubu 2</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No_2", Model.Grup_No_2, "Geçiş Grubu 2 Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Grup_No_2", Model.Grup_No_2, "Geçiş Grubu 2 Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Grup_No_2, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -133,7 +133,7 @@
                                 <label class="control-label col-md-4">Geçiş Grubu 3</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No_3", Model.Grup_No_3, "Geçiş Grubu 3 Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Grup_No_3", Model.Grup_No_3, "Geçiş Grubu 3 Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Grup_No_3, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -143,7 +143,7 @@
                                 <label class="control-label col-md-4">Ziyaretçi Grubu</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Visitor_Grup_No", Model.Visitor_Grup_No, "Ziyaretçi Grubu Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Visitor_Grup_No", Model.Visitor_Grup_No, "Ziyaretçi Grubu Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Visitor_Grup_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -164,10 +164,10 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-12">Süreli Kullanım Sonu</label>
-                                        <input class="form-control" name="Bitis_Tarihi" type="date" value="" id="Tarih">
+                                        <input class="form-control form-control-sm" name="Bitis_Tarihi" type="date" value="" id="Tarih">
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" name="Bitis_Saati" type="time" value="@DateTime.Now" id="Saat">
+                                        <input class="form-control form-control-sm" name="Bitis_Saati" type="time" value="@DateTime.Now" id="Saat">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -184,7 +184,7 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-md-12">Grup Takvimi Adı</label>
-                                        @Html.DropDownList("Grup_Takvimi_No", Model.Grup_Takvimi_No, "Grup Takvimi Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Grup_Takvimi_No", Model.Grup_Takvimi_No, "Grup Takvimi Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Grup_Takvimi_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -213,7 +213,7 @@
                                 <label class="control-label col-md-4">Adı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" name="Adi" class="form-control" value="" />
+                                        <input type="text" name="Adi" class="form-control form-control-sm" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@
                                 <label class="control-label col-md-4">TC Kimlik</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="TCKimlik" value="" />
+                                        <input type="text" class="form-control form-control-sm" name="TCKimlik" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                                 <label class="control-label col-md-4">Şirket</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Sirket_No", Model.Sirket_No, "Şirket Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Sirket_No", Model.Sirket_No, "Şirket Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Sirket_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -241,23 +241,11 @@
                                 <label class="control-label col-md-4">Departmanlar</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Bölümler</label>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.DropDownList("Bolum_No", Model.Bolum_No, "Bölüm Seçiniz...", new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.Bolum_No, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-
-
 
                         </div>
 
@@ -270,7 +258,7 @@
                                 <label class="control-label col-md-4">Soyadı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Soyadi" value="" />
+                                        <input type="text" class="form-control form-control-sm" name="Soyadi" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -278,7 +266,7 @@
                                 <label class="control-label col-md-4">Telefon</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Telefon" value="" />
+                                        <input type="text" class="form-control form-control-sm" name="Telefon" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -286,7 +274,7 @@
                                 <label class="control-label col-md-4">Bloklar</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Blok_No", Model.Blok_No, "Blok Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Blok_No", Model.Blok_No, "Blok Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Blok_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -295,25 +283,22 @@
                                 <label class="control-label col-md-4">Daire</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" name="Daire" value="" />
+                                        <input type="number" class="form-control form-control-sm" name="Daire" value="" />
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Görevler</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Gorev_No", Model.Gorev_No, "Görev Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Gorev_No", Model.Gorev_No, "Görev Seçiniz...", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Gorev_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-
-
-                        </div>
-
-                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Açık Adres</label>
                                 <div class="col-md-12">

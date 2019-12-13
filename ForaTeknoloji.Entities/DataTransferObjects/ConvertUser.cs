@@ -49,7 +49,6 @@ namespace ForaTeknoloji.Entities.DataTransferObjects
                 Tmp = users.Tmp,
                 Visitor_Grup_No = users.Visitor_Grup_No,
                 User_Kayit_No = users.Kayit_No,
-                Bolum_No = users.Bolum_No,
                 Gorev_No = users.Gorev_No
             };
 

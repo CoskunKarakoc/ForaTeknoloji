@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
+using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     public class DepartmentController : Controller
     {
         private IDepartmanService _departmanService;
-        public DepartmentController(IDepartmanService departmanService)
+        private IDBUsersService _dBUsersService;
+        public DBUsers user;
+        public DBUsers permissionUser;
+        public DepartmentController(IDepartmanService departmanService, IDBUsersService dBUsersService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _departmanService = departmanService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
 
@@ -31,35 +42,51 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]
         public ActionResult Create(Departmanlar departmanlar)
         {
-            if (ModelState.IsValid)
+            if (permissionUser.SysAdmin == false)
             {
-                if (departmanlar.Adi != null)
-                {
-                    var ID = _departmanService.GetAllDepartmanlar().Count;
-                    if (ID == 0)
-                        _departmanService.DeleteAll();
-
-
-                    _departmanService.AddDepartman(departmanlar);
-                    return RedirectToAction("Index");
-                }
-                throw new Exception("Yanlış yada eksik karakter girdiniz.");
+                throw new Exception("Yetkisiz Erişim!");
             }
-            return RedirectToAction("Index");
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    if (departmanlar.Adi != null)
+                    {
+                        var ID = _departmanService.GetAllDepartmanlar().Count;
+                        if (ID == 0)
+                            _departmanService.DeleteAll();
+
+
+                        _departmanService.AddDepartman(departmanlar);
+                        return RedirectToAction("Index");
+                    }
+                    throw new Exception("Yanlış yada eksik karakter girdiniz.");
+                }
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Delete(int id = -1)
         {
-            if (id != -1)
+            if (permissionUser.SysAdmin == false)
             {
-                Departmanlar departman = _departmanService.GetById(id);
-                if (departman != null)
-                {
-                    _departmanService.DeleteDepartmanlar(departman);
-                    return Json(true, JsonRequestBehavior.AllowGet);
-                }
+                throw new Exception("Yetkisiz Erişim!");
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            else
+            {
+                if (id != -1)
+                {
+                    Departmanlar departman = _departmanService.GetById(id);
+                    if (departman != null)
+                    {
+                        _departmanService.DeleteDepartmanlar(departman);
+                        return Json(true, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+
+
         }
 
         public ActionResult Edit(int? id)
@@ -80,16 +107,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Departmanlar departmanlar)
         {
-            if (ModelState.IsValid)
+            if (permissionUser.SysAdmin == false)
             {
-                var departman = _departmanService.GetById(departmanlar.Departman_No);
-                if (departmanlar != null)
-                {
-                    _departmanService.UpdateDepartman(departmanlar);
-                    return RedirectToAction("Index");
-                }
+                throw new Exception("Yetkisiz Erişim!");
             }
-            return View(departmanlar);
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    var departman = _departmanService.GetById(departmanlar.Departman_No);
+                    if (departmanlar != null)
+                    {
+                        _departmanService.UpdateDepartman(departmanlar);
+                        return RedirectToAction("Index");
+                    }
+                }
+                return View(departmanlar);
+            }
+
         }
 
 

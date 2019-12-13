@@ -42,7 +42,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void Guncelle(List<int> KayitNo);
         void GetPanelList(DBUsers user);
         void GetSirketList(DBUsers users);
-
+        void GetDepartmanList(DBUsers users);
 
 
 

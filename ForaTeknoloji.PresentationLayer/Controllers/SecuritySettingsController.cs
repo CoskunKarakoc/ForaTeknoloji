@@ -27,15 +27,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDepartmanService _departmanService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
 
-        private IBolumlerService _bolumlerService;
-        private IDBUsersBolumService _dBUsersBolumService;
-
-        private IGorevlerService _gorevlerService;
-        private IDBUsersGorevService _dBUsersGorevService;
 
         DBUsers user;
         DBUsers permissionUser;
-        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IBolumlerService bolumlerService, IDBUsersBolumService dBUsersBolumService, IGorevlerService gorevlerService, IDBUsersGorevService dBUsersGorevService)
+        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -50,10 +45,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _sirketService = sirketService;
             _departmanService = departmanService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
-            _bolumlerService = bolumlerService;
-            _dBUsersBolumService = dBUsersBolumService;
-            _gorevlerService = gorevlerService;
-            _dBUsersGorevService = dBUsersGorevService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -86,13 +77,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var userPanel = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == Kullanici_Adi);
             var userSirket = _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == Kullanici_Adi);
             var userDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == Kullanici_Adi);
-            var userBolum = _dBUsersBolumService.GetAllDBUsersBolum(x => x.Kullanici_Adi == Kullanici_Adi);
-            var userGorev = _dBUsersGorevService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == Kullanici_Adi);
             var panelList = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var sirketList = _sirketService.GetAllSirketler();
             var departmanList = _departmanService.GetAllDepartmanlar();
-            var bolumList = _bolumlerService.GetAllBolumler();
-            var gorevList = _gorevlerService.GetAllGorevler();
 
             var model = new EditSecurityListViewModel
             {
@@ -103,10 +90,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 SirketList = sirketList,
                 UserDepartmanList = userDepartman,
                 DepartmanList = departmanList,
-                UserBolumList = userBolum,
-                BolumList = bolumList,
-                UserGorevList = userGorev,
-                GorevList = gorevList
 
             };
             ViewBag.Kullanici_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Kullanici_Islemleri);
@@ -121,7 +104,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(DBUsers dBUsers, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null, List<int> Bolumler = null, List<int> Gorevler = null)
+        public ActionResult Edit(DBUsers dBUsers, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             if (ModelState.IsValid)
             {
@@ -130,8 +113,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     DBUserSirketUpdate(dBUsers, Sirketler);
                     DBUserPanelUpdate(dBUsers, Paneller);
                     DBUserDepartmanUpdate(dBUsers, Departmanlar);
-                    DBUserBolumUpdate(dBUsers, Bolumler);
-                    DBUserGorevUpdate(dBUsers, Gorevler);
                     _dBUsersService.UpdateDBUsers(dBUsers);
                 }
             }
@@ -156,8 +137,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
                 Sirketler = _sirketService.GetAllSirketler(),
                 Departmanlar = _departmanService.GetAllDepartmanlar(),
-                Bolumler = _bolumlerService.GetAllBolumler(),
-                Gorevler = _gorevlerService.GetAllGorevler(),
                 Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
 
             };
@@ -166,7 +145,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Create(DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null, List<int> Bolumler = null, List<int> Gorevler = null)
+        public ActionResult Create(DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             DBUsers addedUser = new DBUsers();
             if (ModelState.IsValid)
@@ -179,41 +158,56 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         throw new Exception("Aynı kullanıcı adı veya şifre ile kayıt yapılamaz!");
                     }
+
+                    if (dBUsers.SysAdmin==true)
+                    {
+                        dBUsers.Alarm_Islemleri = 1;
+                        dBUsers.Canli_Izleme = 1;
+                        dBUsers.Gecis_Verileri_Rapor_Islemleri = 1;
+                        dBUsers.Grup_Islemleri = 1;
+                        dBUsers.Kullanici_Islemleri = 1;
+                        dBUsers.Programli_Kapi_Islemleri = 1;
+                        dBUsers.Ziyaretci_Islemleri = 1;
+                    }
                     addedUser = _dBUsersService.AddDBUsers(dBUsers);
                 }
-                if (Sirketler != null)
+                if (addedUser.SysAdmin == true)
                 {
-                    foreach (var item in Sirketler)
+                    foreach (var sirket in _sirketService.GetAllSirketler().Select(a => a.Sirket_No).ToList())
                     {
-                        _dBUsersSirketService.AddDBUsersSirket(new DBUsersSirket { Kullanici_Adi = addedUser.Kullanici_Adi, Sirket_No = item });
+                        _dBUsersSirketService.AddDBUsersSirket(new DBUsersSirket { Kullanici_Adi = addedUser.Kullanici_Adi, Sirket_No = sirket });
+                    }
+                    foreach (var departman in _departmanService.GetAllDepartmanlar().Select(a => a.Departman_No).ToList())
+                    {
+                        _dBUsersDepartmanService.AddDBUsersDepartman(new DBUsersDepartman { Kullanici_Adi = addedUser.Kullanici_Adi, Departman_No = departman });
+                    }
+                    foreach (var panel in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).Select(a => a.Panel_ID))
+                    {
+                        _dBUsersPanelsService.AddDBUsersPanels(new DBUsersPanels { Kullanici_Adi = addedUser.Kullanici_Adi, Panel_No = panel });
                     }
                 }
-                if (Paneller != null)
+                else
                 {
-                    foreach (var item in Paneller)
+                    if (Sirketler != null)
                     {
-                        _dBUsersPanelsService.AddDBUsersPanels(new DBUsersPanels { Kullanici_Adi = addedUser.Kullanici_Adi, Panel_No = item });
+                        foreach (var item in Sirketler)
+                        {
+                            _dBUsersSirketService.AddDBUsersSirket(new DBUsersSirket { Kullanici_Adi = addedUser.Kullanici_Adi, Sirket_No = item });
+                        }
                     }
-                }
-                if (Departmanlar != null)
-                {
-                    foreach (var item in Departmanlar)
+                    if (Paneller != null)
                     {
-                        _dBUsersDepartmanService.AddDBUsersDepartman(new DBUsersDepartman { Kullanici_Adi = addedUser.Kullanici_Adi, Departman_No = item });
+                        foreach (var item in Paneller)
+                        {
+                            _dBUsersPanelsService.AddDBUsersPanels(new DBUsersPanels { Kullanici_Adi = addedUser.Kullanici_Adi, Panel_No = item });
+                        }
                     }
-                }
-                if (Bolumler != null)
-                {
-                    foreach (var item in Bolumler)
+                    if (Departmanlar != null)
                     {
-                        _dBUsersBolumService.AddDBUsersBolum(new DBUsersBolum { Kullanici_Adi = addedUser.Kullanici_Adi, Bolum_No = item });
-                    }
-                }
-                if (Gorevler != null)
-                {
-                    foreach (var item in Gorevler)
-                    {
-                        _dBUsersGorevService.AddDBUsersGorev(new DBUsersGorev { Kullanici_Adi = addedUser.Kullanici_Adi, Gorev_No = item });
+                        foreach (var item in Departmanlar)
+                        {
+                            _dBUsersDepartmanService.AddDBUsersDepartman(new DBUsersDepartman { Kullanici_Adi = addedUser.Kullanici_Adi, Departman_No = item });
+                        }
                     }
                 }
                 return RedirectToAction("Index");
@@ -309,40 +303,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Departman_No = departman
                     };
                     _dBUsersDepartmanService.AddDBUsersDepartman(dBUsersDepartman);
-                }
-            }
-        }
-
-        public void DBUserBolumUpdate(DBUsers dBUsers, List<int> Bolumler)
-        {
-            _dBUsersBolumService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-            if (Bolumler != null)
-            {
-                foreach (var bolum in Bolumler)
-                {
-                    DBUsersBolum dBUsersBolum = new DBUsersBolum
-                    {
-                        Kullanici_Adi = dBUsers.Kullanici_Adi,
-                        Bolum_No = bolum
-                    };
-                    _dBUsersBolumService.AddDBUsersBolum(dBUsersBolum);
-                }
-            }
-        }
-
-        public void DBUserGorevUpdate(DBUsers dBUsers, List<int> Gorevler)
-        {
-            _dBUsersGorevService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-            if (Gorevler != null)
-            {
-                foreach (var gorev in Gorevler)
-                {
-                    DBUsersGorev dBUsersGorev = new DBUsersGorev
-                    {
-                        Kullanici_Adi = dBUsers.Kullanici_Adi,
-                        Gorev_No = gorev
-                    };
-                    _dBUsersGorevService.AddDBUsersGorev(dBUsersGorev);
                 }
             }
         }

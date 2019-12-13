@@ -113,57 +113,8 @@
                         <div class="col-md-12"><hr /></div>
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-5 mt-3 mb-4 animated slideInRight faster">
-                                    <div class="card border-left-success shadow-lg h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Paneller</div>
-                                                </div>
-                                                <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                                    <thead class="table-success">
-                                                        <tr>
-                                                            <td>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="AllPanel" />
-                                                                    <label class="custom-control-label" for="AllPanel"></label>
-                                                                </div>
-                                                            </td>
-                                                            <td>Panel ID</td>
-                                                            <td>Panel Adı</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in Model.PanelList)
-                                                        {
-                                                            <tr>
-                                                                <td>
-                                                                    @if (Model.UserPanelList.Any(x => x.Panel_No == item.Panel_ID))
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" checked name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
-                                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
-                                                                        </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
-                                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
-                                                                        </div>
-                                                                    }
-                                                                </td>
-                                                                <td>@item.Panel_ID</td>
-                                                                <td>@item.Panel_Name</td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="offset-1 col-md-5 mt-3 mb-4 animated slideInLeft faster">
+
+                                <div class="offset-1 col-md-5 mt-3 mb-4">
                                     <div class="card border-left-danger shadow-lg h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -214,7 +165,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5 mt-3 mb-4 animated slideInRight faster">
+                                <div class="col-md-5 mt-3 mb-4">
                                     <div class="card border-left-warning shadow-lg h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -265,49 +216,50 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="offset-1 col-md-5 mt-3 mb-4 animated slideInLeft faster">
-                                    <div class="card border-left-secondary shadow-lg h-100 py-2">
+                                <div class="offset-1 col-md-10 mt-3 mb-4">
+                                    <div class="card border-left-success shadow-lg h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Bölümler</div>
+                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Paneller</div>
                                                 </div>
-                                                <table id="BolumTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                                    <thead class="table-secondary">
+                                                <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                    <thead class="table-success">
                                                         <tr>
                                                             <td>
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="AllBolum" />
-                                                                    <label class="custom-control-label" for="AllBolum"></label>
+                                                                    <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                                                    <label class="custom-control-label" for="AllPanel"></label>
                                                                 </div>
                                                             </td>
-                                                            <td>Bölüm No</td>
-                                                            <td>Adı</td>
+                                                            <td>Panel ID</td>
+                                                            <td>Panel Adı</td>
+                                                            <td>Panel IP Adres</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach (var item in Model.BolumList)
+                                                        @foreach (var item in Model.PanelList)
                                                         {
                                                             <tr>
                                                                 <td>
-                                                                    @if (Model.UserBolumList.Any(x => x.Bolum_No == item.Bolum_No))
+                                                                    @if (Model.UserPanelList.Any(x => x.Panel_No == item.Panel_ID))
                                                                     {
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" checked name="Bolumler" id="@("Bolum_"+item.Bolum_No)" value="@item.Bolum_No">
-                                                                            <label class="custom-control-label" for="@("Bolum_"+item.Bolum_No)"></label>
+                                                                            <input type="checkbox" class="custom-control-input" checked name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
                                                                         </div>
                                                                     }
                                                                     else
                                                                     {
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" name="Bolumler" id="@("Bolum_"+item.Bolum_No)" value="@item.Bolum_No">
-                                                                            <label class="custom-control-label" for="@("Bolum_"+item.Bolum_No)"></label>
+                                                                            <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
                                                                         </div>
                                                                     }
-
                                                                 </td>
-                                                                <td>@item.Bolum_No</td>
-                                                                <td>@item.Adi</td>
+                                                                <td>@item.Panel_ID</td>
+                                                                <td>@item.Panel_Name</td>
+                                                                <td>@(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</td>
                                                             </tr>
                                                         }
                                                     </tbody>
@@ -316,58 +268,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-5 mt-3 mb-4 animated slideInRight faster">
-                                    <div class="card border-left-info shadow-lg h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Görevler</div>
-                                                </div>
-                                                <table id="GorevTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                                    <thead class="table-info">
-                                                        <tr>
-                                                            <td>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="AllGorev" />
-                                                                    <label class="custom-control-label" for="AllGorev"></label>
-                                                                </div>
-                                                            </td>
-                                                            <td>Görev No</td>
-                                                            <td>Adı</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in Model.GorevList)
-                                                        {
-                                                            <tr>
-                                                                <td>
-                                                                    @if (Model.UserGorevList.Any(x => x.Gorev_No == item.Gorev_No))
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" checked name="Gorevler" id="@("Gorev_"+item.Gorev_No)" value="@item.Gorev_No">
-                                                                            <label class="custom-control-label" for="@("Gorev_"+item.Gorev_No)"></label>
-                                                                        </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" name="Gorevler" id="@("Gorev_"+item.Gorev_No)" value="@item.Gorev_No">
-                                                                            <label class="custom-control-label" for="@("Gorev_"+item.Gorev_No)"></label>
-                                                                        </div>
-                                                                    }
-
-                                                                </td>
-                                                                <td>@item.Gorev_No</td>
-                                                                <td>@item.Adi</td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>

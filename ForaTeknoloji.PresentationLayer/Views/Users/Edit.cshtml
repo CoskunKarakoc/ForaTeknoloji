@@ -23,7 +23,7 @@
                                 <label class="control-label col-md-4">Kullanıcı ID</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@
                                 <label class="control-label col-md-4">Kart ID</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Kart_ID, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Kart_ID, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.Kart_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
                                 <label class="control-label col-md-4">Şifre</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Sifre, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Sifre, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -50,7 +50,7 @@
                                 @Html.LabelFor(model => model.Plaka, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Plaka, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Plaka, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.Plaka, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@
                                 <label class="control-label col-md-5">Otopark Modu</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Gecis_Modu", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Gecis_Modu", null, "", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Gecis_Modu, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                                 <label class="control-label col-md-5">Kullanıcı Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kullanici_Tipi", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Kullanici_Tipi", null, "", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Kullanici_Tipi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                 <label class="control-label col-md-12">Geçiş Grubu(Ana)</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Grup_No", null, "", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Grup_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                                 <label class="control-label col-md-4">Geçiş Grubu 2</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No_2", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Grup_No_2", null, "", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Grup_No_2, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                 <label class="control-label col-md-4">Geçiş Grubu 3</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No_3", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Grup_No_3", null, "", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Grup_No_3, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                 <label class="control-label col-md-4">Ziyaretçi Grubu</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Visitor_Grup_No", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Visitor_Grup_No", null, "", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Visitor_Grup_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -146,22 +146,22 @@
                                         <label class="control-label col-md-12">Süreli Kullanım Sonu</label>
                                         @if (Model.Bitis_Tarihi == null)
                                         {
-                                            <input type="date" class="form-control" name="Bitis_Tarihi" id="Tarih" />
+                                            <input type="date" class="form-control form-control-sm" name="Bitis_Tarihi" id="Tarih" />
                                         }
                                         else
                                         {
-                                            @Html.TextBoxFor(model => model.Bitis_Tarihi, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                                            @Html.TextBoxFor(model => model.Bitis_Tarihi, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", @type = "date" })
                                         }
 
                                     </div>
                                     <div class="form-group">
                                         @if (Model.Bitis_Saati == null)
                                         {
-                                            <input class="form-control" name="Bitis_Saati" type="time" value="" id="Saat">
+                                            <input class="form-control form-control-sm" name="Bitis_Saati" type="time" value="" id="Saat">
                                         }
                                         else
                                         {
-                                            <input class="form-control" name="Bitis_Saati" type="time" value="@Model.Bitis_Saati.Value.ToShortTimeString()" id="Saat">
+                                            <input class="form-control form-control-sm" name="Bitis_Saati" type="time" value="@Model.Bitis_Saati.Value.ToShortTimeString()" id="Saat">
                                         }
                                     </div>
                                 </div>
@@ -179,7 +179,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-md-12">Grup Takvimi Adı</label>
-                                        @Html.DropDownList("Grup_Takvimi_No", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Grup_Takvimi_No", null, "", new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Grup_Takvimi_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -201,7 +201,7 @@
                                 <label class="control-label col-md-4">Adı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Adi, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Adi, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.Adi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -210,7 +210,7 @@
                                 <label class="control-label col-md-4">TC Kimlik</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.TCKimlik, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.TCKimlik, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.TCKimlik, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -219,7 +219,7 @@
                                 <label class="control-label col-md-4">Şirket</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Sirket_No", null, new { @class = "form-control" })
+                                        @Html.DropDownList("Sirket_No", null, new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Sirket_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -228,29 +228,18 @@
                                 <label class="control-label col-md-4">Departmanlar</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Departman_No", null, new { @class = "form-control" })
+                                        @Html.DropDownList("Departman_No", null, new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Bölümler</label>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.DropDownList("Bolum_No", null, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.Bolum_No, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Soyadı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Soyadi, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Soyadi, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.Soyadi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -259,7 +248,7 @@
                                 <label class="control-label col-md-4">Telefon</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -268,7 +257,7 @@
                                 <label class="control-label col-md-4">Bloklar</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Blok_No", null, new { @class = "form-control" })
+                                        @Html.DropDownList("Blok_No", null, new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Blok_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -277,30 +266,27 @@
                                 <label class="control-label col-md-4">Daire</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Daire, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Daire, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                                         @Html.ValidationMessageFor(model => model.Daire, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Görevler</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Gorev_No", null, new { @class = "form-control" })
+                                        @Html.DropDownList("Gorev_No", null, new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Gorev_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-
-
-
-                        </div>
-                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Açık Adres</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.TextAreaFor(model => model.Adres, new { @class = "form-control" })
+                                        @Html.TextAreaFor(model => model.Adres, new { @class = "form-control form-control-sm" })
                                         @Html.ValidationMessageFor(model => model.Adres, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

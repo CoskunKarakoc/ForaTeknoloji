@@ -1763,32 +1763,33 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
             //Client-Mod
-            //queryString = "SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
-            //    " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
-            //    " Departmanlar.Adi AS Departman," +
-            //    " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
-            //    " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
-            //    " DoorNames.[Kapi Adi] As Kapi," +
-            //    " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-            //    " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
-            //    " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
-            //    " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
-            //    " AND Users.[Sirket No] IN(10000," + sirketListesi + ")";
-            //Server-Mod
-            queryString = " SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
-                "Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket, " +
-                " Departmanlar.Adi AS Departman, " +
-                " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, " +
+            queryString = "SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+                " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
+                " Departmanlar.Adi AS Departman," +
+                " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
                 " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
-                " ReaderSettingsNew.[WKapi Adi] As Kapi, " +
+                " DoorNames.[Kapi Adi] As Kapi," +
                 " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi] " +
-                " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])" +
-                " LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])" +
-                " LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID)" +
-                " LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod)" +
-                " LEFT JOIN ReaderSettingsNew ON AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] AND AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID]) " +
-                " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] ";
+                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
+                " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN DoorNames ON AccessDatas.[Kapi ID] = DoorNames.[Kapi No]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
+                " OR Users.[Sirket No] IN(10000," + sirketListesi + ")" +
+                " OR Users.[Departman No] IN(10000," + departmanListesi + ")";
+            //Server-Mod
+            //queryString = " SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+            //    "Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket, " +
+            //    " Departmanlar.Adi AS Departman, " +
+            //    " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, " +
+            //    " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+            //    " ReaderSettingsNew.[WKapi Adi] As Kapi, " +
+            //    " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
+            //    " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi] " +
+            //    " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])" +
+            //    " LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])" +
+            //    " LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID)" +
+            //    " LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod)" +
+            //    " LEFT JOIN ReaderSettingsNew ON AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] AND AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID]) " +
+            //    " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] ";
             queryString += CodeString;
             queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
             List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
@@ -1947,64 +1948,125 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         //Kullanıcı adına göre Sirket Listesi döndürüyor
         public void GetSirketList(DBUsers users)
         {
-            var sirketler = _dbUsersSirketDal.GetList(x => x.Kullanici_Adi == users.Kullanici_Adi).Select(x => x.Sirket_No).ToList();
-
-            if (sirketler.Count > 0)
+            if (users.SysAdmin == true)
             {
-                sirketListesi = "";
-                foreach (var item in sirketler)
+                var sirketler = _sirketDal.GetList().Select(a => a.Sirket_No).ToList();
+                if (sirketler.Count > 0)
                 {
-                    sirketListesi += item + ",";
-                }
-                sirketListesi = sirketListesi.Substring(0, sirketListesi.Length - 1);
+                    sirketListesi = "";
+                    foreach (var item in sirketler)
+                    {
+                        sirketListesi += item + ",";
+                    }
+                    sirketListesi = sirketListesi.Substring(0, sirketListesi.Length - 1);
 
+                }
+                else
+                {
+                    sirketListesi = "0";
+                }
             }
             else
             {
-                sirketListesi = "0";
+                var sirketler = _dbUsersSirketDal.GetList(x => x.Kullanici_Adi == users.Kullanici_Adi).Select(x => x.Sirket_No).ToList();
+
+                if (sirketler.Count > 0)
+                {
+                    sirketListesi = "";
+                    foreach (var item in sirketler)
+                    {
+                        sirketListesi += item + ",";
+                    }
+                    sirketListesi = sirketListesi.Substring(0, sirketListesi.Length - 1);
+
+                }
+                else
+                {
+                    sirketListesi = "0";
+                }
             }
+
         }
 
         //Kullanıcı adına göre Departman Listesi döndürüyor
         public void GetDepartmanList(DBUsers users)
         {
-            var departmanlar = _dBUsersDepartmanDal.GetList(x => x.Kullanici_Adi == users.Kullanici_Adi).Select(x => x.Departman_No).ToList();
-            if (departmanlar.Count > 0)
+            if (users.SysAdmin == true)
             {
-                departmanListesi = "";
-                foreach (var item in departmanlar)
+                var departmanlar = _departmanDal.GetList().Select(a => a.Departman_No).ToList();
+                if (departmanlar.Count > 0)
                 {
-                    departmanListesi += item + ",";
+                    departmanListesi = "";
+                    foreach (var item in departmanlar)
+                    {
+                        departmanListesi += item + ",";
+                    }
+                    departmanListesi = departmanListesi.Substring(0, departmanListesi.Length - 1);
                 }
-                departmanListesi = departmanListesi.Substring(0, departmanListesi.Length - 1);
+                else
+                {
+                    departmanListesi = "0";
+                }
             }
             else
             {
-                departmanListesi = "0";
+                var departmanlar = _dBUsersDepartmanDal.GetList(x => x.Kullanici_Adi == users.Kullanici_Adi).Select(x => x.Departman_No).ToList();
+                if (departmanlar.Count > 0)
+                {
+                    departmanListesi = "";
+                    foreach (var item in departmanlar)
+                    {
+                        departmanListesi += item + ",";
+                    }
+                    departmanListesi = departmanListesi.Substring(0, departmanListesi.Length - 1);
+                }
+                else
+                {
+                    departmanListesi = "0";
+                }
             }
-
-
-
         }
 
         //Kullanıcı adına göre Panel Listesi döndürüyor
         public void GetPanelList(DBUsers user)
         {
-            var paneller = _dbUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderBy(x => x.Kullanici_Adi).Select(x => x.Panel_No).ToList();
-            panelListesi = "";
-            if (paneller.Count > 0)
+            if (user.SysAdmin == true)
             {
+                var paneller = _panelSettingsDal.GetList(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).Select(a => a.Panel_ID).ToList();
                 panelListesi = "";
-                foreach (var item in paneller)
+                if (paneller.Count > 0)
                 {
-                    panelListesi += item + ",";
-                }
-                panelListesi = panelListesi.Substring(0, panelListesi.Length - 1);
+                    panelListesi = "";
+                    foreach (var item in paneller)
+                    {
+                        panelListesi += item + ",";
+                    }
+                    panelListesi = panelListesi.Substring(0, panelListesi.Length - 1);
 
+                }
+                else
+                {
+                    panelListesi = "0";
+                }
             }
             else
             {
-                panelListesi = "0";
+                var paneller = _dbUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderBy(x => x.Kullanici_Adi).Select(x => x.Panel_No).ToList();
+                panelListesi = "";
+                if (paneller.Count > 0)
+                {
+                    panelListesi = "";
+                    foreach (var item in paneller)
+                    {
+                        panelListesi += item + ",";
+                    }
+                    panelListesi = panelListesi.Substring(0, panelListesi.Length - 1);
+
+                }
+                else
+                {
+                    panelListesi = "0";
+                }
             }
         }
 

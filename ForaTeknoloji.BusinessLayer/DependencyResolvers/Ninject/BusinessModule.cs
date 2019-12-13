@@ -62,9 +62,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IRawUsersDal>().To<EfRawUsersDal>().InSingletonScope();
             Bind<IRawGroupsDal>().To<EfRawGorupsDal>().InSingletonScope();
             Bind<IGorevlerDal>().To<EfGorevlerDal>().InSingletonScope();
-            Bind<IBolumlerDal>().To<EfBolumlerDal>().InSingletonScope();
-            Bind<IDBUsersBolumDal>().To<EfDBUsersBolumDal>().InSingletonScope();
-            Bind<IDBUsersGorevDal>().To<EfDBUsersGorevDal>().InSingletonScope();
+          
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -110,10 +108,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<ISmsSettingsService>().To<SmsSettingsManager>().InSingletonScope();
             Bind<IRawUsersService>().To<RawUsersManager>().InSingletonScope();
             Bind<IRawGroupsService>().To<RawGroupsManager>().InSingletonScope();
-            Bind<IBolumlerService>().To<BolumlerManager>().InSingletonScope();
             Bind<IGorevlerService>().To<GorevlerManager>().InSingletonScope();
-            Bind<IDBUsersGorevService>().To<DBUsersGorevManager>().InSingletonScope();
-            Bind<IDBUsersBolumService>().To<DBUsersBolumManager>().InSingletonScope();
 
 
             /*Context*/
