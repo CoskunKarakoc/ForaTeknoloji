@@ -35,13 +35,43 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<GelenGelmeyen_ToplamIcerdeKalma> GelenGelmeyen_ToplamIcerdeKalmas(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2);
         List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(int? Sirketler, int? Departmanlar, int? Global_Bolge_Adi, int? Groupsdetail, int? UserID, DateTime? Tarih1, DateTime? Tarih2);
 
-
+        /// <summary>
+        /// Sondan başlayarak geriye complex geçiş verileri gönderiyor.
+        /// </summary>
+        /// <param name="watchParameters">İzleme parametrelerine göre kriter uyguluyor.</param>
+        /// <returns></returns>
         List<WatchEntityComplex> GetWatch(WatchParameters watchParameters);
+
+
+        /// <summary>
+        /// Giriş yapan son kullanıcının bilgileri dönüyor.
+        /// Session'da ki kullanıcı bilgilerine göre Şirket,Departman ve Panel kriterleri uygulanıyor.
+        /// </summary>
+        /// <param name="Kayit_No">Gönderilen 'Kayit No'suna göre kullanıcı gönderiyor.</param>
+        /// <returns></returns>
         WatchEntityComplex LastRecordWatch(int? Kayit_No);
 
         void Guncelle(List<int> KayitNo);
+
+        /// <summary>
+        /// Kullanıcı adına göre 'panelListesi' değişkenine id'leri sıralıyor.
+        /// Eğer kullanıcı admin ise panel listesindeki geçerli panellerin tümü ekleniyor.
+        /// </summary>
+        /// <param name="user">UI Katmanında ki Session'da saklanan kullanıcının bilgileri ile filtreleniyor.</param>
         void GetPanelList(DBUsers user);
+
+        /// <summary>
+        /// Kullanıcı adına göre 'sirketListesi' değişkenine id'leri sıralıyor.
+        /// Eğer kullanıcı admin ise şirket listesindeki geçerli şirketlerin tümü ekleniyor.
+        /// </summary>
+        /// <param name="users">UI Katmanında ki Session'da saklanan kullanıcının bilgileri ile filtreleniyor.</param>
         void GetSirketList(DBUsers users);
+
+        /// <summary>
+        /// Kullanıcı adına göre 'departmanListesi' değişkenine id'leri sıralıyor.
+        /// Eğer kullanıcı admin ise departman listesindeki geçerli departmanların tümü ekleniyor.
+        /// </summary>
+        /// <param name="users">UI Katmanında ki Session'da saklanan kullanıcının bilgileri ile filtreleniyor.</param>
         void GetDepartmanList(DBUsers users);
 
 

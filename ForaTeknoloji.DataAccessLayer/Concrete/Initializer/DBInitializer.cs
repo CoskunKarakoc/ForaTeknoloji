@@ -1393,7 +1393,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
             TaskCode taskCode2615 = new TaskCode
             {
                 Gorev_Kodu = 2615,
-                Gorev_Adi = "Stand-Alone Kullanıcı Geçiş Sayaç Hafızasının Silinmesi (Tüm Hafıza)"
+                Gorev_Adi = "Stand-Alone Kullanıcı Geçiş Grupları Hafızasının Silinmesi (Tüm Hafıza)"
             };
             context.TaskCodes.Add(taskCode2615);
             TaskCode taskCode2614 = new TaskCode
@@ -1594,6 +1594,12 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gorev_Adi = "Panel Ayarlarının Alınması"
             };
             context.TaskCodes.Add(taskCode2761);
+            TaskCode taskCode2605 = new TaskCode
+            {
+                Gorev_Kodu = 2605,
+                Gorev_Adi = "Zaman Gruplarının Silinmesi(Tümü)"
+            };
+            context.TaskCodes.Add(taskCode2605);
             EMailSetting eMailSetting = new EMailSetting
             {
                 E_Mail_Adres = "sample@abcd.com",

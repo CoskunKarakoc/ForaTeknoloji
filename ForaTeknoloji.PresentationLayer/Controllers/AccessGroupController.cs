@@ -48,6 +48,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersService = dBUsersService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
+            FillGroups();
         }
 
 
@@ -173,26 +174,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     };
                     _timeGroupsService.AddTimeGroups(timeGroups);
                 }
-                foreach (var panel in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0))
-                {
-                    for (int i = 1; i < 17; i++)
-                    {
-                        GroupsDetailNew groupsDetailNew = new GroupsDetailNew
-                        {
-                            Asansor_Grup_No = 1,
-                            Global_Bolge_No = 1,
-                            Zaman_Grup_No = 1,
-                            Kapi_Aktif = false,
-                            Panel_Adi = panel.Panel_Name,
-                            Panel_No = (short)panel.Panel_ID,
-                            Seri_No = panel.Seri_No,
-                            Kapi_No = i,
-                            Grup_No = groupsMaster.Grup_No,
-                            Grup_Adi = groupsMaster.Grup_Adi
-                        };
-                        _groupsDetailNewService.AddGroupsDetailNew(groupsDetailNew);
-                    }
-                }
+                FillGroups();
                 return RedirectToAction("Groups", "AccessGroup");
             }
             return View(groupsMaster);
@@ -445,6 +427,92 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return RedirectToAction("Groups");
         }
+
+        public ActionResult SendAll(List<int> PanelListAll)
+        {
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
+            if (PanelListAll != null)
+            {
+                try
+                {
+                    foreach (var panel in PanelListAll)
+                    {
+                        TaskList taskListERS = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_ACCESSGROUP,
+                            IntParam_1 = 0,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = panel,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceiveErs = _taskListService.AddTaskList(taskListERS);
+
+                        foreach (var item in _groupMasterService.GetAllGroupsMaster().Select(a => a.Grup_No))
+                        {
+                            TaskList taskListSend = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)CommandConstants.CMD_SND_ACCESSGROUP,
+                                IntParam_1 = item,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = panel,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Groups");
+                }
+
+            }
+            return RedirectToAction("Groups");
+        }
+
+        public void FillGroups()
+        {
+            foreach (var panel in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0))
+            {
+                foreach (var group in _groupMasterService.GetAllGroupsMaster())
+                {
+                    var entity = _groupsDetailNewService.GetBy_GrupNo_AND_PanelID(group.Grup_No, (int)panel.Panel_ID);
+                    if (entity == null)
+                    {
+                        for (int i = 1; i < 17; i++)
+                        {
+                            GroupsDetailNew groupsDetailNew = new GroupsDetailNew
+                            {
+                                Asansor_Grup_No = 1,
+                                Global_Bolge_No = 1,
+                                Zaman_Grup_No = 1,
+                                Kapi_Aktif = false,
+                                Panel_Adi = panel.Panel_Name,
+                                Panel_No = (short)panel.Panel_ID,
+                                Seri_No = panel.Seri_No,
+                                Kapi_No = i,
+                                Grup_No = group.Grup_No,
+                                Grup_Adi = group.Grup_Adi
+                            };
+                            _groupsDetailNewService.AddGroupsDetailNew(groupsDetailNew);
+
+                        }
+                    }
+                }
+            }
+        }
+
 
         private List<PanelSettings> UserPanelList()
         {

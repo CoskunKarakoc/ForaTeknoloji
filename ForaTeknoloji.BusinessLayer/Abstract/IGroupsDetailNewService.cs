@@ -18,5 +18,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteGroupsDetailNew(GroupsDetailNew groupsDetailNew);
         GroupsDetailNew UpdateGroupsDetailNew(GroupsDetailNew groupsDetailNew);
         List<ComplexGroupsDetailNew> GetComplexGroups();
+        void DeleteAll();
     }
 }

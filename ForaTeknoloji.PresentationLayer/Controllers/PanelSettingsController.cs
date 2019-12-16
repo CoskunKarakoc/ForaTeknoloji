@@ -23,9 +23,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReaderSettingsNewService _settingsNewService;
         private ITaskListService _taskListService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IGroupsDetailNewService _groupsDetailNewService;
+
 
         public DBUsers user;
-        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService)
+        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -38,6 +40,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _settingsNewService = settingsNewService;
             _taskListService = taskListService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _groupsDetailNewService = groupsDetailNewService;
         }
 
         public ActionResult Settings(int? PanelID)
@@ -370,7 +373,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 else
                 {
 
-                    var defaultPanel = _panelSettingsService.GetAllPanelSettings().Find(x=>x.Sira_No==panelSettings.Panel_ID);
+                    var defaultPanel = _panelSettingsService.GetAllPanelSettings().Find(x => x.Sira_No == panelSettings.Panel_ID);
                     panelSettings.Kayit_No = defaultPanel.Kayit_No;
                     _panelSettingsService.UpdatePanelSetting(panelSettings);
                     return RedirectToAction("Settings", "PanelSettings");
@@ -437,5 +440,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return panels;
         }
+
+
+
+
     }
 }

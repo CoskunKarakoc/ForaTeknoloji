@@ -1695,7 +1695,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
-        //Watch-List
+       
         public List<WatchEntityComplex> GetWatch(WatchParameters watchParameters)
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
@@ -1843,8 +1843,8 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             return liste;
         }
-
-        //Son Kart Basan Kişi Bilgisi
+        
+      
         public WatchEntityComplex LastRecordWatch(int? Kayit_No)
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
@@ -1890,9 +1890,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                    " AND Users.[Sirket No] IN(10000," + sirketListesi + ")" +
                                    " AND Users.[Departman No] IN(10000," + departmanListesi + ")";
             }
-
             queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
-
             using (SqlConnection connection = new SqlConnection(address))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -1945,7 +1943,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
-        //Kullanıcı adına göre Sirket Listesi döndürüyor
+       
         public void GetSirketList(DBUsers users)
         {
             if (users.SysAdmin == true)
@@ -1988,7 +1986,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
         }
 
-        //Kullanıcı adına göre Departman Listesi döndürüyor
+        
         public void GetDepartmanList(DBUsers users)
         {
             if (users.SysAdmin == true)
@@ -2027,7 +2025,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
         }
 
-        //Kullanıcı adına göre Panel Listesi döndürüyor
+      
         public void GetPanelList(DBUsers user)
         {
             if (user.SysAdmin == true)

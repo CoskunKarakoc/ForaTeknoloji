@@ -13,7 +13,7 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     {
 
         List<ComplexGroupsDetailNew> GetComplexGroups();
-
+        void DeleteAll();
 
     }
 }

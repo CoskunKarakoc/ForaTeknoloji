@@ -244,6 +244,63 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult SendAll(List<int> PanelListAll)
+        {
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                    throw new Exception("Bu işlem için yetkiniz yok!");
+            }
+            if (PanelListAll != null)
+            {
+                try
+                {
+                    foreach (var panel in PanelListAll)
+                    {
+                        TaskList taskListERS = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_TIMEGROUP,
+                            IntParam_1 = 0,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = panel,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceiveErs = _taskListService.AddTaskList(taskListERS);
+
+                        foreach (var item in _timeGroupsService.GetAllTimeGroups().Select(a => a.Zaman_Grup_No))
+                        {
+                            TaskList taskListSend = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)CommandConstants.CMD_SND_TIMEGROUP,
+                                IntParam_1 = item,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = panel,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
+                        }
+                    }
+
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index");
+                }
+
+            }
+            return RedirectToAction("Index");
+        }
+
+
+
+
         private List<PanelSettings> UserPanelList()
         {
             List<PanelSettings> panels = new List<PanelSettings>();

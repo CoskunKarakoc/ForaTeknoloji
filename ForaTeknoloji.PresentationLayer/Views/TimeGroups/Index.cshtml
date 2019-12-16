@@ -58,9 +58,13 @@
                     </tbody>
                 </table>
             </div>
+            <div class="card-footer text-right">
+                <a data-toggle="modal" data-target="#panelListAll" title="Send To Panel" id="sendAll" class="btn btn-sm btn-outline-success text-success"><i class="fas fa-share mr-2"></i>Tüm Zaman Gruplarını Gönder</a>
+            </div>
         </div>
         <br /><br />
     </div>
+
 </div>
 
 
@@ -121,6 +125,67 @@
         </div>
     </div>
 </div>
+
+
+<!--Panel List Modal All-->
+<div class="modal fade" id="panelListAll" tabindex="-1" role="dialog" aria-labelledby="panelListAllTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("SendAll", "TimeGroups", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <div hidden id="messageAll">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
+                    <table id="PanelTableAll" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="PanelAll" />
+                                        <label class="custom-control-label" for="PanelAll"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelListAll" id="@("All_"+item.Panel_ID)" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@("All_"+item.Panel_ID)"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnTaskAll" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
 <script>
     $(document).ready(function () {
         $("#AllPanel").click(function () {
@@ -130,11 +195,23 @@
                 $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
             }
         });
-
+        $("#PanelAll").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTableAll tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTableAll tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
         $("#btnTask").click(function () {
             $("#message").prop("hidden", false);
             setTimeout(function () {
                 $("#message").prop("hidden", true);
+            }, 1000);
+        });
+        $("#btnTaskAll").click(function () {
+            $("#messageAll").prop("hidden", false);
+            setTimeout(function () {
+                $("#messageAll").prop("hidden", true);
             }, 1000);
         });
         var count = $("#TimeGroupCount").val();
