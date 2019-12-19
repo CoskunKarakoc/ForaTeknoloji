@@ -31,7 +31,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public DBUsers permissionUser;
         public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
         {
-
             user = CurrentSession.User;
             if (user == null)
             {
@@ -253,70 +252,66 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public ActionResult GroupReaders
-            (bool? Kapi_1, bool? Kapi_2, bool? Kapi_3, bool? Kapi_4,
-            bool? Kapi_5, bool? Kapi_6, bool? Kapi_7, bool? Kapi_8, bool? Kapi_9, bool? Kapi_10,
-            bool? Kapi_11, bool? Kapi_12, bool? Kapi_13, bool? Kapi_14, bool? Kapi_15, bool? Kapi_16,
-            IList<int> Kapi_Zaman_Grup_No, IList<int> Kapi_Asansor_Bolge_No, int Grup_No, string Grup_Adi, int Panel_ID)
+        public ActionResult GroupReaders(GroupReadersParameters parameters)
         {
             if (ModelState.IsValid)
             {
                 List<bool?> kapiStatus = new List<bool?>();
-                kapiStatus.Add(Kapi_1);
-                kapiStatus.Add(Kapi_2);
-                kapiStatus.Add(Kapi_3);
-                kapiStatus.Add(Kapi_4);
-                kapiStatus.Add(Kapi_5);
-                kapiStatus.Add(Kapi_6);
-                kapiStatus.Add(Kapi_7);
-                kapiStatus.Add(Kapi_8);
-                kapiStatus.Add(Kapi_9);
-                kapiStatus.Add(Kapi_10);
-                kapiStatus.Add(Kapi_11);
-                kapiStatus.Add(Kapi_12);
-                kapiStatus.Add(Kapi_13);
-                kapiStatus.Add(Kapi_14);
-                kapiStatus.Add(Kapi_15);
-                kapiStatus.Add(Kapi_16);
+                kapiStatus.Add(parameters.Kapi_1);
+                kapiStatus.Add(parameters.Kapi_2);
+                kapiStatus.Add(parameters.Kapi_3);
+                kapiStatus.Add(parameters.Kapi_4);
+                kapiStatus.Add(parameters.Kapi_5);
+                kapiStatus.Add(parameters.Kapi_6);
+                kapiStatus.Add(parameters.Kapi_7);
+                kapiStatus.Add(parameters.Kapi_8);
+                kapiStatus.Add(parameters.Kapi_9);
+                kapiStatus.Add(parameters.Kapi_10);
+                kapiStatus.Add(parameters.Kapi_11);
+                kapiStatus.Add(parameters.Kapi_12);
+                kapiStatus.Add(parameters.Kapi_13);
+                kapiStatus.Add(parameters.Kapi_14);
+                kapiStatus.Add(parameters.Kapi_15);
+                kapiStatus.Add(parameters.Kapi_16);
 
                 for (int i = 0; i < 16; i++)
                 {
-                    var group = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Kapi_No == (i + 1) && x.Panel_No == Panel_ID && x.Grup_No == Grup_No).FirstOrDefault();
+                    var group = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Kapi_No == (i + 1) && x.Panel_No == parameters.Panel_ID && x.Grup_No == parameters.Grup_No).FirstOrDefault();
                     if (group == null)
                     {
                         GroupsDetailNew createGroup = new GroupsDetailNew
                         {
-                            Asansor_Grup_No = Kapi_Asansor_Bolge_No[i],
+                            Asansor_Grup_No = parameters.Kapi_Asansor_Bolge_No[i],
                             Global_Bolge_No = 1,
-                            Grup_Adi = Grup_Adi,
-                            Grup_No = Grup_No,
+                            Grup_Adi = parameters.Grup_Adi,
+                            Grup_No = parameters.Grup_No,
                             Kapi_Aktif = kapiStatus[i],
                             Kapi_No = i + 1,
-                            Zaman_Grup_No = Kapi_Zaman_Grup_No[i],
-                            Panel_Adi = _panelSettingsService.GetById(Panel_ID).Panel_Name,
-                            Panel_No = (short)_panelSettingsService.GetById(Panel_ID).Panel_ID,
-                            Seri_No = _panelSettingsService.GetById(Panel_ID).Seri_No
+                            Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i],
+                            Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name,
+                            Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID,
+                            Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No
                         };
                         _groupsDetailNewService.AddGroupsDetailNew(createGroup);
                     }
                     else
                     {
-                        group.Grup_Adi = Grup_Adi;
-                        group.Grup_No = Grup_No;
-                        group.Panel_Adi = _panelSettingsService.GetById(Panel_ID).Panel_Name;
-                        group.Panel_No = (short)_panelSettingsService.GetById(Panel_ID).Panel_ID;
-                        group.Seri_No = _panelSettingsService.GetById(Panel_ID).Seri_No;
+                        group.Grup_Adi = parameters.Grup_Adi;
+                        group.Grup_No = parameters.Grup_No;
+                        group.Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name;
+                        group.Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID;
+                        group.Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No;
                         group.Kapi_No = i + 1;
                         group.Global_Bolge_No = 1;
-                        group.Asansor_Grup_No = Kapi_Asansor_Bolge_No[i];
-                        group.Zaman_Grup_No = Kapi_Zaman_Grup_No[i];
+                        group.Asansor_Grup_No = parameters.Kapi_Asansor_Bolge_No[i];
+                        group.Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i];
                         group.Kapi_Aktif = kapiStatus[i];
                         _groupsDetailNewService.UpdateGroupsDetailNew(group);
                     }
 
                 }
 
-                return RedirectToAction("GroupReaders", "AccessGroup", new { id = Grup_No, PanelID = Panel_ID });
+                return RedirectToAction("GroupReaders", "AccessGroup", new { id = parameters.Grup_No, PanelID = parameters.Panel_ID });
 
             }
 
@@ -512,7 +507,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
             }
         }
-
 
         private List<PanelSettings> UserPanelList()
         {

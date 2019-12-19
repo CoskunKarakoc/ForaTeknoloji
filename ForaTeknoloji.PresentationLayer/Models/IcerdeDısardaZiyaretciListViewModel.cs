@@ -6,8 +6,8 @@ namespace ForaTeknoloji.PresentationLayer.Models
 {
     public class IcerdeDısardaZiyaretciListViewModel
     {
-        public IEnumerable<SelectListItem> Paneller { get; set; }
-        public IEnumerable<SelectListItem> Global_Bolge_Adi { get; set; }
+        public IEnumerable<SelectListItem> Panel { get; set; }
+        public IEnumerable<SelectListItem> Global_Kapi_Bolgesi { get; set; }
         public List<IcerdeDısardaZiyaretci> ZiyaretciListesi { get; internal set; }
     }
 }

@@ -8,15 +8,14 @@ namespace ForaTeknoloji.PresentationLayer.Models
 {
     public class ReportPersonelViewModel
     {
-        public IEnumerable<SelectListItem> Paneller { get; set; }
-        public IEnumerable<SelectListItem> Groupsdetail { get; set; }
-        public IEnumerable<SelectListItem> Global_Bolge_Adi { get; set; }
-        public IEnumerable<SelectListItem> Departmanlar { get; set; }
-        public IEnumerable<SelectListItem> Bloklar { get; set; }
-        public IEnumerable<SelectListItem> Sirketler { get; set; }
-        public IEnumerable<SelectListItem> Gecis_Grubu { get; set; }
         public List<ReportPersonelList> ReportPersonel { get; internal set; }
         public List<EfUserDal.ComplexUser> Kullanıcı { get; internal set; }
         public List<EfUsersOLDDal.ComplexUserOld> EskiKullanicilar { get; internal set; }
+        public IEnumerable<SelectListItem> Gecis_Grubu { get; internal set; }
+        public IEnumerable<SelectListItem> Sirket { get; internal set; }
+        public IEnumerable<SelectListItem> Blok { get; internal set; }
+        public IEnumerable<SelectListItem> Departman { get; internal set; }
+        public IEnumerable<SelectListItem> Global_Kapi_Bolgesi { get; internal set; }
+        public IEnumerable<SelectListItem> Panel { get; internal set; }
     }
 }

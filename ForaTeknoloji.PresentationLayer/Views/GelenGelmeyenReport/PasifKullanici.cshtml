@@ -37,7 +37,7 @@
 
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Tarih</label>
-                        <input class="form-control" name="Tarih" type="date" value="2019-08-13" id="Tarih">
+                        <input class="form-control" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
                     </div>
 
                 </div>
@@ -48,7 +48,7 @@
                             <label class="custom-control-label" for="TümGlobal">Tüm Global Kapı Bölgeleri</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
 
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <label class="custom-control-label" for="TümGecis">Tüm Gruplar</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -70,8 +70,8 @@
                             <input type="checkbox" value="true" name="TümDepartman" class="custom-control-input" id="TümDepartman" />
                             <label class="custom-control-label" for="TümDepartman">Tüm Departmanlar</label>
                         </div>
-                        @Html.DropDownListFor(model => model.Departmanlar, Model.Departmanlar, "Departman Seçiniz..", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Departmanlar, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -80,8 +80,8 @@
                             <input type="checkbox" value="true" name="TümSirket" class="custom-control-input" id="TümSirket" />
                             <label class="custom-control-label" for="TümSirket">Tüm Şirketler</label>
                         </div>
-                        @Html.DropDownListFor(model => model.Sirketler, Model.Sirketler, "Şirket Seçiniz..", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Sirketler, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-12 text-right float-right">

@@ -7,6 +7,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
     public class DigerGecisRaporListViewModel
     {
         public List<DigerGecisRaporList> DigerGecisListesi { get; set; }
-        public IEnumerable<SelectListItem> Paneller { get; set; }
+        public IEnumerable<SelectListItem> Panel { get; set; }
     }
 }

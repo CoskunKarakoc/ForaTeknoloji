@@ -43,20 +43,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: VisitorReport
-        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, int? Visitors = null, int? Global_Bolge_Adi = null, int? Groupsdetail = null, bool? TümPanel = null, int? Paneller = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string Kayit = "", string KapiYon = "", string Search = "", bool TümTarih = false)
+        public ActionResult Index(VisitorReportParameters parameters)
         {
-            if (TümTarih != true)
-            {
-                Tarih1 = Tarih1 ?? DateTime.Now.Date;
-            }
             List<Visitors> visitors = new List<Visitors>();
 
-            var liste = _reportService.GetZiyaretciListesi(Kapi, Tümü, Visitors, Global_Bolge_Adi, Groupsdetail, TümPanel, Paneller, Tarih1, Tarih2, Saat1, Saat2, Kayit, KapiYon);
+            var liste = _reportService.GetZiyaretciListesi(parameters);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != 0 && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
 
-            if (Search != null && Search != "")
+            if (parameters.Search != null && parameters.Search != "")
             {
-                visitors = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search) || x.Soyadi.Contains(Search) || x.Plaka.Contains(Search));
+                visitors = _visitorsService.GetAllVisitors(x => x.Adi.Contains(parameters.Search) || x.Soyadi.Contains(parameters.Search) || x.Plaka.Contains(parameters.Search));
             }
             else
             {
@@ -68,18 +64,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
 
                 ComplexVisitorsListesi = liste,
-                Paneller = panel.Select(a => new SelectListItem
+                Panel = panel.Select(a => new SelectListItem
                 {
                     Text = a.Panel_Name,
                     Value = a.Panel_ID.ToString()
                 }),
                 Visitors = visitors,
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
+                Gecis_Grubu = groupsdetail.Select(a => new SelectListItem
                 {
                     Text = a.Grup_Adi,
                     Value = a.Grup_No.ToString()
                 }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                Global_Kapi_Bolgesi = globalBolgeAdi.Select(a => new SelectListItem
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
@@ -116,7 +112,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetZiyaretciListesi(null, null, null, null, null, null, null, null, null, null, null);
+                liste = _reportService.GetZiyaretciListesi(null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

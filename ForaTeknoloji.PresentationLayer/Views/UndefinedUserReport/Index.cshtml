@@ -45,15 +45,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" value="tümYon" class="custom-control-input" id="tümü" checked name="KapiYon">
+                                    <input type="radio" value="3" class="custom-control-input" id="tümü" checked name="Kapi_Yon">
                                     <label class="custom-control-label" for="tümü">Tüm Yönler</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" value="giris" class="custom-control-input" id="giris" name="KapiYon">
+                                    <input type="radio" value="0" class="custom-control-input" id="giris" name="Kapi_Yon">
                                     <label class="custom-control-label" for="giris">Giriş</label>
                                 </div>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" value="cikis" class="custom-control-input" id="cikis" name="KapiYon">
+                                    <input type="radio" value="1" class="custom-control-input" id="cikis" name="Kapi_Yon">
                                     <label class="custom-control-label" for="cikis">Çıkış</label>
                                 </div>
                             </div>
@@ -96,14 +96,13 @@
                                     <input type="checkbox" value="8" name="Kapi" class="custom-control-input" id="Kapi8" />
                                     <label class="custom-control-label" for="Kapi8">Kapı 8</label>
                                 </div>
-                                @*<div id="Kapilar"></div>*@
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="true" name="TümTarih" class="custom-control-input" id="TümTarih" />
+                                    <input type="checkbox" value="true" name="Tum_Tarih" class="custom-control-input" id="TümTarih" />
                                     <label class="custom-control-label" for="TümTarih">Tüm Tarihler</label>
                                 </div>
                             </div>
@@ -114,11 +113,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Başlangıç</label>
-                                    <input class="form-control" name="Tarih1" type="date" value="2019-08-13" id="Tarih1">
+                                    <input class="form-control" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Bitiş</label>
-                                    <input class="form-control" name="Tarih2" disabled type="date" value="2019-08-13" id="Tarih2">
+                                    <input class="form-control" name="Bitis_Tarihi" disabled type="date" value="2019-08-13" id="Tarih2">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -127,10 +126,10 @@
                                     <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" name="Saat1" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
+                                    <input class="form-control" name="Baslangic_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" name="Saat2" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
+                                    <input class="form-control" name="Bitis_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
                                 </div>
                             </div>
                             <div class="form-group">

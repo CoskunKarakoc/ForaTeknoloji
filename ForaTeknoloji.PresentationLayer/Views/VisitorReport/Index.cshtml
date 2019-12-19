@@ -58,26 +58,26 @@
                     <hr />
                     <div class="form-group">
                         <div class="custom-control custom-radio">
-                            <input type="radio" value="tümKayit" class="custom-control-input" id="tümKayit" checked name="Kayit">
+                            <input type="radio" value="3" class="custom-control-input" id="tümKayit" checked name="Gecis_Tipi">
                             <label class="custom-control-label" for="tümKayit">Tüm Kayıtlar</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" value="OnaylananGecisler" class="custom-control-input" id="OnaylananGecisler" name="Kayit">
+                            <input type="radio" value="0" class="custom-control-input" id="OnaylananGecisler" name="Gecis_Tipi">
                             <label class="custom-control-label text-success" for="OnaylananGecisler">Onaylanan Geçişler</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" value="Antipassback" class="custom-control-input" id="Antipassback" name="Kayit">
+                            <input type="radio" value="1" class="custom-control-input" id="Antipassback" name="Gecis_Tipi">
                             <label class="custom-control-label text-danger" for="Antipassback">Antipassback İhlalleri</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" value="Engellenen" class="custom-control-input" id="Engellenen" name="Kayit">
+                            <input type="radio" value="2" class="custom-control-input" id="Engellenen" name="Gecis_Tipi">
                             <label class="custom-control-label text-warning" for="Engellenen">Engellenen İstekler</label>
                         </div>
                     </div>
                     <hr />
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="TümKapi" />
+                            <input type="checkbox" value="true" name="Tum_Kapi" class="custom-control-input" id="TümKapi" />
                             <label class="custom-control-label" for="TümKapi">Tüm Kapılar</label>
                         </div>
                         <div class="custom-control custom-checkbox">
@@ -113,7 +113,6 @@
                             <input type="checkbox" value="8" name="Kapi" class="custom-control-input" id="Kapi8" />
                             <label class="custom-control-label" for="Kapi8">Kapı 8</label>
                         </div>
-                        @*<div id="Kapilar"></div>*@
                     </div>
 
                     <div class="form-group">
@@ -122,7 +121,7 @@
                             <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Paneller, Model.Paneller, "Panel Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control" })
 
                         </div>
                     </div>
@@ -133,7 +132,7 @@
                             <label class="custom-control-label" for="TümGlobal">Tüm Global Kapı Bölgeleri</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
 
                         </div>
                     </div>
@@ -144,7 +143,7 @@
                             <label class="custom-control-label" for="TümGecis">Tüm Gruplar</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -152,19 +151,19 @@
 
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümZiyaret" class="custom-control-input" id="TümZiyaret" />
+                            <input type="checkbox" value="true" name="All_Visitor" class="custom-control-input" id="TümZiyaret" />
                             <label class="custom-control-label" for="TümZiyaret">Tüm Ziyaretçiler</label>
                         </div>
                         <div class="form-group">
                             <input type="text" id="Ziyaretci" class="form-control" name="Ziyaret" />
-                            <input type="text" id="Visitor" hidden name="Visitors" />
+                            <input type="text" id="Visitor" hidden name="Visitor" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="true" name="TümTarih" class="custom-control-input" id="TümTarih" />
+                                <input type="checkbox" value="true" name="Tum_Tarih" class="custom-control-input" id="TümTarih" />
                                 <label class="custom-control-label" for="TümTarih">Tüm Tarihler</label>
                             </div>
                         </div>
@@ -175,11 +174,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Başlangıç</label>
-                                <input class="form-control" name="Tarih1" type="date" value="2019-08-13" id="Tarih1">
+                                <input class="form-control" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Bitiş</label>
-                                <input class="form-control" name="Tarih2" disabled type="date" value="2019-08-13" id="Tarih2">
+                                <input class="form-control" name="Bitis_Tarihi" disabled type="date" value="2019-08-13" id="Tarih2">
                             </div>
                         </div>
                         <div class="form-group">
@@ -188,10 +187,10 @@
                                 <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" name="Saat1" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
+                                <input class="form-control" name="Baslangic_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" name="Saat2" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
+                                <input class="form-control" name="Bitis_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
                             </div>
                         </div>
                         <br /> <br /><br /> <br /><br /><br />

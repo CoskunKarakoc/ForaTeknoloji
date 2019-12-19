@@ -110,7 +110,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Sira_No = item.Sira_No,
                             WKapi_Acik_Sure = 20,
                             WKapi_Adi = "Kapi " + i,
-                            WKapi_Alarm_Modu = 1,
+                            WKapi_Alarm_Modu = false,
                             WKapi_Gecis_Modu = 1,
                             WKapi_Harici_Alarm_Rolesi = 1,
                             WKapi_ID = i,

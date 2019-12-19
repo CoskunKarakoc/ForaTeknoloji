@@ -25,7 +25,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         DBUsers user;
         public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
-           
+
 
             user = CurrentSession.User;
             if (user == null)
@@ -46,21 +46,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: InsideOutReport
-        public ActionResult Personel(int? Global_Bolge_Adi = 1, int? Paneller = 1, string Bolge = "Lokal", string Gecis = "0", string Kapi = "0")
+        public ActionResult Personel(IcerdeDisardaReportParameters parameters)
         {
-           
-            var liste = _reportService.GetIcerdeDisardaPersonels(Global_Bolge_Adi, Paneller, Kapi, Bolge, Gecis);
+
+            var liste = _reportService.GetIcerdeDisardaPersonels(parameters);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && x.Seri_No != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaPersonelListViewModel
             {
                 IcerdeDısardaPersonel = liste,
-                Paneller = panel.Select(a => new SelectListItem
+                Panel = panel.Select(a => new SelectListItem
                 {
                     Text = a.Panel_Name,
                     Value = a.Panel_ID.ToString()
                 }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                Global_Kapi_Bolgesi = globalBolgeAdi.Select(a => new SelectListItem
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
@@ -75,21 +75,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        public ActionResult Ziyaretci(int? Paneller = null, string Kapi = "", string Bolge = "", string Gecis = "0", int? Global_Bolge_Adi = 1)
+        public ActionResult Ziyaretci(IcerdeDisardaReportParameters parameters)
         {
             //TODO:Tablodan multiselect işlemi uygulanacak
-            var liste = _reportService.GetIcerdeDısardaZiyaretci(Global_Bolge_Adi, Paneller, Kapi, Bolge, Gecis);
+            var liste = _reportService.GetIcerdeDısardaZiyaretci(parameters);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaZiyaretciListViewModel
             {
                 ZiyaretciListesi = liste,
-                Paneller = panel.Select(a => new SelectListItem
+                Panel = panel.Select(a => new SelectListItem
                 {
                     Text = a.Panel_Name,
                     Value = a.Panel_ID.ToString()
                 }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                Global_Kapi_Bolgesi = globalBolgeAdi.Select(a => new SelectListItem
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
@@ -104,21 +104,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        public ActionResult Tumu(int? Paneller = null, string Kapi = null, string Bolge = null, string Gecis = "0", int? Global_Bolge_Adi = 1)
+        public ActionResult Tumu(IcerdeDisardaReportParameters parameters)
         {
 
-            var liste = _reportService.GetIcerdeDısardaTümü(Global_Bolge_Adi, Paneller, Kapi, Bolge, Gecis);
+            var liste = _reportService.GetIcerdeDısardaTümü(parameters);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaTumuListViewModel
             {
                 TumuListesi = liste,
-                Paneller = panel.Select(a => new SelectListItem
+                Panel = panel.Select(a => new SelectListItem
                 {
                     Text = a.Panel_Name,
                     Value = a.Panel_ID.ToString()
                 }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                Global_Kapi_Bolgesi = globalBolgeAdi.Select(a => new SelectListItem
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
@@ -196,7 +196,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["Ziyaretci"] as List<IcerdeDısardaZiyaretci>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetIcerdeDısardaZiyaretci(1, null, null, null, "0");
+                liste = _reportService.GetIcerdeDısardaZiyaretci(null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
@@ -240,7 +240,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["Personel"] as List<IcerdeDisardaPersonel>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetIcerdeDisardaPersonels(1, 1, "1", "Lokal", "0");
+                liste = _reportService.GetIcerdeDisardaPersonels(null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
@@ -292,7 +292,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["Tumu"] as List<IcerdeDısardaTümü>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetIcerdeDısardaTümü(1, null, null, null, "0");
+                liste = _reportService.GetIcerdeDısardaTümü(null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

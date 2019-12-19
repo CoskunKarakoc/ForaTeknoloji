@@ -33,13 +33,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="SirketSirketNo">Şirket Seçimi</label>
-                        @Html.DropDownListFor(model => model.Sirketler, Model.Sirketler, "Şirket Seçiniz..", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Sirketler, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         <label for="DepartmanNo">Departman Seçimi</label>
-                        @Html.DropDownListFor(model => model.Departmanlar, Model.Departmanlar, "Departman Seçiniz..", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Departmanlar, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group mb-2">
                         <label for="Plaka">Plaka Seçimi</label>
@@ -50,8 +50,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="BlokNo">Blok Seçimi</label>
-                        @Html.DropDownListFor(model => model.Bloklar, Model.Bloklar, "Blok Seçiniz..", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Bloklar, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Blok, Model.Blok, "Blok Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Blok, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group mb-2">
@@ -63,13 +63,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect5">Geçiş Grubu Seçimi</label>
-                        @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Groupsdetail, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Gecis_Grubu, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         <label for="GlobalBolgeNo">Global Kapı Bölge Seçimi</label>
-                        @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Global_Bolge_Adi, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Global_Kapi_Bolgesi, "", new { @class = "text-danger" })
                     </div>
                     <br />
                     <h4 class="text-info text-right">@Model.ListCount Adet Kayıt Listelendi</h4>

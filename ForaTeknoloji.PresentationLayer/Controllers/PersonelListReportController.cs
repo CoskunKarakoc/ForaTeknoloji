@@ -44,9 +44,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: PersonelListReport
-        public ActionResult Index(int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, int? Groupsdetail = null, int? Global_Bolge_Adi = null, int? Daire = null, string Plaka = "")
+        public ActionResult Index(PersonelListReportParameters parameters)
         {
-            var personelLists = _reportService.GetPersonelLists(Sirketler, Departmanlar, Bloklar, Groupsdetail, Global_Bolge_Adi, Daire, Plaka);
+            var personelLists = _reportService.GetPersonelLists(parameters);
             var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
@@ -57,27 +57,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 ListCount = personelLists.Count.ToString(),
                 PersonelListesi = personelLists.ToList(),
-                Departmanlar = departmanlar.Select(a => new SelectListItem
+                Departman = departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
                 }),
-                Bloklar = bloklar.Select(a => new SelectListItem
+                Blok = bloklar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Blok_No.ToString()
                 }),
-                Sirketler = sirketler.Select(a => new SelectListItem
+                Sirket = sirketler.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Sirket_No.ToString()
                 }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Grup_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                Global_Kapi_Bolgesi = globalBolgeAdi.Select(a => new SelectListItem
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
@@ -103,7 +98,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetPersonelLists(null, null, null, null, null, null, null);
+                liste = _reportService.GetPersonelLists(null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

@@ -7,7 +7,7 @@ namespace ForaTeknoloji.PresentationLayer.Models
     public class IcerdeDısardaTumuListViewModel
     {
         public List<IcerdeDısardaTümü> TumuListesi { get; set; }
-        public IEnumerable<SelectListItem> Paneller { get; set; }
-        public IEnumerable<SelectListItem> Global_Bolge_Adi { get; set; }
+        public IEnumerable<SelectListItem> Panel { get; set; }
+        public IEnumerable<SelectListItem> Global_Kapi_Bolgesi { get; set; }
     }
 }

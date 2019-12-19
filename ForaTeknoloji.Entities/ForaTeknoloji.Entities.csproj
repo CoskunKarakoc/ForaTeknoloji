@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComplexType\AccessDatasComplex.cs" />
+    <Compile Include="ComplexType\ActiveUserReportParameters.cs" />
     <Compile Include="ComplexType\CamerasComplex.cs" />
     <Compile Include="ComplexType\ComplexGroupsDetailNew.cs" />
     <Compile Include="ComplexType\ComplexTaskList.cs" />
@@ -60,19 +61,26 @@
     <Compile Include="ComplexType\ExcelGroupType.cs" />
     <Compile Include="ComplexType\ExcelUserType.cs" />
     <Compile Include="ComplexType\GelenGelmeyenRaporList.cs" />
+    <Compile Include="ComplexType\GelenGelmeyenReportParameters.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_Gelenler.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_Gelmeyen.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_IlkGirisSonCikis.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_PasifKullanici.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_ToplamIcerdeKalma.cs" />
+    <Compile Include="ComplexType\GroupReadersParameters.cs" />
     <Compile Include="ComplexType\IcerdeDisardaPersonel.cs" />
+    <Compile Include="ComplexType\IcerdeDisardaReportParameters.cs" />
     <Compile Include="ComplexType\IcerdeDısardaTümü.cs" />
     <Compile Include="ComplexType\IcerdeDısardaZiyaretci.cs" />
     <Compile Include="ComplexType\KapiOperasyon.cs" />
+    <Compile Include="ComplexType\OutherReportParameters.cs" />
     <Compile Include="ComplexType\PersonelList.cs" />
+    <Compile Include="ComplexType\PersonelListReportParameters.cs" />
     <Compile Include="ComplexType\ReportPersonelList.cs" />
+    <Compile Include="ComplexType\TanimsizReportParameters.cs" />
     <Compile Include="ComplexType\TaskStatusWatch.cs" />
     <Compile Include="ComplexType\TimeGroupsEdit.cs" />
+    <Compile Include="ComplexType\VisitorReportParameters.cs" />
     <Compile Include="ComplexType\WatchEntityComplex.cs" />
     <Compile Include="ComplexType\WatchParameters.cs" />
     <Compile Include="ComplexType\ZiyaretciRaporList.cs" />

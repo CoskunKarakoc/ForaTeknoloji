@@ -35,11 +35,11 @@
                     <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">İlk Tarih</label>
-                            <input class="form-control form-control-sm" name="Tarih1" type="date" value="2019-08-13" id="Tarih1">
+                            <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Son Tarih</label>
-                            <input class="form-control form-control-sm" name="Tarih2" type="date" value="2019-08-13" id="Tarih2">
+                            <input class="form-control form-control-sm" name="Bitis_Tarihi" type="date" value="2019-08-13" id="Tarih2">
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@
                             <label class="custom-control-label" for="TümGlobal">Tüm Global Kapı Bölgeleri</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Global_Bolge_Adi, Model.Global_Bolge_Adi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
 
                         </div>
                     </div>
@@ -60,8 +60,8 @@
                             <input type="checkbox" value="true" name="TümDepartman" class="custom-control-input" id="TümDepartman" />
                             <label class="custom-control-label" for="TümDepartman">Tüm Departmanlar</label>
                         </div>
-                        @Html.DropDownListFor(model => model.Departmanlar, Model.Departmanlar, "Departman Seçiniz..", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Departmanlar, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -71,7 +71,7 @@
                             <label class="custom-control-label" for="TümGecis">Tüm Gruplar</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Groupsdetail, Model.Groupsdetail, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -79,20 +79,20 @@
                             <input type="checkbox" value="true" name="TümSirket" class="custom-control-input" id="TümSirket" />
                             <label class="custom-control-label" for="TümSirket">Tüm Şirketler</label>
                         </div>
-                        @Html.DropDownListFor(model => model.Sirketler, Model.Sirketler, "Şirket Seçiniz..", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Sirketler, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-12">
 
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümZiyaret" class="custom-control-input" id="TümZiyaret" />
+                            <input type="checkbox" value="true" name="Tum_Kullanici" class="custom-control-input" id="TümZiyaret" />
                             <label class="custom-control-label" for="TümZiyaret">Tüm Kullanıcılar</label>
                         </div>
                         <div class="form-group">
                             <input type="text" id="Ziyaretci" class="form-control" name="Ziyaret" />
-                            <input type="text" id="Visitor" hidden name="UserID" />
+                            <input type="text" id="Visitor" hidden name="User" />
                         </div>
                     </div>
                 </div>

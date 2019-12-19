@@ -57,7 +57,7 @@ namespace ForaTeknoloji.Entities.Entities
         public int? WKapi_Gecis_Modu { get; set; }
 
         [Column("WKapi Alarm Modu")]
-        public int? WKapi_Alarm_Modu { get; set; }
+        public bool? WKapi_Alarm_Modu { get; set; }
 
         [Column("WKapi Yangin Modu")]
         public bool? WKapi_Yangin_Modu { get; set; }

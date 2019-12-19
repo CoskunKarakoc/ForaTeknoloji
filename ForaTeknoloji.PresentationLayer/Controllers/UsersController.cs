@@ -273,8 +273,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 Users users = _userService.GetById(id);
                 var userOld = ConvertUser.UserToUserOld(users);
+
                 _usersOLDService.AddUsersOLD(userOld);
                 _userService.DeleteUsers(users);
+                foreach (var item in UserPanelList())
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_USER,
+                        IntParam_1 = id,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = item.Panel_ID,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                }
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
             return Json(false, JsonRequestBehavior.AllowGet);

@@ -38,14 +38,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: UndefinedUserReport
-        public ActionResult Index(List<string> Kapi = null, bool? Tümü = null, bool? TümPanel = null, int? Panel = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = "", bool TümTarih = false)
+        public ActionResult Index(TanimsizReportParameters parameters)
         {
-            if (TümTarih != true)
-            {
-                Tarih1 = Tarih1 ?? DateTime.Now.Date;
-            }
-           
-            var list = _reportService.GetTanimsizListesi(Kapi, Tümü, TümPanel, Panel, Tarih1, Tarih2, Saat1, Saat2, KapiYon);
+            var list = _reportService.GetTanimsizListesi(parameters);
 
             var PanelName = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var model = new TanimsizKullaniciListViewModel
@@ -64,7 +59,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-        
+
 
 
         //Export Excell
@@ -75,7 +70,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             list = TempData["Tanimsiz"] as List<AccessDatasComplex>;
             if (list == null || list.Count == 0)
             {
-                list = _reportService.GetTanimsizListesi(null, null, null, null, null, null, null, null, "");
+                list = _reportService.GetTanimsizListesi(null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

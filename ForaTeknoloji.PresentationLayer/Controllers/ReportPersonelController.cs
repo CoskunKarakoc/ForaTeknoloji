@@ -54,12 +54,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
         // GET: ReportPersonelAktif
-        public ActionResult Index(List<string> Kapi = null, bool? Günlük = null, bool? Tümü = null, bool? TümKullanici = null, int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, bool? TümPanel = null, int? Visitors = null, int? Panel = null, int? Groupsdetail = null, int? Daire = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = null, string Plaka = null, string Kayit = null, bool TümTarih = false)
+        public ActionResult Index(ActiveUserReportParameters parameters)
         {
-            if (TümTarih != true)
-            {
-                Tarih1 = Tarih1 ?? DateTime.Now.Date;
-            }
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -68,7 +64,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
-            var liste = _reportService.GetReportPersonelLists(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kayit);
+            var liste = _reportService.GetReportPersonelLists(parameters);
             var kullanicilar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
             var eskiKullanicilar = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
             var model = new ReportPersonelViewModel
@@ -76,32 +72,27 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 ReportPersonel = liste,
                 Kullanıcı = kullanicilar,
                 EskiKullanicilar = eskiKullanicilar,
-                Paneller = panel.Select(a => new SelectListItem
+                Panel = panel.Select(a => new SelectListItem
                 {
                     Text = a.Panel_Name,
                     Value = a.Panel_ID.ToString()
                 }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Grup_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                Global_Kapi_Bolgesi = globalBolgeAdi.Select(a => new SelectListItem
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
                 }),
-                Departmanlar = departmanlar.Select(a => new SelectListItem
+                Departman = departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
                 }),
-                Bloklar = bloklar.Select(a => new SelectListItem
+                Blok = bloklar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Blok_No.ToString()
                 }),
-                Sirketler = sirketler.Select(a => new SelectListItem
+                Sirket = sirketler.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Sirket_No.ToString()
@@ -121,12 +112,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         // GET: ReportPersonelEski
-        public ActionResult OldStaff(List<string> Kapi = null, bool? Günlük = null, bool? Tümü = null, bool? TümKullanici = null, int? Sirketler = null, int? Departmanlar = null, int? Bloklar = null, bool? TümPanel = null, int? Visitors = null, int? Panel = null, int? Groupsdetail = null, int? Daire = null, DateTime? Tarih1 = null, DateTime? Tarih2 = null, DateTime? Saat1 = null, DateTime? Saat2 = null, string KapiYon = null, string Plaka = null, string Kayit = null, bool TümTarih = false)
+        public ActionResult OldStaff(ActiveUserReportParameters parameters)
         {
-            if (TümTarih != true)
-            {
-                Tarih1 = Tarih1 ?? DateTime.Now.Date;
-            }
+
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -135,7 +123,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
-            var liste = _reportService.GetReportPersonelListsEski(Kapi, Günlük, Tümü, TümKullanici, Sirketler, Departmanlar, Bloklar, TümPanel, Visitors, Panel, Groupsdetail, Daire, Tarih1, Tarih2, Saat1, Saat2, KapiYon, Plaka, Kayit);
+            var liste = _reportService.GetReportPersonelListsEski(parameters);
             var kullanicilar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
             var eskiKullanicilar = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
             var model = new ReportPersonelViewModel
@@ -143,32 +131,27 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 ReportPersonel = liste,
                 Kullanıcı = kullanicilar,
                 EskiKullanicilar = eskiKullanicilar,
-                Paneller = panel.Select(a => new SelectListItem
+                Panel = panel.Select(a => new SelectListItem
                 {
                     Text = a.Panel_Name,
                     Value = a.Panel_ID.ToString()
                 }),
-                Groupsdetail = groupsdetail.Select(a => new SelectListItem
-                {
-                    Text = a.Grup_Adi,
-                    Value = a.Grup_No.ToString()
-                }),
-                Global_Bolge_Adi = globalBolgeAdi.Select(a => new SelectListItem
+                Global_Kapi_Bolgesi = globalBolgeAdi.Select(a => new SelectListItem
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
                 }),
-                Departmanlar = departmanlar.Select(a => new SelectListItem
+                Departman = departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
                 }),
-                Bloklar = bloklar.Select(a => new SelectListItem
+                Blok = bloklar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Blok_No.ToString()
                 }),
-                Sirketler = sirketler.Select(a => new SelectListItem
+                Sirket = sirketler.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Sirket_No.ToString()
@@ -235,7 +218,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["ReportPersonel"] as List<ReportPersonelList>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetReportPersonelLists(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                liste = _reportService.GetReportPersonelLists(null);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
