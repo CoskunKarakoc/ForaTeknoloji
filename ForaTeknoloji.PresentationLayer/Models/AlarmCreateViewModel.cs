@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
 
 namespace ForaTeknoloji.PresentationLayer.Models
 {

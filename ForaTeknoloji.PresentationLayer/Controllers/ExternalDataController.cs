@@ -1,13 +1,12 @@
-﻿using System;
+﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.IO;
-using ForaTeknoloji.Entities.Entities;
-using ForaTeknoloji.Entities.ComplexType;
-using ForaTeknoloji.BusinessLayer.Abstract;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {

@@ -1,13 +1,8 @@
-﻿using ForaTeknoloji.Entities.ComplexType;
-using ForaTeknoloji.Entities.Entities;
+﻿using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUserDal;
-using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal;
 
 namespace ForaTeknoloji.BusinessLayer.Abstract
 {

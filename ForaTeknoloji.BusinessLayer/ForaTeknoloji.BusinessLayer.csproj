@@ -69,6 +69,8 @@
     <Compile Include="Abstract\IDBUsersService.cs" />
     <Compile Include="Abstract\IDBUsersSirketService.cs" />
     <Compile Include="Abstract\IDepartmanService.cs" />
+    <Compile Include="Abstract\IDoorGroupsDetailService.cs" />
+    <Compile Include="Abstract\IDoorGroupsMasterService.cs" />
     <Compile Include="Abstract\IDoorNamesService.cs" />
     <Compile Include="Abstract\IEmailSettingsService.cs" />
     <Compile Include="Abstract\IFloorNamesService.cs" />
@@ -113,6 +115,8 @@
     <Compile Include="Concrete\DBUsersPanelsManager.cs" />
     <Compile Include="Concrete\DBUsersSirketManager.cs" />
     <Compile Include="Concrete\DepartmanManager.cs" />
+    <Compile Include="Concrete\DoorGroupsDetailManager.cs" />
+    <Compile Include="Concrete\DoorGroupsMasterManager.cs" />
     <Compile Include="Concrete\DoorNamesManager.cs" />
     <Compile Include="Concrete\EMailSettingsManager.cs" />
     <Compile Include="Concrete\FloorNamesManager.cs" />

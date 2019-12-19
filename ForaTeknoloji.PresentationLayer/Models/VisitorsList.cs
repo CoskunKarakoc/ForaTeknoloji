@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using ForaTeknoloji.Entities.ComplexType;
+﻿using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Models
 {

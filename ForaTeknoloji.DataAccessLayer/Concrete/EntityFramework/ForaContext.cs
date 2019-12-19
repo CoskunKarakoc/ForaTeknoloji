@@ -1,11 +1,8 @@
 namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
-    using System;
-    using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-    using ForaTeknoloji.Entities.Entities;
     using ForaTeknoloji.DataAccessLayer.Concrete.Initializer;
+    using ForaTeknoloji.Entities.Entities;
+    using System.Data.Entity;
 
     public partial class ForaContext : DbContext
     {
@@ -66,6 +63,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<EMailSetting> EMailSettings { get; set; }
         public virtual DbSet<SMSSetting> SMSSettings { get; set; }
         public virtual DbSet<Gorevler> Gorevlers { get; set; }
+        public virtual DbSet<AltDepartman> AltDepartmanlar { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

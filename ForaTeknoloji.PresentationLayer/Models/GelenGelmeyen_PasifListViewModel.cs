@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ForaTeknoloji.Entities.ComplexType;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using ForaTeknoloji.Entities.ComplexType;
 
 namespace ForaTeknoloji.PresentationLayer.Models
 {

@@ -1,11 +1,7 @@
 ﻿using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
 using ForaTeknoloji.Entities.Entities;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
 {

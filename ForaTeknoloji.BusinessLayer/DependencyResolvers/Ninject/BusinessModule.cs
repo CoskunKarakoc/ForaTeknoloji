@@ -1,16 +1,9 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.BusinessLayer.Concrete;
-using ForaTeknoloji.Core.DataAccess;
-using ForaTeknoloji.Core.DataAccess.EntityFramework;
 using ForaTeknoloji.DataAccessLayer.Abstract;
 using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
 using Ninject.Modules;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
 {
@@ -62,7 +55,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IRawUsersDal>().To<EfRawUsersDal>().InSingletonScope();
             Bind<IRawGroupsDal>().To<EfRawGorupsDal>().InSingletonScope();
             Bind<IGorevlerDal>().To<EfGorevlerDal>().InSingletonScope();
-          
+            Bind<IDoorGroupsDetailDal>().To<EfDoorGroupsDetailDal>().InSingletonScope();
+            Bind<IDoorGroupsMasterDal>().To<EfDoorGroupsMasterDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -109,8 +103,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IRawUsersService>().To<RawUsersManager>().InSingletonScope();
             Bind<IRawGroupsService>().To<RawGroupsManager>().InSingletonScope();
             Bind<IGorevlerService>().To<GorevlerManager>().InSingletonScope();
-
-
+            Bind<IDoorGroupsDetailService>().To<DoorGroupsDetailManager>().InSingletonScope();
+            Bind<IDoorGroupsMasterService>().To<DoorGroupsMasterManager>().InSingletonScope();
             /*Context*/
             Bind<DbContext>().To<ForaContext>();
         }

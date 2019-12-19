@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ForaTeknoloji.Entities.ComplexType
+﻿namespace ForaTeknoloji.Entities.ComplexType
 {
     public class GelenGelmeyen_IlkGirisSonCikis
     {

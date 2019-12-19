@@ -67,6 +67,8 @@
     <Compile Include="Abstract\IDBUsersPanelsDal.cs" />
     <Compile Include="Abstract\IDBUsersSirketDal.cs" />
     <Compile Include="Abstract\IDepartmanDal.cs" />
+    <Compile Include="Abstract\IDoorGroupsDetailDal.cs" />
+    <Compile Include="Abstract\IDoorGroupsMasterDal.cs" />
     <Compile Include="Abstract\IDoorNamesDal.cs" />
     <Compile Include="Abstract\IEmailSettingsDal.cs" />
     <Compile Include="Abstract\IFloorNamesDal.cs" />
@@ -110,6 +112,8 @@
     <Compile Include="Concrete\EntityFramework\EfDBUsersPanelsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersSirketDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDepartmanDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDoorGroupsDetailDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDoorGroupsMasterDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDoorNamesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfEmailSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfFloorNamesDal.cs" />

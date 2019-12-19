@@ -1,15 +1,9 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.DataAccessLayer.Abstract;
-using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
-using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUserDal;
 
 namespace ForaTeknoloji.BusinessLayer.Concrete

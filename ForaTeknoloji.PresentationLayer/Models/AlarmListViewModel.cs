@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using ForaTeknoloji.Entities.Entities;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using ForaTeknoloji.Entities.Entities;
 using static ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfAlarmlarDal;
 
 namespace ForaTeknoloji.PresentationLayer.Models
