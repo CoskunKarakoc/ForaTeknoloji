@@ -26,9 +26,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
+        private IReportService _reportService;
         private DBUsers user;
         private DBUsers permissionUser;
-        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService)
+        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -44,6 +45,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersService = dBUsersService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
+            _reportService = reportService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -62,7 +64,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new VisitorListViewModel
                 {
                     Visitor = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim())).OrderByDescending(x => x.Kayit_No).ToList(),
-                    PanelListesi = UserPanelList()
+                    PanelListesi = _reportService.PanelListesi(user)
                 };
 
                 return View(model);
@@ -72,7 +74,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var model = new VisitorListViewModel
                 {
                     Visitor = _visitorsService.GetAllVisitors().OrderByDescending(x => x.Kayit_No).ToList(),
-                    PanelListesi = UserPanelList()
+                    PanelListesi = _reportService.PanelListesi(user)
                 };
                 return View(model);
             }
@@ -258,7 +260,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Personeller(string Search)
         {
-            List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser> liste = new List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser>();
+            List<ComplexUser> liste = new List<ComplexUser>();
 
             if (Search != null && Search != "")
             {
@@ -272,28 +274,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(liste, JsonRequestBehavior.AllowGet);
 
         }
-
-
-        private List<PanelSettings> UserPanelList()
-        {
-            List<PanelSettings> panels = new List<PanelSettings>();
-            if (user.SysAdmin == true)
-            {
-                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
-            }
-            else
-            {
-                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                {
-                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                    if (panel != null)
-                        panels.Add(panel);
-                }
-            }
-
-            return panels;
-        }
-
 
         public List<Users> CardModelUser()
         {

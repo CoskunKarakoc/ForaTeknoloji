@@ -34,10 +34,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGorevlerService _gorevlerService;
         private IDBUsersSirketService _dBUsersSirketService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
-
+        private IReportService _reportService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService)
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -60,6 +60,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _gorevlerService = gorevlerService;
             _dBUsersSirketService = dBUsersSirketService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
+            _reportService = reportService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -79,7 +80,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     //Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
                     Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
-                    PanelListesi = UserPanelList()
+                    PanelListesi = _reportService.PanelListesi(user)
                 };
                 return View(model);
             }
@@ -89,7 +90,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     //Users = _userService.GetAllUsersWithOuther(),
                     Users = IndexViewUser(),
-                    PanelListesi = UserPanelList()
+                    PanelListesi = _reportService.PanelListesi(user)
                 };
                 return View(model);
             }
@@ -109,8 +110,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             else
                 MaxID = _userService.GetAllUsers().Max(x => x.ID);
 
-            var Sirketler = UserSirketList();
-            var Departmanlar = UserDepartmanList();
+            var Sirketler = _reportService.SirketListesi(user);
+            var Departmanlar = _reportService.DepartmanListesi(user);
             var Bloklar = _bloklarService.GetAllBloklar();
             var Gorevler = _gorevlerService.GetAllGorevler();
             var GecisTipi = _accessModesService.GetAllAccessModes();
@@ -176,6 +177,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             };
             return View(model);
         }
+    
+        
         //Yeni Kullanıcı Oluşturma
         [HttpPost]
         public ActionResult Create(Users user, HttpPostedFileBase ProfileImage)
@@ -228,6 +231,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ViewBag.Bitis_Saati = users.Bitis_Saati;
             return View(users);
         }
+        
+        
         //Kullanıcı Güncelleme
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -276,7 +281,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
                 _usersOLDService.AddUsersOLD(userOld);
                 _userService.DeleteUsers(users);
-                foreach (var item in UserPanelList())
+                foreach (var item in _reportService.PanelListesi(user))
                 {
                     TaskList taskList = new TaskList
                     {
@@ -325,7 +330,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     //Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
                     Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
-                    PanelListesi = UserPanelList()
+                    PanelListesi = _reportService.PanelListesi(user)
                 };
                 return View(model);
             }
@@ -335,7 +340,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     //Users = _userService.GetAllUsersWithOuther(),
                     Users = IndexViewUser(),
-                    PanelListesi = UserPanelList()
+                    PanelListesi = _reportService.PanelListesi(user)
 
                 };
                 return View(model);
@@ -395,7 +400,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 try
                 {
 
-                    foreach (var item in UserPanelList())
+                    foreach (var item in _reportService.PanelListesi(user))
                     {
                         TaskList taskList = new TaskList
                         {
@@ -550,68 +555,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("PanelOperation");
         }
 
-
-        private List<PanelSettings> UserPanelList()
-        {
-            List<PanelSettings> panels = new List<PanelSettings>();
-            if (user.SysAdmin == true)
-            {
-                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
-            }
-            else
-            {
-                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                {
-                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                    if (panel != null)
-                        panels.Add(panel);
-                }
-            }
-
-            return panels;
-        }
-
-
-        public List<Sirketler> UserSirketList()
-        {
-            List<Sirketler> sirketler = new List<Sirketler>();
-            if (permissionUser.SysAdmin == true)
-            {
-                return _sirketService.GetAllSirketler();
-            }
-            else
-            {
-                foreach (var item in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                {
-                    var sirket = _sirketService.GetById((int)item.Sirket_No);
-                    if (sirket != null)
-                        sirketler.Add(sirket);
-                }
-                return sirketler;
-            }
-
-
-
-        }
-
-        public List<Departmanlar> UserDepartmanList()
-        {
-            List<Departmanlar> departmanlar = new List<Departmanlar>();
-            if (permissionUser.SysAdmin == true)
-            {
-                return _departmanService.GetAllDepartmanlar();
-            }
-            else
-            {
-                foreach (var item in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                {
-                    var departman = _departmanService.GetById((int)item.Departman_No);
-                    if (departman != null)
-                        departmanlar.Add(departman);
-                }
-                return departmanlar;
-            }
-        }
 
         public List<ComplexUser> IndexViewUser()
         {

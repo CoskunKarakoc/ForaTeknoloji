@@ -22,10 +22,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersService _dBUsersService;
+        private IReportService _reportService;
         private FloorNames tempFloor;
         private DBUsers user;
         private DBUsers permissionUser;
-        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService)
+        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -38,6 +39,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersService = dBUsersService;
+            _reportService = reportService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -54,7 +56,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var model = new LiftGroupsListViewModel
             {
                 LiftGroup = _liftGroupsService.GetAllLiftGroups(),
-                PanelListesi = UserPanelList()
+                PanelListesi = _reportService.PanelListesi(user)
             };
 
             return View(model);
@@ -266,25 +268,5 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return 3;
         }
 
-        //Tanımlı Panellerin Listesi
-        private List<PanelSettings> UserPanelList()
-        {
-            List<PanelSettings> panels = new List<PanelSettings>();
-            if (user.SysAdmin == true)
-            {
-                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
-            }
-            else
-            {
-                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                {
-                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                    if (panel != null)
-                        panels.Add(panel);
-                }
-            }
-
-            return panels;
-        }
     }
 }

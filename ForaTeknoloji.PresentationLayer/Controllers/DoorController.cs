@@ -7,6 +7,7 @@ using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
@@ -22,8 +23,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IPanelSettingsService _panelSettingsService;
         private IReaderSettingsNewService _readerSettingsNewService;
+        private IReportService _reportService;
         public DBUsers user;
-        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService)
+        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -35,13 +37,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _panelSettingsService = panelSettingsService;
             _readerSettingsNewService = readerSettingsNewService;
+            _reportService = reportService;
         }
         // GET: Door
         public ActionResult Index(int? PanelID)
         {
             if (PanelID == null)
             {
-                var list = UserPanelList();
+                var list = _reportService.PanelListesi(user);
                 if (list.Count == 0)
                     throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
                 PanelID = list.FirstOrDefault().Panel_ID;
@@ -59,287 +62,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (kapiOperasyon.OprKod == null)
                     throw new Exception("Operasyon seçilmedi!");
 
+
+
                 if (kapiOperasyon.Tum_Panel == true)
                 {
-                    foreach (var item in UserPanelList())
-                    {
-                        if (kapiOperasyon.Kapi_1 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 1,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_2 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 2,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_3 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 3,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_4 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 4,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_5 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 5,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_6 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 6,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_7 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 7,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_8 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 8,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_9 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 9,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_10 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 10,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_11 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 11,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_12 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 12,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_13 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 13,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_14 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 14,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_15 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 15,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Kapi_16 == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 16,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                        if (kapiOperasyon.Alarm == true)
-                        {
-                            TaskList taskList = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
-                                Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                                IntParam_1 = 17,
-                                IntParam_2 = item.Panel_ID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item.Panel_ID,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        }
-                    }
-                }
-                else
-                {
-                    if (kapiOperasyon.Kapi_1 == true)
+                    foreach (var item in _reportService.PanelListesi(user))
                     {
                         TaskList taskList = new TaskList
                         {
@@ -347,270 +74,32 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Durum_Kodu = 1,
                             Gorev_Kodu = (int)kapiOperasyon.OprKod,
                             IntParam_1 = 1,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
+                            IntParam_2 = item.Panel_ID,
+                            StrParam_1 = DoorOperationCode(kapiOperasyon).ToString(),
                             Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
+                            Panel_No = item.Panel_ID,
                             Tablo_Guncelle = true,
                             Tarih = DateTime.Now
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                     }
-                    if (kapiOperasyon.Kapi_2 == true)
+                }
+                else
+                {
+                    TaskList taskList = new TaskList
                     {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 2,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_3 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 3,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_4 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 4,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_5 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 5,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_6 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 6,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_7 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 7,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_8 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 8,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_9 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 9,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_10 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 10,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_11 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 11,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_12 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 12,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_13 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 13,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_14 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 14,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_15 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 15,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Kapi_16 == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 16,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
-                    if (kapiOperasyon.Alarm == true)
-                    {
-                        TaskList taskList = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)kapiOperasyon.OprKod,
-                            IntParam_1 = 17,
-                            IntParam_2 = kapiOperasyon.Panel_ID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = kapiOperasyon.Panel_ID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    }
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)kapiOperasyon.OprKod,
+                        IntParam_1 = 1,
+                        StrParam_1 = DoorOperationCode(kapiOperasyon).ToString(),
+                        IntParam_2 = kapiOperasyon.Panel_ID,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = kapiOperasyon.Panel_ID,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                 }
             }
             return RedirectToAction("Index");
@@ -618,7 +107,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PartialDoorPanelList()
         {
-            var model = UserPanelList();
+            var model = _reportService.PanelListesi(user);
             return PartialView("PartialDoorPanelList", model);
         }
 
@@ -635,7 +124,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             gunler.Add(7, "Pazar");
             if (ListPanel_No == null)
             {
-                var list = UserPanelList();
+                var list = _reportService.PanelListesi(user);
                 if (list.Count == 0)
                     throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
                 ListPanel_No = list.FirstOrDefault().Panel_ID;
@@ -644,7 +133,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var model = new ProgRelayListViewModel
             {
-                Panel_No = UserPanelList().Select(a => new SelectListItem
+                Panel_No = _reportService.PanelListesi(user).Select(a => new SelectListItem
                 {
                     Text = (a.Panel_ID + " - " + a.Panel_Name),
                     Value = a.Panel_ID.ToString()
@@ -758,25 +247,80 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("ProgRelay");
         }
 
-
-        private List<PanelSettings> UserPanelList()
+        private StringBuilder DoorOperationCode(KapiOperasyon kapiOperasyon)
         {
-            List<PanelSettings> panels = new List<PanelSettings>();
-            if (user.SysAdmin == true)
-            {
-                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
-            }
-            else
-            {
-                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                {
-                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                    if (panel != null)
-                        panels.Add(panel);
-                }
-            }
+            StringBuilder stringBuilder = new StringBuilder();
 
-            return panels;
+            if (kapiOperasyon.Kapi_1 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_2 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_3 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_4 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_5 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_6 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_7 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_8 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_9 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_10 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_11 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_12 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_13 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_14 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_15 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Kapi_16 == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+            if (kapiOperasyon.Alarm == true)
+                stringBuilder.Append("1");
+            else
+                stringBuilder.Append("0");
+
+            return stringBuilder;
         }
 
 

@@ -24,10 +24,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITaskListService _taskListService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IGroupsDetailNewService _groupsDetailNewService;
-
+        private IReportService _reportService;
 
         public DBUsers user;
-        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService)
+        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -41,13 +41,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _taskListService = taskListService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _groupsDetailNewService = groupsDetailNewService;
+            _reportService = reportService;
         }
 
         public ActionResult Settings(int? PanelID)
         {
             if (PanelID == null)
             {
-                var list = UserPanelList();
+                var list = _reportService.PanelListesi(user);
                 if (list.Count == 0)
                     throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
 
@@ -55,7 +56,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
 
             List<int> interlock = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-            PanelSettings selectedpanel = UserPanelList().Find(x => x.Panel_ID == PanelID);
+            PanelSettings selectedpanel = _reportService.PanelListesi(user).Find(x => x.Panel_ID == PanelID);
             var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == selectedpanel.Panel_ID).FirstOrDefault();
             if (readers == null)
             {
@@ -166,7 +167,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PanelSelectedSettings()
         {
-            var model = UserPanelList();
+            var model = _reportService.PanelListesi(user);
             if (model.Count == 0)
             {
                 throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
@@ -421,28 +422,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return 3;
         }
-
-        private List<PanelSettings> UserPanelList()
-        {
-            List<PanelSettings> panels = new List<PanelSettings>();
-            if (user.SysAdmin == true)
-            {
-                panels = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
-            }
-            else
-            {
-                foreach (var item in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                {
-                    var panel = _panelSettingsService.GetByQuery(x => x.Seri_No != 0 && x.Seri_No != null && x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_ID == item.Panel_No);
-                    if (panel != null)
-                        panels.Add(panel);
-                }
-            }
-            return panels;
-        }
-
-
-
 
     }
 }

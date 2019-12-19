@@ -105,6 +105,26 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <param name="users">UI Katmanında ki Session'da saklanan kullanıcının bilgileri ile filtreleniyor.</param>
         void GetDepartmanList(DBUsers users);
 
+        /// <summary>
+        /// Kullanıcının yetkilerine göre panel listesi gönderiyor.
+        /// </summary>
+        /// <param name="dBUsers">Sisteme giriş yapan kullanıcı.</param>
+        /// <returns></returns>
+        List<PanelSettings> PanelListesi(DBUsers dBUsers);
+
+        /// <summary>
+        /// Kullanıcının yetkilerine göre departman listesi gönderiyor.
+        /// </summary>
+        /// <param name="dBUsers">Sisteme giriş yapan kullanıcı.</param>
+        /// <returns></returns>
+        List<Departmanlar> DepartmanListesi(DBUsers dBUsers);
+
+        /// <summary>
+        /// Kullanıcının yetkilerine göre şirket listesi gönderiyor.
+        /// </summary>
+        /// <param name="dBUsers">Sisteme giriş yapan kullanıcı.</param>
+        /// <returns></returns>
+        List<Sirketler> SirketListesi(DBUsers dBUsers);
 
 
     }

@@ -29,11 +29,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         private IDoorNamesService _doorNamesService;
         private IUserService _userService;
         private IDBUsersDepartmanDal _dBUsersDepartmanDal;
+        private IDBUsersPanelsDal _dBUsersPanelsDal;
         public string panelListesi = "0";
         public string sirketListesi = "0";
         public string departmanListesi = "0";
         public List<int?> sirketler;
-        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal)
+        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal)
         {
             _visitorsDal = visitorsDal;
             _groupsDetailDal = groupsDetailDal;
@@ -48,6 +49,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _dbUsersSirketDal = dBUsersSirketDal;
             _doorNamesService = doorNamesService;
             _userService = userService;
+            _dBUsersPanelsDal = dBUsersPanelsDal;
             _dBUsersDepartmanDal = dBUsersDepartmanDal;
         }
 
@@ -1868,17 +1870,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
             }
-
-
-
-
-
-
             //Client-Mod
             queryString = "SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
                 " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
                 " Departmanlar.Adi AS Departman," +
-                " Users.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
+                " AccessDatas.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
                 " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
                 " DoorNames.[Kapi Adi] As Kapi," +
                 " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
@@ -2217,6 +2213,71 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
             }
         }
+
+        public List<PanelSettings> PanelListesi(DBUsers dBUsers)
+        {
+            List<PanelSettings> panelListesi = new List<PanelSettings>();
+            if (dBUsers.SysAdmin == true)
+            {
+                panelListesi = _panelSettingsDal.GetList(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            }
+            else
+            {
+                foreach (var panelID in _dBUsersPanelsDal.GetList(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi).Select(x => x.Panel_No).ToList())
+                {
+                    var panel = _panelSettingsDal.Get(x => x.Panel_ID == panelID);
+                    if (panel.Panel_IP1 != 0 && panel.Panel_IP2 != 0 && panel.Panel_IP3 != 0 && panel.Panel_IP4 != 0 && panel.Panel_TCP_Port != 0)
+                    {
+                        panelListesi.Add(panel);
+                    }
+                }
+            }
+            return panelListesi;
+        }
+
+        public List<Departmanlar> DepartmanListesi(DBUsers dBUsers)
+        {
+            List<Departmanlar> departmanListesi = new List<Departmanlar>();
+            if (dBUsers.SysAdmin == true)
+            {
+                departmanListesi = _departmanDal.GetList();
+            }
+            else
+            {
+                foreach (var departmanID in _dBUsersDepartmanDal.GetList(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi).Select(x => x.Departman_No).ToList())
+                {
+                    var departman = _departmanDal.Get(x => x.Departman_No == departmanID);
+                    if (departman != null)
+                    {
+                        departmanListesi.Add(departman);
+                    }
+                }
+            }
+            return departmanListesi;
+        }
+
+        public List<Sirketler> SirketListesi(DBUsers dBUsers)
+        {
+            List<Sirketler> sirketListesi = new List<Sirketler>();
+            if (dBUsers.SysAdmin == true)
+            {
+                sirketListesi = _sirketDal.GetList();
+            }
+            else
+            {
+                foreach (var sirketID in _dbUsersSirketDal.GetList(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi).Select(x => x.Sirket_No).ToList())
+                {
+                    var sirket = _sirketDal.Get(x => x.Sirket_No == sirketID);
+                    if (sirket != null)
+                    {
+                        sirketListesi.Add(sirket);
+                    }
+                }
+            }
+            return sirketListesi;
+        }
+
+
 
 
 

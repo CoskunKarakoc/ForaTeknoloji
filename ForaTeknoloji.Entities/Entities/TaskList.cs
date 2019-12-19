@@ -8,7 +8,7 @@ namespace ForaTeknoloji.Entities.Entities
     using System.Data.Entity.Spatial;
 
     [Table("TaskList")]
-    public partial class TaskList:IEntity
+    public partial class TaskList : IEntity
     {
         [Key]
         [Column("Kayit No")]
@@ -63,6 +63,18 @@ namespace ForaTeknoloji.Entities.Entities
 
         [Column("Tablo Guncelle")]
         public bool? Tablo_Guncelle { get; set; }
+
+        [Column("StrParam 1")]
+        [StringLength(250)]
+        public string StrParam_1 { get; set; }
+
+        [Column("StrParam 2")]
+        [StringLength(250)]
+        public string StrParam_2 { get; set; }
+
+        [Column("StrParam 3")]
+        [StringLength(250)]
+        public string StrParam_3 { get; set; }
     }
 }
 
