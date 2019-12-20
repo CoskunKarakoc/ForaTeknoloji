@@ -404,7 +404,7 @@
                                 <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class=" btn btn-sm btn-outline-secondary"><i class="fas fa-tasks"></i> Panel Durum Tablosu</a>
                                 <button title="Panel Değişikliklerini Kaydet" type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-save"></i> Ayarları Kaydet</button>
                                 <a title="Paneli Veritabanından Sil" href="@Url.Action("Delete","PanelSettings",new {PanelID=Model.Panel_ID })" onclick="return confirm('Paneli Silmek İstediğinize Emin Misiniz?')" class="btn  btn-outline-danger btn-sm"><i class="fas fa-minus-circle"></i> Paneli Kaldır</a>
-                                <a title="Değişiklikleri Panele Gönder" href="@Url.Action("SendToPanel","PanelSettings",new {PanelID=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</a>
+                                <a title="Değişiklikleri Panele Gönder" href="@Url.Action("SendToPanel","PanelSettings",new {Panel=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</a>
                                 <a title="Panelden Ayarları Al" href="@Url.Action("ReceiveFromPanel","PanelSettings",new {PanelID=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-recycle"></i> Ayarları Al</a>
                             </div>
                         </div>

@@ -111,7 +111,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetZiyaretciListesi(null);
+                liste = _reportService.GetZiyaretciListesi(new VisitorReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

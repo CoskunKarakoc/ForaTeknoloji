@@ -70,7 +70,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             list = TempData["Tanimsiz"] as List<AccessDatasComplex>;
             if (list == null || list.Count == 0)
             {
-                list = _reportService.GetTanimsizListesi(null);
+                list = _reportService.GetTanimsizListesi(new TanimsizReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

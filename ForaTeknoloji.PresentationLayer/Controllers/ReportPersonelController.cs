@@ -218,7 +218,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["ReportPersonel"] as List<ReportPersonelList>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetReportPersonelLists(null);
+                liste = _reportService.GetReportPersonelLists(new ActiveUserReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

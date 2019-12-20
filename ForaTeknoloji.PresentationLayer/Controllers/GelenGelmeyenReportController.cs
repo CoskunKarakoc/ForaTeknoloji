@@ -267,7 +267,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["Gelenler"] as List<GelenGelmeyen_Gelenler>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GelenGelmeyen_Gelenlers(null);
+                liste = _reportService.GelenGelmeyen_Gelenlers(new GelenGelmeyenReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
@@ -319,7 +319,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["Gelmeyenler"] as List<GelenGelmeyen_Gelmeyen>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GelenGelmeyen_Gelmeyens(null);
+                liste = _reportService.GelenGelmeyen_Gelmeyens(new GelenGelmeyenReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
@@ -371,7 +371,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["Toplam"] as List<GelenGelmeyen_ToplamIcerdeKalma>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(null);
+                liste = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(new GelenGelmeyenReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
@@ -424,7 +424,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GelenGelmeyen_PasifKullanicis(null);
+                liste = _reportService.GelenGelmeyen_PasifKullanicis(new GelenGelmeyenReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
@@ -478,7 +478,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["IlkGirisSonCikis"] as List<GelenGelmeyen_IlkGirisSonCikis>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GelenGelmeyen_IlkGirisSonCikis(null);
+                liste = _reportService.GelenGelmeyen_IlkGirisSonCikis(new GelenGelmeyenReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

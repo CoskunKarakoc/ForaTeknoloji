@@ -196,7 +196,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["Ziyaretci"] as List<IcerdeDısardaZiyaretci>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetIcerdeDısardaZiyaretci(null);
+                liste = _reportService.GetIcerdeDısardaZiyaretci(new IcerdeDisardaReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

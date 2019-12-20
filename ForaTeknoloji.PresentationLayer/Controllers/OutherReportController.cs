@@ -101,7 +101,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             lists = TempData["DigerGecis"] as List<DigerGecisRaporList>;
             if (lists == null || lists.Count == 0)
             {
-                lists = _reportService.GetDigerGecisListesi(null);
+                lists = _reportService.GetDigerGecisListesi(new OutherReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
@@ -147,7 +147,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = nesne.DigerGecisListesiAlarm;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetDigerGecisRaporListKullaniciAlarms(null);
+                liste = _reportService.GetDigerGecisRaporListKullaniciAlarms(new OutherReportParameters());
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

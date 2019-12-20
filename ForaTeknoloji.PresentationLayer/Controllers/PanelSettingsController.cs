@@ -308,7 +308,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             throw new Exception("Silmek istenen kayıt veritabanında yok!");
         }
 
-        public ActionResult SendToPanel(int? PanelID)
+        public ActionResult SendToPanel(int? Panel)
         {
             try
             {
@@ -317,9 +317,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Deneme_Sayisi = 1,
                     Durum_Kodu = 1,
                     Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
-                    IntParam_1 = (int)PanelID,
+                    IntParam_1 = (int)Panel,
                     Kullanici_Adi = user.Kullanici_Adi,
-                    Panel_No = PanelID,
+                    Panel_No = Panel,
                     Tablo_Guncelle = true,
                     Tarih = DateTime.Now
                 };
@@ -330,7 +330,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
             }
-            return RedirectToAction("Settings");
+            return RedirectToAction("Settings", new { @PanelID = Panel });
         }
 
         public ActionResult Create()
