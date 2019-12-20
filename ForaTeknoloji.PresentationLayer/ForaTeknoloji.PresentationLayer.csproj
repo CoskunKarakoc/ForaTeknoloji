@@ -2517,6 +2517,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DoorController.cs" />
+    <Compile Include="Controllers\DoorGroupController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\EmploymentController.cs" />
     <Compile Include="Controllers\ExternalDataController.cs" />
@@ -2692,6 +2693,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ExcelFile\" />
+    <Folder Include="Views\DoorGroup\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForaTeknoloji.BusinessLayer\ForaTeknoloji.BusinessLayer.csproj">

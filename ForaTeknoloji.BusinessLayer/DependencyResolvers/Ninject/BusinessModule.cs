@@ -105,6 +105,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IGorevlerService>().To<GorevlerManager>().InSingletonScope();
             Bind<IDoorGroupsDetailService>().To<DoorGroupsDetailManager>().InSingletonScope();
             Bind<IDoorGroupsMasterService>().To<DoorGroupsMasterManager>().InSingletonScope();
+
             /*Context*/
             Bind<DbContext>().To<ForaContext>();
         }

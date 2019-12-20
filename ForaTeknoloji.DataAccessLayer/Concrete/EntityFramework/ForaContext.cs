@@ -63,7 +63,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<EMailSetting> EMailSettings { get; set; }
         public virtual DbSet<SMSSetting> SMSSettings { get; set; }
         public virtual DbSet<Gorevler> Gorevlers { get; set; }
-        public virtual DbSet<AltDepartman> AltDepartmanlar { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

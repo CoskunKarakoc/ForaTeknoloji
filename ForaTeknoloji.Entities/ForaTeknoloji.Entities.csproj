@@ -91,7 +91,6 @@
     <Compile Include="Entities\AccessModes.cs" />
     <Compile Include="Entities\Alarmlar.cs" />
     <Compile Include="Entities\AlarmTipleri.cs" />
-    <Compile Include="Entities\AltDepartman.cs" />
     <Compile Include="Entities\Bloklar.cs" />
     <Compile Include="Entities\Cameras.cs" />
     <Compile Include="Entities\CameraTypes.cs" />

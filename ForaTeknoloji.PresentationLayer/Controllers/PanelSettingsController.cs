@@ -324,7 +324,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Tarih = DateTime.Now
                 };
                 TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                Thread.Sleep(2000);
+                Thread.Sleep(2500);
             }
             catch (Exception)
             {
