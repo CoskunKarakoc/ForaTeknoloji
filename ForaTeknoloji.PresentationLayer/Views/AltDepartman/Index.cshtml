@@ -1,0 +1,124 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.AltDepartmanListViewModel
+@{
+    ViewBag.Title = "Alt Departman Tanımları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row animated slideInDown faster">
+    <div class="col-md-6 offset-md-3 mt-xl-5 mb-xl-5">
+        <div class=" card border-left-info h-100 shadow-lg mt-2">
+            <div class="card-header py-1">
+                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Alt Departman Tanımları</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "AltDepartman"))
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="altDepartmanAdi" name="Adi" placeholder="Alt Departman Tanımlama" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="Alt Departman  No" hidden value="" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="submit" id="newAltDepartman"><i class="fas fa-plus mr-2"></i>Yeni Alt Departman</button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <hr />
+                @if (Model.AltDepartmanListesi.Count() == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">Geçerli alt departman kaydı bulunamadı.</p>
+                        <hr>
+                        <p class="mb-0 text-center">Dilerseniz yukarıdaki "Alt Departman Tanımlama" kısmına alt departman adı girip "Yeni Alt Departman" butonuna basarak alt departman ekleyebilirsiniz.</p>
+
+                    </div>
+                }
+                <input type="text" hidden id="AltDepartmanCount" name="name" value="@Model.AltDepartmanListesi.Count()" />
+                <table id="AltDepartmanList" class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Alt Departman No</td>
+                            <td>Alt Departman Adı</td>
+                            <td>Ana Departman Adı</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.AltDepartmanListesi)
+                        {
+                            <tr>
+                                <td>@item.Alt_Departman_No</td>
+                                <td>@item.Alt_Departman_Adi</td>
+                                <td>@item.Departman_Adi</td>
+
+                                <td>
+                                    <a title="Edit" id="edit" href="@Url.Action("Edit","AltDepartman",new { id=item.Alt_Departman_No})"><i class="fas fa-edit text-info mr-5"></i></a>
+                                    <a title="Delete" onclick="Delete(@item.Alt_Departman_No)" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        $(document).ready(function () {
+            var count = $("#AltDepartmanCount").val();
+            if (count == 0) {
+                $("#AltDepartmanList").prop("hidden", true);
+                $("#Title").prop("hidden", true);
+            } else {
+                $("#AltDepartmanList").prop("hidden", false);
+                $("#Title").prop("hidden", false);
+            }
+    });
+
+      function Delete(id) {
+            swal({
+                title: "Silmek İstediğinize Emin Misiniz?",
+                text: "Seçilen alt departman veritabanından silinecek!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                          $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("Delete","AltDepartman")',
+                                data: JSON.stringify({ id: id }), //use id here
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                              success: function (data) {
+                                  if (data) {
+                                      swal("Başarılı! Alt Departman silme işlemi başarılı şekilde gerçekleştirildi!", {
+                                          icon: "success",
+                                      });
+                                  } else {
+                                      //swal("Silme işleminden vazgeçildi!");
+                                  }
+                                  setTimeout(function () {
+                                      window.location.href = "/AltDepartman/Index";
+                                  }, 2500);
+                                },
+                                error: function () {
+                                    alert("Error while deleting data");
+                                }
+                            });
+                    }
+                });
+        }
+</script>
+
+

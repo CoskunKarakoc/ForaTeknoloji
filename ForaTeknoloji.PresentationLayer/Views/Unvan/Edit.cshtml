@@ -1,0 +1,36 @@
+﻿@model ForaTeknoloji.Entities.Entities.Unvan
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row animated slideInLeft faster">
+    <div class="col-md-4 offset-md-4">
+        <div class="card border-left-info h-100 shadow-lg  mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Ünvan Düzenleme</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Unvan_No)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Adi, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Adi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Adi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i> Güncelle</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

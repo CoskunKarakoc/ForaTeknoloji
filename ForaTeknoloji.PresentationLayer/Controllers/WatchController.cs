@@ -81,7 +81,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     if (permissionUser.Canli_Izleme == 2 || permissionUser.Canli_Izleme == 3)
                         throw new Exception("Değişiklik yapmaya yetkiniz yok!");
-                    _progInitService.AddProgInit(progInit);
+                    if (progInit.Kayit_No != 0)
+                    {
+                        _progInitService.UpdateProgInit(progInit);
+                    }
+                    else
+                    {
+                        _progInitService.AddProgInit(progInit);
+                    }
                     return RedirectToAction("Index");
                 }
             }

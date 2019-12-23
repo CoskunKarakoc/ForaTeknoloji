@@ -59,7 +59,9 @@
     <Compile Include="Abstract\IAccessModesService.cs" />
     <Compile Include="Abstract\IAlarmlarService.cs" />
     <Compile Include="Abstract\IAlarmTipleriService.cs" />
+    <Compile Include="Abstract\IAltDepartmanService.cs" />
     <Compile Include="Abstract\IBloklarService.cs" />
+    <Compile Include="Abstract\IBolumService.cs" />
     <Compile Include="Abstract\ICamerasService.cs" />
     <Compile Include="Abstract\ICameraTypesService.cs" />
     <Compile Include="Abstract\ICodeOperationService.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Abstract\IDoorGroupsDetailService.cs" />
     <Compile Include="Abstract\IDoorGroupsMasterService.cs" />
     <Compile Include="Abstract\IDoorNamesService.cs" />
+    <Compile Include="Abstract\IDoorStatusService.cs" />
     <Compile Include="Abstract\IEmailSettingsService.cs" />
     <Compile Include="Abstract\IFloorNamesService.cs" />
     <Compile Include="Abstract\IGlobalZoneService.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Abstract\ITimeGroupsService.cs" />
     <Compile Include="Abstract\ITimeZoneCalendarService.cs" />
     <Compile Include="Abstract\ITimeZoneIDsService.cs" />
+    <Compile Include="Abstract\IUnvanService.cs" />
     <Compile Include="Abstract\IUserService.cs" />
     <Compile Include="Abstract\IUsersOLDService.cs" />
     <Compile Include="Abstract\IUserTypesService.cs" />
@@ -105,7 +109,9 @@
     <Compile Include="Concrete\AccessModesManager.cs" />
     <Compile Include="Concrete\AlarmlarManager.cs" />
     <Compile Include="Concrete\AlarmTipleriManager.cs" />
+    <Compile Include="Concrete\AltDepartmanManager.cs" />
     <Compile Include="Concrete\BloklarManager.cs" />
+    <Compile Include="Concrete\BolumManager.cs" />
     <Compile Include="Concrete\CamerasManager.cs" />
     <Compile Include="Concrete\CameraTypesManager.cs" />
     <Compile Include="Concrete\CodeOperationManager.cs" />
@@ -118,6 +124,7 @@
     <Compile Include="Concrete\DoorGroupsDetailManager.cs" />
     <Compile Include="Concrete\DoorGroupsMasterManager.cs" />
     <Compile Include="Concrete\DoorNamesManager.cs" />
+    <Compile Include="Concrete\DoorStatusManager.cs" />
     <Compile Include="Concrete\EMailSettingsManager.cs" />
     <Compile Include="Concrete\FloorNamesManager.cs" />
     <Compile Include="Concrete\GlobalZoneManager.cs" />
@@ -143,6 +150,7 @@
     <Compile Include="Concrete\TimeGroupsManager.cs" />
     <Compile Include="Concrete\TimeZoneCalendarManager.cs" />
     <Compile Include="Concrete\TimeZoneIDsManager.cs" />
+    <Compile Include="Concrete\UnvanManager.cs" />
     <Compile Include="Concrete\UserManager.cs" />
     <Compile Include="Concrete\UsersOLDManager.cs" />
     <Compile Include="Concrete\UserTypesManager.cs" />

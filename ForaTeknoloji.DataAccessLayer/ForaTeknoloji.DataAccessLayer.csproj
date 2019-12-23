@@ -57,7 +57,9 @@
     <Compile Include="Abstract\IAccessModesDal.cs" />
     <Compile Include="Abstract\IAlarmlarDal.cs" />
     <Compile Include="Abstract\IAlarmTipleriDal.cs" />
+    <Compile Include="Abstract\IAltDepartmanDal.cs" />
     <Compile Include="Abstract\IBloklarDal.cs" />
+    <Compile Include="Abstract\IBolumDal.cs" />
     <Compile Include="Abstract\ICamerasDal.cs" />
     <Compile Include="Abstract\ICameraTypesDal.cs" />
     <Compile Include="Abstract\ICodeOperationDal.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Abstract\IDoorGroupsDetailDal.cs" />
     <Compile Include="Abstract\IDoorGroupsMasterDal.cs" />
     <Compile Include="Abstract\IDoorNamesDal.cs" />
+    <Compile Include="Abstract\IDoorStatusDal.cs" />
     <Compile Include="Abstract\IEmailSettingsDal.cs" />
     <Compile Include="Abstract\IFloorNamesDal.cs" />
     <Compile Include="Abstract\IGlobalZoneDal.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Abstract\ITimeGroupsDal.cs" />
     <Compile Include="Abstract\ITimeZoneCalendarDal.cs" />
     <Compile Include="Abstract\ITimeZoneIDsDal.cs" />
+    <Compile Include="Abstract\IUnvanDal.cs" />
     <Compile Include="Abstract\IUserDal.cs" />
     <Compile Include="Abstract\IUsersOLDDal.cs" />
     <Compile Include="Abstract\IUserTypesDal.cs" />
@@ -102,7 +106,9 @@
     <Compile Include="Concrete\EntityFramework\EfAccessModesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAlarmlarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAlarmTipleriDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfAltDepartmanDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfBloklarDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfBolumDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCamerasDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCameraTypesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCodeOperationDal.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Concrete\EntityFramework\EfDoorGroupsDetailDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDoorGroupsMasterDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDoorNamesDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDoorStatusDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfEmailSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfFloorNamesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfGlobalZoneDal.cs" />
@@ -139,6 +146,7 @@
     <Compile Include="Concrete\EntityFramework\EfTimeGroupsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTimeZoneCalendarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTimeZoneIDsDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfUnvanDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUserDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUsersOLDDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfUserTypesDal.cs" />

@@ -101,7 +101,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { @PanelID = kapiOperasyon.Panel_ID });
         }
 
         public ActionResult PartialDoorPanelList()

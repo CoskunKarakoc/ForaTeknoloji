@@ -1,0 +1,130 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.BolumListViewModel
+@{
+    ViewBag.Title = "Bölüm Tanımları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row animated slideInDown faster">
+    <div class="col-md-6 offset-md-3 mt-xl-5 mb-xl-5">
+        <div class=" card border-left-info h-100 shadow-lg mt-2">
+            <div class="card-header py-1">
+                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Alt Departman Tanımları</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "Bolum"))
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownList("Alt_Departman_No", Model.Alt_Departman_No, "Alt Departman Seçiniz", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Alt_Departman_No, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="bolumAdi" name="Adi" placeholder="Bölüm Tanımlama" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="Bolum  No" hidden value="" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="submit" id="newBolum"><i class="fas fa-plus mr-2"></i>Yeni Bölüm</button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <hr />
+                @if (Model.BolumListesi.Count() == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">Geçerli bölüm kaydı bulunamadı.</p>
+                        <hr>
+                        <p class="mb-0 text-center">Dilerseniz yukarıdaki "Yeni Bölüm Tanımlama" kısmına bölüm adı girip "Yeni Bölüm" butonuna basarak bölüm ekleyebilirsiniz.</p>
+
+                    </div>
+                }
+                <input type="text" hidden id="AltDepartmanCount" name="name" value="@Model.BolumListesi.Count()" />
+                <table id="BolumList" class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <td>Bölüm No</td>
+                            <td>Bölüm Adı</td>
+                            <td>Alt Departman Adı</td>
+                            <td>Ana Departman Adı</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.BolumListesi)
+                        {
+                            <tr>
+                                <td>@item.Bolum_No</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Alt_Departman_Adi</td>
+                                <td>@item.Departman_Adi</td>
+
+                                <td>
+                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Bolum",new { id=item.Bolum_No})"><i class="fas fa-edit text-info mr-5"></i></a>
+                                    <a title="Delete" onclick="Delete(@item.Bolum_No)" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        $(document).ready(function () {
+            var count = $("#BolumCount").val();
+            if (count == 0) {
+                $("#BolumList").prop("hidden", true);
+                $("#Title").prop("hidden", true);
+            } else {
+                $("#BolumList").prop("hidden", false);
+                $("#Title").prop("hidden", false);
+            }
+    });
+
+      function Delete(id) {
+            swal({
+                title: "Silmek İstediğinize Emin Misiniz?",
+                text: "Seçilen bölüm veritabanından silinecek!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                          $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("Delete","Bolum")',
+                                data: JSON.stringify({ id: id }), //use id here
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                              success: function (data) {
+                                  if (data) {
+                                      swal("Başarılı! Bölüm silme işlemi başarılı şekilde gerçekleştirildi!", {
+                                          icon: "success",
+                                      });
+                                  } else {
+                                      //swal("Silme işleminden vazgeçildi!");
+                                  }
+                                  setTimeout(function () {
+                                      window.location.href = "/Bolum/Index";
+                                  }, 2500);
+                                },
+                                error: function () {
+                                    alert("Error while deleting data");
+                                }
+                            });
+                    }
+                });
+        }
+</script>
+
+

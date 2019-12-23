@@ -57,6 +57,11 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IGorevlerDal>().To<EfGorevlerDal>().InSingletonScope();
             Bind<IDoorGroupsDetailDal>().To<EfDoorGroupsDetailDal>().InSingletonScope();
             Bind<IDoorGroupsMasterDal>().To<EfDoorGroupsMasterDal>().InSingletonScope();
+            Bind<IDoorStatusDal>().To<EfDoorStatusDal>().InSingletonScope();
+            Bind<IUnvanDal>().To<EfUnvanDal>().InSingletonScope();
+            Bind<IBolumDal>().To<EfBolumDal>().InSingletonScope();
+            Bind<IAltDepartmanDal>().To<EfAltDepartmanDal>().InSingletonScope();
+
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -105,6 +110,11 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IGorevlerService>().To<GorevlerManager>().InSingletonScope();
             Bind<IDoorGroupsDetailService>().To<DoorGroupsDetailManager>().InSingletonScope();
             Bind<IDoorGroupsMasterService>().To<DoorGroupsMasterManager>().InSingletonScope();
+            Bind<IDoorStatusService>().To<DoorStatusManager>().InSingletonScope();
+            Bind<IUnvanService>().To<UnvanManager>().InSingletonScope();
+            Bind<IBolumService>().To<BolumManager>().InSingletonScope();
+            Bind<IAltDepartmanService>().To<AltDepartmanManager>().InSingletonScope();
+
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

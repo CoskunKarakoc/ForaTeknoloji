@@ -1,0 +1,192 @@
+﻿@model List<ForaTeknoloji.Entities.ComplexType.ComplexDoorStatus>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Kapı Durumları</h3>
+            </div>
+            <div class="card-body">
+                <table class="table-borderless table table-hover text-center table-striped table-sm">
+                    <thead class="table-info">
+                        <tr>
+                            <th>Panel ID</th>
+                            <th>Panel Adı</th>
+                            <th>Kapı 1</th>
+                            <th>Kapı 2</th>
+                            <th>Kapı 3</th>
+                            <th>Kapı 4</th>
+                            <th>Kapı 5</th>
+                            <th>Kapı 6</th>
+                            <th>Kapı 7</th>
+                            <th>Kapı 8</th>
+                            <th>Kapı 9</th>
+                            <th>Kapı 10</th>
+                            <th>Kapı 11</th>
+                            <th>Kapı 12</th>
+                            <th>Kapı 13</th>
+                            <th>Kapı 14</th>
+                            <th>Kapı 15</th>
+                            <th>Kapı 16</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var status in Model)
+                        {
+                            <tr>
+                                <td>@status.Panel_ID</td>
+                                <td>@status.Panel_Name</td>
+                                @if (status.Kapi_1_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+
+                                @if (status.Kapi_2_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+
+                                @if (status.Kapi_3_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+
+                                @if (status.Kapi_4_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+
+                                @if (status.Kapi_5_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+
+                                @if (status.Kapi_6_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+
+                                @if (status.Kapi_7_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+
+                                @if (status.Kapi_8_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                                @if (status.Kapi_9_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                                @if (status.Kapi_10_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                                @if (status.Kapi_11_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                                @if (status.Kapi_12_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                                @if (status.Kapi_13_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                                @if (status.Kapi_14_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                                @if (status.Kapi_15_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                                @if (status.Kapi_16_Baglanti == true)
+                                {
+                                    <td class="bg-success text-white"><i class="fas fa-door-open"></i> Aktif</td>
+                                }
+                                else
+                                {
+                                    <td class="bg-danger text-white"><i class="fas fa-door-closed"></i> Pasif</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            window.location.assign("/DoorStatus/Index");
+        }, 15000)
+    });
+</script>

@@ -2510,7 +2510,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccessGroupController.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
+    <Compile Include="Controllers\AltDepartmanController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
+    <Compile Include="Controllers\BolumController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\CameraSettingsController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -2518,6 +2520,7 @@
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DoorController.cs" />
     <Compile Include="Controllers\DoorGroupController.cs" />
+    <Compile Include="Controllers\DoorStatusController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\EmploymentController.cs" />
     <Compile Include="Controllers\ExternalDataController.cs" />
@@ -2536,6 +2539,7 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TimeGroupsController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
+    <Compile Include="Controllers\UnvanController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Controllers\VisitorReportController.cs" />
@@ -2551,6 +2555,8 @@
     <Compile Include="Models\AlarmCreateViewModel.cs" />
     <Compile Include="Models\AlarmEditListViewModel.cs" />
     <Compile Include="Models\AlarmListViewModel.cs" />
+    <Compile Include="Models\AltDepartmanListViewModel.cs" />
+    <Compile Include="Models\BolumListViewModel.cs" />
     <Compile Include="Models\CameraAddListViewModel.cs" />
     <Compile Include="Models\CreateReaderModel.cs" />
     <Compile Include="Models\CreateVisitorViewModel.cs" />
@@ -2683,6 +2689,13 @@
     <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Employment\Edit.cshtml" />
     <Content Include="Views\Employment\Index.cshtml" />
+    <Content Include="Views\DoorStatus\Index.cshtml" />
+    <Content Include="Views\Unvan\Index.cshtml" />
+    <Content Include="Views\Unvan\Edit.cshtml" />
+    <Content Include="Views\AltDepartman\Index.cshtml" />
+    <Content Include="Views\AltDepartman\Edit.cshtml" />
+    <Content Include="Views\Bolum\Index.cshtml" />
+    <Content Include="Views\Bolum\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

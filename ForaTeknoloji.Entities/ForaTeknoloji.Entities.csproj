@@ -53,6 +53,9 @@
     <Compile Include="ComplexType\AccessDatasComplex.cs" />
     <Compile Include="ComplexType\ActiveUserReportParameters.cs" />
     <Compile Include="ComplexType\CamerasComplex.cs" />
+    <Compile Include="ComplexType\ComplexAltDepartman.cs" />
+    <Compile Include="ComplexType\ComplexBolum.cs" />
+    <Compile Include="ComplexType\ComplexDoorStatus.cs" />
     <Compile Include="ComplexType\ComplexGroupsDetailNew.cs" />
     <Compile Include="ComplexType\ComplexTaskList.cs" />
     <Compile Include="ComplexType\Count.cs" />
@@ -91,7 +94,9 @@
     <Compile Include="Entities\AccessModes.cs" />
     <Compile Include="Entities\Alarmlar.cs" />
     <Compile Include="Entities\AlarmTipleri.cs" />
+    <Compile Include="Entities\AltDepartman.cs" />
     <Compile Include="Entities\Bloklar.cs" />
+    <Compile Include="Entities\Bolum.cs" />
     <Compile Include="Entities\Cameras.cs" />
     <Compile Include="Entities\CameraTypes.cs" />
     <Compile Include="Entities\CodeOperation.cs" />
@@ -106,6 +111,7 @@
     <Compile Include="Entities\DoorGroupsDetail.cs" />
     <Compile Include="Entities\DoorGroupsMaster.cs" />
     <Compile Include="Entities\DoorNames.cs" />
+    <Compile Include="Entities\DoorStatus.cs" />
     <Compile Include="Entities\EMailSetting.cs" />
     <Compile Include="Entities\FloorNames.cs" />
     <Compile Include="Entities\GlobalZones.cs" />
@@ -132,6 +138,7 @@
     <Compile Include="Entities\TimeGroups.cs" />
     <Compile Include="Entities\TimeZoneCalendar.cs" />
     <Compile Include="Entities\TimeZoneIDs.cs" />
+    <Compile Include="Entities\Unvan.cs" />
     <Compile Include="Entities\Users.cs" />
     <Compile Include="Entities\UsersAPB.cs" />
     <Compile Include="Entities\UsersLocalAPB.cs" />
