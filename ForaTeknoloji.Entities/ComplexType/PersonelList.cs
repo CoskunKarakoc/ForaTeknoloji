@@ -20,6 +20,12 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public string DepartmanAdi { get; set; }
 
+        public string AltDepartmanAdi { get; set; }
+
+        public string BolumAdi { get; set; }
+
+        public string UnvanAdi { get; set; }
+
         public string Plaka { get; set; }
 
         public string BlokAdi { get; set; }
@@ -31,22 +37,22 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Grup_Adi { get; set; }
 
         public string Tmp { get; set; }
-        public bool Kapi1 { get; set; }
-        public bool Kapi2 { get; set; }
-        public bool Kapi3 { get; set; }
-        public bool Kapi4 { get; set; }
-        public bool Kapi5 { get; set; }
-        public bool Kapi6 { get; set; }
-        public bool Kapi7 { get; set; }
-        public bool Kapi8 { get; set; }
-        public bool Kapi9 { get; set; }
-        public bool Kapi10 { get; set; }
-        public bool Kapi11 { get; set; }
-        public bool Kapi12 { get; set; }
-        public bool Kapi13 { get; set; }
-        public bool Kapi14 { get; set; }
-        public bool Kapi15 { get; set; }
-        public bool Kapi16{ get; set; }
+        public bool? Kapi1 { get; set; }
+        public bool? Kapi2 { get; set; }
+        public bool? Kapi3 { get; set; }
+        public bool? Kapi4 { get; set; }
+        public bool? Kapi5 { get; set; }
+        public bool? Kapi6 { get; set; }
+        public bool? Kapi7 { get; set; }
+        public bool? Kapi8 { get; set; }
+        public bool? Kapi9 { get; set; }
+        public bool? Kapi10 { get; set; }
+        public bool? Kapi11 { get; set; }
+        public bool? Kapi12 { get; set; }
+        public bool? Kapi13 { get; set; }
+        public bool? Kapi14 { get; set; }
+        public bool? Kapi15 { get; set; }
+        public bool? Kapi16 { get; set; }
         public int? Kapi1_Global_Bolge_No { get; set; }
         public int? Kapi2_Global_Bolge_No { get; set; }
         public int? Kapi3_Global_Bolge_No { get; set; }

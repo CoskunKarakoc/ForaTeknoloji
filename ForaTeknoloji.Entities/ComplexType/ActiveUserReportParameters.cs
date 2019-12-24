@@ -50,6 +50,12 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public bool? Tum_Kullanici { get; set; }
 
+        public int? AltDepartman { get; set; }
+
+        public int? Unvan { get; set; }
+
+        public int? Bolum { get; set; }
+
 
     }
 }

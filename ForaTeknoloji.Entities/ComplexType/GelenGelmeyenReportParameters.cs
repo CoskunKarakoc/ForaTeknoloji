@@ -27,5 +27,11 @@ namespace ForaTeknoloji.Entities.ComplexType
         public int? User { get; set; }
 
         public bool? Tum_Tarih { get; set; }
+
+        public int? AltDepartman { get; set; }
+
+        public int? Unvan { get; set; }
+
+        public int? Bolum { get; set; }
     }
 }

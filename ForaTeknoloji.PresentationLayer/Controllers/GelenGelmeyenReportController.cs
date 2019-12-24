@@ -22,10 +22,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
         private IGroupMasterService _groupMasterService;
+        private IAltDepartmanService _altDepartmanService;
+        private IUnvanService _unvanService;
+        private IBolumService _bolumService;
         public DBUsers user;
         public DateTime DefaultTarih1;
         public DateTime DefaultTarih2;
-        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService, IGroupMasterService groupMasterService)
+        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService, IGroupMasterService groupMasterService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -39,6 +42,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _groupMasterService = groupMasterService;
             _visitorsService = visitorsService;
             _globalZoneService = globalZoneService;
+            _altDepartmanService = altDepartmanService;
+            _unvanService = unvanService;
+            _bolumService = bolumService;
             _reportService = reportService;
             DefaultTarih1 = DateTime.Now;
             DefaultTarih2 = DateTime.Now;
@@ -46,6 +52,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
         }
 
 
@@ -58,6 +65,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var unvanlar = _unvanService.GetAllUnvan();
+            var bolumler = _bolumService.GetAllBolum();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var model = new GelenGelmeyen_GelenlerListViewModel
             {
@@ -81,6 +91,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
+                }),
+                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Unvan = unvanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Unvan_No.ToString()
+                }),
+                Bolum = bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
                 })
             };
             TempData["Gelenler"] = nesne;
@@ -96,6 +121,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var unvanlar = _unvanService.GetAllUnvan();
+            var bolumler = _bolumService.GetAllBolum();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var model = new GelenGelmeyen_GelmeyenlerListViewModel
             {
@@ -119,6 +147,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
+                }),
+                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Unvan = unvanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Unvan_No.ToString()
+                }),
+                Bolum = bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
                 })
             };
             TempData["Gelmeyenler"] = nesne;
@@ -134,6 +177,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var unvanlar = _unvanService.GetAllUnvan();
+            var bolumler = _bolumService.GetAllBolum();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var model = new GelenGelmeyen_PasifListViewModel
             {
@@ -157,6 +203,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
+                }),
+                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Unvan = unvanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Unvan_No.ToString()
+                }),
+                Bolum = bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
                 })
             };
             TempData["Pasif"] = nesne;
@@ -172,6 +233,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var unvanlar = _unvanService.GetAllUnvan();
+            var bolumler = _bolumService.GetAllBolum();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var usersComplex = _userService.GetAllUsersWithOuther();
             var model = new GelenGelmeyen_ToplamIcerdeKalmaListViewModel
@@ -197,6 +261,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
+                }),
+                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Unvan = unvanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Unvan_No.ToString()
+                }),
+                Bolum = bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
                 })
             };
             TempData["Toplam"] = nesne;
@@ -211,6 +290,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var departmanlar = _departmanService.GetAllDepartmanlar();
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var unvanlar = _unvanService.GetAllUnvan();
+            var bolumler = _bolumService.GetAllBolum();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var usersComplex = _userService.GetAllUsersWithOuther();
             var model = new GelenGelmeyen_IlkGirisSonCikisListViewModel
@@ -236,6 +318,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Global_Bolge_Adi,
                     Value = a.Global_Bolge_No.ToString()
+                }),
+                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Unvan = unvanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Unvan_No.ToString()
+                }),
+                Bolum = bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
                 })
             };
             TempData["IlkGirisSonCikis"] = nesne;
@@ -259,6 +356,40 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult AltDepartmanListesi(int? Departman)
+        {
+            if (Departman != 0 && Departman != null)
+            {
+                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman);
+                var selectAltDepartman = list.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                });
+                return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult BolumListesi(int? AltDepartman)
+        {
+            if (AltDepartman != null && AltDepartman != 0)
+            {
+
+                var list = _bolumService.GetAllBolum(x => x.Alt_Departman_No == AltDepartman);
+                var selectBolum = list.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
+                });
+                return Json(selectBolum, JsonRequestBehavior.AllowGet);
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
 
         //Gelenler Excell
         public void GelenlerExcell()

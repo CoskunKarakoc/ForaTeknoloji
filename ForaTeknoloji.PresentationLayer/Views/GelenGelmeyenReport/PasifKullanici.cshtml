@@ -37,7 +37,7 @@
 
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Tarih</label>
-                        <input class="form-control" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
+                        <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
                     </div>
 
                 </div>
@@ -48,19 +48,17 @@
                             <label class="custom-control-label" for="TümGlobal">Tüm Global Kapı Bölgeleri</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm" })
 
                         </div>
                     </div>
-                </div>
-                <div class="col-md-2">
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="TümGecis" class="custom-control-input" id="TümGecis" />
                             <label class="custom-control-label" for="TümGecis">Tüm Gruplar</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm" })
                         </div>
                     </div>
                 </div>
@@ -70,8 +68,12 @@
                             <input type="checkbox" value="true" name="TümDepartman" class="custom-control-input" id="TümDepartman" />
                             <label class="custom-control-label" for="TümDepartman">Tüm Departmanlar</label>
                         </div>
-                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm" })
                         @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Alt Departmanlar</label>
+                        @Html.DropDownListFor(model => model.AltDepartman, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm" })
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -80,8 +82,12 @@
                             <input type="checkbox" value="true" name="TümSirket" class="custom-control-input" id="TümSirket" />
                             <label class="custom-control-label" for="TümSirket">Tüm Şirketler</label>
                         </div>
-                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm" })
                         @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Bölümler</label>
+                        @Html.DropDownListFor(model => model.Bolum, new SelectList(""), "Bölüm Seçiniz..", new { @class = "form-control form-control-sm" })
                     </div>
                 </div>
                 <div class="col-md-12 text-right float-right">
@@ -111,6 +117,8 @@
                webGrid.Column("TCKimlik", "TC Kimlik"),
                webGrid.Column("SirketAdi", "Şirket"),
                webGrid.Column("DepartmanAdi", "Departman"),
+               webGrid.Column("AltDepartmanAdi", "Alt Departman"),
+               webGrid.Column("BolumAdi", "Bölüm"),
                webGrid.Column("Plaka", "Plaka"),
                webGrid.Column("BlokAdi", "Blok"),
                webGrid.Column("Daire", "Daire"),
@@ -139,7 +147,44 @@
 <script>$("input[type='number']").inputSpinner()</script>
 <script src="./src/bootstrap-input-spinner.js"></script>
 <script>
+    $(document).ready(function () {
+        $("#Departman").change(function () {
+            var departmanNo = $(this).val();
+            if (departmanNo == 0) {
+                $("#Bolum").empty();
+                $("#AltDepartman").empty();
+                $("#AltDepartman").append('<option value=' + 0 + '> Alt Departman Seçiniz.. </option>');
+                $("#Bolum").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/GelenGelmeyenReport/AltDepartmanListesi?Departman=' + departmanNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#AltDepartman").empty();
+                    $.each(data, function (index, row) {
+                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                    });
+                });
+            }
 
+        });
+        $("#AltDepartman").change(function () {
+            var altdepartmanNo = $(this).val();
+            $.ajax({
+                url: '/GelenGelmeyenReport/BolumListesi?AltDepartman=' + altdepartmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Bolum").empty();
+                $.each(data, function (index, row) {
+                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                });
+            });
+
+        })
+
+    });
 
     $(function () {
         $("#btnPrint").click(function () {

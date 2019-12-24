@@ -217,15 +217,16 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
-                                <label class="control-label col-md-4">TC Kimlik</label>
+                                <label class="control-label col-md-4">Ünvan</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" name="TCKimlik" value="" />
+                                        @Html.DropDownList("Unvan_No", Model.Unvan_No, "Ünvan Seçiniz...", new { @class = "form-control form-control-sm" })
+                                        @Html.ValidationMessageFor(model => model.Unvan_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="form-group">
                                 <label class="control-label col-md-4">Şirket</label>
@@ -247,6 +248,18 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Alt Departmanlar</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(model => model.Alt_Departman_No, new SelectList(""), "Alt Departman Seçiniz...", new { @class = "form-control form-control-sm" })
+                                        @Html.ValidationMessageFor(model => model.Alt_Departman_No, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                         </div>
 
 
@@ -262,6 +275,16 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-4">TC Kimlik</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-sm" name="TCKimlik" value="" />
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="control-label col-md-4">Telefon</label>
                                 <div class="col-md-12">
@@ -287,9 +310,19 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Bölümler</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(model => model.Bolum_No, new SelectList(""), "Bölüm Seçiniz...", new { @class = "form-control form-control-sm" })
+                                        @Html.ValidationMessageFor(model => model.Bolum_No, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4">Görevler</label>
                                 <div class="col-md-12">
@@ -320,3 +353,36 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#Departman_No").change(function () {
+            var departmanNo = $(this).val();
+            $.ajax({
+                url: '/Users/AltDepartmanListesi?Departman=' + departmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Alt_Departman_No").empty();
+                $.each(data, function (index, row) {
+                    $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                });
+            });
+        });
+        $("#Alt_Departman_No").change(function () {
+            var altdepartmanNo = $(this).val();
+            $.ajax({
+                url: '/Users/BolumListesi?AltDepartman=' + altdepartmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Bolum_No").empty();
+                $.each(data, function (index, row) {
+                    $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                });
+            });
+
+        })
+
+
+    });
+</script>

@@ -10,6 +10,8 @@
         public string Plaka { get; set; }
         public string SirketAdi { get; set; }
         public string DepartmanAdi { get; set; }
+        public string AltDepartmanAdi { get; set; }
+        public string BolumAdi { get; set; }
         public string BlokAdi { get; set; }
         public int? Daire { get; set; }
         public string Grup_Adi { get; set; }

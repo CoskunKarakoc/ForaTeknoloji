@@ -5,7 +5,7 @@ namespace ForaTeknoloji.Entities.Entities
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class Users:IEntity
+    public partial class Users : IEntity
     {
         [Column("Kayit No")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -67,6 +67,15 @@ namespace ForaTeknoloji.Entities.Entities
 
         [Column("Departman No")]
         public int? Departman_No { get; set; }
+
+        [Column("Alt Departman No")]
+        public int? Alt_Departman_No { get; set; }
+
+        [Column("Unvan No")]
+        public int? Unvan_No { get; set; }
+
+        [Column("Bolum No")]
+        public int? Bolum_No { get; set; }
 
         [Column("Sirket No")]
         public int? Sirket_No { get; set; }

@@ -7,7 +7,7 @@
     <div class="col-md-6 offset-md-3 mt-xl-5 mb-xl-5">
         <div class=" card border-left-info h-100 shadow-lg mt-2">
             <div class="card-header py-1">
-                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Alt Departman Tanımları</h3>
+                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Bölüm Tanımları</h3>
             </div>
 
             <div class="card-body">
@@ -19,7 +19,7 @@
                             @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
-                            @Html.DropDownList("Alt_Departman_No", Model.Alt_Departman_No, "Alt Departman Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Alt_Departman_No, new SelectList(""), "Alt Departman Seçiniz", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Alt_Departman_No, "", new { @class = "text-danger" })
                         </div>
                         <div class="input-group mb-3">
@@ -88,6 +88,32 @@
                 $("#BolumList").prop("hidden", false);
                 $("#Title").prop("hidden", false);
             }
+
+            $("#Departman_No").change(function () {
+                var departmanNo = $(this).val();
+                $.ajax({
+                    url: '/Bolum/AltDepartmanListesi?Departman=' + departmanNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Alt_Departman_No").empty();
+                    console.log(data);
+                    if (data == null || data.count == 0) {
+                        $("#Alt_Departman_No").empty();
+                        //$("#Alt_Departman_No").append('<option value=' + 0 + '> Alt Departman Seçiniz.. </option>');
+                    } else {
+                        $.each(data, function (index, row) {
+                            $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        });
+                    }
+
+                });
+            });
+
+
+
+
+
     });
 
       function Delete(id) {

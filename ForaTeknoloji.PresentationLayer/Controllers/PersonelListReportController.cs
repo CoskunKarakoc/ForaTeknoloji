@@ -22,8 +22,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ISirketService _sirketService;
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
+        private IAltDepartmanService _altDepartmanService;
+        private IUnvanService _unvanService;
+        private IBolumService _bolumService;
         public DBUsers user;
-        public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupMasterService groupMasterService, ISirketService sirketService, IGlobalZoneService globalZoneService, IReportService reportService)
+        public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupMasterService groupMasterService, ISirketService sirketService, IGlobalZoneService globalZoneService, IReportService reportService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -37,7 +40,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _sirketService = sirketService;
             _globalZoneService = globalZoneService;
             _reportService = reportService;
-
+            _altDepartmanService = altDepartmanService;
+            _unvanService = unvanService;
+            _bolumService = bolumService;
 
         }
 
@@ -53,6 +58,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
+            var alddepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var unvanlar = _unvanService.GetAllUnvan();
+            var bolumler = _bolumService.GetAllBolum();
             var model = new PersonelListViewModel
             {
                 ListCount = personelLists.Count.ToString(),
@@ -81,11 +89,61 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Grup_Adi,
                     Value = a.Grup_No.ToString()
+                }),
+                Alt_Departman_No = alddepartmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Unvan_No = unvanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Unvan_No.ToString()
+                }),
+                Bolum_No = bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
                 })
 
             };
             TempData["PersonelLists"] = personelLists;
             return View(model);
+        }
+
+        public ActionResult AltDepartmanListesi(int? Departman)
+        {
+            if (Departman != 0 && Departman != null)
+            {
+                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman);
+                var selectAltDepartman = list.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                });
+                return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult BolumListesi(int? AltDepartman)
+        {
+            if (AltDepartman != null && AltDepartman != 0)
+            {
+
+                var list = _bolumService.GetAllBolum(x => x.Alt_Departman_No == AltDepartman);
+                var selectBolum = list.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
+                });
+                return Json(selectBolum, JsonRequestBehavior.AllowGet);
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
         }
 
 

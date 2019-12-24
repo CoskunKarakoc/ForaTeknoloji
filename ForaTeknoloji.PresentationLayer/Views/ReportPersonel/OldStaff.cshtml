@@ -134,11 +134,11 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Başlangıç</label>
-                            <input class="form-control" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
+                            <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Bitiş</label>
-                            <input class="form-control" name="Bitis_Tarihi" disabled type="date" value="" id="Tarih2">
+                            <input class="form-control form-control-sm" name="Bitis_Tarihi" disabled type="date" value="" id="Tarih2">
                         </div>
                     </div>
                     <div class="form-group">
@@ -147,10 +147,10 @@
                             <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="Baslangic_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
+                            <input class="form-control form-control-sm" name="Baslangic_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="Bitis_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
+                            <input class="form-control form-control-sm" name="Bitis_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
                         </div>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="Gunluk_Saat_Dilimi" class="custom-control-input" id="Günlük" />
@@ -160,31 +160,38 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
+                        <label>Şirketler</label>
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm" })
+
+                    </div>
+
+                    <div class="form-group">
                         <label>Departmanlar</label>
-                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm" })
 
                     </div>
                     <div class="form-group">
-                        <label>Şirketler</label>
-                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control" })
-
+                        <label>Alt Departmanlar</label>
+                        @Html.DropDownListFor(model => model.AltDepartman, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm" })
                     </div>
+                    <div class="form-group">
+                        <label>Bölümler</label>
+                        @Html.DropDownListFor(model => model.Bolum, new SelectList(""), "Bölüm Seçiniz..", new { @class = "form-control form-control-sm" })
+                    </div>
+
                     <div class="form-group">
                         <label>Global Kapı Bölgesi</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm" })
 
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Bloklar</label>
-                        @Html.DropDownListFor(model => model.Blok, Model.Blok, "Blok Seçiniz..", new { @class = "form-control" })
 
-                    </div>
+                
                     <div class="form-group">
                         <label>Paneller</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control form-control-sm" })
 
                         </div>
                     </div>
@@ -196,23 +203,28 @@
                             <label class="custom-control-label" for="TümKullanici">Tüm Aktif Kullanıcılar</label>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="Ziyaretci" class="form-control" name="Users" />
+                            <input type="text" id="Ziyaretci" class="form-control form-control-sm" name="Users" />
                             <input type="text" id="UserKayitNo" hidden name="User" value="" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Geçiş Grupları</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Plaka">Plaka Seçimi</label>
-                        <input type="text" placeholder="Plaka" class="form-control" id="Plaka" name="Plaka" value="" />
+                        <input type="text" placeholder="Plaka" class="form-control form-control-sm" id="Plaka" name="Plaka" value="" />
                     </div>
                     <div class="form-group">
                         <label for="Daire">Daire Seçimi</label>
-                        <input type="number" class="form-control" id="Daire" placeholder="Daire" name="Daire" value="" min="0" max="3" step="1" />
+                        <input type="number" class="form-control form-control-sm" id="Daire" placeholder="Daire" name="Daire" value="" min="0" max="3" step="1" />
+                    </div>
+                    <div class="form-group">
+                        <label>Bloklar</label>
+                        @Html.DropDownListFor(model => model.Blok, Model.Blok, "Blok Seçiniz..", new { @class = "form-control form-control-sm" })
+
                     </div>
 
 
@@ -365,6 +377,41 @@ webGrid.Column("Tarih", "Tarih")))
                 $(this).addClass("table-success");
         });
 
+        $("#Departman").change(function () {
+            var departmanNo = $(this).val();
+            if (departmanNo == 0) {
+                $("#Bolum").empty();
+                $("#AltDepartman").empty();
+                $("#AltDepartman").append('<option value=' + 0 + '> Alt Departman Seçiniz.. </option>');
+                $("#Bolum").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/ReportPersonel/AltDepartmanListesi?Departman=' + departmanNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#AltDepartman").empty();
+                    $.each(data, function (index, row) {
+                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                    });
+                });
+            }
+
+        });
+        $("#AltDepartman").change(function () {
+            var altdepartmanNo = $(this).val();
+            $.ajax({
+                url: '/ReportPersonel/BolumListesi?AltDepartman=' + altdepartmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Bolum").empty();
+                $.each(data, function (index, row) {
+                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                });
+            });
+
+        })
 
         $("#SearchBtn").click(function () {
             var arama = $("#Search").val();

@@ -150,6 +150,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult AltDepartmanListesi(int? Departman)
+        {
+            if (Departman != 0 && Departman != null)
+            {
+                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman);
+                var selectAltDepartman = list.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                });
+                return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
 
 
 

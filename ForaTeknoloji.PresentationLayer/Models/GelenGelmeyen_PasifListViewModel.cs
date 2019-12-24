@@ -11,5 +11,8 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> Sirket { get; set; }
         public IEnumerable<SelectListItem> Gecis_Grubu { get; set; }
         public IEnumerable<SelectListItem> Global_Kapi_Bolgesi { get; set; }
+        public IEnumerable<SelectListItem> AltDepartman { get; internal set; }
+        public IEnumerable<SelectListItem> Unvan { get; internal set; }
+        public IEnumerable<SelectListItem> Bolum { get; internal set; }
     }
 }
