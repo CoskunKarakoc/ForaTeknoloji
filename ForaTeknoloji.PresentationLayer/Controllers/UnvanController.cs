@@ -87,10 +87,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (unvan != null)
                     {
                         _unvanService.DeleteUnvan(unvan);
-                        return Json(true, JsonRequestBehavior.AllowGet);
+                        return RedirectToAction("Index");
                     }
                 }
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
         }
 

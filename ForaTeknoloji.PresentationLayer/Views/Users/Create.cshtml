@@ -357,16 +357,36 @@
     $(document).ready(function () {
         $("#Departman_No").change(function () {
             var departmanNo = $(this).val();
-            $.ajax({
-                url: '/Users/AltDepartmanListesi?Departman=' + departmanNo,
-                type: 'GET',
-                dataType: 'json'
-            }).done(function (data) {
+            if (departmanNo == 0) {
                 $("#Alt_Departman_No").empty();
-                $.each(data, function (index, row) {
-                    $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                $("#Bolum_No").empty();
+                $("#Alt_Departman_No").append('<option value=' + 0 + '> Alt Departman Seçiniz... </option>');
+                $("#Bolum_No").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/Users/AltDepartmanListesi?Departman=' + departmanNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Alt_Departman_No").empty();
+                    $.each(data, function (index, row) {
+                        $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                    });
+
+                    var altdepartmanNo = $("#Alt_Departman_No").val();
+                    $.ajax({
+                        url: '/Users/BolumListesi?AltDepartman=' + altdepartmanNo,
+                        type: 'GET',
+                        dataType: 'json'
+                    }).done(function (data) {
+                        $("#Bolum_No").empty();
+                        $.each(data, function (index, row) {
+                            $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        });
+                    });
+
                 });
-            });
+            }
         });
         $("#Alt_Departman_No").change(function () {
             var altdepartmanNo = $(this).val();

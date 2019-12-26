@@ -203,11 +203,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _alarmlarService.DeleteAlarmlar(entity);
-                    return Json(true, JsonRequestBehavior.AllowGet);
+                    return RedirectToAction("Index");
                 }
                 throw new Exception("Böyle bir kayıt bulunamadı!");
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index");
         }
 
 

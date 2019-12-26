@@ -95,10 +95,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (altDepartman != null)
                     {
                         _altDepartmanService.DeleteAltDepartman(altDepartman);
-                        return Json(true, JsonRequestBehavior.AllowGet);
+                        return RedirectToAction("Index");
                     }
                 }
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
         }
 

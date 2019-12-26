@@ -12,6 +12,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         DoorGroupsDetail AddDoorGroupsDetail(DoorGroupsDetail doorGroupsDetail);
         void DeletDoorGroupsDetail(DoorGroupsDetail doorGroupsDetail);
         void DeleteAll();
+        void DeleteByGrupNoANDPanelID(int? PanelID, int? GrupNo);
         DoorGroupsDetail UpdateDoorGroupsDetail(DoorGroupsDetail doorGroupsDetail);
     }
 }

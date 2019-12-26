@@ -323,9 +323,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                 }
-                return Json(true, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index");
         }
 
 

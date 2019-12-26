@@ -52,7 +52,7 @@
                                 <td>@item.Adi</td>
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Employment",new { id=item.Gorev_No})"><i class="fas fa-edit text-info mr-5"></i></a>
-                                    <a title="Delete" onclick="Delete(@item.Gorev_No)" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    <a title="Delete" href="@Url.Action("Delete",new {id=item.Gorev_No })" onclick="return confirm('Seçilen Görevi Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
                                 </td>
                             </tr>
                         }
@@ -76,42 +76,6 @@
                 $("#Title").prop("hidden", false);
             }
     });
-
-      function Delete(id) {
-            swal({
-                title: "Silmek İstediğinize Emin Misiniz?",
-                text: "Seçilen görev veritabanından silinecek!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                          $.ajax({
-                                type: "POST",
-                                url: '@Url.Action("Delete","Employment")',
-                                data: JSON.stringify({ id: id }), //use id here
-                                dataType: "json",
-                                contentType: "application/json; charset=utf-8",
-                              success: function (data) {
-                                  if (data) {
-                                      swal("Başarılı! Görev silme işlemi başarılı şekilde gerçekleştirildi!", {
-                                          icon: "success",
-                                      });
-                                  } else {
-                                      //swal("Silme işleminden vazgeçildi!");
-                                  }
-                                  setTimeout(function () {
-                                      window.location.href = "/Employment/Index";
-                                  }, 2500);
-                                },
-                                error: function () {
-                                    alert("Error while deleting data");
-                                }
-                            });
-                    }
-                });
-        }
 </script>
 
 

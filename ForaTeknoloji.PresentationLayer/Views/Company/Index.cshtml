@@ -9,7 +9,7 @@
             <div class="card-header py-1">
                 <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Şirket Tanımları</h3>
             </div>
-          
+
             <div class="card-body">
                 @using (Html.BeginForm("Create", "Company"))
                 {
@@ -52,7 +52,7 @@
                                 <td>@item.Adi</td>
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Company",new { id=item.Sirket_No})"><i class="fas fa-edit text-info mr-5"></i></a>
-                                    <a title="Delete" onclick="Delete(@item.Sirket_No)" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    <a title="Delete" href="@Url.Action("Delete",new {id=item.Sirket_No })" onclick="return confirm('Seçilen Şirketi Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
                                 </td>
                             </tr>
                         }
@@ -66,52 +66,17 @@
 
 
 <script>
-        $(document).ready(function () {
-            var count = $("#CompanyCount").val();
-            if (count == 0) {
-                $("#CompanyList").prop("hidden", true);
-                $("#Title").prop("hidden", true);
-            } else {
-                $("#CompanyList").prop("hidden", false);
-                $("#Title").prop("hidden", false);
-            }
+    $(document).ready(function () {
+        var count = $("#CompanyCount").val();
+        if (count == 0) {
+            $("#CompanyList").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#CompanyList").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
     });
 
-      function Delete(id) {
-            swal({
-                title: "Silmek İstediğinize Emin Misiniz?",
-                text: "Seçilen şirket veritabanından silinecek!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                          $.ajax({
-                                type: "POST",
-                                url: '@Url.Action("Delete","Company")',
-                                data: JSON.stringify({ id: id }), //use id here
-                                dataType: "json",
-                                contentType: "application/json; charset=utf-8",
-                              success: function (data) {
-                                  if (data) {
-                                      swal("Başarılı! Şirket silme işlemi başarılı şekilde gerçekleştirildi!", {
-                                          icon: "success",
-                                      });
-                                  } else {
-                                      //swal("Silme işleminden vazgeçildi!");
-                                  }
-                                  setTimeout(function () {
-                                      window.location.href = "/Company/Index";
-                                  }, 2500);
-                                },
-                                error: function () {
-                                    alert("Error while deleting data");
-                                }
-                            });
-                    }
-                });
-        }
 </script>
 
 

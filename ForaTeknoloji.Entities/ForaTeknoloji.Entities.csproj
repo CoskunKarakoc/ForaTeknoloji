@@ -79,6 +79,7 @@
     <Compile Include="ComplexType\OutherReportParameters.cs" />
     <Compile Include="ComplexType\PersonelList.cs" />
     <Compile Include="ComplexType\PersonelListReportParameters.cs" />
+    <Compile Include="ComplexType\RefectoryParameters.cs" />
     <Compile Include="ComplexType\ReportPersonelList.cs" />
     <Compile Include="ComplexType\TanimsizReportParameters.cs" />
     <Compile Include="ComplexType\TaskStatusWatch.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="ComplexType\VisitorReportParameters.cs" />
     <Compile Include="ComplexType\WatchEntityComplex.cs" />
     <Compile Include="ComplexType\WatchParameters.cs" />
+    <Compile Include="ComplexType\YemekhaneComplex.cs" />
+    <Compile Include="ComplexType\YemekhaneComplexTotal.cs" />
     <Compile Include="ComplexType\ZiyaretciRaporList.cs" />
     <Compile Include="DataTransferObjects\ConvertUser.cs" />
     <Compile Include="DataTransferObjects\LoginViewModel.cs" />

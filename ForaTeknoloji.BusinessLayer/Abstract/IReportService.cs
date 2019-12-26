@@ -122,6 +122,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <returns></returns>
         List<Sirketler> SirketListesi(DBUsers dBUsers);
 
-
+        List<YemekhaneComplex> YemekhaneRaporu(RefectoryParameters parameters);
+        List<YemekhaneComplexTotal> YemekhaneRaporuTotal(RefectoryParameters parameters);
     }
 }

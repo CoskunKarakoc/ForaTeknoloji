@@ -45,5 +45,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _doorGroupsDetailDal.Update(doorGroupsDetail);
         }
+
+
+        public void DeleteByGrupNoANDPanelID(int? PanelID, int? GrupNo)
+        {
+            _doorGroupsDetailDal.DeleteByGrupNoANDPanelID(PanelID, GrupNo);
+        }
+
     }
 }

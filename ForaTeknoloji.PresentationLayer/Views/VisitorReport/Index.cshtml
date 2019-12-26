@@ -155,8 +155,8 @@
                             <label class="custom-control-label" for="TümZiyaret">Tüm Ziyaretçiler</label>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="Ziyaretci" class="form-control" name="Ziyaret" />
-                            <input type="text" id="Visitor" hidden name="Visitor" />
+                            <input type="text" id="Ziyaretci" class="form-control" name="Ziyaretci" />
+                            <input type="text" id="VisitorID" hidden name="Visitor" />
                         </div>
                     </div>
 
@@ -388,7 +388,7 @@
         $("#TümZiyaret").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#Ziyaretci").attr("disabled", true);
-                $("#Visitor").attr("value", null);
+                $("#VisitorID").attr("value", null);
                 $("#Ziyaretci").attr("value", null);
             } else {
                 $("#Ziyaretci").attr("disabled", false);
@@ -465,13 +465,13 @@
                 var kayitNo = $(this).children("td").data("kayitno");
                 var name = $(this).children("td").data("visitor");
                 $("#Ziyaretci").attr('value', name);
-                $("#Visitor").attr('value', kayitNo);
+                $("#VisitorID").attr('value', kayitNo);
                 $("#alert").text(name + " Seçildi!");
 
             });
         });//Açılan Popup'taki kullanıcıyı seçme ve text'te yazma
         $("#temizle").click(function () {
-            $("#Visitor").attr("value", null);
+            $("#VisitorID").attr("value", null);
             $("#Ziyaretci").attr("value", null);
             $("#alertMain").prop("hidden", true);
         });

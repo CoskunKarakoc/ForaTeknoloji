@@ -1,0 +1,40 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.DoorGroupsCreateViewModel
+@{
+    ViewBag.Title = "Yeni Kapı Grubu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row animated slideInLeft faster">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg border-left-info h-100 mx-lg-5 my-lg-5">
+            <div class="card-header py-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Kapı Grup Ayarları</h3>
+            </div>
+            <div class="card-body">
+              
+                @using (Html.BeginForm("Create", "DoorGroup", FormMethod.Post))
+                {
+                    @Html.HiddenFor(model => model.Kapi_Grup_No)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Geçiş Grup No</label>
+                                @Html.TextBoxFor(model => model.Kapi_Grup_No, new { @class = "form-control", disabled = true })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Geçiş Grup Adı</label>
+                                <input type="text" name="Kapi_Grup_Adi" id="Kapi_Grup_Adi" class="form-control" value="" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <a href="@Url.Action("Index","DoorGroup")" class="btn btn-outline-primary btn-sm"><i class="fas fa-hand-o-left"></i> Listeye Geri Dön</a>
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-save"></i> Grup Kaydet</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

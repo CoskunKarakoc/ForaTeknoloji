@@ -198,7 +198,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         _groupsDetailNewService.DeleteGroupsDetailNew(item);
                     }
-                    return Json(true, JsonRequestBehavior.AllowGet);
+                    return RedirectToAction("Groups");
                 }
                 throw new Exception("Böyle bir kayıt bulunamadı");
             }

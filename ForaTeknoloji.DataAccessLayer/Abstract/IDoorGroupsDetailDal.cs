@@ -6,5 +6,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     public interface IDoorGroupsDetailDal : IEntityRepository<DoorGroupsDetail>
     {
         void DeleteAll();
+        void DeleteByGrupNoANDPanelID(int? PanelID, int? GrupNo);
     }
 }

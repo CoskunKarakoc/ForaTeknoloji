@@ -1,0 +1,234 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.RefectoryListViewModel
+@{
+    ViewBag.Title = "Yemekhane Raporu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    WebGrid webGrid = new WebGrid(source: Model.YemekhaneListe, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    webGrid.Pager(WebGridPagerModes.NextPrevious);
+}
+
+<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft faster">
+    <div class="card-header">
+        <h3 class="text-muted text-center">Yemekhane Raporu</h3>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Refectory", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Kapı Grup Listesi</label>
+                        @Html.DropDownListFor(model => model.Group_ID, Model.Group_ID, "Grup Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.Group_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="custom-control custom-checkbox ">
+                        <input type="checkbox" value="true" name="ikiTarih" class="custom-control-input" id="ikiTarih" />
+                        <label class="custom-control-label mb-2" for="ikiTarih">İki Tarih Arası</label>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Bitiş</label>
+                        <input class="form-control form-control-sm" name="Bitis_Tarihi" disabled type="date" value="" id="Tarih2">
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                    <a id="Excell" href="@Url.Action("PersonelRaporları", "ReportPersonel")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn  btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-users"></i> Toplam Geçiş Sayısı</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<!-- Table -->
+<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight faster">
+    <div class="card-body">
+        <div id="print_div">
+            @if (Model.YemekhaneListe.Count > 0)
+            {
+                @webGrid.GetHtml(
+htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+selectedRowStyle: "selectRow",
+footerStyle: "table-pager",
+columns: webGrid.Columns(
+webGrid.Column("Gecis_Sayisi", "Geçiş Sayısı"),
+webGrid.Column("ID", "ID"),
+webGrid.Column("Kart_ID", "Kart ID"),
+webGrid.Column("Adi", "Adı"),
+webGrid.Column("Soyadi", "Soyadı"),
+webGrid.Column("TC_Kimlik", "TC Kimlik"),
+webGrid.Column("Panel_ID", "Panel ID"),
+webGrid.Column("Panel_Name", "Panel Adı"),
+webGrid.Column("Kapi_ID", "Kapı ID")))
+            }
+            else
+            {
+                <div class="alert alert-info alert-message">
+                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                </div>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+
+
+<!--Toplam Geçiş Sayısını Veren Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Toplam Geçiş Sayıları</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if (Model.ToplamGecis.Count > 0)
+                {
+                    <div id="print_divTotal">
+                        <table class="table-borderless table table-hover text-center table-striped table-sm">
+                            <thead class="table-info">
+                                <tr>
+                                    <td>Panel ID</td>
+                                    <td>Panel Name</td>
+                                    <td>Kapı ID</td>
+                                    <td>Geçiş Sayısı</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ToplamGecis)
+                                {
+                                    <tr>
+                                        <td>@item.PanelID</td>
+                                        <td>@item.PanelAdi</td>
+                                        <td>@item.KapiID</td>
+                                        <td>@item.GecisSayi</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info alert-message">
+                        <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                    </div>
+
+                }
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnPrintTotal" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script>
+    var today = new Date();
+    $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+    $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+    $("#ikiTarih").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Tarih2").attr("disabled", false);
+        } else {
+            $("#Tarih2").attr("disabled", true);
+        }
+
+    });
+
+
+
+    $("#btnPrint").click(function () {
+        var contents = $("#print_div").html();
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        frame1.css({ "position": "absolute" });
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+        frameDoc.document.open();
+        //Create a new HTML document.
+        frameDoc.document.write('<html><head><title>Personel Geçiş Sayısı Raporları</title>');
+        frameDoc.document.write('</head><body><hr />');
+        //Append the external CSS file.
+        frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+        //Append the DIV contents.
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            frame1.remove();
+        }, 500);
+
+    });
+    $("#btnPrintTotal").click(function () {
+        var contents = $("#print_divTotal").html();
+        var frame2 = $('<iframe />');
+        frame2[0].name = "frame2";
+        frame2.css({ "position": "absolute" });
+        $("body").append(frame2);
+        var frameDoc = frame2[0].contentWindow ? frame2[0].contentWindow : frame2[0].contentDocument.document ? frame2[0].contentDocument.document : frame2[0].contentDocument;
+        frameDoc.document.open();
+        //Create a new HTML document.
+        frameDoc.document.write('<html><head><title>Geçiş Sayısı Raporları</title>');
+        frameDoc.document.write('</head><body><hr />');
+        //Append the external CSS file.
+        frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+        //Append the DIV contents.
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+        setTimeout(function () {
+
+            window.frames["frame2"].focus();
+            window.frames["frame2"].print();
+            frame2.remove();
+        }, 500);
+
+    });
+
+
+
+    $(document).ready(function () {
+        $("#TümTarih").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#ikiTarih").attr("disabled", true);
+                $("#Tarih1").attr("disabled", true);
+                $("#Tarih2").attr("disabled", true);
+            } else {
+                $("#ikiTarih").attr("disabled", false);
+                $("#Tarih1").attr("disabled", false);
+            }
+
+        });
+
+    });
+</script>
+

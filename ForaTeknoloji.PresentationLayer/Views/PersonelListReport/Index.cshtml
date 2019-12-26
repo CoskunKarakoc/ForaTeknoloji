@@ -46,7 +46,11 @@
                         @Html.DropDownListFor(model => model.Alt_Departman_No, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm" })
                         @Html.ValidationMessageFor(model => model.Alt_Departman_No, "", new { @class = "text-danger" })
                     </div>
-
+                    <div class="form-group">
+                        <label for="Unvan_No">Ünvan</label>
+                        @Html.DropDownListFor(model => model.Unvan_No, Model.Unvan_No, "Ünvan Seçimi...", new { @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.Unvan_No, "", new { @class = "text-danger" })
+                    </div>
 
 
                 </div>
@@ -138,9 +142,9 @@
         $("#Departman").change(function () {
             var departmanNo = $(this).val();
             if (departmanNo == 0) {
-                $("#Bolum_No").empty();
                 $("#Alt_Departman_No").empty();
-                $("#Alt_Departman_No").append('<option value=' + 0 + '> Alt Departman Seçiniz.. </option>');
+                $("#Bolum_No").empty();
+                $("#Alt_Departman_No").append('<option value=' + 0 + '> Alt Departman Seçiniz... </option>');
                 $("#Bolum_No").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
             } else {
                 $.ajax({
@@ -152,6 +156,19 @@
                     $.each(data, function (index, row) {
                         $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
                     });
+
+                    var altdepartmanNo = $("#Alt_Departman_No").val();
+                    $.ajax({
+                        url: '/PersonelListReport/BolumListesi?AltDepartman=' + altdepartmanNo,
+                        type: 'GET',
+                        dataType: 'json'
+                    }).done(function (data) {
+                        $("#Bolum_No").empty();
+                        $.each(data, function (index, row) {
+                            $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        });
+                    });
+
                 });
             }
         });

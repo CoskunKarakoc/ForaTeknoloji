@@ -49,10 +49,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     return RedirectToAction("Index");
                 }
                 _camerasService.DeleteCamera(cameras);
-                return Json(true, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
 
             }
-            return Json(false, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index");
         }
 
 

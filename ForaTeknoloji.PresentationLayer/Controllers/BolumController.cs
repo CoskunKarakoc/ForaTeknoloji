@@ -101,10 +101,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (bolum != null)
                     {
                         _bolumService.DeleteBolum(bolum);
-                        return Json(true, JsonRequestBehavior.AllowGet);
+                        return RedirectToAction("Index");
                     }
                 }
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
         }
 

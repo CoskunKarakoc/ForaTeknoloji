@@ -77,10 +77,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (departman != null)
                     {
                         _departmanService.DeleteDepartmanlar(departman);
-                        return Json(true, JsonRequestBehavior.AllowGet);
+                        return RedirectToAction("Index");
                     }
                 }
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
 
 

@@ -74,10 +74,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (gorev != null)
                     {
                         _gorevlerService.DeleteGorev(gorev);
-                        return Json(true, JsonRequestBehavior.AllowGet);
+                        return RedirectToAction("Index");
                     }
                 }
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
         }
 

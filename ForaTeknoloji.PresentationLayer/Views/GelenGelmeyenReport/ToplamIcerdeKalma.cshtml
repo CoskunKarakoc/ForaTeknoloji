@@ -33,6 +33,12 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
+                        <label>Ünvan</label>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçimi", new { @class = "form-control form-control-sm" })
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">İlk Tarih</label>
                             <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
@@ -46,20 +52,14 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümGlobal" class="custom-control-input" id="TümGlobal" />
-                            <label class="custom-control-label" for="TümGlobal">Tüm Global Kapı Bölgeleri</label>
-                        </div>
+                        <label>Global Kapı Bölgeleri</label>
                         <div class="form-group">
                             @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm" })
 
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümDepartman" class="custom-control-input" id="TümDepartman" />
-                            <label class="custom-control-label" for="TümDepartman">Tüm Departmanlar</label>
-                        </div>
+                        <label>Departmanlar</label>
                         @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm" })
                         @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
                     </div>
@@ -73,19 +73,13 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümGecis" class="custom-control-input" id="TümGecis" />
-                            <label class="custom-control-label" for="TümGecis">Tüm Gruplar</label>
-                        </div>
+                        <label>Geçiş Grupları</label>
                         <div class="form-group">
                             @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümSirket" class="custom-control-input" id="TümSirket" />
-                            <label class="custom-control-label" for="TümSirket">Tüm Şirketler</label>
-                        </div>
+                        <label>Şirketler</label>
                         @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm" })
                         @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
                     </div>
@@ -104,8 +98,8 @@
                             <label class="custom-control-label" for="TümZiyaret">Tüm Kullanıcılar</label>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="Ziyaretci" class="form-control form-control-sm" name="Ziyaret" />
-                            <input type="text" id="Visitor" hidden name="User" />
+                            <input type="text" id="Kullanici" class="form-control form-control-sm" name="Kullanici" />
+                            <input type="text" id="USERID" hidden name="User" />
                         </div>
                     </div>
                 </div>
@@ -255,53 +249,24 @@
             }, 500);
 
         });
-        $("#TümDepartman").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Departmanlar").attr("disabled", true);
-            } else {
-                $("#Departmanlar").attr("disabled", false);
-            }
-        });
-        $("#TümGecis").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Groupsdetail").attr("disabled", true)
-            } else {
-                $("#Groupsdetail").attr("disabled", false);
-            }
-
-        });
-        $("#TümSirket").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Sirketler").attr("disabled", true);
-            } else {
-                $("#Sirketler").attr("disabled", false);
-            }
-        });
-        $("#TümGlobal").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Global_Bolge_Adi").attr("disabled", true);
-            } else {
-                $("#Global_Bolge_Adi").attr("disabled", false);
-            }
-        });
         $("#TümZiyaret").change(function () {
             if ($(this).prop("checked") == true) {
-                $("#Ziyaretci").attr("disabled", true);
-                $("#Visitor").attr("value", null);
-                $("#Ziyaretci").attr("value", null);
+                $("#Kullanici").attr("disabled", true);
+                $("#USERID").attr("value", null);
+                $("#Kullanici").attr("value", null);
                 $("#alertMain").text("");
             } else {
-                $("#Ziyaretci").attr("disabled", false);
+                $("#Kullanici").attr("disabled", false);
             }
         });
-        $("#Ziyaretci").focus(function () {
+        $("#Kullanici").focus(function () {
             $("#exampleModal").modal("show");
             $("#myTable tbody tr").click(function () {
                 $("#alertMain").prop("hidden", false);
                 var kayitNo = $(this).children("td").data("kayitno");
                 var name = $(this).children("td").data("visitor");
-                $("#Ziyaretci").attr('value', name);
-                $("#Visitor").attr('value', kayitNo);
+                $("#Kullanici").attr('value', name);
+                $("#USERID").attr('value', kayitNo);
                 $("#alert").text(name + " Seçildi!");
                 var selected = $(this).hasClass("table-success");
                 $("#myTable tbody tr").removeClass("table-success");
@@ -425,9 +390,9 @@
         $("#Departman").change(function () {
             var departmanNo = $(this).val();
             if (departmanNo == 0) {
-                $("#Bolum").empty();
                 $("#AltDepartman").empty();
-                $("#AltDepartman").append('<option value=' + 0 + '> Alt Departman Seçiniz.. </option>');
+                $("#Bolum").empty();
+                $("#AltDepartman").append('<option value=' + 0 + '> Alt Departman Seçiniz... </option>');
                 $("#Bolum").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
             } else {
                 $.ajax({
@@ -439,6 +404,19 @@
                     $.each(data, function (index, row) {
                         $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>');
                     });
+
+                    var altdepartmanNo = $("#AltDepartman").val();
+                    $.ajax({
+                        url: '/GelenGelmeyenReport/BolumListesi?AltDepartman=' + altdepartmanNo,
+                        type: 'GET',
+                        dataType: 'json'
+                    }).done(function (data) {
+                        $("#Bolum").empty();
+                        $.each(data, function (index, row) {
+                            $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        });
+                    });
+
                 });
             }
 
@@ -457,11 +435,6 @@
             });
 
         })
-
-
-
-
-
 
     });
 

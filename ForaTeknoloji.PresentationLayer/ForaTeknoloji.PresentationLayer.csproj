@@ -2515,7 +2515,6 @@
     <Compile Include="Controllers\BolumController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\CameraSettingsController.cs" />
-    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DoorController.cs" />
@@ -2533,6 +2532,7 @@
     <Compile Include="Controllers\PanelController.cs" />
     <Compile Include="Controllers\PanelSettingsController.cs" />
     <Compile Include="Controllers\PersonelListReportController.cs" />
+    <Compile Include="Controllers\RefectoryController.cs" />
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\SecuritySettingsController.cs" />
     <Compile Include="Controllers\SMSController.cs" />
@@ -2563,6 +2563,9 @@
     <Compile Include="Models\CurrentSession.cs" />
     <Compile Include="Models\DigerGecisRaporAlarmListViewModel.cs" />
     <Compile Include="Models\DigerGecisRaporListViewModel.cs" />
+    <Compile Include="Models\DoorGroupReaderCreateViewModel.cs" />
+    <Compile Include="Models\DoorGroupsCreateViewModel.cs" />
+    <Compile Include="Models\DoorGroupsListViewModel.cs" />
     <Compile Include="Models\EditSecurityListViewModel.cs" />
     <Compile Include="Models\GecisGrupListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyenViewModel.cs" />
@@ -2586,6 +2589,7 @@
     <Compile Include="Models\ProgRelay2EditViewModel.cs" />
     <Compile Include="Models\ProgRelayListViewModel.cs" />
     <Compile Include="Models\ReaderEditViewModel.cs" />
+    <Compile Include="Models\RefectoryListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\SecurityCreateViewModel.cs" />
     <Compile Include="Models\SecuritySettingsListViewModel.cs" />
@@ -2686,7 +2690,6 @@
     <Content Include="Views\PanelSettings\Create.cshtml" />
     <Content Include="Views\SecuritySettings\ChangePassword.cshtml" />
     <Content Include="Views\Task\TopManuTask.cshtml" />
-    <Content Include="Views\Chart\Index.cshtml" />
     <Content Include="Views\Employment\Edit.cshtml" />
     <Content Include="Views\Employment\Index.cshtml" />
     <Content Include="Views\DoorStatus\Index.cshtml" />
@@ -2696,6 +2699,12 @@
     <Content Include="Views\AltDepartman\Edit.cshtml" />
     <Content Include="Views\Bolum\Index.cshtml" />
     <Content Include="Views\Bolum\Edit.cshtml" />
+    <Content Include="Views\Refectory\Index.cshtml" />
+    <Content Include="Views\DoorGroup\Index.cshtml" />
+    <Content Include="Views\DoorGroup\Create.cshtml" />
+    <Content Include="Views\DoorGroup\Reader.cshtml" />
+    <Content Include="Views\DoorGroup\Edit.cshtml" />
+    <Content Include="Views\DoorGroup\ReaderEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2706,7 +2715,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ExcelFile\" />
-    <Folder Include="Views\DoorGroup\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForaTeknoloji.BusinessLayer\ForaTeknoloji.BusinessLayer.csproj">

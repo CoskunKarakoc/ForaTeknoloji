@@ -78,10 +78,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (bloklar != null)
                     {
                         _bloklarService.DeleteBloklar(bloklar);
-                        return Json(true, JsonRequestBehavior.AllowGet);
+                        return RedirectToAction("Index");
                     }
                 }
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
         }
 

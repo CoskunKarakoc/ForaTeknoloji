@@ -38,7 +38,7 @@
                                 <td>
                                     <a title="Düzenle" href="@Url.Action("Edit","Lift",new {Asansor_Grup_No=item.Asansor_Grup_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
                                     <a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(@item.Asansor_Grup_No,2644)" class="text-danger mr-2"><i class="fas fa-dumpster-fire"></i></a>
-                                    <a title="Veritabanından Sil" onclick="Delete(@item.Asansor_Grup_No)" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
+                                    <a title="Veritabanından Sil" href="@Url.Action("DatabaseRemove",new {id=item.Asansor_Grup_No })" onclick="return confirm('Seçilen Asansörü Silmek İstediğinize Emin Misiniz?')" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
                                     <a data-toggle="modal" data-target="#panelList" title="Panele Gönder" onclick="ekle(@item.Asansor_Grup_No,2640)" class="text-success"><i class="fas fa-share"></i></a>
                                 </td>
                             </tr>
@@ -150,41 +150,5 @@
         $("#oprKod").prop("value", oprKod);
     }
 
-     function Delete(id) {
-
-        swal({
-            title: "Silmek İstediğinize Emin Misiniz?",
-            text: "Seçilen asansör grubu veritabanından silinecek!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                      $.ajax({
-                            type: "POST",
-                            url: '@Url.Action("DatabaseRemove", "Lift")',
-                            data: JSON.stringify({ id: id }),
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                          success: function (data) {
-                              if (data) {
-                                  swal("Başarılı! Asansör Grubu silme işlemi başarılı şekilde gerçekleştirildi!", {
-                                      icon: "success",
-                                  });
-                              } else {
-                                  //swal("Silme işleminden vazgeçildi!");
-                              }
-                              setTimeout(function () {
-                                  window.location.href = "/Lift/LiftGroups";
-                              }, 2500);
-                            },
-                            error: function () {
-                                alert("Error while deleting data");
-                            }
-                        });
-                }
-            });
-    }
 
 </script>

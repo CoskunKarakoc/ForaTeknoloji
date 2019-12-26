@@ -77,10 +77,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (sirket != null)
                     {
                         _sirketService.DeleteSirket(sirket);
-                        return Json(true, JsonRequestBehavior.AllowGet);
+                        return RedirectToAction("Index");
                     }
                 }
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
         }
 

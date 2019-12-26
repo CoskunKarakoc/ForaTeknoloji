@@ -111,17 +111,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Grup_Adi,
                     Value = a.Grup_No.ToString()
                 }),
-                AltDepartman=altdepartmanlar.Select(a=>new SelectListItem {
-                    Text=a.Adi,
-                    Value=a.Alt_Departman_No.ToString()
+                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
                 }),
-                Unvan=unvanlar.Select(a=>new SelectListItem {
-                    Text=a.Adi,
-                    Value=a.Unvan_No.ToString()
+                Unvan = unvanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Unvan_No.ToString()
                 }),
-                Bolum=bolumler.Select(a=>new SelectListItem {
-                    Text=a.Adi,
-                    Value=a.Bolum_No.ToString()
+                Bolum = bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
                 })
 
 

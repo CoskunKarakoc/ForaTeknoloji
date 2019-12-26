@@ -153,7 +153,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _timeGroupsService.DeleteTimeGroups(entity);
-                    return Json(true, JsonRequestBehavior.AllowGet);
+                    return RedirectToAction("Index");
                 }
                 throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
             }

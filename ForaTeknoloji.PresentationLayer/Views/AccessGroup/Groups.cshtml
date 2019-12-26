@@ -58,7 +58,7 @@
                                     <td>
                                         <a title="Grup Ayarları" href="@Url.Action("GroupSettings","AccessGroup",new {id=item.Grup_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
                                         <a title="Grup Kapı Ayarları" href="@Url.Action("GroupReaders","AccessGroup",new {id=item.Grup_No })" class="text-secondary mr-2"><i class="fas fa-door-open"></i></a>
-                                        <a title="Veritabanından sil" onclick="Delete(@item.Grup_No)" class="text-danger mr-2"><i class="fas fa-trash-alt"></i></a>
+                                        <a title="Veritabanından sil"href="@Url.Action("Delete",new {id=item.Grup_No })" onclick="return confirm('Seçilen Geçiş Grubunu Silmek İstediğinize Emin Misiniz?')" class="text-danger mr-2"><i class="fas fa-trash-alt"></i></a>
                                         <a title="Seçili Grubu Panele Gönder" data-toggle="modal" data-target="#panelList" onclick="ekle(@item.Grup_No)" class="text-success"><i class="fas fa-share"></i></a>
                                     </td>
                                 </tr>
@@ -241,43 +241,6 @@
         $("#gecisGrupNo").prop("value", grupNo);
     }
 
-
-    function Delete(id) {
-
-        swal({
-            title: "Silmek İstediğinize Emin Misiniz?",
-            text: "Seçilen geçiş grubu veritabanından silinecek!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                      $.ajax({
-                            type: "POST",
-                            url: '@Url.Action("Delete","AccessGroup")',
-                            data: JSON.stringify({ id: id }),
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                          success: function (data) {
-                              if (data) {
-                                  swal("Başarılı! Geçiş Grubu silme işlemi başarılı şekilde gerçekleştirildi!", {
-                                      icon: "success",
-                                  });
-                              } else {
-                                  //swal("Silme işleminden vazgeçildi!");
-                              }
-                              setTimeout(function () {
-                                  window.location.href = "/AccessGroup/Groups";
-                              }, 2500);
-                            },
-                            error: function () {
-                                alert("Error while deleting data");
-                            }
-                        });
-                }
-            });
-    }
 
 
 </script>

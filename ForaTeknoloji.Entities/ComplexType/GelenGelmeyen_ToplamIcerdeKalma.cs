@@ -10,6 +10,7 @@
         public string DepartmanAdi { get; set; }
         public string AltDepartmanAdi { get; set; }
         public string BolumAdi { get; set; }
+        public string Unvan { get; set; }
         public string Grup_Adi { get; set; }
         public string Tarih_Degeri { get; set; }
         public string Toplam_Saat { get; set; }
