@@ -666,11 +666,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             DepartmanAdi = reader[6].ToString(),
                             AltDepartmanAdi = reader[7].ToString(),
                             BolumAdi = reader[8].ToString(),
-                            Plaka = reader[9].ToString(),
-                            BlokAdi = reader[10].ToString(),
-                            Daire = reader[11] as int? ?? default(int),
-                            Grup_Adi = reader[12].ToString(),
-                            Global_Bolge_Adi = reader[13].ToString()
+                            UnvanAdi = reader[9].ToString(),
+                            Plaka = reader[10].ToString(),
+                            BlokAdi = reader[11].ToString(),
+                            Daire = reader[12] as int? ?? default(int),
+                            Grup_Adi = reader[13].ToString(),
+                            Global_Bolge_Adi = reader[14].ToString()
 
                         };
                         liste.Add(nesne);
@@ -1009,8 +1010,8 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             ID = reader[0] as int? ?? default(int),
                             Kart_ID = reader[1].ToString(),
                             Adi = reader[2].ToString(),
-                            Soyadi = reader[3].ToString(),
-                            UnvanAdi = reader[4].ToString(),
+                            UnvanAdi = reader[3].ToString(),
+                            Soyadi = reader[4].ToString(),
                             TCKimlik = reader[5].ToString(),
                             SirketAdi = reader[6].ToString(),
                             DepartmanAdi = reader[7].ToString(),

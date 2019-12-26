@@ -11,6 +11,7 @@
         public string DepartmanAdi { get; set; }
         public string AltDepartmanAdi { get; set; }
         public string BolumAdi { get; set; }
+        public string UnvanAdi { get; set; }
         public string Plaka { get; set; }
         public string BlokAdi { get; set; }
         public int? Daire { get; set; }
