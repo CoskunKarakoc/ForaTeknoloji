@@ -48,5 +48,6 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public int? Gecis_Tipi { get; set; }
 
+        public string Panel_Name { get; set; }
     }
 }

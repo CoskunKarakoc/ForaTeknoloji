@@ -2233,6 +2233,93 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
+        public List<WatchEntityComplex> MonitorWatch(SpotMonitorSettings parameters)
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = "";
+            if (parameters != null && parameters.Panel_ID != null && parameters.Kapi_ID != null)
+            {
+                queryString = @"SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID,
+                    AccessDatas.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik,
+                    Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman, AccessDatas.Plaka,
+                    Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel,
+                    ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.Tarih, AccessDatas.Kod,
+                    Users.Resim, CodeOperation.Operasyon, AccessDatas.[Kullanici Adi] As Operator,
+                    AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],PanelSettings.[Panel Name]
+                    FROM ((((AccessDatas LEFT JOIN (((Users
+                    LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])
+                    LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
+                    LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID)
+                    LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) 
+                    LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID])                    
+                    LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID])
+                    LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]
+                    WHERE AccessDatas.[Panel ID] =" + parameters.Panel_ID + " AND AccessDatas.[Kapi ID]= " + parameters.Kapi_ID + " ORDER BY AccessDatas.[Kayit No] DESC";
+            }
+            else
+            {
+                return new List<WatchEntityComplex>();
+            }
+
+            List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var nesne = new WatchEntityComplex
+                        {
+                            Kayit_No = reader[0] as int? ?? default(int),
+                            ID = reader[1] as int? ?? default(int),
+                            Kart_ID = reader[2].ToString(),
+                            Adi = reader[3].ToString(),
+                            Soyadi = reader[4].ToString(),
+                            TCKimlik = reader[5].ToString(),
+                            Sirket_Adi = reader[6].ToString(),
+                            Departman_Adi = reader[7].ToString(),
+                            Plaka = reader[8].ToString(),
+                            Blok_Adi = reader[9].ToString(),
+                            Daire = reader[10] as int? ?? default(int),
+                            Grup_Adi = reader[11].ToString(),
+                            Panel_ID = reader[12] as int? ?? default(int),
+                            Kapi_Adi = reader[13].ToString(),
+                            Tarih = reader[14] as DateTime? ?? default(DateTime),
+                            Kod = reader[15] as int? ?? default(int),
+                            Resim = reader[16].ToString(),
+                            Operasyon = reader[17].ToString(),
+                            Operator = reader[18].ToString(),
+                            Islem_Verisi_1 = reader[19] as int? ?? default(int),
+                            Islem_Verisi_2 = reader[20] as int? ?? default(int),
+                            Gecis_Tipi = reader[21] as int? ?? default(int),
+                            Panel_Name=reader[22].ToString()
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return liste;
+        }
+
+
+
+
+
+
+
         public List<YemekhaneComplex> YemekhaneRaporu(RefectoryParameters parameters)
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;

@@ -157,7 +157,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
                     }
                 }
-                return RedirectToAction("Settings");
+                return RedirectToAction("Settings", new { @PanelID = panel.Panel_ID });
             }
 
             return View(panel);

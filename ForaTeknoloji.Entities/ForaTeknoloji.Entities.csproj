@@ -81,6 +81,7 @@
     <Compile Include="ComplexType\PersonelListReportParameters.cs" />
     <Compile Include="ComplexType\RefectoryParameters.cs" />
     <Compile Include="ComplexType\ReportPersonelList.cs" />
+    <Compile Include="ComplexType\SpotMonitorSettings.cs" />
     <Compile Include="ComplexType\TanimsizReportParameters.cs" />
     <Compile Include="ComplexType\TaskStatusWatch.cs" />
     <Compile Include="ComplexType\TimeGroupsEdit.cs" />

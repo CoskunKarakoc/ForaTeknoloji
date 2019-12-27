@@ -84,8 +84,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    //Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
-                    Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
+                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    //Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
                     PanelListesi = _reportService.PanelListesi(user)
                 };
                 return View(model);
@@ -94,8 +94,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    //Users = _userService.GetAllUsersWithOuther(),
-                    Users = IndexViewUser(),
+                    Users = _userService.GetAllUsersWithOuther(),
+                    //Users = IndexViewUser(),
                     PanelListesi = _reportService.PanelListesi(user)
                 };
                 return View(model);
@@ -355,8 +355,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    //Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
-                    Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
+                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
+                    //Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
                     PanelListesi = _reportService.PanelListesi(user)
                 };
                 return View(model);
@@ -365,8 +365,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 var model = new UsersListViewModel
                 {
-                    //Users = _userService.GetAllUsersWithOuther(),
-                    Users = IndexViewUser(),
+                    Users = _userService.GetAllUsersWithOuther(),
+                    //Users = IndexViewUser(),
                     PanelListesi = _reportService.PanelListesi(user)
 
                 };

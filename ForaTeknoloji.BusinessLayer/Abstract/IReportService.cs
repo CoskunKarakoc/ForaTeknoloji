@@ -124,5 +124,8 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
 
         List<YemekhaneComplex> YemekhaneRaporu(RefectoryParameters parameters);
         List<YemekhaneComplexTotal> YemekhaneRaporuTotal(RefectoryParameters parameters);
+
+
+        List<WatchEntityComplex> MonitorWatch(SpotMonitorSettings parameters);
     }
 }

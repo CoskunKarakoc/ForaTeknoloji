@@ -2536,6 +2536,7 @@
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\SecuritySettingsController.cs" />
     <Compile Include="Controllers\SMSController.cs" />
+    <Compile Include="Controllers\SpotMonitorController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TimeGroupsController.cs" />
     <Compile Include="Controllers\UndefinedUserReportController.cs" />
@@ -2585,6 +2586,7 @@
     <Compile Include="Models\LiftEditViewModel.cs" />
     <Compile Include="Models\LiftGroupsAddViewModel.cs" />
     <Compile Include="Models\LiftGroupsListViewModel.cs" />
+    <Compile Include="Models\MonitorWatchViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ProgRelay2EditViewModel.cs" />
     <Compile Include="Models\ProgRelayListViewModel.cs" />
@@ -2705,6 +2707,7 @@
     <Content Include="Views\DoorGroup\Reader.cshtml" />
     <Content Include="Views\DoorGroup\Edit.cshtml" />
     <Content Include="Views\DoorGroup\ReaderEdit.cshtml" />
+    <Content Include="Views\SpotMonitor\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

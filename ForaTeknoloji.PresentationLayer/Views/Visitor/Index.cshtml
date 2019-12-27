@@ -56,11 +56,18 @@
                                 <td>@item.TCKimlik</td>
                                 <td>@item.Telefon</td>
                                 <td>@item.Plaka</td>
-                                <td>@item.Tarih.Value.ToShortDateString()</td>
+                                @if (item.Tarih == null)
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>@item.Tarih.Value.ToShortDateString()</td>
+                                }
                                 <td>@item.Ziyaret_Sebebi</td>
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","Visitor",new { id=item.Kayit_No})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Visitor",new { id=item.ID})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Visitor",new { id=item.Kayit_No})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
                                     <a data-toggle="modal" data-target="#panelList" title="Visitor Send To Panel" onclick="ekle(@item.ID)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
                                 </td>
                             </tr>

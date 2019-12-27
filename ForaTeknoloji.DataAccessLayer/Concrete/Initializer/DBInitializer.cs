@@ -1602,7 +1602,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Kullanici_Adi = "Fora Teknoloji",
                 Sifre = "12345",
                 SMPT_Server = "smpt.gmail.com",
-                SMPT_Server_Port = 465,
+                SMPT_Server_Port = 587,
                 SSL_Kullan = true,
                 Authentication = 2,
                 Gonderme_Saati = DateTime.Now,
