@@ -182,9 +182,14 @@
                         <h6 class="collapse-header">Genel Ayarları</h6>
                         <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı Operasyon</a>
                         <a class="collapse-item" href="@Url.Action("Index","DoorStatus")">Kapı Durumları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","DoorGroup")">Kapı Grupları</a>
+                        @{
+                            DBUsers yemekhaneGrup = CurrentSession.User;
+                            if (yemekhaneGrup.SysAdmin == true)
+                            {
+                                <a class="collapse-item" href="@Url.Action("Index","DoorGroup")">Kapı Grupları</a>
+                            }
+                        }
                         <a class="collapse-item" href="@Url.Action("ProgRelay","Door")">Programlı Kapı<br /> Açma/Kapama</a>
-
                     </div>
 
                 </div>
@@ -262,7 +267,13 @@
                         <a class="collapse-item" href="@Url.Action("Ziyaretci","InsideOutReport")">Ziyaretçi</a>
                         <a class="collapse-item" href="@Url.Action("Tumu","InsideOutReport")">Tümü</a>
                         <hr />
-                        <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları</a>
+                        @{
+                            DBUsers yemekhaneUser = CurrentSession.User;
+                            if (users.SysAdmin == true)
+                            {
+                                <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları</a>
+                            }
+                        }
                         <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Diğer Raporlar</a>
                         <a class="collapse-item" href="@Url.Action("Index","VisitorReport")">Ziyaretçi Raporları</a>
                         <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Tanımsız Kullanıcı Raporları</a>
@@ -375,10 +386,16 @@
                                     <i class="fas fa-door-open fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Kapı İşlemleri
                                 </a>
-                                <a class="dropdown-item" href="@Url.Action("Index","SpotMonitor")">
-                                    <i class="fas fa-desktop fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Spot Monitör
-                                </a>
+                                @{
+                                    DBUsers monitorUser = CurrentSession.User;
+                                    if (monitorUser.SysAdmin == true)
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("Index","SpotMonitor")">
+                                            <i class="fas fa-desktop fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Spot Monitör
+                                        </a>
+                                    }
+                                }
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="@Url.Action("Logout","Home")">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

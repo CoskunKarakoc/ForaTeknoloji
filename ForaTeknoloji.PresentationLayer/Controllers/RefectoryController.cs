@@ -50,6 +50,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: Refectory
         public ActionResult Index(RefectoryParameters parameters)
         {
+            if (permissionUser.SysAdmin == false)
+            {
+                throw new Exception("Yetkisiz Erişim!");
+            }
+
+
             var Liste = _reportService.YemekhaneRaporu(parameters);
             var Toplam = _reportService.YemekhaneRaporuTotal(parameters);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
@@ -69,6 +75,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Total(RefectoryParameters parameters)
         {
+            if (permissionUser.SysAdmin == false)
+            {
+                throw new Exception("Yetkisiz Erişim!");
+            }
+
             var Total = _reportService.YemekhaneRaporuTotal(parameters);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
             var model = new RefectoryListViewModel

@@ -22,8 +22,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReaderSettingsNewService _readerSettingsNewService;
         private IReportService _reportService;
         private IPanelSettingsService _panelSettingsService;
+        private IDBUsersService _dBUsersService;
         DBUsers dBUsers;
-        public DoorGroupController(IDoorGroupsDetailService doorGroupsDetailService, IDoorGroupsMasterService doorGroupsMasterService, IGroupsDetailNewService groupsDetailNewService, IGroupMasterService groupMasterService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IPanelSettingsService panelSettingsService)
+        DBUsers permissionUser;
+        public DoorGroupController(IDoorGroupsDetailService doorGroupsDetailService, IDoorGroupsMasterService doorGroupsMasterService, IGroupsDetailNewService groupsDetailNewService, IGroupMasterService groupMasterService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IPanelSettingsService panelSettingsService, IDBUsersService dBUsersService)
         {
             dBUsers = CurrentSession.User;
             if (dBUsers == null)
@@ -38,12 +40,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _readerSettingsNewService = readerSettingsNewService;
             _reportService = reportService;
             _panelSettingsService = panelSettingsService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi);
         }
 
 
         // GET: DoorGroup
         public ActionResult Index()
         {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
             var model = new DoorGroupsListViewModel
             {
                 Gruplar = _doorGroupsMasterService.GetAllDoorGroupsMaster()
@@ -56,6 +63,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Create()
         {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
             int maxID;
             if (_doorGroupsMasterService.GetAllDoorGroupsMaster().Count > 0)
                 maxID = _doorGroupsMasterService.GetAllDoorGroupsMaster().Count;
@@ -81,6 +91,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Edit(int? ID)
         {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
             DoorGroupsMaster model = new DoorGroupsMaster();
             if (ID != null)
             {
@@ -109,6 +122,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Reader(int? DoorGroupID)
         {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
             var Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var DoorGroupName = _doorGroupsMasterService.GetById((int)DoorGroupID);
             var model = new DoorGroupReaderCreateViewModel
@@ -148,6 +164,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult ReaderEdit(int? DoorGroupID)
         {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
             var Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var DoorGroupName = _doorGroupsMasterService.GetById((int)DoorGroupID);
             var model = new DoorGroupReaderCreateViewModel
@@ -216,6 +235,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(int id = -1)
         {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
+
             if (id != -1)
             {
                 var entity = _doorGroupsMasterService.GetById(id);

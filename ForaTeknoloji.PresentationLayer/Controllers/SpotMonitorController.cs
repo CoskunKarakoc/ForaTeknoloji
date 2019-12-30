@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
@@ -18,12 +19,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IReaderSettingsNewService _readerSettingsNewService;
         private IAccessDatasService _accessDatasService;
-        public SpotMonitorController(IReportService reportService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IAccessDatasService accessDatasService)
+        private IDBUsersService _dBUsersService;
+        DBUsers dBUsers;
+        DBUsers permissionUser;
+        public SpotMonitorController(IReportService reportService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService)
         {
+            dBUsers = CurrentSession.User;
+            if (dBUsers == null)
+            {
+                dBUsers = new DBUsers();
+            }
             _reportService = reportService;
             _panelSettingsService = panelSettingsService;
             _readerSettingsNewService = readerSettingsNewService;
             _accessDatasService = accessDatasService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi);
         }
 
 
@@ -34,6 +45,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: SpotMonitor
         public ActionResult Index()
         {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
             var Panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var Kapi = _readerSettingsNewService.GetAllReaderSettingsNew();
             var MonitorList = _reportService.MonitorWatch(CurrentSession.Get<SpotMonitorSettings>("SpotWatchParameter"));
@@ -58,6 +72,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult WatchSettings(SpotMonitorSettings parameters)
         {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
             if (parameters.Panel_ID != null && parameters.Kapi_ID != null)
             {
                 CurrentSession.Set<SpotMonitorSettings>("SpotWatchParameter", parameters);
