@@ -119,6 +119,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["I6"].Value = "Kapı ID";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
+            worksheet.Cells["A6:I6"].Style.Font.Size = 13;
+            worksheet.Cells["A6:I6"].Style.Font.Bold = true;
+            worksheet.Cells["A:AZ"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Cells["A:AZ"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
             int rowStart = 7;
             foreach (var item in liste)
             {
@@ -161,6 +165,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["D6"].Value = "Geçiş Sayısı";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
+            worksheet.Cells["A6:D6"].Style.Font.Size = 13;
+            worksheet.Cells["A6:D6"].Style.Font.Bold = true;
+            worksheet.Cells["A:AZ"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Cells["A:AZ"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
             int rowStart = 7;
             foreach (var item in liste)
             {

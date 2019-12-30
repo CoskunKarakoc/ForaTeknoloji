@@ -85,6 +85,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Tarih";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
+            worksheet.Cells["A6:E6"].Style.Font.Size = 13;
+            worksheet.Cells["A6:E6"].Style.Font.Bold = true;
+            worksheet.Cells["A:AZ"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Cells["A:AZ"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
             int rowStart = 7;
             foreach (var item in list)
             {

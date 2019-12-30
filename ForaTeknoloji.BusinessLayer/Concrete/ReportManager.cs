@@ -63,10 +63,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             if (parameters.Kod == 100)
             {
                 queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.[Panel ID] As Panel,"
-                              + " DoorNames.[Kapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis,"
+                              + " ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis,"
                               + " CodeOperation.Operasyon, AccessDatas.Tarih"
                               + " FROM(CodeOperation RIGHT JOIN"
-                              + " (AccessDatas RIGHT JOIN DoorNames ON AccessDatas.[Panel ID] = DoorNames.[Panel No] AND AccessDatas.[Kapi ID] = DoorNames.[Kapi No])"
+                              + " (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID])"
                               + " ON CodeOperation.TKod = AccessDatas.Kod )"
                               + " WHERE AccessDatas.Kod >= 5 AND AccessDatas.Kod <= 27";
 
@@ -92,20 +92,20 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             else if (parameters.Kod == 22)
             {
                 queryString = " SELECT AccessDatas.[Kayit No], AccessDatas.[Panel ID] As Panel,"
-                   + " DoorNames.[Kapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis,"
+                   + " ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis,"
                    + " CodeOperation.Operasyon, AccessDatas.Tarih"
                    + " FROM(CodeOperation RIGHT JOIN"
-                   + " (AccessDatas RIGHT JOIN DoorNames ON AccessDatas.[Panel ID] = DoorNames.[Panel No] AND AccessDatas.[Kapi ID] = DoorNames.[Kapi No])"
+                   + " (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID])"
                    + " ON CodeOperation.TKod = AccessDatas.Kod )"
                    + " WHERE AccessDatas.Kod >= 22 AND AccessDatas.Kod <= 25 ";
             }
             else
             {
                 queryString = "SELECT AccessDatas.[Kayit No], AccessDatas.[Panel ID] As Panel, "
-                   + " DoorNames.[Kapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis,"
+                   + " ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis,"
                    + " CodeOperation.Operasyon, AccessDatas.Tarih"
                    + " FROM(CodeOperation RIGHT JOIN"
-                   + " (AccessDatas RIGHT JOIN DoorNames ON AccessDatas.[Panel ID] = DoorNames.[Panel No] AND AccessDatas.[Kapi ID] = DoorNames.[Kapi No])"
+                   + " (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID])"
                    + " ON CodeOperation.TKod = AccessDatas.Kod )"
                    + " WHERE AccessDatas.Kod = " + parameters.Kod;
             }
@@ -221,10 +221,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = " SELECT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi, "
-                   + " Sirketler.Adi AS Sirket, AccessDatas.[Panel ID] As Panel, DoorNames.[Kapi Adi] As Kapi,"
+                   + " Sirketler.Adi AS Sirket, AccessDatas.[Panel ID] As Panel, ReaderSettingsNew.[WKapi Adi] As Kapi,"
                    + " AccessDatas.[Gecis Tipi] As Gecis, CodeOperation.Operasyon,"
                    + " AccessDatas.Tarih"
-                   + " FROM DoorNames RIGHT JOIN(CodeOperation RIGHT JOIN (AccessDatas RIGHT JOIN (Users RIGHT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) ON CodeOperation.TKod = AccessDatas.Kod) ON(DoorNames.[Kapi No] = AccessDatas.[Kapi ID]) AND(DoorNames.[Panel No] = AccessDatas.[Panel ID])"
+                   + " FROM ReaderSettingsNew RIGHT JOIN(CodeOperation RIGHT JOIN (AccessDatas RIGHT JOIN (Users RIGHT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) ON CodeOperation.TKod = AccessDatas.Kod) ON(ReaderSettingsNew.[WKapi ID] = AccessDatas.[Kapi ID]) AND(ReaderSettingsNew.[Panel ID] = AccessDatas.[Panel ID])"
                    + " WHERE AccessDatas.Kod >= 26 AND AccessDatas.Kod <= 27 ";
             queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             queryString += " AND Departman.[Departman No] IN(10000," + departmanListesi + ")";
