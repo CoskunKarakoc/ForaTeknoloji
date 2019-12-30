@@ -2708,6 +2708,7 @@
     <Content Include="Views\DoorGroup\Edit.cshtml" />
     <Content Include="Views\DoorGroup\ReaderEdit.cshtml" />
     <Content Include="Views\SpotMonitor\Index.cshtml" />
+    <Content Include="Views\Refectory\Total.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,19 +1,18 @@
-﻿@using ForaTeknoloji.Entities.ComplexType
-@model ForaTeknoloji.PresentationLayer.Models.RefectoryListViewModel
+﻿@model ForaTeknoloji.PresentationLayer.Models.RefectoryListViewModel
 @{
-    ViewBag.Title = "Yemekhane Raporu";
+    ViewBag.Title = "Yemekhane Raporu Total";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    WebGrid webGrid = new WebGrid(source: Model.YemekhaneListe, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
+    WebGrid webGrid = new WebGrid(source: Model.ToplamGecis, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
     webGrid.Pager(WebGridPagerModes.NextPrevious);
 }
 
 <div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft faster">
     <div class="card-header">
-        <h3 class="text-muted text-center">Yemekhane Raporu</h3>
+        <h3 class="text-muted text-center">Yemekhane Raporu (Toplam)</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Index", "Refectory", FormMethod.Get))
+        @using (Html.BeginForm("Total", "Refectory", FormMethod.Get))
         {
             <div class="row">
                 <div class="col-md-4">
@@ -40,11 +39,8 @@
                 </div>
                 <div class="col-md-12 text-right">
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                    <a id="Excell" href="@Url.Action("UserAccessCountTotal", "Refectory")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
-                    <a id="Excell" href="@Url.Action("UserAccessCount", "Refectory")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
-
-                    <!-- Button trigger modal -->
-                    <a href="@Url.Action("Total", "Refectory")" class="btn btn-sm btn-primary"><i class="fas fa-users"></i> Toplam Geçiş Sayısı</a>
                 </div>
             </div>
         }
@@ -56,22 +52,17 @@
 <div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight faster">
     <div class="card-body">
         <div id="print_div">
-            @if (Model.YemekhaneListe.Count > 0)
+            @if (Model.ToplamGecis.Count > 0)
             {
                 @webGrid.GetHtml(
 htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
 selectedRowStyle: "selectRow",
 footerStyle: "table-pager",
 columns: webGrid.Columns(
-webGrid.Column("Gecis_Sayisi", "Geçiş Sayısı"),
-webGrid.Column("ID", "ID"),
-webGrid.Column("Kart_ID", "Kart ID"),
-webGrid.Column("Adi", "Adı"),
-webGrid.Column("Soyadi", "Soyadı"),
-webGrid.Column("TC_Kimlik", "TC Kimlik"),
-webGrid.Column("Panel_ID", "Panel ID"),
-webGrid.Column("Panel_Name", "Panel Adı"),
-webGrid.Column("Kapi_ID", "Kapı ID")))
+webGrid.Column("PanelID", "Panel ID"),
+webGrid.Column("PanelAdi", "Panel Adı"),
+webGrid.Column("KapiID", "Kapı ID"),
+webGrid.Column("GecisSayi", "Geçiş Sayısı")))
             }
             else
             {
@@ -84,65 +75,6 @@ webGrid.Column("Kapi_ID", "Kapı ID")))
         </div>
     </div>
 </div>
-
-
-
-<!--Toplam Geçiş Sayısını Veren Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Toplam Geçiş Sayıları</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @if (Model.ToplamGecis.Count > 0)
-                {
-                    <div id="print_divTotal">
-                        <table class="table-borderless table table-hover text-center table-striped table-sm">
-                            <thead class="table-info">
-                                <tr>
-                                    <td>Panel ID</td>
-                                    <td>Panel Name</td>
-                                    <td>Kapı ID</td>
-                                    <td>Geçiş Sayısı</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.ToplamGecis)
-                                {
-                                    <tr>
-                                        <td>@item.PanelID</td>
-                                        <td>@item.PanelAdi</td>
-                                        <td>@item.KapiID</td>
-                                        <td>@item.GecisSayi</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                }
-                else
-                {
-                    <div class="alert alert-info alert-message">
-                        <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                    </div>
-
-                }
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btnPrintTotal" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 
 
 
@@ -190,32 +122,6 @@ webGrid.Column("Kapi_ID", "Kapı ID")))
         }, 500);
 
     });
-    $("#btnPrintTotal").click(function () {
-        var contents = $("#print_divTotal").html();
-        var frame2 = $('<iframe />');
-        frame2[0].name = "frame2";
-        frame2.css({ "position": "absolute" });
-        $("body").append(frame2);
-        var frameDoc = frame2[0].contentWindow ? frame2[0].contentWindow : frame2[0].contentDocument.document ? frame2[0].contentDocument.document : frame2[0].contentDocument;
-        frameDoc.document.open();
-        //Create a new HTML document.
-        frameDoc.document.write('<html><head><title>Geçiş Sayısı Raporları</title>');
-        frameDoc.document.write('</head><body><hr />');
-        //Append the external CSS file.
-        frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
-        //Append the DIV contents.
-        frameDoc.document.write(contents);
-        frameDoc.document.write('</body></html>');
-        frameDoc.document.close();
-        setTimeout(function () {
-
-            window.frames["frame2"].focus();
-            window.frames["frame2"].print();
-            frame2.remove();
-        }, 500);
-
-    });
-
 
 
     $(document).ready(function () {

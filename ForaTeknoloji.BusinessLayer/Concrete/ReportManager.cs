@@ -2295,7 +2295,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Islem_Verisi_1 = reader[19] as int? ?? default(int),
                             Islem_Verisi_2 = reader[20] as int? ?? default(int),
                             Gecis_Tipi = reader[21] as int? ?? default(int),
-                            Panel_Name=reader[22].ToString()
+                            Panel_Name = reader[22].ToString()
                         };
                         liste.Add(nesne);
                     }
@@ -2335,19 +2335,30 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
                 {
                     queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
                 }
                 else if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
                 {
                     queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
                 }
                 var panelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
                 if (panelListesi != null)
                 {
+                    queryString += "AND ";
+                    var sayac = 0;
                     foreach (var item in panelListesi)
                     {
-                        queryString += " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + ")";
+                        sayac++;
+                        if (sayac == 1)
+                        {
+                            queryString += "(AccessDatas.[Panel ID]=" + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                        }
+                        else
+                        {
+                            queryString += "OR (AccessDatas.[Panel ID]=" + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                        }
+
                     }
                 }
                 queryString += " GROUP BY Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]";
@@ -2409,19 +2420,30 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
                 {
                     queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)  AND AccessDatas.Kod=1";
                 }
                 else if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
                 {
                     queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)  AND AccessDatas.Kod=1";
                 }
                 var panelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
                 if (panelListesi != null)
                 {
+                    queryString += "AND ";
+                    var sayac = 0;
                     foreach (var item in panelListesi)
                     {
-                        queryString += " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + ")";
+                        sayac++;
+                        if (sayac == 1)
+                        {
+                            queryString += " (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                        }
+                        else
+                        {
+                            queryString += "OR (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                        }
+
                     }
                 }
                 queryString += " GROUP BY PanelSettings.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]";

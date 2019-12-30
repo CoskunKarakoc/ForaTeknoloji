@@ -93,7 +93,7 @@
                         <input type="time" id="Gonderme_Saati" name="Gonderme_Saati" class="form-control" value="@Model.Gonderme_Saati.Value.ToShortTimeString()" />
                     </div>
 
-                    <div class="custom-control custom-checkbox">
+                    <div class="custom-control custom-checkbox ">
                         @Html.CheckBox("Gelmeyenler_Raporu", Model.Gelmeyenler_Raporu ?? false, new { @class = "custom-control-input" })
                         <label for="Gelmeyenler_Raporu" class="custom-control-label">Gelmeyenler Raporu</label>
                     </div>

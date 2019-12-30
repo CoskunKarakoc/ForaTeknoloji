@@ -1601,7 +1601,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 E_Mail_Adres = "sample@abcd.com",
                 Kullanici_Adi = "Fora Teknoloji",
                 Sifre = "12345",
-                SMPT_Server = "smpt.gmail.com",
+                SMPT_Server = "smtp.gmail.com",
                 SMPT_Server_Port = 587,
                 SSL_Kullan = true,
                 Authentication = 2,
@@ -1629,6 +1629,16 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 HerGirisCikista_Mesaj = "TEST"
             };
             context.SMSSettings.Add(sMSSetting);
+            Sirketler sirket = new Sirketler
+            {
+                Adi = "Şirket 1"
+            };
+            context.Sirketler.Add(sirket);
+            Departmanlar departman = new Departmanlar
+            {
+                Adi = "Departman"
+            };
+            context.Departmanlar.Add(departman);
 
 
             context.SaveChanges();
