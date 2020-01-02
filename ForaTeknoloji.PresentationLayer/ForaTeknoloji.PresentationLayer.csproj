@@ -2709,6 +2709,9 @@
     <Content Include="Views\DoorGroup\ReaderEdit.cshtml" />
     <Content Include="Views\SpotMonitor\Index.cshtml" />
     <Content Include="Views\Refectory\Total.cshtml" />
+    <Content Include="Views\InsideOutReport\InOutPersonel.cshtml" />
+    <Content Include="Views\InsideOutReport\InOutVisitor.cshtml" />
+    <Content Include="Views\InsideOutReport\InOutAll.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -19,5 +19,8 @@
         public string Bolge { get; set; }
 
         public int? Gecis { get; set; }
+
+        public int? LBN { get; set; }
+
     }
 }

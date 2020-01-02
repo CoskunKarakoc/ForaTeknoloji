@@ -69,7 +69,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <returns></returns>
         List<WatchEntityComplex> GetWatch(WatchParameters watchParameters);
 
-
+        WatchEntityComplex GetWatchTopOne(WatchParameters watchParameters);
         /// <summary>
         /// Giriş yapan son kullanıcının bilgileri dönüyor.
         /// Session'da ki kullanıcı bilgilerine göre Şirket,Departman ve Panel kriterleri uygulanıyor.
@@ -78,7 +78,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <returns></returns>
         WatchEntityComplex LastRecordWatch(int? Kayit_No);
 
-        void Guncelle(List<int> KayitNo);
+        void Guncelle(List<int> KayitNo, int? PanelID, int? KapiID);
 
         /// <summary>
         /// Kullanıcı adına göre 'panelListesi' değişkenine id'leri sıralıyor.

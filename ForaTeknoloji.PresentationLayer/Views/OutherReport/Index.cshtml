@@ -163,10 +163,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
-                            <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
-                        </div>
+                        <label>Panel Seçimi</label>
                         <div class="form-group">
                             @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control" })
 

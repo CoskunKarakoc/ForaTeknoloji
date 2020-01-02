@@ -54,7 +54,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (permissionUser.Canli_Izleme == 3)
                     throw new Exception("Yetkisiz Erişim!");
             }
-            var lastrecordwatch = _reportService.LastRecordWatch(null);
+            var lastrecordwatch = _reportService.GetWatchTopOne(WtchPrmtrs); //_reportService.LastRecordWatch(null);
             var cmplxwatch = _reportService.GetWatch(WtchPrmtrs);
             var model = new WatchIndexViewModel
             {
@@ -94,9 +94,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return View(progInit);
         }
-
-
-
 
 
         public ActionResult SonKayit(int KayitNo)

@@ -263,9 +263,9 @@
                         <a class="collapse-item" href="@Url.Action("PasifKullanici","GelenGelmeyenReport")">Pasif Kullanıcı Raporları</a>
 
                         <h6 class="collapse-header">İçerde Dışarda Raporları</h6>
-                        <a class="collapse-item" href="@Url.Action("Personel","InsideOutReport")">Personel</a>
-                        <a class="collapse-item" href="@Url.Action("Ziyaretci","InsideOutReport")">Ziyaretçi</a>
-                        <a class="collapse-item" href="@Url.Action("Tumu","InsideOutReport")">Tümü</a>
+                        <a class="collapse-item" href="@Url.Action("InOutPersonel","InsideOutReport")">Personel</a>
+                        <a class="collapse-item" href="@Url.Action("InOutVisitor","InsideOutReport")">Ziyaretçi</a>
+                        <a class="collapse-item" href="@Url.Action("InOutAll","InsideOutReport")">Tümü</a>
                         <hr />
                         @{
                             DBUsers yemekhaneUser = CurrentSession.User;

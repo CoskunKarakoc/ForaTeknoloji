@@ -20,15 +20,14 @@
                 background-color: #f0f0f0;
             }
 </style>
+
 <div class="card border-left-info h-100 mt-2 shadow-lg animated slideInLeft faster">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">İçerdekiler-Dışardakiler Personel</h3>
     </div>
-
     <div class="card-body">
-        @using (Html.BeginForm("Personel", "InsideOutReport", FormMethod.Get))
+        @using (Html.BeginForm("InOutPersonel", "InsideOutReport", FormMethod.Get))
         {
-
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -58,8 +57,8 @@
                         @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control" })
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Okuyucular</label>
-                        <select class="form-control" name="Kapi" id="reader"></select>
+                        <label for="Reader">Okuyucular</label>
+                        <select class="form-control" name="Kapi" id="Reader"></select>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -67,14 +66,7 @@
                         <label for="exampleFormControlSelect1">Global Kapı Bölgesi</label>
                         @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <label for="readerCikis">Panel Çıkış Kapı No</label>
-                        <select class="form-control" id="readerCikis">
-                            <option>Panel Çıkış Kapı No</option>
-                        </select>
-                    </div>
                 </div>
-
                 <div class="col-md-12 text-right">
                     <br />
                     <br />
@@ -82,6 +74,7 @@
                     <br />
                     <br />
                     <h5 id="mesaj" hidden class="text-success text-right"></h5>
+                    <input type="text" hidden name="LBN" id="LBN" value="" />
                     <h4 class="text-info text-right">@Model.IcerdeDısardaPersonel.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
@@ -90,48 +83,60 @@
                 </div>
             </div>
         }
+
     </div>
 </div>
-<div class="card border-left-info h-100 mt-2 shadow-lg animated slideInRight faster">
-    @using (Html.BeginForm("ManuelCikisPersonel", "InsideOutReport", FormMethod.Post))
-    {
 
-        <div id="print_div" class="card-body">
-
-            @if (Model.IcerdeDısardaPersonel.Count > 0)
-            {
-                @webGrid.GetHtml(
+<div class="card border-left-info h-100 mt-2 shadow-l animated slideInRight faster ">
+    <div class="card-body">
+        @using (Html.BeginForm("ManuelCikisPersonel", "InsideOutReport", FormMethod.Post))
+        {
+            <input type="text" name="PanelID" id="PanelID" hidden value="" />
+            <input type="text" name="KapiID" id="KapiID" hidden value="" />
+            <div id="print_div">
+                @if (Model.IcerdeDısardaPersonel.Count > 0)
+                {
+                    @webGrid.GetHtml(
     htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-    footerStyle:"table-pager",
+    footerStyle: "table-pager",
     columns: webGrid.Columns(
-     webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                                                                            webGrid.Column("Kayit_No", "Kayıt No"),
-                                                                            webGrid.Column("ID", "ID"),
-                                                                            webGrid.Column("Kart_ID", "Kart ID"),
-                                                                            webGrid.Column("Adi", "Adı"),
-                                                                            webGrid.Column("Soyadi", "Soyadı"),
-                                                                            webGrid.Column("Sirket", "Şirket"),
-                                                                            webGrid.Column("Departman", "Departman"),
-                                                                            webGrid.Column("Tarih", "Tarih"),
-                                                                            webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
-            }
-            else
-            {
-                <div class="alert alert-info alert-message">
-                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                </div>
-            }
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <input type="submit" id="CikisVer" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" />
+    webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
+                                        webGrid.Column("Kayit_No", "Kayıt No"),
+                                        webGrid.Column("ID", "ID"),
+                                        webGrid.Column("Kart_ID", "Kart ID"),
+                                        webGrid.Column("Adi", "Adı"),
+                                        webGrid.Column("Soyadi", "Soyadı"),
+                                        webGrid.Column("Sirket", "Şirket"),
+                                        webGrid.Column("Departman", "Departman"),
+                                        webGrid.Column("Tarih", "Tarih"),
+                                        webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
+                }
+                else
+                {
+                    <div class="alert alert-info alert-message">
+                        <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                    </div>
+                }
             </div>
-        </div>
-    }
-</div>
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2 text-right">
+                    <div class="form-group">
+                        <select class="form-control" name="OutReader" id="OutReader"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <input type="submit" id="CikisVer" value="Manuel Çıkış" class="btn btn-sm btn-secondary pull-right" onclick="return confirm('Seçilen Kayıtlar Çıkış Yapacak');" />
+                </div>
+            </div>
+        }
 
+    </div>
+</div>
 <script>
-    $(function () {
+    $(document).ready(function () {
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
             var frame1 = $('<iframe />');
@@ -157,88 +162,72 @@
             }, 500);
 
         });
-        $("#Global_Bolge_Adi").attr("disabled", true);
-        $("#Panel").change(function () {
-            var panelid = $(this).val();
-            if (panelid == 0 || panelid < 0 || panelid=="") {
-                $("#reader").html("");
-            }
-            $.ajax({
-                url: '@Url.Action("Reader", "InsideOutReport")',
-                type: "POST",
-                dataType: "json",
-                data: { Paneller: panelid },
-                success: function (data) {
-                    $("#reader").html("");
-                    $("#readerCikis").html("");
-                    $('#reader').append("<option value=''>Okuyucu Seç</option>");
-                    for (var i = 0; i < data.length; i++) {
-                        if (data[i].WKapi_Lokal_Bolge != 0) {
-                            $('#reader').append('<option value=' + data[i].WKapi_Lokal_Bolge + '>' + data[i].WKapi_Adi + '</option>')
-                        }
-                        if (data[i].WKapi_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + data[i].Kayit_No + '>' + data[i].WKapi_Adi + '</option>')
-                        }
-                    }
-                }
-            });
-        });
-
-        $("#reader").change(function () {
-            var lokal = $(this).val();
-            $("#mesaj").html("");
-            $("#mesaj").text("Seçilen Lokal Bölge " + lokal);
-            $("#mesaj").removeAttr("hidden")
-        });
+        $("#Global_Kapi_Bolgesi").attr("disabled", true);
         $("#lokal").change(function () {
             if ($(this).prop("checked") == true) {
-                $("#Paneller").attr("disabled", false);
-                $("#reader").attr("disabled", false);
-                $("#Global_Bolge_Adi").attr("disabled", true);
-            } else {
-
-                $("#Paneller").attr("disabled", true);
-                $("#reader").attr("disabled", true);
-                $("#Global_Bolge_Adi").attr("disabled", false);
+                $("#Global_Kapi_Bolgesi").prop("disabled", true);
+                $("#Panel").prop("disabled", false);
+                $("#Reader").prop("disabled ", false);
             }
+        })
 
-        });
         $("#global").change(function () {
             if ($(this).prop("checked") == true) {
-                $("#Global_Bolge_Adi").attr("disabled", false);
-                $("#Paneller").attr("disabled", true);
-                $("#reader").attr("disabled", true);
-                $("#mesaj").html("");
-                $("#mesaj").attr("hidden", true)
-            } else {
-                $("#Paneller").attr("disabled", false);
-                $("#reader").attr("disabled", false);
-                $("#Global_Bolge_Adi").attr("disabled", true);
+                $("#Panel").prop("disabled", true);
+                $("#Reader").prop("disabled ", true);
+                $("#Global_Kapi_Bolgesi").prop("disabled", false);
             }
-
         });
+
         $("#In").change(function () {
             if ($(this).prop("checked") == true) {
-                $("#CikisVer").attr("disabled", false);
-                $("#readerCikis").attr("disabled", false);
+                $("#OutReader").prop("disabled", false);
             }
-        });
-        $("#Out").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#CikisVer").attr("disabled", true);
-                $("#readerCikis").attr("disabled", true);
-            }
+
         });
 
-        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
-        // buton aktif durum css
-        $("tfoot td")
-            .contents()
-            .filter(function () {
-                if (this.nodeType === 3 && this.length > 1) {
-                    return this.nodeType
-                }
-            })
-            .wrap('<span class=" btn btn-primary" />');
+        $("#Panel").change(function () {
+            var panelID = $(this).val();
+            if (panelID == 0) {
+                $("#Reader").html("");
+            } else {
+                $.ajax({
+                    url: '/InsideOutReport/Reader?Paneller=' + panelID,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Reader").html("");
+                    $("#OutReader").html("");
+                    $('#Reader').append("<option value=''>Okuyucu Seç</option>");
+                    $('#OutReader').append("<option value=''>Çıkış Okuyucusu Seç</option>");
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].WKapi_Lokal_Bolge != 0) {
+                            $('#Reader').append('<option value=' + data[i].WKapi_Lokal_Bolge + '>' + data[i].WKapi_Adi + '</option>')
+                        }
+                        if (data[i].WKapi_Kapi_Tipi == 2) {
+                            $('#OutReader').append('<option value=' + data[i].WKapi_ID + '>' + data[i].WKapi_Adi + '</option>')
+                        }
+                    }
+                });
+            }
+        })
+
+        $("#Reader").change(function () {
+            var lokalBolgeNo = $(this).val();
+            $("#mesaj").html("");
+            $("#mesaj").text("Seçilen Lokal Bölge " + lokalBolgeNo);
+            $("#mesaj").removeAttr("hidden")
+            $("#LBN").attr("value", lokalBolgeNo);
+        });
+
+        $("#OutReader").change(function () {
+            var kapiID = $(this).val();
+            $("#KapiID").prop("value", kapiID);
+        });
+
+        $("#Panel").change(function () {
+            var panel = $(this).val();
+            $("#PanelID").prop("value", panel);
+        });
     });
 </script>

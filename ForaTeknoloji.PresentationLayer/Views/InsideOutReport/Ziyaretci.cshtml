@@ -1,5 +1,7 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.IcerdeDısardaZiyaretciListViewModel
 @{
+    /**/
+
     ViewBag.Title = "Ziyaretci";
     Layout = "~/Views/Shared/_Layout.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.ZiyaretciListesi, rowsPerPage: 20);
@@ -107,11 +109,11 @@
                 footerStyle:"table-pager",
                 columns: webGrid.Columns(
                     webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                                                      webGrid.Column("Kart_ID", "Kart ID"),
-                                                      webGrid.Column("Adi", "Adı"),
-                                                      webGrid.Column("Soyadi", "Soyadı"),
-                                                      webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
-                                                      webGrid.Column("Tarih", "Tarih")))
+                                                                webGrid.Column("Kart_ID", "Kart ID"),
+                                                                webGrid.Column("Adi", "Adı"),
+                                                                webGrid.Column("Soyadi", "Soyadı"),
+                                                                webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
+                                                                webGrid.Column("Tarih", "Tarih")))
 
             }
             else
@@ -131,19 +133,8 @@
     }
 
 </div>
-
 <script>
-    $(function () {
-        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
-        // buton aktif durum css
-        $("tfoot td")
-            .contents()
-            .filter(function () {
-                if (this.nodeType === 3 && this.length > 1) {
-                    return this.nodeType
-                }
-            })
-            .wrap('<span class=" btn btn-primary" />');
+      $(function () {
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
             var frame1 = $('<iframe />');
@@ -153,7 +144,7 @@
             var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
             frameDoc.document.open();
             //Create a new HTML document.
-            frameDoc.document.write('<html><head><title>İçerde Dışarda-Ziyaretçi Raporları</title>');
+            frameDoc.document.write('<html><head><title>İçerde Dışarda-Personel Raporları</title>');
             frameDoc.document.write('</head><body><hr />');
             //Append the external CSS file.
             frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
@@ -170,144 +161,32 @@
 
         });
         $("#Global_Bolge_Adi").attr("disabled", true);
-             $("#Paneller").change(function () {
-                 var panelid = $(this).val();
-                 if (panelid == 0 || panelid < 0 || panelid == "") {
-                     $("#reader").html("");
-                 }
+        $("#Panel").change(function () {
+            var panelid = $(this).val();
+            if (panelid == 0 || panelid < 0 || panelid=="") {
+                $("#reader").html("");
+            }
             $.ajax({
                 url: '@Url.Action("Reader", "InsideOutReport")',
                 type: "POST",
                 dataType: "json",
                 data: { Paneller: panelid },
                 success: function (data) {
-                    console.log(data);
                     $("#reader").html("");
                     $("#readerCikis").html("");
                     $('#reader').append("<option value=''>Okuyucu Seç</option>");
-                    $.each(data, function (index, value) {
-                        //Okuyucuların dropdownlist'i için
-                        if (value.WKapi1_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi1_Lokal_Bolge + '>' + value.WKapi1_Adi + '</option>')
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].WKapi_Lokal_Bolge != 0) {
+                            $('#reader').append('<option value=' + data[i].WKapi_Lokal_Bolge + '>' + data[i].WKapi_Adi + '</option>')
                         }
-                        if (value.WKapi2_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi2_Lokal_Bolge + '>' + value.WKapi2_Adi + '</option>')
+                        if (data[i].WKapi_Kapi_Tipi == 2) {
+                            $("#readerCikis").append('<option value=' + data[i].Kayit_No + '>' + data[i].WKapi_Adi + '</option>')
                         }
-                        if (value.WKapi3_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi3_Lokal_Bolge + '>' + value.WKapi3_Adi + '</option>')
-                        }
-                        if (value.WKapi4_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi4_Lokal_Bolge + '>' + value.WKapi4_Adi + '</option>')
-                        }
-                        if (value.WKapi5_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi5_Lokal_Bolge + '>' + value.WKapi5_Adi + '</option>')
-                        }
-                        if (value.WKapi6_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi6_Lokal_Bolge + '>' + value.WKapi6_Adi + '</option>')
-                        }
-                        if (value.WKapi7_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi7_Lokal_Bolge + '>' + value.WKapi7_Adi + '</option>')
-                        }
-                        if (value.WKapi8_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi8_Lokal_Bolge + '>' + value.WKapi8_Adi + '</option>')
-                        }
-                        if (value.WKapi9_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi9_Lokal_Bolge + '>' + value.WKapi9_Adi + '</option>')
-                        }
-                        if (value.WKapi10_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi10_Lokal_Bolge + '>' + value.WKapi10_Adi + '</option>')
-                        }
-                        if (value.WKapi11_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi11_Lokal_Bolge + '>' + value.WKapi11_Adi + '</option>')
-                        }
-                        if (value.WKapi12_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi12_Lokal_Bolge + '>' + value.WKapi12_Adi + '</option>')
-                        }
-                        if (value.WKapi13_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi13_Lokal_Bolge + '>' + value.WKapi13_Adi + '</option>')
-                        }
-                        if (value.WKapi14_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi14_Lokal_Bolge + '>' + value.WKapi14_Adi + '</option>')
-                        }
-                        if (value.WKapi15_Lokal_Bolge != 0) {
-
-                            $('#reader').append('<option value=' + value.WKapi15_Lokal_Bolge + '>' + value.WKapi15_Adi + '</option>')
-                        }
-                        if (value.WKapi16_Lokal_Bolge!=0) {
-                            $('#reader').append('<option value=' + value.WKapi16_Lokal_Bolge + '>' + value.WKapi16_Adi + '</option>')
-                        }
-
-
-                        //Manuel Çıkış dropdown list İçin
-                        if (value.WKapi1_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi1_Adi + '</option>')
-                        }
-                        if (value.WKapi2_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi2_Adi + '</option>')
-                        }
-                        if (value.WKapi3_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi3_Adi + '</option>')
-                        }
-                        if (value.WKapi4_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi4_Adi + '</option>')
-                        }
-                        if (value.WKapi5_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi5_Adi + '</option>')
-                        }
-                        if (value.WKapi6_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi6_Adi + '</option>')
-                        }
-                        if (value.WKapi7_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi7_Adi + '</option>')
-                        }
-                        if (value.WKapi8_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi8_Adi + '</option>')
-                        }
-                        if (value.WKapi9_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi9_Adi + '</option>')
-                        }
-                        if (value.WKapi10_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi10_Adi + '</option>')
-                        }
-                        if (value.WKapi11_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi11_Adi + '</option>')
-                        }
-                        if (value.WKapi12_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi12_Adi + '</option>')
-                        }
-                        if (value.WKapi13_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi13_Adi + '</option>')
-                        }
-                        if (value.WKapi14_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi14_Adi + '</option>')
-                        }
-                        if (value.WKapi15_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi15_Adi + '</option>')
-                        }
-                        if (value.WKapi16_Kapi_Tipi == 2) {
-                            $("#readerCikis").append('<option value=' + value.Kayit_No + '>' + value.WKapi16_Adi + '</option>')
-                        }
-
-
-                    })
+                    }
                 }
             });
-
         });
+
         $("#reader").change(function () {
             var lokal = $(this).val();
             $("#mesaj").html("");
@@ -354,5 +233,15 @@
             }
         });
 
+        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
+        // buton aktif durum css
+        $("tfoot td")
+            .contents()
+            .filter(function () {
+                if (this.nodeType === 3 && this.length > 1) {
+                    return this.nodeType
+                }
+            })
+            .wrap('<span class=" btn btn-primary" />');
     });
 </script>
