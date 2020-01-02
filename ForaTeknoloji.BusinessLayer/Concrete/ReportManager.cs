@@ -1786,7 +1786,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                 + " ON Users.[Sirket No] = Sirketler.[Sirket No]"
                                 + " LEFT OUTER JOIN Departmanlar"
                                 + " ON Users.[Departman No] = Departmanlar.[Departman No]"
-                                + " WHERE AccessDatas.[Global Bolge No] =" + parameters.Global_Kapi_Bolgesi
+                                + " WHERE AccessDatas.[Global Bolge No] =" + (parameters.Global_Kapi_Bolgesi == null ? 1 : parameters.Global_Kapi_Bolgesi)
                                 + " AND AccessDatas.ID > 0"
                                 + " AND AccessDatas.Kod = 1"
                                 + " AND Sirketler.[Sirket No]"
@@ -1882,7 +1882,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             FROM Visitors 
                             LEFT OUTER JOIN AccessDatas 
                             ON Visitors.[Kayit No] = AccessDatas.[Visitor Kayit No] 
-                            WHERE AccessDatas.[Global Bolge No] = " + parameters.Global_Kapi_Bolgesi + @"
+                            WHERE AccessDatas.[Global Bolge No] = " + (parameters.Global_Kapi_Bolgesi == null ? 1 : parameters.Global_Kapi_Bolgesi) + @"
                             AND AccessDatas.[Kullanici Tipi] = 1
                             AND AccessDatas.[Visitor Kayit No] > 0 
                             AND AccessDatas.Kod = 1 
@@ -1994,7 +1994,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                 ON Users.[Sirket No] = Sirketler.[Sirket No] 
                                 LEFT OUTER JOIN Departmanlar 
                                 ON Users.[Departman No] = Departmanlar.[Departman No] 
-                                WHERE AccessDatas.[Global Bolge No] = " + parameters.Global_Kapi_Bolgesi + @"
+                                WHERE AccessDatas.[Global Bolge No] = " + (parameters.Global_Kapi_Bolgesi == null ? 1 : parameters.Global_Kapi_Bolgesi) + @"
                                 AND AccessDatas.ID > 0 
                                 AND AccessDatas.Kod = 1 
                                 AND Sirketler.[Sirket No] IN(10000," + sirketListesi + @")
@@ -2008,7 +2008,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                 FROM Visitors 
                                 LEFT OUTER JOIN AccessDatas 
                                 ON Visitors.[Kayit No] = AccessDatas.[Visitor Kayit No] 
-                                WHERE AccessDatas.[Global Bolge No] = " + parameters.Global_Kapi_Bolgesi + @"
+                                WHERE AccessDatas.[Global Bolge No] = " + (parameters.Global_Kapi_Bolgesi == null ? 1 : parameters.Global_Kapi_Bolgesi) + @"
                                 AND AccessDatas.[Visitor Kayit No] > 0 
                                 AND AccessDatas.Kod = 1 
                                 GROUP BY AccessDatas.[Visitor Kayit No], Visitors.Adi, Visitors.Soyadi) TTT2 

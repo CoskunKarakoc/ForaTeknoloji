@@ -125,7 +125,11 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<YemekhaneComplex> YemekhaneRaporu(RefectoryParameters parameters);
         List<YemekhaneComplexTotal> YemekhaneRaporuTotal(RefectoryParameters parameters);
 
-
+        /// <summary>
+        /// Seçilen Panel ve Kapı ID'lerine göre geçiş verileri gönderiyor.
+        /// </summary>
+        /// <param name="parameters">int Panel ID ve int Kapı ID</param>
+        /// <returns>Complex Geçiş Verileri</returns>
         List<WatchEntityComplex> MonitorWatch(SpotMonitorSettings parameters);
     }
 }
