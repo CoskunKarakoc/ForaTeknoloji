@@ -1,6 +1,7 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,25 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUserService _userService;
         private IRawGroupsService _rawGroupsService;
         private IGroupMasterService _groupMasterService;
-        public ExternalDataController(IUserService userService, IRawUsersService rawUsersService, IRawGroupsService rawGroupsService, IGroupMasterService groupMasterService)
+        private IAccessDatasService _accessDatasService;
+        private IDBUsersService _dBUsersService;
+        public DBUsers user;
+        public DBUsers permissionUser;
+        public ExternalDataController(IUserService userService, IRawUsersService rawUsersService, IRawGroupsService rawGroupsService, IGroupMasterService groupMasterService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _userService = userService;
             _rawUsersService = rawUsersService;
             _rawGroupsService = rawGroupsService;
             _groupMasterService = groupMasterService;
+            _accessDatasService = accessDatasService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
+
         }
 
 
@@ -216,6 +230,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     _userService.AddUsers(users);
                 }
                 _rawUsersService.DeleteAll();
+                _accessDatasService.AddOperatorLog(211, user.Kullanici_Adi, 0, 0, 0, 0);
             }
             else
             {
@@ -266,6 +281,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         _rawUsersService.DeleteRawUsers(rawuser);
                     }
                 }
+                _accessDatasService.AddOperatorLog(211, user.Kullanici_Adi, 0, 0, 0, 0);
+
             }
 
             return RedirectToAction("Index", "Users");
@@ -285,6 +302,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     };
                     _groupMasterService.AddGroupsMaster(group);
                 }
+                _accessDatasService.AddOperatorLog(210, user.Kullanici_Adi, 0, 0, 0, 0);
             }
 
             return RedirectToAction("Groups", "AccessGroup");

@@ -24,9 +24,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersService _dBUsers;
         private IReportService _reportService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService)
+        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService, IAccessDatasService accessDatasService)
         {
 
             user = CurrentSession.User;
@@ -42,6 +43,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsers = dBUsers;
             _reportService = reportService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsers.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -128,6 +130,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (alarmlar != null)
                 {
                     _alarmlarService.UpdateAlarmlar(alarmlar);
+                    _accessDatasService.AddOperatorLog(141, user.Kullanici_Adi, alarmlar.Alarm_No, 0, 0, 0);
                     return RedirectToAction("Index", "Alarm");
                 }
             }
@@ -183,6 +186,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
 
                 _alarmlarService.AddAlarmlar(alarmlar);
+                _accessDatasService.AddOperatorLog(140, user.Kullanici_Adi, alarmlar.Alarm_No, 0, 0, 0);
                 return RedirectToAction("Index", "Alarm");
             }
             return View(alarmlar);
@@ -203,6 +207,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _alarmlarService.DeleteAlarmlar(entity);
+                    _accessDatasService.AddOperatorLog(142, user.Kullanici_Adi, entity.Alarm_No, 0, 0, 0);
                     return RedirectToAction("Index");
                 }
                 throw new Exception("Böyle bir kayıt bulunamadı!");
@@ -254,6 +259,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tarih = DateTime.Now
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(143, user.Kullanici_Adi, AlarmID, 0, item, 0);
                     }
                     Thread.Sleep(2000);
                 }

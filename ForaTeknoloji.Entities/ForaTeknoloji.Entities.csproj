@@ -70,12 +70,15 @@
     <Compile Include="ComplexType\GelenGelmeyen_IlkGirisSonCikis.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_PasifKullanici.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_ToplamIcerdeKalma.cs" />
+    <Compile Include="ComplexType\GelenGelmeyen_TopluGiris.cs" />
     <Compile Include="ComplexType\GroupReadersParameters.cs" />
     <Compile Include="ComplexType\IcerdeDisardaPersonel.cs" />
     <Compile Include="ComplexType\IcerdeDisardaReportParameters.cs" />
     <Compile Include="ComplexType\IcerdeDısardaTümü.cs" />
     <Compile Include="ComplexType\IcerdeDısardaZiyaretci.cs" />
     <Compile Include="ComplexType\KapiOperasyon.cs" />
+    <Compile Include="ComplexType\OperatorLogComplex.cs" />
+    <Compile Include="ComplexType\OperatorLogParameters.cs" />
     <Compile Include="ComplexType\OutherReportParameters.cs" />
     <Compile Include="ComplexType\PersonelList.cs" />
     <Compile Include="ComplexType\PersonelListReportParameters.cs" />

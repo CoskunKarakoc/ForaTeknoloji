@@ -14,30 +14,31 @@
                 @using (Html.BeginForm("Add", "Email", FormMethod.Post))
                 {
                     @Html.Hidden("Kayit_No", Model.Kayit_No)
-                    <div class="form-group">
-                        <label for="E_Mail_Adres">E-Mail Adres</label>
-                        @Html.TextBox("E_Mail_Adres", Model.E_Mail_Adres, new { @class = "form-control", type = "email" })
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="E_Mail_Adres">E-Mail Adres</label>
+                        <div class="col-sm-9">@Html.TextBox("E_Mail_Adres", Model.E_Mail_Adres, new { @class = "form-control form-control-sm", type = "email" })</div>
                     </div>
-                    <div class="form-group">
-                        <label id="Kullanici_Adi">Kullanıcı Adı</label>
-                        @Html.TextBox("Kullanici_Adi", Model.Kullanici_Adi, new { @class = "form-control" })
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" id="Kullanici_Adi">Kullanıcı Adı</label>
+                        <div class="col-sm-9"> @Html.TextBox("Kullanici_Adi", Model.Kullanici_Adi, new { @class = "form-control form-control-sm" })</div>
                     </div>
-                    <div class="form-group">
-                        <label for="Sifre">Şifre</label>
-                        @Html.TextBox("Sifre", Model.Sifre, new { @class = "form-control", type = "password" })
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="Sifre">Şifre</label>
+                        <div class="col-sm-9">  @Html.TextBox("Sifre", Model.Sifre, new { @class = "form-control form-control-sm", type = "password" })</div>
                     </div>
-                    <div class="form-group">
-                        <label for="SMPT_Server">SMPT Server</label>
-                        @Html.TextBox("SMPT_Server", Model.SMPT_Server, new { @class = "form-control" })
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="SMPT_Server">SMPT Server</label>
+                        <div class="col-sm-9"> @Html.TextBox("SMPT_Server", Model.SMPT_Server, new { @class = "form-control form-control-sm" })</div>
                     </div>
-                    <div class="form-group">
-                        <label id="SMPT_Server_Port">SMPT Server Port</label>
-                        @Html.TextBox("SMPT_Server_Port", Model.SMPT_Server_Port, new { @class = "form-control", type = "number" })
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" id="SMPT_Server_Port">SMPT Server Port</label>
+                        <div class="col-sm-9"> @Html.TextBox("SMPT_Server_Port", Model.SMPT_Server_Port, new { @class = "form-control form-control-sm", type = "number" })</div>
                     </div>
                     <div class="custom-control custom-checkbox">
                         @Html.CheckBox("SSL_Kullan", Model.SSL_Kullan ?? false, new { @class = "custom-control-input" })
                         <label for="SSL_Kullan" class="custom-control-label">SSL Kullan</label>
                     </div>
+                    <hr />
                     if (Model.Authentication == 1)
                     {
                         <div class="custom-control-inline custom-radio">
@@ -53,7 +54,7 @@
                             <input type="radio" value="3" class="custom-control-input" id="NTLM" name="Authentication">
                             <label class="custom-control-label mr-5" for="NTLM">NTLM</label>
                         </div>
-
+                        <hr />
                     }
                     else if (Model.Authentication == 2)
                     {
@@ -70,6 +71,8 @@
                             <input type="radio" value="3" class="custom-control-input" id="NTLM" name="Authentication">
                             <label class="custom-control-label mr-5" for="NTLM">NTLM</label>
                         </div>
+                        <hr />
+
                     }
                     else
                     {
@@ -86,11 +89,12 @@
                             <input type="radio" value="3" class="custom-control-input" id="NTLM" checked name="Authentication">
                             <label class="custom-control-label mr-5" for="NTLM">NTLM</label>
                         </div>
+                        <hr />
 
                     }
-                    <div class="form-group">
-                        <label for="Gonderme_Saati">Gönderme Saati</label>
-                        <input type="time" id="Gonderme_Saati" name="Gonderme_Saati" class="form-control" value="@Model.Gonderme_Saati.Value.ToShortTimeString()" />
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="Gonderme_Saati">Gönderme Saati</label>
+                        <div class="col-sm-9"> <input type="time" id="Gonderme_Saati" name="Gonderme_Saati" class="form-control form-control-sm" value="@Model.Gonderme_Saati.Value.ToShortTimeString()" /></div>
                     </div>
 
                     <div class="custom-control custom-checkbox ">
@@ -98,30 +102,27 @@
                         <label for="Gelmeyenler_Raporu" class="custom-control-label">Gelmeyenler Raporu</label>
                     </div>
                     <hr />
-                    <label>Alıcı 1</label>
-                    <div class="form-group">
-                        <label>E-Mail Adres</label>
-                        @Html.TextBox("Alici_1_E_Mail_Adres", Model.Alici_1_E_Mail_Adres, new { @class = "form-control" })
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">Alıcı 1 E-Mail Adres</label>
+                        <div class="col-sm-7">  @Html.TextBox("Alici_1_E_Mail_Adres", Model.Alici_1_E_Mail_Adres, new { @class = "form-control form-control-sm" })</div>
                     </div>
                     <div class="custom-control custom-checkbox">
                         @Html.CheckBox("Alici_1_E_Mail_Gonder", Model.Alici_1_E_Mail_Gonder ?? false, new { @class = "custom-control-input" })
                         <label for="Alici_1_E_Mail_Gonder" class="custom-control-label">E-Mail Gönder</label>
                     </div>
                     <hr />
-                    <label>Alıcı 2</label>
-                    <div class="form-group">
-                        <label>E-Mail Adres</label>
-                        @Html.TextBox("Alici_2_E_Mail_Adres", Model.Alici_2_E_Mail_Adres, new { @class = "form-control" })
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">Alıcı 2 E-Mail Adres</label>
+                        <div class="col-sm-7"> @Html.TextBox("Alici_2_E_Mail_Adres", Model.Alici_2_E_Mail_Adres, new { @class = "form-control form-control-sm" })</div>
                     </div>
                     <div class="custom-control custom-checkbox">
                         @Html.CheckBox("Alici_2_E_Mail_Gonder", Model.Alici_2_E_Mail_Gonder ?? false, new { @class = "custom-control-input" })
                         <label for="Alici_2_E_Mail_Gonder" class="custom-control-label">Gönder</label>
                     </div>
                     <hr />
-                    <label>Alıcı 3</label>
-                    <div class="form-group">
-                        <label>E-Mail Adres</label>
-                        @Html.TextBox("Alici_3_E_Mail_Adres", Model.Alici_3_E_Mail_Adres, new { @class = "form-control" })
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">Alıcı 3 E-Mail Adres</label>
+                        <div class="col-sm-7"> @Html.TextBox("Alici_3_E_Mail_Adres", Model.Alici_3_E_Mail_Adres, new { @class = "form-control form-control-sm" })</div>
                     </div>
                     <div class="custom-control custom-checkbox">
                         @Html.CheckBox("Alici_3_E_Mail_Gonder", Model.Alici_3_E_Mail_Gonder ?? false, new { @class = "custom-control-input" })

@@ -27,9 +27,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
         private IReportService _reportService;
+        private IAccessDatasService _accessDatasService;
         private DBUsers user;
         private DBUsers permissionUser;
-        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService)
+        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -46,6 +47,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
             _reportService = reportService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -127,7 +129,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 visitors.Saat = DateTime.Now;
-                _visitorsService.AddVisitor(visitors);
+                var addedVisitor = _visitorsService.AddVisitor(visitors);
+                _accessDatasService.AddOperatorLog(320, permissionUser.Kullanici_Adi, addedVisitor.Kayit_No, 0, 0, 0);
                 return RedirectToAction("Index");
             }
 
@@ -190,6 +193,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (visitor != null)
                 {
                     _visitorsService.UpdateVisitor(entity);
+                    _accessDatasService.AddOperatorLog(321, permissionUser.Kullanici_Adi, entity.Kayit_No, 0, 0, 0);
                     return RedirectToAction("Index");
                 }
             }
@@ -213,6 +217,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (visitor != null)
                 {
                     _visitorsService.DeleteVisitor(visitor);
+                    _accessDatasService.AddOperatorLog(322, permissionUser.Kullanici_Adi, visitor.Kayit_No, 0, 0, 0);
                     return RedirectToAction("Index");
                 }
             }
@@ -246,6 +251,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tarih = DateTime.Now
                         };
                         TaskList taskReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(323, permissionUser.Kullanici_Adi, VisitorID, 0, item, 0);
                     }
                     Thread.Sleep(2000);
                 }

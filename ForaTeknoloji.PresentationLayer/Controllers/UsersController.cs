@@ -38,9 +38,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IBolumService _bolumService;
         private IReportService _reportService;
         private IUnvanService _unvanService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAltDepartmanService altDepartmanService, IBolumService bolumService, IUnvanService unvanService)
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAltDepartmanService altDepartmanService, IBolumService bolumService, IUnvanService unvanService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -67,6 +68,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _bolumService = bolumService;
             _reportService = reportService;
             _unvanService = unvanService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -216,6 +218,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _userService.AddUsers(user);
+                _accessDatasService.AddOperatorLog(100, permissionUser.Kullanici_Adi, user.ID, 0, 0, 0);
                 return RedirectToAction("Index");
             }
             return View(user);
@@ -285,7 +288,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         throw new Exception("Yetkisiz Şirket Ataması!");
                     if (!CheckDepartman((int)entity.Departman_No))
                         throw new Exception("Yetkisiz Departman Ataması!");
+
+
                     _userService.UpdateUsers(entity);
+                    _accessDatasService.AddOperatorLog(102, permissionUser.Kullanici_Adi, entity.ID, 0, 0, 0);
                     return RedirectToAction("Index");
                 }
             }
@@ -401,6 +407,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    _accessDatasService.AddOperatorLog(104, permissionUser.Kullanici_Adi, ReceiveUserID, 0, 0, 0);
                     Thread.Sleep(2000);
                 }
                 catch (Exception)
@@ -515,6 +522,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                     Tarih = DateTime.Now
                                 };
                                 _taskListService.AddTaskList(taskList);
+                                _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, userID, 0, 0, 0);
                             }
                         }
                         Thread.Sleep(2000);
@@ -554,6 +562,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tarih = DateTime.Now
                             };
                             _taskListService.AddTaskList(taskList);
+                            _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, UserID, 0, 0, 0);
                         }
                         Thread.Sleep(2000);
                     }

@@ -22,10 +22,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersService _dBUsersService;
         private IReportService _reportService;
+        private IAccessDatasService _accessDatasService;
         private FloorNames tempFloor;
         private DBUsers user;
         private DBUsers permissionUser;
-        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService)
+        public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -39,6 +40,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersService = dBUsersService;
             _reportService = reportService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -88,6 +90,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _liftGroupsService.AddLiftGroup(liftGroups);
+                _accessDatasService.AddOperatorLog(160, user.Kullanici_Adi, liftGroups.Asansor_No, 0, 0, 0);
                 return RedirectToAction("LiftGroups", "Lift");
             }
             return View(liftGroups);
@@ -131,6 +134,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _liftGroupsService.UpdateLiftGroup(liftGroups);
+                _accessDatasService.AddOperatorLog(161, user.Kullanici_Adi, liftGroups.Asansor_No, 0, 0, 0);
                 return RedirectToAction("LiftGroups", "Lift");
             }
             return View(liftGroups);
@@ -158,6 +162,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _liftGroupsService.DeleteLiftGroup(new LiftGroups { Asansor_Grup_No = (int)id });
+                    _accessDatasService.AddOperatorLog(162, user.Kullanici_Adi, id, 0, 0, 0);
                     return RedirectToAction("LiftGroups");
                 }
             }
@@ -246,6 +251,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tarih = DateTime.Now
                         };
                         _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(163, user.Kullanici_Adi, AsansorGrupNo, 0, item, 0);
                     }
                     Thread.Sleep(2000);
                 }

@@ -2528,6 +2528,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsideOutReportController.cs" />
     <Compile Include="Controllers\LiftController.cs" />
+    <Compile Include="Controllers\OperatorLogReportController.cs" />
     <Compile Include="Controllers\OutherReportController.cs" />
     <Compile Include="Controllers\PanelController.cs" />
     <Compile Include="Controllers\PanelSettingsController.cs" />
@@ -2575,6 +2576,7 @@
     <Compile Include="Models\GelenGelmeyen_IlkGirisSonCikisListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_PasifListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_ToplamIcerdeKalmaListViewModel.cs" />
+    <Compile Include="Models\GelenGelmeyen_TopluGirisSayisiListViewModel.cs" />
     <Compile Include="Models\GenelPanelSettingsListViewModel.cs" />
     <Compile Include="Models\GlobalBolgePanelSettingsListViewModel.cs" />
     <Compile Include="Models\GroupMasterCreateViewModel.cs" />
@@ -2587,6 +2589,7 @@
     <Compile Include="Models\LiftGroupsAddViewModel.cs" />
     <Compile Include="Models\LiftGroupsListViewModel.cs" />
     <Compile Include="Models\MonitorWatchViewModel.cs" />
+    <Compile Include="Models\OperatorLogListViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ProgRelay2EditViewModel.cs" />
     <Compile Include="Models\ProgRelayListViewModel.cs" />
@@ -2712,6 +2715,8 @@
     <Content Include="Views\InsideOutReport\InOutPersonel.cshtml" />
     <Content Include="Views\InsideOutReport\InOutVisitor.cshtml" />
     <Content Include="Views\InsideOutReport\InOutAll.cshtml" />
+    <Content Include="Views\OperatorLogReport\Index.cshtml" />
+    <Content Include="Views\GelenGelmeyenReport\TopluGirisSayisi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,437 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.GelenGelmeyen_TopluGirisSayisiListViewModel
+@{
+    ViewBag.Title = "Toplu Giriş Sayısı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model.TopluGirisSayisi, rowsPerPage: 20);
+}
+<style>
+    .table-pager > td {
+        padding-top: 10px;
+    }
+
+        .table-pager > td > a {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 3px 7px;
+        }
+
+            .table-pager > td > a:hover {
+                background-color: #f0f0f0;
+            }
+</style>
+<div class="card border-left-info h-100 shadow-lg mt-2 animated slideInLeft faster">
+    <div class="card-header-tabs">
+        <h3 class="text-muted text-center">Toplu Giriş Sayısı</h3>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("TopluGirisSayisi", "GelenGelmeyenReport", FormMethod.Get))
+        {
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">İlk Tarih</label>
+                            <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Son Tarih</label>
+                            <input class="form-control form-control-sm" name="Bitis_Tarihi" type="date" value="2019-08-13" id="Tarih2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ünvan</label>
+                        @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.Unvan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Global Kapı Bölgeleri</label>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Departmanlar</label>
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Alt Departmanlar</label>
+                        @Html.DropDownListFor(model => model.AltDepartman, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Geçiş Grupları</label>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Şirketler</label>
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Bölümler</label>
+                        @Html.DropDownListFor(model => model.Bolum, new SelectList(""), "Bölüm Seçiniz..", new { @class = "form-control form-control-sm" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümZiyaret" class="custom-control-input" id="TümZiyaret" />
+                            <label class="custom-control-label" for="TümZiyaret">Tüm Kullanıcılar</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="Kullanici" class="form-control form-control-sm" name="Kullanici" />
+                            <input type="text" id="USERID" hidden value="" name="User" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right float-right">
+                    <h4 class="text-info text-right">@Model.TopluGirisSayisi.Count Adet Kayıt Listelendi</h4>
+                    <hr />
+                    <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                    <a id="Excell" href="@Url.Action("TopluGirisSayisiExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div id="print_div" class="mt-4">
+
+                        @if (Model.TopluGirisSayisi.Count > 0)
+                        {
+                            @webGrid.GetHtml(
+           htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+           footerStyle: "table-pager",
+           columns: webGrid.Columns(
+               webGrid.Column("ID", "ID"),
+               webGrid.Column("Kart_ID", "Kart ID"),
+               webGrid.Column("Adi", "Adı"),
+               webGrid.Column("Soyadi", "Soyadı"),
+               webGrid.Column("Unvan_Adi", "Ünvanı"),
+               webGrid.Column("Grup_Adi", "Grup Adı"),
+               webGrid.Column("Sirket_Adi", "Şirket"),
+               webGrid.Column("Departman_Adi", "Departman"),
+               webGrid.Column("Alt_Departman_Adi", "Alt Departman"),
+               webGrid.Column("Bolum_Adi", "Bölüm Adı"),
+               webGrid.Column("Giris_Sayisi", "Giriş Sayısı")))
+                        }
+                        else
+                        {
+                            <div class="alert alert-info alert-message">
+                                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                            </div>
+                        }
+
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-muted">Kullanıcı Arama</h4>
+            </div>
+            <div class="modal-body ">
+                <div hidden id="alertMain" class="alert-success">
+                    <h2 id="alert" class="text-center text-muted"></h2>
+                </div>
+                <!-- Search form -->
+                <div class="input-group md-form form-sm form-2 pl-0">
+                    <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
+                    <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
+                </div>
+                <hr />
+                <table id="myTable" class="table table-hover text-center table-striped small">
+                    <thead class="table-info table-sm">
+                        <tr>
+                            <td>Kayıt No</td>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Şirket</td>
+                            <td>Departman</td>
+                            <td>Blok</td>
+                            <td>Plaka</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Ziyaretçi Grubu</td>
+                        </tr>
+                    </thead>
+                    <tbody id="SearchTable">
+                        @foreach (var item in Model.KullaniciComplex)
+                        {
+                            <tr>
+                                <td data-kayitno="@item.ID" data-visitor="@(item.Adi+' '+item.Soyadi)">@item.Kayit_No</td>
+                                <td>@item.ID</td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                <td>@item.Sirket</td>
+                                <td>@item.Departman</td>
+                                <td>@item.Blok</td>
+                                <td>@item.Plaka</td>
+                                <td>@item.Gecis_Grubu</td>
+                                <td>@item.Ziyaretci_Grubu</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" id="yenile"><i class="fas fa-refresh"></i> Listeyi Yenile</button>
+                <button type="button" class="btn btn-success" id="temizle"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
+                <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#btnPrint").click(function () {
+            var contents = $("#print_div").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html><head><title>İlk Giriş Son Çıkış</title>');
+            frameDoc.document.write('</head><body><hr />');
+            //Append the external CSS file.
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            //Append the DIV contents.
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+        });
+
+        $("#TümZiyaret").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Kullanici").attr("disabled", true);
+                $("#USERID").attr("value", null);
+                $("#Kullanici").attr("value", null);
+                $("#alertMain").text("");
+            } else {
+                $("#Kullanici").attr("disabled", false);
+            }
+        });
+        $("#Kullanici").focus(function () {
+            $("#exampleModal").modal("show");
+            $("#myTable tbody tr").click(function () {
+                $("#alertMain").prop("hidden", false);
+                var kayitNo = $(this).children("td").data("kayitno");
+                var name = $(this).children("td").data("visitor");
+                $("#Kullanici").attr('value', name);
+                $("#USERID").attr('value', kayitNo);
+                $("#alert").text(name + " Seçildi!");
+                var selected = $(this).hasClass("table-success");
+                $("#myTable tbody tr").removeClass("table-success");
+                if (!selected)
+                    $(this).addClass("table-success");
+            });
+        });
+    });
+    $("#temizle").click(function () {
+        $("#User").attr("value", null);
+        $("#Kullanici").attr("value", null);
+        $("#alertMain").prop("hidden", true);
+
+    });
+    var today = new Date();
+    $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+    $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+</script>
+<script>
+    $(document).ready(function () {
+        $("#yenile").click(function () {
+            $.ajax({
+                url: '/GelenGelmeyenReport/ComplexUser',
+                type: 'GET',
+                data: { Search: null },
+                dataType: 'json',
+            }).done(function (data) {
+                $("#SearchTable").html("");
+                $("#Search").html("");
+                for (var i in data) {
+                    $("#SearchTable").append("<tr><td data-kayitno=" +
+                        data[i].ID +
+                        " data-visitor=" +
+                        data[i].Adi + '-' + data[i].Soyadi + ">" +
+                        data[i].Kayit_No +
+                        "</td><td>" + data[i].ID +
+                        "</td><td>" + data[i].Kart_ID +
+                        "</td><td>" + data[i].Adi +
+                        "</td><td>" + data[i].Soyadi +
+                        "</td><td>" + data[i].Sirket +
+                        "</td><td>" + data[i].Departman +
+                        "</td><td>" + data[i].Blok +
+                        "</td><td>" + data[i].Plaka +
+                        "</td><td>" + data[i].Gecis_Grubu +
+                        "</td><td>" + data[i].Ziyaretci_Grubu +
+                        "</td></tr>");
+                }
+            }).always(function () {
+                $("#myTable tbody tr").click(function () {
+                    $("#alertMain").prop("hidden", false);
+                    var kayitNo = $(this).children("td").data("kayitno");
+                    var name = $(this).children("td").data("visitor");
+                    $("#Ziyaretci").attr('value', name);
+                    $("#Visitor").attr('value', kayitNo);
+                    $("#alert").text(name + " Seçildi!");
+
+                });
+
+
+
+
+            });
+
+        });
+        $("#SearchBtn").click(function () {
+            var arama = $("#Search").val();
+            $("#Search").val("");
+            $.ajax({
+                url: '/GelenGelmeyenReport/ComplexUser',
+                type: 'GET',
+                data: { Search: arama },
+                dataType: 'json',
+            }).done(function (data) {
+                $("#SearchTable").html("");
+                $("#Search").html("");
+                for (var i in data) {
+                    $("#SearchTable").append("<tr><td data-kayitno=" +
+                        data[i].ID +
+                        " data-visitor=" +
+                        data[i].Adi + '-' + data[i].Soyadi + ">" +
+                        data[i].Kayit_No +
+                        "</td><td>" + data[i].ID +
+                        "</td><td>" + data[i].Kart_ID +
+                        "</td><td>" + data[i].Adi +
+                        "</td><td>" + data[i].Soyadi +
+                        "</td><td>" + data[i].Sirket +
+                        "</td><td>" + data[i].Departman +
+                        "</td><td>" + data[i].Blok +
+                        "</td><td>" + data[i].Plaka +
+                        "</td><td>" + data[i].Gecis_Grubu +
+                        "</td><td>" + data[i].Ziyaretci_Grubu +
+                        "</td></tr>");
+                }
+            }).always(function () {
+                $("#myTable tbody tr").click(function () {
+                    $("#alertMain").prop("hidden", false);
+                    var kayitNo = $(this).children("td").data("kayitno");
+                    var name = $(this).children("td").data("visitor");
+                    $("#Ziyaretci").attr('value', name);
+                    $("#Visitor").attr('value', kayitNo);
+                    $("#alert").text(name + " Seçildi!");
+
+                });
+
+
+
+
+            });
+
+        });
+        $("#Kullanici").attr('value', null);
+        $("#USERID").attr('value', null);
+        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
+        // buton aktif durum css
+        $("tfoot td")
+            .contents()
+            .filter(function () {
+                if (this.nodeType === 3 && this.length > 1) {
+                    return this.nodeType
+                }
+            })
+            .wrap('<span class=" btn btn-primary" />');
+
+
+        $("#Departman").change(function () {
+            var departmanNo = $(this).val();
+            if (departmanNo == 0) {
+                $("#AltDepartman").empty();
+                $("#Bolum").empty();
+                $("#AltDepartman").append('<option value=' + 0 + '> Alt Departman Seçiniz... </option>');
+                $("#Bolum").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/GelenGelmeyenReport/AltDepartmanListesi?Departman=' + departmanNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#AltDepartman").empty();
+                    $.each(data, function (index, row) {
+                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                    });
+
+                    var altdepartmanNo = $("#AltDepartman").val();
+                    $.ajax({
+                        url: '/GelenGelmeyenReport/BolumListesi?AltDepartman=' + altdepartmanNo,
+                        type: 'GET',
+                        dataType: 'json'
+                    }).done(function (data) {
+                        $("#Bolum").empty();
+                        $.each(data, function (index, row) {
+                            $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        });
+                    });
+
+                });
+            }
+
+        });
+        $("#AltDepartman").change(function () {
+            var altdepartmanNo = $(this).val();
+            $.ajax({
+                url: '/GelenGelmeyenReport/BolumListesi?AltDepartman=' + altdepartmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Bolum").empty();
+                $.each(data, function (index, row) {
+                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                });
+            });
+
+        })
+
+
+
+
+
+
+
+
+    });
+
+</script>

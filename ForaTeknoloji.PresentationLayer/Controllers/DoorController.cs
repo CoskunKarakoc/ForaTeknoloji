@@ -23,8 +23,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IReaderSettingsNewService _readerSettingsNewService;
         private IReportService _reportService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
-        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService)
+        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -37,6 +38,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _readerSettingsNewService = readerSettingsNewService;
             _reportService = reportService;
+            _accessDatasService = accessDatasService;
         }
         // GET: Door
         public ActionResult Index(int? PanelID)
@@ -176,6 +178,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _progRelay2Service.UpdateProgRelay2(progRelay2);
+                _accessDatasService.AddOperatorLog(170, user.Kullanici_Adi, progRelay2.Kayit_No, 0, 0, 0);
                 return RedirectToAction("ProgRelay", "Door", new { @ListPanel_No = progRelay2.Panel_No, @ListHaftanin_Gunu = progRelay2.Haftanin_Gunu });
             }
             return View(progRelay2);
@@ -203,6 +206,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    _accessDatasService.AddOperatorLog(171, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
                     Thread.Sleep(2000);
                 }
                 catch (Exception)
@@ -235,6 +239,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    _accessDatasService.AddOperatorLog(172, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
                     Thread.Sleep(2000);
                 }
                 catch (Exception)

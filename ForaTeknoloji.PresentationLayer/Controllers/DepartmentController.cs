@@ -13,9 +13,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
         private IDepartmanService _departmanService;
         private IDBUsersService _dBUsersService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public DepartmentController(IDepartmanService departmanService, IDBUsersService dBUsersService)
+        public DepartmentController(IDepartmanService departmanService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -24,6 +25,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             _departmanService = departmanService;
             _dBUsersService = dBUsersService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -55,6 +57,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
                         _departmanService.AddDepartman(departmanlar);
+                        _accessDatasService.AddOperatorLog(190, user.Kullanici_Adi, departmanlar.Departman_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                     throw new Exception("Yanlış yada eksik karakter girdiniz.");
@@ -77,6 +80,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (departman != null)
                     {
                         _departmanService.DeleteDepartmanlar(departman);
+                        _accessDatasService.AddOperatorLog(192, user.Kullanici_Adi, id, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                 }
@@ -116,6 +120,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (departmanlar != null)
                     {
                         _departmanService.UpdateDepartman(departmanlar);
+                        _accessDatasService.AddOperatorLog(191, user.Kullanici_Adi, departmanlar.Departman_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                 }

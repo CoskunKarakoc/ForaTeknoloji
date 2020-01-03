@@ -7,6 +7,11 @@ namespace ForaTeknoloji.Entities.Entities
 
     public partial class AccessDatas : IEntity
     {
+        public AccessDatas()
+        {
+
+        }
+
         [Key]
         [Column("Kayit No")]
         public int Kayit_No { get; set; }
@@ -20,10 +25,14 @@ namespace ForaTeknoloji.Entities.Entities
         public DateTime? Tarih { get; set; }
 
         [Column("Lokal Bolge No")]
+        [System.ComponentModel.DefaultValue(1)]
         public int? Lokal_Bolge_No { get; set; }
 
+
         [Column("Global Bolge No")]
+        [System.ComponentModel.DefaultValue(1)]
         public int? Global_Bolge_No { get; set; }
+
 
         [Column("Panel ID")]
         public int? Panel_ID { get; set; }

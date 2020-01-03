@@ -340,6 +340,62 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult TopluGirisSayisi(GelenGelmeyenReportParameters parameters)
+        {
+            var nesne = _reportService.GelenGelmeyen_TopluGirisSayisi(parameters);
+            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
+            var departmanlar = _departmanService.GetAllDepartmanlar();
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var unvanlar = _unvanService.GetAllUnvan();
+            var bolumler = _bolumService.GetAllBolum();
+            var groupsdetail = _groupMasterService.GetAllGroupsMaster();
+            var usersComplex = _userService.GetAllUsersWithOuther();
+            var model = new GelenGelmeyen_TopluGirisSayisiListViewModel
+            {
+                TopluGirisSayisi = nesne,
+                KullaniciComplex = usersComplex,
+                Departman = departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
+                Sirket = sirketler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
+                Gecis_Grubu = groupsdetail.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Grup_No.ToString()
+                }),
+                Global_Kapi_Bolgesi = globalBolgeAdi.Select(a => new SelectListItem
+                {
+                    Text = a.Global_Bolge_Adi,
+                    Value = a.Global_Bolge_No.ToString()
+                }),
+                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Unvan = unvanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Unvan_No.ToString()
+                }),
+                Bolum = bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
+                })
+            };
+            TempData["TopluGirisSayisi"] = nesne;
+            return View(model);
+        }
+
+
 
         public ActionResult ComplexUser(string Search)
         {
@@ -663,6 +719,56 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Ilk_Kayit;
                 worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Son_Kayit;
                 worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Fark;
+                rowStart++;
+            }
+            worksheet.Cells[string.Format("A{0}", rowStart + 3)].Value = "Toplam Kayıt=" + liste.Count();
+            worksheet.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-dispositon", "attachment: filename=" + "ExcelReport.xlsx");
+            Response.BinaryWrite(package.GetAsByteArray());
+            Response.End();
+        }
+
+        //Toplu Giris Sayısı
+        public void TopluGirisSayisiExcell()
+        {
+            List<GelenGelmeyen_TopluGiris> liste = new List<GelenGelmeyen_TopluGiris>();
+            liste = TempData["TopluGirisSayisi"] as List<GelenGelmeyen_TopluGiris>;
+            if (liste == null || liste.Count == 0)
+            {
+                liste = _reportService.GelenGelmeyen_TopluGirisSayisi(new GelenGelmeyenReportParameters());
+            }
+            ExcelPackage package = new ExcelPackage();
+            ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
+            worksheet.Cells["A1"].Value = "Toplu Giriş Sayısı";
+            worksheet.Cells["A3"].Value = "Tarih";
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A6"].Value = "ID";
+            worksheet.Cells["B6"].Value = "Kart ID";
+            worksheet.Cells["C6"].Value = "Adı";
+            worksheet.Cells["D6"].Value = "Soyadı";
+            worksheet.Cells["E6"].Value = "Grup Adı";
+            worksheet.Cells["F6"].Value = "Şirket";
+            worksheet.Cells["G6"].Value = "Departman";
+            worksheet.Cells["H6"].Value = "Giriş Sayısı";
+            worksheet.Cells["A1"].Style.Font.Size = 13;
+            worksheet.Cells["A1"].Style.Font.Bold = true;
+            worksheet.Cells["A6:K6"].Style.Font.Size = 13;
+            worksheet.Cells["A6:K6"].Style.Font.Bold = true;
+            worksheet.Cells["A:AZ"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Cells["A:AZ"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            int rowStart = 7;
+            foreach (var item in liste)
+            {
+                worksheet.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
+                worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Kart_ID;
+                worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Adi;
+                worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Soyadi;
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Grup_Adi;
+                worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Sirket_Adi;
+                worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.Departman_Adi;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Giris_Sayisi;
                 rowStart++;
             }
             worksheet.Cells[string.Format("A{0}", rowStart + 3)].Value = "Toplam Kayıt=" + liste.Count();

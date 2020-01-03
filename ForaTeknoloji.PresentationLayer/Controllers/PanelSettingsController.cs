@@ -23,9 +23,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IGroupsDetailNewService _groupsDetailNewService;
         private IReportService _reportService;
-
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
-        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService)
+        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -40,6 +40,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _groupsDetailNewService = groupsDetailNewService;
             _reportService = reportService;
+            _accessDatasService = accessDatasService;
         }
 
         public ActionResult Settings(int? PanelID)
@@ -119,6 +120,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 var updatePanel = _panelSettingsService.UpdatePanelSetting(panel);
+                _accessDatasService.AddOperatorLog(133, user.Kullanici_Adi, 0, 0, panel.Panel_ID, 0);
                 var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == updatePanel.Panel_ID);
                 if (readers == null)
                 {
@@ -303,6 +305,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 entity.Hastane_Acil_Durum_Yesil_Kod = null;
                 entity.Hastane_Yesil_Kod_Suresi = null;
                 _panelSettingsService.UpdatePanelSetting(entity);
+                _accessDatasService.AddOperatorLog(132, user.Kullanici_Adi, 0, 0, PanelID, 0);
                 return RedirectToAction("Settings");
             }
             throw new Exception("Silmek istenen kayıt veritabanında yok!");
@@ -324,6 +327,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Tarih = DateTime.Now
                 };
                 TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, Panel, 0);
                 Thread.Sleep(2500);
             }
             catch (Exception)
@@ -375,6 +379,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     var defaultPanel = _panelSettingsService.GetAllPanelSettings().Find(x => x.Sira_No == panelSettings.Panel_ID);
                     panelSettings.Kayit_No = defaultPanel.Kayit_No;
                     _panelSettingsService.UpdatePanelSetting(panelSettings);
+                    _accessDatasService.AddOperatorLog(130, user.Kullanici_Adi, 0, 0, panelSettings.Panel_ID, 0);
                     return RedirectToAction("Settings", "PanelSettings");
                 }
             }

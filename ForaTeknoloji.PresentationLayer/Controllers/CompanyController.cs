@@ -13,9 +13,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
         private ISirketService _sirketService;
         private IDBUsersService _dBUsersService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public CompanyController(ISirketService sirketService, IDBUsersService dBUsersService)
+        public CompanyController(ISirketService sirketService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -24,6 +25,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             _sirketService = sirketService;
             _dBUsersService = dBUsersService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -53,6 +55,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             _sirketService.DeleteAll();
 
                         _sirketService.AddSirket(Sirket);
+                        _accessDatasService.AddOperatorLog(180, user.Kullanici_Adi, Sirket.Sirket_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                     throw new Exception("Yanlış yada eksik karakter girdiniz.");
@@ -77,6 +80,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (sirket != null)
                     {
                         _sirketService.DeleteSirket(sirket);
+                        _accessDatasService.AddOperatorLog(182, user.Kullanici_Adi, id, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                 }
@@ -114,6 +118,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (sirket != null)
                     {
                         _sirketService.UpdateSirket(sirketler);
+                        _accessDatasService.AddOperatorLog(181, user.Kullanici_Adi, sirketler.Sirket_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                 }

@@ -84,10 +84,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (progInit.Kayit_No != 0)
                     {
                         _progInitService.UpdateProgInit(progInit);
+                        _accessDatasService.AddOperatorLog(260, user.Kullanici_Adi, progInit.Kayit_No, 0, 0, 0);
                     }
                     else
                     {
-                        _progInitService.AddProgInit(progInit);
+                        return RedirectToAction("Index");
                     }
                     return RedirectToAction("Index");
                 }

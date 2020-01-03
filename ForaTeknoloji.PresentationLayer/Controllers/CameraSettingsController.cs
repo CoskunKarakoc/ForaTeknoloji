@@ -14,11 +14,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ICamerasService _camerasService;
         private ICameraTypesService _cameraTypesService;
         private IPanelSettingsService _panelSettingsService;
-        public CameraSettingsController(ICamerasService camerasService, ICameraTypesService cameraTypesService, IPanelSettingsService panelSettingsService)
+        private IAccessDatasService _accessDatasService;
+        public DBUsers user;
+        public CameraSettingsController(ICamerasService camerasService, ICameraTypesService cameraTypesService, IPanelSettingsService panelSettingsService, IAccessDatasService accessDatasService)
         {
+            user = CurrentSession.User;
+            if (user == null)
+            {
+                user = new DBUsers();
+            }
             _camerasService = camerasService;
             _cameraTypesService = cameraTypesService;
             _panelSettingsService = panelSettingsService;
+            _accessDatasService = accessDatasService;
         }
 
 
@@ -49,6 +57,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     return RedirectToAction("Index");
                 }
                 _camerasService.DeleteCamera(cameras);
+                _accessDatasService.AddOperatorLog(152, user.Kullanici_Adi, cameras.Kamera_No, 0, 0, 0);
                 return RedirectToAction("Index");
 
             }
@@ -81,6 +90,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _camerasService.UpdateCamera(cameras);
+                _accessDatasService.AddOperatorLog(151, user.Kullanici_Adi, cameras.Kamera_No, 0, 0, 0);
                 return RedirectToAction("Index");
             }
             return View(cameras);
@@ -124,6 +134,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _camerasService.AddCamera(cameras);
+                _accessDatasService.AddOperatorLog(150, user.Kullanici_Adi, cameras.Kamera_No, 0, 0, 0);
                 return RedirectToAction("Index");
             }
             return View(cameras);

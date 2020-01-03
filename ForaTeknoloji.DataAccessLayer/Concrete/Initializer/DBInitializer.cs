@@ -1640,6 +1640,40 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
             };
             context.Departmanlar.Add(departman);
 
+            ProgInit progInit = new ProgInit
+            {
+                BackupPeriode = null,
+                BackupDay = null,
+                LastBackupDate = null,
+                LiveAPBInvalid = false,
+                LiveDeniedInvalid = false,
+                LiveUnknownInvalid = false,
+                LiveButtonInvalid = false,
+                LiveManuelInvalid = false,
+                LiveProgrammedInvalid = false,
+                UpdateAccessFile = false,
+                NoOpLogUser = false,
+                NoOpLogTimeZone = false,
+                NoOpLogGroup = false,
+                NoOpLogPanelLogs = false,
+                NoOpLogVisitor = false,
+                NoOpLogUserAlarm = false,
+                NoOpLogCamera = false,
+                NoOpLogLift = false,
+                NoOpLogProgrammedRelay = false,
+                NoOpLogCompany = false,
+                NoOpLogDepartment = false,
+                NoOpLogBlock = false,
+                NoOpLogImport = false,
+                NoOpLogEmailSMS = false,
+                NoOpLogUserGlobalInterlock = false,
+                NoOpLogGroupCalendar = false,
+                NoOpLogReports = false,
+                NoOpLogDatabase = false,
+                NoOpPanelSettings = false,
+                NoOpOther = false
+            };
+            context.ProgInit.Add(progInit);
 
             context.SaveChanges();
         }

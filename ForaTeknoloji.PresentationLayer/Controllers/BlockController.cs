@@ -13,9 +13,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
         private IBloklarService _bloklarService;
         private IDBUsersService _dBUsersService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public BlockController(IBloklarService bloklarService, IDBUsersService dBUsersService)
+        public BlockController(IBloklarService bloklarService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -24,6 +25,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             _bloklarService = bloklarService;
             _dBUsersService = dBUsersService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -54,6 +56,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             _bloklarService.DeleteAll();
 
                         _bloklarService.AddBloklar(bloklar);
+                        _accessDatasService.AddOperatorLog(200, user.Kullanici_Adi, bloklar.Blok_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                     throw new Exception("Yanlış yada eksik karakter girdiniz");
@@ -78,6 +81,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (bloklar != null)
                     {
                         _bloklarService.DeleteBloklar(bloklar);
+                        _accessDatasService.AddOperatorLog(202, user.Kullanici_Adi, id, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                 }
@@ -116,6 +120,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     if (blok != null)
                     {
                         _bloklarService.UpdateBloklar(bloklar);
+                        _accessDatasService.AddOperatorLog(201, user.Kullanici_Adi, bloklar.Blok_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
                 }

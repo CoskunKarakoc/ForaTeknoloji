@@ -25,8 +25,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IAltDepartmanService _altDepartmanService;
         private IUnvanService _unvanService;
         private IBolumService _bolumService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
-        public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupMasterService groupMasterService, ISirketService sirketService, IGlobalZoneService globalZoneService, IReportService reportService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService)
+        public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupMasterService groupMasterService, ISirketService sirketService, IGlobalZoneService globalZoneService, IReportService reportService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -43,6 +44,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _altDepartmanService = altDepartmanService;
             _unvanService = unvanService;
             _bolumService = bolumService;
+            _accessDatasService = accessDatasService;
 
         }
 

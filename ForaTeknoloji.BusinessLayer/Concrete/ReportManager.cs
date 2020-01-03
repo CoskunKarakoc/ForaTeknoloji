@@ -907,6 +907,98 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
+        // Gelen-Gelmeyen Toplu Geçiş Sayısı
+        public List<GelenGelmeyen_TopluGiris> GelenGelmeyen_TopluGirisSayisi(GelenGelmeyenReportParameters parameters)
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = @"SELECT AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi,Unvan.Adi, GroupsMaster.[Grup Adi],
+                 Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,AltDepartman.Adi AS [Alt Departman],Bolum.Adi AS Bolum, COUNT(AccessDatas.ID) As[Giriş Sayısı]
+                FROM(((((((Select DISTINCT AccessDatas.ID, AccessDatas.[Kart ID], AccessDatas.[Gecis Tipi], AccessDatas.Tarih from AccessDatas) AccessDatas
+                LEFT JOIN Users ON AccessDatas.ID = Users.ID) 
+                LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) 
+                LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) 
+				LEFT JOIN AltDepartman ON Users.[Alt Departman No]=AltDepartman.[Departman No])
+				LEFT JOIN Bolum ON Users.[Bolum No]=Bolum.[Bolum No])
+				LEFT JOIN Unvan ON Users.[Unvan No]=Unvan.[Unvan No])
+                LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]
+                WHERE AccessDatas.[Gecis Tipi] = 0 ";
+            if (parameters.User != null)
+            {
+                queryString += " AND Users.ID = " + parameters.User;
+            }
+            if (parameters.Gecis_Grubu != null)
+            {
+                queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
+            }
+            if (parameters.Sirket != null)
+            {
+                queryString += " AND Users.[Sirket No] =" + parameters.Sirket;
+            }
+            if (parameters.Departman != null)
+            {
+                queryString += " AND Users.[Departman No] =" + parameters.Departman;
+            }
+            if (parameters.AltDepartman != null)
+            {
+                queryString += " AND Users.[Alt Departman No] =" + parameters.AltDepartman;
+            }
+            if (parameters.Bolum != null)
+            {
+                queryString += " AND Users.[Bolum No] =" + parameters.Bolum;
+            }
+            if (parameters.Unvan != null)
+            {
+                queryString += " AND Users.[Unvan No] =" + parameters.Unvan;
+            }
+            if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
+            {
+                queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+            }
+            queryString += " GROUP BY AccessDatas.ID, AccessDatas.[Kart ID], Users.Adi, Users.Soyadi,Unvan.Adi, GroupsMaster.[Grup Adi], Sirketler.Adi, Departmanlar.Adi,AltDepartman.Adi ,Bolum.Adi";
+            queryString += " ORDER BY AccessDatas.ID";
+            List<GelenGelmeyen_TopluGiris> liste = new List<GelenGelmeyen_TopluGiris>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var nesne = new GelenGelmeyen_TopluGiris
+                        {
+                            ID = reader[0] as int? ?? default(int),
+                            Kart_ID = reader[1].ToString(),
+                            Adi = reader[2].ToString(),
+                            Soyadi = reader[3].ToString(),
+                            Unvan_Adi = reader[4].ToString(),
+                            Grup_Adi = reader[5].ToString(),
+                            Sirket_Adi = reader[6].ToString(),
+                            Departman_Adi = reader[7].ToString(),
+                            Alt_Departman_Adi = reader[8].ToString(),
+                            Bolum_Adi = reader[9].ToString(),
+                            Giris_Sayisi = reader[10] as int? ?? default(int)
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+            return liste;
+
+        }
+
 
         //+PersonelListReport Controller
         public List<PersonelList> GetPersonelLists(PersonelListReportParameters parameters)
@@ -2692,9 +2784,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
             if (parameters.Group_ID != null)
             {
-                queryString = @"SELECT COUNT(*),PanelSettings.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID] FROM AccessDatas
+                queryString = @"SELECT COUNT(*),PanelSettings.[Panel ID],
+                PanelSettings.[Panel Name],AccessDatas.[Kapi ID] FROM AccessDatas
 				LEFT JOIN PanelSettings ON AccessDatas.[Panel ID]=PanelSettings.[Panel ID]
 				WHERE AccessDatas.[Gecis Tipi] = 0 AND AccessDatas.[Kart ID]>0";
+
                 if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
                 {
                     queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
@@ -2703,24 +2797,27 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 else if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
                 {
                     queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)  AND AccessDatas.Kod=1";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
                 }
+
                 var panelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
+
                 if (panelListesi != null)
                 {
-                    queryString += " AND ";
                     var sayac = 0;
                     foreach (var item in panelListesi)
                     {
-                        sayac++;
-                        if (sayac == 1)
-                        {
-                            queryString += " (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
-                        }
-                        else
-                        {
-                            queryString += "OR (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
-                        }
+                        queryString += " OR (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+
+                        //sayac++;
+                        //if (sayac == 1)
+                        //{
+                        //    queryString += " (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                        //}
+                        //else
+                        //{
+                        //    queryString += "OR (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                        //}
 
                     }
                 }
@@ -2765,6 +2862,111 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
             return liste;
         }
+
+
+        public List<OperatorLogComplex> OperatorLogReport(OperatorLogParameters parameters)
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = "";
+            if (parameters.Kullanici_Adi == null || parameters.Kullanici_Adi == "")
+            {
+                queryString = @"SELECT AccessDatas.[Kayit No], AccessDatas.[Panel ID] As Panel, 
+                ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis, 
+                CodeOperation.Operasyon,
+                AccessDatas.Tarih, AccessDatas.[Kullanici Adi],
+                AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2] 
+                FROM (CodeOperation RIGHT JOIN 
+                (AccessDatas LEFT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) 
+                ON CodeOperation.TKod = AccessDatas.Kod ) 
+                WHERE AccessDatas.Kod >= 100 ";
+            }
+            else if (parameters.Kullanici_Adi != null || parameters.Kullanici_Adi != "")
+            {
+                queryString = @"SELECT AccessDatas.[Kayit No], AccessDatas.[Panel ID] As Panel, 
+                ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis, 
+                CodeOperation.Operasyon, AccessDatas.Tarih, AccessDatas.[Kullanici Adi], AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2] 
+                FROM (CodeOperation RIGHT JOIN 
+                (AccessDatas LEFT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) 
+                ON CodeOperation.TKod = AccessDatas.Kod ) 
+                WHERE AccessDatas.Kod >= 100 
+                AND AccessDatas.[Kullanici Adi] = '" + parameters.Kullanici_Adi.Trim() + "'";
+            }
+            else if (parameters == null)
+            {
+                return new List<OperatorLogComplex>();
+            }
+
+            if (parameters.Code_Operation != null)
+            {
+                queryString += " AND AccessDatas.[Kod] = " + parameters.Code_Operation;
+            }
+
+            if (parameters.Tum_Tarih != true)
+            {
+                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
+                {
+                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                }
+                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
+                {
+                    if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)
+                    {
+                        var sonuc1 = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        var sonuc2 = parameters.Bitis_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + sonuc1 + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + sonuc2 + "',103) ";
+                    }
+                    else
+                    {
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    }
+
+                }
+            }
+
+            queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
+            List<OperatorLogComplex> liste = new List<OperatorLogComplex>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var nesne = new OperatorLogComplex
+                        {
+                            Kayit_No = reader[0] as int? ?? default(int),
+                            Panel_ID = reader[1] as int? ?? default(int),
+                            Kapi_Adi = reader[2].ToString(),
+                            Gecis_Tipi = reader[3] as int? ?? default(int),
+                            Operasyon = reader[4].ToString(),
+                            Tarih = reader[5] as DateTime? ?? default(DateTime),
+                            Kullanici_Adi = reader[6].ToString(),
+                            Islem_Verisi_1 = reader[7] as int? ?? default(int),
+                            Islem_Verisi_2 = reader[8] as int? ?? default(int),
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return liste;
+
+        }
+
 
         public void GetSirketList(DBUsers users)
         {

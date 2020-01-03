@@ -9,6 +9,7 @@
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             @using (Html.BeginForm("WatchSettings", "Watch", FormMethod.Post))
             {
+                @Html.HiddenFor(model => model.Kayit_No)
                 <div class="card-body">
                     <hr />
                     <h5 class="text-info text-center">Panel LOG Ayarları</h5>

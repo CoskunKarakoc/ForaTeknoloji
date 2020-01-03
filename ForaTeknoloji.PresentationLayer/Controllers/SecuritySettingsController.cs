@@ -26,10 +26,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDepartmanService _departmanService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
 
+        private IAccessDatasService _accessDatasService;
 
         DBUsers user;
         DBUsers permissionUser;
-        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService)
+        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -44,6 +45,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _sirketService = sirketService;
             _departmanService = departmanService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -113,6 +115,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     DBUserPanelUpdate(dBUsers, Paneller);
                     DBUserDepartmanUpdate(dBUsers, Departmanlar);
                     _dBUsersService.UpdateDBUsers(dBUsers);
+                    _accessDatasService.AddOperatorLog(232, user.Kullanici_Adi, 0, 0, 0, 0);
                 }
             }
             return RedirectToAction("Index", "SecuritySettings");
@@ -158,7 +161,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         throw new Exception("Aynı kullanıcı adı veya şifre ile kayıt yapılamaz!");
                     }
 
-                    if (dBUsers.SysAdmin==true)
+                    if (dBUsers.SysAdmin == true)
                     {
                         dBUsers.Alarm_Islemleri = 1;
                         dBUsers.Canli_Izleme = 1;
@@ -169,6 +172,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         dBUsers.Ziyaretci_Islemleri = 1;
                     }
                     addedUser = _dBUsersService.AddDBUsers(dBUsers);
+                    _accessDatasService.AddOperatorLog(230, user.Kullanici_Adi, 0, 0, 0, 0);
                 }
                 if (addedUser.SysAdmin == true)
                 {
@@ -228,6 +232,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (user != null && user.Kullanici_Adi != "sa")
                 {
                     _dBUsersService.DeleteDBUsers(user);
+                    _accessDatasService.AddOperatorLog(231, user.Kullanici_Adi, 0, 0, 0, 0);
                     return RedirectToAction("Index", "SecuritySettings");
                 }
             }

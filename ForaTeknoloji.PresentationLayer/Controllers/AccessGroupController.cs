@@ -27,9 +27,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersService _dBUsersService;
         private IReportService _reportService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService)
+        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -47,6 +48,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersService = dBUsersService;
             _reportService = reportService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
             FillGroups();
         }
@@ -103,6 +105,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     var entity = item;
                     entity.Grup_Adi = groupsMaster.Grup_Adi;
                     _groupsDetailNewService.UpdateGroupsDetailNew(entity);
+                    _accessDatasService.AddOperatorLog(122, permissionUser.Kullanici_Adi, groupsMaster.Grup_No, 0, 0, 0);
+
                 }
                 return RedirectToAction("Groups", "AccessGroup");
             }
@@ -150,6 +154,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _groupMasterService.AddGroupsMaster(groupsMaster);
+                _accessDatasService.AddOperatorLog(120, permissionUser.Kullanici_Adi, groupsMaster.Grup_No, 0, 0, 0);
                 if (_liftGroupsService.GetAllLiftGroups().Count() == 0 || _liftGroupsService.GetAllLiftGroups() == null)
                 {
                     _liftGroupsService.DeleteAll();
@@ -194,6 +199,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _groupMasterService.DeleteGroupsMaster(entity);
+                    _accessDatasService.AddOperatorLog(121, permissionUser.Kullanici_Adi, id, 0, 0, 0);
                     foreach (var item in _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Grup_Adi == entity.Grup_Adi))
                     {
                         _groupsDetailNewService.DeleteGroupsDetailNew(item);
@@ -413,6 +419,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tarih = DateTime.Now
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(123, permissionUser.Kullanici_Adi, GecisGrupNo, 0, item, 0);
                     }
                     Thread.Sleep(2000);
                 }
@@ -464,6 +471,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tarih = DateTime.Now
                             };
                             TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
+                            _accessDatasService.AddOperatorLog(123, permissionUser.Kullanici_Adi, item, 0, panel, 0);
                         }
                     }
 

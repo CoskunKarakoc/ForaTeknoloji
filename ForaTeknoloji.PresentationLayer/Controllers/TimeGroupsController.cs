@@ -22,9 +22,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersService _dBUsersService;
         private IReportService _reportService;
+        private IAccessDatasService _accessDatasService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService)
+        public TimeGroupsController(ITimeGroupsService timeGroupsService, ITimeZoneIDsService timeZoneIDsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -38,6 +39,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersService = dBUsersService;
             _reportService = reportService;
+            _accessDatasService = accessDatasService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -133,6 +135,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     }
                 }
                 _timeGroupsService.AddTimeGroups(timeGroups);
+                _accessDatasService.AddOperatorLog(110, permissionUser.Kullanici_Adi, timeGroups.Zaman_Grup_No, 0, 0, 0);
                 return RedirectToAction("Index");
             }
             return View(timeGroups);
@@ -153,6 +156,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _timeGroupsService.DeleteTimeGroups(entity);
+                    _accessDatasService.AddOperatorLog(111, permissionUser.Kullanici_Adi, id, 0, 0, 0);
                     return RedirectToAction("Index");
                 }
                 throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
@@ -199,6 +203,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _timeGroupsService.UpdateTimeGroups(timeGroups);
+                    _accessDatasService.AddOperatorLog(112, permissionUser.Kullanici_Adi, timeGroups.Zaman_Grup_No, 0, 0, 0);
                     return RedirectToAction("Index");
                 }
                 throw new Exception("Bu Zaman Grup No'suna uygun kayıt bulunamadı!");
@@ -233,6 +238,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tarih = DateTime.Now
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(112, permissionUser.Kullanici_Adi, ZamanGrupNo, 0, item, 0);
                     }
                     Thread.Sleep(2000);
                 }
@@ -270,7 +276,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tarih = DateTime.Now
                         };
                         TaskList taskListReceiveErs = _taskListService.AddTaskList(taskListERS);
-
+                        _accessDatasService.AddOperatorLog(111, permissionUser.Kullanici_Adi, 0, 0, panel, 0);
                         foreach (var item in _timeGroupsService.GetAllTimeGroups().Select(a => a.Zaman_Grup_No))
                         {
                             TaskList taskListSend = new TaskList
@@ -285,6 +291,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tarih = DateTime.Now
                             };
                             TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
+                            _accessDatasService.AddOperatorLog(113, permissionUser.Kullanici_Adi, item, 0, panel, 0);
                         }
                     }
 

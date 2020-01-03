@@ -63,6 +63,15 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(GelenGelmeyenReportParameters parameters);
 
         /// <summary>
+        /// Gelen gelmeyen raporları iki tarih arasında ki kullanıcı bazında toplu geçiş sayısı gönderiyor.
+        /// </summary>
+        /// <param name="parameters">Şirket,Departman,Geçiş Grubu,Başlangıç ve Bitiş Tarihleri,Gün Bazında Fark,Kullanıcı</param>
+        /// <returns></returns>
+        List<GelenGelmeyen_TopluGiris> GelenGelmeyen_TopluGirisSayisi(GelenGelmeyenReportParameters parameters);
+
+
+
+        /// <summary>
         /// Sondan başlayarak geriye complex geçiş verileri gönderiyor.
         /// </summary>
         /// <param name="watchParameters">İzleme parametrelerine göre kriter uyguluyor.</param>
@@ -131,5 +140,8 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <param name="parameters">int Panel ID ve int Kapı ID</param>
         /// <returns>Complex Geçiş Verileri</returns>
         List<WatchEntityComplex> MonitorWatch(SpotMonitorSettings parameters);
+
+
+        List<OperatorLogComplex> OperatorLogReport(OperatorLogParameters parameters);
     }
 }
