@@ -252,44 +252,44 @@
 <div class="card border-left-info h-100 mt-1 shadow-lg animated fadeIn">
     <div class="card-body">
         <div id="print_div">
-            @if (Model.ReportPersonel.Count > 0)
-            {
-                @webGrid.GetHtml(
-htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-selectedRowStyle: "selectRow",
-footerStyle: "table-pager",
-columns: webGrid.Columns(
-webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
-webGrid.Column("ID", "ID"),
-webGrid.Column("Kart_ID", "Kart ID"),
-webGrid.Column("Adi", "Adı"),
-webGrid.Column("Soyadi", "Soyadı"),
-webGrid.Column("TCKimlik", "TC Kimlik"),
-webGrid.Column("UnvanAdi", "Ünvan"),
-webGrid.Column("Telefon", "Telefon"),
-webGrid.Column("SirketAdi", "Şirket"),
-webGrid.Column("DepartmanAdi", "Departman"),
-webGrid.Column("AltDepartmanAdi", "Alt Departman"),
-webGrid.Column("BolumAdi", "Bölüm"),
-webGrid.Column("Plaka", "Plaka"),
-webGrid.Column("BlokAdi", "Blok"),
-webGrid.Column("Daire", "Daire"),
-webGrid.Column("Grup_Adi", "Grup"),
-webGrid.Column("Panel_ID", "Panel"),
-webGrid.Column("Kapi", "Kapı"),
-webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
-webGrid.Column("Tarih", "Tarih")))
+                        @if (Model.ReportPersonel.Count > 0)
+                        {
+                            @webGrid.GetHtml(
+            htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+            selectedRowStyle: "selectRow",
+            footerStyle: "table-pager",
+            columns: webGrid.Columns(
+            webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
+            webGrid.Column("ID", "ID"),
+            webGrid.Column("Kart_ID", "Kart ID"),
+            webGrid.Column("Adi", "Adı"),
+            webGrid.Column("Soyadi", "Soyadı"),
+            webGrid.Column("TCKimlik", "TC Kimlik"),
+            webGrid.Column("UnvanAdi", "Ünvan"),
+            webGrid.Column("Telefon", "Telefon"),
+            webGrid.Column("SirketAdi", "Şirket"),
+            webGrid.Column("DepartmanAdi", "Departman"),
+            webGrid.Column("AltDepartmanAdi", "Alt Departman"),
+            webGrid.Column("BolumAdi", "Bölüm"),
+            webGrid.Column("Plaka", "Plaka"),
+            webGrid.Column("BlokAdi", "Blok"),
+            webGrid.Column("Daire", "Daire"),
+            webGrid.Column("Grup_Adi", "Grup"),
+            webGrid.Column("Panel_ID", "Panel"),
+            webGrid.Column("Kapi", "Kapı"),
+            webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+            webGrid.Column("Tarih", "Tarih")))
 
-            }
-            else
-            {
-                <div class="alert alert-info alert-message">
-                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info alert-message">
+                                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                            </div>
 
-            }
+                        }
 
-        </div>
+                    </div>
     </div>
 </div>
 <!-- Modal Aktif -->
@@ -352,7 +352,7 @@ webGrid.Column("Tarih", "Tarih")))
 @section Scripts{
     <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
     <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
-     <style>
+    <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
             background: none;
             color: black !important;
@@ -373,8 +373,6 @@ webGrid.Column("Tarih", "Tarih")))
                 }
             });
         });
-
-
     </script>
 
 

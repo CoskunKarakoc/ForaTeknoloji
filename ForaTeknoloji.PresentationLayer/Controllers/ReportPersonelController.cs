@@ -134,6 +134,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
 
         }
+        
+
+
 
         // GET: ReportPersonelEski
         public ActionResult OldStaff(ActiveUserReportParameters parameters)
