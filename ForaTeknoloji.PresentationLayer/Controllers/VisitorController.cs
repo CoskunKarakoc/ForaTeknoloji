@@ -70,6 +70,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
 
         }
+        [HttpGet]
+        public ActionResult Liste()
+        {
+            var model = _visitorsService.GetAllVisitors().OrderByDescending(x => x.Kayit_No).ToList();
+            return Json(new { data = model }, JsonRequestBehavior.AllowGet);
+        }
 
 
         public ActionResult Create()

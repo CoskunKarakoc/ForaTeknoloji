@@ -20,45 +20,49 @@
 
                     </div>
                 }
-                <input type="text" hidden id="UserCount" name="name" value="@Model.Users.Count" />
-                <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                    <thead>
-                        <tr>
-                            <td>ID</td>
-                            <td>Kart ID</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>Şirket</td>
-                            <td>Departman</td>
-                            <td>Görev</td>
-                            <td>Blok</td>
-                            <td>Plaka</td>
-                            <td>Geçiş Grubu</td>
-                            <td>Ziyaretçi Grubu</td>
-                            <td title="Panel Durum Tablosu" class="text-right">
-                                <a data-toggle="modal" data-target="#panelList" onclick="ekle(0,2622)" class="text-success mr-2" title="Tüm Kullanıcıları Gönder"><i class="fas fa-users"></i></a>
-                                <a href="@Url.Action("TaskTable","Task")" class="text-secondary mr"><i class="fas fa-tasks"></i> </a>
+                else
+                {
+                    <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>Görev</td>
+                                <td>Blok</td>
+                                <td>Plaka</td>
+                                <td>Geçiş Grubu</td>
+                                <td>Ziyaretçi Grubu</td>
+                                <td title="Panel Durum Tablosu" class="text-right">
+                                    <a data-toggle="modal" data-target="#panelList" onclick="ekle(0,2622)" class="text-success mr-2" title="Tüm Kullanıcıları Gönder"><i class="fas fa-users"></i></a>
+                                    <a href="@Url.Action("TaskTable","Task")" class="text-secondary mr"><i class="fas fa-tasks"></i> </a>
 
-                            </td>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <td>ID</td>
-                            <td>Kart ID</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>Şirket</td>
-                            <td>Departman</td>
-                            <td>Görev</td>
-                            <td>Blok</td>
-                            <td>Plaka</td>
-                            <td>Geçiş Grubu</td>
-                            <td>Ziyaretçi Grubu</td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>Görev</td>
+                                <td>Blok</td>
+                                <td>Plaka</td>
+                                <td>Geçiş Grubu</td>
+                                <td>Ziyaretçi Grubu</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+
+
             </div>
         </div>
     </div>
@@ -177,11 +181,26 @@
     </div>
 </div>
 @section Scripts{
-
     <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
     <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
     <script>
         $(document).ready(function () {
+
+            //$.fn.dataTable.ext.classes.sPageButton = 'btn btn-sm btn-info mr-1 ml-1';
+            //$.fn.dataTable.ext.classes.sFilterInput = "form-control form-control-sm";
             $("#UserList").DataTable({
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
@@ -208,8 +227,12 @@
                             return multipleUrl;
                         }
                     },
+                ],
+                "columnDefs": [
+                    { "orderable": false, "targets": 11 }
                 ]
             });
+
         });
     </script>
 }
@@ -246,20 +269,6 @@
                 $("#messageRcv").prop("hidden", true);
             }, 1000);
         });
-        var count = $("#UserCount").val();
-        if (count == 0) {
-            $("#UserList").prop("hidden", true);
-            $("#Title").prop("hidden", true);
-        } else {
-            $("#UserList").prop("hidden", false);
-            $("#Title").prop("hidden", false);
-        }
-
-
-
-
-
-
     });
     function ekle(userID, oprKod) {
         $("#userID").prop("value", userID);

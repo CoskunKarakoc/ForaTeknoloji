@@ -32,7 +32,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card border-left-info h-100 mt-1 shadow-lg">
+<div class="card border-left-info h-100 mt-1 shadow-lg animated fadeIn">
     <div class="card-header-tabs">
         <h3 class="text-muted text-center">Ziyaretçi Raporları</h3>
     </div>
@@ -207,7 +207,7 @@
         }
     </div>
 </div>
-<div class="card border-left-info h-100 mt-1 shadow-lg">
+<div class="card border-left-info h-100 mt-1 shadow-lg animated fadeIn">
     <div class="card-body">
         <div id="print_div">
             @if (Model.ComplexVisitorsListesi.Count > 0)
@@ -326,6 +326,19 @@
 @section Scripts{
     <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
     <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
     <script>
         $(document).ready(function () {
             $("#myTable").DataTable({

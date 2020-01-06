@@ -349,79 +349,22 @@ webGrid.Column("Tarih", "Tarih")))
     </div>
 </div>
 
-
-<!-- Modal Eski -->
-@*
-    <div class="modal fade" id="exampleModalEski" tabindex="-1" role="dialog" aria-labelledby="exampleModalEskiLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="text-muted">Eski Kullanıcı Arama</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body ">
-                    <div hidden id="alertMainEski" class="alert-success alert">
-                        <h2 id="alertEski" class="text-center text-muted"></h2>
-                    </div>
-                    <!-- Search form -->
-                    <div class="input-group md-form form-sm form-2 pl-0">
-                        <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="SearchEski" aria-label="Search">
-                        <button class="btn btn-sm btn-success" id="SearchBtnEski">Ara</button>
-                    </div>
-                    <hr />
-                    <table id="myTableEski" class="table table-hover text-center table-striped">
-                        <thead class="table-info">
-                            <tr>
-                                <td>Kayıt No</td>
-                                <td>ID</td>
-                                <td>Kart ID</td>
-                                <td>Adı</td>
-                                <td>Soyadı</td>
-                                <td>Şirket</td>
-                                <td>Departman</td>
-                                <td>Blok</td>
-                                <td>Plaka</td>
-                                <td>Geçiş Grubu</td>
-                                <td>Ziyaretçi Grubu</td>
-                            </tr>
-                        </thead>
-                        <tbody id="zyrt">
-                            @foreach (var item in Model.EskiKullanicilar)
-                            {
-                                <tr>
-                                    <td data-kayitno="@item.Kayit_No" data-visitor="@(item.Adi+" "+item.Soyadi )">@item.Kayit_No</td>
-                                    <td>@item.ID</td>
-                                    <td>@item.Kart_ID</td>
-                                    <td>@item.Adi</td>
-                                    <td>@item.Soyadi</td>
-                                    <td>@item.Sirket</td>
-                                    <td>@item.Departman</td>
-                                    <td>@item.Blok</td>
-                                    <td>@item.Plaka</td>
-                                    <td>@item.Gecis_Grubu</td>
-                                    <td>@item.Ziyaretci_Grubu</td>
-                                </tr>
-
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" id="yenileEski"><i class="fas fa-refresh"></i> Listeyi Yenile</button>
-                    <button type="button" id="temizleEski" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
-                    <button type="button" id="closeEski" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
-                </div>
-            </div>
-        </div>
-    </div>*@
-
-
 @section Scripts{
     <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
     <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+     <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
     <script>
         $(document).ready(function () {
             $("#myTable").DataTable({

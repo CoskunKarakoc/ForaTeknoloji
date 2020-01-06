@@ -11,16 +11,6 @@
                 <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Ziyaretçi Ayarları</h3>
             </div>
             <div class="card-body">
-                @*@using (Html.BeginForm("Index", "Visitor", FormMethod.Get))
-                    {
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Kullanıcı Ara..." name="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i> Ara</button>
-                            </div>
-                        </div>
-                    }
-                    <hr />*@
                 @if (Model.Visitor.Count == 0)
                 {
                     <div class="alert alert-info" role="alert">
@@ -31,49 +21,51 @@
 
                     </div>
                 }
-                <input type="text" hidden id="VisitorCount" name="name" value="@Model.Visitor.Count" />
-                <table id="VisitorList" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>Kart ID</td>
-                            <td>TC Kimlik</td>
-                            <td>Telefon</td>
-                            <td>Plaka</td>
-                            <td>Tarih</td>
-                            <td>Ziyaret Sebebi</td>
-                            <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Visitor)
-                        {
+                else
+                {
+                    <table id="VisitorList" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead>
                             <tr>
-                                <td>@item.Adi</td>
-                                <td>@item.Soyadi</td>
-                                <td>@item.Kart_ID</td>
-                                <td>@item.TCKimlik</td>
-                                <td>@item.Telefon</td>
-                                <td>@item.Plaka</td>
-                                @if (item.Tarih == null)
-                                {
-                                    <td></td>
-                                }
-                                else
-                                {
-                                    <td>@item.Tarih.Value.ToShortDateString()</td>
-                                }
-                                <td>@item.Ziyaret_Sebebi</td>
-                                <td>
-                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Visitor",new { id=item.Kayit_No})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Visitor",new { id=item.Kayit_No})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Visitor Send To Panel" onclick="ekle(@item.ID)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
-                                </td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Kart ID</td>
+                                <td>TC Kimlik</td>
+                                <td>Telefon</td>
+                                <td>Plaka</td>
+                                <td>Tarih</td>
+                                <td>Ziyaret Sebebi</td>
+                                <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Visitor)
+                            {
+                                <tr>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Soyadi</td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.TCKimlik</td>
+                                    <td>@item.Telefon</td>
+                                    <td>@item.Plaka</td>
+                                    @if (item.Tarih == null)
+                                    {
+                                        <td></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.Tarih.Value.ToShortDateString()</td>
+                                    }
+                                    <td>@item.Ziyaret_Sebebi</td>
+                                    <td>
+                                        <a title="Edit" id="edit" href="@Url.Action("Edit","Visitor",new { id=item.Kayit_No})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                        <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Visitor",new { id=item.Kayit_No})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                        <a data-toggle="modal" data-target="#panelList" title="Visitor Send To Panel" onclick="ekle(@item.ID)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
             </div>
         </div>
     </div>
@@ -139,12 +131,28 @@
 @section Scripts{
     <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
     <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
     <script>
         $(document).ready(function () {
             $("#VisitorList").DataTable({
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
-                }
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 8 }
+                ]
             });
         });
     </script>
@@ -167,17 +175,6 @@
                 $("#message").prop("hidden", true);
             }, 1000);
         });
-
-        var count = $("#VisitorCount").val();
-        if (count == 0) {
-            $("#VisitorList").prop("hidden", true);
-            $("#Title").prop("hidden", true);
-        } else {
-            $("#VisitorList").prop("hidden", false);
-            $("#Title").prop("hidden", false);
-        }
-
-
     });
     function ekle(visitorNo) {
         $("#visitorNo").prop("value", visitorNo);

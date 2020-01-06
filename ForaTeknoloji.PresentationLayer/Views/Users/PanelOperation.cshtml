@@ -22,48 +22,51 @@
 
                     </div>
                 }
-                <input type="text" hidden id="UserCount" name="name" value="@Model.Users.Count" />
-                <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <td>ID</td>
-                            <td>Kart ID</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>Şirket</td>
-                            <td>Departman</td>
-                            <td>Görev</td>
-                            <td>Blok</td>
-                            <td>Plaka</td>
-                            <td>Geçiş Grubu</td>
-                            <td>Ziyaretçi Grubu</td>
-                            <td>
-                                <a data-toggle="modal" data-target="#panelList" title="Tümünü Panelden Sil" onclick="ekle(0,2629)" id="PanelDelete"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
-                                <a data-toggle="modal" data-target="#panelList" title="Tüm Geçiş Sayacını Sil" onclick="ekle(0,2702)" id="AccessDelete"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
-                                <a data-toggle="modal" data-target="#panelList" title="Tüm Antipassback Sayacını Sil" onclick="ekle(0,2711)" id="AntiDelete"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
-                                <a title="Tüm Kullanıcıları Sil" onclick="return confirm('Kullanıcıların Tümünü Veritabanından Silmek İstediğinize Emin Misiniz?')" id="AllDataUser" href="@Url.Action("DeleteDatabaseAll","Users")"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
-                                <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a>
-                            </td>
+                else
+                {
+                    <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>Görev</td>
+                                <td>Blok</td>
+                                <td>Plaka</td>
+                                <td>Geçiş Grubu</td>
+                                <td>Ziyaretçi Grubu</td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#panelList" title="Tümünü Panelden Sil" onclick="ekle(0,2629)" id="PanelDelete"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Tüm Geçiş Sayacını Sil" onclick="ekle(0,2702)" id="AccessDelete"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
+                                    <a data-toggle="modal" data-target="#panelList" title="Tüm Antipassback Sayacını Sil" onclick="ekle(0,2711)" id="AntiDelete"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
+                                    <a title="Tüm Kullanıcıları Sil" onclick="return confirm('Kullanıcıların Tümünü Veritabanından Silmek İstediğinize Emin Misiniz?')" id="AllDataUser" href="@Url.Action("DeleteDatabaseAll","Users")"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
+                                    <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a>
+                                </td>
 
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <td>ID</td>
-                            <td>Kart ID</td>
-                            <td>Adı</td>
-                            <td>Soyadı</td>
-                            <td>Şirket</td>
-                            <td>Departman</td>
-                            <td>Görev</td>
-                            <td>Blok</td>
-                            <td>Plaka</td>
-                            <td>Geçiş Grubu</td>
-                            <td>Ziyaretçi Grubu</td>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>Görev</td>
+                                <td>Blok</td>
+                                <td>Plaka</td>
+                                <td>Geçiş Grubu</td>
+                                <td>Ziyaretçi Grubu</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+
             </div>
         </div>
     </div>
@@ -131,6 +134,20 @@
 @section Scripts{
     <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
     <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+            
+        }
+    </style>
     <script>
         $(document).ready(function () {
             $("#UserList").DataTable({
@@ -159,16 +176,12 @@
                             return multipleUrl;
                         }
                     },
-
-
+                ],
+                "columnDefs": [
+                    { "orderable": false, "targets": 11 }
                 ]
             });
-
-
-
-
-
-        })
+        });
     </script>
 }
 <script>
@@ -186,14 +199,6 @@
                 $("#message").prop("hidden", true);
             }, 1000);
         });
-        var count = $("#UserCount").val();
-        if (count == 0) {
-            $("#UserList").prop("hidden", true);
-            $("#Title").prop("hidden", true);
-        } else {
-            $("#UserList").prop("hidden", false);
-            $("#Title").prop("hidden", false);
-        }
     });
     function ekle(userNo, oprKod) {
         $("#userNo").prop("value", userNo);

@@ -21,7 +21,7 @@
             }
 </style>
 
-<div class="card border-left-info h-100 mt-2 shadow-lg animated slideInLeft faster">
+<div class="card border-left-info h-100 mt-2 shadow-lg animated fadeIn">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">İçerdekiler-Dışardakiler Ziyaretçi</h3>
     </div>
@@ -88,7 +88,7 @@
     </div>
 </div>
 
-<div class="card border-left-info h-100 mt-2 shadow-l animated slideInRight faster ">
+<div class="card border-left-info h-100 mt-2 shadow-l animated fadeIn">
     <div class="card-body">
         <div class="card-body">
             @using (Html.BeginForm("ManuelCikisPersonel", "InsideOutReport", FormMethod.Post))
@@ -103,15 +103,15 @@
         footerStyle: "table-pager",
         columns: webGrid.Columns(
         webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                                  webGrid.Column("Kayit_No", "Kayıt No"),
-                                  webGrid.Column("ID", "ID"),
-                                  webGrid.Column("Kart_ID", "Kart ID"),
-                                  webGrid.Column("Adi", "Adı"),
-                                  webGrid.Column("Soyadi", "Soyadı"),
-                                  webGrid.Column("Sirket", "Şirket"),
-                                  webGrid.Column("Departman", "Departman"),
-                                  webGrid.Column("Tarih", "Tarih"),
-                                  webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
+                            webGrid.Column("Kayit_No", "Kayıt No"),
+                            webGrid.Column("ID", "ID"),
+                            webGrid.Column("Kart_ID", "Kart ID"),
+                            webGrid.Column("Adi", "Adı"),
+                            webGrid.Column("Soyadi", "Soyadı"),
+                            webGrid.Column("Sirket", "Şirket"),
+                            webGrid.Column("Departman", "Departman"),
+                            webGrid.Column("Tarih", "Tarih"),
+                            webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
                     }
                     else
                     {
@@ -136,99 +136,100 @@
             }
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $("#btnPrint").click(function () {
-                var contents = $("#print_div").html();
-                var frame1 = $('<iframe />');
-                frame1[0].name = "frame1";
-                frame1.css({ "position": "absolute" });
-                $("body").append(frame1);
-                var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
-                frameDoc.document.open();
-                //Create a new HTML document.
-                frameDoc.document.write('<html><head><title>İçerde Dışarda-Personel Raporları</title>');
-                frameDoc.document.write('</head><body><hr />');
-                //Append the external CSS file.
-                frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
-                //Append the DIV contents.
-                frameDoc.document.write(contents);
-                frameDoc.document.write('</body></html>');
-                frameDoc.document.close();
-                setTimeout(function () {
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnPrint").click(function () {
+            var contents = $("#print_div").html();
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            //Create a new HTML document.
+            frameDoc.document.write('<html><head><title>İçerde Dışarda-Personel Raporları</title>');
+            frameDoc.document.write('</head><body><hr />');
+            //Append the external CSS file.
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            //Append the DIV contents.
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
 
-                    window.frames["frame1"].focus();
-                    window.frames["frame1"].print();
-                    frame1.remove();
-                }, 500);
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
 
-            });
-            $("#Global_Kapi_Bolgesi").attr("disabled", true);
-            $("#lokal").change(function () {
-                if ($(this).prop("checked") == true) {
-                    $("#Global_Kapi_Bolgesi").prop("disabled", true);
-                    $("#Panel").prop("disabled", false);
-                    $("#Reader").prop("disabled ", false);
-                }
-            })
-
-            $("#global").change(function () {
-                if ($(this).prop("checked") == true) {
-                    $("#Panel").prop("disabled", true);
-                    $("#Reader").prop("disabled ", true);
-                    $("#Global_Kapi_Bolgesi").prop("disabled", false);
-                }
-            });
-
-            $("#In").change(function () {
-                if ($(this).prop("checked") == true) {
-                    $("#OutReader").prop("disabled", false);
-                }
-
-            });
-
-            $("#Panel").change(function () {
-                var panelID = $(this).val();
-                if (panelID == 0) {
-                    $("#Reader").html("");
-                } else {
-                    $.ajax({
-                        url: '/InsideOutReport/Reader?Paneller=' + panelID,
-                        type: 'GET',
-                        dataType: 'json'
-                    }).done(function (data) {
-                        $("#Reader").html("");
-                        $("#OutReader").html("");
-                        $('#Reader').append("<option value=''>Okuyucu Seç</option>");
-                        $('#OutReader').append("<option value=''>Çıkış Okuyucusu Seç</option>");
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].WKapi_Lokal_Bolge != 0) {
-                                $('#Reader').append('<option value=' + data[i].WKapi_Lokal_Bolge + '>' + data[i].WKapi_Adi + '</option>')
-                            }
-                            if (data[i].WKapi_Kapi_Tipi == 2) {
-                                $('#OutReader').append('<option value=' + data[i].WKapi_ID + '>' + data[i].WKapi_Adi + '</option>')
-                            }
-                        }
-                    });
-                }
-            })
-
-            $("#Reader").change(function () {
-                var lokalBolgeNo = $(this).val();
-                $("#mesaj").html("");
-                $("#mesaj").text("Seçilen Lokal Bölge " + lokalBolgeNo);
-                $("#mesaj").removeAttr("hidden")
-                $("#LBN").attr("value", lokalBolgeNo);
-            });
-
-            $("#OutReader").change(function () {
-                var kapiID = $(this).val();
-                $("#KapiID").prop("value", kapiID);
-            });
-
-            $("#Panel").change(function () {
-                var panel = $(this).val();
-                $("#PanelID").prop("value", panel);
-            });
         });
-    </script>
+        $("#Global_Kapi_Bolgesi").attr("disabled", true);
+        $("#lokal").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Global_Kapi_Bolgesi").prop("disabled", true);
+                $("#Panel").prop("disabled", false);
+                $("#Reader").prop("disabled ", false);
+            }
+        })
+
+        $("#global").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Panel").prop("disabled", true);
+                $("#Reader").prop("disabled ", true);
+                $("#Global_Kapi_Bolgesi").prop("disabled", false);
+            }
+        });
+
+        $("#In").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#OutReader").prop("disabled", false);
+            }
+
+        });
+
+        $("#Panel").change(function () {
+            var panelID = $(this).val();
+            if (panelID == 0) {
+                $("#Reader").html("");
+            } else {
+                $.ajax({
+                    url: '/InsideOutReport/Reader?Paneller=' + panelID,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Reader").html("");
+                    $("#OutReader").html("");
+                    $('#Reader').append("<option value=''>Okuyucu Seç</option>");
+                    $('#OutReader').append("<option value=''>Çıkış Okuyucusu Seç</option>");
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].WKapi_Lokal_Bolge != 0) {
+                            $('#Reader').append('<option value=' + data[i].WKapi_Lokal_Bolge + '>' + data[i].WKapi_Adi + '</option>')
+                        }
+                        if (data[i].WKapi_Kapi_Tipi == 2) {
+                            $('#OutReader').append('<option value=' + data[i].WKapi_ID + '>' + data[i].WKapi_Adi + '</option>')
+                        }
+                    }
+                });
+            }
+        })
+
+        $("#Reader").change(function () {
+            var lokalBolgeNo = $(this).val();
+            $("#mesaj").html("");
+            $("#mesaj").text("Seçilen Lokal Bölge " + lokalBolgeNo);
+            $("#mesaj").removeAttr("hidden")
+            $("#LBN").attr("value", lokalBolgeNo);
+        });
+
+        $("#OutReader").change(function () {
+            var kapiID = $(this).val();
+            $("#KapiID").prop("value", kapiID);
+        });
+
+        $("#Panel").change(function () {
+            var panel = $(this).val();
+            $("#PanelID").prop("value", panel);
+        });
+    });
+</script>

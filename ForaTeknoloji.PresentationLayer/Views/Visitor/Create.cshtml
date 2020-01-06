@@ -305,6 +305,9 @@
 
 <script>
     $(document).ready(function () {
+        var today = new Date();
+        $('#Tarih').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+
         $("#myTable tbody tr").click(function () {
             $("#alertMain").prop("hidden", false);
             var ID = $(this).children("td").data("id");
