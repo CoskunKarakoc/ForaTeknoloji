@@ -316,6 +316,13 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTablesNew\dataTables.bootstrap.min.css" />
+    <Content Include="Content\DataTablesNew\dataTables.bootstrap.min.js" />
+    <Content Include="Content\DataTablesNew\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\DataTablesNew\dataTables.bootstrap4.min.js" />
+    <Content Include="Content\DataTablesNew\dataTablesLanguageTr.js" />
+    <Content Include="Content\DataTablesNew\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTablesNew\jquery.dataTables.min.js" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap4.css" />
@@ -480,6 +487,11 @@
     <Content Include="Content\gridmvc.datepicker.css" />
     <Content Include="Content\gridmvc.datepicker.min.css" />
     <Content Include="Content\Images\favicon.ico" />
+    <Content Include="Content\Images\sort_asc.png" />
+    <Content Include="Content\Images\sort_asc_disabled.png" />
+    <Content Include="Content\Images\sort_both.png" />
+    <Content Include="Content\Images\sort_desc.png" />
+    <Content Include="Content\Images\sort_desc_disabled.png" />
     <Content Include="Content\Login-Page.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Validation-Summary.css" />

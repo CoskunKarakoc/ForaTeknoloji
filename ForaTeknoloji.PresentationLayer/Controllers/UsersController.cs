@@ -75,34 +75,30 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         //Kullanıcıların Listelenmesi
-        public ActionResult Index(string Search = null)
+        public ActionResult Index()
         {
             if (permissionUser.SysAdmin == false)
             {
                 if (permissionUser.Kullanici_Islemleri == 3)
                     throw new Exception("Yetkisiz Erişim!");
             }
-            if (Search != null && Search != "")
+
+            var model = new UsersListViewModel
             {
-                var model = new UsersListViewModel
-                {
-                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
-                    //Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
-                    PanelListesi = _reportService.PanelListesi(user)
-                };
-                return View(model);
-            }
-            else
-            {
-                var model = new UsersListViewModel
-                {
-                    Users = _userService.GetAllUsersWithOuther(),
-                    //Users = IndexViewUser(),
-                    PanelListesi = _reportService.PanelListesi(user)
-                };
-                return View(model);
-            }
+                Users = _userService.GetAllUsersWithOuther(),
+                //Users = IndexViewUser(),
+                PanelListesi = _reportService.PanelListesi(user)
+            };
+            return View(model);
+
         }
+
+        public ActionResult UserList()
+        {
+            return Json(new { data = _userService.GetAllUsersWithOuther() }, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         //Yeni Kullanıcı Oluşturma
         public ActionResult Create(string Kart_ID = null)
@@ -349,37 +345,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         //Panel Silme Operasyonları Silme İşlemi
-        public ActionResult PanelOperation(string Search)
+        public ActionResult PanelOperation()
         {
             if (permissionUser.SysAdmin == false)
             {
                 if (permissionUser.Kullanici_Islemleri == 3)
                     throw new Exception("Yetkisiz Erişim!");
             }
-
-            if (Search != null && Search != "")
+            var model = new UsersListViewModel
             {
-                var model = new UsersListViewModel
-                {
-                    Users = _userService.GetAllUsersWithOuther(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())),
-                    //Users = IndexViewUser().Where(x => x.Kart_ID.Contains(Search.Trim()) || x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).ToList(),
-                    PanelListesi = _reportService.PanelListesi(user)
-                };
-                return View(model);
-            }
-            else
-            {
-                var model = new UsersListViewModel
-                {
-                    Users = _userService.GetAllUsersWithOuther(),
-                    //Users = IndexViewUser(),
-                    PanelListesi = _reportService.PanelListesi(user)
+                Users = _userService.GetAllUsersWithOuther(),
+                //Users = IndexViewUser(),
+                PanelListesi = _reportService.PanelListesi(user)
 
-                };
-                return View(model);
-            }
+            };
+            return View(model);
         }
-
         //Panelden Kullanıcı Alma İşlemi
         public ActionResult Receive(int PanelListReceive, int ReceiveUserID = -1)
         {

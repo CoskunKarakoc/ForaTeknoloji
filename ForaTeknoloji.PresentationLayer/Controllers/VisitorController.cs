@@ -54,32 +54,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: Visitor
-        public ActionResult Index(string Search)
+        public ActionResult Index()
         {
             if (permissionUser.SysAdmin == false)
             {
                 if (permissionUser.Ziyaretci_Islemleri == 3)
                     throw new Exception("Yetkisiz erişim!");
             }
-            if (Search != null && Search != "")
-            {
-                var model = new VisitorListViewModel
-                {
-                    Visitor = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim())).OrderByDescending(x => x.Kayit_No).ToList(),
-                    PanelListesi = _reportService.PanelListesi(user)
-                };
 
-                return View(model);
-            }
-            else
+            var model = new VisitorListViewModel
             {
-                var model = new VisitorListViewModel
-                {
-                    Visitor = _visitorsService.GetAllVisitors().OrderByDescending(x => x.Kayit_No).ToList(),
-                    PanelListesi = _reportService.PanelListesi(user)
-                };
-                return View(model);
-            }
+                Visitor = _visitorsService.GetAllVisitors().OrderByDescending(x => x.Kayit_No).ToList(),
+                PanelListesi = _reportService.PanelListesi(user)
+            };
+            return View(model);
+
         }
 
 

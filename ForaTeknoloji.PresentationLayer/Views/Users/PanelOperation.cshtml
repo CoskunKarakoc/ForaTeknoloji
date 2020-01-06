@@ -12,16 +12,6 @@
                 <h3 title="Title" class="m-0 font-weight-bold text-secondary text-center">Kullanıcı Ayarları</h3>
             </div>
             <div class="card-body">
-                @using (Html.BeginForm("PanelOperation", "Users", FormMethod.Get))
-                {
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Kullanıcı Ara..." name="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i> Ara</button>
-                        </div>
-                    </div>
-                }
-                <hr />
                 @if (Model.Users.Count == 0)
                 {
                     <div class="alert alert-info" role="alert">
@@ -34,7 +24,7 @@
                 }
                 <input type="text" hidden id="UserCount" name="name" value="@Model.Users.Count" />
                 <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
+                    <thead>
                         <tr>
                             <td>ID</td>
                             <td>Kart ID</td>
@@ -57,30 +47,22 @@
 
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach (var item in Model.Users)
-                        {
-                            <tr>
-                                <td>@item.ID</td>
-                                <td>@item.Kart_ID</td>
-                                <td>@item.Adi</td>
-                                <td>@item.Soyadi</td>
-                                <td>@item.Sirket</td>
-                                <td>@item.Departman</td>
-                                <td>@item.Gorev</td>
-                                <td>@item.Blok</td>
-                                <td>@item.Plaka</td>
-                                <td>@item.Gecis_Grubu</td>
-                                <td>@item.String_Ziyaretci_Grubu</td>
-                                <td>
-                                    <a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(@item.ID,2628)" id="PanelDelete"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Geçiş Sayacı Sil" onclick="ekle(@item.ID,2701)" id="AccessDelete"><i class="fas fa-trash-alt text-warning mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Antipassback Sayacı Sil" onclick="ekle(@item.ID,2710)" id="AntiDelete"><i class="fas fa-trash-alt text-dark mr-2"></i></a>
-                                    <a title="Kullanıcıyı Tüm Sistemden Kaldır" onclick="return confirm('Kullanıcıyı Tüm Sistemden Silmek İstediğinize Emin Misiniz?')" id="AntiDelete" href="@Url.Action("DeleteAllSystem","Users",new { id=item.ID})"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Şirket</td>
+                            <td>Departman</td>
+                            <td>Görev</td>
+                            <td>Blok</td>
+                            <td>Plaka</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Ziyaretçi Grubu</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -146,10 +128,49 @@
     </div>
 </div>
 
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <script>
+        $(document).ready(function () {
+            $("#UserList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "ajax": "/Users/UserList",
+                "columns": [
+                    { "data": "ID" },
+                    { "data": "Kart_ID" },
+                    { "data": "Adi" },
+                    { "data": "Soyadi" },
+                    { "data": "Sirket" },
+                    { "data": "Departman" },
+                    { "data": "Gorev" },
+                    { "data": "Blok" },
+                    { "data": "Plaka" },
+                    { "data": "Gecis_Grubu" },
+                    { "data": "String_Ziyaretci_Grubu" },
+                    {
+                        "data": "ID", "render": function (data) {
+                            var multipleUrl = '<a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(' + data + ',2628)" id="PanelDelete"><i class="fas fa-trash-alt text-danger mr-2"></i></a>' +
+                                '<a data-toggle="modal" data-target="#panelList" title="Geçiş Sayacı Sil" onclick="ekle(' + data + ',2701)" id="AccessDelete"><i class="fas fa-trash-alt text-warning mr-2"></i></a>' +
+                                '<a data-toggle="modal" data-target="#panelList" title="Antipassback Sayacı Sil" onclick="ekle(' + data + ',2710)" id="AntiDelete"><i class="fas fa-trash-alt text-dark mr-2"></i></a>' +
+                                '<a title="Kullanıcıyı Tüm Sistemden Kaldır" onclick="return confirm(\'Kullanıcıyı Tüm Sistemden Silmek İstediğinize Emin Misiniz?\')" id="AntiDelete" href="Users/DeleteAllSystem?id=' + data + '"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>';
+                            return multipleUrl;
+                        }
+                    },
+
+
+                ]
+            });
 
 
 
 
+
+        })
+    </script>
+}
 <script>
     $(document).ready(function () {
         $("#AllPanel").click(function () {

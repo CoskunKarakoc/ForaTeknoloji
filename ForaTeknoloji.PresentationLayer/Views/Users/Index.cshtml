@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Kullanıcı Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //WebGrid webGrid = new WebGrid(source: Model.Users, rowsPerPage: 50);
 }
 <div class="row">
     <div class="col-md-12">
@@ -11,16 +10,6 @@
                 <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Kullanıcı Ayarları</h3>
             </div>
             <div class="card-body ">
-                @using (Html.BeginForm("Index", "Users", FormMethod.Get))
-                {
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Kullanıcı Ara..." name="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i> Ara</button>
-                        </div>
-                    </div>
-                }
-                <hr />
                 @if (Model.Users.Count == 0)
                 {
                     <div class="alert alert-info" role="alert">
@@ -32,8 +21,8 @@
                     </div>
                 }
                 <input type="text" hidden id="UserCount" name="name" value="@Model.Users.Count" />
-                <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
+                <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead>
                         <tr>
                             <td>ID</td>
                             <td>Kart ID</td>
@@ -53,77 +42,27 @@
                             </td>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach (var item in Model.Users)
-                        {
-                            <tr>
-                                <td>@item.ID</td>
-                                <td>@item.Kart_ID</td>
-                                <td>@item.Adi</td>
-                                <td>@item.Soyadi</td>
-                                <td>@item.Sirket</td>
-                                <td>@item.Departman</td>
-                                <td>@item.Gorev</td>
-                                <td>@item.Blok</td>
-                                <td>@item.Plaka</td>
-                                <td>@item.Gecis_Grubu</td>
-                                <td>@item.String_Ziyaretci_Grubu</td>
-                                <td>
-                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=item.ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Delete"href="@Url.Action("Delete",new {id=item.ID })" onclick="return confirm('Seçilen Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(@item.ID,2620)" id="send"><i class="fas fa-share text-success mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelListReceive" title="Receive From Panel" onclick="receiveAdd(@item.ID)" id="send"><i class="fas fa-reply text-success mr-2"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Şirket</td>
+                            <td>Departman</td>
+                            <td>Görev</td>
+                            <td>Blok</td>
+                            <td>Plaka</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Ziyaretçi Grubu</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
-
-                @*<a data-toggle="modal" data-target="#panelList" onclick="ekle(0,2622)" class=" mr-2 btn btn-sm btn-outline-success text-success" title="Tüm Kullanıcıları Gönder"><i class="fas fa-users"></i> Tüm Kullanıcıları Gönder</a>
-                    <a href="@Url.Action("TaskTable","Task")" class="btn btn-sm btn-outline-secondary mr"><i class="fas fa-tasks"></i> Görev Durum Tablosu</a>
-                    <hr />
-                    @if (Model.Users.Count > 0)
-                    {
-                        @webGrid.GetHtml(
-                        htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped" },
-                        headerStyle:"table-info table-sm",
-                        footerStyle: "table-pager",
-
-                        columns:webGrid.Columns(
-                            webGrid.Column("ID", header: "ID"),
-                            webGrid.Column("Kart_ID", header: "Kart ID"),
-                            webGrid.Column("Adi", header: "Adı"),
-                            webGrid.Column("Soyadi", header: "Soyadı"),
-                            webGrid.Column("Sirket", header: "Şirket"),
-                            webGrid.Column("Departman", header: "Departman"),
-                            webGrid.Column("Blok", header: "Blok"),
-                            webGrid.Column("Plaka", header: "Plaka"),
-                            webGrid.Column("Gecis_Grubu", header: "Geçiş Grubu"),
-                            webGrid.Column("String_Ziyaretci_Grubu", header:"Ziyaretçi Grubu"),
-                            webGrid.Column(format:@<text>@(SetBinding(item.ID))</text>)))
-                    }
-                    else
-                    {
-                        <div class="alert alert-info alert-message ">
-                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                        </div>
-                    }*@
             </div>
         </div>
     </div>
 </div>
-@*@helper SetBinding(int ID)
-    {
-        <a title="Edit" id="edit" href="@Url.Action("Edit","Users",new { id=ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-        <a title="Delete" onclick="Delete(ID)"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-        <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(ID)" id="send"><i class="fas fa-share text-success mr-2"></i></a>
-        <a data-toggle="modal" data-target="#panelListReceive" title="Receive From Panel" onclick="receiveAdd(ID)" id="send"><i class="fas fa-reply text-success mr-2"></i></a>
-
-    }*@
-
-
-
-
 
 <!--Send User PanelSelect Modal -->
 <div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
@@ -237,8 +176,43 @@
         </div>
     </div>
 </div>
+@section Scripts{
 
-
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <script>
+        $(document).ready(function () {
+            $("#UserList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "ajax": "/Users/UserList",
+                "columns": [
+                    { "data": "ID" },
+                    { "data": "Kart_ID" },
+                    { "data": "Adi" },
+                    { "data": "Soyadi" },
+                    { "data": "Sirket" },
+                    { "data": "Departman" },
+                    { "data": "Gorev" },
+                    { "data": "Blok" },
+                    { "data": "Plaka" },
+                    { "data": "Gecis_Grubu" },
+                    { "data": "String_Ziyaretci_Grubu" },
+                    {
+                        "data": "ID", "render": function (data) {
+                            var multipleUrl = '<a title="Edit" id="edit" href="/Users/Edit?id=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
+                                '<a title="Delete" href="/Users/Delete?id=' + data + '" onclick="return confirm(\'Seçilen Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?\')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>' +
+                                '<a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(' + data + ',2620)" id="send"><i class="fas fa-share text-success mr-2"></i></a>' +
+                                '<a data-toggle="modal" data-target="#panelListReceive" title="Receive From Panel" onclick="receiveAdd(' + data + ')" id="send"><i class="fas fa-reply text-success mr-2"></i></a>';
+                            return multipleUrl;
+                        }
+                    },
+                ]
+            });
+        });
+    </script>
+}
 
 
 <script>
@@ -280,6 +254,10 @@
             $("#UserList").prop("hidden", false);
             $("#Title").prop("hidden", false);
         }
+
+
+
+
 
 
     });

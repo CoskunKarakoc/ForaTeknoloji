@@ -35,7 +35,7 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft faster">
+<div class="card border-left-info h-100 mt-1 shadow-lg animated fadeIn">
     <div class="card-header-tabs mt-1">
         <h3 class="text-center text-muted">Aktif Kullanıcı Raporları</h3>
     </div>
@@ -249,7 +249,7 @@
 
 
 <!-- Table -->
-<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight faster">
+<div class="card border-left-info h-100 mt-1 shadow-lg animated fadeIn">
     <div class="card-body">
         <div id="print_div">
             @if (Model.ReportPersonel.Count > 0)
@@ -302,16 +302,9 @@ webGrid.Column("Tarih", "Tarih")))
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
             <div class="modal-body ">
-                <!-- Search form -->
-                <div class="input-group md-form form-sm form-2 pl-0">
-                    <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
-                    <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
-                </div>
-                <hr />
-                <table id="myTable" class="table table-hover text-center table-striped">
-                    <thead class="table-info">
+                <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead>
                         <tr>
                             <td>Kayıt No</td>
                             <td>ID</td>
@@ -424,6 +417,25 @@ webGrid.Column("Tarih", "Tarih")))
             </div>
         </div>
     </div>*@
+
+
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <script>
+        $(document).ready(function () {
+            $("#myTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+        });
+
+
+    </script>
+
+
+}
 <script>
 
     $(document).ready(function () {
