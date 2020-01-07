@@ -505,116 +505,14 @@
 </script>
 <script>
     $(document).ready(function () {
-        $("#SearchBtn").click(function () {
-            var arama = $("#Search").val();
-            $("#Search").val("");
-            $.ajax({
-                url: '/VisitorReport/ComplexVisitors',
-                type: 'GET',
-                data: { Search: arama },
-                dataType: 'json',
-            }).done(function (data) {
-                function dateFormat(d) {
-                    return ((d.getDate() + "").padStart(2, "0") + "/" + (d.getMonth() + 1) + "").padStart(2, "0") + "/" + d.getFullYear();
-                };
-                function timeFormat(dt) {
-                    var d = new Date(dt);
-                    return (d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds());
-                }
-                $("#SearchTable").html("");
-                $("#Search").html("");
-                for (var i in data) {
-                    $("#SearchTable").append("<tr><td data-kayitno=" +
-                        data[i].Kayit_No +
-                        " data-visitor=" +
-                        data[i].Adi + '-' + data[i].Soyadi + ">" +
-                        data[i].Kayit_No +
-
-                        "</td><td>" + data[i].Kart_ID +
-                        "</td><td>" + data[i].Adi +
-                        "</td><td>" + data[i].Soyadi +
-                        "</td><td>" + data[i].TCKimlik +
-                        "</td><td>" + data[i].Plaka +
-                        "</td><td>" + dateFormat(new Date(parseInt((data[i].Tarih).match(/\d+/)[0]))) +
-                        "</td><td>" + data[i].Saat +
-                        "</td><td>" + data[i].Ziyaret_Sebebi +
-                        "</td><td>" + data[i].Grup_No +
-                        "</td><td>" + data[i].ID +
-                        "</td><td>" + data[i].User_ID +
-                        "</td><td>" + data[i].UseUserGroup +
-                        "</td><td>" + data[i].Telefon +
-                        "</td><td>" + data[i].Resim +
-                        "</td></tr>");
-                }
-            }).always(function () {
-                $("#myTable tbody tr").click(function () {
-                    $("#alertMain").prop("hidden", false);
-                    var kayitNo = $(this).children("td").data("kayitno");
-                    var name = $(this).children("td").data("visitor");
-                    $("#Ziyaretci").attr('value', name);
-                    $("#Visitor").attr('value', kayitNo);
-                    $("#alert").text(name + " Seçildi!");
-
-                });
-
-
-
-            })
-
-
-        });
-        $("#yenile").click(function () {
-            $.ajax({
-                url: '/VisitorReport/ComplexVisitors',
-                type: 'GET',
-                data: { Search: null },
-                dataType: 'json',
-            }).done(function (data) {
-                function dateFormat(d) {
-                    return ((d.getDate() + "").padStart(2, "0") + "." + (d.getMonth() + 1) + "").padStart(2, "0") + "." + d.getFullYear();
-                };
-                function timeFormat(d) {
-                    return ((d.getUTCHours() + "").padStart(2, "0") + ":" + (d.getUTCMinutes() + 1) + "").padStart(2, "0") + ":" + d.getUTCSeconds();
-                }
-                $("#SearchTable").html("");
-                $("#Search").html("");
-                for (var i in data) {
-                    $("#SearchTable").append("<tr><td data-kayitno=" +
-                        data[i].Kayit_No +
-                        " data-visitor=" +
-                        data[i].Adi + '-' + data[i].Soyadi + ">" +
-                        data[i].Kayit_No +
-                        "</td><td>" + data[i].Kart_ID +
-                        "</td><td>" + data[i].Adi +
-                        "</td><td>" + data[i].Soyadi +
-                        "</td><td>" + data[i].TCKimlik +
-                        "</td><td>" + data[i].Plaka +
-                        "</td><td>" + dateFormat(new Date(parseInt((data[i].Tarih).match(/\d+/)[0]))) +
-                        "</td><td>" + timeFormat(new Date(parseInt((data[i].Saat).match(/\d+/)[0]))) +
-                        "</td><td>" + data[i].Ziyaret_Sebebi +
-                        "</td><td>" + data[i].Grup_No +
-                        "</td><td>" + data[i].ID +
-                        "</td><td>" + data[i].User_ID +
-                        "</td><td>" + data[i].UseUserGroup +
-                        "</td><td>" + data[i].Telefon +
-                        "</td><td>" + data[i].Resim +
-                        "</td></tr>");
-                }
-            }).always(function () {
-                $("#myTable tbody tr").click(function () {
-                    $("#alertMain").prop("hidden", false);
-                    var kayitNo = $(this).children("td").data("kayitno");
-                    var name = $(this).children("td").data("visitor");
-                    $("#Ziyaretci").attr('value', name);
-                    $("#Visitor").attr('value', kayitNo);
-                    $("#alert").text(name + " Seçildi!");
-
-                });
-
-
-
-            })
-
+     
+        $("#myTable tbody tr").click(function () {
+            $("#alertMain").prop("hidden", false);
+            var kayitNo = $(this).children("td").data("kayitno");
+            var name = $(this).children("td").data("visitor");
+            $("#Ziyaretci").attr('value', name);
+            $("#VisitorID").attr('value', kayitNo);
+            $("#alert").text(name + " Seçildi!");
 
         });
 

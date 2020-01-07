@@ -346,7 +346,6 @@ webGrid.Column("Tarih", "Tarih")))
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="yenile"><i class="fas fa-refresh"></i> Listeyi Yenile</button>
                 <button type="button" id="temizle" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
                 <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
             </div>
@@ -454,83 +453,6 @@ webGrid.Column("Tarih", "Tarih")))
             });
 
         })
-
-        $("#SearchBtn").click(function () {
-            var arama = $("#Search").val();
-            $("#Search").val("");
-            $("#zyrt").html("");
-            $.ajax({
-                url: '/ReportPersonel/AktifZiyaretciler',
-                type: 'GET',
-                dataType: 'json',
-                data: { Search: arama }
-            }).done(function (data) {
-                for (var i in data) {
-                    $("#zyrt").append("<tr><td data-kayitno=" +
-                        data[i].Kayit_No +
-                        " data-visitor=" +
-                        data[i].Adi + '-' + data[i].Soyadi + ">" +
-                        data[i].Kayit_No +
-                        "</td><td>" + data[i].ID +
-                        "</td><td>" + data[i].Kart_ID +
-                        "</td><td>" + data[i].Adi +
-                        "</td><td>" + data[i].Soyadi +
-                        "</td><td>" + data[i].Sirket +
-                        "</td><td>" + data[i].Departman +
-                        "</td><td>" + data[i].Blok +
-                        "</td><td>" + data[i].Plaka +
-                        "</td><td>" + data[i].Gecis_Grubu +
-                        "</td><td>" + data[i].Ziyaretci_Grubu +
-                        "</td></tr>");
-                }
-            }).always(function () {
-                $("#myTable tbody tr").click(function () {
-                    var kayitNo = $(this).children("td").data("kayitno");
-                    var name = $(this).children("td").data("visitor");
-                    $("#Ziyaretci").attr('value', name);
-                    $("#UserKayitNo").attr('value', kayitNo);
-                });
-
-            });
-
-        });
-
-
-        $("#yenile").click(function () {
-            $("#zyrt").html("");
-            $.ajax({
-                url: '/ReportPersonel/AktifZiyaretciler',
-                type: 'GET',
-                dataType: 'json',
-                data: { Search: null }
-            }).done(function (data) {
-                for (var i in data) {
-                    $("#zyrt").append("<tr><td data-kayitno=" +
-                        data[i].Kayit_No +
-                        " data-visitor=" +
-                        data[i].Adi + '-' + data[i].Soyadi + ">" +
-                        data[i].Kayit_No +
-                        "</td><td>" + data[i].ID +
-                        "</td><td>" + data[i].Kart_ID +
-                        "</td><td>" + data[i].Adi +
-                        "</td><td>" + data[i].Soyadi +
-                        "</td><td>" + data[i].Sirket +
-                        "</td><td>" + data[i].Departman +
-                        "</td><td>" + data[i].Blok +
-                        "</td><td>" + data[i].Plaka +
-                        "</td><td>" + data[i].Gecis_Grubu +
-                        "</td><td>" + data[i].Ziyaretci_Grubu +
-                        "</td></tr>");
-                }
-            }).always(function () {
-                $("#myTable tbody tr").click(function () {
-                    var kayitNo = $(this).children("td").data("kayitno");
-                    var name = $(this).children("td").data("visitor");
-                    $("#Ziyaretci").attr('value', name);
-                    $("#UserKayitNo").attr('value', kayitNo);
-                });
-            });
-        });
     });
 
 
