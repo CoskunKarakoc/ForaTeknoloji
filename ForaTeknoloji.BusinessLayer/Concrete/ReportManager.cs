@@ -2715,21 +2715,25 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 var panelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
                 if (panelListesi != null)
                 {
-                    queryString += " AND ";
                     var sayac = 0;
+                    var count = panelListesi.Count();
+                    queryString += " AND (";
                     foreach (var item in panelListesi)
                     {
                         sayac++;
-                        if (sayac == 1)
+                        if (sayac == count)
                         {
-                            queryString += "(AccessDatas.[Panel ID]=" + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                            queryString += " (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                            break;
                         }
                         else
                         {
-                            queryString += "OR (AccessDatas.[Panel ID]=" + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                            queryString += " (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                            queryString += " OR ";
                         }
 
                     }
+                    queryString += ")";
                 }
                 queryString += " GROUP BY Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]";
             }
@@ -2805,21 +2809,24 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 if (panelListesi != null)
                 {
                     var sayac = 0;
+                    var count = panelListesi.Count();
+                    queryString += " AND (";
                     foreach (var item in panelListesi)
                     {
-                        queryString += " OR (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
-
-                        //sayac++;
-                        //if (sayac == 1)
-                        //{
-                        //    queryString += " (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
-                        //}
-                        //else
-                        //{
-                        //    queryString += "OR (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
-                        //}
+                        sayac++;
+                        if (sayac == count)
+                        {
+                            queryString += " (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                            break;
+                        }
+                        else
+                        {
+                            queryString += " (AccessDatas.[Panel ID]= " + item + " AND AccessDatas.[Kapi ID] IN(SELECT DoorGroupsDetail.[Kapi ID] FROM DoorGroupsDetail WHERE DoorGroupsDetail.[Kapi Grup No]=" + parameters.Group_ID + " AND DoorGroupsDetail.[Panel ID]=" + item + "))";
+                            queryString += " OR ";
+                        }
 
                     }
+                    queryString += ")";
                 }
                 queryString += " GROUP BY PanelSettings.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]";
             }

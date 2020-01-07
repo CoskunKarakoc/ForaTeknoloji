@@ -50,8 +50,9 @@
 
 <!-- Table -->
 <div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight faster">
-    <div class="card-body">
-        <div id="print_div">
+    <div id="print_div">
+        <div class="card-body">
+
             @if (Model.ToplamGecis.Count > 0)
             {
                 @webGrid.GetHtml(
@@ -72,6 +73,10 @@ webGrid.Column("GecisSayi", "Geçiş Sayısı")))
 
             }
 
+
+        </div>
+        <div class="card-footer text-right">
+            <p class="text-info"><i class="fas fa-info-circle"></i> Toplam Geçiş Sayısı: @Model.ToplamGecis.Select(x => x.GecisSayi).Sum()</p>
         </div>
     </div>
 </div>

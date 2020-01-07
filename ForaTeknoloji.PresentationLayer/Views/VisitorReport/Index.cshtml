@@ -455,6 +455,7 @@
             //Create a new HTML document.
             frameDoc.document.write('<html><head><title>Ziyaretçi Raporları</title>');
             frameDoc.document.write('</head><body><hr />');
+            frameDoc.document.write('<h3>Ziyaretçi Raporları</h3><hr />');
             //Append the external CSS file.
             frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
             //Append the DIV contents.
@@ -505,7 +506,7 @@
 </script>
 <script>
     $(document).ready(function () {
-     
+
         $("#myTable tbody tr").click(function () {
             $("#alertMain").prop("hidden", false);
             var kayitNo = $(this).children("td").data("kayitno");
