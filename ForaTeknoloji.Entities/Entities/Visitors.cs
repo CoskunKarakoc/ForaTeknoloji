@@ -50,5 +50,9 @@ namespace ForaTeknoloji.Entities.Entities
 
         [StringLength(50)]
         public string Resim { get; set; }
+
+
+        [StringLength(200)]
+        public string Firma { get; set; }
     }
 }

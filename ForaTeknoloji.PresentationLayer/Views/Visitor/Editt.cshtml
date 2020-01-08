@@ -144,9 +144,8 @@
                                 <label class="control-label col-md-5">Personel ID</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" id="ID" name="ID" value="@Model.Personel.ID" class="form-control form-control-sm" />
+                                        <input type="text" name="ID" id="ID" value="" class="form-control form-control-sm" />
                                         @*@Html.TextBox("ID", Model.Personel.ID, new { @class = "form-control" })*@
-                                        @Html.ValidationMessageFor(model => model.Personel.ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -156,8 +155,7 @@
                                 <label class="control-label col-md-5">Personel Adı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Personel.Adi, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                        @Html.ValidationMessageFor(model => model.Personel.Adi, "", new { @class = "text-danger" })
+                                        <input type="text" name="Personel_Adi" id="Personel_Adi" class="form-control form-control-sm" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -167,8 +165,7 @@
                                 <label class="control-label col-md-5">Personel Soyadı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Personel.Soyadi, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
-                                        @Html.ValidationMessageFor(model => model.Personel.Soyadi, "", new { @class = "text-danger" })
+                                        <input type="text" name="Personel_Soyadi" id="Personel_Soyadi" class="form-control form-control-sm" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -178,8 +175,8 @@
                                 <label class="control-label col-md-4">Geçiş Grubu</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" id="Grup_No" name="Grup_No" hidden value="@Model.Ziyaretci.Grup_No" />
-                                        <input type="text" id="Grup_Adi" name="Grup_Adi" value="@Model.GrupAdi" class="form-control form-control-sm" />
+                                        <input type="text" name="Grup_No" id="Grup_No" hidden value="" />
+                                        <input type="text" name="Grup_Adi" id="Grup_Adi" class="form-control form-control-sm" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +256,6 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" id="yenile"><i class="fas fa-refresh"></i> Listeyi Yenile</button>
                 <button type="button" id="temizle" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
                 <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
             </div>
@@ -333,6 +329,7 @@
             });
         });
     </script>
+
 
 }
 

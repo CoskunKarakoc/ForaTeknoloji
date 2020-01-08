@@ -34,6 +34,7 @@
                                 <td>Plaka</td>
                                 <td>Tarih</td>
                                 <td>Ziyaret Sebebi</td>
+                                <td>Firma</td>
                                 <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
                             </tr>
                         </thead>
@@ -56,6 +57,7 @@
                                         <td>@item.Tarih.Value.ToShortDateString()</td>
                                     }
                                     <td>@item.Ziyaret_Sebebi</td>
+                                    <td>@item.Firma</td>
                                     <td>
                                         <a title="Edit" id="edit" href="@Url.Action("Edit","Visitor",new { id=item.Kayit_No})"><i class="fas fa-edit text-info mr-2"></i></a>
                                         <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","Visitor",new { id=item.Kayit_No})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
@@ -151,7 +153,7 @@
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
                 },
                 "columnDefs": [
-                    { "orderable": false, "targets": 8 }
+                    { "orderable": false, "targets": 9 }
                 ]
             });
         });

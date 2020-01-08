@@ -2729,6 +2729,7 @@
     <Content Include="Views\InsideOutReport\InOutAll.cshtml" />
     <Content Include="Views\OperatorLogReport\Index.cshtml" />
     <Content Include="Views\GelenGelmeyenReport\TopluGirisSayisi.cshtml" />
+    <Content Include="Views\Visitor\Editt.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -147,12 +147,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
 
             Visitors visitors = _visitorsService.GetAllVisitors().Find(x => x.Kayit_No == id);
-
+            Users users = new Users();
             if (visitors.Resim == null)
                 visitors.Resim = "BaseUser.jpg";
-
-            Users users = _userService.GetById((int)visitors.ID);
-
+            if (visitors.ID != null)
+            {
+                users = _userService.GetAllUsers().FirstOrDefault(x => x.ID == visitors.ID);
+            }
+            else
+            {
+                return RedirectToAction("Editt", new { id = visitors.Kayit_No });
+            }
             if (visitors == null)
                 return HttpNotFound();
 
@@ -184,9 +189,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             if (ModelState.IsValid)
             {
-                var visitor = _visitorsService.GetById((int)entity.ID);
+                var visitor = _visitorsService.GetById((int)entity.Kayit_No);
                 if (visitor != null)
                 {
+                    if (entity.ID != null)
+                        entity.UseUserGroup = true;
+                    else
+                        entity.UseUserGroup = false;
+
                     _visitorsService.UpdateVisitor(entity);
                     _accessDatasService.AddOperatorLog(321, permissionUser.Kullanici_Adi, entity.Kayit_No, 0, 0, 0);
                     return RedirectToAction("Index");
@@ -195,6 +205,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(entity);
         }
 
+        public ActionResult Editt(int? id)
+        {
+            var visitors = _visitorsService.GetAllVisitors().Find(x => x.Kayit_No == id);
+            if (visitors.Resim == null)
+                visitors.Resim = "BaseUser.jpg";
+
+            var model = new VisitorEditViewModel
+            {
+                Ziyaretci = visitors,
+                GrupAdi = null,
+                Personel = null,
+                Personeller = ModalUser(),
+                VisitorCardList = CardModelUser()
+            };
+            return View(model);
+        }
 
         public ActionResult Delete(int id = -1)
         {
@@ -256,24 +282,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
             }
             return RedirectToAction("Index");
-        }
-
-
-        public ActionResult Personeller(string Search)
-        {
-            List<ComplexUser> liste = new List<ComplexUser>();
-
-            if (Search != null && Search != "")
-            {
-                liste = _userService.GetAllUsersWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
-            }
-            else
-            {
-                liste = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
-            }
-
-            return Json(liste, JsonRequestBehavior.AllowGet);
-
         }
 
         public List<Users> CardModelUser()
