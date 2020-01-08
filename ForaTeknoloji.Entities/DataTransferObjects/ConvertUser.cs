@@ -4,6 +4,11 @@ namespace ForaTeknoloji.Entities.DataTransferObjects
 {
     public static class ConvertUser
     {
+        /// <summary>
+        /// Var olan kullanıcıyı eski kullanıcıya çevirme.
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
         public static UsersOLD UserToUserOld(Users users)
         {
             var usersOld = new UsersOLD

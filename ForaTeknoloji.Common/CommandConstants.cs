@@ -1,5 +1,9 @@
 ﻿namespace ForaTeknoloji.Common
 {
+    /// <summary>
+    /// Panel Operasyon Komutları
+    /// Not:Seçilen komut setine göre panel komutları oluşturuluyor.
+    /// </summary>
     public enum CommandConstants
     {
         CMD_BASE = 2560,
