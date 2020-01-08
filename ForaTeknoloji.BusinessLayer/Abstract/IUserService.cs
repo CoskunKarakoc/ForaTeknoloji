@@ -1,4 +1,5 @@
-﻿using ForaTeknoloji.Entities.Entities;
+﻿using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -18,5 +19,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<ComplexUser> GetAllUsersWithOutherOnlyUser(Expression<Func<ComplexUser, bool>> filter = null);
         Users GetByKayitNo(int? Kayit_No);
         void DeleteAllUsers();
+        bool FastGroupAdd(FastGroupParameters parameters);
     }
 }

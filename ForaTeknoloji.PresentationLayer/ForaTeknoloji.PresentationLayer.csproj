@@ -2535,6 +2535,7 @@
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\EmploymentController.cs" />
     <Compile Include="Controllers\ExternalDataController.cs" />
+    <Compile Include="Controllers\FastGroupController.cs" />
     <Compile Include="Controllers\GelenGelmeyenReportController.cs" />
     <Compile Include="Controllers\GlobalZoneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2581,6 +2582,7 @@
     <Compile Include="Models\DoorGroupsCreateViewModel.cs" />
     <Compile Include="Models\DoorGroupsListViewModel.cs" />
     <Compile Include="Models\EditSecurityListViewModel.cs" />
+    <Compile Include="Models\FastGroupListViewModel.cs" />
     <Compile Include="Models\GecisGrupListViewModel.cs" />
     <Compile Include="Models\GelenGelmeyenViewModel.cs" />
     <Compile Include="Models\GelenGelmeyen_GelenlerListViewModel.cs" />
@@ -2730,6 +2732,7 @@
     <Content Include="Views\OperatorLogReport\Index.cshtml" />
     <Content Include="Views\GelenGelmeyenReport\TopluGirisSayisi.cshtml" />
     <Content Include="Views\Visitor\Editt.cshtml" />
+    <Content Include="Views\FastGroup\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

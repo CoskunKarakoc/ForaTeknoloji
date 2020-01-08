@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ForaTeknoloji.Entities.ComplexType
+{
+    public class FastGroupParameters
+    {
+        public int? Unvan_No { get; set; }
+
+        public int? Grup_No { get; set; }
+
+        public int? User_Grup { get; set; }
+    }
+}

@@ -57,7 +57,54 @@ namespace ForaTeknoloji.Entities.DataTransferObjects
 
             return usersOld;
         }
+      
+        /// <summary>
+        /// Excel'den alınan verileri User nesnesine çevirme.
+        /// </summary>
+        /// <param name="rawUsers">Excel'den okunan verilerin RawUsers Tablosundaki nesne karşılığı</param>
+        /// <returns></returns>
+        public static Users RawUserToUser(RawUsers rawUsers)
+        {
+            var user = new Users
+            {
+                Adi = rawUsers.Adi,
+                Soyadi = rawUsers.Soyadi,
+                Adres = rawUsers.Adres,
+                Aciklama = rawUsers.Aciklama,
+                ID = rawUsers.ID,
+                Kart_ID = rawUsers.Kart_ID,
+                Dogrulama_PIN = rawUsers.Dogrulama_PIN,
+                Kimlik_PIN = rawUsers.Kimlik_PIN,
+                Kullanici_Tipi = rawUsers.Kullanici_Tipi,
+                Sifre = rawUsers.Sifre,
+                Gecis_Modu = rawUsers.Gecis_Modu,
+                Grup_No = rawUsers.Grup_No,
+                Visitor_Grup_No = rawUsers.Visitor_Grup_No,
+                Resim = rawUsers.Resim,
+                Plaka = rawUsers.Plaka,
+                TCKimlik = rawUsers.TCKimlik,
+                Blok_No = rawUsers.Blok_No,
+                Daire = rawUsers.Daire,
+                Gorev = rawUsers.Gorev,
+                Departman_No = rawUsers.Departman_No,
+                Sirket_No = rawUsers.Sirket_No,
+                Iptal = rawUsers.Iptal,
+                Grup_Takvimi_Aktif = rawUsers.Grup_Takvimi_Aktif,
+                Grup_Takvimi_No = rawUsers.Grup_Takvimi_No,
+                Saat_1 = rawUsers.Saat_1,
+                Saat_2 = rawUsers.Saat_2,
+                Saat_3 = rawUsers.Saat_3,
+                Grup_No_1 = rawUsers.Grup_No_1,
+                Grup_No_2 = rawUsers.Grup_No_2,
+                Grup_No_3 = rawUsers.Grup_No_3,
+                Tmp = rawUsers.Tmp,
+                Sureli_Kullanici = rawUsers.Sureli_Kullanici,
+                Bitis_Tarihi = rawUsers.Bitis_Tarihi,
+                Telefon = rawUsers.Telefon,
+                C3_Grup = rawUsers.C3_Grup
+            };
 
-
+            return user;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
@@ -181,52 +182,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-
-        public ActionResult AddUser(bool TabloDelete)
+        [HttpPost]
+        public ActionResult AddUser(bool? TabloDelete)
         {
             if (TabloDelete == true)
             {
                 _userService.DeleteAllUsers();
                 foreach (var item in _rawUsersService.GetAllRawUsers())
                 {
-                    Users users = new Users
-                    {
-                        Adi = item.Adi,
-                        Soyadi = item.Soyadi,
-                        Adres = item.Adres,
-                        Aciklama = item.Aciklama,
-                        ID = item.ID,
-                        Kart_ID = item.Kart_ID,
-                        Dogrulama_PIN = item.Dogrulama_PIN,
-                        Kimlik_PIN = item.Kimlik_PIN,
-                        Kullanici_Tipi = item.Kullanici_Tipi,
-                        Sifre = item.Sifre,
-                        Gecis_Modu = item.Gecis_Modu,
-                        Grup_No = item.Grup_No,
-                        Visitor_Grup_No = item.Visitor_Grup_No,
-                        Resim = item.Resim,
-                        Plaka = item.Plaka,
-                        TCKimlik = item.TCKimlik,
-                        Blok_No = item.Blok_No,
-                        Daire = item.Daire,
-                        Gorev = item.Gorev,
-                        Departman_No = item.Departman_No,
-                        Sirket_No = item.Sirket_No,
-                        Iptal = item.Iptal,
-                        Grup_Takvimi_Aktif = item.Grup_Takvimi_Aktif,
-                        Grup_Takvimi_No = item.Grup_Takvimi_No,
-                        Saat_1 = item.Saat_1,
-                        Saat_2 = item.Saat_2,
-                        Saat_3 = item.Saat_3,
-                        Grup_No_1 = item.Grup_No_1,
-                        Grup_No_2 = item.Grup_No_2,
-                        Grup_No_3 = item.Grup_No_3,
-                        Tmp = item.Tmp,
-                        Sureli_Kullanici = item.Sureli_Kullanici,
-                        Bitis_Tarihi = item.Bitis_Tarihi,
-                        Telefon = item.Telefon,
-                        C3_Grup = item.C3_Grup
-                    };
+
+                    var users = ConvertUser.RawUserToUser(item);
                     _userService.AddUsers(users);
                 }
                 _rawUsersService.DeleteAll();
@@ -238,44 +203,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     if (!_userService.GetAllUsers().Any(x => x.ID == item.ID))
                     {
-                        Users users = new Users
-                        {
-                            Adi = item.Adi,
-                            Soyadi = item.Soyadi,
-                            Adres = item.Adres,
-                            Aciklama = item.Aciklama,
-                            ID = item.ID,
-                            Kart_ID = item.Kart_ID,
-                            Dogrulama_PIN = item.Dogrulama_PIN,
-                            Kimlik_PIN = item.Kimlik_PIN,
-                            Kullanici_Tipi = item.Kullanici_Tipi,
-                            Sifre = item.Sifre,
-                            Gecis_Modu = item.Gecis_Modu,
-                            Grup_No = item.Grup_No,
-                            Visitor_Grup_No = item.Visitor_Grup_No,
-                            Resim = item.Resim,
-                            Plaka = item.Plaka,
-                            TCKimlik = item.TCKimlik,
-                            Blok_No = item.Blok_No,
-                            Daire = item.Daire,
-                            Gorev = item.Gorev,
-                            Departman_No = item.Departman_No,
-                            Sirket_No = item.Sirket_No,
-                            Iptal = item.Iptal,
-                            Grup_Takvimi_Aktif = item.Grup_Takvimi_Aktif,
-                            Grup_Takvimi_No = item.Grup_Takvimi_No,
-                            Saat_1 = item.Saat_1,
-                            Saat_2 = item.Saat_2,
-                            Saat_3 = item.Saat_3,
-                            Grup_No_1 = item.Grup_No_1,
-                            Grup_No_2 = item.Grup_No_2,
-                            Grup_No_3 = item.Grup_No_3,
-                            Tmp = item.Tmp,
-                            Sureli_Kullanici = item.Sureli_Kullanici,
-                            Bitis_Tarihi = item.Bitis_Tarihi,
-                            Telefon = item.Telefon,
-                            C3_Grup = item.C3_Grup
-                        };
+                        var users = ConvertUser.RawUserToUser(item);
                         _userService.AddUsers(users);
                         var rawuser = _rawUsersService.GetById(item.ID);
                         _rawUsersService.DeleteRawUsers(rawuser);
@@ -287,8 +215,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return RedirectToAction("Index", "Users");
         }
-
-        public ActionResult AddGroup(bool TabloDelete)
+        [HttpPost]
+        public ActionResult AddGroup(bool? TabloDelete)
         {
             if (TabloDelete == true)
             {
