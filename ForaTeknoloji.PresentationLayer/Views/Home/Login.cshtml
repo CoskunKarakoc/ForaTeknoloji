@@ -46,18 +46,12 @@
                             @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Şifre" })
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-4">
                             <input type="submit" value="Giriş" class="btn float-right login_btn">
                         </div>
                         <br />
                         <br />
                         @Html.ValidationSummary(false)
-                        <div class="card-footer">
-
-                            <div class="d-flex justify-content-center">
-                                <a href="#">Şifrenizi mi Unuttunuz?</a>
-                            </div>
-                        </div>
                     }
 
                 </div>

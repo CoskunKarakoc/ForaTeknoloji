@@ -116,19 +116,16 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND AccessDatas.[Panel ID]=" + parameters.Panel;
             }
-            if (parameters.Tum_Kapi != true && parameters.Tum_Kapi != null)
-            {
-                if (parameters.Kapi != null)
-                {
-                    string kapilar = "";
-                    foreach (var item in parameters.Kapi)
-                    {
-                        kapilar += item + ",";
-                    }
-                    kapilar = kapilar.Substring(0, kapilar.Length - 1);
-                    queryString += " AND AccessDatas.[Kapi ID] IN(" + kapilar + ")";
-                }
 
+            if (parameters.Kapi != null && parameters.Kapi.Count != 0)
+            {
+                string kapilar = "";
+                foreach (var item in parameters.Kapi)
+                {
+                    kapilar += item + ",";
+                }
+                kapilar = kapilar.Substring(0, kapilar.Length - 1);
+                queryString += " AND AccessDatas.[Kapi ID] IN(" + kapilar + ")";
             }
             else
             {
@@ -140,25 +137,27 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 kapilar = kapilar.Substring(0, kapilar.Length - 1);
                 queryString += " AND AccessDatas.[Kapi ID] IN(" + kapilar + ")";
             }
-
-            if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
+            if (parameters.Tum_Tarih != true)
             {
-                queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
-                queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
-            }
-            if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
-            {
-                if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)
+                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
                 {
-                    var sonuc1 = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
-                    var sonuc2 = parameters.Bitis_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
-                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + sonuc1 + "',103)";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + sonuc2 + "',103)";
+                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
                 }
-                else
+                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
                 {
-                    queryString += " AND AccessDatas.Tarih >='" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "'";
-                    queryString += " AND AccessDatas.Tarih <='" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "'";
+                    if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)
+                    {
+                        var sonuc1 = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        var sonuc2 = parameters.Bitis_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + sonuc1 + "',103)";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + sonuc2 + "',103)";
+                    }
+                    else
+                    {
+                        queryString += " AND AccessDatas.Tarih >='" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "'";
+                        queryString += " AND AccessDatas.Tarih <='" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "'";
+                    }
                 }
             }
             if (parameters.Kapi_Yon == 0)
@@ -167,11 +166,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             if (parameters.Kapi_Yon == 1)
             {
-                queryString += " AND AccessDatas.[Gecis Tipi] = 1";
-            }
-            else
-            {
-                queryString += " AND AccessDatas.[Gecis Tipi] = 0";
                 queryString += " AND AccessDatas.[Gecis Tipi] = 1";
             }
 
@@ -237,19 +231,15 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND AccessDatas.[Panel ID]=" + parameters.Panel;
             }
-            if (parameters.Tum_Kapi != true && parameters.Tum_Kapi != null)
+            if (parameters.Kapi != null)
             {
-                if (parameters.Kapi != null)
+                string kapilar = "";
+                foreach (var item in parameters.Kapi)
                 {
-                    string kapilar = "";
-                    foreach (var item in parameters.Kapi)
-                    {
-                        kapilar += item + ",";
-                    }
-                    kapilar = kapilar.Substring(0, kapilar.Length - 1);
-                    queryString += " AND AccessDatas.[Kapi ID] IN(" + kapilar + ")";
+                    kapilar += item + ",";
                 }
-
+                kapilar = kapilar.Substring(0, kapilar.Length - 1);
+                queryString += " AND AccessDatas.[Kapi ID] IN(" + kapilar + ")";
             }
             else
             {
@@ -261,38 +251,37 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 kapilar = kapilar.Substring(0, kapilar.Length - 1);
                 queryString += " AND AccessDatas.[Kapi ID] IN(" + kapilar + ")";
             }
+            if (parameters.Tum_Tarih != true)
+            {
+                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
+                {
+                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                }
+                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
+                {
+                    if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)
+                    {
+                        var sonuc1 = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        var sonuc2 = parameters.Bitis_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + sonuc1 + "',103)";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + sonuc2 + "',103)";
+                    }
+                    else
+                    {
+                        queryString += " AND AccessDatas.Tarih >='" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "'";
+                        queryString += " AND AccessDatas.Tarih <='" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "'";
+                    }
+                }
+            }
 
-            if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
-            {
-                queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
-                queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
-            }
-            if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
-            {
-                if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)
-                {
-                    var sonuc1 = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
-                    var sonuc2 = parameters.Bitis_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
-                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + sonuc1 + "',103)";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + sonuc2 + "',103)";
-                }
-                else
-                {
-                    queryString += " AND AccessDatas.Tarih >='" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "'";
-                    queryString += " AND AccessDatas.Tarih <='" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "'";
-                }
-            }
+
             if (parameters.Kapi_Yon == 0)
             {
                 queryString += " AND AccessDatas.[Gecis Tipi] = 0";
             }
             if (parameters.Kapi_Yon == 1)
             {
-                queryString += " AND AccessDatas.[Gecis Tipi] = 1";
-            }
-            else
-            {
-                queryString += " AND AccessDatas.[Gecis Tipi] = 0";
                 queryString += " AND AccessDatas.[Gecis Tipi] = 1";
             }
 

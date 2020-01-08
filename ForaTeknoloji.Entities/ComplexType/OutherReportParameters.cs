@@ -33,5 +33,8 @@ namespace ForaTeknoloji.Entities.ComplexType
         public int? Kod { get; set; }
 
         public bool? Tum_Kapi { get; set; }
+
+        public bool? Tum_Tarih { get; set; }
+
     }
 }
