@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.Entities.ComplexType;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -14,5 +15,7 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> AltDepartman { get; internal set; }
         public IEnumerable<SelectListItem> Unvan { get; internal set; }
         public IEnumerable<SelectListItem> Bolum { get; internal set; }
+        public DateTime? Saat { get; internal set; }
+        public bool? ReportByHour { get; internal set; }
     }
 }

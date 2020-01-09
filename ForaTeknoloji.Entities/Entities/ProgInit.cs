@@ -18,6 +18,10 @@ namespace ForaTeknoloji.Entities.Entities
 
         public DateTime? LastBackupDate { get; set; }
 
+        public DateTime? EndlessReportTime { get; set; }
+
+        public bool? ReportByHour { get; set; }
+
         public bool? LiveAPBInvalid { get; set; }
 
         public bool? LiveDeniedInvalid { get; set; }

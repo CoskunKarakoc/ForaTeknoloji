@@ -21,8 +21,15 @@
             }
 </style>
 <div class="card border-left-info h-100 shadow-lg mt-2 animated fadeIn">
-    <div class="card-header-tabs">
-        <h3 class="text-muted text-center">Gelmeyen Kişi Raporları</h3>
+    <div class="card-header py-1">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-muted text-center">Gelmeyen Kişi Raporları</h3>
+            </div>
+            <div class="col-md-12 text-right">
+                <a data-toggle="modal" data-target="#GelmeyenReportTime"><i class="fas fa-cogs fa-2x text-secondary"></i></a>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         @using (Html.BeginForm("Gelmeyenler", "GelenGelmeyenReport", FormMethod.Get))
@@ -44,6 +51,7 @@
                             <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
                         </div>
                     </div>
+
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
@@ -135,6 +143,53 @@
         }
     </div>
 </div>
+<!--Gelmeyen Saat Ayarları Modal -->
+<div class="modal fade" id="GelmeyenReportTime" tabindex="-1" role="dialog" aria-labelledby="GelmeyenlerReportTime" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            @using (Html.BeginForm("ReportTime", "GelenGelmeyenReport", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Gelmeyenler Rapor Saati</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ReportTime">Gelmeyenler Rapor Saati</label>
+                                <input class="form-control form-control-sm" name="Report_Time" type="time" value="@Model.Saat.Value.ToLongTimeString()" id="ReportTime">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-4">
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("ReportByHour", Model.ReportByHour ?? false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="ReportByHour">Saate Göre Raporla</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Değişikliği Kaydet</button>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
 <script>
     $(document).ready(function () {
         $("#Departman").change(function () {

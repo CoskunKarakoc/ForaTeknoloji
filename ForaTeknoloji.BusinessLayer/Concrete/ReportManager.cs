@@ -30,11 +30,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         private IGroupsDetailNewDal _groupsDetailNewDal;
         private IDoorGroupsDetailDal _doorGroupsDetailDal;
         private IReaderSettingsNewDal _readerSettingsNewDal;
+        private IProgInitDal _progInitDal;
         public string panelListesi = "0";
         public string sirketListesi = "0";
         public string departmanListesi = "0";
         public List<int?> sirketler;
-        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal, IGroupsDetailNewDal groupsDetailNewDal, IDoorGroupsDetailDal doorGroupsDetailDal, IReaderSettingsNewDal readerSettingsNewDal)
+        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal, IGroupsDetailNewDal groupsDetailNewDal, IDoorGroupsDetailDal doorGroupsDetailDal, IReaderSettingsNewDal readerSettingsNewDal, IProgInitDal progInitDal)
         {
             _visitorsDal = visitorsDal;
             _groupsDetailDal = groupsDetailDal;
@@ -54,6 +55,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _groupsDetailNewDal = groupsDetailNewDal;
             _doorGroupsDetailDal = doorGroupsDetailDal;
             _readerSettingsNewDal = readerSettingsNewDal;
+            _progInitDal = progInitDal;
         }
 
         //OutherReport Controller
@@ -389,10 +391,23 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
             if (parameters.Baslangic_Tarihi != null)
             {
-                queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.Date.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
-                queryString += " AND AccessDatas.[Gecis Tipi] = 0";
-                queryString += ")";
+                var progInit = _progInitDal.GetList().FirstOrDefault();
+                if (progInit != null && progInit.ReportByHour == true && progInit.EndlessReportTime != null)
+                {
+                    var sonuc1 = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + progInit.EndlessReportTime?.ToLongTimeString();
+                    var sonuc2 = parameters.Baslangic_Tarihi?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss");
+                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + sonuc1 + "',103)";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + sonuc2 + "',103)";
+                    queryString += " AND AccessDatas.[Gecis Tipi] = 0";
+                    queryString += ")";
+                }
+                else
+                {
+                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.Date.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.Date.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+                    queryString += " AND AccessDatas.[Gecis Tipi] = 0";
+                    queryString += ")";
+                }
             }
 
 

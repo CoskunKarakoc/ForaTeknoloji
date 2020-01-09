@@ -25,10 +25,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IAltDepartmanService _altDepartmanService;
         private IUnvanService _unvanService;
         private IBolumService _bolumService;
+        private IProgInitService _progInitService;
         public DBUsers user;
         public DateTime DefaultTarih1;
         public DateTime DefaultTarih2;
-        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService, IGroupMasterService groupMasterService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService)
+        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService, IGroupMasterService groupMasterService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, IProgInitService progInitService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -46,6 +47,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _unvanService = unvanService;
             _bolumService = bolumService;
             _reportService = reportService;
+            _progInitService = progInitService;
             DefaultTarih1 = DateTime.Now;
             DefaultTarih2 = DateTime.Now;
 
@@ -162,12 +164,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
-                })
+                }),
+                Saat = _progInitService.GetAllProgInit().FirstOrDefault().EndlessReportTime,
+                ReportByHour = _progInitService.GetAllProgInit().FirstOrDefault().ReportByHour
             };
             TempData["Gelmeyenler"] = nesne;
             return View(model);
         }
-
 
 
 
@@ -446,6 +449,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             defaultValue.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
             return Json(defaultValue, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult ReportTime(DateTime? Report_Time, bool? ReportByHour)
+        {
+            if (Report_Time != null)
+            {
+                var entity = _progInitService.GetAllProgInit().FirstOrDefault();
+                entity.EndlessReportTime = Report_Time;
+                entity.ReportByHour = ReportByHour;
+                _progInitService.UpdateProgInit(entity);
+                return RedirectToAction("Gelmeyenler");
+            }
+            return RedirectToAction("Gelmeyenler");
+
+        }
+
 
         //Gelenler Excell
         public void GelenlerExcell()

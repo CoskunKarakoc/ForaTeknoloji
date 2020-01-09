@@ -1645,6 +1645,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 BackupPeriode = null,
                 BackupDay = null,
                 LastBackupDate = null,
+                EndlessReportTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0),
+                ReportByHour = false,
                 LiveAPBInvalid = false,
                 LiveDeniedInvalid = false,
                 LiveUnknownInvalid = false,
