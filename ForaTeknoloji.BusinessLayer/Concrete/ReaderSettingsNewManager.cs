@@ -56,5 +56,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _readerSettingsNewDal.Get(x => x.WKapi_ID == KapiID && x.Panel_ID == PanelID);
         }
+
+        public void DeleteReaderSettingsNewByPanelID(int PanelID)
+        {
+            _readerSettingsNewDal.DeleteReaderSettingsNewByPanelID(PanelID);
+        }
+
+
     }
 }

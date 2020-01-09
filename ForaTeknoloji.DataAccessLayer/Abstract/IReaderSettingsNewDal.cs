@@ -5,5 +5,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
     public interface IReaderSettingsNewDal : IEntityRepository<ReaderSettingsNew>
     {
+        void DeleteReaderSettingsNewByPanelID(int PanelID);
     }
 }
