@@ -35,8 +35,6 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public bool? Tum_Tarih { get; set; }
 
-        public string Search { get; set; }
-
         public bool? All_Visitor { get; set; }
 
     }

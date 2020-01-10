@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
@@ -134,7 +135,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
 
         }
-        
+
 
 
 
@@ -248,39 +249,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(defaultValue, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult AktifZiyaretciler(string Search)//Popup'a Aktif Kulanıcı Yükleniyor
+        public ActionResult AktifZiyaretciler()//Popup'a Aktif Kulanıcı Yükleniyor
         {
-
-            List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser> liste = new List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser>();
-
-            if (Search != null && Search != "")
-            {
-                liste = _userService.GetAllUsersWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
-            }
-            else
-            {
-                liste = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
-            }
-
+            List<EfUserDal.ComplexUser> liste = new List<EfUserDal.ComplexUser>();
+            liste = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
             return Json(liste, JsonRequestBehavior.AllowGet);
-
-
-
-
         }
 
-        public ActionResult EskiZiyaretciler(string Search)//Popup'a Eski Kullanıcı Yükleniyor
+        public ActionResult EskiZiyaretciler()//Popup'a Eski Kullanıcı Yükleniyor
         {
-            List<DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal.ComplexUserOld> liste = new List<DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal.ComplexUserOld>();
-
-            if (Search != null && Search != "")
-            {
-                liste = _usersOLDService.GetAllUserOLDWithOuther(x => x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
-            }
-            else
-            {
-                liste = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
-            }
+            List<EfUsersOLDDal.ComplexUserOld> liste = new List<EfUsersOLDDal.ComplexUserOld>();
+            liste = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 

@@ -97,6 +97,7 @@
     <Compile Include="ComplexType\ZiyaretciRaporList.cs" />
     <Compile Include="DataTransferObjects\ClearPanelSettings.cs" />
     <Compile Include="DataTransferObjects\ConvertUser.cs" />
+    <Compile Include="DataTransferObjects\DoorOperationCode.cs" />
     <Compile Include="DataTransferObjects\LoginViewModel.cs" />
     <Compile Include="Entities\AccessCountTypes.cs" />
     <Compile Include="Entities\AccessDatas.cs" />

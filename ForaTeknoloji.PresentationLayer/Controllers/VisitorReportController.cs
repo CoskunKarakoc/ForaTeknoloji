@@ -48,15 +48,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var liste = _reportService.GetZiyaretciListesi(parameters);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != 0 && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-
-            if (parameters.Search != null && parameters.Search != "")
-            {
-                visitors = _visitorsService.GetAllVisitors(x => x.Adi.Contains(parameters.Search) || x.Soyadi.Contains(parameters.Search) || x.Plaka.Contains(parameters.Search));
-            }
-            else
-            {
-                visitors = _visitorsService.GetAllVisitors();
-            }
+            visitors = _visitorsService.GetAllVisitors();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new VisitorsList
@@ -84,19 +76,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
-        //Ziyaretci Listesi ve Search İşlemi
-        public ActionResult ComplexVisitors(string Search)
+        //Ziyaretci Listesi
+        public ActionResult ComplexVisitors()
         {
             List<Visitors> liste = new List<Visitors>();
-            if (Search == null || Search == "")
-            {
-                liste = _visitorsService.GetAllVisitors();
-            }
-            else
-            {
-                liste = _visitorsService.GetAllVisitors(x => x.Adi.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.TCKimlik.Contains(Search.Trim()) || x.Ziyaret_Sebebi.Contains(Search.Trim()) || x.Telefon.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()));
-
-            }
+            liste = _visitorsService.GetAllVisitors();
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 

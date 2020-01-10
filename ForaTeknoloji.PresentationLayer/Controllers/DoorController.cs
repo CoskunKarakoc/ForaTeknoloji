@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Web.Mvc;
+using ForaTeknoloji.Entities.DataTransferObjects;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
@@ -76,7 +77,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Gorev_Kodu = (int)kapiOperasyon.OprKod,
                             IntParam_1 = 1,
                             IntParam_2 = item.Panel_ID,
-                            StrParam_1 = DoorOperationCode(kapiOperasyon).ToString(),
+                            StrParam_1 = DoorOperationCode.CreateDoorOperationCode(kapiOperasyon),
                             Kullanici_Adi = user.Kullanici_Adi,
                             Panel_No = item.Panel_ID,
                             Tablo_Guncelle = true,
@@ -93,7 +94,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Durum_Kodu = 1,
                         Gorev_Kodu = (int)kapiOperasyon.OprKod,
                         IntParam_1 = 1,
-                        StrParam_1 = DoorOperationCode(kapiOperasyon).ToString(),
+                        StrParam_1 = DoorOperationCode.CreateDoorOperationCode(kapiOperasyon),
                         IntParam_2 = kapiOperasyon.Panel_ID,
                         Kullanici_Adi = user.Kullanici_Adi,
                         Panel_No = kapiOperasyon.Panel_ID,
@@ -251,81 +252,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("ProgRelay");
         }
 
-        private StringBuilder DoorOperationCode(KapiOperasyon kapiOperasyon)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
 
-            if (kapiOperasyon.Kapi_1 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_2 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_3 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_4 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_5 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_6 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_7 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_8 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_9 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_10 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_11 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_12 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_13 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_14 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_15 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Kapi_16 == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-            if (kapiOperasyon.Alarm == true)
-                stringBuilder.Append("1");
-            else
-                stringBuilder.Append("0");
-
-            return stringBuilder;
-        }
 
 
     }
