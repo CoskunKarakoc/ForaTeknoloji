@@ -2559,6 +2559,7 @@
     <Compile Include="Controllers\VisitorController.cs" />
     <Compile Include="Controllers\VisitorReportController.cs" />
     <Compile Include="Controllers\WatchController.cs" />
+    <Compile Include="Controllers\WatchScreenController.cs" />
     <Compile Include="Filters\Auth.cs" />
     <Compile Include="Filters\Excp.cs" />
     <Compile Include="Global.asax.cs">
@@ -2733,6 +2734,10 @@
     <Content Include="Views\GelenGelmeyenReport\TopluGirisSayisi.cshtml" />
     <Content Include="Views\Visitor\Editt.cshtml" />
     <Content Include="Views\FastGroup\Index.cshtml" />
+    <Content Include="Views\WatchScreen\Index.cshtml" />
+    <Content Include="Views\WatchScreen\WatchSettings.cshtml" />
+    <Content Include="Views\Shared\_PartialAlarm.cshtml" />
+    <Content Include="Views\Alarm\AlarmTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

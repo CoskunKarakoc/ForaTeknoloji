@@ -143,5 +143,11 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
 
 
         List<OperatorLogComplex> OperatorLogReport(OperatorLogParameters parameters);
+
+        /// <summary>
+        /// Alarm durumunda alarm listesini gönderiyor.
+        /// </summary>
+        /// <returns></returns>
+        List<AlarmDatasComplex> AlarmListesi();
     }
 }

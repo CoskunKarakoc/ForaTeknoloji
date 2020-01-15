@@ -2880,6 +2880,59 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
+        public List<AlarmDatasComplex> AlarmListesi()
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = "";
+            queryString = @"SELECT TOP 200 AccessDatas.[Kayit No],Users.Adi,Users.Soyadi,AccessDatas.[Kart ID],AccessDatas.[Kapi ID],
+                                AccessDatas.[Panel ID],AccessDatas.Kod,CodeOperation.Operasyon,AccessDatas.Tarih,AccessDatas.ID
+                                FROM AccessDatas 
+                                LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod
+                                LEFT JOIN Users ON AccessDatas.[Kart ID] =Users.[Kart ID]
+                                WHERE AccessDatas.Kod >= 20
+                                AND AccessDatas.Kod <= 27
+                                AND AccessDatas.Kontrol=0
+                                ORDER BY AccessDatas.[Kayit No] DESC";
+            List<AlarmDatasComplex> liste = new List<AlarmDatasComplex>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var nesne = new AlarmDatasComplex
+                        {
+                            Kayit_No = reader[0] as int? ?? default(int),
+                            Adi = reader[1].ToString(),
+                            Soyadi = reader[2].ToString(),
+                            Kart_ID = reader[3].ToString(),
+                            Kapi_ID = reader[4] as int? ?? default(int),
+                            Panel_ID = reader[5] as int? ?? default(int),
+                            Kod = reader[6] as int? ?? default(int),
+                            Operasyon = reader[7].ToString(),
+                            Tarih = reader[8] as DateTime? ?? default(DateTime),
+                            ID = reader[9] as int? ?? default(int)
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return liste;
+        }
+
         public void GetSirketList(DBUsers users)
         {
             if (users.SysAdmin == true)

@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ComplexType\AccessDatasComplex.cs" />
     <Compile Include="ComplexType\ActiveUserReportParameters.cs" />
+    <Compile Include="ComplexType\AlarmDatasComplex.cs" />
     <Compile Include="ComplexType\CamerasComplex.cs" />
     <Compile Include="ComplexType\ComplexAltDepartman.cs" />
     <Compile Include="ComplexType\ComplexBolum.cs" />

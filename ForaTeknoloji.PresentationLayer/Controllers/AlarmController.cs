@@ -271,5 +271,34 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult AlarmListesi()
+        {
+            //var model = _accessDatasService.GetAllAccessDatas().Where(x => x.Kod >= 20 && x.Kod <= 27 && x.Kontrol == 0).ToList();
+            var model = _reportService.AlarmListesi();
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AlarmTable()
+        {
+            var model = _reportService.AlarmListesi();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AlarmChange(List<int> Alarmlar)
+        {
+            if (Alarmlar.Count != 0 && Alarmlar != null)
+            {
+                foreach (var item in Alarmlar)
+                {
+                    var editEntity = _accessDatasService.GetByKayit_No(item);
+                    editEntity.Kontrol = 1;
+                    _accessDatasService.UpdateAccessData(editEntity);
+                }
+                return RedirectToAction("AlarmTable", "Alarm");
+            }
+            return RedirectToAction("AlarmTable", "Alarm");
+        }
     }
 }

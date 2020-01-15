@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ForaTeknoloji.Entities.ComplexType.AlarmDatasComplex>
+@{
+    ViewBag.Title = "AlarmTable";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-lg">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Alarm Listesi</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Count() == 0)
+                {
+                    <div class="alert alert-info">
+                        <h3 class="text-center">Geçerli Alarm Kaydı Bulunamadı!</h3>
+                    </div>
+                }
+                else
+                {
+                    using (Html.BeginForm("AlarmChange", "Alarm", FormMethod.Post))
+                    {
+                        <table id="AlarmTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="AllAlarm" />
+                                            <label class="custom-control-label" for="AllAlarm"></label>
+                                        </div>
+                                    </td>
+                                    <td>Kayıt No</td>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>Panel ID</td>
+                                    <td>Kapı ID</td>
+                                    <td>Operasyon</td>
+                                    <td>Tarih</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" name="Alarmlar" id="@item.Kayit_No" value="@item.Kayit_No">
+                                                <label class="custom-control-label" for="@item.Kayit_No"></label>
+                                            </div>
+                                        </td>
+                                        <td>@item.Kayit_No</td>
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_ID</td>
+                                        <td>@item.Operasyon</td>
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i> Seçilen Alarmı Güncelle</button>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#AllAlarm").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#AlarmTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#AlarmTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
+    });
+</script>

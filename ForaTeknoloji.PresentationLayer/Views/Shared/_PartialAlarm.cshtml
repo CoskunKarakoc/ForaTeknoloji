@@ -1,0 +1,62 @@
+﻿@*Alarm Bildirimleri*@
+<li class="nav-item dropdown no-arrow mx-1">
+    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bell fa-fw"></i>
+        <!-- Counter - Alerts -->
+        <span id="count" hidden class="badge badge-danger badge-counter"></span>
+    </a>
+    <!-- Dropdown - Alerts -->
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in  " aria-labelledby="alertsDropdown">
+        <h6 class="dropdown-header bg-secondary border-secondary">
+            Alarm Durumları
+        </h6>
+        <div id="body">
+
+        </div>
+        <a class="dropdown-item text-center small text-gray-500" href="@Url.Action("AlarmTable","Alarm")">Tüm Alarm Durumlarını Göster</a>
+    </div>
+</li>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/Alarm/AlarmListesi',
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            $("#body").html('');
+            if (data.length > 0) {
+                $("#count").prop("hidden", false);
+                $("#count").html(data.length + '+');
+                $.each(data, function (item, value) {
+                    console.log(value);
+                    $("#body").append(AlarmSablon(value));
+                });
+            } else {
+                $("#count").prop("hidden", true);
+                $("#body").append('<div id="NoAlarm" class="text-center mt-2">' +
+                    '<p class= "text-success animated shake" > Alarm Kaydı Yok!</p >' +
+                    '</div>');
+
+            }
+        });
+        setInterval(function () {
+            $("#count").toggleClass("animated fadeIn faster");
+        }, 500);
+    });
+
+    function AlarmSablon(value) {
+        var sablon = '';
+        sablon = ' <a href="/Alarm/AlarmTable" class="dropdown-item d-flex align-items-center" href="#">' +
+            '<div class="mr-3">' +
+            '<div class="icon-circle badge-danger">' +
+            '<i title="Hata" class="fas fa-exclamation-triangle text-white"></i>' +
+            '</div>' +
+            '</div>' +
+            '<div>' +
+            '<div class="small text-gray-500">Panel No:' + value.Panel_ID + '</div>' +
+            value.Operasyon
+        '</div>' +
+            '</a>';
+        return sablon;
+    }
+</script>
