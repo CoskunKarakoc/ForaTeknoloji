@@ -1,0 +1,621 @@
+﻿@model ForaTeknoloji.Entities.ComplexType.WatchParameters
+@{
+    ViewBag.Title = "WatchScreen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mx-lg-5 mt-1" style="height:inherit">
+            <div class="card-header text-right">
+                <a href="@Url.Action("WatchSettings","WatchScreen")"><i class="fas fa-cogs fa-2x text-secondary"></i></a>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("WatcParameters", "WatchScreen", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="custom-control-inline custom-checkbox ml-5">
+                                @Html.CheckBox("Tumu", Model.Tumu ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Tumu">Tümü</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-5">
+                                @Html.CheckBox("Normal", Model.Normal ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-success" for="Normal">Normal</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-5">
+                                @Html.CheckBox("Coklu", Model.Coklu ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-info" for="Coklu">Çoklu Geçiş</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-5">
+                                @Html.CheckBox("Antipassback", Model.Antipassback ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-danger" for="Antipassback">Antipassback</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-5">
+                                @Html.CheckBox("Manuel", Model.Manuel ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-warning" for="Manuel">Manuel İşlem</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-5">
+                                @Html.CheckBox("AlarmYangin", Model.AlarmYangin ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-secondary" for="AlarmYangin">Alarm Yangın</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-5">
+                                @Html.CheckBox("Tanimsiz", Model.Tanimsiz ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-primary" for="Tanimsiz">Tanımsız</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center mt-1">
+
+                            <div class="custom-control-inline custom-checkbox ml-4">
+                                @Html.CheckBox("Programli", Model.Programli ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-success" for="Programli">Programlı İşlem</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-4">
+                                @Html.CheckBox("KapiAlarm", Model.KapiAlarm ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-info" for="KapiAlarm">Kapı Alarmları</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-4">
+                                @Html.CheckBox("Engellenen", Model.Engellenen ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-danger" for="Engellenen">Engellenen</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-4">
+                                @Html.CheckBox("Button", Model.Button ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-warning" for="Button">Buton İşlemi</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-4">
+                                @Html.CheckBox("DigerAlarm", Model.DigerAlarm ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-secondary" for="DigerAlarm">Diğer Alarmlar</label>
+                            </div>
+                            <div class="custom-control-inline custom-checkbox ml-4">
+                                @Html.CheckBox("OperatorLog", Model.Operatorlog ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label text-dark" for="OperatorLog">Operatör Logları</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <div class="form-group ml-2">
+                                <button id="watchParameterBtn" type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-filter"></i> Seçilenlere Göre Filtrele</button>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" hidden id="Last_Kayit_No" name="Last_Kayit_No" value="" />
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Kart ID</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" id="Kart_ID" name="Kart_ID" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Adı</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Adi" name="Adi" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Şirket</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Sirket_Adi" name="Sirket_Adi" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Plaka</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Plaka" name="Plaka" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Daire</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Daire" name="Daire" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Panel</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Panel_ID" name="Panel_ID" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Geçiş Tipi</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Gecis_Tipi" name="Gecis_Tipi" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">TC Kimlik</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="TCKimlik" name="TCKimlik" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Soyadı</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Soyadi" name="Soyadi" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Bölüm</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Departman_Adi" name="Departman_Adi" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Blok</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Blok_Adi" name="Blok_Adi" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Tarih</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Tarih" name="Tarih" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Kapı</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Kapi_Adi" name="Kapi_Adi" value="" class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">Kayıt Tipi</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="Operasyon" name="Operasyon" value="" class="form-control form-control-sm text-center bg-info text-white" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offset-1">
+                        <img id="KayitliImage" style="height:350px;" class="img-profile card-img-bottom card-img" src="~/Images/" alt="User Image" />
+                        <img id="CanliImage" style="height:350px;" src="~/Images/BaseUser.jpg" hidden class="img-profile card-img-bottom card-img" alt="User Image" />
+                        <hr />
+                        <div id="Resimler" class="btn-group btn-group-toggle offset-2" data-toggle="buttons">
+                            <label class="btn btn-outline-info active btn-sm">
+                                <input type="radio" autocomplete="off" checked value="Kayitli"> Kayıtlı Resim
+                            </label>
+                            <label class="btn btn-outline-info btn-sm">
+                                <input type="radio" autocomplete="off" value="Canli"> Canlı Resim
+                            </label>
+                            <label class="btn btn-outline-info btn-sm">
+                                <input type="radio" autocomplete="off" value="Yanyana"> Yanyana
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr /></div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover text-center table-striped small " id="table" width="100%" cellspacing="0">
+                        <thead class="bg-gray-600 text-white table-sm">
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>TCKimlik</td>
+                                <td>Plaka</td>
+                                <td>Blok</td>
+                                <td>Daire</td>
+                                <td>Grup Adı</td>
+                                <td>Panel</td>
+                                <td>Kapı</td>
+                                <td>Geçiş</td>
+                                <td>Tarih</td>
+                                <td>Operasyon</td>
+                                <td>Operator</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        if ($("#Tumu").prop("checked") == true) {
+            $("#table tbody tr#normalSatir").prop("hidden", false);
+            $("#table tbody tr#cokluSatir").prop("hidden", false);
+            $("#table tbody tr#antipassbackSatir").prop("hidden", false);
+            $("#table tbody tr#manuelSatir").prop("hidden", false);
+            $("#table tbody tr#alarmyanginSatir").prop("hidden", false);
+            $("#table tbody tr#tanimsizSatir").prop("hidden", false);
+            $("#table tbody tr#programliSatir").prop("hidden", false);
+            $("#table tbody tr#kapialarmSatir").prop("hidden", false);
+            $("#table tbody tr#engellenenSatir").prop("hidden", false);
+            $("#table tbody tr#buttonSatir").prop("hidden", false);
+            $("#table tbody tr#digerSatir").prop("hidden", false);
+            $("#table tbody tr#operatorSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#normalSatir").prop("hidden", true);
+            $("#table tbody tr#cokluSatir").prop("hidden", true);
+            $("#table tbody tr#antipassbackSatir").prop("hidden", true);
+            $("#table tbody tr#manuelSatir").prop("hidden", true);
+            $("#table tbody tr#alarmyanginSatir").prop("hidden", true);
+            $("#table tbody tr#tanimsizSatir").prop("hidden", true);
+            $("#table tbody tr#programliSatir").prop("hidden", true);
+            $("#table tbody tr#kapialarmSatir").prop("hidden", true);
+            $("#table tbody tr#engellenenSatir").prop("hidden", true);
+            $("#table tbody tr#buttonSatir").prop("hidden", true);
+            $("#table tbody tr#digerSatir").prop("hidden", true);
+            $("#table tbody tr#operatorSatir").prop("hidden", true);
+        }
+        $("#Tumu").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Normal").prop("value", true);
+                $("#Normal").prop("checked", true);
+
+                $("#Coklu").prop("value", true);
+                $("#Coklu").prop("checked", true);
+
+                $("#Antipassback").prop("value", true);
+                $("#Antipassback").prop("checked", true);
+
+                $("#Manuel").prop("value", true);
+                $("#Manuel").prop("checked", true);
+
+                $("#AlarmYangin").prop("value", true);
+                $("#AlarmYangin").prop("checked", true);
+
+                $("#Tanimsiz").prop("value", true);
+                $("#Tanimsiz").prop("checked", true);
+
+                $("#Programli").prop("value", true);
+                $("#Programli").prop("checked", true);
+
+                $("#KapiAlarm").prop("value", true);
+                $("#KapiAlarm").prop("checked", true);
+
+                $("#Engellenen").prop("value", true);
+                $("#Engellenen").prop("checked", true);
+
+                $("#Button").prop("value", true);
+                $("#Button").prop("checked", true);
+
+                $("#DigerAlarm").prop("value", true);
+                $("#DigerAlarm").prop("checked", true);
+
+                $("#OperatorLog").prop("value", true);
+                $("#OperatorLog").prop("checked", true);
+            } else {
+                $("#Normal").prop("value", false);
+                $("#Normal").prop("checked", false);
+
+                $("#Coklu").prop("value", false);
+                $("#Coklu").prop("checked", false);
+
+                $("#Antipassback").prop("value", false);
+                $("#Antipassback").prop("checked", false);
+
+
+                $("#Manuel").prop("value", false);
+                $("#Manuel").prop("checked", false);
+
+                $("#AlarmYangin").prop("value", false);
+                $("#AlarmYangin").prop("checked", false);
+
+                $("#Tanimsiz").prop("value", false);
+                $("#Tanimsiz").prop("checked", false);
+
+                $("#Programli").prop("value", false);
+                $("#Programli").prop("checked", false);
+
+                $("#KapiAlarm").prop("value", false);
+                $("#KapiAlarm").prop("checked", false);
+
+                $("#Engellenen").prop("value", false);
+                $("#Engellenen").prop("checked", false);
+
+                $("#Button").prop("value", false);
+                $("#Button").prop("checked", false);
+
+                $("#DigerAlarm").prop("value", false);
+                $("#DigerAlarm").prop("checked", false);
+
+                $("#OperatorLog").prop("value", false);
+                $("#OperatorLog").prop("checked", false);
+            }
+
+        });
+        $('#Resimler .btn').on('click', function (event) {
+            var result = $(this).find('input').val();
+            if (result == "Kayitli") {
+                $("#KayitliImage").prop("hidden", false);
+                $("#CanliImage").prop("hidden", true);
+            } else if (result == "Canli") {
+                $("#KayitliImage").prop("hidden", true);
+                $("#CanliImage").prop("hidden", false);
+            } else if (result == "Yanyana") {
+                $("#KayitliImage").prop("hidden", false);
+                $("#CanliImage").prop("hidden", false);
+            }
+        });
+
+        var count = 0;
+        $.ajax({
+            url: '/WatchScreen/AccessCount',
+            type: 'GET',
+            dataType: 'json',
+        }).done(function (data) {
+            count = data;
+        });
+
+        setInterval(function () {
+            $.ajax({
+                url: '/WatchScreen/AccessCount',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                if (count != data) {
+                    alert("Giriş Yapıldı");
+                }
+            }).always(function (data) {
+                count = data;
+            });
+        }, 1000);
+
+
+        //setInterval(function () {
+        //    $.ajax({
+        //        url: '/WatchScreen/AccessCount',
+        //        type: 'GET',
+        //        dataType: 'json'
+        //    }).done(function (data) {
+        //        count = data;
+        //        if (data != count) {
+        //            $.ajax({
+        //                url: '/WatchScreen/WatchList',
+        //                type: 'GET',
+        //                dataType: 'json'
+        //            }).done(function (data) {
+        //                let lastItem = data[0];
+        //                $("#table tbody").html("");
+        //                $.each(data, function (key, value) {
+        //                    if (value.Kod == 0) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
+        //                    } else if (value.Kod == 1) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
+        //                    } else if (value.Kod == 2) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
+        //                    } else if (value.Kod == 3) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
+        //                    } else if (value.Kod == 4) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
+        //                    } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
+        //                    } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
+        //                    } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
+        //                    } else if (value.Kod == 20 || value.Kod == 21) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
+        //                    } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
+        //                    } else if (value.Kod > 24 && value.Kod < 48) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
+        //                    } else if (value.Kod >= 100) {
+        //                        $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
+        //                    }
+        //                });
+        //                $.ajax({
+        //                    url: '/WatchScreen/ReturnWatchParameters',
+        //                    type: 'GET',
+        //                    dataType: 'json'
+        //                }).done(function (data) {
+        //                    RowHiding(data);
+        //                });
+        //                InputBindLastData(lastItem);
+        //            }).always(function () {
+        //                $("#table tbody tr").click(function () {
+        //                    var kayitNo = $(this).data("kayitno");
+        //                    $.ajax({
+        //                        url: '/WatchScreen/ByRegistrationNumber',
+        //                        type: 'GET',
+        //                        dataType: 'json',
+        //                        data: { KayitNo: kayitNo },
+        //                    }).done(function (data) {
+        //                        InputBindLastData(data);
+        //                    });
+        //                })
+
+        //            });
+        //        }
+        //    }).always(function (data) {
+        //        count = data;
+        //    });
+        //}, 1000);
+
+        FirstOpeningList();
+    });
+
+    function FirstOpeningList() {
+        $.ajax({
+            url: '/WatchScreen/WatchList',
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            let lastItem = data[0];
+            $("#table tbody").html("");
+            $.each(data, function (key, value) {
+                if (value.Kod == 0) {
+                    $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
+                } else if (value.Kod == 1) {
+                    $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
+                } else if (value.Kod == 2) {
+                    $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
+                } else if (value.Kod == 3) {
+                    $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
+                } else if (value.Kod == 4) {
+                    $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
+                } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
+                    $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
+                } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
+                    $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
+                } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
+                    $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
+                } else if (value.Kod == 20 || value.Kod == 21) {
+                    $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
+                } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
+                    $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
+                } else if (value.Kod > 24 && value.Kod < 48) {
+                    $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
+                } else if (value.Kod >= 100) {
+                    $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
+                }
+            });
+            $.ajax({
+                url: '/WatchScreen/ReturnWatchParameters',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                RowHiding(data);
+            });
+            InputBindLastData(lastItem);
+        }).always(function () {
+            $("#table tbody tr").click(function () {
+                var kayitNo = $(this).data("kayitno");
+                $.ajax({
+                    url: '/WatchScreen/ByRegistrationNumber',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { KayitNo: kayitNo },
+                }).done(function (data) {
+                    InputBindLastData(data);
+                });
+            })
+
+        });
+    }
+
+    function TableRowTemplate(value, idParam, classParam) {
+        var GecisTipi = "";
+        var SatirSablon = '';
+        if (value.Gecis_Tipi == 0) {
+            GecisTipi = "Giriş";
+        } else if (value.Gecis_Tipi == 1) {
+            GecisTipi = "Çıkış";
+        } else {
+            GecisTipi = "Çıkış";
+        }
+        SatirSablon = '<tr data-kayitno="' + value.Kayit_No + '" id="' + idParam + '" class="' + classParam + '">' +
+            '<td>' + value.ID + '</td>' +
+            '<td>' + value.Kart_ID + '</td>' +
+            '<td>' + value.Adi + '</td>' +
+            '<td>' + value.Soyadi + '</td>' +
+            '<td>' + value.Sirket_Adi + '</td>' +
+            '<td>' + value.Departman_Adi + '</td>' +
+            '<td>' + value.TCKimlik + '</td>' +
+            '<td>' + value.Plaka + '</td>' +
+            '<td>' + value.Blok_Adi + '</td>' +
+            '<td>' + value.Daire + '</td>' +
+            '<td>' + value.Grup_Adi + '</td>' +
+            '<td>' + value.Panel_ID + '</td>' +
+            '<td>' + value.Kapi_Adi + '</td>' +
+            '<td>' + GecisTipi + '</td>' +
+            '<td>' + value.Tarih + '</td>' +
+            '<td class="small">' + value.Operasyon + '</td>' +
+            '<td class="small">' + value.Operator + '</td>' +
+            '</tr>';
+        return SatirSablon;
+    }
+    function InputBindLastData(value) {
+        $("#Kart_ID").prop("value", value.Kart_ID);
+        $("#TCKimlik").prop("value", value.TCKimlik);
+        $("#Adi").prop("value", value.Adi);
+        $("#Soyadi").prop("value", value.Soyadi);
+        $("#Sirket_Adi").prop("value", value.Sirket_Adi);
+        $("#KayitliImage").prop("src", "/Images/" + value.Resim);
+        $("#Grup_Adi").prop("value", value.Grup_Adi);
+        $("#Plaka").prop("value", value.Plaka);
+        $("#Blok_Adi").prop("value", value.Blok_Adi);
+        $("#Departman_Adi").prop("value", value.Departman_Adi);
+        $("#Daire").prop("value", value.Daire);
+        $("#Tarih").prop("value", value.Tarih);
+        $("#Panel_ID").prop("value", value.Panel_ID);
+        $("#Kapi_ID").prop("value", value.Kapi_ID);
+        $("#Operasyon").prop("value", value.Operasyon);
+        if (value.Gecis_Tipi == 0) {
+            $("#Gecis_Tipi").prop("value", "GİRİŞ");
+            $("#Gecis_Tipi").removeClass("bg-danger text-white text-center");
+            $("#Gecis_Tipi").addClass("bg-success text-white text-center");
+        } else {
+            $("#Gecis_Tipi").prop("value", "ÇIKIŞ");
+            $("#Gecis_Tipi").removeClass("bg-success text-white text-center");
+            $("#Gecis_Tipi").addClass("bg-danger text-white text-center");
+        }
+    }
+    function RowHiding(data) {
+        if (data.Normal == true) {
+            $("#table tbody tr#normalSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#normalSatir").prop("hidden", true);
+        }
+        if (data.Coklu == true) {
+            $("#table tbody tr#cokluSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#cokluSatir").prop("hidden", true);
+        }
+        if (data.Antipassback == true) {
+            $("#table tbody tr#antipassbackSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#antipassbackSatir").prop("hidden", true);
+        }
+        if (data.Manuel == true) {
+            $("#table tbody tr#manuelSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#manuelSatir").prop("hidden", true);
+        }
+        if (data.AlarmYangin == true) {
+            $("#table tbody tr#alarmyanginSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#alarmyanginSatir").prop("hidden", true);
+        }
+        if (data.Tanimsiz == true) {
+            $("#table tbody tr#tanimsizSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#tanimsizSatir").prop("hidden", true);
+        }
+        if (data.Programli == true) {
+            $("#table tbody tr#programliSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#programliSatir").prop("hidden", true);
+        }
+        if (data.KapiAlarm == true) {
+            $("#table tbody tr#programliSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#programliSatir").prop("hidden", true);
+        }
+        if (data.Engellenen == true) {
+            $("#table tbody tr#engellenenSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#engellenenSatir").prop("hidden", true);
+        }
+        if (data.Button == true) {
+            $("#table tbody tr#buttonSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#buttonSatir").prop("hidden", true);
+        }
+        if (data.DigerAlarm == true) {
+            $("#table tbody tr#digerSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#digerSatir").prop("hidden", true);
+        }
+        if (data.OperatorLog == true) {
+            $("#table tbody tr#operatorSatir").prop("hidden", false);
+        } else {
+            $("#table tbody tr#operatorSatir").prop("hidden", true);
+        }
+    }
+</script>
