@@ -17,6 +17,36 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
         public DBUsers AddDBUsers(DBUsers dBUsers)
         {
+            if (dBUsers.Kullanici_Islemleri == null)
+                dBUsers.Kullanici_Islemleri = 3;
+            if (dBUsers.Grup_Islemleri == null)
+                dBUsers.Grup_Islemleri = 3;
+            if (dBUsers.Programli_Kapi_Islemleri == null)
+                dBUsers.Programli_Kapi_Islemleri = 3;
+            if (dBUsers.Gecis_Verileri_Rapor_Islemleri == null)
+                dBUsers.Gecis_Verileri_Rapor_Islemleri = 3;
+            if (dBUsers.Ziyaretci_Islemleri == null)
+                dBUsers.Ziyaretci_Islemleri = 3;
+            if (dBUsers.Canli_Izleme == null)
+                dBUsers.Canli_Izleme = 3;
+            if (dBUsers.Alarm_Islemleri == null)
+                dBUsers.Alarm_Islemleri = 3;
+            if (dBUsers.SysAdmin == null)
+                dBUsers.SysAdmin = false;
+            if (dBUsers.OtherDeviceReports == null)
+                dBUsers.OtherDeviceReports = false;
+            if (dBUsers.SysAdmin == true)
+            {
+                dBUsers.Kullanici_Islemleri = 1;
+                dBUsers.Grup_Islemleri = 1;
+                dBUsers.Programli_Kapi_Islemleri = 1;
+                dBUsers.Gecis_Verileri_Rapor_Islemleri = 1;
+                dBUsers.Ziyaretci_Islemleri = 1;
+                dBUsers.Canli_Izleme = 1;
+                dBUsers.Alarm_Islemleri = 1;
+                dBUsers.OtherDeviceReports = true;
+            }
+
             return _dBUsersDal.Add(dBUsers);
         }
 
@@ -37,6 +67,37 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
         public DBUsers UpdateDBUsers(DBUsers dBUsers)
         {
+            if (dBUsers.Kullanici_Islemleri == null)
+                dBUsers.Kullanici_Islemleri = 3;
+            if (dBUsers.Grup_Islemleri == null)
+                dBUsers.Grup_Islemleri = 3;
+            if (dBUsers.Programli_Kapi_Islemleri == null)
+                dBUsers.Programli_Kapi_Islemleri = 3;
+            if (dBUsers.Gecis_Verileri_Rapor_Islemleri == null)
+                dBUsers.Gecis_Verileri_Rapor_Islemleri = 3;
+            if (dBUsers.Ziyaretci_Islemleri == null)
+                dBUsers.Ziyaretci_Islemleri = 3;
+            if (dBUsers.Canli_Izleme == null)
+                dBUsers.Canli_Izleme = 3;
+            if (dBUsers.Alarm_Islemleri == null)
+                dBUsers.Alarm_Islemleri = 3;
+            if (dBUsers.SysAdmin == null)
+                dBUsers.SysAdmin = false;
+            if (dBUsers.OtherDeviceReports == null)
+                dBUsers.OtherDeviceReports = false;
+            if (dBUsers.SysAdmin == true)
+            {
+                dBUsers.Kullanici_Islemleri = 1;
+                dBUsers.Grup_Islemleri = 1;
+                dBUsers.Programli_Kapi_Islemleri = 1;
+                dBUsers.Gecis_Verileri_Rapor_Islemleri = 1;
+                dBUsers.Ziyaretci_Islemleri = 1;
+                dBUsers.Canli_Izleme = 1;
+                dBUsers.Alarm_Islemleri = 1;
+                dBUsers.OtherDeviceReports = true;
+            }
+
+
             return _dBUsersDal.Update(dBUsers);
         }
 

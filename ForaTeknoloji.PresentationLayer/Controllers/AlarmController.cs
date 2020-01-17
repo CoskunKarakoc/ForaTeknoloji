@@ -281,6 +281,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult AlarmTable()
         {
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Alarm_Islemleri == 3 || permissionUser.Alarm_Islemleri == null)
+                    throw new Exception("Yetkisiz erişim!");
+            }
+
             var model = _reportService.AlarmListesi();
             return View(model);
         }

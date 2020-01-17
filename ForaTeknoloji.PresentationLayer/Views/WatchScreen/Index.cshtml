@@ -176,7 +176,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 offset-1">
-                        <img id="KayitliImage" style="height:350px;" class="img-profile card-img-bottom card-img" src="~/Images/" alt="User Image" />
+                        <img id="KayitliImage" style="height:350px;" class="img-profile card-img-bottom card-img" src="" alt="User Image" />
                         <img id="CanliImage" style="height:350px;" src="~/Images/BaseUser.jpg" hidden class="img-profile card-img-bottom card-img" alt="User Image" />
                         <hr />
                         <div id="Resimler" class="btn-group btn-group-toggle offset-2" data-toggle="buttons">
@@ -225,6 +225,7 @@
 </div>
 <script>
     $(document).ready(function () {
+
         if ($("#Tumu").prop("checked") == true) {
             $("#table tbody tr#normalSatir").prop("hidden", false);
             $("#table tbody tr#cokluSatir").prop("hidden", false);
@@ -358,84 +359,68 @@
                 type: 'GET',
                 dataType: 'json'
             }).done(function (data) {
-                if (count != data) {
-                    alert("Giriş Yapıldı");
+                if (data != count) {
+                    $.ajax({
+                        url: '/WatchScreen/WatchList',
+                        type: 'GET',
+                        dataType: 'json'
+                    }).done(function (data) {
+                        let lastItem = data[0];
+                        $("#table tbody").html("");
+                        $.each(data, function (key, value) {
+                            if (value.Kod == 0) {
+                                $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
+                            } else if (value.Kod == 1) {
+                                $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
+                            } else if (value.Kod == 2) {
+                                $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
+                            } else if (value.Kod == 3) {
+                                $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
+                            } else if (value.Kod == 4) {
+                                $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
+                            } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
+                                $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
+                            } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
+                                $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
+                            } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
+                                $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
+                            } else if (value.Kod == 20 || value.Kod == 21) {
+                                $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
+                            } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
+                                $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
+                            } else if (value.Kod > 24 && value.Kod < 48) {
+                                $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
+                            } else if (value.Kod >= 100) {
+                                $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
+                            }
+                        });
+                        $.ajax({
+                            url: '/WatchScreen/ReturnWatchParameters',
+                            type: 'GET',
+                            dataType: 'json'
+                        }).done(function (data) {
+                            RowHiding(data);
+                        });
+                        InputBindLastData(lastItem);
+                    }).always(function () {
+                        $("#table tbody tr").click(function () {
+                            var kayitNo = $(this).data("kayitno");
+                            $.ajax({
+                                url: '/WatchScreen/ByRegistrationNumber',
+                                type: 'GET',
+                                dataType: 'json',
+                                data: { KayitNo: kayitNo },
+                            }).done(function (data) {
+                                InputBindLastData(data);
+                            });
+                        })
+
+                    });
                 }
             }).always(function (data) {
                 count = data;
             });
-        }, 1000);
-
-
-        //setInterval(function () {
-        //    $.ajax({
-        //        url: '/WatchScreen/AccessCount',
-        //        type: 'GET',
-        //        dataType: 'json'
-        //    }).done(function (data) {
-        //        count = data;
-        //        if (data != count) {
-        //            $.ajax({
-        //                url: '/WatchScreen/WatchList',
-        //                type: 'GET',
-        //                dataType: 'json'
-        //            }).done(function (data) {
-        //                let lastItem = data[0];
-        //                $("#table tbody").html("");
-        //                $.each(data, function (key, value) {
-        //                    if (value.Kod == 0) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
-        //                    } else if (value.Kod == 1) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
-        //                    } else if (value.Kod == 2) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
-        //                    } else if (value.Kod == 3) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
-        //                    } else if (value.Kod == 4) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
-        //                    } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
-        //                    } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
-        //                    } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
-        //                    } else if (value.Kod == 20 || value.Kod == 21) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
-        //                    } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
-        //                    } else if (value.Kod > 24 && value.Kod < 48) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
-        //                    } else if (value.Kod >= 100) {
-        //                        $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
-        //                    }
-        //                });
-        //                $.ajax({
-        //                    url: '/WatchScreen/ReturnWatchParameters',
-        //                    type: 'GET',
-        //                    dataType: 'json'
-        //                }).done(function (data) {
-        //                    RowHiding(data);
-        //                });
-        //                InputBindLastData(lastItem);
-        //            }).always(function () {
-        //                $("#table tbody tr").click(function () {
-        //                    var kayitNo = $(this).data("kayitno");
-        //                    $.ajax({
-        //                        url: '/WatchScreen/ByRegistrationNumber',
-        //                        type: 'GET',
-        //                        dataType: 'json',
-        //                        data: { KayitNo: kayitNo },
-        //                    }).done(function (data) {
-        //                        InputBindLastData(data);
-        //                    });
-        //                })
-
-        //            });
-        //        }
-        //    }).always(function (data) {
-        //        count = data;
-        //    });
-        //}, 1000);
+        }, 500);
 
         FirstOpeningList();
     });
@@ -509,42 +494,68 @@
         } else {
             GecisTipi = "Çıkış";
         }
-        SatirSablon = '<tr data-kayitno="' + value.Kayit_No + '" id="' + idParam + '" class="' + classParam + '">' +
-            '<td>' + value.ID + '</td>' +
-            '<td>' + value.Kart_ID + '</td>' +
-            '<td>' + value.Adi + '</td>' +
-            '<td>' + value.Soyadi + '</td>' +
-            '<td>' + value.Sirket_Adi + '</td>' +
-            '<td>' + value.Departman_Adi + '</td>' +
-            '<td>' + value.TCKimlik + '</td>' +
-            '<td>' + value.Plaka + '</td>' +
-            '<td>' + value.Blok_Adi + '</td>' +
-            '<td>' + value.Daire + '</td>' +
-            '<td>' + value.Grup_Adi + '</td>' +
-            '<td>' + value.Panel_ID + '</td>' +
-            '<td>' + value.Kapi_Adi + '</td>' +
-            '<td>' + GecisTipi + '</td>' +
-            '<td>' + value.Tarih + '</td>' +
-            '<td class="small">' + value.Operasyon + '</td>' +
-            '<td class="small">' + value.Operator + '</td>' +
-            '</tr>';
+        if (idParam == "tanimsizSatir") {
+            SatirSablon = '<tr data-kayitno="' + value.Kayit_No + '" id="' + idParam + '" class="' + classParam + '">' +
+                '<td>' + value.ID + '</td>' +
+                '<td>' + value.Kart_ID + '</td>' +
+                '<td>' + value.Adi + '</td>' +
+                '<td>' + value.Soyadi + '</td>' +
+                '<td>' + value.Sirket_Adi + '</td>' +
+                '<td>' + value.Departman_Adi + '</td>' +
+                '<td>' + value.TCKimlik + '</td>' +
+                '<td>' + value.Plaka + '</td>' +
+                '<td>' + value.Blok_Adi + '</td>' +
+                '<td>' + value.Daire + '</td>' +
+                '<td>' + value.Grup_Adi + '</td>' +
+                '<td>' + value.Panel_ID + '</td>' +
+                '<td>' + value.Kapi_Adi + '</td>' +
+                '<td>' + GecisTipi + '</td>' +
+                '<td>' + ToJavaScriptDate(value.Tarih) + '</td>' +
+                '<td class="small">' + value.Operasyon + '</td>' +
+                '<td class="small">' + value.Operator + '<a title="Yeni Kullanıcı Olarak Ekle" onclick="return confirm(\'Yeni Kullanıcı Olarak Eklemek İstiyormusunuz?\')" href="/Users/Create?Kart_ID=' + value.Kart_ID + '"><i class="fas fa-user-plus text-info ml-2"></i></a></td>' +
+                '</tr>';
+        } else {
+            SatirSablon = '<tr data-kayitno="' + value.Kayit_No + '" id="' + idParam + '" class="' + classParam + '">' +
+                '<td>' + value.ID + '</td>' +
+                '<td>' + value.Kart_ID + '</td>' +
+                '<td>' + value.Adi + '</td>' +
+                '<td>' + value.Soyadi + '</td>' +
+                '<td>' + value.Sirket_Adi + '</td>' +
+                '<td>' + value.Departman_Adi + '</td>' +
+                '<td>' + value.TCKimlik + '</td>' +
+                '<td>' + value.Plaka + '</td>' +
+                '<td>' + value.Blok_Adi + '</td>' +
+                '<td>' + value.Daire + '</td>' +
+                '<td>' + value.Grup_Adi + '</td>' +
+                '<td>' + value.Panel_ID + '</td>' +
+                '<td>' + value.Kapi_Adi + '</td>' +
+                '<td>' + GecisTipi + '</td>' +
+                '<td>' + ToJavaScriptDate(value.Tarih) + '</td>' +
+                '<td class="small">' + value.Operasyon + '</td>' +
+                '<td class="small">' + value.Operator + '</td>' +
+                '</tr>';
+        }
         return SatirSablon;
     }
     function InputBindLastData(value) {
+        var imgUrl = value.Resim;
+        if (imgUrl == null || imgUrl == "") {
+            imgUrl = "BaseUser.jpg";
+        }
         $("#Kart_ID").prop("value", value.Kart_ID);
         $("#TCKimlik").prop("value", value.TCKimlik);
         $("#Adi").prop("value", value.Adi);
         $("#Soyadi").prop("value", value.Soyadi);
         $("#Sirket_Adi").prop("value", value.Sirket_Adi);
-        $("#KayitliImage").prop("src", "/Images/" + value.Resim);
+        $("#KayitliImage").prop("src", "/Images/" + imgUrl);
         $("#Grup_Adi").prop("value", value.Grup_Adi);
         $("#Plaka").prop("value", value.Plaka);
         $("#Blok_Adi").prop("value", value.Blok_Adi);
         $("#Departman_Adi").prop("value", value.Departman_Adi);
         $("#Daire").prop("value", value.Daire);
-        $("#Tarih").prop("value", value.Tarih);
+        $("#Tarih").prop("value", ToJavaScriptDate(value.Tarih));
         $("#Panel_ID").prop("value", value.Panel_ID);
-        $("#Kapi_ID").prop("value", value.Kapi_ID);
+        $("#Kapi_Adi").prop("value", value.Kapi_Adi);
         $("#Operasyon").prop("value", value.Operasyon);
         if (value.Gecis_Tipi == 0) {
             $("#Gecis_Tipi").prop("value", "GİRİŞ");
@@ -618,4 +629,12 @@
             $("#table tbody tr#operatorSatir").prop("hidden", true);
         }
     }
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+    }
+
 </script>

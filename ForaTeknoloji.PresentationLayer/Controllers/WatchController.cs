@@ -105,7 +105,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Count()
         {
-            var count = _accessDatasService.GetAllAccessDatas().Count;
+            var count = _reportService.WatchScreenGetCount(null, null);
             return Json(count, JsonRequestBehavior.AllowGet);
         }
 

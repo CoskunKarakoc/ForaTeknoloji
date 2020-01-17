@@ -156,21 +156,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     var Kullanici = _dBUsersService.GetById(dBUsers.Kullanici_Adi);
                     var Sifre = _dBUsersService.GetBySifre(dBUsers.Sifre);
-                    if (Kullanici != null || Sifre != null)
+                    if (Kullanici != null && Sifre != null)
                     {
                         throw new Exception("Aynı kullanıcı adı veya şifre ile kayıt yapılamaz!");
                     }
 
-                    if (dBUsers.SysAdmin == true)
-                    {
-                        dBUsers.Alarm_Islemleri = 1;
-                        dBUsers.Canli_Izleme = 1;
-                        dBUsers.Gecis_Verileri_Rapor_Islemleri = 1;
-                        dBUsers.Grup_Islemleri = 1;
-                        dBUsers.Kullanici_Islemleri = 1;
-                        dBUsers.Programli_Kapi_Islemleri = 1;
-                        dBUsers.Ziyaretci_Islemleri = 1;
-                    }
                     addedUser = _dBUsersService.AddDBUsers(dBUsers);
                     _accessDatasService.AddOperatorLog(230, user.Kullanici_Adi, 0, 0, 0, 0);
                 }

@@ -18,6 +18,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
         public Users AddUsers(Users users)
         {
+            if (users.Sirket_No == null)
+                users.Sirket_No = 1;
+            if (users.Departman_No == null)
+                users.Departman_No = 1;
+
             return _userDal.Add(users);
         }
 
@@ -38,6 +43,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
         public Users UpdateUsers(Users users)
         {
+            if (users.Sirket_No == null)
+                users.Sirket_No = 1;
+            if (users.Departman_No == null)
+                users.Departman_No = 1;
+
             return _userDal.Update(users);
         }
 
@@ -73,24 +83,40 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     if (parameters.User_Grup == 1)
                     {
                         user.Grup_No = parameters.Grup_No;
+                        if (user.Sirket_No == null)
+                            user.Sirket_No = 1;
+                        if (user.Departman_No == null)
+                            user.Departman_No = 1;
                         _userDal.Update(user);
                         result = true;
                     }
                     else if (parameters.User_Grup == 2)
                     {
                         user.Grup_No_1 = parameters.Grup_No;
+                        if (user.Sirket_No == null)
+                            user.Sirket_No = 1;
+                        if (user.Departman_No == null)
+                            user.Departman_No = 1;
                         _userDal.Update(user);
                         result = true;
                     }
                     else if (parameters.User_Grup == 3)
                     {
                         user.Grup_No_2 = parameters.Grup_No;
+                        if (user.Sirket_No == null)
+                            user.Sirket_No = 1;
+                        if (user.Departman_No == null)
+                            user.Departman_No = 1;
                         _userDal.Update(user);
                         result = true;
                     }
                     else if (parameters.User_Grup == 4)
                     {
                         user.Grup_No_3 = parameters.Grup_No;
+                        if (user.Sirket_No == null)
+                            user.Sirket_No = 1;
+                        if (user.Departman_No == null)
+                            user.Departman_No = 1;
                         _userDal.Update(user);
                         result = true;
                     }

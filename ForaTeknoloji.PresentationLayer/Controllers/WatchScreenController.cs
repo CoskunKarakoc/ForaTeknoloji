@@ -58,7 +58,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult AccessCount()
         {
-            return Json(_accessDatasService.GetAllAccessDatas().Count, JsonRequestBehavior.AllowGet);
+            return Json(_reportService.WatchScreenGetCount(null, null), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult WatchList()

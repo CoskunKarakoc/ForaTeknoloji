@@ -2216,7 +2216,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
             }
             //Client-Mod
-            queryString = "SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+            queryString = "SELECT DISTINCT TOP 50 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
                 " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
                 " Departmanlar.Adi AS Departman," +
                 " AccessDatas.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
@@ -2514,6 +2514,39 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return nesne;
         }
 
+
+        public int WatchScreenGetCount(int? panelID, int? KapiID)
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = "";
+            queryString = "SELECT COUNT(*) FROM AccessDatas";
+            if (panelID != null && KapiID != null)
+            {
+                queryString += " WHERE [Panel ID]=" + panelID;
+                queryString += " AND [Kapi ID]=" + KapiID;
+            }
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        return reader[0] as int? ?? default(int);
+                    }
+                }
+                catch (Exception)
+                {
+
+                    return 0;
+                }
+            }
+            return 0;
+        }
+
+
         public List<WatchEntityComplex> MonitorWatch(SpotMonitorSettings parameters)
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
@@ -2586,10 +2619,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 {
 
                     throw;
-                }
-                finally
-                {
-                    connection.Close();
                 }
             }
             return liste;

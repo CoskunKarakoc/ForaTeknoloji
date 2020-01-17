@@ -25,8 +25,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGroupsDetailNewService _groupsDetailNewService;
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
+        private IDBUsersService _dBUsersService;
         public DBUsers user;
-        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService)
+        DBUsers permissionUser;
+
+        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -42,6 +45,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _groupsDetailNewService = groupsDetailNewService;
             _reportService = reportService;
             _accessDatasService = accessDatasService;
+            _dBUsersService = dBUsersService;
+            permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
         public ActionResult Settings(int? PanelID)
@@ -207,7 +212,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 };
                 TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                 _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, Panel, 0);
-                Thread.Sleep(2500);
+                Thread.Sleep(1000);
             }
             catch (Exception)
             {
@@ -294,7 +299,38 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
         }
 
+        public ActionResult AlarmClear(int? PanelID)
+        {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Bu işlem için yetkiniz yok!");
 
+            if (PanelID != null)
+            {
+                try
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_ALARMFIRE_STATUS,
+                        IntParam_1 = (int)PanelID,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelID,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                }
+                return RedirectToAction("Settings", new { @PanelID = PanelID });
+
+            }
+            throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+        }
 
         public int CheckStatus(int GrupNo = -1)
         {

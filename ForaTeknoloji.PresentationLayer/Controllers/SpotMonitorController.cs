@@ -95,7 +95,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var condition = CurrentSession.Get<SpotMonitorSettings>("SpotWatchParameter");
             if (condition != null)
             {
-                var count = _accessDatasService.GetAllAccessDatas(x => x.Panel_ID == condition.Panel_ID && x.Kapi_ID == condition.Kapi_ID).Count;
+                var count = _reportService.WatchScreenGetCount(condition.Panel_ID, condition.Kapi_ID);
                 return Json(count, JsonRequestBehavior.AllowGet);
             }
             else

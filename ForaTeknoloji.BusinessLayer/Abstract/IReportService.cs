@@ -149,5 +149,11 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// </summary>
         /// <returns></returns>
         List<AlarmDatasComplex> AlarmListesi();
+
+        /// <summary>
+        /// AccessDatas tablosunda ki satır sayısını gönderiyor.
+        /// </summary>
+        /// <returns></returns>
+        int WatchScreenGetCount(int? panelID, int? KapiID);
     }
 }
