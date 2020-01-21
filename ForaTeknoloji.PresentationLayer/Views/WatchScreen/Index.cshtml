@@ -226,6 +226,8 @@
 <script>
     $(document).ready(function () {
 
+        FirstOpeningList();
+
         if ($("#Tumu").prop("checked") == true) {
             $("#table tbody tr#normalSatir").prop("hidden", false);
             $("#table tbody tr#cokluSatir").prop("hidden", false);
@@ -422,7 +424,6 @@
             });
         }, 500);
 
-        FirstOpeningList();
     });
 
     function FirstOpeningList() {
@@ -510,7 +511,7 @@
                 '<td>' + value.Panel_ID + '</td>' +
                 '<td>' + value.Kapi_Adi + '</td>' +
                 '<td>' + GecisTipi + '</td>' +
-                '<td>' + ToJavaScriptDate(value.Tarih) + '</td>' +
+                '<td>' + ConvertTime(value.Tarih) + '</td>' +
                 '<td class="small">' + value.Operasyon + '</td>' +
                 '<td class="small">' + value.Operator + '<a title="Yeni Kullanıcı Olarak Ekle" onclick="return confirm(\'Yeni Kullanıcı Olarak Eklemek İstiyormusunuz?\')" href="/Users/Create?Kart_ID=' + value.Kart_ID + '"><i class="fas fa-user-plus text-info ml-2"></i></a></td>' +
                 '</tr>';
@@ -530,13 +531,14 @@
                 '<td>' + value.Panel_ID + '</td>' +
                 '<td>' + value.Kapi_Adi + '</td>' +
                 '<td>' + GecisTipi + '</td>' +
-                '<td>' + ToJavaScriptDate(value.Tarih) + '</td>' +
+                '<td>' + ConvertTime(value.Tarih) + '</td>' +
                 '<td class="small">' + value.Operasyon + '</td>' +
                 '<td class="small">' + value.Operator + '</td>' +
                 '</tr>';
         }
         return SatirSablon;
     }
+
     function InputBindLastData(value) {
         var imgUrl = value.Resim;
         if (imgUrl == null || imgUrl == "") {
@@ -553,7 +555,7 @@
         $("#Blok_Adi").prop("value", value.Blok_Adi);
         $("#Departman_Adi").prop("value", value.Departman_Adi);
         $("#Daire").prop("value", value.Daire);
-        $("#Tarih").prop("value", ToJavaScriptDate(value.Tarih));
+        $("#Tarih").prop("value", ConvertTime(value.Tarih));
         $("#Panel_ID").prop("value", value.Panel_ID);
         $("#Kapi_Adi").prop("value", value.Kapi_Adi);
         $("#Operasyon").prop("value", value.Operasyon);
@@ -567,6 +569,7 @@
             $("#Gecis_Tipi").addClass("bg-danger text-white text-center");
         }
     }
+
     function RowHiding(data) {
         if (data.Normal == true) {
             $("#table tbody tr#normalSatir").prop("hidden", false);
@@ -630,11 +633,15 @@
         }
     }
 
-    function ToJavaScriptDate(value) {
-        var pattern = /Date\(([^)]+)\)/;
-        var results = pattern.exec(value);
-        var dt = new Date(parseFloat(results[1]));
-        return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+    function AddLeadingZeros(number, size) {
+        var s = "0000" + number;
+        return s.substr(s.length - size);
+    }
+
+    function ConvertTime(value) {
+        var dt = new Date(parseInt(value.replace('/Date(', '')))
+        var result = AddLeadingZeros(dt.getDate(), 2) + "/" + AddLeadingZeros(dt.getMonth() + 1, 2) + "/" + AddLeadingZeros(dt.getFullYear(), 4) + " " + AddLeadingZeros(dt.getHours(), 2) + ":" + AddLeadingZeros(dt.getMinutes(), 2) + ":" + AddLeadingZeros(dt.getSeconds(), 2);
+        return result;
     }
 
 </script>

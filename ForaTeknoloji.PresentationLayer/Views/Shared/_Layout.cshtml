@@ -17,7 +17,8 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <link href="~/Templete/TempleteDosyalari/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    @*<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">*@
+    <link href="~/Content/SiteContent/fontfamily.css" rel="stylesheet" />
     <!-- Custom styles for this template-->
     <link href="~/Templete/TempleteDosyalari/css/sb-admin-2.min.css" rel="stylesheet" />
     <link href="~/Content/Gridmvc.css" rel="stylesheet" />
@@ -32,26 +33,34 @@
 
     <!---Alerttfy js--->
     <!-- JavaScript -->
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/alertify.min.js"></script>
+    @*<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/alertify.min.js"></script>*@
+    <script src="~/Content/SiteContent/alertify.min.js"></script>
     <!-- CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/alertify.min.css" />
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/alertify.min.css" />*@
+    <link href="~/Content/SiteContent/alertify.min.css" rel="stylesheet" />
     <!-- Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/default.min.css" />
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/default.min.css" />*@
+    <link href="~/Content/SiteContent/default.min.css" rel="stylesheet" />
     <!-- Semantic UI theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/semantic.min.css" />
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/semantic.min.css" />*@
+    <link href="~/Content/SiteContent/semantic.min.css" rel="stylesheet" />
     <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/bootstrap.min.css" />
-
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/bootstrap.min.css" />*@
+    <link href="~/Content/SiteContent/alertify-bootstrap.min.css" rel="stylesheet" />
     <!--
         RTL version
     -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/alertify.rtl.min.css" />
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/alertify.rtl.min.css" />*@
+    <link href="~/Content/SiteContent/alertify.rtl.min.css" rel="stylesheet" />
     <!-- Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/default.rtl.min.css" />
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/default.rtl.min.css" />*@
+    <link href="~/Content/SiteContent/default.rtl.min.css" rel="stylesheet" />
     <!-- Semantic UI theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/semantic.rtl.min.css" />
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/semantic.rtl.min.css" />*@
+    <link href="~/Content/SiteContent/semantic.rtl.min.css" rel="stylesheet" />
     <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/bootstrap.rtl.min.css" />
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/bootstrap.rtl.min.css" />*@
+    <link href="~/Content/SiteContent/bootstrap.rtl.min.css" rel="stylesheet" />
     <!---Alertfy JS-->
     @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
 
@@ -290,7 +299,8 @@
                             DBUsers yemekhaneUser = CurrentSession.User;
                             if (users.SysAdmin == true)
                             {
-                                <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları</a>
+                                <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları-Kişi</a>
+                                <a class="collapse-item" href="@Url.Action("Total","Refectory")">Yemekhane Raporları-Toplu</a>
                             }
                         }
                         <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Diğer Raporlar</a>
@@ -467,8 +477,8 @@
     @*<script src="~/Templete/TempleteDosyalari/js/demo/chart-pie-demo.js"></script>*@
 
 
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-
+    @*<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>*@
+    <script src="~/Content/SiteContent/bootstrap4-toggle.js"></script>
     @RenderSection("Scripts", false)
 
 </body>

@@ -28,7 +28,6 @@
                 $("#count").prop("hidden", false);
                 $("#count").html(data.length + '+');
                 $.each(data, function (item, value) {
-                    console.log(value);
                     $("#body").append(AlarmSablon(value));
                 });
             } else {
@@ -41,6 +40,26 @@
         });
         setInterval(function () {
             $("#count").toggleClass("animated fadeIn faster");
+            $.ajax({
+                url: '/Alarm/AlarmListesi',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#body").html('');
+                if (data.length > 0) {
+                    $("#count").prop("hidden", false);
+                    $("#count").html(data.length + '+');
+                    $.each(data, function (item, value) {
+                        $("#body").append(AlarmSablon(value));
+                    });
+                } else {
+                    $("#count").prop("hidden", true);
+                    $("#body").append('<div id="NoAlarm" class="text-center mt-2">' +
+                        '<p class= "text-success animated shake" > Alarm Kaydı Yok!</p >' +
+                        '</div>');
+
+                }
+            });
         }, 500);
     });
 

@@ -494,6 +494,17 @@
     <Content Include="Content\Images\sort_desc_disabled.png" />
     <Content Include="Content\Login-Page.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\SiteContent\alertify-bootstrap.min.css" />
+    <Content Include="Content\SiteContent\alertify.min.css" />
+    <Content Include="Content\SiteContent\alertify.min.js" />
+    <Content Include="Content\SiteContent\alertify.rtl.min.css" />
+    <Content Include="Content\SiteContent\bootstrap.rtl.min.css" />
+    <Content Include="Content\SiteContent\bootstrap4-toggle.js" />
+    <Content Include="Content\SiteContent\default.min.css" />
+    <Content Include="Content\SiteContent\default.rtl.min.css" />
+    <Content Include="Content\SiteContent\fontfamily.css" />
+    <Content Include="Content\SiteContent\semantic.min.css" />
+    <Content Include="Content\SiteContent\semantic.rtl.min.css" />
     <Content Include="Content\Validation-Summary.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
