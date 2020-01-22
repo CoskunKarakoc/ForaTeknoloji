@@ -225,7 +225,6 @@
 </div>
 <script>
     $(document).ready(function () {
-
         FirstOpeningList();
 
         if ($("#Tumu").prop("checked") == true) {
@@ -362,62 +361,7 @@
                 dataType: 'json'
             }).done(function (data) {
                 if (data != count) {
-                    $.ajax({
-                        url: '/WatchScreen/WatchList',
-                        type: 'GET',
-                        dataType: 'json'
-                    }).done(function (data) {
-                        let lastItem = data[0];
-                        $("#table tbody").html("");
-                        $.each(data, function (key, value) {
-                            if (value.Kod == 0) {
-                                $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
-                            } else if (value.Kod == 1) {
-                                $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
-                            } else if (value.Kod == 2) {
-                                $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
-                            } else if (value.Kod == 3) {
-                                $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
-                            } else if (value.Kod == 4) {
-                                $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
-                            } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
-                                $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
-                            } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
-                                $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
-                            } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
-                                $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
-                            } else if (value.Kod == 20 || value.Kod == 21) {
-                                $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
-                            } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
-                                $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
-                            } else if (value.Kod > 24 && value.Kod < 48) {
-                                $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
-                            } else if (value.Kod >= 100) {
-                                $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
-                            }
-                        });
-                        $.ajax({
-                            url: '/WatchScreen/ReturnWatchParameters',
-                            type: 'GET',
-                            dataType: 'json'
-                        }).done(function (data) {
-                            RowHiding(data);
-                        });
-                        InputBindLastData(lastItem);
-                    }).always(function () {
-                        $("#table tbody tr").click(function () {
-                            var kayitNo = $(this).data("kayitno");
-                            $.ajax({
-                                url: '/WatchScreen/ByRegistrationNumber',
-                                type: 'GET',
-                                dataType: 'json',
-                                data: { KayitNo: kayitNo },
-                            }).done(function (data) {
-                                InputBindLastData(data);
-                            });
-                        })
-
-                    });
+                    ListBind();
                 }
             }).always(function (data) {
                 count = data;
@@ -425,6 +369,66 @@
         }, 500);
 
     });
+
+    function ListBind() {
+        $.ajax({
+            url: '/WatchScreen/WatchList',
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            let lastItem = data[0];
+            $("#table tbody").html("");
+            $.each(data, function (key, value) {
+                if (value.Kod == 0) {
+                    $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
+                } else if (value.Kod == 1) {
+                    $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
+                } else if (value.Kod == 2) {
+                    $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
+                } else if (value.Kod == 3) {
+                    $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
+                } else if (value.Kod == 4) {
+                    $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
+                } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
+                    $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
+                } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
+                    $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
+                } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
+                    $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
+                } else if (value.Kod == 20 || value.Kod == 21) {
+                    $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
+                } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
+                    $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
+                } else if (value.Kod > 24 && value.Kod < 48) {
+                    $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
+                } else if (value.Kod >= 100) {
+                    $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
+                }
+            });
+            $.ajax({
+                url: '/WatchScreen/ReturnWatchParameters',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                RowHiding(data);
+            });
+            InputBindLastData(lastItem);
+        }).always(function () {
+            $("#table tbody tr").click(function () {
+                var kayitNo = $(this).data("kayitno");
+                $.ajax({
+                    url: '/WatchScreen/ByRegistrationNumber',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { KayitNo: kayitNo },
+                }).done(function (data) {
+                    InputBindLastData(data);
+                });
+            })
+
+        });
+    }
+
 
     function FirstOpeningList() {
         $.ajax({
@@ -568,6 +572,7 @@
             $("#Gecis_Tipi").removeClass("bg-success text-white text-center");
             $("#Gecis_Tipi").addClass("bg-danger text-white text-center");
         }
+
     }
 
     function RowHiding(data) {
@@ -643,5 +648,4 @@
         var result = AddLeadingZeros(dt.getDate(), 2) + "/" + AddLeadingZeros(dt.getMonth() + 1, 2) + "/" + AddLeadingZeros(dt.getFullYear(), 4) + " " + AddLeadingZeros(dt.getHours(), 2) + ":" + AddLeadingZeros(dt.getMinutes(), 2) + ":" + AddLeadingZeros(dt.getSeconds(), 2);
         return result;
     }
-
 </script>

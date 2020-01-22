@@ -66,11 +66,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(_reportService.GetWatch(WtchPrmtrs), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult WatchTopOne()
-        {
-            return Json(_reportService.GetWatchTopOne(WtchPrmtrs), JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult ByRegistrationNumber(int KayitNo)
         {
             return Json(_reportService.LastRecordWatch(KayitNo), JsonRequestBehavior.AllowGet);
