@@ -705,6 +705,8 @@
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="libman.json" />
+    <Content Include="ExcelFile\1480e227-16f0-42fc-8d54-64fbfcec085eSampleUsers.xlsx" />
+    <Content Include="ExcelFile\1480e227-16f0-42fc-8d54-64fbfcec085eSampleGroups.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.tr.js" />
@@ -2759,7 +2761,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ExcelFile\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForaTeknoloji.BusinessLayer\ForaTeknoloji.BusinessLayer.csproj">
