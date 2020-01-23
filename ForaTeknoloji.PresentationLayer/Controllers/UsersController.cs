@@ -389,7 +389,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                     _accessDatasService.AddOperatorLog(104, permissionUser.Kullanici_Adi, ReceiveUserID, 0, 0, 0);
-                    Thread.Sleep(2000);
+                    Thread.Sleep(500);
                 }
                 catch (Exception)
                 {
@@ -430,7 +430,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                     }
-                    Thread.Sleep(2000);
+                    Thread.Sleep(500);
                     Users users = _userService.GetById(id);
                     UsersOLD usersOLD = ConvertUser.UserToUserOld(users);
                     _usersOLDService.AddUsersOLD(usersOLD);
@@ -506,7 +506,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, userID, 0, 0, 0);
                             }
                         }
-                        Thread.Sleep(2000);
+                        Thread.Sleep(500);
                     }
                     else if (OprKod == CommandConstants.CMD_ERSALL_USER)
                     {
@@ -525,7 +525,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             };
                             _taskListService.AddTaskList(taskList);
                         }
-                        Thread.Sleep(2000);
+                        Thread.Sleep(500);
                     }
                     else
                     {
@@ -545,7 +545,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             _taskListService.AddTaskList(taskList);
                             _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, UserID, 0, 0, 0);
                         }
-                        Thread.Sleep(2000);
+                        Thread.Sleep(500);
                     }
                 }
                 catch (Exception)

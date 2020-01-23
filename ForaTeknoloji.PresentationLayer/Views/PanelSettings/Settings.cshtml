@@ -403,8 +403,8 @@
                             <div class="col-md-12 text-right">
                                 <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class=" btn btn-sm btn-outline-secondary"><i class="fas fa-tasks"></i> Panel Durum Tablosu</a>
                                 <button title="Panel Değişikliklerini Kaydet" type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-save"></i> Ayarları Kaydet</button>
-                                <a href="@Url.Action("AlarmClear","PanelSettings",new {PanelID=Model.Panel_ID })" class="btn btn-outline-info btn-sm"><i class="fas fa-times"></i> Mevcut Tüm Alarm Durumlarını Kapat</a>
                                 <a title="Paneli Veritabanından Sil" href="@Url.Action("Delete","PanelSettings",new {PanelID=Model.Panel_ID })" onclick="return confirm('Paneli Silmek İstediğinize Emin Misiniz?')" class="btn  btn-outline-danger btn-sm"><i class="fas fa-minus-circle"></i> Paneli Kaldır</a>
+                                <a href="@Url.Action("AlarmClear","PanelSettings",new {PanelID=Model.Panel_ID })" class="btn btn-outline-info btn-sm"><i class="fas fa-times"></i> Mevcut Tüm Alarm Durumlarını Kapat</a>
                                 <a title="Değişiklikleri Panele Gönder" href="@Url.Action("SendToPanel","PanelSettings",new {Panel=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</a>
                                 <a title="Panelden Ayarları Al" href="@Url.Action("ReceiveFromPanel","PanelSettings",new {PanelID=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-recycle"></i> Ayarları Al</a>
                                 <a title="Panel Saatini Güncelle" href="@Url.Action("PanelDate","PanelSettings",new {Panel=Model.Panel_ID })" class="btn btn-sm btn-outline-warning"><i class="fas fa-clock-o"></i> Saati Güncelle</a>
