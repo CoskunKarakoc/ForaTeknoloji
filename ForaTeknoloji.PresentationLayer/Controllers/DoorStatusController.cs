@@ -37,9 +37,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 DoorStatusList = _doorStatusService.ComplexDoorStatuses(),
                 ReaderList = _readerSettingsNewService.GetAllReaderSettingsNew()
             };
-
             return View(model);
         }
+
+      
+
 
     }
 }

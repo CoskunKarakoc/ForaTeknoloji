@@ -332,6 +332,30 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
         }
 
+        public ActionResult PanelDate(int Panel)
+        {
+            try
+            {
+                TaskList taskList = new TaskList
+                {
+                    Deneme_Sayisi = 1,
+                    Durum_Kodu = 1,
+                    Gorev_Kodu = (int)CommandConstants.CMD_SND_RTC,
+                    IntParam_1 = (int)Panel,
+                    Kullanici_Adi = user.Kullanici_Adi,
+                    Panel_No = Panel,
+                    Tablo_Guncelle = true,
+                    Tarih = DateTime.Now
+                };
+                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+            }
+            return RedirectToAction("Settings", new { @PanelID = Panel });
+        }
+
         public int CheckStatus(int GrupNo = -1)
         {
             if (GrupNo != -1)
