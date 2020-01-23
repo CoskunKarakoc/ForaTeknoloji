@@ -15,8 +15,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     public class DoorStatusController : Controller
     {
         private IDoorStatusService _doorStatusService;
+        private IReaderSettingsNewService _readerSettingsNewService;
         DBUsers dBUsers;
-        public DoorStatusController(IDoorStatusService doorStatusService)
+        public DoorStatusController(IDoorStatusService doorStatusService, IReaderSettingsNewService readerSettingsNewService)
         {
             dBUsers = CurrentSession.User;
             if (dBUsers == null)
@@ -24,14 +25,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 dBUsers = new DBUsers();
             }
 
-
+            _readerSettingsNewService = readerSettingsNewService;
             _doorStatusService = doorStatusService;
         }
 
         // GET: DoorStatus
         public ActionResult Index()
         {
-            return View(_doorStatusService.ComplexDoorStatuses());
+            var model = new DoorStatusListViewModel
+            {
+                DoorStatusList = _doorStatusService.ComplexDoorStatuses(),
+                ReaderList = _readerSettingsNewService.GetAllReaderSettingsNew()
+            };
+
+            return View(model);
         }
 
     }

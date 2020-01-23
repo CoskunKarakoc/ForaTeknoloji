@@ -2593,6 +2593,7 @@
     <Compile Include="Models\DoorGroupReaderCreateViewModel.cs" />
     <Compile Include="Models\DoorGroupsCreateViewModel.cs" />
     <Compile Include="Models\DoorGroupsListViewModel.cs" />
+    <Compile Include="Models\DoorStatusListViewModel.cs" />
     <Compile Include="Models\EditSecurityListViewModel.cs" />
     <Compile Include="Models\FastGroupListViewModel.cs" />
     <Compile Include="Models\GecisGrupListViewModel.cs" />
