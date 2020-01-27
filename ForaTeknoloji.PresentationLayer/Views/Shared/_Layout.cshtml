@@ -129,6 +129,14 @@
                         <a class="collapse-item" href="#">Harici Okuyucu</a>
                         <a class="collapse-item" href="@Url.Action("Add","EMail")">E-Mail Gönderme Ayarları</a>
                         <a class="collapse-item" href="@Url.Action("Add","SMS")">SMS Gönderme Ayarları</a>
+                        @{
+                            DBUsers AccessReceive = CurrentSession.User;
+                            if (AccessReceive.SysAdmin == true)
+                            {
+                                <a class="collapse-item" href="@Url.Action("Index","AccessReceive")">Geçiş-Olay Verileri</a>
+                            }
+                        }
+
 
                     </div>
 

@@ -2534,6 +2534,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccessGroupController.cs" />
+    <Compile Include="Controllers\AccessReceiveController.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\AltDepartmanController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
@@ -2752,6 +2753,7 @@
     <Content Include="Views\WatchScreen\WatchSettings.cshtml" />
     <Content Include="Views\Shared\_PartialAlarm.cshtml" />
     <Content Include="Views\Alarm\AlarmTable.cshtml" />
+    <Content Include="Views\AccessReceive\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -20,6 +20,12 @@ namespace ForaTeknoloji.Entities.Entities
 
         public DateTime? EndlessReportTime { get; set; }
 
+        public DateTime? PeriodicAccessDataTime { get; set; }
+
+        public bool? AllPanelPeriodicAccessReceive { get; set; }
+
+        public bool? DeleteAfterReceiving { get; set; }
+
         public bool? ReportByHour { get; set; }
 
         public bool? LiveAPBInvalid { get; set; }

@@ -1,0 +1,78 @@
+﻿@model ForaTeknoloji.Entities.Entities.ProgInit
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Geçiş Olay Verileri</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Index", "AccessReceive", FormMethod.Post))
+                {
+                    @Html.HiddenFor(model => model.Kayit_No)
+                    @Html.HiddenFor(model => model.BackupPeriode)
+                    @Html.HiddenFor(model => model.BackupDay)
+                    @Html.HiddenFor(model => model.LastBackupDate)
+                    @Html.HiddenFor(model => model.EndlessReportTime)
+                    @Html.HiddenFor(model => model.ReportByHour)
+                    @Html.HiddenFor(model => model.LiveAPBInvalid)
+                    @Html.HiddenFor(model => model.LiveDeniedInvalid)
+                    @Html.HiddenFor(model => model.LiveUnknownInvalid)
+                    @Html.HiddenFor(model => model.LiveButtonInvalid)
+                    @Html.HiddenFor(model => model.LiveManuelInvalid)
+                    @Html.HiddenFor(model => model.LiveProgrammedInvalid)
+                    @Html.HiddenFor(model => model.UpdateAccessFile)
+                    @Html.HiddenFor(model => model.NoOpLogUser)
+                    @Html.HiddenFor(model => model.NoOpLogTimeZone)
+                    @Html.HiddenFor(model => model.NoOpLogGroup)
+                    @Html.HiddenFor(model => model.NoOpLogPanelLogs)
+                    @Html.HiddenFor(model => model.NoOpLogVisitor)
+                    @Html.HiddenFor(model => model.NoOpLogUserAlarm)
+                    @Html.HiddenFor(model => model.NoOpLogCamera)
+                    @Html.HiddenFor(model => model.NoOpLogLift)
+                    @Html.HiddenFor(model => model.NoOpLogProgrammedRelay)
+                    @Html.HiddenFor(model => model.NoOpLogCompany)
+                    @Html.HiddenFor(model => model.NoOpLogDepartment)
+                    @Html.HiddenFor(model => model.NoOpLogBlock)
+                    @Html.HiddenFor(model => model.NoOpLogImport)
+                    @Html.HiddenFor(model => model.NoOpLogEmailSMS)
+                    @Html.HiddenFor(model => model.NoOpLogUserGlobalInterlock)
+                    @Html.HiddenFor(model => model.NoOpLogGroupCalendar)
+                    @Html.HiddenFor(model => model.NoOpLogReports)
+                    @Html.HiddenFor(model => model.NoOpLogDatabase)
+                    @Html.HiddenFor(model => model.NoOpPanelSettings)
+                    @Html.HiddenFor(model => model.NoOpOther)
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("AllPanelPeriodicAccessReceive", Model.AllPanelPeriodicAccessReceive ?? false, new { @class = "custom-control-input" })
+                                <label for="AllPanelPeriodicAccessReceive" class="custom-control-label">Geçiş Kayıtlarını Tüm Panellerden Günlük Al</label>
+                            </div>
+                            <hr />
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("DeleteAfterReceiving", Model.DeleteAfterReceiving ?? false, new { @class = "custom-control-input" })
+                                <label for="DeleteAfterReceiving" class="custom-control-label">Aldıktan Sonra Sil</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-7 col-form-label" for="Alma_Saati">Periyodik Olay Verisi Alma Saati</label>
+                                <div class="col-sm-5"> <input type="time" id="Alma_Saati" name="PeriodicAccessDataTime" class="form-control form-control-sm" value="@Model.PeriodicAccessDataTime.Value.ToShortTimeString()" /></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <a href="@Url.Action("ClearPanelMemory","AccessReceive")" onclick="return confirm('Tüm Panellerin Geçiş Hafızalarını Silmek İstediğinize Emin Misiniz?')" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Tüm Panellerin Geçiş Hafızasını Sil</a>
+                            <button class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i> Değişikliği Güncelle</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

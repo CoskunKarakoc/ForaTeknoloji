@@ -72,7 +72,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private List<TaskStatusWatch> QueryList(int? Panel, int? Gorev, int? Durum, DateTime? Tarih)
         {
             IEnumerable<TaskStatusWatch> liste;
-            liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderByDescending(x => x.Tarih).Take(100);
+            if (user.SysAdmin == true)
+            {
+                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi || x.Kullanici_Adi.Contains("System")).OrderByDescending(x => x.Tarih).Take(100);
+            }
+            else
+            {
+                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderByDescending(x => x.Tarih).Take(100);
+            }
+
+
+
             if (Panel != null)
             {
                 liste = liste.Where(x => x.Panel_ID == Panel);
