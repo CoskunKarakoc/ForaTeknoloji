@@ -300,6 +300,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     var editEntity = _accessDatasService.GetByKayit_No(item);
                     editEntity.Kontrol = 1;
+                    editEntity.Kontrol_Tarihi = DateTime.Now;
                     _accessDatasService.UpdateAccessData(editEntity);
                 }
                 return RedirectToAction("AlarmTable", "Alarm");
