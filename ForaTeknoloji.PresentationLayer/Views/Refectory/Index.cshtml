@@ -31,11 +31,23 @@
                     <div class="form-group">
                         <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
                     </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Bitiş Tarihi</label>
+                        <input class="form-control form-control-sm" name="Bitis_Tarihi" disabled type="date" value="" id="Tarih2">
+                    </div>
+
                 </div>
                 <div class="col-md-4">
+                    <div class="custom-control custom-checkbox ">
+                        <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
+                        <label class="custom-control-label mb-2" for="ikiSaat">İki Saat Arası</label>
+                    </div>
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Bitiş</label>
-                        <input class="form-control form-control-sm" name="Bitis_Tarihi" disabled type="date" value="" id="Tarih2">
+                        <input type="time" class="form-control form-control-sm" disabled name="Baslangic_Saati" id="Saat1" value="@DateTime.Now.ToShortTimeString()" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput2">Bitiş Saati</label>
+                        <input type="time" class="form-control form-control-sm" name="Bitis_Saati" disabled id="Saat2" value="@DateTime.Now.ToShortTimeString()" />
                     </div>
                 </div>
                 <div class="col-md-12 text-right">
@@ -85,66 +97,6 @@ webGrid.Column("Kapi_ID", "Kapı ID")))
 
 
 
-<!--Toplam Geçiş Sayısını Veren Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Toplam Geçiş Sayıları</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @if (Model.ToplamGecis.Count > 0)
-                {
-                    <div id="print_divTotal">
-                        <table class="table-borderless table table-hover text-center table-striped table-sm">
-                            <thead class="table-info">
-                                <tr>
-                                    <td>Panel ID</td>
-                                    <td>Panel Name</td>
-                                    <td>Kapı ID</td>
-                                    <td>Geçiş Sayısı</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.ToplamGecis)
-                                {
-                                    <tr>
-                                        <td>@item.PanelID</td>
-                                        <td>@item.PanelAdi</td>
-                                        <td>@item.KapiID</td>
-                                        <td>@item.GecisSayi</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                }
-                else
-                {
-                    <div class="alert alert-info alert-message">
-                        <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                    </div>
-
-                }
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btnPrintTotal" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
 
 
 
@@ -160,7 +112,15 @@ webGrid.Column("Kapi_ID", "Kapı ID")))
         }
 
     });
-
+    $("#ikiSaat").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Saat1").attr("disabled", false);
+            $("#Saat2").attr("disabled", false);
+        } else {
+            $("#Saat1").attr("disabled", true);
+            $("#Saat2").attr("disabled", true);
+        }
+    });
 
 
     $("#btnPrint").click(function () {
@@ -178,6 +138,7 @@ webGrid.Column("Kapi_ID", "Kapı ID")))
         frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
         //Append the DIV contents.
         frameDoc.document.write(contents);
+
         frameDoc.document.write('</body></html>');
         frameDoc.document.close();
         setTimeout(function () {
@@ -188,47 +149,7 @@ webGrid.Column("Kapi_ID", "Kapı ID")))
         }, 500);
 
     });
-    $("#btnPrintTotal").click(function () {
-        var contents = $("#print_divTotal").html();
-        var frame2 = $('<iframe />');
-        frame2[0].name = "frame2";
-        frame2.css({ "position": "absolute" });
-        $("body").append(frame2);
-        var frameDoc = frame2[0].contentWindow ? frame2[0].contentWindow : frame2[0].contentDocument.document ? frame2[0].contentDocument.document : frame2[0].contentDocument;
-        frameDoc.document.open();
-        //Create a new HTML document.
-        frameDoc.document.write('<html><head><title>Geçiş Sayısı Raporları</title>');
-        frameDoc.document.write('</head><body><hr />');
-        //Append the external CSS file.
-        frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
-        //Append the DIV contents.
-        frameDoc.document.write(contents);
-        frameDoc.document.write('</body></html>');
-        frameDoc.document.close();
-        setTimeout(function () {
-
-            window.frames["frame2"].focus();
-            window.frames["frame2"].print();
-            frame2.remove();
-        }, 500);
-
-    });
 
 
-
-    $(document).ready(function () {
-        $("#TümTarih").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#ikiTarih").attr("disabled", true);
-                $("#Tarih1").attr("disabled", true);
-                $("#Tarih2").attr("disabled", true);
-            } else {
-                $("#ikiTarih").attr("disabled", false);
-                $("#Tarih1").attr("disabled", false);
-            }
-
-        });
-
-    });
 </script>
 

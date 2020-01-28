@@ -10,6 +10,9 @@
 <div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft faster">
     <div class="card-header">
         <h3 class="text-muted text-center">Yemekhane Raporu (Toplam)</h3>
+        <div class="text-right">
+            <a data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-cogs fa-2x text-secondary"></i></a>
+        </div>
     </div>
     <div class="card-body">
         @using (Html.BeginForm("Total", "Refectory", FormMethod.Get))
@@ -30,11 +33,22 @@
                     <div class="form-group">
                         <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
                     </div>
-                </div>
-                <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Bitiş</label>
                         <input class="form-control form-control-sm" name="Bitis_Tarihi" disabled type="date" value="" id="Tarih2">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
+                        <label class="custom-control-label mb-2" for="ikiSaat">İki Saat Arası</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="time" class="form-control form-control-sm" disabled name="Baslangic_Saati" id="Saat1" value="@DateTime.Now.ToShortTimeString()" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput2">Bitiş Saati</label>
+                        <input type="time" class="form-control form-control-sm" name="Bitis_Saati" disabled id="Saat2" value="@DateTime.Now.ToShortTimeString()" />
                     </div>
                 </div>
                 <div class="col-md-12 text-right">
@@ -83,6 +97,73 @@ webGrid.Column("GecisSayi", "Geçiş Sayısı")))
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            @using (Html.BeginForm("MailSettings", "Refectory"))
+            {
+                @Html.Hidden("Kayit_No", Model.EmailSettings.Kayit_No)
+                @Html.Hidden("E_Mail_Adres", Model.EmailSettings.E_Mail_Adres)
+                @Html.Hidden("Kullanici_Adi", Model.EmailSettings.Kullanici_Adi)
+                @Html.Hidden("Sifre", Model.EmailSettings.Sifre)
+                @Html.Hidden("SMPT_Server", Model.EmailSettings.SMPT_Server)
+                @Html.Hidden("SMPT_Server_Port", Model.EmailSettings.SMPT_Server_Port)
+                @Html.Hidden("SSL_Kullan", Model.EmailSettings.SSL_Kullan)
+                @Html.Hidden("Authentication", Model.EmailSettings.Authentication)
+                @Html.Hidden("Gonderme_Saati", Model.EmailSettings.Gonderme_Saati)
+                @Html.Hidden("Gelmeyenler_Raporu", Model.EmailSettings.Gelmeyenler_Raporu)
+                @Html.Hidden("Yemekhane_Raporu", Model.EmailSettings.Yemekhane_Raporu)
+                @Html.Hidden("Alici_1_E_Mail_Adres", Model.EmailSettings.Alici_1_E_Mail_Adres)
+                @Html.Hidden("Alici_1_E_Mail_Gonder", Model.EmailSettings.Alici_1_E_Mail_Gonder)
+                @Html.Hidden("Alici_2_E_Mail_Adres", Model.EmailSettings.Alici_2_E_Mail_Adres)
+                @Html.Hidden("Alici_2_E_Mail_Gonder", Model.EmailSettings.Alici_2_E_Mail_Gonder)
+                @Html.Hidden("Alici_3_E_Mail_Adres", Model.EmailSettings.Alici_3_E_Mail_Adres)
+                @Html.Hidden("Alici_3_E_Mail_Gonder", Model.EmailSettings.Alici_3_E_Mail_Gonder)
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Mail Ayarları</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Kapı Grup Listesi</label>
+                                @Html.DropDownList("Kapi_Grup_No", null, "Grup Seçiniz..", new { @class = "form-control form-control-sm" })
+                                @Html.ValidationMessageFor(model => model.Group_ID, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Başlangıç Saati</label>
+                                <div class="form-group">
+                                    <input type="time" class="form-control form-control-sm" name="Kapi_Grup_Baslangic_Saati" value="@Model.EmailSettings.Kapi_Grup_Baslangic_Saati.Value.ToShortTimeString()" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Mail Gönderme Saati</label>
+                                <div class="form-group">
+                                    <input type="time" name="Kapi_Grup_Gonderme_Saati" class="form-control form-control-sm" value="@Model.EmailSettings.Kapi_Grup_Gonderme_Saati.Value.ToShortTimeString()" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Bitiş Saati</label>
+                                <div class="form-group">
+                                    <input type="time" class="form-control form-control-sm" name="Kapi_Grup_Bitis_Saati" value="@Model.EmailSettings.Kapi_Grup_Bitis_Saati.Value.ToShortTimeString()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-save"></i> Değişikliği Kaydet</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
 
 
@@ -99,7 +180,15 @@ webGrid.Column("GecisSayi", "Geçiş Sayısı")))
         }
 
     });
-
+    $("#ikiSaat").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Saat1").attr("disabled", false);
+            $("#Saat2").attr("disabled", false);
+        } else {
+            $("#Saat1").attr("disabled", true);
+            $("#Saat2").attr("disabled", true);
+        }
+    });
 
 
     $("#btnPrint").click(function () {
@@ -128,20 +217,5 @@ webGrid.Column("GecisSayi", "Geçiş Sayısı")))
 
     });
 
-
-    $(document).ready(function () {
-        $("#TümTarih").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#ikiTarih").attr("disabled", true);
-                $("#Tarih1").attr("disabled", true);
-                $("#Tarih2").attr("disabled", true);
-            } else {
-                $("#ikiTarih").attr("disabled", false);
-                $("#Tarih1").attr("disabled", false);
-            }
-
-        });
-
-    });
 </script>
 

@@ -42,6 +42,21 @@ namespace ForaTeknoloji.Entities.Entities
         [Column("Gelmeyenler Raporu")]
         public bool? Gelmeyenler_Raporu { get; set; }
 
+        [Column("Yemekhane Raporu")]
+        public bool? Yemekhane_Raporu { get; set; }
+
+        [Column("Kapi Grup No")]
+        public int? Kapi_Grup_No { get; set; }
+
+        [Column("Kapi Grup Baslangic Saati")]
+        public DateTime? Kapi_Grup_Baslangic_Saati { get; set; }
+
+        [Column("Kapi Grup Bitis Saati")]
+        public DateTime? Kapi_Grup_Bitis_Saati { get; set; }
+
+        [Column("Kapi Grup Gonderme Saati")]
+        public DateTime? Kapi_Grup_Gonderme_Saati { get; set; }
+
         [Column("Alici 1 E-Mail Adres")]
         [StringLength(150)]
         public string Alici_1_E_Mail_Adres { get; set; }

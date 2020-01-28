@@ -2636,15 +2636,41 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                         LEFT JOIN Users ON AccessDatas.[Kart ID] = Users.[Kart ID]
                         LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID]                        
                         WHERE AccessDatas.[Gecis Tipi]= 0 AND Users.ID > 0";
-                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
+                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)//Tek Tarih 
                 {
-                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
+                    if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)//Tek Tarih-İki Saat Arası
+                    {
+                        var BaslangicTarihSaat = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        var BitisTarihSaat = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + BaslangicTarihSaat + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + BitisTarihSaat + "',103) AND AccessDatas.Kod=1";
+                    }
+                    else if (parameters.Baslangic_Saati != null)//Tek Tarih-Tek Saat Arası
+                    {
+                        var BaslangicTarihSaat = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + BaslangicTarihSaat + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
+                    }
+                    else//Tek Tarih Arası
+                    {
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
+                    }
                 }
-                else if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
+                else if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)//İki Tarih Arası
                 {
-                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
+                    if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)// İki Tarih-Saat Arası
+                    {
+                        var BaslangicTarihSaat = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        var BitisTarihSaat = parameters.Bitis_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + BaslangicTarihSaat + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + BitisTarihSaat + "',103) AND AccessDatas.Kod=1";
+                    }
+                    else//İki Tarih Arası
+                    {
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
+                    }
                 }
                 var panelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
                 if (panelListesi != null)
@@ -2727,19 +2753,43 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 				LEFT JOIN PanelSettings ON AccessDatas.[Panel ID]=PanelSettings.[Panel ID]
 				WHERE AccessDatas.[Gecis Tipi] = 0 AND AccessDatas.[Kart ID]>0";
 
-                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)
+                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)//Tek Tarih
                 {
-                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)  AND AccessDatas.Kod=1";
+                    if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)
+                    {
+                        var BaslangicTarihSaat = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        var BitisTarihSaat = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + BaslangicTarihSaat + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + BitisTarihSaat + "',103) AND AccessDatas.Kod=1";
+                    }
+                    else if (parameters.Baslangic_Saati != null)//Tek Tarih - Tek Saat Arası
+                    {
+                        var BaslangicTarihSaat = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + BaslangicTarihSaat + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
+                    }
+                    else//Tek Tarih Arası
+                    {
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)  AND AccessDatas.Kod=1";
+                    }
                 }
-                else if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
+                else if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)//İki Tarih Arası
                 {
-                    queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
-                    queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
+                    if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)//İki Tarih - Saat Arası
+                    {
+                        var BaslangicTarihSaat = parameters.Baslangic_Tarihi?.ToShortDateString() + " " + parameters.Baslangic_Saati?.ToLongTimeString();
+                        var BitisTarihSaat = parameters.Bitis_Tarihi?.ToShortDateString() + " " + parameters.Bitis_Saati?.ToLongTimeString();
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + BaslangicTarihSaat + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + BitisTarihSaat + "',103) AND AccessDatas.Kod=1";
+                    }
+                    else//İki Tarih Arası
+                    {
+                        queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddSeconds(1).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+                        queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) AND AccessDatas.Kod=1";
+                    }
                 }
-
                 var panelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
-
                 if (panelListesi != null)
                 {
                     var sayac = 0;

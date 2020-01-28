@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.Entities;
 
 namespace ForaTeknoloji.PresentationLayer.Models
 {
@@ -10,5 +11,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<YemekhaneComplex> YemekhaneListe { get; internal set; }
         public IEnumerable<SelectListItem> Panel_ID { get; internal set; }
         public List<YemekhaneComplexTotal> ToplamGecis { get; internal set; }
+        public EMailSetting EmailSettings { get; internal set; }
     }
 }

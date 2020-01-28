@@ -25,9 +25,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGroupsDetailNewService _groupsDetailNewService;
         private IDoorGroupsMasterService _doorGroupsMasterService;
         private IDoorGroupsDetailService _doorGroupsDetailService;
+        private IEmailSettingsService _emailSettingsService;
         DBUsers user;
         DBUsers permissionUser;
-        public RefectoryController(IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersService dBUsersService, IGroupMasterService groupMasterService, IGroupsDetailNewService groupsDetailNewService, IDoorGroupsMasterService doorGroupsMasterService, IDoorGroupsDetailService doorGroupsDetailService)
+        public RefectoryController(IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersService dBUsersService, IGroupMasterService groupMasterService, IGroupsDetailNewService groupsDetailNewService, IDoorGroupsMasterService doorGroupsMasterService, IDoorGroupsDetailService doorGroupsDetailService, IEmailSettingsService emailSettingsService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -42,6 +43,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _groupsDetailNewService = groupsDetailNewService;
             _doorGroupsDetailService = doorGroupsDetailService;
             _doorGroupsMasterService = doorGroupsMasterService;
+            _emailSettingsService = emailSettingsService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -59,6 +61,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var Liste = _reportService.YemekhaneRaporu(parameters);
             var Toplam = _reportService.YemekhaneRaporuTotal(parameters);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
+            var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
             var model = new RefectoryListViewModel
             {
                 Group_ID = Groups.Select(a => new SelectListItem
@@ -67,7 +70,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.Kapi_Grup_No.ToString()
                 }),
                 YemekhaneListe = Liste,
-                ToplamGecis = Toplam
+                ToplamGecis = Toplam,
+                EmailSettings = Email
             };
             TempData["UserAccessCount"] = Liste;
             return View(model);
@@ -82,6 +86,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var Total = _reportService.YemekhaneRaporuTotal(parameters);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
+            var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
+            ViewBag.Kapi_Grup_No = new SelectList(_doorGroupsMasterService.GetAllDoorGroupsMaster(), "Kapi_Grup_No", "Kapi_Grup_Adi", Email.Kapi_Grup_No);
             var model = new RefectoryListViewModel
             {
                 Group_ID = Groups.Select(a => new SelectListItem
@@ -89,11 +95,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Kapi_Grup_Adi,
                     Value = a.Kapi_Grup_No.ToString()
                 }),
-                ToplamGecis = Total
+                ToplamGecis = Total,
+                EmailSettings = Email
             };
             TempData["UserAccessCountTotal"] = Total;
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult MailSettings(EMailSetting eMailSetting)
+        {
+            if (ModelState.IsValid)
+            {
+                _emailSettingsService.UpdateEMailSetting(eMailSetting);
+                return RedirectToAction("Total", "Refectory");
+            }
+            return RedirectToAction("Total", "Refectory");
+        }
+
 
         public void UserAccessCount()
         {

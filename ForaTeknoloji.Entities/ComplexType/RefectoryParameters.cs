@@ -13,5 +13,9 @@ namespace ForaTeknoloji.Entities.ComplexType
         public DateTime? Baslangic_Tarihi { get; set; }
 
         public DateTime? Bitis_Tarihi { get; set; }
+
+        public DateTime? Baslangic_Saati { get; set; }
+
+        public DateTime? Bitis_Saati { get; set; }
     }
 }

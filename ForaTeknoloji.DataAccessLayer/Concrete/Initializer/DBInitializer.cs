@@ -1608,7 +1608,11 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gonderme_Saati = DateTime.Now,
                 Gelmeyenler_Raporu = true,
                 Alici_1_E_Mail_Adres = "sample@forateknoloji.com",
-                Alici_1_E_Mail_Gonder = true
+                Alici_1_E_Mail_Gonder = true,
+                Yemekhane_Raporu = false,
+                Kapi_Grup_Baslangic_Saati = DateTime.Now,
+                Kapi_Grup_Bitis_Saati = DateTime.Now,
+                Kapi_Grup_Gonderme_Saati = DateTime.Now
             };
             context.EMailSettings.Add(eMailSetting);
             SMSSetting sMSSetting = new SMSSetting
