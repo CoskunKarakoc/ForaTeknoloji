@@ -1,4 +1,4 @@
-﻿@model ForaTeknoloji.Entities.Entities.ProgInit
+﻿@model ForaTeknoloji.PresentationLayer.Models.OfflineAccessReceiveListViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,60 +13,61 @@
             <div class="card-body">
                 @using (Html.BeginForm("Index", "AccessReceive", FormMethod.Post))
                 {
-                    @Html.HiddenFor(model => model.Kayit_No)
-                    @Html.HiddenFor(model => model.BackupPeriode)
-                    @Html.HiddenFor(model => model.BackupDay)
-                    @Html.HiddenFor(model => model.LastBackupDate)
-                    @Html.HiddenFor(model => model.EndlessReportTime)
-                    @Html.HiddenFor(model => model.ReportByHour)
-                    @Html.HiddenFor(model => model.LiveAPBInvalid)
-                    @Html.HiddenFor(model => model.LiveDeniedInvalid)
-                    @Html.HiddenFor(model => model.LiveUnknownInvalid)
-                    @Html.HiddenFor(model => model.LiveButtonInvalid)
-                    @Html.HiddenFor(model => model.LiveManuelInvalid)
-                    @Html.HiddenFor(model => model.LiveProgrammedInvalid)
-                    @Html.HiddenFor(model => model.UpdateAccessFile)
-                    @Html.HiddenFor(model => model.NoOpLogUser)
-                    @Html.HiddenFor(model => model.NoOpLogTimeZone)
-                    @Html.HiddenFor(model => model.NoOpLogGroup)
-                    @Html.HiddenFor(model => model.NoOpLogPanelLogs)
-                    @Html.HiddenFor(model => model.NoOpLogVisitor)
-                    @Html.HiddenFor(model => model.NoOpLogUserAlarm)
-                    @Html.HiddenFor(model => model.NoOpLogCamera)
-                    @Html.HiddenFor(model => model.NoOpLogLift)
-                    @Html.HiddenFor(model => model.NoOpLogProgrammedRelay)
-                    @Html.HiddenFor(model => model.NoOpLogCompany)
-                    @Html.HiddenFor(model => model.NoOpLogDepartment)
-                    @Html.HiddenFor(model => model.NoOpLogBlock)
-                    @Html.HiddenFor(model => model.NoOpLogImport)
-                    @Html.HiddenFor(model => model.NoOpLogEmailSMS)
-                    @Html.HiddenFor(model => model.NoOpLogUserGlobalInterlock)
-                    @Html.HiddenFor(model => model.NoOpLogGroupCalendar)
-                    @Html.HiddenFor(model => model.NoOpLogReports)
-                    @Html.HiddenFor(model => model.NoOpLogDatabase)
-                    @Html.HiddenFor(model => model.NoOpPanelSettings)
-                    @Html.HiddenFor(model => model.NoOpOther)
+                    @Html.Hidden("Kayit_No", Model.ProgEntity.Kayit_No)
+                    @Html.Hidden("BackupPeriode", Model.ProgEntity.BackupPeriode)
+                    @Html.Hidden("BackupDay", Model.ProgEntity.BackupDay)
+                    @Html.Hidden("LastBackupDate", Model.ProgEntity.LastBackupDate)
+                    @Html.Hidden("EndlessReportTime", Model.ProgEntity.EndlessReportTime)
+                    @Html.Hidden("ReportByHour", Model.ProgEntity.ReportByHour)
+                    @Html.Hidden("LiveAPBInvalid", Model.ProgEntity.LiveAPBInvalid)
+                    @Html.Hidden("LiveDeniedInvalid", Model.ProgEntity.LiveDeniedInvalid)
+                    @Html.Hidden("LiveUnknownInvalid", Model.ProgEntity.LiveUnknownInvalid)
+                    @Html.Hidden("LiveButtonInvalid", Model.ProgEntity.LiveButtonInvalid)
+                    @Html.Hidden("LiveManuelInvalid", Model.ProgEntity.LiveManuelInvalid)
+                    @Html.Hidden("LiveProgrammedInvalid", Model.ProgEntity.LiveProgrammedInvalid)
+                    @Html.Hidden("UpdateAccessFile", Model.ProgEntity.UpdateAccessFile)
+                    @Html.Hidden("NoOpLogUser", Model.ProgEntity.NoOpLogUser)
+                    @Html.Hidden("NoOpLogTimeZone", Model.ProgEntity.NoOpLogTimeZone)
+                    @Html.Hidden("NoOpLogGroup", Model.ProgEntity.NoOpLogGroup)
+                    @Html.Hidden("NoOpLogPanelLogs", Model.ProgEntity.NoOpLogPanelLogs)
+                    @Html.Hidden("NoOpLogVisitor", Model.ProgEntity.NoOpLogVisitor)
+                    @Html.Hidden("NoOpLogUserAlarm", Model.ProgEntity.NoOpLogUserAlarm)
+                    @Html.Hidden("NoOpLogCamera", Model.ProgEntity.NoOpLogCamera)
+                    @Html.Hidden("NoOpLogLift", Model.ProgEntity.NoOpLogLift)
+                    @Html.Hidden("NoOpLogProgrammedRelay", Model.ProgEntity.NoOpLogProgrammedRelay)
+                    @Html.Hidden("NoOpLogCompany", Model.ProgEntity.NoOpLogCompany)
+                    @Html.Hidden("NoOpLogDepartment", Model.ProgEntity.NoOpLogDepartment)
+                    @Html.Hidden("NoOpLogBlock", Model.ProgEntity.NoOpLogBlock)
+                    @Html.Hidden("NoOpLogImport", Model.ProgEntity.NoOpLogImport)
+                    @Html.Hidden("NoOpLogEmailSMS", Model.ProgEntity.NoOpLogEmailSMS)
+                    @Html.Hidden("NoOpLogUserGlobalInterlock", Model.ProgEntity.NoOpLogUserGlobalInterlock)
+                    @Html.Hidden("NoOpLogGroupCalendar", Model.ProgEntity.NoOpLogGroupCalendar)
+                    @Html.Hidden("NoOpLogReports", Model.ProgEntity.NoOpLogReports)
+                    @Html.Hidden("NoOpLogDatabase", Model.ProgEntity.NoOpLogDatabase)
+                    @Html.Hidden("NoOpPanelSettings", Model.ProgEntity.NoOpPanelSettings)
+                    @Html.Hidden("NoOpOther", Model.ProgEntity.NoOpOther)
                     <div class="row">
                         <div class="col-md-6">
                             <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("AllPanelPeriodicAccessReceive", Model.AllPanelPeriodicAccessReceive ?? false, new { @class = "custom-control-input" })
+                                @Html.CheckBox("AllPanelPeriodicAccessReceive", Model.ProgEntity.AllPanelPeriodicAccessReceive ?? false, new { @class = "custom-control-input" })
                                 <label for="AllPanelPeriodicAccessReceive" class="custom-control-label">Geçiş Kayıtlarını Tüm Panellerden Günlük Al</label>
                             </div>
                             <hr />
                             <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("DeleteAfterReceiving", Model.DeleteAfterReceiving ?? false, new { @class = "custom-control-input" })
+                                @Html.CheckBox("DeleteAfterReceiving", Model.ProgEntity.DeleteAfterReceiving ?? false, new { @class = "custom-control-input" })
                                 <label for="DeleteAfterReceiving" class="custom-control-label">Aldıktan Sonra Sil</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-7 col-form-label" for="Alma_Saati">Periyodik Olay Verisi Alma Saati</label>
-                                <div class="col-sm-5"> <input type="time" id="Alma_Saati" name="PeriodicAccessDataTime" class="form-control form-control-sm" value="@Model.PeriodicAccessDataTime.Value.ToShortTimeString()" /></div>
+                                <div class="col-sm-5"> <input type="time" id="Alma_Saati" name="PeriodicAccessDataTime" class="form-control form-control-sm" value="@Model.ProgEntity.PeriodicAccessDataTime.Value.ToShortTimeString()" /></div>
                             </div>
                         </div>
                         <div class="col-md-12 text-right">
                             <hr />
-                            <a href="@Url.Action("ClearPanelMemory","AccessReceive")" onclick="return confirm('Tüm Panellerin Geçiş Hafızalarını Silmek İstediğinize Emin Misiniz?')" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Tüm Panellerin Geçiş Hafızasını Sil</a>
+                            <a data-toggle="modal" data-target="#panelListClearPanel" onclick="return confirm('Panel Hafızasını Silmek İstediğinize Emin Misiniz?')" class="btn btn-sm btn-outline-danger text-danger"><i class="fas fa-trash-alt"></i> Tüm Geçiş/Olay Verilerini Sil</a>
+                            <a data-toggle="modal" data-target="#panelList" onclick="return confirm('Panel Hafızasından Geçiş Verileri Alınsın Mı?')" title="Send To Panel" class="btn btn-sm btn-outline-info text-info"><i class="fas fa-save"></i> Tüm Geçiş/Olay Verilerini Al</a>
                             <button class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i> Değişikliği Güncelle</button>
                         </div>
                     </div>
@@ -76,3 +77,135 @@
     </div>
 </div>
 
+
+<!--Send OfflineAccess PanelSelect Modal -->
+<div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Receive", "AccessReceive", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <div hidden id="messageSnd">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                        <label class="custom-control-label" for="AllPanel"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelList" id="@item.Panel_ID" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnTaskSend" type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i> Seçilen Panellerden Geçiş Kayıtlarını Al</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<!--Send OfflinePanelMemoryClear PanelSelect Modal -->
+<div class="modal fade" id="panelListClearPanel" tabindex="-1" role="dialog" aria-labelledby="panelListTitleClear" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("ClearPanelMemory", "AccessReceive", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <table id="PanelTableClear" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead class="table-info">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="AllPanelClear" />
+                                        <label class="custom-control-label" for="AllPanelClear"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelListClear" id="@("Clear_"+item.Panel_ID)" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@("Clear_"+item.Panel_ID)"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnTaskSend" type="submit" class="btn btn-outline-success"><i class="fas fa-trash"></i> Seçilen Panellerden Geçiş Kayıtlarını Sil</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#AllPanel").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
+        $("#AllPanelClear").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTableClear tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTableClear tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
+    });
+</script>

@@ -19,9 +19,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersService _dBUsersService;
+        private IReportService _reportService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public AccessReceiveController(IProgInitService progInitService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersService dBUsersService)
+        public AccessReceiveController(IProgInitService progInitService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersService dBUsersService, IReportService reportService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -32,6 +33,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _taskListService = taskListService;
             _panelSettingsService = panelSettingsService;
             _dBUsersService = dBUsersService;
+            _reportService = reportService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -40,8 +42,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
                 throw new Exception("Yetkisiz Erişim!");
-
-            var model = _progInitService.GetAllProgInit().FirstOrDefault();
+            var model = new OfflineAccessReceiveListViewModel
+            {
+                ProgEntity = _progInitService.GetAllProgInit().FirstOrDefault(),
+                PanelListesi = _reportService.PanelListesi(user)
+            };
             return View(model);
         }
 
@@ -59,12 +64,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(progInit);
         }
 
-        public ActionResult ClearPanelMemory()
+        public ActionResult ClearPanelMemory(List<int> PanelListClear)
         {
             if (permissionUser.SysAdmin == false)
                 throw new Exception("Yetkisiz Erişim!");
 
-            foreach (var item in _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0))
+            foreach (var item in PanelListClear)
             {
                 TaskList taskList = new TaskList
                 {
@@ -73,7 +78,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Gorev_Kodu = (int)CommandConstants.CMD_ERS_LOGCOUNT,
                     IntParam_1 = 1,
                     Kullanici_Adi = user.Kullanici_Adi,
-                    Panel_No = item.Panel_ID,
+                    Panel_No = item,
                     Tablo_Guncelle = true,
                     Tarih = DateTime.Now
                 };
@@ -82,7 +87,28 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Index", "AccessReceive");
         }
 
+        public ActionResult Receive(List<int> PanelList)
+        {
+            if (permissionUser.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
 
+            foreach (var panel in PanelList)
+            {
+                TaskList taskList = new TaskList
+                {
+                    Deneme_Sayisi = 1,
+                    Durum_Kodu = 1,
+                    Gorev_Kodu = (int)CommandConstants.CMD_RCV_LOGS,
+                    IntParam_1 = 1,
+                    Kullanici_Adi = user.Kullanici_Adi,
+                    Panel_No = panel,
+                    Tablo_Guncelle = true,
+                    Tarih = DateTime.Now
+                };
+                _taskListService.AddTaskList(taskList);
+            }
+            return RedirectToAction("Index", "AccessReceive");
+        }
 
     }
 }
