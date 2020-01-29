@@ -1,0 +1,121 @@
+﻿@model IEnumerable<ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework.EfUsersOLDDal.ComplexUserOld>
+@{
+    ViewBag.Title = "DeletedUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Silinen Kullanıcılar</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Count() == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">'Silinen Kullanıcı' kaydı bulunamadı.</p>
+                    </div>
+                }
+                else
+                {
+                    <table id="DeletedUserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>Görev</td>
+                                <td>Blok</td>
+                                <td>Plaka</td>
+                                <td>Geçiş Grubu</td>
+                                <td>Ziyaretçi Grubu</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>Görev</td>
+                                <td>Blok</td>
+                                <td>Plaka</td>
+                                <td>Geçiş Grubu</td>
+                                <td>Ziyaretçi Grubu</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/ReportPersonel/DeletedUserList',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                console.log(data);
+            });
+
+
+
+            $("#DeletedUserList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "ajax": "/ReportPersonel/DeletedUserList",
+                "columns": [
+                    { "data": "ID" },
+                    { "data": "Kart_ID" },
+                    { "data": "Adi" },
+                    { "data": "Soyadi" },
+                    { "data": "Sirket" },
+                    { "data": "Departman" },
+                    { "data": "Gorev" },
+                    { "data": "Blok" },
+                    { "data": "Plaka" },
+                    { "data": "Gecis_Grubu" },
+                    { "data": "Ziyaretci_Grubu" },
+                    {
+                        "data": "ID", "render": function (data) {
+                            var TurnBackUrl = '<a title="Kullanıcıyı Sisteme Yeniden Yükle" onclick="return confirm(\'Seçilen Kullanıcı Sisteme Geri Yüklenecek!\')" href="/ReportPersonel/TurnBackUser?id=' + data + '"><i class="fas fa-recycle text-success mr-2"></i></a>'
+                            return TurnBackUrl;
+                        }
+                    },
+                ],
+
+                "columnDefs": [
+                    { "orderable": false, "targets": 11 }
+                ]
+            });
+
+        });
+    </script>
+}

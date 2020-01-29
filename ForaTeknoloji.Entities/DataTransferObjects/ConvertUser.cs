@@ -7,7 +7,7 @@ namespace ForaTeknoloji.Entities.DataTransferObjects
         /// <summary>
         /// Var olan kullanıcıyı eski kullanıcıya çevirme.
         /// </summary>
-        /// <param name="users"></param>
+        /// <param name="users">Aktif Kullanıcı</param>
         /// <returns></returns>
         public static UsersOLD UserToUserOld(Users users)
         {
@@ -106,5 +106,58 @@ namespace ForaTeknoloji.Entities.DataTransferObjects
 
             return user;
         }
+        /// <summary>
+        /// Eski kullanıcıyı yeni kullanıcıya çevirme.
+        /// </summary>
+        /// <param name="usersOLD">Eski Kullanıcı</param>
+        /// <returns></returns>
+        public static Users UserOldToUser(UsersOLD usersOLD)
+        {
+            var user = new Users
+            {
+                Aciklama = usersOLD.Aciklama,
+                Adi = usersOLD.Adi,
+                Adres = usersOLD.Adres,
+                Bitis_Tarihi = usersOLD.Bitis_Tarihi,
+                Blok_No = usersOLD.Blok_No,
+                C3_Grup = usersOLD.C3_Grup,
+                Daire = usersOLD.Daire,
+                Departman_No = usersOLD.Departman_No,
+                Alt_Departman_No = usersOLD.Alt_Departman_No,
+                Unvan_No = usersOLD.Unvan_No,
+                Bolum_No = usersOLD.Bolum_No,
+                Dogrulama_PIN = usersOLD.Dogrulama_PIN,
+                Gecis_Modu = usersOLD.Gecis_Modu,
+                Gorev = usersOLD.Gorev,
+                Grup_No = usersOLD.Grup_No,
+                Grup_No_1 = usersOLD.Grup_No_1,
+                Grup_No_2 = usersOLD.Grup_No_2,
+                Grup_No_3 = usersOLD.Grup_No_3,
+                Grup_Takvimi_Aktif = usersOLD.Grup_Takvimi_Aktif,
+                Grup_Takvimi_No = usersOLD.Grup_Takvimi_No,
+                ID = usersOLD.ID,
+                Iptal = usersOLD.Iptal,
+                Kart_ID = usersOLD.Kart_ID,
+                Kimlik_PIN = usersOLD.Kimlik_PIN,
+                Kullanici_Tipi = usersOLD.Kullanici_Tipi,
+                Plaka = usersOLD.Plaka,
+                Resim = usersOLD.Resim,
+                Saat_1 = usersOLD.Saat_1,
+                Saat_2 = usersOLD.Saat_2,
+                Saat_3 = usersOLD.Saat_3,
+                Sifre = usersOLD.Sifre,
+                Sirket_No = usersOLD.Sirket_No,
+                Soyadi = usersOLD.Soyadi,
+                Sureli_Kullanici = usersOLD.Sureli_Kullanici,
+                TCKimlik = usersOLD.TCKimlik,
+                Telefon = usersOLD.Telefon,
+                Tmp = usersOLD.Tmp,
+                Visitor_Grup_No = usersOLD.Visitor_Grup_No,
+                Gorev_No = usersOLD.Gorev_No
+            };
+            return user;
+        }
+
+
     }
 }

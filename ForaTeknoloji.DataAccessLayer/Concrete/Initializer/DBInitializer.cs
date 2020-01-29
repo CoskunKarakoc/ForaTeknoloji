@@ -1302,12 +1302,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gorev_Adi = "Geçiş Gruplarının Alınması"
             };
             context.TaskCodes.Add(taskCode2612);
-            TaskCode taskCode2620 = new TaskCode
-            {
-                Gorev_Kodu = 2620,
-                Gorev_Adi = "Stand-Alone Kullanıcı Hafızasına Kullanıcı Bilgisi Gönderme (V5.10 Firmware)"
-            };
-            context.TaskCodes.Add(taskCode2620);
             TaskCode taskCode26200 = new TaskCode
             {
                 Gorev_Kodu = 2620,
@@ -1572,12 +1566,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gorev_Adi = "Global Kapı Bölgeleri Interlock Ayarlarının Alınması  (Global Kapı Bölge Çiftleri)"
             };
             context.TaskCodes.Add(taskCode51);
-            TaskCode taskCode262000 = new TaskCode
-            {
-                Gorev_Kodu = 2620,
-                Gorev_Adi = "Kullanıcıları Gönderme"
-            };
-            context.TaskCodes.Add(taskCode262000);
             TaskCode taskCode262200 = new TaskCode
             {
                 Gorev_Kodu = 2622,

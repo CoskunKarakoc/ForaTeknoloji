@@ -213,6 +213,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             if (ModelState.IsValid)
             {
+
+                var CheckKartID = _userService.GetAllUsers(x => x.Kart_ID == user.Kart_ID);
+                if (CheckKartID.Count > 0)
+                    throw new Exception("Aynı Kart ID'sine sahip kullanıcı bulunmaktadır.");
+
                 _userService.AddUsers(user);
                 _accessDatasService.AddOperatorLog(100, permissionUser.Kullanici_Adi, user.ID, 0, 0, 0);
                 return RedirectToAction("Index");

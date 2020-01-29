@@ -1,6 +1,8 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
 using ForaTeknoloji.Entities.ComplexType;
+using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -32,9 +34,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IAltDepartmanService _altDepartmanService;
         private IUnvanService _unvanService;
         private IBolumService _bolumService;
+        private ITaskListService _taskListService;
+        private IAccessDatasService _accessDatasService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
-        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersService dBUsersService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService)
+        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersService dBUsersService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, ITaskListService taskListService, IAccessDatasService accessDatasService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -57,6 +61,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _altDepartmanService = altDepartmanService;
             _unvanService = unvanService;
             _bolumService = bolumService;
+            _taskListService = taskListService;
+            _accessDatasService = accessDatasService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
 
         }
@@ -263,8 +269,71 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult DeletedUsers()
+        {
+            if (user.SysAdmin == false)
+            {
+                if (user.Kullanici_Islemleri == 3)
+                    throw new Exception("Yetkisiz Erişim!");
+            }
+
+            return View(_usersOLDService.GetAllUserOLDWithOuther());
+        }
+
+        public ActionResult DeletedUserList()
+        {
+            return Json(new { data = _usersOLDService.GetAllUserOLDWithOuther() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult TurnBackUser(int? id)
+        {
+            if (id != null)
+            {
+                if (user.SysAdmin == false)
+                {
+                    if (user.Kullanici_Islemleri == 2 || user.Kullanici_Islemleri == 3)
+                        throw new Exception("Kullanıcı ekleme yetkiniz yok!");
+                }
 
 
+                var entity = _usersOLDService.GetAllUsersOLD().FirstOrDefault(x => x.ID == id);
+                var checkUserKartID = _userService.GetAllUsers().FirstOrDefault(x => x.Kart_ID == entity.Kart_ID);
+                if (checkUserKartID == null)
+                {
+
+                    Users ReCycleUser = ConvertUser.UserOldToUser(entity);
+                    var checkUserID = _userService.GetAllUsers().FirstOrDefault(x => x.ID == ReCycleUser.ID);
+                    if (checkUserID != null)
+                        ReCycleUser.ID = (_userService.GetAllUsers().Max(x => x.ID) + 1);
+
+                    _userService.AddUsers(ReCycleUser);
+                    _usersOLDService.DeleteUsersOLD(entity);
+                    _accessDatasService.AddOperatorLog(100, user.Kullanici_Adi, ReCycleUser.ID, 0, 0, 0);
+                    foreach (var panel in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0))
+                    {
+                        TaskList taskSendUser = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
+                            IntParam_1 = ReCycleUser.ID,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = panel.Panel_ID,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        _taskListService.AddTaskList(taskSendUser);
+                    }
+                    _accessDatasService.AddOperatorLog(103, user.Kullanici_Adi, ReCycleUser.ID, 0, 0, 0);
+                    return RedirectToAction("Index", "Users");
+                }
+                else
+                {
+                    throw new Exception("Aynı Kart ID'sine sahip kullanıcı bulunmaktadır!");
+                }
+            }
+            throw new Exception("Upps! Yanlış Giden Birşeyler Var!");
+        }
 
         //EXCELL EXPORT
         public void PersonelRaporları()
