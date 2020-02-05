@@ -81,5 +81,7 @@ namespace ForaTeknoloji.Entities.Entities
         public bool? NoOpPanelSettings { get; set; }
 
         public bool? NoOpOther { get; set; }
+
+        public string RouteValue { get; set; }
     }
 }

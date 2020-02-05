@@ -2223,7 +2223,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
                 " ReaderSettingsNew.[WKapi Adi] As Kapi," +
                 " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
+                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],AccessDatas.[Canli Resim]" +
                 " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
                 " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")" +
                 " OR Users.[Sirket No] IN(10000," + sirketListesi + ")" +
@@ -2279,6 +2279,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Islem_Verisi_1 = reader[19] as int? ?? default(int),
                             Islem_Verisi_2 = reader[20] as int? ?? default(int),
                             Gecis_Tipi = reader[21] as int? ?? default(int),
+                            Canli_Resim = reader[22].ToString()
                         };
                         liste.Add(nesne);
                     }
@@ -2454,7 +2455,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
               " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
               " ReaderSettingsNew.[WKapi Adi] As Kapi," +
               " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-              " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
+              " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],AccessDatas.[Canli Resim]" +
               " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
               " WHERE AccessDatas.[Kayit No] = " + Kayit_No;
             }
@@ -2496,6 +2497,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Islem_Verisi_1 = reader[19] as int? ?? default(int),
                             Islem_Verisi_2 = reader[20] as int? ?? default(int),
                             Gecis_Tipi = reader[21] as int? ?? default(int),
+                            Canli_Resim = reader[22].ToString()
                         };
 
                     }

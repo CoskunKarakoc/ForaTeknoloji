@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
+using System;
 using System.Web.Mvc;
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
@@ -28,6 +29,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //GET:Login
         public ActionResult Login()
         {
+
             return View();
         }
 

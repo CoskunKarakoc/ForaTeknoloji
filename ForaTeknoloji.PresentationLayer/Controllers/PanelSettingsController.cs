@@ -26,10 +26,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
         private IDBUsersService _dBUsersService;
+        private IDoorStatusService _doorStatusService;
         public DBUsers user;
         DBUsers permissionUser;
 
-        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService)
+        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IDoorStatusService doorStatusService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -46,6 +47,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService = reportService;
             _accessDatasService = accessDatasService;
             _dBUsersService = dBUsersService;
+            _doorStatusService = doorStatusService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -189,6 +191,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 deletePanel = ClearPanelSettings.ClearPanel(deletePanel);
                 _panelSettingsService.UpdatePanelSetting(deletePanel);
                 _settingsNewService.DeleteReaderSettingsNewByPanelID((int)PanelID);
+                //Kapı Durumlarının Silinmesi
+                var doorstatus = _doorStatusService.GetAllDoorStatus().FirstOrDefault(x => x.Panel_ID == PanelID);
+                if (doorstatus != null)
+                    _doorStatusService.DeleteDoorStatus(doorstatus);
                 _accessDatasService.AddOperatorLog(132, user.Kullanici_Adi, 0, 0, PanelID, 0);
                 return RedirectToAction("Settings");
             }

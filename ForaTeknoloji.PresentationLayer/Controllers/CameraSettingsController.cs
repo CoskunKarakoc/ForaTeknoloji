@@ -15,8 +15,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ICameraTypesService _cameraTypesService;
         private IPanelSettingsService _panelSettingsService;
         private IAccessDatasService _accessDatasService;
+        private IProgInitService _progInitService;
         public DBUsers user;
-        public CameraSettingsController(ICamerasService camerasService, ICameraTypesService cameraTypesService, IPanelSettingsService panelSettingsService, IAccessDatasService accessDatasService)
+        public CameraSettingsController(ICamerasService camerasService, ICameraTypesService cameraTypesService, IPanelSettingsService panelSettingsService, IAccessDatasService accessDatasService, IProgInitService progInitService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -27,6 +28,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _cameraTypesService = cameraTypesService;
             _panelSettingsService = panelSettingsService;
             _accessDatasService = accessDatasService;
+            _progInitService = progInitService;
         }
 
 
@@ -58,6 +60,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
                 _camerasService.DeleteCamera(cameras);
                 _accessDatasService.AddOperatorLog(152, user.Kullanici_Adi, cameras.Kamera_No, 0, 0, 0);
+                RouteValueCheck();
                 return RedirectToAction("Index");
 
             }
@@ -91,6 +94,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 _camerasService.UpdateCamera(cameras);
                 _accessDatasService.AddOperatorLog(151, user.Kullanici_Adi, cameras.Kamera_No, 0, 0, 0);
+                RouteValueCheck();
                 return RedirectToAction("Index");
             }
             return View(cameras);
@@ -135,10 +139,36 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 _camerasService.AddCamera(cameras);
                 _accessDatasService.AddOperatorLog(150, user.Kullanici_Adi, cameras.Kamera_No, 0, 0, 0);
+                RouteValueCheck();
                 return RedirectToAction("Index");
             }
             return View(cameras);
         }
+
+
+        private void RouteValueCheck()
+        {
+            var entity = _progInitService.GetAllProgInit().FirstOrDefault();
+            if (entity != null)
+            {
+                if (entity.RouteValue == "" || entity.RouteValue == null)
+                {
+                    entity.RouteValue = Server.MapPath("~/Canli_Images");
+                    _progInitService.UpdateProgInit(entity);
+                }
+            }
+            else
+            {
+                ProgInit progInit = new ProgInit();
+                progInit.RouteValue = Server.MapPath("~/Canli_Images");
+                _progInitService.AddProgInit(progInit);
+            }
+        }
+
+
+
+
+
 
     }
 }

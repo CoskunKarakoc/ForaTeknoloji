@@ -71,7 +71,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
                 YemekhaneListe = Liste,
                 ToplamGecis = Toplam,
-                EmailSettings = Email
+                EmailSettings = Email,
+                User=user
             };
             TempData["UserAccessCount"] = Liste;
             return View(model);
@@ -96,7 +97,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.Kapi_Grup_No.ToString()
                 }),
                 ToplamGecis = Total,
-                EmailSettings = Email
+                EmailSettings = Email,
+                User=user
             };
             TempData["UserAccessCountTotal"] = Total;
             return View(model);

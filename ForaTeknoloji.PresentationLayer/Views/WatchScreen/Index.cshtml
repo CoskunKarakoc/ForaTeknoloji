@@ -177,7 +177,7 @@
                     </div>
                     <div class="col-md-4 offset-1">
                         <img id="KayitliImage" style="height:350px;" class="img-profile card-img-bottom card-img" src="" alt="User Image" />
-                        <img id="CanliImage" style="height:350px;" src="~/Images/BaseUser.jpg" hidden class="img-profile card-img-bottom card-img" alt="User Image" />
+                        <img id="CanliImage" style="height:350px;" src="" hidden class="img-profile card-img-bottom card-img" alt="User Image" />
                         <hr />
                         <div id="Resimler" class="btn-group btn-group-toggle offset-2" data-toggle="buttons">
                             <label class="btn btn-outline-info active btn-sm">
@@ -548,12 +548,17 @@
         if (imgUrl == null || imgUrl == "") {
             imgUrl = "BaseUser.jpg";
         }
+        var snapShotUrl = value.Canli_Resim;
+        if (snapShotUrl == null || snapShotUrl == "") {
+            snapShotUrl = "BaseUser.jpg";
+        }
         $("#Kart_ID").prop("value", value.Kart_ID);
         $("#TCKimlik").prop("value", value.TCKimlik);
         $("#Adi").prop("value", value.Adi);
         $("#Soyadi").prop("value", value.Soyadi);
         $("#Sirket_Adi").prop("value", value.Sirket_Adi);
         $("#KayitliImage").prop("src", "/Images/" + imgUrl);
+        $("#CanliImage").prop("src", "/Canli_Images/" + snapShotUrl);
         $("#Grup_Adi").prop("value", value.Grup_Adi);
         $("#Plaka").prop("value", value.Plaka);
         $("#Blok_Adi").prop("value", value.Blok_Adi);

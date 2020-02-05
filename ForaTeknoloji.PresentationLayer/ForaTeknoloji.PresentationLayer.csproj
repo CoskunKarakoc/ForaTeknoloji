@@ -303,8 +303,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Canli_Images\6684433.jpg" />
-    <Content Include="Canli_Images\6066786.jpg" />
+    <Content Include="Canli_Images\BaseUser.jpg" />
     <Content Include="Content\Animate.css" />
     <Content Include="Content\bootstrap-1.1.0.css" />
     <Content Include="Content\bootstrap-1.1.0.min.css" />
@@ -493,6 +492,11 @@
     <Content Include="Content\Images\sort_desc.png" />
     <Content Include="Content\Images\sort_desc_disabled.png" />
     <Content Include="Content\Login-Page.css" />
+    <Content Include="Content\LoginContent\LoginBootstrap.bootstrap.min.css" />
+    <Content Include="Content\LoginContent\LoginBootstrap.bootstrap.min.js" />
+    <Content Include="Content\LoginContent\LoginPage.bootstrap.min.css" />
+    <Content Include="Content\LoginContent\LoginPage.fontawesome.css" />
+    <Content Include="Content\LoginContent\LoginPage.jquery.min.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\SiteContent\alertify-bootstrap.min.css" />
     <Content Include="Content\SiteContent\alertify.min.css" />
@@ -508,9 +512,6 @@
     <Content Include="Content\Validation-Summary.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Images\803551058.jpg" />
-    <Content Include="Images\801324018.jpg" />
-    <Content Include="Images\15491735.jpg" />
     <Content Include="Images\BaseUser.jpg" />
     <Content Include="Images\LoginPageImage.jpg" />
     <Content Include="Images\Logo.jpg" />
@@ -2691,7 +2692,6 @@
     <Content Include="Views\SecuritySettings\Edit.cshtml" />
     <Content Include="Views\Home\Orientation.cshtml" />
     <Content Include="Views\Door\Index.cshtml" />
-    <Content Include="Views\Camera\Index.cshtml" />
     <Content Include="Views\PanelSettings\Settings.cshtml" />
     <Content Include="Views\Watch\WatchSettings.cshtml" />
     <Content Include="Views\CameraSettings\Index.cshtml" />
@@ -2765,6 +2765,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Camera\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForaTeknoloji.BusinessLayer\ForaTeknoloji.BusinessLayer.csproj">

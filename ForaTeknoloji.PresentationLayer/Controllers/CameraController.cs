@@ -1,18 +1,22 @@
-﻿using System;
+﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.PresentationLayer.Filters;
+using ForaTeknoloji.PresentationLayer.Models;
+using System;
 using System.IO;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
+    [Auth]
+    [Excp]
     public class CameraController : Controller
     {
-        // GET: Camera
-        public ActionResult Index()
+        private IUserService _userService;
+        public CameraController(IUserService userService)
         {
-            return View();
+            _userService = userService;
         }
-
-        public void Capture()
+        public void Capture(int id = -1)
         {
             var stream = Request.InputStream;
             string dump;
@@ -20,7 +24,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             using (var reader = new StreamReader(stream))
                 dump = reader.ReadToEnd();
 
-            var path = Server.MapPath("~/test.jpg");
+            var path = Server.MapPath("/Images/user_" + id + ".jpeg");
+            var entity = _userService.GetById(id);
+            entity.Resim = "user_" + id + ".jpeg";
+            _userService.UpdateUsers(entity);
             System.IO.File.WriteAllBytes(path, String_To_Bytes(dump));
         }
 

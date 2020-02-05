@@ -38,6 +38,8 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public string Resim { get; set; }
 
+        public string Canli_Resim { get; set; }
+
         public string Operasyon { get; set; }
 
         public string Operator { get; set; }

@@ -190,7 +190,7 @@
                             <input type="file" name="ProfileImage" id="ProfileImage" class="form-control btn btn-sm btn-secondary" value="" /><br />
                             <span class="fas fa-info-circle">&nbsp;</span>
                             <span><i>Lütfen jpg,jpeg ya da png formatı kullanın</i></span><br />
-                            <a href="/Camera/Index" class="btn btn-sm btn-outline-secondary mt-2"><i class="fas fa-camera"></i> Resim Çek&nbsp;&nbsp;&nbsp;</a>
+                            <a data-toggle="modal" data-target="#cameraModal" class="btn btn-sm btn-outline-secondary mt-2"><i class="fas fa-camera"></i> Resim Çek&nbsp;&nbsp;&nbsp;</a>
                         </div>
                     </div>
                     <h5 class="text-center text-danger">Kimlik Bilgileri</h5>
@@ -330,10 +330,60 @@
     </div>
 </div>
 
+<!--Camera Modal -->
+<div class="modal fade" id="cameraModal" tabindex="-1" role="dialog" aria-labelledby="cameraModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center"><i class="fas fa-photo-video"></i>Kullanıcı Fotoğraf Çekme</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <div hidden id="Alert" class="alert alert-success">
+                    <p class="text-success">Fotoğraf Çekme İşlemi Başarılı!</p>
+                </div>
+                <div id="Camera"></div>
+                @section camera
+                {
+                    <script src="@Url.Content("~/Scripts/jquery.webcam.js")">
+                    </script>
+                    <script>
+        $("#Camera").webcam({
+             width: 320,
+             height: 240,
+             mode: "save",
+             swffile: "@Url.Content("~/Scripts/jscam.swf")",
+             onTick: function () { },
+             onSave: function () { },
+             onCapture: function () {
+                 webcam.save("@Url.Content("~/Camera/Capture?id="+Model.ID)");
+             },
+             debug: function () { },
+             onLoad: function () { }
+         });
+                    </script>
+                }
+            </div>
+            <div class="modal-footer">
+                <button hidden type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+                <button id="Shoot" type="button" onclick="webcam.capture();" class="col-md-12 btn btn-outline-info btn-sm mb-1"><i class="fas fa-camera-retro"></i> Fotoğraf Çek!</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
     $(document).ready(function () {
+        $("#Shoot").click(function () {
+            $("#Alert").prop("hidden", false);
+            setTimeout(function () {
+                $("#cameraModal .close").click();
+                $("#Alert").prop("hidden", true);
+            }, 1000);
+        });
         var takvim = $("#GrupTakvimHidden").attr("value");
         if (takvim) {
             $("#GrupTakvim").prop("checked", true);
@@ -433,13 +483,5 @@
             });
 
         })
-
-
-
-
-
-
-
-
     });
 </script>
