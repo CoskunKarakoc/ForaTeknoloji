@@ -1,10 +1,12 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace ForaTeknoloji.PresentationLayer.Controllers
@@ -17,8 +19,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReaderSettingsNewService _readerSettingsNewService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IReportService _reportService;
+        private IAccessDatasService _accessDatasService;
+        private ITaskListService _taskListService;
         public DBUsers user;
-        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService, IReportService reportService)
+        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService, IReportService reportService, IAccessDatasService accessDatasService, ITaskListService taskListService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -29,6 +33,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _readerSettingsNewService = readerSettingsNewService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _reportService = reportService;
+            _accessDatasService = accessDatasService;
+            _taskListService = taskListService;
         }
 
 
@@ -90,6 +96,79 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             return View(model);
         }
+
+
+        public ActionResult SendToPanel(int? Panel)
+        {
+            try
+            {
+                TaskList taskList = new TaskList
+                {
+                    Deneme_Sayisi = 1,
+                    Durum_Kodu = 1,
+                    Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
+                    IntParam_1 = (int)Panel,
+                    Kullanici_Adi = user.Kullanici_Adi,
+                    Panel_No = Panel,
+                    Tablo_Guncelle = true,
+                    Tarih = DateTime.Now
+                };
+                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, Panel, 0);
+                Thread.Sleep(500);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+            }
+            return RedirectToAction("ReaderList", new { @PanelID = Panel });
+        }
+
+        public ActionResult ReceiveFromPanel(int? PanelID)
+        {
+            if (PanelID != null)
+            {
+                try
+                {
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
+                        IntParam_1 = (int)PanelID,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelID,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    Thread.Sleep(500);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                }
+                return RedirectToAction("ReaderList", new { @PanelID = PanelID });
+            }
+            throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+        }
+
+
+        public ActionResult AllReaderActive(int? PanelID)
+        {
+            if (PanelID != null)
+            {
+                var readers = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
+                foreach (var reader in readers)
+                {
+                    reader.WKapi_Aktif = true;
+                    _readerSettingsNewService.UpdateReaderSettingsNew(reader);
+                }
+                return RedirectToAction("ReaderList", new { @PanelID = PanelID });
+            }
+            throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+        }
+
 
 
         private void ReaderFill()

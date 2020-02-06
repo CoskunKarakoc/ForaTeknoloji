@@ -52,7 +52,19 @@
 
                         }
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-right">
+                                <hr />
+                                <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class=" btn btn-sm btn-outline-secondary"><i class="fas fa-tasks"></i> Panel Durum Tablosu</a>
+                                <a title="Tüm Kapıları Aktifleştir" href="@Url.Action("AllReaderActive","Panel",new {PanelID=Model.Panel_ID })" class=" btn btn-sm btn-outline-success"><i class="fas fa-check"></i> Tümünü Aktifleştir</a>
+                                <a title="Değişiklikleri Panele Gönder" href="@Url.Action("SendToPanel","Panel",new {Panel=Model.Panel_ID })" class="btn btn-sm btn-outline-info"><i class="fas fa-paper-plane"></i> Ayarları Gönder</a>
+                                <a title="Panelden Ayarları Al" href="@Url.Action("ReceiveFromPanel","Panel",new {PanelID=Model.Panel_ID })" class="btn btn-sm btn-outline-info"><i class="fas fa-recycle"></i> Ayarları Al</a>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
+
             </div>
         </div>
     </div>
