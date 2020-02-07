@@ -504,6 +504,8 @@
     <Content Include="Content\SiteContent\alertify.rtl.min.css" />
     <Content Include="Content\SiteContent\bootstrap.rtl.min.css" />
     <Content Include="Content\SiteContent\bootstrap4-toggle.js" />
+    <Content Include="Content\SiteContent\chosen-sprite%402x.png" />
+    <Content Include="Content\SiteContent\chosen-sprite.png" />
     <Content Include="Content\SiteContent\default.min.css" />
     <Content Include="Content\SiteContent\default.rtl.min.css" />
     <Content Include="Content\SiteContent\fontfamily.css" />

@@ -142,8 +142,8 @@
             if (departmanNo == 0) {
                 $("#AltDepartman").empty();
                 $("#Bolum").empty();
-                $("#AltDepartman").append('<option value=' + 0 + '> Alt Departman Seçiniz... </option>');
-                $("#Bolum").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
+                $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
+                $("#Bolum").append('<option > Bölüm Seçiniz... </option>');
             } else {
                 $.ajax({
                     url: '/GelenGelmeyenReport/AltDepartmanListesi?Departman=' + departmanNo,

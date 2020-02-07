@@ -40,11 +40,11 @@
                     </div>
                     <div class="form-group">
                         <div class="form-group">
-                            <label for="exampleFormControlInput1">İlk Tarih</label>
+                            <label for="Tarih1">İlk Tarih</label>
                             <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
                         </div>
                         <div class="form-group">
-                            <label for="exampleFormControlInput1">Son Tarih</label>
+                            <label for="Tarih2">Son Tarih</label>
                             <input class="form-control form-control-sm" name="Bitis_Tarihi" type="date" value="2019-08-13" id="Tarih2">
                         </div>
                     </div>
@@ -339,8 +339,8 @@
             if (departmanNo == 0) {
                 $("#AltDepartman").empty();
                 $("#Bolum").empty();
-                $("#AltDepartman").append('<option value=' + 0 + '> Alt Departman Seçiniz... </option>');
-                $("#Bolum").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
+                $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
+                $("#Bolum").append('<option > Bölüm Seçiniz... </option>');
             } else {
                 $.ajax({
                     url: '/GelenGelmeyenReport/AltDepartmanListesi?Departman=' + departmanNo,

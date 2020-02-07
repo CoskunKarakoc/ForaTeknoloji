@@ -61,42 +61,41 @@
                 </div>
             </div>
         }
-    </div>
-</div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+                <div id="print_div">
+
+                    @if (Model.ToplamGecis.Count > 0)
+                    {
+                        @webGrid.GetHtml(
+        htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+        selectedRowStyle: "selectRow",
+        footerStyle: "table-pager",
+        columns: webGrid.Columns(
+        webGrid.Column("PanelID", "Panel ID"),
+        webGrid.Column("PanelAdi", "Panel Adı"),
+        webGrid.Column("KapiID", "Kapı ID"),
+        webGrid.Column("GecisSayi", "Geçiş Sayısı")))
+                    }
+                    else
+                    {
+                        <div class="alert alert-info alert-message">
+                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                        </div>
+
+                    }
 
 
-<!-- Table -->
-<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInRight faster">
-    <div id="print_div">
-        <div class="card-body">
-
-            @if (Model.ToplamGecis.Count > 0)
-            {
-                @webGrid.GetHtml(
-htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-selectedRowStyle: "selectRow",
-footerStyle: "table-pager",
-columns: webGrid.Columns(
-webGrid.Column("PanelID", "Panel ID"),
-webGrid.Column("PanelAdi", "Panel Adı"),
-webGrid.Column("KapiID", "Kapı ID"),
-webGrid.Column("GecisSayi", "Geçiş Sayısı")))
-            }
-            else
-            {
-                <div class="alert alert-info alert-message">
-                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
                 </div>
-
-            }
-
-
-        </div>
-        <div class="card-footer text-right">
-            <p class="text-info"><i class="fas fa-info-circle"></i> Toplam Geçiş Sayısı: @Model.ToplamGecis.Select(x => x.GecisSayi).Sum()</p>
+            </div>
+            <div class="col-md-12 text-right">
+                <p class="text-info"><i class="fas fa-info-circle"></i> Toplam Geçiş Sayısı: @Model.ToplamGecis.Select(x => x.GecisSayi).Sum()</p>
+            </div>
         </div>
     </div>
 </div>
+
 
 
 

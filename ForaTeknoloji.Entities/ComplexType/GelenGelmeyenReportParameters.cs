@@ -7,7 +7,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public GelenGelmeyenReportParameters()
         {
             Baslangic_Tarihi = DateTime.Now.Date;
-
+            Bitis_Tarihi = DateTime.Now.Date;
             Fark = 45;
         }
         public int? Sirket { get; set; }

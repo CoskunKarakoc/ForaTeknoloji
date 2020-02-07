@@ -65,50 +65,44 @@
                             </div>
                         }
                         <div class="col-md-12 text-right">
-                            <hr />
                             <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                         </div>
                     </div>
                 }
-            </div>
-        </div>
-    </div>
-</div>
 
-
-
-<div class="row animated slideInRight faster">
-    <div class="col-md-8 offset-2">
-        <div class="card border-left-info h-100 mt-4 shadow-lg ">
-            <div class="card-body">
-                @if (Model.Liste.Count > 0)
-                {
-                    @webGrid.GetHtml(
-                    htmlAttributes: new {@id="table",@class= "table-borderless table table-hover text-center table-striped small" },
-                    headerStyle:"table-info table-sm",
-                    footerStyle: "table-pager",
-                     columns:webGrid.Columns(
-                         webGrid.Column("Gorev_Adi",header:"Görev Adı"),
-                         webGrid.Column("Panel_Adi",header:"Panel Adı"),
-                         webGrid.Column("Durum_Adi",header:"Durum",format:@<text>@(SetStatus(item.Durum_Adi))</text>),
-webGrid.Column("Tarih", "Tarih"),
-webGrid.Column("Adi", "Adı"),
-webGrid.Column("Soyadi", "Soyadı")))
-                }
-                else
-                {
-                    <div class="alert alert-info alert-message ">
-                        <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                    </div>
-                }
                 <div class="row">
                     <div class="col-md-12">
                         <hr />
-                        <span class="fas fa-info-circle">&nbsp;</span>
-                        <span><i>Bu kullanıcıya ait görev listesinde sadece son <b>100</b> kayıt gösterilmektedir.</i></span><br />
+                        @if (Model.Liste.Count > 0)
+                        {
+                            @webGrid.GetHtml(
+                            htmlAttributes: new {@id="table",@class= "table-borderless table table-hover text-center table-striped small" },
+                            headerStyle:"table-info table-sm",
+                            footerStyle: "table-pager",
+                             columns:webGrid.Columns(
+                                 webGrid.Column("Gorev_Adi",header:"Görev Adı"),
+                                 webGrid.Column("Panel_Adi",header:"Panel Adı"),
+                                 webGrid.Column("Durum_Adi",header:"Durum",format:@<text>@(SetStatus(item.Durum_Adi))</text>),
+webGrid.Column("Tarih", "Tarih"),
+webGrid.Column("Adi", "Adı"),
+webGrid.Column("Soyadi", "Soyadı")))
+                        }
+                        else
+                        {
+                            <div class="alert alert-info alert-message ">
+                                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-md-12">
+                                <hr />
+                                <span class="fas fa-info-circle">&nbsp;</span>
+                                <span><i>Bu kullanıcıya ait görev listesinde sadece son <b>100</b> kayıt gösterilmektedir.</i></span><br />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -132,7 +126,7 @@ webGrid.Column("Soyadi", "Soyadı")))
         <span class="text-secondary"><b>Zaman Aşımı</b></span>
     }
 }
-       
+
 
 <script>
     $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css

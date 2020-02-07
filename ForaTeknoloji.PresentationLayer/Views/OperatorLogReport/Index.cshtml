@@ -96,42 +96,39 @@
             </div>
         }
 
-    </div>
-</div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+                <div id="print_div">
+                    @if (Model.OperatorLogList.Count > 0)
+                    {
+                        @webGrid.GetHtml(
+                                  htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+                                  footerStyle: "table-pager",
+                                  columns: webGrid.Columns(
+                                      webGrid.Column("Kayit_No", "Kayit No"),
+                                      webGrid.Column("Panel_ID", "Panel ID"),
+                                      webGrid.Column("Kapi_Adi", "Kapı Adı"),
+                                      webGrid.Column("Gecis_Tipi", "Geçiş Tipi"),
+                                      webGrid.Column("Operasyon", "Operasyon"),
+                                      webGrid.Column("Tarih", "Tarih"),
+                                      webGrid.Column("Kullanici_Adi", "Kullanıcı Adı"),
+                                      webGrid.Column("Islem_Verisi_1", "İşlem Verisi 1"),
+                                      webGrid.Column("Islem_Verisi_2", "İşlem Verisi 2")))
 
+                    }
+                    else
+                    {
+                        <div class="alert alert-info alert-message ">
+                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                        </div>
+                    }
 
-
-<div class="card border-left-info h-100 shadow-lg mt-2 mb-1 animated fadeIn">
-
-    <div id="print_div" class="card-body">
-        @if (Model.OperatorLogList.Count > 0)
-        {
-            @webGrid.GetHtml(
-                      htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-                      footerStyle: "table-pager",
-                      columns: webGrid.Columns(
-                          webGrid.Column("Kayit_No", "Kayit No"),
-                          webGrid.Column("Panel_ID", "Panel ID"),
-                          webGrid.Column("Kapi_Adi", "Kapı Adı"),
-                          webGrid.Column("Gecis_Tipi", "Geçiş Tipi"),
-                          webGrid.Column("Operasyon", "Operasyon"),
-                          webGrid.Column("Tarih", "Tarih"),
-                          webGrid.Column("Kullanici_Adi", "Kullanıcı Adı"),
-                          webGrid.Column("Islem_Verisi_1", "İşlem Verisi 1"),
-                          webGrid.Column("Islem_Verisi_2", "İşlem Verisi 2")))
-
-        }
-        else
-        {
-            <div class="alert alert-info alert-message ">
-                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                </div>
             </div>
-        }
-
+        </div>
     </div>
-
 </div>
-
 <script>
     $(document).ready(function () {
         $('.chosen-select').chosen();

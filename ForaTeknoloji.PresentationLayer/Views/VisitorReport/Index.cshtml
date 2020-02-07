@@ -205,41 +205,42 @@
                 </div>
             </div>
         }
-    </div>
-</div>
-<div class="card border-left-info h-100 mt-1 shadow-lg animated fadeIn">
-    <div class="card-body">
-        <div id="print_div">
-            @if (Model.ComplexVisitorsListesi.Count > 0)
-            {
-                @webGrid.GetHtml(
-          htmlAttributes: new { @id = "tableNon", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-         footerStyle:"table-pager",
-          selectedRowStyle: "selectRow",
-          columns: webGrid.Columns(
-    webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
-    webGrid.Column("ID", "ID"),
-    webGrid.Column("Kart_ID", "Kart ID"),
-    webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
-    webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadı"),
-    webGrid.Column("Ziyaretci_TCKimlik", "Ziyaretçi TC Kimlik"),
-    webGrid.Column("Ziyaretci_Telefon", "Ziyaretçi Telefon"),
-    webGrid.Column("Ziyaretci_Plaka", "Ziyaretçi Plaka"),
-    webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
-    webGrid.Column("Grup_Adi", "Grup"),
-    webGrid.Column("Panel_ID", "Panel"),
-    webGrid.Column("Kapi", "Kapı"),
-    webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
-    webGrid.Column("Tarih", "Tarih"),
-    webGrid.Column("Personel_Adi", "Personel Adı"),
-    webGrid.Column("Personel_Soyadi", "Personel Soyadı")))
-            }
-            else
-            {
-                <div class="alert alert-info alert-message">
-                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="print_div">
+                    @if (Model.ComplexVisitorsListesi.Count > 0)
+                    {
+                        @webGrid.GetHtml(
+                  htmlAttributes: new { @id = "tableNon", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+                 footerStyle:"table-pager",
+                  selectedRowStyle: "selectRow",
+                  columns: webGrid.Columns(
+            webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
+            webGrid.Column("ID", "ID"),
+            webGrid.Column("Kart_ID", "Kart ID"),
+            webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
+            webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadı"),
+            webGrid.Column("Ziyaretci_TCKimlik", "Ziyaretçi TC Kimlik"),
+            webGrid.Column("Ziyaretci_Telefon", "Ziyaretçi Telefon"),
+            webGrid.Column("Ziyaretci_Plaka", "Ziyaretçi Plaka"),
+            webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
+            webGrid.Column("Grup_Adi", "Grup"),
+            webGrid.Column("Panel_ID", "Panel"),
+            webGrid.Column("Kapi", "Kapı"),
+            webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+            webGrid.Column("Tarih", "Tarih"),
+            webGrid.Column("Personel_Adi", "Personel Adı"),
+            webGrid.Column("Personel_Soyadi", "Personel Soyadı")))
+                    }
+                    else
+                    {
+                        <div class="alert alert-info alert-message">
+                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                        </div>
+                    }
                 </div>
-            }
+            </div>
         </div>
     </div>
 </div>
