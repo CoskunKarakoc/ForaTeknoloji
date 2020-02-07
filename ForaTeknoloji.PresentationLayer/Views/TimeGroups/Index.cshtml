@@ -11,16 +11,6 @@
                 <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Zaman Bölgesi Ayarları</h3>
             </div>
             <div class="card-body">
-                @using (Html.BeginForm("Index", "TimeGroups", FormMethod.Get))
-                {
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Zaman Bölgesi Ara..." name="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i> Ara</button>
-                        </div>
-                    </div>
-                }
-                <hr />
                 @if (Model.TimeGroups.Count == 0)
                 {
                     <div class="alert alert-info" role="alert">
@@ -32,8 +22,8 @@
                     </div>
                 }
                 <input type="text" hidden id="TimeGroupCount" name="name" value="@Model.TimeGroups.Count" />
-                <table id="TimeGroupList" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
+                <table id="TimeGroupList"  class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead class="table-sm">
                         <tr>
                             <td>Zaman Grup No</td>
                             <td>Zaman Grup Adı</td>
@@ -59,6 +49,7 @@
                 </table>
             </div>
             <div class="card-footer text-right">
+                <a href="@Url.Action("Add","TimeGroups")" title="New Time Zone" id="Create" class="btn btn-sm btn-outline-success text-success"><i class="fas fa-plus mr-2"></i>Yeni Zaman Bölgesi</a>
                 <a data-toggle="modal" data-target="#panelListAll" title="Send To Panel" id="sendAll" class="btn btn-sm btn-outline-success text-success"><i class="fas fa-share mr-2"></i>Tüm Zaman Gruplarını Gönder</a>
             </div>
         </div>
@@ -86,8 +77,8 @@
                         <hr />
                     </div>
                     <input id="zamanGrupNo" type="text" hidden name="ZamanGrupNo" value="" />
-                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                        <thead class="table-info">
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
@@ -144,8 +135,8 @@
                         <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
                         <hr />
                     </div>
-                    <table id="PanelTableAll" class="table-borderless table table-hover text-center table-striped table-sm">
-                        <thead class="table-info">
+                    <table id="PanelTableAll"   class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
@@ -184,7 +175,55 @@
     </div>
 </div>
 
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
 
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#TimeGroupList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 },
+                    { "orderable": false, "targets": 3 }
+                ]
+            });
+            $("#PanelTableAll").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+            $("#PanelTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+
+
+
+        });
+    </script>
+}
 
 <script>
     $(document).ready(function () {

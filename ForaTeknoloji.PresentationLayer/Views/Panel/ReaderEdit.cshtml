@@ -30,21 +30,21 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Master Role No</label>
-                                        @Html.DropDownList("WKapi_Role_No", null, "Master Role", new { @class = "form-control" })
+                                        @Html.DropDownList("WKapi_Role_No", null, "Master Role", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.WKapi_Role_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Lokal Bölge No</label>
-                                        @Html.DropDownList("WKapi_Lokal_Bolge", null, "Lokal Bölge No", new { @class = "form-control" })
+                                        @Html.DropDownList("WKapi_Lokal_Bolge", null, "Lokal Bölge No", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.WKapi_Lokal_Bolge, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Kullanıcı Sayısı</label>
-                                        @Html.DropDownList("WKapi_User_Count", null, "Kullanıcı Sayısı", new { @class = "form-control" })
+                                        @Html.DropDownList("WKapi_User_Count", null, "Kullanıcı Sayısı", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.WKapi_User_Count, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -338,7 +338,7 @@
                                     @if (Model.WKapi_LPR_Kamera_Model == 1)
                                     {
                                         <div class="form-group">
-                                            <select class="form-control" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
+                                            <select class="form-control chosen-select" tabindex="2" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
                                                 <option value="">Kamera Tipi...</option>
                                                 <option selected value="1">Zavio-BiGES / Compact IP Cameras</option>
                                                 <option value="2">Haikon / IR Bullet 1.3M</option>
@@ -349,7 +349,7 @@
                                     else if (Model.WKapi_LPR_Kamera_Model == 2)
                                     {
                                         <div class="form-group">
-                                            <select class="form-control" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
+                                            <select class="form-control chosen-select" tabindex="2" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
                                                 <option value="">Kamera Tipi...</option>
                                                 <option value="1">Zavio-BiGES / Compact IP Cameras</option>
                                                 <option selected value="2">Haikon / IR Bullet 1.3M</option>
@@ -360,7 +360,7 @@
                                     else if (Model.WKapi_LPR_Kamera_Model == 3)
                                     {
                                         <div class="form-group">
-                                            <select class="form-control" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
+                                            <select class="form-control chosen-select" tabindex="2" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
                                                 <option value="">Kamera Tipi...</option>
                                                 <option value="1">Zavio-BiGES / Compact IP Cameras</option>
                                                 <option value="2">Haikon / IR Bullet 1.3M</option>
@@ -371,7 +371,7 @@
                                     else
                                     {
                                         <div class="form-group">
-                                            <select class="form-control" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
+                                            <select class="form-control chosen-select" tabindex="2" name="WKapi_LPR_Kamera_Model" id="WKapi_LPR_Kamera_Model">
                                                 <option selected value="">Kamera Tipi...</option>
                                                 <option value="1">Zavio-BiGES / Compact IP Cameras</option>
                                                 <option value="2">Haikon / IR Bullet 1.3M</option>
@@ -406,7 +406,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Harici Alarm Rolesi</label>
-                                        @Html.DropDownList("WKapi_Harici_Alarm_Rolesi", null, "Harici Alarm Rolesi", new { @class = "form-control" })
+                                        @Html.DropDownList("WKapi_Harici_Alarm_Rolesi", null, "Harici Alarm Rolesi", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.WKapi_Harici_Alarm_Rolesi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -469,3 +469,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+    });
+</script>

@@ -40,7 +40,7 @@
                                 <label class="control-label col-md-5">Alarm Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Alarm_Tipi", Model.AlarmTipleri, "Alarm Tipi Seçimi...", new { @class = "form-control" })
+                                        @Html.DropDownList("Alarm_Tipi", Model.AlarmTipleri, "Alarm Tipi Seçimi...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.AlarmTipleri, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                 <label class="control-label col-md-5">Panel Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Panel_No", Model.Paneller, "Panel Seçimi...", new { @class = "form-control" })
+                                        @Html.DropDownList("Panel_No", Model.Paneller, "Panel Seçimi...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Paneller, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
                                 <label class="control-label col-md-5">Kapı Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_No", null, "Kapı Seçimi...", new { @class = "form-control" })
+                                        @Html.DropDownList("Kapi_No", null, "Kapı Seçimi...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Kapilar, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                 <label class="control-label col-md-12">Harici Alarm Rolesi No</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_Role_No", null, "Harici Alarm Rolesi...", new { @class = "form-control" })
+                                        @Html.DropDownList("Kapi_Role_No", null, "Harici Alarm Rolesi...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.AlarmRolesi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -147,27 +147,15 @@
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12 text-success">
-
                         <div hidden id="alertMain" class="text-success">
                             <h2 id="alert" class="text-center "></h2>
                         </div>
-                        <div id="alertMain" class="text-muted">
-                            <h2 class="text-center ">Kullanıcı Arama</h2>
-                        </div>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="modal-body ">
-                <!-- Search form -->
-                <div class="input-group md-form form-sm form-2 pl-0">
-                    <input class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" id="Search" aria-label="Search">
-                    <button class="btn btn-sm btn-success" id="SearchBtn">Ara</button>
-                </div>
-                <hr />
-                <table id="myTable" class="table table-hover text-center table-striped small">
+                <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
                     <thead class="table-info">
                         <tr>
                             <td>ID</td>
@@ -208,10 +196,37 @@
         </div>
     </div>
 </div>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
 
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#myTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+        });
+    </script>
+}
 
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#myTable tbody tr").click(function () {
             $("#alertMain").prop("hidden", false);
             var ID = $(this).children("td").data("id");

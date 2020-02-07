@@ -507,6 +507,8 @@
     <Content Include="Content\SiteContent\default.min.css" />
     <Content Include="Content\SiteContent\default.rtl.min.css" />
     <Content Include="Content\SiteContent\fontfamily.css" />
+    <Content Include="Content\SiteContent\searchSelect.css" />
+    <Content Include="Content\SiteContent\searchSelect.js" />
     <Content Include="Content\SiteContent\semantic.min.css" />
     <Content Include="Content\SiteContent\semantic.rtl.min.css" />
     <Content Include="Content\Validation-Summary.css" />
@@ -517,6 +519,7 @@
     <Content Include="Images\Logo.jpg" />
     <Content Include="Images\MavisoftYatayOrta2.jpg" />
     <Content Include="Images\MavisoftYatayOrtaLogo.png" />
+    <Content Include="Images\Plan 3.jpg" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />

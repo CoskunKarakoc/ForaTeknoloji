@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label>Paneller</label>
                                 <div class="form-group">
-                                    @Html.DropDownListFor(model => model.Panel_ID, Model.Panel_ID, "Panel Seçimi", new { @class = "form-control form-control-sm" })
+                                    @Html.DropDownListFor(model => model.Panel_ID, Model.Panel_ID, "Panel Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
 
                                 </div>
                             </div>
@@ -48,11 +48,6 @@
                             <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-save"></i> Grup Kaydet</button>
                         </div>
                     </div>
-
-
-
-
-
                 }
             </div>
         </div>
@@ -60,6 +55,8 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#Panel_ID").change(function () {
             var panelID = $(this).val();
             $.ajax({

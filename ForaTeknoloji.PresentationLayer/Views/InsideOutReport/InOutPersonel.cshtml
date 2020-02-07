@@ -54,7 +54,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Panel Listesi</label>
-                        @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
                     </div>
                     <div class="form-group">
                         <label for="Reader">Okuyucular</label>
@@ -64,7 +64,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Global Kapı Bölgesi</label>
-                        @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
                     </div>
                 </div>
                 <div class="col-md-12 text-right">
@@ -101,15 +101,15 @@
     footerStyle: "table-pager",
     columns: webGrid.Columns(
     webGrid.Column(header: "Seç", format:@<text><input type="checkbox" name="Kayit_No" value="@item.Kayit_No" /></text>),
-                                        webGrid.Column("Kayit_No", "Kayıt No"),
-                                        webGrid.Column("ID", "ID"),
-                                        webGrid.Column("Kart_ID", "Kart ID"),
-                                        webGrid.Column("Adi", "Adı"),
-                                        webGrid.Column("Soyadi", "Soyadı"),
-                                        webGrid.Column("Sirket", "Şirket"),
-                                        webGrid.Column("Departman", "Departman"),
-                                        webGrid.Column("Tarih", "Tarih"),
-                                        webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
+                                         webGrid.Column("Kayit_No", "Kayıt No"),
+                                         webGrid.Column("ID", "ID"),
+                                         webGrid.Column("Kart_ID", "Kart ID"),
+                                         webGrid.Column("Adi", "Adı"),
+                                         webGrid.Column("Soyadi", "Soyadı"),
+                                         webGrid.Column("Sirket", "Şirket"),
+                                         webGrid.Column("Departman", "Departman"),
+                                         webGrid.Column("Tarih", "Tarih"),
+                                         webGrid.Column("Gecis_Tipi", "Geçiş Tipi", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")))
                 }
                 else
                 {
@@ -137,6 +137,8 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
             var frame1 = $('<iframe />');

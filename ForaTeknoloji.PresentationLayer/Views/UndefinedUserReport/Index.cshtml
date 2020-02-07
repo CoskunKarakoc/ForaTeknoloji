@@ -137,7 +137,7 @@
                                     <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
                                     <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
                                 </div>
-                                @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçiniz..", new { @class = "form-control" })
+                                @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçiniz..", new { @class = "form-control chosen-select", tabindex = "2" })
                                 @Html.ValidationMessageFor(model => model.Panel, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -188,6 +188,8 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#TümPanel").change(function () {
             if ($(this).prop("checked") == true) {
                 $("#Panel").attr("disabled", true);

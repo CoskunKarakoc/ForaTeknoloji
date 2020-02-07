@@ -43,7 +43,7 @@
                                 <label class="control-label col-md-5">Alarm Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Alarm_Tipi", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Alarm_Tipi", null, "", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Alarm.Alarm_Tipi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                 <label class="control-label col-md-5">Panel Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Panel_No", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Panel_No", null, "", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Alarm.Panel_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                 <label class="control-label col-md-5">Kapı Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_No", null, "Kapı Seçimi...", new { @class = "form-control" })
+                                        @Html.DropDownList("Kapi_No", null, "Kapı Seçimi...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Alarm.Kapi_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                 <label class="control-label col-md-12">Harici Alarm Rolesi No</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_Role_No", null, "Harici Alarm Rolesi...", new { @class = "form-control" })
+                                        @Html.DropDownList("Kapi_Role_No", null, "Harici Alarm Rolesi...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Alarm.Kapi_Role_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -216,6 +216,8 @@
 
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#myTable tbody tr").click(function () {
             $("#alertMain").prop("hidden", false);
             var ID = $(this).children("td").data("id");

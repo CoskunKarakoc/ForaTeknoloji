@@ -15,7 +15,7 @@
                 {
                     <div class="col-md-12">
                         <div class="form-group">
-                            @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz", new { @class = "form-control chosen-select", tabindex = "2" })
                             @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
                         </div>
                         <div class="input-group mb-3">
@@ -59,7 +59,7 @@
 
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","AltDepartman",new { id=item.Alt_Departman_No})"><i class="fas fa-edit text-info mr-5"></i></a>
-                                    <a title="Delete"  href="@Url.Action("Delete",new {id=item.Alt_Departman_No })" onclick="return confirm('Seçilen Alt Departmanı Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    <a title="Delete" href="@Url.Action("Delete",new {id=item.Alt_Departman_No })" onclick="return confirm('Seçilen Alt Departmanı Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
                                 </td>
                             </tr>
                         }
@@ -73,15 +73,17 @@
 
 
 <script>
-        $(document).ready(function () {
-            var count = $("#AltDepartmanCount").val();
-            if (count == 0) {
-                $("#AltDepartmanList").prop("hidden", true);
-                $("#Title").prop("hidden", true);
-            } else {
-                $("#AltDepartmanList").prop("hidden", false);
-                $("#Title").prop("hidden", false);
-            }
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+        var count = $("#AltDepartmanCount").val();
+        if (count == 0) {
+            $("#AltDepartmanList").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#AltDepartmanList").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
     });
 
 </script>

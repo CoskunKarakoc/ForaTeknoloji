@@ -24,7 +24,7 @@
                 }
                 else
                 {
-                    <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm">
+                    <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
                         <thead>
                             <tr>
                                 <td>ID</td>
@@ -91,8 +91,8 @@
                     </div>
                     <input id="userNo" type="text" hidden name="UserID" value="" />
                     <input id="oprKod" type="number" hidden name="OprKod" value="" />
-                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                        <thead class="table-info">
+                    <table id="PanelTable"  class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class=" table-sm">
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
@@ -145,11 +145,20 @@
         .dataTables_wrapper .dataTables_paginate .paginate_button:active {
             background: none;
             color: black !important;
-            
         }
     </style>
     <script>
         $(document).ready(function () {
+
+            $("#PanelTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+
             $("#UserList").DataTable({
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"

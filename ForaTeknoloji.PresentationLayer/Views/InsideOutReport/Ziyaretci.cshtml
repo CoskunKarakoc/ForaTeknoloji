@@ -58,7 +58,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Panel Listesi</label>
-                        @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Okuyucular</label>
@@ -68,7 +68,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Global Kapı Bölgesi</label>
-                        @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
                     </div>
                     <div class="form-group">
                         <label for="readerCikis">Panel Çıkış Kapı No</label>
@@ -134,7 +134,9 @@
 
 </div>
 <script>
-      $(function () {
+    $(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
             var frame1 = $('<iframe />');

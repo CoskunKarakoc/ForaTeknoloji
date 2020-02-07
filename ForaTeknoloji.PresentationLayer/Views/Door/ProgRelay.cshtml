@@ -16,13 +16,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="Panel_No">Panel Seçimi</label>
-                                @Html.DropDownList("ListPanel_No", Model.Panel_No, new { @class = "form-control", header = "Panel Listesi" })
+                                @Html.DropDownList("ListPanel_No", Model.Panel_No, new { @class = "form-control chosen-select", tabindex = "2" , header = "Panel Listesi" })
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="Haftanin_Gunu">Haftanın Günü</label>
-                                @Html.DropDownList("ListHaftanin_Gunu", Model.Haftanin_Gunu, new { @class = "form-control" })
+                                @Html.DropDownList("ListHaftanin_Gunu", Model.Haftanin_Gunu, new { @class = "form-control chosen-select", tabindex = "2" })
                             </div>
                         </div>
                         <div class="col-md-12 text-right">
@@ -124,6 +124,8 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#ListPanel_No").change(function () {
             $("#SubmitBtn").click();
         });

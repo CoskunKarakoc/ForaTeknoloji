@@ -35,19 +35,19 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="Panel_ID">Panel Listesi</label>
-                                @Html.DropDownListFor(model => model.Panel, null, "Panel Seçiniz...", new { @class = "form-control form-control-sm" })
+                                @Html.DropDownListFor(model => model.Panel, null, "Panel Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="Gorev_Kodu">Görev Adı</label>
-                                @Html.DropDownListFor(model => model.Gorev, null, "Görev Seçiniz...", new { @class = "form-control form-control-sm" })
+                                @Html.DropDownListFor(model => model.Gorev, null, "Görev Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="Durum_Kodu">Durum</label>
-                                @Html.DropDownListFor(model => model.Durum, null, "Durum Seçiniz...", new { @class = "form-control form-control-sm" })
+                                @Html.DropDownListFor(model => model.Durum, null, "Durum Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -132,7 +132,7 @@ webGrid.Column("Soyadi", "Soyadı")))
         <span class="text-secondary"><b>Zaman Aşımı</b></span>
     }
 }
-
+       
 
 <script>
     $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
@@ -145,4 +145,8 @@ webGrid.Column("Soyadi", "Soyadı")))
             }
         })
         .wrap('<span class=" btn btn-primary" />');
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+    });
 </script>

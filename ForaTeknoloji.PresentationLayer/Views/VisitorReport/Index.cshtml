@@ -118,7 +118,7 @@
                     <div class="form-group">
                         <label>Panel Seçimi</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
 
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                     <div class="form-group">
                         <label>Global Kapı Bolge Seçimi</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
 
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                     <div class="form-group">
                         <label>Geçiş Grupları</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
                         </div>
                     </div>
                 </div>
@@ -506,7 +506,8 @@
 </script>
 <script>
     $(document).ready(function () {
-
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#myTable tbody tr").click(function () {
             $("#alertMain").prop("hidden", false);
             var kayitNo = $(this).children("td").data("kayitno");

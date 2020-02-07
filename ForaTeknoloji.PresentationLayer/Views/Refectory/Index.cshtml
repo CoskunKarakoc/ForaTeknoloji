@@ -19,7 +19,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Kapı Grup Listesi</label>
-                        @Html.DropDownListFor(model => model.Group_ID, Model.Group_ID, "Grup Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownListFor(model => model.Group_ID, Model.Group_ID, "Grup Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                         @Html.ValidationMessageFor(model => model.Group_ID, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -95,7 +95,12 @@ webGrid.Column("Kapi_ID", "Kapı ID")))
     </div>
 </div>
 
-
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+    });
+</script>
 
 
 

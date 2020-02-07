@@ -23,7 +23,7 @@
                 else
                 {
                     <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                        <thead>
+                        <thead class="table-sm">
                             <tr>
                                 <td>ID</td>
                                 <td>Kart ID</td>
@@ -87,8 +87,8 @@
                     </div>
                     <input id="userID" type="text" hidden name="UserID" value="" />
                     <input id="oprKod" type="number" hidden name="OprKod" value="" />
-                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                        <thead class="table-info">
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
@@ -146,8 +146,8 @@
                         <hr />
                     </div>
                     <input id="ReceiveUserID" type="text" hidden name="ReceiveUserID" value="" />
-                    <table id="PanelTableReceice" class="table-borderless table table-hover text-center table-striped table-sm">
-                        <thead class="table-info">
+                    <table id="PanelTableReceice" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
                             <tr>
                                 <td></td>
                                 <td>Panel Seri No</td>
@@ -201,6 +201,26 @@
 
             //$.fn.dataTable.ext.classes.sPageButton = 'btn btn-sm btn-info mr-1 ml-1';
             //$.fn.dataTable.ext.classes.sFilterInput = "form-control form-control-sm";
+            $("#PanelTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+
+            $("#PanelTableReceice").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+
+
+
             $("#UserList").DataTable({
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"

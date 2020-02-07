@@ -42,7 +42,7 @@
                                 <label class="control-label col-md-12">Zaman Bölge Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Gecis_Sinirlama_Tipi", null, "", new { @class = "form-control" })
+                                        @Html.DropDownList("Gecis_Sinirlama_Tipi", null, "", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Gecis_Sinirlama_Tipi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -1086,7 +1086,8 @@
 
 <script>
     $(document).ready(function () {
-
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         var nesneBaslangic = $("#Gecis_Sinirlama_Tipi").val();
         if (nesneBaslangic == 0) {
             $("#Saat").prop("hidden", true);

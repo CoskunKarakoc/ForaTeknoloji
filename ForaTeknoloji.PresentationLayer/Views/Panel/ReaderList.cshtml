@@ -11,7 +11,7 @@
         @Html.Partial("_PartialPanelSettingsList", Model.Paneller)
     </div>
 
-    <div class="col-md-5 offset-1  mx-lg-4 my-lg-4 animated slideInRight faster">
+    <div class="col-md-6 offset-1  mx-lg-4 my-lg-4 animated slideInRight faster">
         <div class="card border-bottom-info h-100 shadow-lg ml-5">
             <div class="card-header py-1">
                 <h3 class="m-0 font-weight-bold text-secondary text-center">Kapı Listesi</h3>
@@ -23,7 +23,7 @@
                             <td>ID</td>
                             <td>Aktif</td>
                             <td>Adı</td>
-                            <td></td>
+                            <td>Kapı Ayarları</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,7 +57,7 @@
                             <td colspan="4" class="text-right">
                                 <hr />
                                 <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class=" btn btn-sm btn-outline-secondary"><i class="fas fa-tasks"></i> Panel Durum Tablosu</a>
-                                <a title="Tüm Kapıları Aktifleştir" href="@Url.Action("AllReaderActive","Panel",new {PanelID=Model.Panel_ID })" class=" btn btn-sm btn-outline-success"><i class="fas fa-check"></i> Tümünü Aktifleştir</a>
+                                <a title="Tüm Kapıları Aktifleştir" href="@Url.Action("AllReaderActive","Panel",new {PanelID=Model.Panel_ID })" class=" btn btn-sm btn-outline-warning"><i class="fas fa-check"></i> Tümünü Aktifleştir</a>
                                 <a title="Değişiklikleri Panele Gönder" href="@Url.Action("SendToPanel","Panel",new {Panel=Model.Panel_ID })" class="btn btn-sm btn-outline-info"><i class="fas fa-paper-plane"></i> Ayarları Gönder</a>
                                 <a title="Panelden Ayarları Al" href="@Url.Action("ReceiveFromPanel","Panel",new {PanelID=Model.Panel_ID })" class="btn btn-sm btn-outline-info"><i class="fas fa-recycle"></i> Ayarları Al</a>
                             </td>

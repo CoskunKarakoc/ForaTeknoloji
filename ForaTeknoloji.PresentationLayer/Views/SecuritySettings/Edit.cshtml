@@ -47,28 +47,28 @@
                             <div class="form-group row">
                                 <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Kullanıcı İşlemleri</label>
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Kullanici_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.DropDownList("Kullanici_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                     @Html.ValidationMessageFor(model => model.Kullanicilar.Kullanici_Islemleri, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Geçiş Grup İşlemleri</label>
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Grup_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.DropDownList("Grup_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                     @Html.ValidationMessageFor(model => model.Kullanicilar.Grup_Islemleri, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Kapı İşlemleri</label>
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Programli_Kapi_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.DropDownList("Programli_Kapi_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                     @Html.ValidationMessageFor(model => model.Kullanicilar.Programli_Kapi_Islemleri, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Geçiş Verileri-Raporlar</label>
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Gecis_Verileri_Rapor_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.DropDownList("Gecis_Verileri_Rapor_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                     @Html.ValidationMessageFor(model => model.Kullanicilar.Gecis_Verileri_Rapor_Islemleri, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -78,21 +78,21 @@
                             <div class="form-group row">
                                 <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Ziyaretçi İşlemleri</label>
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Ziyaretci_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.DropDownList("Ziyaretci_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                     @Html.ValidationMessageFor(model => model.Kullanicilar.Ziyaretci_Islemleri, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Canlı İzleme</label>
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Canli_Izleme", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.DropDownList("Canli_Izleme", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                     @Html.ValidationMessageFor(model => model.Kullanicilar.Canli_Izleme, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Alarm İşlemleri</label>
                                 <div class="col-sm-6">
-                                    @Html.DropDownList("Alarm_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm" })
+                                    @Html.DropDownList("Alarm_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                     @Html.ValidationMessageFor(model => model.Kullanicilar.Alarm_Islemleri, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -278,6 +278,8 @@
 </div>
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#AllPanel").click(function () {
             if ($(this).prop("checked") == true) {
                 $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);

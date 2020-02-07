@@ -167,7 +167,7 @@
                             <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
                         </div>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
 
                         </div>
 
@@ -258,6 +258,8 @@
 
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         //Yazıcı Çıktısı Alan Kod Table'ı kaplayan div'in => id'sine print_div yaz birde id si btnPrint olan bir buton yaz
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();

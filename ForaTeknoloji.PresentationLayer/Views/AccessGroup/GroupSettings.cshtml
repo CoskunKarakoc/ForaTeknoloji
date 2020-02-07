@@ -26,7 +26,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="Gunluk_Aylik">Günlük/Aylık Seçimi...</label>
-                                        <select class="form-control" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                        <select class="form-control chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">
                                             <option value="">Günlük/Aylık Seçimi...</option>
                                             <option selected value="0">Günlük</option>
                                             <option value="1">Aylık</option>
@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="Gunluk_Aylik">Günlük/Aylık Seçimi...</label>
-                                        <select class="form-control" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                        <select class="form-control chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">
                                             <option value="">Günlük/Aylık Seçimi...</option>
                                             <option value="0">Günlük</option>
                                             <option selected value="1">Aylık</option>
@@ -52,7 +52,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="Gunluk_Aylik">Günlük/Aylık Seçimi</label>
-                                        <select class="form-control" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                        <select class="form-control chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">
                                             <option selected value="">Günlük/Aylık Seçimi...</option>
                                             <option value="0">Günlük</option>
                                             <option value="1">Aylık</option>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Grup İçerdeki Kişi Sayısı Global Bölge No</label>
-                                @Html.DropDownList("Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                @Html.DropDownList("Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control chosen-select", tabindex = "2" })
                                 @Html.ValidationMessageFor(model => model.Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Grup Geçiş Sayısı Global Bölge No</label>
-                                @Html.DropDownList("Grup_Gecis_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                @Html.DropDownList("Grup_Gecis_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control chosen-select", tabindex = "2" })
                                 @Html.ValidationMessageFor(model => model.Grup_Gecis_Sayisi_Global_Bolge_No, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -121,4 +121,9 @@
 
 
 
-
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+    });
+</script>

@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         <label>Ünvan</label>
-                        @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                         @Html.ValidationMessageFor(model => model.Unvan, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -50,35 +50,35 @@
                     <div class="form-group">
                         <label>Global Kapı Bölgeleri</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm" })
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
 
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Departmanlar</label>
-                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                         @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         <label>Alt Departmanlar</label>
-                        @Html.DropDownListFor(model => model.AltDepartman, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownListFor(model => model.AltDepartman, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Geçiş Grupları</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm" })
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Şirketler</label>
-                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                         @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         <label>Bölümler</label>
-                        @Html.DropDownListFor(model => model.Bolum, new SelectList(""), "Bölüm Seçiniz..", new { @class = "form-control form-control-sm" })
+                        @Html.DropDownListFor(model => model.Bolum, new SelectList(""), "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -297,6 +297,8 @@
 </script>
 <script>
     $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         $("#myTable tbody tr").click(function () {
             $("#alertMain").prop("hidden", false);
             var kayitNo = $(this).children("td").data("kayitno");

@@ -31,7 +31,7 @@
                                 <label class="control-label col-md-5">Kamera Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kamera_Tipi", null, "Kamera Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Kamera_Tipi", null, "Kamera Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Kamera_Tipi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                                 <label class="control-label col-md-5">Kapı Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_ID", null, "Kapı Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Kapi_ID", null, "Kapı Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Kapi_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                 <label class="control-label col-md-5">Panel Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Panel_ID", null, "Panel Seçiniz...", new { @class = "form-control" })
+                                        @Html.DropDownList("Panel_ID", null, "Panel Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Panel_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -144,12 +144,15 @@
                             <a href="@Url.Action("Index","CameraSettings")" class="btn btn-sm btn-outline-info"><i class="fa fa-hand-point-left"></i> Listeye Geri Dön</a>
                             <button type="submit" class="btn btn-sm btn-outline-success mr-2"><i class="fa fa-edit"></i> Güncelle</button>
                         </div>
-
-
-
                     </div>
                 }
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+    });
+</script>
