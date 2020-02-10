@@ -259,7 +259,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tarih = DateTime.Now
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        _accessDatasService.AddOperatorLog(143, user.Kullanici_Adi, AlarmID, 0, item, 0);
+                        if (OprKod == CommandConstants.CMD_ERS_USERALARM)
+                            _accessDatasService.AddOperatorLog(142, user.Kullanici_Adi, AlarmID, 0, item, 0);
+                        else
+                            _accessDatasService.AddOperatorLog(143, user.Kullanici_Adi, AlarmID, 0, item, 0);
                     }
                     Thread.Sleep(2000);
                 }
