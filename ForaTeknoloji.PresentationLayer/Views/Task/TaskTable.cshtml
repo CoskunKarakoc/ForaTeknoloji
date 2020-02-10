@@ -22,6 +22,11 @@
                 background-color: #f0f0f0;
             }
 </style>
+
+
+
+
+
 <div class="row animated slideInLeft faster">
     <div class="col-md-8 offset-2">
         <div class="card shadow-lg mt-3 mb-3 border-left-info h-100">
@@ -53,8 +58,8 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <div class="custom-control">
-                                    <label for="exampleFormControlInput1">Tarih</label>
-                                    <input class="form-control form-control-sm" name="Tarih" type="date" value="" id="Tarih">
+                                    <label for="Tarih">Tarih</label>
+                                    <input class="form-control form-control-sm" name="Tarih" type="date" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" id="Tarih">
                                 </div>
                             </div>
                         </div>
@@ -107,6 +112,8 @@ webGrid.Column("Soyadi", "Soyadı")))
         </div>
     </div>
 </div>
+
+
 @helper SetStatus(string value)
 {
     if (value == "Beklemede")
@@ -126,7 +133,6 @@ webGrid.Column("Soyadi", "Soyadı")))
         <span class="text-secondary"><b>Zaman Aşımı</b></span>
     }
 }
-
 
 <script>
     $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css

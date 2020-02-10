@@ -22,95 +22,95 @@
 </style>
 <div class="card border-left-info h-100 shadow-lg mt-1">
     <div class="card-header-tabs">
-        <h3 class="text-center text-muted">Diğer Geçiş Raporları</h3>
+        <h3 class="text-center text-muted">Diğer Geçiş Raporları(Kullanıcı Alarmları)</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Index", "OutherReport", FormMethod.Get))
+        @using (Html.BeginForm("KullaniciAlarm", "OutherReport", FormMethod.Get))
         {
             <div class="row">
 
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="100" checked class="custom-control-input" id="Tümü" name="Kod">
-                            <label class="custom-control-label" for="Tümü">Tümü</label>
+                @*<div class="col-md-3">
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="100" checked class="custom-control-input" id="Tümü" name="Kod">
+                                <label class="custom-control-label" for="Tümü">Tümü</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="5" class="custom-control-input" id="OTetikleme" name="Kod">
+                                <label class="custom-control-label" for="OTetikleme">Operatör Tetiklemeleri</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="6" class="custom-control-input" id="OAcma" name="Kod">
+                                <label class="custom-control-label" for="OAcma">Operatör Açma</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="7" class="custom-control-input" id="OKapatma" name="Kod">
+                                <label class="custom-control-label" for="OKapatma">Operatör Kapatma</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="13" class="custom-control-input" id="OSerbest" name="Kod">
+                                <label class="custom-control-label" for="OSerbest">Operatör Serbest Bırakma</label>
+                            </div>
+                            <hr />
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="8" class="custom-control-input" id="BTetikleme" name="Kod">
+                                <label class="custom-control-label" for="BTetikleme">Buton Tetikleme</label>
+                            </div>
+                            <hr />
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="9" class="custom-control-input" id="PAcma" name="Kod">
+                                <label class="custom-control-label" for="PAcma">Programlı Açma</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="10" class="custom-control-input" id="PKapatma" name="Kod">
+                                <label class="custom-control-label" for="PKapatma">Programlı Kapatma</label>
+                            </div>
+                            <hr />
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="14" class="custom-control-input" id="PSerbest" name="Kod">
+                                <label class="custom-control-label" for="PSerbest">Programlı Serbest Bırakma</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="20" class="custom-control-input" id="Alarm" name="Kod">
+                                <label class="custom-control-label" for="Alarm">Alarm(Hırsız) Kayıtları</label>
+                            </div>
+                            <hr />
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="21" class="custom-control-input" id="Yangin" name="Kod">
+                                <label class="custom-control-label" for="Yangin">Yangın Kayıtları</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="22" class="custom-control-input" id="KAlarm" name="Kod">
+                                <label class="custom-control-label" for="KAlarm">Kapı Alarmları</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="26" class="custom-control-input" id="KulAlarm" name="Kod">
+                                <label class="custom-control-label" for="KulAlarm">Kullanıcı Alarmları</label>
+                            </div>
+                            <hr />
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="40" class="custom-control-input" id="MaviKod" name="Kod">
+                                <label class="custom-control-label text-info" for="MaviKod">Mavi Kod</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="42" class="custom-control-input" id="BeyazKod" name="Kod">
+                                <label class="custom-control-label text-muted" for="BeyazKod">Beyaz Kod</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="44" class="custom-control-input" id="PembeKod" name="Kod">
+                                <label style="color:pink" class="custom-control-label " for="PembeKod">Pembe Kod</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="46" class="custom-control-input" id="KirmiziKod" name="Kod">
+                                <label class="custom-control-label text-danger" for="KirmiziKod">Kırmızı Kod</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" value="48" class="custom-control-input" id="YesilKod" name="Kod">
+                                <label class="custom-control-label text-success" for="YesilKod">Yeşil Kod</label>
+                            </div>
+                            <hr />
                         </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="5" class="custom-control-input" id="OTetikleme" name="Kod">
-                            <label class="custom-control-label" for="OTetikleme">Operatör Tetiklemeleri</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="6" class="custom-control-input" id="OAcma" name="Kod">
-                            <label class="custom-control-label" for="OAcma">Operatör Açma</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="7" class="custom-control-input" id="OKapatma" name="Kod">
-                            <label class="custom-control-label" for="OKapatma">Operatör Kapatma</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="13" class="custom-control-input" id="OSerbest" name="Kod">
-                            <label class="custom-control-label" for="OSerbest">Operatör Serbest Bırakma</label>
-                        </div>
-                        <hr />
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="8" class="custom-control-input" id="BTetikleme" name="Kod">
-                            <label class="custom-control-label" for="BTetikleme">Buton Tetikleme</label>
-                        </div>
-                        <hr />
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="9" class="custom-control-input" id="PAcma" name="Kod">
-                            <label class="custom-control-label" for="PAcma">Programlı Açma</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="10" class="custom-control-input" id="PKapatma" name="Kod">
-                            <label class="custom-control-label" for="PKapatma">Programlı Kapatma</label>
-                        </div>
-                        <hr />
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="14" class="custom-control-input" id="PSerbest" name="Kod">
-                            <label class="custom-control-label" for="PSerbest">Programlı Serbest Bırakma</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="20" class="custom-control-input" id="Alarm" name="Kod">
-                            <label class="custom-control-label" for="Alarm">Alarm(Hırsız) Kayıtları</label>
-                        </div>
-                        <hr />
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="21" class="custom-control-input" id="Yangin" name="Kod">
-                            <label class="custom-control-label" for="Yangin">Yangın Kayıtları</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="22" class="custom-control-input" id="KAlarm" name="Kod">
-                            <label class="custom-control-label" for="KAlarm">Kapı Alarmları</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="26" class="custom-control-input" id="KulAlarm" name="Kod">
-                            <label class="custom-control-label" for="KulAlarm">Kullanıcı Alarmları</label>
-                        </div>
-                        <hr />
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="40" class="custom-control-input" id="MaviKod" name="Kod">
-                            <label class="custom-control-label text-info" for="MaviKod">Mavi Kod</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="42" class="custom-control-input" id="BeyazKod" name="Kod">
-                            <label class="custom-control-label text-muted" for="BeyazKod">Beyaz Kod</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="44" class="custom-control-input" id="PembeKod" name="Kod">
-                            <label style="color:pink" class="custom-control-label " for="PembeKod">Pembe Kod</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="46" class="custom-control-input" id="KirmiziKod" name="Kod">
-                            <label class="custom-control-label text-danger" for="KirmiziKod">Kırmızı Kod</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" value="48" class="custom-control-input" id="YesilKod" name="Kod">
-                            <label class="custom-control-label text-success" for="YesilKod">Yeşil Kod</label>
-                        </div>
-                        <hr />
-                    </div>
-                </div>
+                    </div>*@
                 <div class="col-md-4">
                     <div class="form-group">
                         <div class="custom-control custom-radio">
@@ -162,13 +162,12 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
-                            <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
-                        </div>
+                        @*<div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
+                                <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
+                            </div>*@
                         <div class="form-group">
                             @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçimi", new { @class = "form-control chosen-select", tabindex = "2" })
-
                         </div>
 
                         <div class="form-group">

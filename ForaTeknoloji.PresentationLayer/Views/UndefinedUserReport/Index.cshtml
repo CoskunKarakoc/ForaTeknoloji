@@ -57,7 +57,13 @@
                                     <label class="custom-control-label" for="cikis">Çıkış</label>
                                 </div>
                             </div>
-
+                            <div class="form-group row">
+                                <div class="col-md-8">
+                                    <hr />
+                                    @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçiniz..", new { @class = "form-control chosen-select", tabindex = "2" })
+                                    @Html.ValidationMessageFor(model => model.Panel, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="Tümü" />
@@ -132,14 +138,7 @@
                                     <input class="form-control" name="Bitis_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" value="true" name="TümPanel" class="custom-control-input" id="TümPanel" />
-                                    <label class="custom-control-label" for="TümPanel">Tüm Paneller</label>
-                                </div>
-                                @Html.DropDownListFor(model => model.Panel, Model.Panel, "Panel Seçiniz..", new { @class = "form-control chosen-select", tabindex = "2" })
-                                @Html.ValidationMessageFor(model => model.Panel, "", new { @class = "text-danger" })
-                            </div>
+
                         </div>
                     </div>
                     <div class="row">

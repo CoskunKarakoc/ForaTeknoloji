@@ -41,6 +41,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: Task
         public ActionResult TaskTable(int? Panel, int? Gorev, int? Durum, DateTime? Tarih)
         {
+            Tarih = Tarih == null ? DateTime.Now.Date : Tarih;
             var Paneller = _reportService.PanelListesi(user);
             var StatusCodes = _statusCodesService.GetAllStatusCodes();
             var TaskCode = _taskCodeService.GetAllTaskCodes();
@@ -80,9 +81,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderByDescending(x => x.Tarih).Take(100);
             }
-
-
-
             if (Panel != null)
             {
                 liste = liste.Where(x => x.Panel_ID == Panel);

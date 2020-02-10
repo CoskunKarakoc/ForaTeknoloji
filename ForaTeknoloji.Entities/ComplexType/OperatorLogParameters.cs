@@ -9,6 +9,12 @@ namespace ForaTeknoloji.Entities.ComplexType
     public class OperatorLogParameters
     {
 
+        public OperatorLogParameters()
+        {
+            Baslangic_Tarihi = DateTime.Now.Date;
+        }
+
+
         public string Kullanici_Adi { get; set; }
 
         public int? Code_Operation { get; set; }

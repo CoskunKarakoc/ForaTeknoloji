@@ -45,48 +45,39 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: OutherReport
         public ActionResult Index(OutherReportParameters parameters)
         {
-
-            if (parameters.Kod == 26)
+            var liste = _reportService.GetDigerGecisListesi(parameters);
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
+            var model = new DigerGecisRaporListViewModel
             {
-                var listKulAlarm = _reportService.GetDigerGecisRaporListKullaniciAlarms(parameters);
-                var panell = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-                var modelAlarm = new DigerGecisRaporAlarmListViewModel
+                DigerGecisListesi = liste,
+                Panel = panel.Select(a => new SelectListItem
                 {
-                    DigerGecisListesiAlarm = listKulAlarm,
-                    Panel = panell.Select(a => new SelectListItem
-                    {
-                        Text = a.Panel_Name,
-                        Value = a.Panel_ID.ToString()
-                    })
-                };
-                TempData["DigerGecisAlarm"] = modelAlarm;
-                return RedirectToAction("KullaniciAlarm", "OutherReport");
-            }
-            else
-            {
-                var liste = _reportService.GetDigerGecisListesi(parameters);
-                var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
-                var model = new DigerGecisRaporListViewModel
-                {
-                    DigerGecisListesi = liste,
-                    Panel = panel.Select(a => new SelectListItem
-                    {
-                        Text = a.Panel_Name,
-                        Value = a.Panel_ID.ToString()
-                    })
-                };
-                TempData["DigerGecis"] = liste;
-                return View(model);
-            }
+                    Text = a.Panel_Name,
+                    Value = a.Panel_ID.ToString()
+                })
+            };
+            TempData["DigerGecis"] = liste;
+            return View(model);
         }
 
 
 
         //Kullanıcı Alarmlarında Daha Fazla Veri Geldiği İçin Bunu Ayrı Bir Sayfada Yaptım
-        public ActionResult KullaniciAlarm()
+        public ActionResult KullaniciAlarm(OutherReportParameters parameters)
         {
-            var nesne = TempData["DigerGecisAlarm"] as DigerGecisRaporAlarmListViewModel;
-            return View(nesne);
+            var listKulAlarm = _reportService.GetDigerGecisRaporListKullaniciAlarms(parameters);
+            var panell = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
+            var modelAlarm = new DigerGecisRaporAlarmListViewModel
+            {
+                DigerGecisListesiAlarm = listKulAlarm,
+                Panel = panell.Select(a => new SelectListItem
+                {
+                    Text = a.Panel_Name,
+                    Value = a.Panel_ID.ToString()
+                })
+            };
+            TempData["DigerGecisAlarm"] = listKulAlarm;
+            return View(modelAlarm);
         }
 
 
@@ -145,10 +136,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //Export Excell Alarm
         public void DigerGecisListesiAlarm()
         {
-            DigerGecisRaporAlarmListViewModel nesne;
-            nesne = TempData["DigerGecisAlarm"] as DigerGecisRaporAlarmListViewModel;
             List<DigerGecisRaporListKullaniciAlarm> liste = new List<DigerGecisRaporListKullaniciAlarm>();
-            liste = nesne.DigerGecisListesiAlarm;
+            liste = TempData["DigerGecisAlarm"] as List<DigerGecisRaporListKullaniciAlarm>;
             if (liste == null || liste.Count == 0)
             {
                 liste = _reportService.GetDigerGecisRaporListKullaniciAlarms(new OutherReportParameters());
