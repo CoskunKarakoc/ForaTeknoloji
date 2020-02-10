@@ -2761,6 +2761,8 @@
     <Content Include="Views\Alarm\AlarmTable.cshtml" />
     <Content Include="Views\AccessReceive\Index.cshtml" />
     <Content Include="Views\ReportPersonel\DeletedUsers.cshtml" />
+    <Content Include="Views\Shared\_PartialPersonelListReport.cshtml" />
+    <Content Include="Views\Shared\_PartialGelenGelmeyenIlkGirisSonCikis.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

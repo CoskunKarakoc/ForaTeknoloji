@@ -367,27 +367,27 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND Departmanlar.[Departman No] IN(1000," + departmanListesi + ")";
             }
-            if (parameters.Sirket != null)
+            if (parameters.Sirket != null && parameters.Sirket != 0)
             {
                 queryString += " AND Users.[Sirket No] = " + parameters.Sirket;
             }
-            if (parameters.Departman != null)
+            if (parameters.Departman != null && parameters.Departman != 0)
             {
                 queryString += " AND Users.[Departman No] = " + parameters.Departman;
             }
-            if (parameters.AltDepartman != null)
+            if (parameters.AltDepartman != null && parameters.AltDepartman != 0)
             {
                 queryString += " AND Users.[Alt Departman No] = " + parameters.AltDepartman;
             }
-            if (parameters.Bolum != null)
+            if (parameters.Bolum != null && parameters.Bolum != 0)
             {
                 queryString += " AND Users.[Bolum No] = " + parameters.Bolum;
             }
-            if (parameters.Unvan != null)
+            if (parameters.Unvan != null && parameters.Unvan != 0)
             {
                 queryString += " AND Users.[Unvan No] = " + parameters.Unvan;
             }
-            if (parameters.Gecis_Grubu != null)
+            if (parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
             {
                 queryString += " AND Users.[Grup No] = " + parameters.Gecis_Grubu;
             }
@@ -487,27 +487,27 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 WHERE Users.ID > 0 ";
             queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             queryString += " AND Departmanlar.[Departman No] IN(10000," + departmanListesi + ")";
-            if (parameters.Sirket != null)
+            if (parameters.Sirket != null && parameters.Sirket != 0)
             {
                 queryString += " AND Users.[Sirket No] =" + parameters.Sirket;
             }
-            if (parameters.Departman != null)
+            if (parameters.Departman != null && parameters.Departman != 0)
             {
                 queryString += " AND Users.[Departman No] =" + parameters.Departman;
             }
-            if (parameters.AltDepartman != null)
+            if (parameters.AltDepartman != null && parameters.AltDepartman != 0)
             {
                 queryString += " AND Users.[Alt Departman No] =" + parameters.AltDepartman;
             }
-            if (parameters.Bolum != null)
+            if (parameters.Bolum != null && parameters.Bolum != 0)
             {
                 queryString += " AND Users.[Bolum No] =" + parameters.Bolum;
             }
-            if (parameters.Unvan != null)
+            if (parameters.Unvan != null && parameters.Unvan != 0)
             {
                 queryString += " AND Users.[Unvan No] =" + parameters.Unvan;
             }
-            if (parameters.Gecis_Grubu != null)
+            if (parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
             {
                 queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
             }
@@ -597,27 +597,27 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 AND Users.[Kullanici Tipi] = 0";
             queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             queryString += "AND Departmanlar.[Departman No] IN(10000," + departmanListesi + ")";
-            if (parameters.Sirket != null)
+            if (parameters.Sirket != null && parameters.Sirket != 0)
             {
                 queryString += " AND Users.[Sirket No] =" + parameters.Sirket;
             }
-            if (parameters.Departman != null)
+            if (parameters.Departman != null && parameters.Departman != 0)
             {
                 queryString += " AND Users.[Departman No] =" + parameters.Departman;
             }
-            if (parameters.AltDepartman != null)
+            if (parameters.AltDepartman != null && parameters.AltDepartman != 0)
             {
                 queryString += " AND Users.[Alt Departman No] =" + parameters.AltDepartman;
             }
-            if (parameters.Bolum != null)
+            if (parameters.Bolum != null && parameters.Bolum != 0)
             {
                 queryString += " AND Users.[Bolum No] =" + parameters.Bolum;
             }
-            if (parameters.Unvan != null)
+            if (parameters.Unvan != null && parameters.Unvan != 0)
             {
                 queryString += " AND Users.[Unvan No] =" + parameters.Unvan;
             }
-            if (parameters.Gecis_Grubu != null)
+            if (parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
             {
                 queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
             }
@@ -710,36 +710,36 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             queryString += "AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             queryString += "AND Departmanlar.[Departman No] IN(10000," + departmanListesi + ")";
 
-            if (parameters.User != null)
+            if (parameters.User != null && parameters.User != 0)
             {
                 queryString += " AND AccessDatas.ID =" + parameters.User;
             }
-            if (parameters.Gecis_Grubu != null)
+            if (parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
             {
                 queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
             }
-            if (parameters.Departman != null)
+            if (parameters.Departman != null && parameters.Departman != 0)
             {
                 queryString += " AND Users.[Departman No] =" + parameters.Departman;
             }
-            if (parameters.AltDepartman != null)
+            if (parameters.AltDepartman != null && parameters.AltDepartman != 0)
             {
                 queryString += " AND Users.[Alt Departman No] =" + parameters.AltDepartman;
             }
-            if (parameters.Bolum != null)
+            if (parameters.Bolum != null && parameters.Bolum != 0)
             {
                 queryString += " AND Users.[Bolum No] =" + parameters.Bolum;
             }
-            if (parameters.Unvan != null)
+            if (parameters.Unvan != null && parameters.Unvan != 0)
             {
                 queryString += " AND Users.[Unvan No] =" + parameters.Unvan;
             }
-            if (parameters.Sirket != null)
+            if (parameters.Sirket != null && parameters.Sirket != 0)
             {
                 queryString += " AND Users.[Sirket No] =" + parameters.Sirket;
 
             }
-            if (parameters.Global_Kapi_Bolgesi != null)
+            if (parameters.Global_Kapi_Bolgesi != null && parameters.Global_Kapi_Bolgesi != 0)
             {
 
             }
@@ -833,31 +833,31 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             queryString += "AND Departmanlar.[Departman No] IN(10000," + departmanListesi + ")";
 
 
-            if (parameters.User != null)
+            if (parameters.User != null && parameters.User != 0)
             {
                 queryString += " AND a.ID =" + parameters.User;
             }
-            if (parameters.Gecis_Grubu != null)
+            if (parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
             {
                 queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
             }
-            if (parameters.Departman != null)
+            if (parameters.Departman != null && parameters.Departman != 0)
             {
                 queryString += " AND Users.[Departman No] =" + parameters.Departman;
             }
-            if (parameters.AltDepartman != null)
+            if (parameters.AltDepartman != null && parameters.AltDepartman != 0)
             {
                 queryString += " AND Users.[Alt Departman No] =" + parameters.AltDepartman;
             }
-            if (parameters.Bolum != null)
+            if (parameters.Bolum != null && parameters.Bolum != 0)
             {
                 queryString += " AND Users.[Bolum No] =" + parameters.Bolum;
             }
-            if (parameters.Unvan != null)
+            if (parameters.Unvan != null && parameters.Unvan != 0)
             {
                 queryString += " AND Users.[Unvan No] =" + parameters.Unvan;
             }
-            if (parameters.Sirket != null)
+            if (parameters.Sirket != null && parameters.Sirket != 0)
             {
                 queryString += " AND Users.[Sirket No] =" + parameters.Sirket;
 
@@ -932,31 +932,31 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 				LEFT JOIN Unvan ON Users.[Unvan No]=Unvan.[Unvan No])
                 LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]
                 WHERE AccessDatas.[Gecis Tipi] = 0 ";
-            if (parameters.User != null)
+            if (parameters.User != null && parameters.User != 0)
             {
                 queryString += " AND Users.ID = " + parameters.User;
             }
-            if (parameters.Gecis_Grubu != null)
+            if (parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
             {
                 queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
             }
-            if (parameters.Sirket != null)
+            if (parameters.Sirket != null && parameters.Sirket != 0)
             {
                 queryString += " AND Users.[Sirket No] =" + parameters.Sirket;
             }
-            if (parameters.Departman != null)
+            if (parameters.Departman != null && parameters.Departman != 0)
             {
                 queryString += " AND Users.[Departman No] =" + parameters.Departman;
             }
-            if (parameters.AltDepartman != null)
+            if (parameters.AltDepartman != null && parameters.AltDepartman != 0)
             {
                 queryString += " AND Users.[Alt Departman No] =" + parameters.AltDepartman;
             }
-            if (parameters.Bolum != null)
+            if (parameters.Bolum != null && parameters.Bolum != 0)
             {
                 queryString += " AND Users.[Bolum No] =" + parameters.Bolum;
             }
-            if (parameters.Unvan != null)
+            if (parameters.Unvan != null && parameters.Unvan != 0)
             {
                 queryString += " AND Users.[Unvan No] =" + parameters.Unvan;
             }
@@ -1029,7 +1029,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                         LEFT JOIN Unvan ON Users.[Unvan No]=Unvan.[Unvan No])
                                         WHERE Users.[Kullanici Tipi] = 0  AND Users.ID > 0";
 
-            if (parameters.Departman != null)
+            if (parameters.Departman != null && parameters.Departman != 0)
             {
                 queryString += " AND Users.[Departman No] = " + parameters.Departman;
             }
@@ -1045,7 +1045,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND Users.[Unvan No] = " + parameters.Unvan_No;
             }
-            if (parameters.Sirket != null)
+            if (parameters.Sirket != null && parameters.Sirket != 0)
             {
                 queryString += " AND Users.[Sirket No] = " + parameters.Sirket;
             }
@@ -1053,7 +1053,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND Users.[Plaka] ='" + parameters.Plaka.Trim() + "'";
             }
-            if (parameters.Blok != null)
+            if (parameters.Blok != null && parameters.Blok != 0)
             {
                 queryString += " AND Users.[Blok No] =" + parameters.Blok;
             }
@@ -1061,11 +1061,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND Users.[Daire] =" + parameters.Daire;
             }
-            if (parameters.Gecis_Grubu != null)
+            if (parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
             {
                 queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
             }
-            if (parameters.Global_Kapi_Bolgesi != null)
+            if (parameters.Global_Kapi_Bolgesi != null && parameters.Global_Kapi_Bolgesi != 0)
             {
                 queryString += " AND (( GroupsDetailNew.[Kapi No] = 1 AND GroupsDetailNew.[Kapi Aktif] = 1  AND GroupsDetailNew.[Kapi Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
                     + "  OR(GroupsDetailNew.[Kapi No] = 2 AND GroupsDetailNew.[Kapi Aktif] = 1 AND GroupsDetailNew.[Kapi Global Bolge No] = " + GlobalZone.Global_Bolge_No + ")"
@@ -1703,7 +1703,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 }
             }
 
-            if (parameters.Gecis_Grubu != null)
+            if (parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
             {
                 queryString += " AND Visitors.[Grup No] =" + parameters.Gecis_Grubu;
             }

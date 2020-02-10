@@ -20,8 +20,6 @@
                 background-color: #f0f0f0;
             }
 </style>
-
-
 <div class="card border-left-info h-100 shadow-lg mt-2 animated fadeIn">
     <div class="card-header-tabs">
         <h3 class="text-muted text-center">Toplam İçerde Kalma</h3>
@@ -29,7 +27,6 @@
     <div class="card-body">
         @using (Html.BeginForm("ToplamIcerdeKalma", "GelenGelmeyenReport", FormMethod.Get))
         {
-
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -110,13 +107,8 @@
                     <a id="Excell" href="@Url.Action("ToplamIcerdeKalmaExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
-
                 <div class="col-md-12">
-
                     <div id="print_div" class="mt-4">
-
-
-
                         @if (Model.ToplamIcerdeKalma.Count > 0)
                         {
 
@@ -144,15 +136,9 @@
                                 <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
                             </div>
                         }
-
-
-
                     </div>
-
-
-
-
                 </div>
+
             </div>
         }
     </div>
