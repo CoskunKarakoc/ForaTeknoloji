@@ -184,10 +184,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" value="true" name="Tum_Kullanici" class="custom-control-input" id="TümKullanici" />
-                            <label class="custom-control-label mb-2" for="TümKullanici">Tüm Aktif Kullanıcılar</label>
-                        </div>
+                        @*<div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="true" name="Tum_Kullanici" class="custom-control-input" id="TümKullanici" />
+                                <label class="custom-control-label mb-2" for="TümKullanici">Tüm Aktif Kullanıcılar</label>
+                            </div>*@
+                        <label for="Ziyaretci">Kullanıcılar</label>
                         <div class="form-group">
                             <input type="text" id="Ziyaretci" class="form-control form-control-sm" name="Users" />
                             <input type="text" id="UserKayitNo" hidden name="User" value="" />
@@ -232,7 +233,7 @@
                 <div class="col-md-4">
                     <img id="change-image" src="@img" style="height:300px; width:300px;" alt="Kayıtlı Fotoğraf" />
                     <hr />
-                    <img id="change-image-canli" src="@canlimg" style="height:300px; width:300px;"  alt="Canlı Fotoğraf" />
+                    <img id="change-image-canli" src="@canlimg" style="height:300px; width:300px;" alt="Canlı Fotoğraf" />
                     <br /><br /><br />
                     <h4 class="text-info text-right">@Model.ReportPersonel.Count Adet Kayıt Listelendi</h4>
                     <hr />
