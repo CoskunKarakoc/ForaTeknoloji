@@ -56,6 +56,6 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public int? Bolum { get; set; }
 
-
+        public int? User_Kayit_No { get; set; }
     }
 }

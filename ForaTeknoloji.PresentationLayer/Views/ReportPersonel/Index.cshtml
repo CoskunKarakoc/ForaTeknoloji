@@ -14,7 +14,7 @@
     {
         var sonuc = (ForaTeknoloji.Entities.ComplexType.ReportPersonelList)webGrid.Rows[webGrid.SelectedIndex].Value;
         img = "/Images/" + sonuc.Resim;
-        canlimg = "/Canli_Images/" + sonuc.Kart_ID + ".jpg";
+        canlimg = "/Canli_Images/" + sonuc.Canli_Resim;
 
     }
 }
@@ -232,7 +232,7 @@
                 <div class="col-md-4">
                     <img id="change-image" src="@img" style="height:300px; width:300px;" alt="Kayıtlı Fotoğraf" />
                     <hr />
-                    <img id="change-image-canli" src="@canlimg" alt="Canlı Fotoğraf" />
+                    <img id="change-image-canli" src="@canlimg" style="height:300px; width:300px;"  alt="Canlı Fotoğraf" />
                     <br /><br /><br />
                     <h4 class="text-info text-right">@Model.ReportPersonel.Count Adet Kayıt Listelendi</h4>
                     <hr />

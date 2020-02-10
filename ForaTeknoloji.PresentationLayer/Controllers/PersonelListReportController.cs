@@ -113,6 +113,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(model);
         }
 
+
         public ActionResult AltDepartmanListesi(int? Departman)
         {
             if (Departman != 0 && Departman != null)

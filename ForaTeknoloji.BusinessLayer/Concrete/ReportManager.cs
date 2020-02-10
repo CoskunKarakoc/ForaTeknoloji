@@ -1145,26 +1145,23 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
 
-
-
-            queryString = @"SELECT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], 
-                    Users.Adi, Users.Soyadi, Users.TCKimlik,Unvan.Adi As [Unvan Adi], Users.Telefon, Sirketler.Adi AS Sirket, 
-                    Departmanlar.Adi AS Departman, AltDepartman.Adi As [Alt Departman],Bolum.Adi As [Bolum Adi],
-                    Users.Plaka, Bloklar.Adi AS Blok, Users.Daire, 
-                    GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, ReaderSettingsNew.[WKapi Adi] As Kapi,
-                    AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, Users.Resim, AccessDatas.[Canli Resim] 
-                    FROM (((((((GroupsMaster
-					RIGHT JOIN (Users
-					LEFT JOIN AccessDatas ON Users.[Kayit No] = AccessDatas.[User Kayit No]) ON GroupsMaster.[Grup No] = Users.[Grup No])
-					LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No])
-					LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
-					LEFT JOIN AltDepartman ON Users.[Alt Departman No]=AltDepartman.[Alt Departman No])
-                    LEFT JOIN Bolum ON Users.[Bolum No]=Bolum.[Bolum No])
-                    LEFT JOIN Unvan ON Users.[Unvan No]=Unvan.[Unvan No])
-					LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] )
-					LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND (AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID]) 
-                    WHERE AccessDatas.[Kullanici Tipi] = 0 ";
-
+            queryString = @" SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], 
+                Users.Adi, Users.Soyadi, Users.TCKimlik,Unvan.Adi As [Unvan Adi], Users.Telefon, Sirketler.Adi AS Sirket,
+                Departmanlar.Adi AS Departman, AltDepartman.Adi As [Alt Departman],Bolum.Adi As [Bolum Adi],
+                Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,
+                GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, ReaderSettingsNew.[WKapi Adi] As Kapi,
+                AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, Users.Resim, AccessDatas.[Canli Resim],AccessDatas.[User Kayit No]
+                FROM (((((((GroupsMaster
+				RIGHT JOIN (Users
+				LEFT JOIN AccessDatas ON Users.[ID] = AccessDatas.[ID]) ON GroupsMaster.[Grup No] = Users.[Grup No])
+				LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No])
+				LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
+                LEFT JOIN AltDepartman ON Users.[Alt Departman No]=AltDepartman.[Alt Departman No])
+                LEFT JOIN Bolum ON Users.[Bolum No]=Bolum.[Bolum No])
+                LEFT JOIN Unvan ON Users.[Unvan No]=Unvan.[Unvan No])
+				LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] )
+				LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] AND AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID])
+                WHERE AccessDatas.[Kullanici Tipi] = 0 ";
             if (parameters.Tum_Kullanici != true)
             {
                 if (parameters.User != null)
@@ -1334,7 +1331,8 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Gecis_Tipi = reader[18] as int? ?? default(int),
                             Tarih = reader[19] as DateTime? ?? default(DateTime),
                             Resim = reader[20].ToString(),
-                            Canli_Resim = reader[21].ToString()
+                            Canli_Resim = reader[21].ToString(),
+                            User_Kayit_No = reader[22] as int? ?? default(int)
                         };
                         liste.Add(nesne);
 
