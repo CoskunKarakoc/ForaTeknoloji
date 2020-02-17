@@ -33,17 +33,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: CameraSettings
-        public ActionResult Index(string Search = null)
+        public ActionResult Index()
         {
-            List<CamerasComplex> cameras;
-            if (Search != null)
-            {
-                cameras = _camerasService.GetAllCamerasComplex(x => x.Kamera_No.ToString().Contains(Search) || x.Kamera_Adi.Contains(Search) || x.IP_Adres.Contains(Search) || x.TCP_Port.ToString().Contains(Search) || x.UDP_Port.ToString().Contains(Search) || x.Panel_ID.ToString().Contains(Search) || x.Kapi_ID.ToString().Contains(Search) || x.Panel_Name.Contains(Search));
-            }
-            else
-            {
-                cameras = _camerasService.GetAllCamerasComplex();
-            }
+            var cameras = _camerasService.GetAllCamerasComplex();
             return View(cameras);
         }
 
