@@ -48,7 +48,7 @@
                                         </div>
                                     </td>
                                     <td>@item.Grup_No</td>
-                                    <td>@item.Grup_Adi</td>
+                                    <td>@(item.Grup_Adi + "(" + Model.GroupUserCount.FirstOrDefault(x => x.Key == item.Grup_No).Value + ")")</td>
                                     <td>
                                         <a title="Grup Ayarları" href="@Url.Action("GroupSettings","AccessGroup",new {id=item.Grup_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
                                         <a title="Grup Kapı Ayarları" href="@Url.Action("GroupReaders","AccessGroup",new {id=item.Grup_No })" class="text-secondary mr-2"><i class="fas fa-door-open"></i></a>

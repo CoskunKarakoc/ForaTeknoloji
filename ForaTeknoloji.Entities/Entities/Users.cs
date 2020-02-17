@@ -129,5 +129,10 @@ namespace ForaTeknoloji.Entities.Entities
 
         [Column("3 Grup")]
         public bool? C3_Grup { get; set; }
+
+        [StringLength(5)]
+        [Column("Kan Grubu")]
+        public string Kan_Grubu { get; set; }
+
     }
 }

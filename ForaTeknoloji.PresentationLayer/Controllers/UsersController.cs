@@ -203,26 +203,25 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         //Yeni Kullanıcı Oluşturma
         [HttpPost]
-        public ActionResult Create(Users user, HttpPostedFileBase ProfileImage)
+        public ActionResult Create(Users Addeduser, HttpPostedFileBase ProfileImage)
         {
             if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" || ProfileImage.ContentType == "image/jpg" || ProfileImage.ContentType == "image/png"))
             {
-                string filename = $"user_{user.ID}.{ProfileImage.ContentType.Split('/')[1]}";
+                string filename = $"user_{Addeduser.ID}.{ProfileImage.ContentType.Split('/')[1]}";
                 ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
-                user.Resim = filename;
+                Addeduser.Resim = filename;
             }
-            if (ModelState.IsValid)
+            if (Addeduser != null && Addeduser.ID != 0 && Addeduser.Kart_ID != null)
             {
-
-                var CheckKartID = _userService.GetAllUsers(x => x.Kart_ID == user.Kart_ID);
+                var CheckKartID = _userService.GetAllUsers(x => x.Kart_ID == Addeduser.Kart_ID);
                 if (CheckKartID.Count > 0)
                     throw new Exception("Aynı Kart ID'sine sahip kullanıcı bulunmaktadır.");
 
-                _userService.AddUsers(user);
-                _accessDatasService.AddOperatorLog(100, permissionUser.Kullanici_Adi, user.ID, 0, 0, 0);
+                _userService.AddUsers(Addeduser);
+                _accessDatasService.AddOperatorLog(100, permissionUser.Kullanici_Adi, Addeduser.ID, 0, 0, 0);
                 return RedirectToAction("Index");
             }
-            return View(user);
+            return View(Addeduser);
         }
 
         //Kullanıcı Güncelleme

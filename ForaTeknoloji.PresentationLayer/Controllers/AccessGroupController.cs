@@ -28,9 +28,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
+        private IUserService _userService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService, IAccessDatasService accessDatasService)
+        public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService, IAccessDatasService accessDatasService, IUserService userService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -49,6 +50,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersService = dBUsersService;
             _reportService = reportService;
             _accessDatasService = accessDatasService;
+            _userService = userService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
             FillGroups();
         }
@@ -62,11 +64,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (permissionUser.Grup_Islemleri == 3)
                     throw new Exception("Yetkisiz Erişim!");
             }
+            IDictionary<int, int> keyValues = new Dictionary<int, int>();
+            foreach (var group in _groupMasterService.GetAllGroupsMaster())
+            {
+                var groupUserCount = _userService.GetAllUsers().Where(x => x.Grup_No == group.Grup_No).Count();
+                keyValues.Add(group.Grup_No, groupUserCount);
+            }
             var model = new GecisGrupListViewModel
             {
                 Gruplar = _groupMasterService.GetAllGroupsMaster(),
-                PanelListesi = _reportService.PanelListesi(user)
+                PanelListesi = _reportService.PanelListesi(user),
+                GroupUserCount=keyValues
             };
+
             return View(model);
         }
 
