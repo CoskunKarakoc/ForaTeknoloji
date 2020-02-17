@@ -402,9 +402,9 @@
                 $(this).addClass("table-success");
         });
 
-        $("#Departman").change(function () {
+        $("#Departman").chosen().change(function () {
             var departmanNo = $(this).val();
-            if (departmanNo == 0) {
+            if (departmanNo == 0 || departmanNo == null) {
                 $("#AltDepartman").empty();
                 $("#Bolum").empty();
                 $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
@@ -416,8 +416,9 @@
                     dataType: 'json'
                 }).done(function (data) {
                     $("#AltDepartman").empty();
+                    $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
                     $.each(data, function (index, row) {
-                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                     });
 
                     var altdepartmanNo = $("#AltDepartman").val();
@@ -428,7 +429,7 @@
                     }).done(function (data) {
                         $("#Bolum").empty();
                         $.each(data, function (index, row) {
-                            $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                            $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                         });
                     });
 
@@ -445,7 +446,7 @@
             }).done(function (data) {
                 $("#Bolum").empty();
                 $.each(data, function (index, row) {
-                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                 });
             });
 

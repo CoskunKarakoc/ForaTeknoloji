@@ -28,111 +28,111 @@
         @using (Html.BeginForm("PasifKullanici", "GelenGelmeyenReport", FormMethod.Get))
         {
 
-        <div class="row">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="Fark">Hareketsiz Gün</label>
-                    <input type="number" class="form-control form-control-sm" id="Fark" placeholder="Hareketsiz Gün" name="Fark" value="45" min="0" max="1000" step="1" />
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Tarih</label>
-                    <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
-                </div>
-
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>Global Kapı Bölgeleri</label>
+            <div class="row">
+                <div class="col-md-2">
                     <div class="form-group">
-                        @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-
+                        <label for="Fark">Hareketsiz Gün</label>
+                        <input type="number" class="form-control form-control-sm" id="Fark" placeholder="Hareketsiz Gün" name="Fark" value="45" min="0" max="1000" step="1" />
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>Geçiş Grupları</label>
+
                     <div class="form-group">
-                        @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        <label for="exampleFormControlInput1">Tarih</label>
+                        <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
                     </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>Departmanlar</label>
-                    @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    <label>Alt Departmanlar</label>
-                    @Html.DropDownListFor(model => model.AltDepartman, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>Şirketler</label>
-                    @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group">
-                    <label>Bölümler</label>
-                    @Html.DropDownListFor(model => model.Bolum, new SelectList(""), "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>Ünvan</label>
-                    @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    @Html.ValidationMessageFor(model => model.Unvan, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-12 text-right float-right">
-                <h4 class="text-info text-right">@Model.Pasif.Count Adet Kayıt Listelendi</h4>
-                <hr />
-                <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                <a id="Excell" href="@Url.Action("PasifKullaniciExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
-                <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
-            </div>
 
-            <div class="col-md-12">
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Global Kapı Bölgeleri</label>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
 
-                <div id="print_div" class="mt-4">
-
-
-
-                    @if (Model.Pasif.Count > 0)
-                    {
-                        @webGrid.GetHtml(
-       htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-       footerStyle:"table-pager",
-       columns: webGrid.Columns(
-           webGrid.Column("ID", "ID"),
-           webGrid.Column("Kart_ID", "Kart ID"),
-           webGrid.Column("Adi", "Adı"),
-           webGrid.Column("Soyadi", "Soyadı"),
-           webGrid.Column("TCKimlik", "TC Kimlik"),
-           webGrid.Column("SirketAdi", "Şirket"),
-           webGrid.Column("DepartmanAdi", "Departman"),
-           webGrid.Column("AltDepartmanAdi", "Alt Departman"),
-           webGrid.Column("BolumAdi", "Bölüm"),
-           webGrid.Column("Plaka", "Plaka"),
-           webGrid.Column("BlokAdi", "Blok"),
-           webGrid.Column("Daire", "Daire"),
-           webGrid.Column("Grup_Adi", "Geçiş Grubu"),
-           webGrid.Column("Global_Bolge_Adi", "Global Bölge")))
-                    }
-                    else
-                    {
-                        <div class="alert alert-info alert-message">
-                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
                         </div>
-                    }
+                    </div>
+                    <div class="form-group">
+                        <label>Geçiş Grupları</label>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Departmanlar</label>
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Alt Departmanlar</label>
+                        @Html.DropDownListFor(model => model.AltDepartman, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Şirketler</label>
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Bölümler</label>
+                        @Html.DropDownListFor(model => model.Bolum, new SelectList(""), "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Ünvan</label>
+                        @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Unvan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12 text-right float-right">
+                    <h4 class="text-info text-right">@Model.Pasif.Count Adet Kayıt Listelendi</h4>
+                    <hr />
+                    <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
+                    <a id="Excell" href="@Url.Action("PasifKullaniciExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
 
+                <div class="col-md-12">
+
+                    <div id="print_div" class="mt-4">
 
 
 
+                        @if (Model.Pasif.Count > 0)
+                        {
+                            @webGrid.GetHtml(
+           htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+           footerStyle:"table-pager",
+           columns: webGrid.Columns(
+               webGrid.Column("ID", "ID"),
+               webGrid.Column("Kart_ID", "Kart ID"),
+               webGrid.Column("Adi", "Adı"),
+               webGrid.Column("Soyadi", "Soyadı"),
+               webGrid.Column("TCKimlik", "TC Kimlik"),
+               webGrid.Column("SirketAdi", "Şirket"),
+               webGrid.Column("DepartmanAdi", "Departman"),
+               webGrid.Column("AltDepartmanAdi", "Alt Departman"),
+               webGrid.Column("BolumAdi", "Bölüm"),
+               webGrid.Column("Plaka", "Plaka"),
+               webGrid.Column("BlokAdi", "Blok"),
+               webGrid.Column("Daire", "Daire"),
+               webGrid.Column("Grup_Adi", "Geçiş Grubu"),
+               webGrid.Column("Global_Bolge_Adi", "Global Bölge")))
+                        }
+                        else
+                        {
+                            <div class="alert alert-info alert-message">
+                                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                            </div>
+                        }
+                    </div>
+
+
+
+
+                </div>
             </div>
-        </div>
         }
     </div>
 </div>
@@ -140,9 +140,9 @@
     $(document).ready(function () {
         $('.chosen-select').chosen();
         $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
-        $("#Departman").change(function () {
+        $("#Departman").chosen().change(function () {
             var departmanNo = $(this).val();
-            if (departmanNo == 0) {
+            if (departmanNo == 0 || departmanNo == null) {
                 $("#AltDepartman").empty();
                 $("#Bolum").empty();
                 $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
@@ -154,8 +154,9 @@
                     dataType: 'json'
                 }).done(function (data) {
                     $("#AltDepartman").empty();
+                    $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
                     $.each(data, function (index, row) {
-                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                     });
 
                     var altdepartmanNo = $("#AltDepartman").val();
@@ -166,7 +167,7 @@
                     }).done(function (data) {
                         $("#Bolum").empty();
                         $.each(data, function (index, row) {
-                            $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                            $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                         });
                     });
 
@@ -175,7 +176,7 @@
 
 
         });
-        $("#AltDepartman").change(function () {
+        $("#AltDepartman").chosen().change(function () {
             var altdepartmanNo = $(this).val();
             $.ajax({
                 url: '/GelenGelmeyenReport/BolumListesi?AltDepartman=' + altdepartmanNo,
@@ -184,7 +185,7 @@
             }).done(function (data) {
                 $("#Bolum").empty();
                 $.each(data, function (index, row) {
-                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                 });
             });
 

@@ -58,7 +58,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         _accessDatasService.AddOperatorLog(180, user.Kullanici_Adi, Sirket.Sirket_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
-                    throw new Exception("Yanlış yada eksik karakter girdiniz.");
+                    ModelState.AddModelError(string.Empty, "Şirket Adı Boş Geçilemez");
                 }
                 return RedirectToAction("Index");
             }

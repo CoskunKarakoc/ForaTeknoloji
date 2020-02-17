@@ -290,22 +290,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Bölüm</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         @Html.DropDownList("Bolum_No", null, "Bölüm Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Bolum_No, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Görevler</label>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.DropDownList("Gorev_No", null, "Görev Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                                        @Html.ValidationMessageFor(model => model.Gorev_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -319,6 +310,34 @@
                                 </div>
                             </div>
                         </div>
+
+
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Görevler</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Gorev_No", null, "Görev Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Gorev_No, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Açıklama</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control form-control-sm" })
+                                        @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
                     </div>
                     <div class="col-md-12 text-right">
                         <a href="@Url.Action("Index","Users")" class="btn btn-sm btn-outline-info"><i class="fa fa-hand-point-left"></i> Listeye Geri Dön</a>
@@ -436,13 +455,13 @@
             }
         });
 
-        $("#Departman_No").change(function () {
+        $("#Departman_No").chosen().change(function () {
             var departmanNo = $(this).val();
-            if (departmanNo == 0) {
+            if (departmanNo == 0 || departmanNo == null) {
                 $("#Alt_Departman_No").empty();
                 $("#Bolum_No").empty();
-                $("#Alt_Departman_No").append('<option value=' + 0 + '> Alt Departman Seçiniz... </option>');
-                $("#Bolum_No").append('<option value=' + 0 + '> Bölüm Seçiniz... </option>');
+                $("#Alt_Departman_No").append('<option > Alt Departman Seçiniz... </option>');
+                $("#Bolum_No").append('<option > Bölüm Seçiniz... </option>');
             } else {
                 $.ajax({
                     url: '/Users/AltDepartmanListesi?Departman=' + departmanNo,
@@ -451,7 +470,7 @@
                 }).done(function (data) {
                     $("#Alt_Departman_No").empty();
                     $.each(data, function (index, row) {
-                        $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                     });
 
                     var altdepartmanNo = $("#Alt_Departman_No").val();
@@ -462,14 +481,14 @@
                     }).done(function (data) {
                         $("#Bolum_No").empty();
                         $.each(data, function (index, row) {
-                            $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                            $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                         });
                     });
 
                 });
             }
         });
-        $("#Alt_Departman_No").change(function () {
+        $("#Alt_Departman_No").chosen().change(function () {
             var altdepartmanNo = $(this).val();
             $.ajax({
                 url: '/Users/BolumListesi?AltDepartman=' + altdepartmanNo,
@@ -478,7 +497,7 @@
             }).done(function (data) {
                 $("#Bolum_No").empty();
                 $.each(data, function (index, row) {
-                    $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                    $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                 });
             });
 

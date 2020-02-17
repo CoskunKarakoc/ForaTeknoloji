@@ -35,46 +35,78 @@
 
                     </div>
                 }
-                <input type="text" hidden id="UnvanCount" name="name" value="@Model.Count()" />
-                <table id="UnvanList" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
-                        <tr>
-                            <td>Ünvan No</td>
-                            <td>Ünvan Adı</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                else
+                {
+                    <input type="text" hidden id="UnvanCount" name="name" value="@Model.Count()" />
+                    <table id="UnvanList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
                             <tr>
-                                <td>@item.Unvan_No</td>
-                                <td>@item.Adi</td>
-                                <td>
-                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Unvan",new { id=item.Unvan_No})"><i class="fas fa-edit text-info mr-5"></i></a>
-                                    <a title="Delete" href="@Url.Action("Delete",new {id=item.Unvan_No })" onclick="return confirm('Seçilen Unvanı Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
-                                </td>
+                                <td>Ünvan No</td>
+                                <td>Ünvan Adı</td>
+                                <td></td>
                             </tr>
-                        }
-                    </tbody>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Unvan_No</td>
+                                    <td>@item.Adi</td>
+                                    <td>
+                                        <a title="Edit" id="edit" href="@Url.Action("Edit","Unvan",new { id=item.Unvan_No})"><i class="fas fa-edit text-info mr-5"></i></a>
+                                        <a title="Delete" href="@Url.Action("Delete",new {id=item.Unvan_No })" onclick="return confirm('Seçilen Unvanı Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
 
-                </table>
+                    </table>
+                }
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#UnvanList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+        });
+    </script>
+
+
+}
+
 
 <script>
-        $(document).ready(function () {
-            var count = $("#UnvanCount").val();
-            if (count == 0) {
-                $("#UnvanList").prop("hidden", true);
-                $("#Title").prop("hidden", true);
-            } else {
-                $("#UnvanList").prop("hidden", false);
-                $("#Title").prop("hidden", false);
-            }
+    $(document).ready(function () {
+        var count = $("#UnvanCount").val();
+        if (count == 0) {
+            $("#UnvanList").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#UnvanList").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
     });
 
 </script>

@@ -60,7 +60,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Grup_No = tbl4.Grup_No,
                                 Gorev = tbl7.Adi,
                                 Sirket_No = tbl1.Sirket_No,
-                                Departman_No = tbl2.Departman_No
+                                Departman_No = tbl2.Departman_No,
+                                Aciklama = u.Aciklama,
+                                Adres = u.Adres
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();
@@ -143,7 +145,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public int? Sirket_No { get; set; }
             public int? Departman_No { get; set; }
             public string String_Ziyaretci_Grubu { get; set; }
-
+            public string Aciklama { get; set; }
+            public string Adres { get; set; }
         }
     }
 }

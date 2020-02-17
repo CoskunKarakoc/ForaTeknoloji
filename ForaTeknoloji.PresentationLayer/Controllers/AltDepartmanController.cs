@@ -64,7 +64,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (AltDepartman.Adi != null)
+                    if (AltDepartman.Adi != null && AltDepartman.Departman_No != null)
                     {
                         var ID = _altDepartmanService.GetAllAltDepartman().Count;
                         if (ID == 0)

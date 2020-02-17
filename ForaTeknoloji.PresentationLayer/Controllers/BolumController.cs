@@ -70,7 +70,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (Bolum.Adi != null)
+                    if (Bolum.Adi != null && Bolum.Alt_Departman_No != null && Bolum.Departman_No != null)
                     {
                         var ID = _bolumService.GetAllBolum().Count;
                         if (ID == 0)

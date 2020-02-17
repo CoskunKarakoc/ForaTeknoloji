@@ -29,13 +29,12 @@
                                 <td>Kart ID</td>
                                 <td>Adı</td>
                                 <td>Soyadı</td>
-                                <td>Şirket</td>
                                 <td>Departman</td>
-                                <td>Görev</td>
                                 <td>Blok</td>
                                 <td>Plaka</td>
                                 <td>Geçiş Grubu</td>
                                 <td>Ziyaretçi Grubu</td>
+                                <td>Açıklama</td>
                                 <td title="Panel Durum Tablosu" class="text-right">
                                     <a data-toggle="modal" data-target="#panelList" onclick="ekle(0,2622)" class="text-success mr-2" title="Tüm Kullanıcıları Gönder"><i class="fas fa-users"></i></a>
                                     <a href="@Url.Action("TaskTable","Task")" class="text-secondary mr"><i class="fas fa-tasks"></i> </a>
@@ -49,13 +48,12 @@
                                 <td>Kart ID</td>
                                 <td>Adı</td>
                                 <td>Soyadı</td>
-                                <td>Şirket</td>
                                 <td>Departman</td>
-                                <td>Görev</td>
                                 <td>Blok</td>
                                 <td>Plaka</td>
                                 <td>Geçiş Grubu</td>
                                 <td>Ziyaretçi Grubu</td>
+                                <td>Açıklama</td>
                                 <td></td>
                             </tr>
                         </tfoot>
@@ -231,13 +229,25 @@
                     { "data": "Kart_ID" },
                     { "data": "Adi" },
                     { "data": "Soyadi" },
-                    { "data": "Sirket" },
                     { "data": "Departman" },
-                    { "data": "Gorev" },
                     { "data": "Blok" },
                     { "data": "Plaka" },
                     { "data": "Gecis_Grubu" },
                     { "data": "String_Ziyaretci_Grubu" },
+                    {
+                        "data": "Aciklama", "render": function (data) {
+                            if (data != null) {
+                                var value = data.substring(0, 10);
+                                value += '...';
+                                return value;
+                            } else {
+                                return "";
+                            }
+
+
+                          
+                        }
+                    },
                     {
                         "data": "ID", "render": function (data) {
                             var multipleUrl = '<a title="Edit" id="edit" href="/Users/Edit?id=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
@@ -249,7 +259,7 @@
                     },
                 ],
                 "columnDefs": [
-                    { "orderable": false, "targets": 11 }
+                    { "orderable": false, "targets": 10 }
                 ]
             });
 

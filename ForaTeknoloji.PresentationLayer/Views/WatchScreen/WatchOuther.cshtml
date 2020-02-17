@@ -1,0 +1,240 @@
+﻿@model ForaTeknoloji.Entities.ComplexType.WatchParameters
+@{
+    ViewBag.Title = "WatchScreen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mx-lg-5 mt-1" style="height:inherit">
+            <div class="card-header">
+                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Anlık Geçişler</h3>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <a id="Stop" hidden class="text-danger"  data-toggle="tooltip" data-placement="right" title="Anlık Geçiş Akışını Durdur"><i class="fas fa-pause fa-3x"></i></a>
+                        <a id="Start" class="text-success"  data-toggle="tooltip" data-placement="right" title="Anlık Geçiş Akışını Başlat"><i class="fas fa-play fa-3x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover text-center table-striped small " id="table" width="100%" cellspacing="0">
+                        <thead class="bg-gray-600 text-white table-sm">
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>TCKimlik</td>
+                                <td>Plaka</td>
+                                <td>Blok</td>
+                                <td>Daire</td>
+                                <td>Grup Adı</td>
+                                <td>Panel</td>
+                                <td>Kapı</td>
+                                <td>Geçiş</td>
+                                <td>Tarih</td>
+                                <td>Operasyon</td>
+                                <td>Operator</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var myTimer
+        var myTimerSpeed = 250;
+
+        $('#Start').on('click', startTimer)
+        $('#Stop').on('click', stopTimer)
+
+        $('#Start').tooltip('toggle');
+        $('#Stop').tooltip('toggle');
+
+        function startTimer() {
+            $("#Stop").prop("hidden", false);
+            $("#Start").prop("hidden", true);
+            myTimer = setInterval(timerTick, myTimerSpeed);
+        }
+
+        function stopTimer() {
+            $("#Stop").prop("hidden", true);
+            $("#Start").prop("hidden", false);
+            clearInterval(myTimer)
+        }
+
+        function timerTick() {
+            $.ajax({
+                url: '/WatchScreen/AccessCount',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                if (data != count) {
+                    ListBind();
+                }
+            }).always(function (data) {
+                count = data;
+            });
+        }
+        FirstOpeningList();
+        var count = 0;
+        $.ajax({
+            url: '/WatchScreen/AccessCount',
+            type: 'GET',
+            dataType: 'json',
+        }).done(function (data) {
+            count = data;
+        });
+
+
+
+    });
+    function ListBind() {
+        $.ajax({
+            url: '/WatchScreen/WatchListOther',
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            let lastItem = data[0];
+            $("#table tbody").html("");
+            $.each(data, function (key, value) {
+                if (value.Kod == 0) {
+                    $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
+                } else if (value.Kod == 1) {
+                    $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
+                } else if (value.Kod == 2) {
+                    $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
+                } else if (value.Kod == 3) {
+                    $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
+                } else if (value.Kod == 4) {
+                    $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
+                } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
+                    $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
+                } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
+                    $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
+                } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
+                    $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
+                } else if (value.Kod == 20 || value.Kod == 21) {
+                    $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
+                } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
+                    $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
+                } else if (value.Kod > 24 && value.Kod < 48) {
+                    $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
+                } else if (value.Kod >= 100) {
+                    $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
+                }
+            });
+
+        });
+    }
+
+
+    function FirstOpeningList() {
+        $.ajax({
+            url: '/WatchScreen/WatchListOther',
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            let lastItem = data[0];
+            $("#table tbody").html("");
+            $.each(data, function (key, value) {
+                if (value.Kod == 0) {
+                    $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
+                } else if (value.Kod == 1) {
+                    $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
+                } else if (value.Kod == 2) {
+                    $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
+                } else if (value.Kod == 3) {
+                    $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
+                } else if (value.Kod == 4) {
+                    $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
+                } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
+                    $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
+                } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
+                    $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
+                } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
+                    $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
+                } else if (value.Kod == 20 || value.Kod == 21) {
+                    $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
+                } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
+                    $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
+                } else if (value.Kod > 24 && value.Kod < 48) {
+                    $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
+                } else if (value.Kod >= 100) {
+                    $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
+                }
+            });
+        });
+    }
+
+    function TableRowTemplate(value, idParam, classParam) {
+        var GecisTipi = "";
+        var SatirSablon = '';
+        if (value.Gecis_Tipi == 0) {
+            GecisTipi = "Giriş";
+        } else if (value.Gecis_Tipi == 1) {
+            GecisTipi = "Çıkış";
+        } else {
+            GecisTipi = "Çıkış";
+        }
+        if (idParam == "tanimsizSatir") {
+            SatirSablon = '<tr data-kayitno="' + value.Kayit_No + '" id="' + idParam + '" class="' + classParam + '">' +
+                '<td>' + value.ID + '</td>' +
+                '<td>' + value.Kart_ID + '</td>' +
+                '<td>' + value.Adi + '</td>' +
+                '<td>' + value.Soyadi + '</td>' +
+                '<td>' + value.Sirket_Adi + '</td>' +
+                '<td>' + value.Departman_Adi + '</td>' +
+                '<td>' + value.TCKimlik + '</td>' +
+                '<td>' + value.Plaka + '</td>' +
+                '<td>' + value.Blok_Adi + '</td>' +
+                '<td>' + value.Daire + '</td>' +
+                '<td>' + value.Grup_Adi + '</td>' +
+                '<td>' + value.Panel_ID + '</td>' +
+                '<td>' + value.Kapi_Adi + '</td>' +
+                '<td>' + GecisTipi + '</td>' +
+                '<td>' + ConvertTime(value.Tarih) + '</td>' +
+                '<td class="small">' + value.Operasyon + '</td>' +
+                '<td class="small">' + value.Operator + '<a title="Yeni Kullanıcı Olarak Ekle" onclick="return confirm(\'Yeni Kullanıcı Olarak Eklemek İstiyormusunuz?\')" href="/Users/Create?Kart_ID=' + value.Kart_ID + '"><i class="fas fa-user-plus text-info ml-2"></i></a></td>' +
+                '</tr>';
+        } else {
+            SatirSablon = '<tr data-kayitno="' + value.Kayit_No + '" id="' + idParam + '" class="' + classParam + '">' +
+                '<td>' + value.ID + '</td>' +
+                '<td>' + value.Kart_ID + '</td>' +
+                '<td>' + value.Adi + '</td>' +
+                '<td>' + value.Soyadi + '</td>' +
+                '<td>' + value.Sirket_Adi + '</td>' +
+                '<td>' + value.Departman_Adi + '</td>' +
+                '<td>' + value.TCKimlik + '</td>' +
+                '<td>' + value.Plaka + '</td>' +
+                '<td>' + value.Blok_Adi + '</td>' +
+                '<td>' + value.Daire + '</td>' +
+                '<td>' + value.Grup_Adi + '</td>' +
+                '<td>' + value.Panel_ID + '</td>' +
+                '<td>' + value.Kapi_Adi + '</td>' +
+                '<td>' + GecisTipi + '</td>' +
+                '<td>' + ConvertTime(value.Tarih) + '</td>' +
+                '<td class="small">' + value.Operasyon + '</td>' +
+                '<td class="small">' + value.Operator + '</td>' +
+                '</tr>';
+        }
+        return SatirSablon;
+    }
+
+    function AddLeadingZeros(number, size) {
+        var s = "0000" + number;
+        return s.substr(s.length - size);
+    }
+
+    function ConvertTime(value) {
+        var dt = new Date(parseInt(value.replace('/Date(', '')))
+        var result = AddLeadingZeros(dt.getDate(), 2) + "/" + AddLeadingZeros(dt.getMonth() + 1, 2) + "/" + AddLeadingZeros(dt.getFullYear(), 4) + " " + AddLeadingZeros(dt.getHours(), 2) + ":" + AddLeadingZeros(dt.getMinutes(), 2) + ":" + AddLeadingZeros(dt.getSeconds(), 2);
+        return result;
+    }
+</script>

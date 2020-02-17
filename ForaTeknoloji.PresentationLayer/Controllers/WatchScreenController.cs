@@ -116,5 +116,28 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return View(progInit);
         }
+
+
+
+
+        /*Sadece Listenin Olduğu Ve Tüm Kayıtların Geldiği Canlı İzleme*/
+
+        public ActionResult WatchOuther()
+        {
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Canli_Izleme == 3)
+                    throw new Exception("Yetkisiz Erişim!");
+            }
+            return View();
+        }
+
+        public ActionResult WatchListOther()
+        {
+            return Json(_reportService.GetWatchOuther(), JsonRequestBehavior.AllowGet);
+        }
+
+
+
     }
 }

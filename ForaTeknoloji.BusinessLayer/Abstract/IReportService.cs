@@ -77,6 +77,12 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <param name="watchParameters">İzleme parametrelerine göre kriter uyguluyor.</param>
         /// <returns></returns>
         List<WatchEntityComplex> GetWatch(WatchParameters watchParameters);
+        
+        /// <summary>
+        /// Sondan başlayarak geriye complex geçiş verileri gönderiyor textboxlar ve resimler bu listeyi kullanan view'de yok
+        /// </summary>
+        /// <returns></returns>
+        List<WatchEntityComplex> GetWatchOuther();
 
         WatchEntityComplex GetWatchTopOne(WatchParameters watchParameters);
         /// <summary>

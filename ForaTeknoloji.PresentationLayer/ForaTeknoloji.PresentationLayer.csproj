@@ -2763,6 +2763,7 @@
     <Content Include="Views\ReportPersonel\DeletedUsers.cshtml" />
     <Content Include="Views\Shared\_PartialPersonelListReport.cshtml" />
     <Content Include="Views\Shared\_PartialGelenGelmeyenIlkGirisSonCikis.cshtml" />
+    <Content Include="Views\WatchScreen\WatchOuther.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

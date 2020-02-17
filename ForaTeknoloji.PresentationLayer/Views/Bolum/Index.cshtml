@@ -43,39 +43,71 @@
 
                     </div>
                 }
-                <input type="text" hidden id="AltDepartmanCount" name="name" value="@Model.BolumListesi.Count()" />
-                <table id="BolumList" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
-                        <tr>
-                            <td>Bölüm No</td>
-                            <td>Bölüm Adı</td>
-                            <td>Alt Departman Adı</td>
-                            <td>Ana Departman Adı</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.BolumListesi)
-                        {
+                else
+                {
+
+                    <input type="text" hidden id="AltDepartmanCount" name="name" value="@Model.BolumListesi.Count()" />
+                    <table id="BolumList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
                             <tr>
-                                <td>@item.Bolum_No</td>
-                                <td>@item.Adi</td>
-                                <td>@item.Alt_Departman_Adi</td>
-                                <td>@item.Departman_Adi</td>
-
-                                <td>
-                                    <a title="Edit" id="edit" href="@Url.Action("Edit","Bolum",new { id=item.Bolum_No})"><i class="fas fa-edit text-info mr-5"></i></a>
-                                    <a title="Delete" href="@Url.Action("Delete",new {id=item.Bolum_No })" onclick="return confirm('Seçilen Bölümü Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
-                                </td>
+                                <td>Bölüm No</td>
+                                <td>Bölüm Adı</td>
+                                <td>Alt Departman Adı</td>
+                                <td>Ana Departman Adı</td>
+                                <td></td>
                             </tr>
-                        }
-                    </tbody>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BolumListesi)
+                            {
+                                <tr>
+                                    <td>@item.Bolum_No</td>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Alt_Departman_Adi</td>
+                                    <td>@item.Departman_Adi</td>
 
-                </table>
+                                    <td>
+                                        <a title="Edit" id="edit" href="@Url.Action("Edit","Bolum",new { id=item.Bolum_No})"><i class="fas fa-edit text-info mr-5"></i></a>
+                                        <a title="Delete" href="@Url.Action("Delete",new {id=item.Bolum_No })" onclick="return confirm('Seçilen Bölümü Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                }
             </div>
         </div>
     </div>
 </div>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#BolumList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+        });
+    </script>
+
+
+}
 
 
 <script>
@@ -91,7 +123,7 @@
             $("#Title").prop("hidden", false);
         }
 
-        $("#Departman_No").change(function () {
+        $("#Departman_No").chosen().change(function () {
             var departmanNo = $(this).val();
             $.ajax({
                 url: '/Bolum/AltDepartmanListesi?Departman=' + departmanNo,
@@ -102,10 +134,12 @@
                 console.log(data);
                 if (data == null || data.count == 0) {
                     $("#Alt_Departman_No").empty();
-                    //$("#Alt_Departman_No").append('<option value=' + 0 + '> Alt Departman Seçiniz.. </option>');
+                    $("#Alt_Departman_No").append('<option> Alt Departman Seçiniz.. </option>');
                 } else {
+                    $("#Alt_Departman_No").empty();
+                    $("#Alt_Departman_No").append('<option> Alt Departman Seçiniz.. </option>');
                     $.each(data, function (index, row) {
-                        $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>');
+                        $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                     });
                 }
 

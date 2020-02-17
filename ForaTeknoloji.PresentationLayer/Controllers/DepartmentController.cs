@@ -60,7 +60,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         _accessDatasService.AddOperatorLog(190, user.Kullanici_Adi, departmanlar.Departman_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }
-                    throw new Exception("Yanlış yada eksik karakter girdiniz.");
                 }
                 return RedirectToAction("Index");
             }
