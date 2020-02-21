@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <label>Geçiş Modu:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                             <div class="form-group col-md-4">
@@ -70,19 +70,53 @@
                             <label class="col-sm-4">Role Süresi</label>
                             <input type="text" name="Role_Suresi" class="form-control form-control-sm col-sm-3" value="" />
                         </div>
-                        <label>Çalışma Modu:&nbsp;</label>
-                        <label class="radio-inline">
-                            <input type="radio" name="Calisma_Modu" value="1" checked>Stand Alone
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="Calisma_Modu" value="2">Online
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="Calisma_Modu" value="3">Reader Only
-                        </label>
 
+                        <div class="row">
+                            <label class="col-md-3">Çalışma Modu:</label>
+                            <div class="form-group col-md-3">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="Calisma_Modu" value="1" class="custom-control-input" id="Calisma_Modu1" />
+                                    <label class="custom-control-label" for="Calisma_Modu1">Stand Alone</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="Calisma_Modu" value="2" class="custom-control-input" id="Calisma_Modu2" />
+                                    <label class="custom-control-label" for="Calisma_Modu2">Online</label>
+                                </div>
+                            </div>
 
+                            <div class="form-group col-md-3">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" name="Calisma_Modu" value="3" class="custom-control-input" id="Calisma_Modu3" />
+                                    <label class="custom-control-label" for="Calisma_Modu3">Reader Only</label>
+                                </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio">
+                                            @Html.RadioButton("Calisma_Modu", "1", new { @id = "reader", @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="reader">ReaderrOnlyt</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-radio">
+                                                @Html.RadioButton("Calisma_Modu", "2", new { @id = "stand", @class = "custom-control-input" })
+                                                <label class="custom-control-label" for="stand">StandAloneee</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-radio">
+                                                @Html.RadioButton("Calisma_Modu", "3", new { @id = "online", @class = "custom-control-input" })
+                                                <label class="custom-control-label" for="online">Online</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="row">
@@ -94,12 +128,20 @@
                             </div>
                             <div class="col-md-6">
                                 <br />
-                                <label class="radio-inline">
-                                    <input type="radio" name="Mukerrer_Engelleme_Tipi" value="1" checked>Saniye
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="Mukerrer_Engelleme_Tipi" value="2">Dakika
-                                </label>
+                                <div class="row">
+                                    <div class="form-group col-md-6 mt-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" name="Mukerrer_Engelleme_Tipi" value="1" class="custom-control-input" id="Saniye" />
+                                            <label class="custom-control-label" for="Saniye">Saniye</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 mt-1">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" name="Mukerrer_Engelleme_Tipi" value="2" class="custom-control-input" id="Dakika" />
+                                            <label class="custom-control-label" for="Dakika">Dakika</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

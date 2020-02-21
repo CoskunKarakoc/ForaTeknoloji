@@ -73,7 +73,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         TaskList taskList = new TaskList
                         {
                             Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
                             Gorev_Kodu = (int)kapiOperasyon.OprKod,
                             IntParam_1 = 1,
                             IntParam_2 = item.Panel_ID,
@@ -91,7 +91,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
                         Gorev_Kodu = (int)kapiOperasyon.OprKod,
                         IntParam_1 = 1,
                         StrParam_1 = DoorOperationCode.CreateDoorOperationCode(kapiOperasyon),
@@ -199,7 +199,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         TaskList taskList = new TaskList
                         {
                             Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
                             Gorev_Kodu = (int)CommandConstants.CMD_SND_RELAYPROGRAM,
                             IntParam_1 = (int)Panel_No,
                             IntParam_2 = (int)Hafta,
@@ -236,7 +236,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         TaskList taskList = new TaskList
                         {
                             Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
                             Gorev_Kodu = (int)CommandConstants.CMD_RCV_RELAYPROGRAM,
                             IntParam_1 = (int)Panel_No,
                             IntParam_2 = (int)Hafta,

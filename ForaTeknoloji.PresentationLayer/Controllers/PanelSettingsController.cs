@@ -68,7 +68,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (readers == null)
             {
 
-                if (selectedpanel.Panel_Model==9)
+                if (selectedpanel.Panel_Model == 9)
                 {
                     //ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
                     //{
@@ -179,7 +179,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-             
+
             }
             ViewBag.Panel_Global_Bolge1 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi", selectedpanel.Panel_Global_Bolge1);
             ViewBag.Panel_Global_Bolge2 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi", selectedpanel.Panel_Global_Bolge2);
@@ -358,7 +358,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 TaskList taskList = new TaskList
                 {
                     Deneme_Sayisi = 1,
-                    Durum_Kodu = 1,
+                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
                     Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
                     IntParam_1 = (int)Panel,
                     Kullanici_Adi = user.Kullanici_Adi,
@@ -435,7 +435,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
                         Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
                         IntParam_1 = (int)PanelID,
                         Kullanici_Adi = user.Kullanici_Adi,
@@ -467,7 +467,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
                         Gorev_Kodu = (int)CommandConstants.CMD_ERS_ALARMFIRE_STATUS,
                         IntParam_1 = (int)PanelID,
                         Kullanici_Adi = user.Kullanici_Adi,
@@ -495,7 +495,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 TaskList taskList = new TaskList
                 {
                     Deneme_Sayisi = 1,
-                    Durum_Kodu = 1,
+                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
                     Gorev_Kodu = (int)CommandConstants.CMD_SND_RTC,
                     IntParam_1 = (int)Panel,
                     Kullanici_Adi = user.Kullanici_Adi,

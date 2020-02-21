@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
@@ -39,11 +40,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: FastGroup
-        public ActionResult Index(int? Status=0)
+        public ActionResult Index(int? Status = 0)
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz Erişim!");
             }
             var Group = _groupMasterService.GetAllGroupsMaster();
@@ -70,7 +71,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme)
                     throw new Exception("Grup düzenleme yetkiniz yok!");
             }
             if (ModelState.IsValid)

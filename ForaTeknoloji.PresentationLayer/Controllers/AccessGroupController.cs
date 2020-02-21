@@ -61,7 +61,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz Erişim!");
             }
             IDictionary<int, int> keyValues = new Dictionary<int, int>();
@@ -89,7 +89,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 if (permissionUser.SysAdmin == false)
                 {
-                    if (permissionUser.Grup_Islemleri == 2)
+                    if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme)
                         throw new Exception("Grup düzenleme yetkiniz yok!");
                 }
                 var entity = _groupMasterService.GetById(id);
@@ -128,7 +128,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Grup oluşturma yetkiniz yok!");
             }
             int maxID;
@@ -200,7 +200,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Grup silme yetkiniz yok!");
             }
             if (id != -1)
@@ -226,7 +226,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme)
                     throw new Exception("Bu işlem için yetkiniz yok!");
             }
             List<SelectList> KapiZamanGrupNo = new List<SelectList>();
@@ -274,7 +274,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (parameters.PanelModel == 9)
+                if (parameters.PanelModel == (int)PanelModel.Panel_1010)
                 {
                     List<bool?> kapiStatus = new List<bool?>();
                     kapiStatus.Add(parameters.Kapi_1);
@@ -389,7 +389,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Bu işlem için yetkiniz yok!");
             }
             var entity = _groupsDetailNewService.GetBy_GrupNo_AND_PanelID(GrupNo, PanelID);
@@ -402,7 +402,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Bu işlem için yetkiniz yok!");
             }
             if (Groups != null)
@@ -455,7 +455,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Bu işlem için yetkiniz yok!");
             }
             if (GecisGrupNo != -1)
@@ -471,7 +471,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             TaskList taskList = new TaskList
                             {
                                 Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                 Gorev_Kodu = (int)CommandConstants.CMD_SND_ACCESSGROUP,
                                 IntParam_1 = GecisGrupNo,
                                 Kullanici_Adi = user.Kullanici_Adi,
@@ -498,7 +498,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Bu işlem için yetkiniz yok!");
             }
             if (PanelListAll != null)
@@ -513,7 +513,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             TaskList taskListERS = new TaskList
                             {
                                 Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                 Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_ACCESSGROUP,
                                 IntParam_1 = 0,
                                 Kullanici_Adi = user.Kullanici_Adi,
@@ -528,7 +528,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 TaskList taskListSend = new TaskList
                                 {
                                     Deneme_Sayisi = 1,
-                                    Durum_Kodu = 1,
+                                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                     Gorev_Kodu = (int)CommandConstants.CMD_SND_ACCESSGROUP,
                                     IntParam_1 = item,
                                     Kullanici_Adi = user.Kullanici_Adi,

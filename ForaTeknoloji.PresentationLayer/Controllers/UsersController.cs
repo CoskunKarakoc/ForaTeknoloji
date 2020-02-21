@@ -79,7 +79,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Kullanici_Islemleri == 3)
+                if (permissionUser.Kullanici_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz Erişim!");
             }
 
@@ -105,7 +105,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Kullanici_Islemleri == 2 || permissionUser.Kullanici_Islemleri == 3)
+                if (permissionUser.Kullanici_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Kullanici_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Kullanıcı ekleme yetkiniz yok!");
             }
             int MaxID;
@@ -234,7 +234,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Kullanıcı düzenleme yetkiniz yok!");
             }
             if (id == null)
@@ -311,7 +311,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Kullanıcı silme işlemine yetkiniz yok!");
             }
 
@@ -327,7 +327,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
                         Gorev_Kodu = (int)CommandConstants.CMD_ERS_USER,
                         IntParam_1 = id,
                         Kullanici_Adi = user.Kullanici_Adi,
@@ -361,7 +361,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Kullanici_Islemleri == 3)
+                if (permissionUser.Kullanici_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz Erişim!");
             }
             var model = new UsersListViewModel
@@ -379,7 +379,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Kullanıcı alma işlemine yetkiniz yok!");
             }
 
@@ -391,7 +391,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
                         Gorev_Kodu = (int)CommandConstants.CMD_RCV_USER,
                         IntParam_1 = ReceiveUserID,
                         Kullanici_Adi = user.Kullanici_Adi,
@@ -417,7 +417,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Kullanıcı silme işlemine yetkiniz yok!");
             }
 
@@ -432,7 +432,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         TaskList taskList = new TaskList
                         {
                             Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
                             Gorev_Kodu = (int)CommandConstants.CMD_ERS_USER,
                             IntParam_1 = id,
                             Kullanici_Adi = user.Kullanici_Adi,
@@ -462,7 +462,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Bu işleme yetkiniz yok!");
             }
 
@@ -477,8 +477,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             TaskList taskListRemove = new TaskList
                             {
-                                Deneme_Sayisi = 2,
-                                Durum_Kodu = 1,
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                 Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
                                 IntParam_1 = 1,
                                 Kullanici_Adi = user.Kullanici_Adi,
@@ -490,7 +490,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             TaskList maxUser = new TaskList
                             {
                                 Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                 Gorev_Kodu = (int)CommandConstants.CMD_SND_MAXUSERID,
                                 IntParam_1 = _userService.GetAllUsers().Max(x => x.ID),
                                 Kullanici_Adi = user.Kullanici_Adi,
@@ -506,7 +506,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 TaskList taskList = new TaskList
                                 {
                                     Deneme_Sayisi = 1,
-                                    Durum_Kodu = 1,
+                                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                     Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
                                     IntParam_1 = userID,
                                     Kullanici_Adi = user.Kullanici_Adi,
@@ -526,8 +526,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             TaskList taskList = new TaskList
                             {
-                                Deneme_Sayisi = 2,
-                                Durum_Kodu = 1,
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                 Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
                                 IntParam_1 = 1,
                                 Kullanici_Adi = user.Kullanici_Adi,
@@ -546,7 +546,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             TaskList taskList = new TaskList
                             {
                                 Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                 Gorev_Kodu = (int)OprKod,
                                 IntParam_1 = UserID,
                                 Kullanici_Adi = user.Kullanici_Adi,

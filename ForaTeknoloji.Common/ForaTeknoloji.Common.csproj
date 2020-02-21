@@ -46,7 +46,9 @@
     <Compile Include="DefaultCommon.cs" />
     <Compile Include="ICommon.cs" />
     <Compile Include="PanelModel.cs" />
+    <Compile Include="PanelStatusCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityCode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

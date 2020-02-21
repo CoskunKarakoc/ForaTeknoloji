@@ -77,7 +77,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
                         Gorev_Kodu = (int)CommandConstants.CMD_ERS_LOGCOUNT,
                         IntParam_1 = 1,
                         Kullanici_Adi = user.Kullanici_Adi,
@@ -105,7 +105,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
                         Gorev_Kodu = (int)CommandConstants.CMD_RCV_LOGS,
                         IntParam_1 = 1,
                         Kullanici_Adi = user.Kullanici_Adi,

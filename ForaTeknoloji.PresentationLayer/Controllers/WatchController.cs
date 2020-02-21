@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
@@ -51,7 +52,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Canli_Izleme == 3)
+                if (permissionUser.Canli_Izleme == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz Erişim!");
             }
             var lastrecordwatch = _reportService.GetWatchTopOne(WtchPrmtrs); //_reportService.LastRecordWatch(null);
@@ -79,7 +80,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 if (progInit != null)
                 {
-                    if (permissionUser.Canli_Izleme == 2 || permissionUser.Canli_Izleme == 3)
+                    if (permissionUser.Canli_Izleme == (int)SecurityCode.Sadece_Izleme || permissionUser.Canli_Izleme == (int)SecurityCode.Yetkisiz)
                         throw new Exception("Değişiklik yapmaya yetkiniz yok!");
                     if (progInit.Kayit_No != 0)
                     {

@@ -58,7 +58,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Ziyaretci_Islemleri == 3)
+                if (permissionUser.Ziyaretci_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz erişim!");
             }
 
@@ -82,7 +82,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Ziyaretci_Islemleri == 2 || permissionUser.Ziyaretci_Islemleri == 3)
+                if (permissionUser.Ziyaretci_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Ziyaretci_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Ziyaretçi eklemeye yetkiniz yok!");
             }
 
@@ -141,7 +141,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Ziyaretçi düzenlemeye yetkiniz yok!");
             }
 
@@ -235,7 +235,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Ziyaretçi silmeye yetkiniz yok!");
             }
 
@@ -258,7 +258,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Ziyaretçi göndermeye yetkiniz yok!");
             }
             if (VisitorID != -1)
@@ -274,7 +274,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             TaskList taskList = new TaskList
                             {
                                 Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                 Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
                                 IntParam_1 = VisitorID,
                                 Kullanici_Adi = user.Kullanici_Adi,

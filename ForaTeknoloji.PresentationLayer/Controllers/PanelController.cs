@@ -106,7 +106,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 TaskList taskList = new TaskList
                 {
                     Deneme_Sayisi = 1,
-                    Durum_Kodu = 1,
+                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
                     Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
                     IntParam_1 = (int)Panel,
                     Kullanici_Adi = user.Kullanici_Adi,
@@ -134,7 +134,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
                         Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
                         IntParam_1 = (int)PanelID,
                         Kullanici_Adi = user.Kullanici_Adi,

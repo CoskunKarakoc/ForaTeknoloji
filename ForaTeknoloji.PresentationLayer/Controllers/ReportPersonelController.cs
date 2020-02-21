@@ -273,7 +273,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (user.SysAdmin == false)
             {
-                if (user.Kullanici_Islemleri == 3)
+                if (user.Kullanici_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz Erişim!");
             }
 
@@ -291,7 +291,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 if (user.SysAdmin == false)
                 {
-                    if (user.Kullanici_Islemleri == 2 || user.Kullanici_Islemleri == 3)
+                    if (user.Kullanici_Islemleri == (int)SecurityCode.Sadece_Izleme || user.Kullanici_Islemleri == (int)SecurityCode.Yetkisiz)
                         throw new Exception("Kullanıcı ekleme yetkiniz yok!");
                 }
 
@@ -314,7 +314,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         TaskList taskSendUser = new TaskList
                         {
                             Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
                             Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
                             IntParam_1 = ReCycleUser.ID,
                             Kullanici_Adi = user.Kullanici_Adi,

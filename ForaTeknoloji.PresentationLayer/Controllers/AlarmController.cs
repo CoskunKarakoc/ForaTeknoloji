@@ -54,7 +54,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Alarm_Islemleri == 3)
+                if (permissionUser.Alarm_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz erişim!");
             }
 
@@ -95,7 +95,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Alarm değişikliklerine yetkiniz yok!");
             }
             if (id != null)
@@ -143,7 +143,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Alarm oluşturmaya yetkiniz yok!");
             }
             var maxID = 0;
@@ -198,7 +198,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Grup_Islemleri == 2 || permissionUser.Grup_Islemleri == 3)
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Alarm silmeye yetkiniz yok!");
             }
             if (id != null)
@@ -253,7 +253,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             TaskList taskList = new TaskList
                             {
                                 Deneme_Sayisi = 1,
-                                Durum_Kodu = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
                                 Gorev_Kodu = (int)OprKod,
                                 Kullanici_Adi = user.Kullanici_Adi,
                                 IntParam_1 = AlarmID,
@@ -291,7 +291,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (permissionUser.SysAdmin == false)
             {
-                if (permissionUser.Alarm_Islemleri == 3 || permissionUser.Alarm_Islemleri == null)
+                if (permissionUser.Alarm_Islemleri == (int)SecurityCode.Yetkisiz || permissionUser.Alarm_Islemleri == null)
                     throw new Exception("Yetkisiz erişim!");
             }
 
