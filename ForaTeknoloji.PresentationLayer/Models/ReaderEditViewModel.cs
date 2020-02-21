@@ -8,5 +8,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<PanelSettings> Paneller { get; set; }
         public List<ReaderSettingsNew> Okuyucular { get; set; }
         public int? Panel_ID { get; internal set; }
+        public int? PanelModel { get; internal set; }
     }
 }

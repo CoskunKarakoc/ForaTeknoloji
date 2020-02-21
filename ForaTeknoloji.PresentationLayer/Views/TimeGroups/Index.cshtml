@@ -21,32 +21,36 @@
 
                     </div>
                 }
-                <input type="text" hidden id="TimeGroupCount" name="name" value="@Model.TimeGroups.Count" />
-                <table id="TimeGroupList"  class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                    <thead class="table-sm">
-                        <tr>
-                            <td>Zaman Grup No</td>
-                            <td>Zaman Grup Adı</td>
-                            <td>Adı</td>
-                            <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.TimeGroups)
-                        {
+                else
+                {
+                    <input type="text" hidden id="TimeGroupCount" name="name" value="@Model.TimeGroups.Count" />
+                    <table id="TimeGroupList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
                             <tr>
-                                <td>@item.Zaman_Grup_No</td>
-                                <td>@item.Zaman_Grup_Adi</td>
-                                <td>@item.Adi</td>
-                                <td>
-                                    <a title="Edit" id="edit" href="@Url.Action("Edit","TimeGroups",new { id=item.Zaman_Grup_No})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Delete" href="@Url.Action("Delete",new {id=item.Zaman_Grup_No })" onclick="return confirm('Seçilen Zaman Grubunu Silmek İstediğinize Emin Misiniz?')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(@item.Zaman_Grup_No)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
-                                </td>
+                                <td>Zaman Grup No</td>
+                                <td>Zaman Grup Adı</td>
+                                <td>Adı</td>
+                                <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.TimeGroups)
+                            {
+                                <tr>
+                                    <td>@item.Zaman_Grup_No</td>
+                                    <td>@item.Zaman_Grup_Adi</td>
+                                    <td>@item.Adi</td>
+                                    <td>
+                                        <a title="Edit" id="edit" href="@Url.Action("Edit","TimeGroups",new { id=item.Zaman_Grup_No})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                        <a title="Delete" href="@Url.Action("Delete",new {id=item.Zaman_Grup_No })" onclick="return confirm('Seçilen Zaman Grubunu Silmek İstediğinize Emin Misiniz?')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                        <a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(@item.Zaman_Grup_No)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+
             </div>
             <div class="card-footer text-right">
                 <a href="@Url.Action("Add","TimeGroups")" title="New Time Zone" id="Create" class="btn btn-sm btn-outline-success text-success"><i class="fas fa-plus mr-2"></i>Yeni Zaman Bölgesi</a>
@@ -135,7 +139,7 @@
                         <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
                         <hr />
                     </div>
-                    <table id="PanelTableAll"   class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <table id="PanelTableAll" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
                         <thead class="table-sm">
                             <tr>
                                 <td>

@@ -67,40 +67,119 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == selectedpanel.Panel_ID).FirstOrDefault();
             if (readers == null)
             {
-                for (int i = 1; i < 17; i++)
+
+                if (selectedpanel.Panel_Model==9)
                 {
-                    ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                    //ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                    //{
+                    //    Panel_ID = selectedpanel.Panel_ID,
+                    //    Panel_Name = selectedpanel.Panel_Name,
+                    //    Seri_No = selectedpanel.Seri_No,
+                    //    Sira_No = selectedpanel.Sira_No,
+                    //    WKapi_ID = 1,
+                    //    WKapi_Adi = "Kapi " + 1,
+                    //    WKapi_Aktif = false,
+                    //    WKapi_Zorlama_Alarmi = false,
+                    //    WKapi_Yangin_Modu = false,
+                    //    WKapi_Sirali_Gecis_Ana_Kapi = false,
+                    //    WKapi_Ana_Alarm_Rolesi = false,
+                    //    WKapi_Acik_Sure_Alarmi = false,
+                    //    WKapi_Acilma_Alarmi = false,
+                    //    WKapi_Coklu_Onay = false,
+                    //    WKapi_Lift_Aktif = false,
+                    //    WKapi_Pin_Dogrulama = false,
+                    //    WKapi_Panik_Buton_Alarmi = false,
+                    //    WKapi_WIGType = 1,
+                    //    WKapi_Acik_Sure = 20,
+                    //    WKapi_Alarm_Modu = false,
+                    //    WKapi_Gecis_Modu = 0,
+                    //    WKapi_Harici_Alarm_Rolesi = 1,
+                    //    WKapi_Itme_Gecikmesi = 1,
+                    //    WKapi_Lokal_Bolge = 1,
+                    //    WKapi_Role_No = 1,
+                    //    WKapi_User_Count = 1,
+                    //    WKapi_Kapi_Tipi = 1,
+                    //};
+                    //_settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                    for (int i = 1; i < 17; i++)
                     {
-                        Panel_ID = selectedpanel.Panel_ID,
-                        Panel_Name = selectedpanel.Panel_Name,
-                        Seri_No = selectedpanel.Seri_No,
-                        Sira_No = selectedpanel.Sira_No,
-                        WKapi_ID = i,
-                        WKapi_Adi = "Kapi " + i,
-                        WKapi_Aktif = false,
-                        WKapi_Zorlama_Alarmi = false,
-                        WKapi_Yangin_Modu = false,
-                        WKapi_Sirali_Gecis_Ana_Kapi = false,
-                        WKapi_Ana_Alarm_Rolesi = false,
-                        WKapi_Acik_Sure_Alarmi = false,
-                        WKapi_Acilma_Alarmi = false,
-                        WKapi_Coklu_Onay = false,
-                        WKapi_Lift_Aktif = false,
-                        WKapi_Pin_Dogrulama = false,
-                        WKapi_Panik_Buton_Alarmi = false,
-                        WKapi_WIGType = 1,
-                        WKapi_Acik_Sure = 20,
-                        WKapi_Alarm_Modu = false,
-                        WKapi_Gecis_Modu = 0,
-                        WKapi_Harici_Alarm_Rolesi = 1,
-                        WKapi_Itme_Gecikmesi = 1,
-                        WKapi_Lokal_Bolge = 1,
-                        WKapi_Role_No = i,
-                        WKapi_User_Count = 1,
-                        WKapi_Kapi_Tipi = 1,
-                    };
-                    _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                        ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                        {
+                            Panel_ID = selectedpanel.Panel_ID,
+                            Panel_Name = selectedpanel.Panel_Name,
+                            Seri_No = selectedpanel.Seri_No,
+                            Sira_No = selectedpanel.Sira_No,
+                            WKapi_ID = i,
+                            WKapi_Adi = "Kapi " + i,
+                            WKapi_Aktif = false,
+                            WKapi_Zorlama_Alarmi = false,
+                            WKapi_Yangin_Modu = false,
+                            WKapi_Sirali_Gecis_Ana_Kapi = false,
+                            WKapi_Ana_Alarm_Rolesi = false,
+                            WKapi_Acik_Sure_Alarmi = false,
+                            WKapi_Acilma_Alarmi = false,
+                            WKapi_Coklu_Onay = false,
+                            WKapi_Lift_Aktif = false,
+                            WKapi_Pin_Dogrulama = false,
+                            WKapi_Panik_Buton_Alarmi = false,
+                            WKapi_WIGType = 1,
+                            WKapi_Acik_Sure = 20,
+                            WKapi_Alarm_Modu = false,
+                            WKapi_Gecis_Modu = 0,
+                            WKapi_Harici_Alarm_Rolesi = 1,
+                            WKapi_Itme_Gecikmesi = 1,
+                            WKapi_Lokal_Bolge = 1,
+                            WKapi_Role_No = i,
+                            WKapi_User_Count = 1,
+                            WKapi_Kapi_Tipi = 1,
+                        };
+                        _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                    }
+
+
                 }
+                else
+                {
+                    for (int i = 1; i < 17; i++)
+                    {
+                        ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                        {
+                            Panel_ID = selectedpanel.Panel_ID,
+                            Panel_Name = selectedpanel.Panel_Name,
+                            Seri_No = selectedpanel.Seri_No,
+                            Sira_No = selectedpanel.Sira_No,
+                            WKapi_ID = i,
+                            WKapi_Adi = "Kapi " + i,
+                            WKapi_Aktif = false,
+                            WKapi_Zorlama_Alarmi = false,
+                            WKapi_Yangin_Modu = false,
+                            WKapi_Sirali_Gecis_Ana_Kapi = false,
+                            WKapi_Ana_Alarm_Rolesi = false,
+                            WKapi_Acik_Sure_Alarmi = false,
+                            WKapi_Acilma_Alarmi = false,
+                            WKapi_Coklu_Onay = false,
+                            WKapi_Lift_Aktif = false,
+                            WKapi_Pin_Dogrulama = false,
+                            WKapi_Panik_Buton_Alarmi = false,
+                            WKapi_WIGType = 1,
+                            WKapi_Acik_Sure = 20,
+                            WKapi_Alarm_Modu = false,
+                            WKapi_Gecis_Modu = 0,
+                            WKapi_Harici_Alarm_Rolesi = 1,
+                            WKapi_Itme_Gecikmesi = 1,
+                            WKapi_Lokal_Bolge = 1,
+                            WKapi_Role_No = i,
+                            WKapi_User_Count = 1,
+                            WKapi_Kapi_Tipi = 1,
+                        };
+                        _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                    }
+                }
+
+
+
+
+             
             }
             ViewBag.Panel_Global_Bolge1 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi", selectedpanel.Panel_Global_Bolge1);
             ViewBag.Panel_Global_Bolge2 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi", selectedpanel.Panel_Global_Bolge2);
@@ -132,39 +211,110 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == updatePanel.Panel_ID);
                 if (readers == null)
                 {
-                    for (int i = 1; i < 17; i++)
+                    if (updatePanel.Panel_Model == 9)
                     {
-                        ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                        //ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                        //{
+                        //    Panel_ID = updatePanel.Panel_ID,
+                        //    Panel_Name = updatePanel.Panel_Name,
+                        //    Seri_No = updatePanel.Seri_No,
+                        //    Sira_No = updatePanel.Sira_No,
+                        //    WKapi_ID = 1,
+                        //    WKapi_Adi = "Kapı " + 1,
+                        //    WKapi_Aktif = false,
+                        //    WKapi_Zorlama_Alarmi = false,
+                        //    WKapi_Yangin_Modu = false,
+                        //    WKapi_Sirali_Gecis_Ana_Kapi = false,
+                        //    WKapi_Ana_Alarm_Rolesi = false,
+                        //    WKapi_Acik_Sure_Alarmi = false,
+                        //    WKapi_Acilma_Alarmi = false,
+                        //    WKapi_Coklu_Onay = false,
+                        //    WKapi_Lift_Aktif = false,
+                        //    WKapi_Pin_Dogrulama = false,
+                        //    WKapi_Panik_Buton_Alarmi = false,
+                        //    WKapi_WIGType = 1,
+                        //    WKapi_Acik_Sure = 1,
+                        //    WKapi_Alarm_Modu = false,
+                        //    WKapi_Gecis_Modu = 0,
+                        //    WKapi_Harici_Alarm_Rolesi = 1,
+                        //    WKapi_Itme_Gecikmesi = 1,
+                        //    WKapi_Lokal_Bolge = 1,
+                        //    WKapi_Role_No = 1,
+                        //    WKapi_User_Count = 1,
+                        //    WKapi_Kapi_Tipi = 1,
+                        //};
+                        //_settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                        for (int i = 1; i < 17; i++)
                         {
-                            Panel_ID = updatePanel.Panel_ID,
-                            Panel_Name = updatePanel.Panel_Name,
-                            Seri_No = updatePanel.Seri_No,
-                            Sira_No = updatePanel.Sira_No,
-                            WKapi_ID = i,
-                            WKapi_Adi = "Kapı " + i,
-                            WKapi_Aktif = false,
-                            WKapi_Zorlama_Alarmi = false,
-                            WKapi_Yangin_Modu = false,
-                            WKapi_Sirali_Gecis_Ana_Kapi = false,
-                            WKapi_Ana_Alarm_Rolesi = false,
-                            WKapi_Acik_Sure_Alarmi = false,
-                            WKapi_Acilma_Alarmi = false,
-                            WKapi_Coklu_Onay = false,
-                            WKapi_Lift_Aktif = false,
-                            WKapi_Pin_Dogrulama = false,
-                            WKapi_Panik_Buton_Alarmi = false,
-                            WKapi_WIGType = 1,
-                            WKapi_Acik_Sure = 1,
-                            WKapi_Alarm_Modu = false,
-                            WKapi_Gecis_Modu = 0,
-                            WKapi_Harici_Alarm_Rolesi = 1,
-                            WKapi_Itme_Gecikmesi = 1,
-                            WKapi_Lokal_Bolge = 1,
-                            WKapi_Role_No = 1,
-                            WKapi_User_Count = 1,
-                            WKapi_Kapi_Tipi = 1,
-                        };
-                        _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                            ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                            {
+                                Panel_ID = updatePanel.Panel_ID,
+                                Panel_Name = updatePanel.Panel_Name,
+                                Seri_No = updatePanel.Seri_No,
+                                Sira_No = updatePanel.Sira_No,
+                                WKapi_ID = i,
+                                WKapi_Adi = "Kapı " + i,
+                                WKapi_Aktif = false,
+                                WKapi_Zorlama_Alarmi = false,
+                                WKapi_Yangin_Modu = false,
+                                WKapi_Sirali_Gecis_Ana_Kapi = false,
+                                WKapi_Ana_Alarm_Rolesi = false,
+                                WKapi_Acik_Sure_Alarmi = false,
+                                WKapi_Acilma_Alarmi = false,
+                                WKapi_Coklu_Onay = false,
+                                WKapi_Lift_Aktif = false,
+                                WKapi_Pin_Dogrulama = false,
+                                WKapi_Panik_Buton_Alarmi = false,
+                                WKapi_WIGType = 1,
+                                WKapi_Acik_Sure = 1,
+                                WKapi_Alarm_Modu = false,
+                                WKapi_Gecis_Modu = 0,
+                                WKapi_Harici_Alarm_Rolesi = 1,
+                                WKapi_Itme_Gecikmesi = 1,
+                                WKapi_Lokal_Bolge = 1,
+                                WKapi_Role_No = i,
+                                WKapi_User_Count = 1,
+                                WKapi_Kapi_Tipi = 1,
+                            };
+                            _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 1; i < 17; i++)
+                        {
+                            ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                            {
+                                Panel_ID = updatePanel.Panel_ID,
+                                Panel_Name = updatePanel.Panel_Name,
+                                Seri_No = updatePanel.Seri_No,
+                                Sira_No = updatePanel.Sira_No,
+                                WKapi_ID = i,
+                                WKapi_Adi = "Kapı " + i,
+                                WKapi_Aktif = false,
+                                WKapi_Zorlama_Alarmi = false,
+                                WKapi_Yangin_Modu = false,
+                                WKapi_Sirali_Gecis_Ana_Kapi = false,
+                                WKapi_Ana_Alarm_Rolesi = false,
+                                WKapi_Acik_Sure_Alarmi = false,
+                                WKapi_Acilma_Alarmi = false,
+                                WKapi_Coklu_Onay = false,
+                                WKapi_Lift_Aktif = false,
+                                WKapi_Pin_Dogrulama = false,
+                                WKapi_Panik_Buton_Alarmi = false,
+                                WKapi_WIGType = 1,
+                                WKapi_Acik_Sure = 1,
+                                WKapi_Alarm_Modu = false,
+                                WKapi_Gecis_Modu = 0,
+                                WKapi_Harici_Alarm_Rolesi = 1,
+                                WKapi_Itme_Gecikmesi = 1,
+                                WKapi_Lokal_Bolge = 1,
+                                WKapi_Role_No = i,
+                                WKapi_User_Count = 1,
+                                WKapi_Kapi_Tipi = 1,
+                            };
+                            _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                        }
                     }
                 }
                 return RedirectToAction("Settings", new { @PanelID = panel.Panel_ID });

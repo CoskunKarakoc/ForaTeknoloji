@@ -226,19 +226,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     foreach (var item in PanelList)
                     {
-                        TaskList taskList = new TaskList
+                        var panelModel = _panelSettingsService.GetById(item);
+                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)CommandConstants.CMD_SND_TIMEGROUP,
-                            IntParam_1 = ZamanGrupNo,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = item,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        _accessDatasService.AddOperatorLog(112, permissionUser.Kullanici_Adi, ZamanGrupNo, 0, item, 0);
+                            TaskList taskList = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)CommandConstants.CMD_SND_TIMEGROUP,
+                                IntParam_1 = ZamanGrupNo,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = item,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                            _accessDatasService.AddOperatorLog(112, permissionUser.Kullanici_Adi, ZamanGrupNo, 0, item, 0);
+                        }
+
                     }
                     Thread.Sleep(2000);
                 }
@@ -264,34 +269,38 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     foreach (var panel in PanelListAll)
                     {
-                        TaskList taskListERS = new TaskList
+                        var panelModel = _panelSettingsService.GetById(panel);
+                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_TIMEGROUP,
-                            IntParam_1 = 0,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = panel,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceiveErs = _taskListService.AddTaskList(taskListERS);
-                        _accessDatasService.AddOperatorLog(111, permissionUser.Kullanici_Adi, 0, 0, panel, 0);
-                        foreach (var item in _timeGroupsService.GetAllTimeGroups().Select(a => a.Zaman_Grup_No))
-                        {
-                            TaskList taskListSend = new TaskList
+                            TaskList taskListERS = new TaskList
                             {
                                 Deneme_Sayisi = 1,
                                 Durum_Kodu = 1,
-                                Gorev_Kodu = (int)CommandConstants.CMD_SND_TIMEGROUP,
-                                IntParam_1 = item,
+                                Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_TIMEGROUP,
+                                IntParam_1 = 0,
                                 Kullanici_Adi = user.Kullanici_Adi,
                                 Panel_No = panel,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
-                            _accessDatasService.AddOperatorLog(113, permissionUser.Kullanici_Adi, item, 0, panel, 0);
+                            TaskList taskListReceiveErs = _taskListService.AddTaskList(taskListERS);
+                            _accessDatasService.AddOperatorLog(111, permissionUser.Kullanici_Adi, 0, 0, panel, 0);
+                            foreach (var item in _timeGroupsService.GetAllTimeGroups().Select(a => a.Zaman_Grup_No))
+                            {
+                                TaskList taskListSend = new TaskList
+                                {
+                                    Deneme_Sayisi = 1,
+                                    Durum_Kodu = 1,
+                                    Gorev_Kodu = (int)CommandConstants.CMD_SND_TIMEGROUP,
+                                    IntParam_1 = item,
+                                    Kullanici_Adi = user.Kullanici_Adi,
+                                    Panel_No = panel,
+                                    Tablo_Guncelle = true,
+                                    Tarih = DateTime.Now
+                                };
+                                TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
+                                _accessDatasService.AddOperatorLog(113, permissionUser.Kullanici_Adi, item, 0, panel, 0);
+                            }
                         }
                     }
 

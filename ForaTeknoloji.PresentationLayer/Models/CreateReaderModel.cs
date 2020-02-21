@@ -12,5 +12,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<ComplexGroupsDetailNew> Groups { get; internal set; }
         public int? Panel_ID { get; internal set; }
         public List<PanelSettings> PanelList { get; internal set; }
+        public int? PanelModel { get; internal set; }
     }
 }

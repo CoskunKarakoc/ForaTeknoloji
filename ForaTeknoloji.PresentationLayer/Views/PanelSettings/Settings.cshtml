@@ -1,4 +1,5 @@
-﻿@model ForaTeknoloji.Entities.Entities.PanelSettings
+﻿@using ForaTeknoloji.Common
+@model ForaTeknoloji.Entities.Entities.PanelSettings
 @{
     /**/
 
@@ -66,7 +67,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="text-muted">Panel Modeli</label>
-                                    @if (Model.Panel_Model == 5)
+                                    @if (Model.Panel_Model == (int)PanelModel.Panel_301)
                                     {
                                         <div class="custom-control custom-radio">
                                             <input type="radio" value="5" class="custom-control-input" id="Kapi301" checked name="Panel_Model">
@@ -80,8 +81,12 @@
                                             <input type="radio" value="7" class="custom-control-input" id="Kapi302" name="Panel_Model">
                                             <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
                                         </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="9" class="custom-control-input" id="Kapi1010" name="Panel_Model">
+                                            <label class="custom-control-label" for="Kapi1010">MS-1010</label>
+                                        </div>
                                     }
-                                    else if (Model.Panel_Model == 6)
+                                    else if (Model.Panel_Model == (int)PanelModel.Panel_304)
                                     {
                                         <div class="custom-control custom-radio">
                                             <input type="radio" value="5" class="custom-control-input" id="Kapi301" name="Panel_Model">
@@ -94,6 +99,29 @@
                                         <div class="custom-control custom-radio">
                                             <input type="radio" value="7" class="custom-control-input" id="Kapi302" name="Panel_Model">
                                             <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="9" class="custom-control-input" id="Kapi1010" name="Panel_Model">
+                                            <label class="custom-control-label" for="Kapi1010">MS-1010</label>
+                                        </div>
+                                    }
+                                    else if (Model.Panel_Model == (int)PanelModel.Panel_1010)
+                                    {
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="5" class="custom-control-input" id="Kapi301" name="Panel_Model">
+                                            <label class="custom-control-label" for="Kapi301">MW-301(8 Kapı)</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="6" class="custom-control-input" id="Kapi304" name="Panel_Model">
+                                            <label class="custom-control-label" for="Kapi304">MW-304(4 Kapı)</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="7" class="custom-control-input" id="Kapi302" name="Panel_Model">
+                                            <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="9" class="custom-control-input" checked id="Kapi1010" name="Panel_Model">
+                                            <label class="custom-control-label" for="Kapi1010">MS-1010</label>
                                         </div>
                                     }
                                     else
@@ -109,6 +137,10 @@
                                         <div class="custom-control custom-radio">
                                             <input type="radio" value="7" class="custom-control-input" id="Kapi302" checked name="Panel_Model">
                                             <label class="custom-control-label" for="Kapi302">MW-302(2 Kapı)</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" value="9" class="custom-control-input" id="Kapi1010" name="Panel_Model">
+                                            <label class="custom-control-label" for="Kapi1010">MS-1010</label>
                                         </div>
                                     }
                                 </div>
@@ -948,43 +980,43 @@
                         <label class="text-center text-info">Lokal Bölge 2 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge2", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                            @Html.DropDownList("Panel_Global_Bolge2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge2, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 3 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge3", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                            @Html.DropDownList("Panel_Global_Bolge3", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge3, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 4 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge4", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                            @Html.DropDownList("Panel_Global_Bolge4", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge4, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 5 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge5", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                            @Html.DropDownList("Panel_Global_Bolge5", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge5, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 6 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge6", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                            @Html.DropDownList("Panel_Global_Bolge6", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge6, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 7 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge7", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                            @Html.DropDownList("Panel_Global_Bolge7", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge7, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 8 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge8", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                            @Html.DropDownList("Panel_Global_Bolge8", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge8, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -1007,14 +1039,14 @@
                                     <div class="col-md-6">
                                         <label>Grup 1-1:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G1_1", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                                            @Html.DropDownList("LocalInterlock_G1_1", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G1_1, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Grup 1-2:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G1_2", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                                            @Html.DropDownList("LocalInterlock_G1_2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G1_2, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -1023,7 +1055,7 @@
                                     <div class="col-md-6">
                                         <label>Grup 2-1:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G2_1", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                                            @Html.DropDownList("LocalInterlock_G2_1", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G2_1, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -1039,14 +1071,14 @@
                                     <div class="col-md-6">
                                         <label>Grup 3-1:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G3_1", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                                            @Html.DropDownList("LocalInterlock_G3_1", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G3_1, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Grup 3-2:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G3_2", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                                            @Html.DropDownList("LocalInterlock_G3_2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G3_2, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -1062,7 +1094,7 @@
                                     <div class="col-md-6">
                                         <label>Grup 4-2:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G4_2", null, "Global Bölge Seçiniz", new { @class = "form-control"})
+                                            @Html.DropDownList("LocalInterlock_G4_2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G4_2, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -1083,7 +1115,7 @@
                                 @if (Model.Panel_Expansion == 0)
                                 {
                                     <div class="form-group">
-                                        <select class="form-control"  name="Panel_Expansion" id="Panel_Expansion">
+                                        <select class="form-control" name="Panel_Expansion" id="Panel_Expansion">
                                             <option selected value="0">İptal</option>
                                             <option value="1">MW 301 EXP</option>
                                             <option value="2">MW 650 Asansör</option>
@@ -1195,7 +1227,7 @@
                                 else if (Model.Lift_Capacity == 2)
                                 {
                                     <div class="form-group">
-                                        <select class="form-control"  name="Lift_Capacity" id="Lift_Capacity">
+                                        <select class="form-control" name="Lift_Capacity" id="Lift_Capacity">
                                             <option value="0">İptal</option>
                                             <option value="1">Max 8 Asansör,Max 16 Kat</option>
                                             <option selected value="2">Max 8 Asansör,Max 32 Kat</option>
@@ -1234,7 +1266,7 @@
                                 else
                                 {
                                     <div class="form-group">
-                                        <select class="form-control"  name="Lift_Capacity" id="Lift_Capacity">
+                                        <select class="form-control" name="Lift_Capacity" id="Lift_Capacity">
                                             <option value="0">İptal</option>
                                             <option value="1">Max 8 Asansör,Max 16 Kat</option>
                                             <option value="2">Max 8 Asansör,Max 32 Kat</option>

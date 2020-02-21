@@ -121,6 +121,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 visitors.Resim = filename;
             }
 
+            if (ProfileImage == null)
+                visitors.Resim = "BaseUser.jpg";
+
+
             if (ModelState.IsValid)
             {
                 visitors.Saat = DateTime.Now;
@@ -187,6 +191,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
                 entity.Resim = filename;
             }
+            if (ProfileImage == null && entity.Resim == null)
+                entity.Resim = "BaseUser.jpg";
+
+
             if (ModelState.IsValid)
             {
                 var visitor = _visitorsService.GetById((int)entity.Kayit_No);
@@ -260,19 +268,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
                     foreach (var item in PanelList)
                     {
-                        TaskList taskList = new TaskList
+                        var panelModel = _panelSettingsService.GetById(item);
+                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
-                            IntParam_1 = VisitorID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = item,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskReceive = _taskListService.AddTaskList(taskList);
-                        _accessDatasService.AddOperatorLog(323, permissionUser.Kullanici_Adi, VisitorID, 0, item, 0);
+                            TaskList taskList = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
+                                IntParam_1 = VisitorID,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = item,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            TaskList taskReceive = _taskListService.AddTaskList(taskList);
+                            _accessDatasService.AddOperatorLog(323, permissionUser.Kullanici_Adi, VisitorID, 0, item, 0);
+                        }
                     }
                     Thread.Sleep(500);
                 }

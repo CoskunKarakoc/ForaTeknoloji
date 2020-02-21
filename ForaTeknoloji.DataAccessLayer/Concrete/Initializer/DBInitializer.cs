@@ -66,21 +66,6 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
             };
             context.AlarmTipleri.Add(alarmTipleri1);
             context.AlarmTipleri.Add(alarmTipleri2);
-            Cameras cameras = new Cameras
-            {
-                Kamera_No = 1,
-                Kamera_Adi = "LPR FORA",
-                Kamera_Tipi = 3,
-                IP_Adres = "192.168.1.201",
-                TCP_Port = 8083,
-                Kamera_Admin = "admin",
-                Kamera_Password = "12345",
-                Geciste_Resim_Kayit = false,
-                Antipassback_Resim_Kayit = false,
-                Engellenen_Resim_Kayit = false,
-                Tanimsiz_Resim_Kayit = false,
-            };
-            context.Cameras.Add(cameras);
             CameraTypes cameraTypes1 = new CameraTypes
             {
                 Kamera_Tipi = 1,
@@ -1594,9 +1579,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 SSL_Kullan = true,
                 Authentication = 2,
                 Gonderme_Saati = DateTime.Now,
-                Gelmeyenler_Raporu = true,
+                Gelmeyenler_Raporu = false,
                 Alici_1_E_Mail_Adres = "sample@forateknoloji.com",
-                Alici_1_E_Mail_Gonder = true,
+                Alici_1_E_Mail_Gonder = false,
                 Yemekhane_Raporu = false,
                 Kapi_Grup_Baslangic_Saati = DateTime.Now,
                 Kapi_Grup_Bitis_Saati = DateTime.Now,

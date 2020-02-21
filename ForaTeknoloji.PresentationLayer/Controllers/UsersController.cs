@@ -211,6 +211,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
                 Addeduser.Resim = filename;
             }
+            if (ProfileImage == null)
+                Addeduser.Resim = "BaseUser.jpg";
+
+
+
             if (Addeduser != null && Addeduser.ID != 0 && Addeduser.Kart_ID != null)
             {
                 var CheckKartID = _userService.GetAllUsers(x => x.Kart_ID == Addeduser.Kart_ID);
@@ -275,6 +280,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 ProfileImage.SaveAs(Server.MapPath($"~/Images/{filename}"));
                 entity.Resim = filename;
             }
+            if (ProfileImage == null && entity.Resim == null)
+                entity.Resim = "BaseUser.jpg";
+
 
 
             if (ModelState.IsValid)
@@ -693,6 +701,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
 
         }
+
+
 
     }
 

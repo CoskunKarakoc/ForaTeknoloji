@@ -84,12 +84,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             if (okuyucular == null)
                 throw new Exception("Bu panele ait okuyucu bulunmamaktadır.");
-
+            var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
             var model = new ReaderEditViewModel
             {
                 Paneller = _reportService.PanelListesi(user),
                 Okuyucular = okuyucular.OrderBy(x => x.WKapi_ID).ToList(),
-                Panel_ID = PanelID
+                Panel_ID = PanelID,
+                PanelModel = panelModel
             };
 
 
@@ -168,6 +169,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
         }
+
+
+
+        public ActionResult ReaderEditMS(int Wid, int MSPanelID)
+        {
+            var model = new ReaderSettingsNew();
+
+
+            return View(model);
+        }
+
 
 
 

@@ -239,19 +239,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     foreach (var item in PanelList)
                     {
-                        TaskList taskList = new TaskList
+                        var panelModel = _panelSettingsService.GetById(item);
+                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)OprKod,
-                            IntParam_1 = AsansorGrupNo,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = item,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        _taskListService.AddTaskList(taskList);
-                        _accessDatasService.AddOperatorLog(163, user.Kullanici_Adi, AsansorGrupNo, 0, item, 0);
+                            TaskList taskList = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)OprKod,
+                                IntParam_1 = AsansorGrupNo,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = item,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            _taskListService.AddTaskList(taskList);
+                            _accessDatasService.AddOperatorLog(163, user.Kullanici_Adi, AsansorGrupNo, 0, item, 0);
+                        }
                     }
                     Thread.Sleep(2000);
                 }

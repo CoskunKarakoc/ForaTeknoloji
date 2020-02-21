@@ -70,6 +70,8 @@
                             </div>
                         }
                         <div class="col-md-12 text-right">
+                            <hr />
+                            <a href="@Url.Action("ClearTask","Task")" onclick="return confirm('Tüm Görevleri Silmek İstedeğinize Emin Misiniz?')" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> Görevleri Temizle</a>
                             <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                         </div>
                     </div>
@@ -77,12 +79,12 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <hr />
+                        <br />
                         @if (Model.Liste.Count > 0)
                         {
                             @webGrid.GetHtml(
                             htmlAttributes: new {@id="table",@class= "table-borderless table table-hover text-center table-striped small" },
-                            headerStyle:"table-info table-sm",
+                            headerStyle:"table-sm",
                             footerStyle: "table-pager",
                              columns:webGrid.Columns(
                                  webGrid.Column("Gorev_Adi",header:"Görev Adı"),

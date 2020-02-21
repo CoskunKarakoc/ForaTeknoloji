@@ -53,5 +53,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Grup_Adi { get; set; }
 
         public int Panel_ID { get; set; }
+
+        public int PanelModel { get; set; }
     }
 }

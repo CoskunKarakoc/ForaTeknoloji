@@ -45,6 +45,7 @@
     <Compile Include="CommandConstants.cs" />
     <Compile Include="DefaultCommon.cs" />
     <Compile Include="ICommon.cs" />
+    <Compile Include="PanelModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

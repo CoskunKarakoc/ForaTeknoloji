@@ -9,5 +9,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     {
         List<TaskStatusWatch> GetAllTaskStatusWatch();
         List<ComplexTaskList> ComplexTaskList();
+        void ClearTakList();
     }
 }

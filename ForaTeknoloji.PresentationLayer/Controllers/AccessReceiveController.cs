@@ -71,18 +71,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             foreach (var item in PanelListClear)
             {
-                TaskList taskList = new TaskList
+                var panelModel = _panelSettingsService.GetById(item);
+                if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                 {
-                    Deneme_Sayisi = 1,
-                    Durum_Kodu = 1,
-                    Gorev_Kodu = (int)CommandConstants.CMD_ERS_LOGCOUNT,
-                    IntParam_1 = 1,
-                    Kullanici_Adi = user.Kullanici_Adi,
-                    Panel_No = item,
-                    Tablo_Guncelle = true,
-                    Tarih = DateTime.Now
-                };
-                _taskListService.AddTaskList(taskList);
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_LOGCOUNT,
+                        IntParam_1 = 1,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = item,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    _taskListService.AddTaskList(taskList);
+                }
+
             }
             return RedirectToAction("Index", "AccessReceive");
         }
@@ -94,18 +99,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             foreach (var panel in PanelList)
             {
-                TaskList taskList = new TaskList
+                var panelModel = _panelSettingsService.GetById(panel);
+                if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                 {
-                    Deneme_Sayisi = 1,
-                    Durum_Kodu = 1,
-                    Gorev_Kodu = (int)CommandConstants.CMD_RCV_LOGS,
-                    IntParam_1 = 1,
-                    Kullanici_Adi = user.Kullanici_Adi,
-                    Panel_No = panel,
-                    Tablo_Guncelle = true,
-                    Tarih = DateTime.Now
-                };
-                _taskListService.AddTaskList(taskList);
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = 1,
+                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_LOGS,
+                        IntParam_1 = 1,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = panel,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    _taskListService.AddTaskList(taskList);
+                }
+
             }
             return RedirectToAction("Index", "AccessReceive");
         }

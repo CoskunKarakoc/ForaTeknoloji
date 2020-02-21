@@ -74,7 +74,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 Gruplar = _groupMasterService.GetAllGroupsMaster(),
                 PanelListesi = _reportService.PanelListesi(user),
-                GroupUserCount=keyValues
+                GroupUserCount = keyValues
             };
 
             return View(model);
@@ -256,14 +256,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
 
 
-
+            var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
             var model = new CreateReaderModel
             {
                 Kapi_Asansor_Bolge_No = KapiAsansorBolgeNo,
                 Kapi_Zaman_Grup_No = KapiZamanGrupNo,
                 Groups = nesne,
                 Panel_ID = PanelID,
-                PanelList = _reportService.PanelListesi(user)
+                PanelList = _reportService.PanelListesi(user),
+                PanelModel = panelModel
             };
             return View(model);
         }
@@ -273,63 +274,110 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
-                List<bool?> kapiStatus = new List<bool?>();
-                kapiStatus.Add(parameters.Kapi_1);
-                kapiStatus.Add(parameters.Kapi_2);
-                kapiStatus.Add(parameters.Kapi_3);
-                kapiStatus.Add(parameters.Kapi_4);
-                kapiStatus.Add(parameters.Kapi_5);
-                kapiStatus.Add(parameters.Kapi_6);
-                kapiStatus.Add(parameters.Kapi_7);
-                kapiStatus.Add(parameters.Kapi_8);
-                kapiStatus.Add(parameters.Kapi_9);
-                kapiStatus.Add(parameters.Kapi_10);
-                kapiStatus.Add(parameters.Kapi_11);
-                kapiStatus.Add(parameters.Kapi_12);
-                kapiStatus.Add(parameters.Kapi_13);
-                kapiStatus.Add(parameters.Kapi_14);
-                kapiStatus.Add(parameters.Kapi_15);
-                kapiStatus.Add(parameters.Kapi_16);
-
-                for (int i = 0; i < 16; i++)
+                if (parameters.PanelModel == 9)
                 {
-                    var group = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Kapi_No == (i + 1) && x.Panel_No == parameters.Panel_ID && x.Grup_No == parameters.Grup_No).FirstOrDefault();
-                    if (group == null)
+                    List<bool?> kapiStatus = new List<bool?>();
+                    kapiStatus.Add(parameters.Kapi_1);
+
+                    for (int i = 0; i < 1; i++)
                     {
-                        GroupsDetailNew createGroup = new GroupsDetailNew
+                        var group = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Kapi_No == (i + 1) && x.Panel_No == parameters.Panel_ID && x.Grup_No == parameters.Grup_No).FirstOrDefault();
+                        if (group == null)
                         {
-                            Asansor_Grup_No = parameters.Kapi_Asansor_Bolge_No[i],
-                            Global_Bolge_No = 1,
-                            Grup_Adi = parameters.Grup_Adi,
-                            Grup_No = parameters.Grup_No,
-                            Kapi_Aktif = kapiStatus[i],
-                            Kapi_No = i + 1,
-                            Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i],
-                            Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name,
-                            Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID,
-                            Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No
-                        };
-                        _groupsDetailNewService.AddGroupsDetailNew(createGroup);
+                            GroupsDetailNew createGroup = new GroupsDetailNew
+                            {
+                                Asansor_Grup_No = 1,
+                                Global_Bolge_No = 1,
+                                Grup_Adi = parameters.Grup_Adi,
+                                Grup_No = parameters.Grup_No,
+                                Kapi_Aktif = kapiStatus[i],
+                                Kapi_No = i + 1,
+                                Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i],
+                                Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name,
+                                Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID,
+                                Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No
+                            };
+                            _groupsDetailNewService.AddGroupsDetailNew(createGroup);
+                        }
+                        else
+                        {
+                            group.Grup_Adi = parameters.Grup_Adi;
+                            group.Grup_No = parameters.Grup_No;
+                            group.Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name;
+                            group.Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID;
+                            group.Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No;
+                            group.Kapi_No = i + 1;
+                            group.Global_Bolge_No = 1;
+                            group.Asansor_Grup_No = 1;
+                            group.Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i];
+                            group.Kapi_Aktif = kapiStatus[i];
+                            _groupsDetailNewService.UpdateGroupsDetailNew(group);
+                        }
+
                     }
-                    else
+
+                    return RedirectToAction("GroupReaders", "AccessGroup", new { id = parameters.Grup_No, PanelID = parameters.Panel_ID });
+                }
+                else
+                {
+                    List<bool?> kapiStatus = new List<bool?>();
+                    kapiStatus.Add(parameters.Kapi_1);
+                    kapiStatus.Add(parameters.Kapi_2);
+                    kapiStatus.Add(parameters.Kapi_3);
+                    kapiStatus.Add(parameters.Kapi_4);
+                    kapiStatus.Add(parameters.Kapi_5);
+                    kapiStatus.Add(parameters.Kapi_6);
+                    kapiStatus.Add(parameters.Kapi_7);
+                    kapiStatus.Add(parameters.Kapi_8);
+                    kapiStatus.Add(parameters.Kapi_9);
+                    kapiStatus.Add(parameters.Kapi_10);
+                    kapiStatus.Add(parameters.Kapi_11);
+                    kapiStatus.Add(parameters.Kapi_12);
+                    kapiStatus.Add(parameters.Kapi_13);
+                    kapiStatus.Add(parameters.Kapi_14);
+                    kapiStatus.Add(parameters.Kapi_15);
+                    kapiStatus.Add(parameters.Kapi_16);
+
+                    for (int i = 0; i < 16; i++)
                     {
-                        group.Grup_Adi = parameters.Grup_Adi;
-                        group.Grup_No = parameters.Grup_No;
-                        group.Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name;
-                        group.Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID;
-                        group.Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No;
-                        group.Kapi_No = i + 1;
-                        group.Global_Bolge_No = 1;
-                        group.Asansor_Grup_No = parameters.Kapi_Asansor_Bolge_No[i];
-                        group.Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i];
-                        group.Kapi_Aktif = kapiStatus[i];
-                        _groupsDetailNewService.UpdateGroupsDetailNew(group);
+                        var group = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Kapi_No == (i + 1) && x.Panel_No == parameters.Panel_ID && x.Grup_No == parameters.Grup_No).FirstOrDefault();
+                        if (group == null)
+                        {
+                            GroupsDetailNew createGroup = new GroupsDetailNew
+                            {
+                                Asansor_Grup_No = parameters.Kapi_Asansor_Bolge_No[i],
+                                Global_Bolge_No = 1,
+                                Grup_Adi = parameters.Grup_Adi,
+                                Grup_No = parameters.Grup_No,
+                                Kapi_Aktif = kapiStatus[i],
+                                Kapi_No = i + 1,
+                                Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i],
+                                Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name,
+                                Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID,
+                                Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No
+                            };
+                            _groupsDetailNewService.AddGroupsDetailNew(createGroup);
+                        }
+                        else
+                        {
+                            group.Grup_Adi = parameters.Grup_Adi;
+                            group.Grup_No = parameters.Grup_No;
+                            group.Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name;
+                            group.Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID;
+                            group.Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No;
+                            group.Kapi_No = i + 1;
+                            group.Global_Bolge_No = 1;
+                            group.Asansor_Grup_No = parameters.Kapi_Asansor_Bolge_No[i];
+                            group.Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i];
+                            group.Kapi_Aktif = kapiStatus[i];
+                            _groupsDetailNewService.UpdateGroupsDetailNew(group);
+                        }
+
                     }
+
+                    return RedirectToAction("GroupReaders", "AccessGroup", new { id = parameters.Grup_No, PanelID = parameters.Panel_ID });
 
                 }
-
-                return RedirectToAction("GroupReaders", "AccessGroup", new { id = parameters.Grup_No, PanelID = parameters.Panel_ID });
-
             }
 
             throw new Exception("Upss! Yanlış giden birşeyler var.");
@@ -417,19 +465,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
                     foreach (var item in PanelList)
                     {
-                        TaskList taskList = new TaskList
+                        var panelModel = _panelSettingsService.GetById(item);
+                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)CommandConstants.CMD_SND_ACCESSGROUP,
-                            IntParam_1 = GecisGrupNo,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = item,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        _accessDatasService.AddOperatorLog(123, permissionUser.Kullanici_Adi, GecisGrupNo, 0, item, 0);
+                            TaskList taskList = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)CommandConstants.CMD_SND_ACCESSGROUP,
+                                IntParam_1 = GecisGrupNo,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = item,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                            _accessDatasService.AddOperatorLog(123, permissionUser.Kullanici_Adi, GecisGrupNo, 0, item, 0);
+                        }
+
                     }
                     Thread.Sleep(2000);
                 }
@@ -454,34 +507,38 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     foreach (var panel in PanelListAll)
                     {
-                        TaskList taskListERS = new TaskList
+                        var panelModel = _panelSettingsService.GetById(panel);
+                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_ACCESSGROUP,
-                            IntParam_1 = 0,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = panel,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceiveErs = _taskListService.AddTaskList(taskListERS);
-
-                        foreach (var item in _groupMasterService.GetAllGroupsMaster().Select(a => a.Grup_No))
-                        {
-                            TaskList taskListSend = new TaskList
+                            TaskList taskListERS = new TaskList
                             {
                                 Deneme_Sayisi = 1,
                                 Durum_Kodu = 1,
-                                Gorev_Kodu = (int)CommandConstants.CMD_SND_ACCESSGROUP,
-                                IntParam_1 = item,
+                                Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_ACCESSGROUP,
+                                IntParam_1 = 0,
                                 Kullanici_Adi = user.Kullanici_Adi,
                                 Panel_No = panel,
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
-                            _accessDatasService.AddOperatorLog(123, permissionUser.Kullanici_Adi, item, 0, panel, 0);
+                            TaskList taskListReceiveErs = _taskListService.AddTaskList(taskListERS);
+
+                            foreach (var item in _groupMasterService.GetAllGroupsMaster().Select(a => a.Grup_No))
+                            {
+                                TaskList taskListSend = new TaskList
+                                {
+                                    Deneme_Sayisi = 1,
+                                    Durum_Kodu = 1,
+                                    Gorev_Kodu = (int)CommandConstants.CMD_SND_ACCESSGROUP,
+                                    IntParam_1 = item,
+                                    Kullanici_Adi = user.Kullanici_Adi,
+                                    Panel_No = panel,
+                                    Tablo_Guncelle = true,
+                                    Tarih = DateTime.Now
+                                };
+                                TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
+                                _accessDatasService.AddOperatorLog(123, permissionUser.Kullanici_Adi, item, 0, panel, 0);
+                            }
                         }
                     }
 

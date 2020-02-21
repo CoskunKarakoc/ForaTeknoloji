@@ -191,28 +191,32 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (Panel_No != null)
             {
-                try
+                var panelModel = _panelSettingsService.GetById((int)Panel_No);
+                if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                 {
-                    TaskList taskList = new TaskList
+                    try
                     {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_SND_RELAYPROGRAM,
-                        IntParam_1 = (int)Panel_No,
-                        IntParam_2 = (int)Hafta,
-                        IntParam_3 = (int)ZamanDilimi,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = (int)Panel_No,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    _accessDatasService.AddOperatorLog(171, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
-                    Thread.Sleep(2000);
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_RELAYPROGRAM,
+                            IntParam_1 = (int)Panel_No,
+                            IntParam_2 = (int)Hafta,
+                            IntParam_3 = (int)ZamanDilimi,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = (int)Panel_No,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(171, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
+                        Thread.Sleep(2000);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                    }
                 }
             }
 
@@ -224,28 +228,32 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (Panel_No != null)
             {
-                try
+                var panelModel = _panelSettingsService.GetById((int)Panel_No);
+                if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                 {
-                    TaskList taskList = new TaskList
+                    try
                     {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = 1,
-                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_RELAYPROGRAM,
-                        IntParam_1 = (int)Panel_No,
-                        IntParam_2 = (int)Hafta,
-                        IntParam_3 = (int)ZamanDilimi,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = (int)Panel_No,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    _accessDatasService.AddOperatorLog(172, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
-                    Thread.Sleep(2000);
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = 1,
+                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_RELAYPROGRAM,
+                            IntParam_1 = (int)Panel_No,
+                            IntParam_2 = (int)Hafta,
+                            IntParam_3 = (int)ZamanDilimi,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = (int)Panel_No,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(172, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
+                        Thread.Sleep(2000);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                    }
                 }
             }
 

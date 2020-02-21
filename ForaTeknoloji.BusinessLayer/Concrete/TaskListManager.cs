@@ -75,6 +75,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _taskListDal.ComplexTaskList().OrderBy(x => x.Kayit_No).Where(x => x.Kullanici_Adi == UserName).ToList();
         }
 
-
+        public void DeleteAll()
+        {
+            _taskListDal.ClearTakList();
+        }
     }
 }

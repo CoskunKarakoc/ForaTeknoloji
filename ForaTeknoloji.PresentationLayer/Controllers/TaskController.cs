@@ -101,6 +101,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         }
 
+        public ActionResult ClearTask()
+        {
+            _taskListService.DeleteAll();
+            return RedirectToAction("TaskTable", "Task");
+        }
+
+
+
+
+
+
+
 
         public PartialViewResult TopManuTask()
         {

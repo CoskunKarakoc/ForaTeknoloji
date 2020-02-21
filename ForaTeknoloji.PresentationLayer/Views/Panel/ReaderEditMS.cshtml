@@ -1,0 +1,241 @@
+﻿@model ForaTeknoloji.Entities.Entities.ReaderSettingsNew
+@{
+    ViewBag.Title = "ReaderEditMS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Seçilen Kapı Ayarları(MS-1010)</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+
+
+                        @*Kapı Geçiş Tipi*@
+                        <div class="row">
+                            <label>Kapı Geçiş Tipi:&nbsp;</label>
+                            <div class="form-group col-md-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="Kapi_Gecis_Tipi_Giris" name="Kapi_Gecis_Tipi" value="1" checked />
+                                    <label class="custom-control-label" for="Kapi_Gecis_Tipi_Giris">Giriş</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" id="Kapi_Gecis_Tipi_Cikis" name="Kapi_Gecis_Tipi" value="2" />
+                                    <label class="custom-control-label" for="Kapi_Gecis_Tipi_Cikis">Çıkış</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label>Kullanıcı Modu:&nbsp;</label>
+                            <div class="form-group col-md-4">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="0" class="custom-control-input" id="Kullanici_Modu1" checked name="Kullanici_Modu">
+                                    <label class="custom-control-label" for="Kullanici_Modu1">Tanımlı Kartlar</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="1" class="custom-control-input" id="Kullanici_Modu2" name="Kullanici_Modu">
+                                    <label class="custom-control-label" for="Kullanici_Modu2">Tüm Kartlar</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <label>Geçiş Modu:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <div class="form-group col-md-4">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="0" class="custom-control-input" id="Gecis_Modu1" checked name="Gecis_Modu">
+                                    <label class="custom-control-label" for="Gecis_Modu1">Kart ve Şifre</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" value="1" class="custom-control-input" id="Gecis_Modu2" name="Gecis_Modu">
+                                    <label class="custom-control-label" for="Gecis_Modu2">Kart veya Şifre</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <label class="col-sm-4">Role Süresi</label>
+                            <input type="text" name="Role_Suresi" class="form-control form-control-sm col-sm-3" value="" />
+                        </div>
+                        <label>Çalışma Modu:&nbsp;</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Calisma_Modu" value="1" checked>Stand Alone
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Calisma_Modu" value="2">Online
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="Calisma_Modu" value="3">Reader Only
+                        </label>
+
+
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Peşpeşe Okuma Engeli</label>
+                                    <input type="text" name="Mukerrer_Engelleme_Suresi" class="form-control form-control-sm" value="" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <br />
+                                <label class="radio-inline">
+                                    <input type="radio" name="Mukerrer_Engelleme_Tipi" value="1" checked>Saniye
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Mukerrer_Engelleme_Tipi" value="2">Dakika
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <br />
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" name="Tus_Takimi_Ayar" id="Tus_Takimi_Ayar" class="custom-control-input" value="" />
+                                    <label class="custom-control-label" for="Tus_Takimi_Ayar">Tuş Takımı İle Ayar</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Menü Şifresi</label>
+                                    <input type="text" name="Menu_Sifresi" class="form-control form-control-sm" value="" />
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="Gecis_Sayisi_Kontrol_Iptal" class="custom-control-input" name="Gecis_Sayisi_Kontrol_Iptal" value="" />
+                            <label class="custom-control-label" for="Gecis_Sayisi_Kontrol_Iptal">Geçiş Sayısı Kontrolü İptal</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="UDP_Global_Guncelleme" class="custom-control-input" name="UDP_Global_Guncelleme" value="" />
+                            <label class="custom-control-label" for="UDP_Global_Guncelleme">UDP Global Güncelleme</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="Gecis_Sayac_Sifirlama_Iptal" class="custom-control-input" name="Gecis_Sayac_Sifirlama_Iptal" value="" />
+                            <label class="custom-control-label" for="Gecis_Sayac_Sifirlama_Iptal">Geçiş Sayaç Sıfırlama İptal</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="Tek_Gecis_Sayaci_Kullan" class="custom-control-input" name="Tek_Gecis_Sayaci_Kullan" value="" />
+                            <label class="custom-control-label" for="Tek_Gecis_Sayaci_Kullan">Tek Geçiş Sayacı Kullan</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="Kart_ID_32_Bit_Sifirla" class="custom-control-input" name="Kart_ID_32_Bit_Sifirla" value="" />
+                            <label class="custom-control-label" for="Kart_ID_32_Bit_Sifirla">Kart ID 32.Bit Sıfırla</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" id="Turnike_Kolu_Izleme" class="custom-control-input" name="Turnike_Kolu_Izleme" value="" />
+                            <label class="custom-control-label" for="Turnike_Kolu_Izleme">Turnike Kolu İzleme</label>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="Ikinci_OkuyucuRS" class="custom-control-input" name="Ikinci_OkuyucuRS" value="" />
+                                    <label class="custom-control-label" for="Ikinci_OkuyucuRS">İkinci Okuyucu(RS485)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>İkinci Okuyucu Tipi(RS485) Tipi&nbsp;</label>
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="0" class="custom-control-input" id="Ikinci_OkuyucuRS_Tipi1" checked name="Ikinci_OkuyucuRS_Tipi">
+                                        <label class="custom-control-label" for="Ikinci_OkuyucuRS_Tipi1">MW-310/340</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="1" class="custom-control-input" id="Ikinci_OkuyucuRS_Tipi2" name="Ikinci_OkuyucuRS_Tipi">
+                                        <label class="custom-control-label" for="Ikinci_OkuyucuRS_Tipi2">MW-157</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="Ikinci_OkuyucuWG" class="custom-control-input" name="Ikinci_OkuyucuWG" value="" />
+                                    <label class="custom-control-label" for="Ikinci_OkuyucuWG">İkinci Okuyucu(Wiegand)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>İkinci Okuyucu Tipi(Wiegand)&nbsp;</label>
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="0" class="custom-control-input" id="Ikinci_OkuyucuWG_Tipi1" checked name="Ikinci_OkuyucuWG_Tipi">
+                                        <label class="custom-control-label" for="Ikinci_OkuyucuWG_Tipi1">26-Bit</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="1" class="custom-control-input" id="Ikinci_OkuyucuWG_Tipi2" name="Ikinci_OkuyucuWG_Tipi">
+                                        <label class="custom-control-label" for="Ikinci_OkuyucuWG_Tipi2">34-Bit</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="Dahili_Mifare_Okuyucu" class="custom-control-input" name="Dahili_Mifare_Okuyucu" value="" />
+                                    <label class="custom-control-label" for="Dahili_Mifare_Okuyucu">Dahili Mifare Okuyucu</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Dahili Mifare Okuyucu Tipi&nbsp;</label>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="0" class="custom-control-input" id="Mifare_Okuyucu_Tipi1" name="Mifare_Okuyucu_Tipi" checked>
+                                        <label class="custom-control-label" for="Mifare_Okuyucu_Tipi1">Standart 4 Byte UID</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="1" class="custom-control-input" id="Mifare_Okuyucu_Tipi2" name="Mifare_Okuyucu_Tipi">
+                                        <label class="custom-control-label" for="Mifare_Okuyucu_Tipi2">Inverted 4 Byte UID</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="2" class="custom-control-input" id="Mifare_Okuyucu_Tipi3" name="Mifare_Okuyucu_Tipi">
+                                        <label class="custom-control-label" for="Mifare_Okuyucu_Tipi3">Standart 7 Byte UID</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

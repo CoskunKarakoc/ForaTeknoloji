@@ -247,22 +247,27 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     foreach (var item in PanelList)
                     {
-                        TaskList taskList = new TaskList
+                        var panelModel = _panelSettingsService.GetById(item);
+                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = 1,
-                            Gorev_Kodu = (int)OprKod,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            IntParam_1 = AlarmID,
-                            Panel_No = item,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                        if (OprKod == CommandConstants.CMD_ERS_USERALARM)
-                            _accessDatasService.AddOperatorLog(142, user.Kullanici_Adi, AlarmID, 0, item, 0);
-                        else
-                            _accessDatasService.AddOperatorLog(143, user.Kullanici_Adi, AlarmID, 0, item, 0);
+                            TaskList taskList = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = 1,
+                                Gorev_Kodu = (int)OprKod,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                IntParam_1 = AlarmID,
+                                Panel_No = item,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                            if (OprKod == CommandConstants.CMD_ERS_USERALARM)
+                                _accessDatasService.AddOperatorLog(142, user.Kullanici_Adi, AlarmID, 0, item, 0);
+                            else
+                                _accessDatasService.AddOperatorLog(143, user.Kullanici_Adi, AlarmID, 0, item, 0);
+                        }
+
                     }
                     Thread.Sleep(2000);
                 }

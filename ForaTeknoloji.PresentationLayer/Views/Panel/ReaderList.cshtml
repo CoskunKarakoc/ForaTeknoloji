@@ -1,4 +1,5 @@
-﻿@model ForaTeknoloji.PresentationLayer.Models.ReaderEditViewModel
+﻿@using ForaTeknoloji.Common
+@model ForaTeknoloji.PresentationLayer.Models.ReaderEditViewModel
 @{
     ViewBag.Title = "Okuyucular";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +7,6 @@
 
 <div class="row">
     @Html.HiddenFor(model => model.Panel_ID)
-
     <div class="col-md-4 mx-lg-4 my-lg-4 animated slideInLeft faster">
         @Html.Partial("_PartialPanelSettingsList", Model.Paneller)
     </div>
@@ -27,29 +27,58 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Okuyucular)
+                        @if (Model.PanelModel == (int)PanelModel.Panel_1010)
+                        {
+                            for (int i = 0; i < 1; i++)
+                            {
+                                <tr>
+                                    <td>@Model.Okuyucular[i].WKapi_ID</td>
+                                    @if (Model.Okuyucular[i].WKapi_Aktif == true)
+                                    {
+                                        <td><b><i class="text-success">Evet</i></b></td>
+                                        <td><b><i class="text-success">@Model.Okuyucular[i].WKapi_Adi.Trim()</i></b></td>
+                                        <td>
+                                            <a title="Edit" id="edit" href="@Url.Action("ReaderEditMS","Panel",new { Wid=Model.Okuyucular[i].WKapi_ID,MSPanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-danger">Hayır</td>
+                                        <td class="text-danger">@Model.Okuyucular[i].WKapi_Adi.Trim()</td>
+                                        <td>
+                                            <a title="Edit" id="edit" href="@Url.Action("ReaderEditMS","Panel",new { Wid=Model.Okuyucular[i].WKapi_ID,MSPanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                        else
                         {
 
-                            <tr>
-                                <td>@item.WKapi_ID</td>
-                                @if (item.WKapi_Aktif == true)
-                                {
-                                    <td><b><i class="text-success">Evet</i></b></td>
-                                    <td><b><i class="text-success">@item.WKapi_Adi.Trim()</i></b></td>
-                                    <td>
-                                        <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td class="text-danger">Hayır</td>
-                                    <td class="text-danger">@item.WKapi_Adi.Trim()</td>
-                                    <td>
-                                        <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    </td>
-                                }
-                            </tr>
+                            foreach (var item in Model.Okuyucular)
+                            {
 
+                                <tr>
+                                    <td>@item.WKapi_ID</td>
+                                    @if (item.WKapi_Aktif == true)
+                                    {
+                                        <td><b><i class="text-success">Evet</i></b></td>
+                                        <td><b><i class="text-success">@item.WKapi_Adi.Trim()</i></b></td>
+                                        <td>
+                                            <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-danger">Hayır</td>
+                                        <td class="text-danger">@item.WKapi_Adi.Trim()</td>
+                                        <td>
+                                            <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                        </td>
+                                    }
+                                </tr>
+
+                            }
                         }
                     </tbody>
                     <tfoot>

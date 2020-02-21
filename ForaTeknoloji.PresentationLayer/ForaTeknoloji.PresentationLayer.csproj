@@ -2764,6 +2764,7 @@
     <Content Include="Views\Shared\_PartialPersonelListReport.cshtml" />
     <Content Include="Views\Shared\_PartialGelenGelmeyenIlkGirisSonCikis.cshtml" />
     <Content Include="Views\WatchScreen\WatchOuther.cshtml" />
+    <Content Include="Views\Panel\ReaderEditMS.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

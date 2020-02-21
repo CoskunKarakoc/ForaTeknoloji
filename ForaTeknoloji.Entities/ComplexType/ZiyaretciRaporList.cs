@@ -22,5 +22,6 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Personel_Adi { get; set; }
         public string Personel_Soyadi { get; set; }
         public string Ziyaretci_Resim { get; set; }
+        public string Canli_Resim { get; set; }
     }
 }

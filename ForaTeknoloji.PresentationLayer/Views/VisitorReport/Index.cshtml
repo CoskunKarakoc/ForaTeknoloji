@@ -12,7 +12,7 @@
     {
         var sonuc = (ForaTeknoloji.Entities.ComplexType.ZiyaretciRaporList)webGrid.Rows[webGrid.SelectedIndex].Value;
         img = "/Images/" + sonuc.Ziyaretci_Resim;
-        canlimg = "/Canli_Images/" + sonuc.Ziyaretci_Resim;
+        canlimg = "/Canli_Images/" + sonuc.Canli_Resim;
 
     }
 }
@@ -196,11 +196,11 @@
                 <div class="col-md-4 text-center">
                     <p class="text-center text-muted">Kayıtlı Fotoğraf</p>
                     <hr />
-                    <img id="change-image" src="@img" alt="Kayıtlı Fotoğraf" />
+                    <img id="change-image"  style="height:350px;"  src="@img" alt="Kayıtlı Fotoğraf" />
 
                     <p class="text-center text-muted">Canlı Fotoğraf</p>
                     <hr />
-                    <img id="change-image-canli" src="@canlimg" alt="Canlı Fotoğraf" />
+                    <img id="change-image-canli"  style="height:350px;"  src="@canlimg" alt="Canlı Fotoğraf" />
 
                 </div>
             </div>

@@ -1707,7 +1707,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             Visitors.[Ziyaret Sebebi], GroupsMaster.[Grup Adi], 
             AccessDatas.[Panel ID] AS Panel, ReaderSettingsNew.[WKapi Adi] AS Kapi, 
             AccessDatas.[Gecis Tipi] AS Gecis, AccessDatas.Tarih,
-            Users.Adi AS [Personel Adi], Users.Soyadi AS [Personel Soyadi], Visitors.Resim 
+            Users.Adi AS [Personel Adi], Users.Soyadi AS [Personel Soyadi], Visitors.Resim,AccessDatas.[Canli Resim]
             FROM (((Visitors
 			RIGHT JOIN AccessDatas ON Visitors.[Kayit No] = AccessDatas.[Visitor Kayit No])
 			LEFT JOIN GroupsMaster ON Visitors.[Grup No] = GroupsMaster.[Grup No])
@@ -1844,6 +1844,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Personel_Adi = reader[14].ToString(),
                             Personel_Soyadi = reader[15].ToString(),
                             Ziyaretci_Resim = reader[16].ToString(),
+                            Canli_Resim = reader[17].ToString()
                         };
                         liste.Add(nesne);
                     }
@@ -2656,10 +2657,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             using (SqlConnection connection = new SqlConnection(address))
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
                 try
                 {
                     connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {

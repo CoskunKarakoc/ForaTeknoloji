@@ -9,6 +9,18 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
     public class EfTaskListDal : EfEntityRepositoryBase<TaskList, ForaContext>, ITaskListDal
     {
+
+        public void ClearTakList()
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("DELETE FROM TaskList");
+            }
+        }
+
+
+
+
         public List<TaskStatusWatch> GetAllTaskStatusWatch()
         {
             IQueryable<TaskStatusWatch> query;

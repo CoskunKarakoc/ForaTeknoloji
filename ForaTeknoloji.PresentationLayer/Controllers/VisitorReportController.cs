@@ -40,6 +40,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _doorNamesService = doorNamesService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
 
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+
         }
         // GET: VisitorReport
         public ActionResult Index(VisitorReportParameters parameters)
