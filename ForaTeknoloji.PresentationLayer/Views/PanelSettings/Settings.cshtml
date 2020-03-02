@@ -156,8 +156,12 @@
                                         <input type="radio" value="1" class="custom-control-input" id="Online" name="Kontrol_Modu">
                                         <label class="custom-control-label" for="Online">Online</label>
                                     </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="2" class="custom-control-input" id="ReadOnly" name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="ReadOnly">Reader Only</label>
+                                    </div>
                                 }
-                                else
+                                else if (Model.Kontrol_Modu == 1)
                                 {
                                     <label class="text-muted">Panel Kontrol Modu</label>
                                     <div class="custom-control custom-radio">
@@ -167,6 +171,26 @@
                                     <div class="custom-control custom-radio">
                                         <input type="radio" value="1" class="custom-control-input" checked id="Online" name="Kontrol_Modu">
                                         <label class="custom-control-label" for="Online">Online</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="2" class="custom-control-input" id="ReadOnly" name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="ReadOnly">Reader Only</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="text-muted">Panel Kontrol Modu</label>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="0" class="custom-control-input" id="StandAlone" name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="StandAlone">Stand-Alone</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="1" class="custom-control-input" id="Online" name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="Online">Online</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" value="2" class="custom-control-input" checked id="ReadOnly" name="Kontrol_Modu">
+                                        <label class="custom-control-label" for="ReadOnly">Reader Only</label>
                                     </div>
                                 }
                             </div>
@@ -369,6 +393,11 @@
                                         </div>
                                     </div>
                                 }
+
+                                <div class="form-group">
+                                    <span class="text-danger">Cihaz Saati: <i class="fas fa-clock"></i> 02.03.2020 10.48</span>
+                                </div>
+
 
                             </div>
                         </div>

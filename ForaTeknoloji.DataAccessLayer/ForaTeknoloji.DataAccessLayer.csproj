@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAccessDatasDal.cs" />
+    <Compile Include="Abstract\IAccessDatasTempDal.cs" />
     <Compile Include="Abstract\IAccessModesDal.cs" />
     <Compile Include="Abstract\IAlarmlarDal.cs" />
     <Compile Include="Abstract\IAlarmTipleriDal.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Abstract\IRawUsersDal.cs" />
     <Compile Include="Abstract\IReaderSettingDal.cs" />
     <Compile Include="Abstract\IReaderSettingsNewDal.cs" />
+    <Compile Include="Abstract\IReaderSettingsNewMSDal.cs" />
     <Compile Include="Abstract\ISirketDal.cs" />
     <Compile Include="Abstract\IStatusCodesDal.cs" />
     <Compile Include="Abstract\ITaskCodesDal.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Abstract\IVisitorsDal.cs" />
     <Compile Include="Abstract\ISMSSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessDatasDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfAccessDatasTempDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAccessModesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAlarmlarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfAlarmTipleriDal.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="Concrete\EntityFramework\EfRawUsersDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewMSDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSmsSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfStatusCodesDal.cs" />

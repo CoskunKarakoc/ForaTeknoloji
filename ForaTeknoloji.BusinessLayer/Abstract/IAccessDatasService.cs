@@ -78,6 +78,15 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
 
         bool AddOperatorLog(int? LogType, string UserName, int? Veri1, int? Veri2, int? Panel, int? Kapi);
 
+        /// <summary>
+        /// Güncel AccessDatas Verilerini AccessDatasTemp Tablosuna Kaydeder ve Kaydettiği Veriyi Kendinden Siler
+        /// </summary>
+        void BackupAccessDatasTable();
 
+        /// <summary>
+        /// Tüm AccessDatas Tablosunu Siler.
+        /// Not:Kayit No Kaldığı Yerden Devam Eder.
+        /// </summary>
+        void DeleteAllAccessDatas();
     }
 }

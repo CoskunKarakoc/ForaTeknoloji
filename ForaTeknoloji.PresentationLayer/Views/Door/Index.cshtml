@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ForaTeknoloji.Entities.Entities.ReaderSettingsNew>
+﻿@*@model IEnumerable<ForaTeknoloji.Entities.Entities.ReaderSettingsNew>*@
+@model ForaTeknoloji.PresentationLayer.Models.ReaderOperationListViewModel
+@using ForaTeknoloji.Common
 @{
     ViewBag.Title = "Kapı Operasyon";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,24 +19,37 @@
             <div class="card-body">
                 @using (Html.BeginForm("Index", "Door", FormMethod.Post))
                 {
-                    <input type="text" id="Panel_ID" name="Panel_ID" hidden value="@Model.FirstOrDefault().Panel_ID" />
+                    <input type="text" id="Panel_ID" name="Panel_ID" hidden value="@Model.ReaderList.FirstOrDefault().Panel_ID" />
                     <div class="row">
-                        <div class="col-md-4">
-                            @foreach (var item in Model)
-                            {
 
+                        @if (Model.PanelModeli == (int)PanelModel.Panel_1010)
+                        {
+                            <div class="col-md-4">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="@("Kapi_"+item.WKapi_ID)" name="@("Kapi_"+item.WKapi_ID)" value="true" class="custom-control-input" />
-                                    <label class="custom-control-label" for="@("Kapi_"+item.WKapi_ID)">@item.WKapi_Adi.Trim()</label>
+                                    <input type="checkbox" id="Kapi_1" name="Kapi_1" value="true" class="custom-control-input" />
+                                    <label class="custom-control-label" for="Kapi_1">@Model.ReaderList.FirstOrDefault().WKapi_Adi.Trim()</label>
                                 </div>
-
-                            }
-                            <hr />
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" id="Alarm" name="Alarm" value="true" class="custom-control-input" />
-                                <label class="custom-control-label" for="Alarm">Alarm Rolesi</label>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4">
+                                @foreach (var item in Model.ReaderList)
+                                {
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="@("Kapi_"+item.WKapi_ID)" name="@("Kapi_"+item.WKapi_ID)" value="true" class="custom-control-input" />
+                                        <label class="custom-control-label" for="@("Kapi_"+item.WKapi_ID)">@item.WKapi_Adi.Trim()</label>
+                                    </div>
+
+                                }
+                                <hr />
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="Alarm" name="Alarm" value="true" class="custom-control-input" />
+                                    <label class="custom-control-label" for="Alarm">Alarm Rolesi</label>
+                                </div>
+                            </div>
+                        }
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-5">

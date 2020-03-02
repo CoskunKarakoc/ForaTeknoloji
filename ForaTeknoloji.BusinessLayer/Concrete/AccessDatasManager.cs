@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.DataAccessLayer.Abstract;
+using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
     public class AccessDatasManager : IAccessDatasService
     {
         private IAccessDatasDal _accessDatasDal;
+        private IAccessDatasTempDal _accessDatasTempDal;
         private IProgInitDal _progInitDal;
-        public AccessDatasManager(IAccessDatasDal accessDatasDal, IProgInitDal progInitDal)
+        public AccessDatasManager(IAccessDatasDal accessDatasDal, IAccessDatasTempDal accessDatasTempDal, IProgInitDal progInitDal)
         {
             _accessDatasDal = accessDatasDal;
+            _accessDatasTempDal = accessDatasTempDal;
             _progInitDal = progInitDal;
         }
 
@@ -224,5 +227,24 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
 
         }
+
+
+        /// <summary>
+        /// Güncel AccessDatas Verilerini AccessDatasTemp Tablosuna Kaydeder ve Kaydettiği Veriyi Kendinden Siler
+        /// </summary>
+        public void BackupAccessDatasTable()
+        {
+            _accessDatasDal.BackupAccessDatasTable();
+        }
+
+        /// <summary>
+        /// Tüm AccessDatas Tablosunu Siler.
+        /// Not:Kayit No Kaldığı Yerden Devam Eder.
+        /// </summary>
+        public void DeleteAllAccessDatas()
+        {
+            _accessDatasDal.DeleteAll();
+        }
+
     }
 }

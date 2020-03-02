@@ -543,6 +543,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         foreach (var item in PanelList)
                         {
+                            if (OprKod == CommandConstants.CMD_SND_USER)
+                            {
+                                TaskList maxUser = new TaskList
+                                {
+                                    Deneme_Sayisi = 1,
+                                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                                    Gorev_Kodu = (int)CommandConstants.CMD_SND_MAXUSERID,
+                                    IntParam_1 = _userService.GetAllUsers().Max(x => x.ID),
+                                    Kullanici_Adi = user.Kullanici_Adi,
+                                    Panel_No = item,
+                                    Tablo_Guncelle = true,
+                                    Tarih = DateTime.Now
+                                };
+                                _taskListService.AddTaskList(maxUser);
+                            }
                             TaskList taskList = new TaskList
                             {
                                 Deneme_Sayisi = 1,

@@ -27,10 +27,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IAccessDatasService _accessDatasService;
         private IDBUsersService _dBUsersService;
         private IDoorStatusService _doorStatusService;
+        private IReaderSettingsNewMSService _readerSettingsNewMSService;
         public DBUsers user;
         DBUsers permissionUser;
 
-        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IDoorStatusService doorStatusService)
+        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IDoorStatusService doorStatusService, IReaderSettingsNewMSService readerSettingsNewMSService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -48,6 +49,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _accessDatasService = accessDatasService;
             _dBUsersService = dBUsersService;
             _doorStatusService = doorStatusService;
+            _readerSettingsNewMSService = readerSettingsNewMSService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -68,39 +70,41 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (readers == null)
             {
 
-                if (selectedpanel.Panel_Model == 9)
+                if (selectedpanel.Panel_Model == (int)PanelModel.Panel_1010)
                 {
-                    //ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
-                    //{
-                    //    Panel_ID = selectedpanel.Panel_ID,
-                    //    Panel_Name = selectedpanel.Panel_Name,
-                    //    Seri_No = selectedpanel.Seri_No,
-                    //    Sira_No = selectedpanel.Sira_No,
-                    //    WKapi_ID = 1,
-                    //    WKapi_Adi = "Kapi " + 1,
-                    //    WKapi_Aktif = false,
-                    //    WKapi_Zorlama_Alarmi = false,
-                    //    WKapi_Yangin_Modu = false,
-                    //    WKapi_Sirali_Gecis_Ana_Kapi = false,
-                    //    WKapi_Ana_Alarm_Rolesi = false,
-                    //    WKapi_Acik_Sure_Alarmi = false,
-                    //    WKapi_Acilma_Alarmi = false,
-                    //    WKapi_Coklu_Onay = false,
-                    //    WKapi_Lift_Aktif = false,
-                    //    WKapi_Pin_Dogrulama = false,
-                    //    WKapi_Panik_Buton_Alarmi = false,
-                    //    WKapi_WIGType = 1,
-                    //    WKapi_Acik_Sure = 20,
-                    //    WKapi_Alarm_Modu = false,
-                    //    WKapi_Gecis_Modu = 0,
-                    //    WKapi_Harici_Alarm_Rolesi = 1,
-                    //    WKapi_Itme_Gecikmesi = 1,
-                    //    WKapi_Lokal_Bolge = 1,
-                    //    WKapi_Role_No = 1,
-                    //    WKapi_User_Count = 1,
-                    //    WKapi_Kapi_Tipi = 1,
-                    //};
-                    //_settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                    var readerMS1010 = _readerSettingsNewMSService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Panel_ID == selectedpanel.Panel_ID);
+                    if (readerMS1010 == null)
+                    {
+                        ReaderSettingsNewMS readerSettingsNewMS = new ReaderSettingsNewMS
+                        {
+                            Seri_No = selectedpanel.Seri_No,
+                            Sira_No = selectedpanel.Sira_No,
+                            Panel_ID = selectedpanel.Panel_ID,
+                            Panel_Name = selectedpanel.Panel_Name,
+                            WKapi_ID = 1,
+                            New_Device_ID = selectedpanel.Panel_ID,
+                            WKapi_Kapi_Tipi = 1,
+                            WKapi_Kapi_Kontrol_Modu = 0,
+                            WKapi_Kapi_Gecis_Modu = 0,
+                            RS485_Reader_Type = 0,
+                            LCD_Row_Message = selectedpanel.Panel_Name,
+                            WKapi_Keypad_Status = false,
+                            WKapi_Keypad_Menu_Password = 0,
+                            RS485_Reader_Status = false,
+                            Wiegand_Reader_Status = false,
+                            Wiegand_Reader_Type = 0,
+                            Mifare_Reader_Status = false,
+                            Mifare_Kart_Data_Type = 0,
+                            UDP_Haberlesme = false,
+                            Multiple_Clock_Mode_Counter_Usage = false,
+                            Pass_Counter_Auto_Delete_Cancel = false,
+                            Access_Counter_Kontrol = false,
+                            Turnstile_Arm_Tracking = false,
+                            Kart_ID_32_Bit_Clear = false
+                        };
+                        _readerSettingsNewMSService.AddReaderSettingsNew(readerSettingsNewMS);
+                    }
+
                     for (int i = 1; i < 17; i++)
                     {
                         ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
@@ -211,39 +215,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == updatePanel.Panel_ID);
                 if (readers == null)
                 {
-                    if (updatePanel.Panel_Model == 9)
+                    if (updatePanel.Panel_Model == (int)PanelModel.Panel_1010)
                     {
-                        //ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
-                        //{
-                        //    Panel_ID = updatePanel.Panel_ID,
-                        //    Panel_Name = updatePanel.Panel_Name,
-                        //    Seri_No = updatePanel.Seri_No,
-                        //    Sira_No = updatePanel.Sira_No,
-                        //    WKapi_ID = 1,
-                        //    WKapi_Adi = "Kapı " + 1,
-                        //    WKapi_Aktif = false,
-                        //    WKapi_Zorlama_Alarmi = false,
-                        //    WKapi_Yangin_Modu = false,
-                        //    WKapi_Sirali_Gecis_Ana_Kapi = false,
-                        //    WKapi_Ana_Alarm_Rolesi = false,
-                        //    WKapi_Acik_Sure_Alarmi = false,
-                        //    WKapi_Acilma_Alarmi = false,
-                        //    WKapi_Coklu_Onay = false,
-                        //    WKapi_Lift_Aktif = false,
-                        //    WKapi_Pin_Dogrulama = false,
-                        //    WKapi_Panik_Buton_Alarmi = false,
-                        //    WKapi_WIGType = 1,
-                        //    WKapi_Acik_Sure = 1,
-                        //    WKapi_Alarm_Modu = false,
-                        //    WKapi_Gecis_Modu = 0,
-                        //    WKapi_Harici_Alarm_Rolesi = 1,
-                        //    WKapi_Itme_Gecikmesi = 1,
-                        //    WKapi_Lokal_Bolge = 1,
-                        //    WKapi_Role_No = 1,
-                        //    WKapi_User_Count = 1,
-                        //    WKapi_Kapi_Tipi = 1,
-                        //};
-                        //_settingsNewService.AddReaderSettingsNew(readerSettingsNew);
                         for (int i = 1; i < 17; i++)
                         {
                             ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
@@ -338,14 +311,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var deletePanel = _panelSettingsService.GetById((int)PanelID);
             if (deletePanel != null)
             {
+                if (deletePanel.Panel_Model == (int)PanelModel.Panel_1010)
+                    _readerSettingsNewMSService.DeleteReaderSettingsNewByPanelID((int)PanelID);
+
                 deletePanel = ClearPanelSettings.ClearPanel(deletePanel);
+
                 _panelSettingsService.UpdatePanelSetting(deletePanel);
+
                 _settingsNewService.DeleteReaderSettingsNewByPanelID((int)PanelID);
-                //Kapı Durumlarının Silinmesi
+
                 var doorstatus = _doorStatusService.GetAllDoorStatus().FirstOrDefault(x => x.Panel_ID == PanelID);
+
                 if (doorstatus != null)
                     _doorStatusService.DeleteDoorStatus(doorstatus);
+
                 _accessDatasService.AddOperatorLog(132, user.Kullanici_Adi, 0, 0, PanelID, 0);
+
                 return RedirectToAction("Settings");
             }
             throw new Exception("Silmek istenen kayıt veritabanında yok!");

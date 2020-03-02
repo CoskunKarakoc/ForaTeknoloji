@@ -2543,6 +2543,7 @@
     <Compile Include="Controllers\AccessReceiveController.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\AltDepartmanController.cs" />
+    <Compile Include="Controllers\BackupAccessDatasController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\BolumController.cs" />
     <Compile Include="Controllers\CameraController.cs" />
@@ -2630,7 +2631,9 @@
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ProgRelay2EditViewModel.cs" />
     <Compile Include="Models\ProgRelayListViewModel.cs" />
+    <Compile Include="Models\ReaderEditMS1010ViewModel.cs" />
     <Compile Include="Models\ReaderEditViewModel.cs" />
+    <Compile Include="Models\ReaderOperationListViewModel.cs" />
     <Compile Include="Models\RefectoryListViewModel.cs" />
     <Compile Include="Models\ReportPersonelViewModel.cs" />
     <Compile Include="Models\SecurityCreateViewModel.cs" />
@@ -2765,6 +2768,7 @@
     <Content Include="Views\Shared\_PartialGelenGelmeyenIlkGirisSonCikis.cshtml" />
     <Content Include="Views\WatchScreen\WatchOuther.cshtml" />
     <Content Include="Views\Panel\ReaderEditMS.cshtml" />
+    <Content Include="Views\BackupAccessDatas\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

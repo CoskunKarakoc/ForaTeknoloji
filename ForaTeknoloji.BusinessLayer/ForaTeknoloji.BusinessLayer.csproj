@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAccessDatasService.cs" />
+    <Compile Include="Abstract\IAccessDatasTempService.cs" />
     <Compile Include="Abstract\IAccessModesService.cs" />
     <Compile Include="Abstract\IAlarmlarService.cs" />
     <Compile Include="Abstract\IAlarmTipleriService.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Abstract\IProgRelay2Service.cs" />
     <Compile Include="Abstract\IRawGroupsService.cs" />
     <Compile Include="Abstract\IRawUsersService.cs" />
+    <Compile Include="Abstract\IReaderSettingsNewMSService.cs" />
     <Compile Include="Abstract\IReaderSettingsNewService.cs" />
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="Abstract\IUserTypesService.cs" />
     <Compile Include="Abstract\IVisitorsService.cs" />
     <Compile Include="Concrete\AccessDatasManager.cs" />
+    <Compile Include="Concrete\AccessDatasTempManager.cs" />
     <Compile Include="Concrete\AccessModesManager.cs" />
     <Compile Include="Concrete\AlarmlarManager.cs" />
     <Compile Include="Concrete\AlarmTipleriManager.cs" />
@@ -141,6 +144,7 @@
     <Compile Include="Concrete\RawUsersManager.cs" />
     <Compile Include="Concrete\ReaderSettingsManager.cs" />
     <Compile Include="Concrete\ReaderSettingsNewManager.cs" />
+    <Compile Include="Concrete\ReaderSettingsNewMSManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />
     <Compile Include="Concrete\SirketManager.cs" />
     <Compile Include="Concrete\SmsSettingsManager.cs" />
@@ -158,7 +162,9 @@
     <Compile Include="DependencyResolvers\Ninject\BusinessModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

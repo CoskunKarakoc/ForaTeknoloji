@@ -21,8 +21,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
         private ITaskListService _taskListService;
+        private IReaderSettingsNewMSService _readerSettingsNewMSService;
         public DBUsers user;
-        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService, IReportService reportService, IAccessDatasService accessDatasService, ITaskListService taskListService)
+        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService, IReportService reportService, IAccessDatasService accessDatasService, ITaskListService taskListService, IReaderSettingsNewMSService readerSettingsNewMSService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -35,6 +36,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService = reportService;
             _accessDatasService = accessDatasService;
             _taskListService = taskListService;
+            _readerSettingsNewMSService = readerSettingsNewMSService;
         }
 
 
@@ -174,14 +176,33 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult ReaderEditMS(int Wid, int MSPanelID)
         {
-            var model = new ReaderSettingsNew();
-
+            var entity = _readerSettingsNewMSService.GetByKapiANDPanel(Wid, MSPanelID);
+            var readerSettings = _readerSettingsNewService.GetByKapiANDPanel(Wid, MSPanelID);
+            var model = new ReaderEditMS1010ViewModel
+            {
+                ReaderSettingsNewMSEntity = entity,
+                ReaderSettingsEntity = readerSettings
+            };
 
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult ReaderEditMS(ReaderSettingsNewMS readerSettingsNewMS, bool? WKapi_Aktif, string WKapi_Adi)
+        {
 
+            if (ModelState.IsValid)
+            {
+                _readerSettingsNewMSService.UpdateReaderSettingsNew(readerSettingsNewMS);
+                var updatedReader = _readerSettingsNewService.GetByKapiANDPanel(1, (int)readerSettingsNewMS.Panel_ID);
+                updatedReader.WKapi_Aktif = WKapi_Aktif;
+                updatedReader.WKapi_Adi = WKapi_Adi;
+                _readerSettingsNewService.UpdateReaderSettingsNew(updatedReader);
+                return RedirectToAction("ReaderList", new { PanelID = readerSettingsNewMS.Panel_ID });
 
+            }
+            return View(readerSettingsNewMS);
+        }
 
         private void ReaderFill()
         {

@@ -3,9 +3,7 @@ using ForaTeknoloji.Entities.Entities;
 
 namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
-    public interface IAccessDatasDal : IEntityRepository<AccessDatas>
+    public interface IReaderSettingsNewMSDal : IEntityRepository<ReaderSettingsNewMS>
     {
-        void BackupAccessDatasTable();
-        void DeleteAll();
     }
 }

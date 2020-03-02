@@ -61,6 +61,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IUnvanDal>().To<EfUnvanDal>().InSingletonScope();
             Bind<IBolumDal>().To<EfBolumDal>().InSingletonScope();
             Bind<IAltDepartmanDal>().To<EfAltDepartmanDal>().InSingletonScope();
+            Bind<IAccessDatasTempDal>().To<EfAccessDatasTempDal>().InSingletonScope();
+            Bind<IReaderSettingsNewMSDal>().To<EfReaderSettingsNewMSDal>().InSingletonScope();
 
 
             /*Business-Layer-Binding*/
@@ -114,6 +116,8 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IUnvanService>().To<UnvanManager>().InSingletonScope();
             Bind<IBolumService>().To<BolumManager>().InSingletonScope();
             Bind<IAltDepartmanService>().To<AltDepartmanManager>().InSingletonScope();
+            Bind<IAccessDatasTempService>().To<AccessDatasTempManager>().InSingletonScope();
+            Bind<IReaderSettingsNewMSService>().To<ReaderSettingsNewMSManager>().InSingletonScope();
 
 
             /*Context*/

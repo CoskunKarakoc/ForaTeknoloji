@@ -67,6 +67,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<Unvan> Unvan { get; set; }
         public virtual DbSet<AltDepartman> AltDepartman { get; set; }
         public virtual DbSet<Bolum> Bolum { get; set; }
+        public virtual DbSet<AccessDatasTemp> AccessDatasTemp { get; set; }
+        public virtual DbSet<ReaderSettingsNewMS> ReaderSettingsNewMs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

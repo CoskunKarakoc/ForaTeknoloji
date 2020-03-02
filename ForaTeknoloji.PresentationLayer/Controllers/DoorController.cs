@@ -51,8 +51,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
                 PanelID = list.FirstOrDefault().Panel_ID;
             }
+            var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
+            var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
+            var model = new ReaderOperationListViewModel
+            {
+                ReaderList = readerList,
+                PanelModeli = panelModel
+            };
 
-            var model = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
+
+
+            //var model = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
             return View(model);
         }
 

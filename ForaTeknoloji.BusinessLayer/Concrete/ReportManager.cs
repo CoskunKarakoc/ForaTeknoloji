@@ -2253,6 +2253,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                         }
                     }
                 }
+                else
+                {
+                    CodeString = " AND AccessDatas.Kod IN (0,1,2,3,4,5,6,7,8,9,10,14,20,21,22,23,24,25,26,27) OR AccessDatas.Kod >= 100 ";
+                }
 
 
             }
@@ -2372,7 +2376,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             //    " LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod)" +
             //    " LEFT JOIN ReaderSettingsNew ON AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] AND AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID]) " +
             //    " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] ";
-            queryString += " AND AccessDatas.Kod IN (" + CodeString + ") ";
+            queryString += " AND AccessDatas.Kod IN (" + CodeString + ")  OR AccessDatas.Kod > 100";
             queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
             List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
             using (SqlConnection connection = new SqlConnection(address))
@@ -2483,6 +2487,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             CodeString = " AND AccessDatas.Kod IN (" + CodeString + ") ";
                         }
                     }
+                }
+                else
+                {
+                    CodeString = " AND AccessDatas.Kod IN (0,1,2,3,4,5,6,7,8,9,10,14,20,21,22,23,24,25,26,27) OR AccessDatas.Kod >= 100 ";
                 }
 
 

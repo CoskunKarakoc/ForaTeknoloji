@@ -138,7 +138,14 @@
                                 <a class="collapse-item" href="@Url.Action("Index","AccessReceive")">Geçiş-Olay Verileri</a>
                             }
                         }
+                        @{
+                            DBUsers BacupAccessDatas = CurrentSession.User;
+                            if (BacupAccessDatas.SysAdmin == true)
+                            {
+                                <a class="collapse-item" href="@Url.Action("Index","BackupAccessDatas")">Geçiş-Olay Yedekle</a>
+                            }
 
+                        }
 
                     </div>
 
