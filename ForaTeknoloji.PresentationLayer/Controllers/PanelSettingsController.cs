@@ -396,7 +396,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
                 else
                 {
-
+                    if (panelSettings.Panel_Model == (int)PanelModel.Panel_1010)
+                        ReaderSettingsNewMSEditFill(panelSettings);
                     var defaultPanel = _panelSettingsService.GetAllPanelSettings().Find(x => x.Sira_No == panelSettings.Panel_ID);
                     panelSettings.Kayit_No = defaultPanel.Kayit_No;
                     _panelSettingsService.UpdatePanelSetting(panelSettings);
@@ -493,6 +494,31 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return RedirectToAction("Settings", new { @PanelID = Panel });
         }
 
+        //Panel Saatini Okuma Rutini Devre Dışı
+        //public ActionResult PanelReceiveDate(int Panel)
+        //{
+        //    try
+        //    {
+        //        TaskList taskList = new TaskList
+        //        {
+        //            Deneme_Sayisi = 1,
+        //            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+        //            Gorev_Kodu = (int)CommandConstants.CMD_RCV_RTC,
+        //            IntParam_1 = (int)Panel,
+        //            Kullanici_Adi = user.Kullanici_Adi,
+        //            Panel_No = Panel,
+        //            Tablo_Guncelle = true,
+        //            Tarih = DateTime.Now
+        //        };
+        //        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+        //    }
+        //    return RedirectToAction("Settings", new { @PanelID = Panel });
+        //}
+
         public int CheckStatus(int GrupNo = -1)
         {
             if (GrupNo != -1)
@@ -501,6 +527,117 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return 3;
         }
+
+        public void ReaderSettingsNewMSEditFill(PanelSettings panelSettings)
+        {
+
+            var readerSettingsNewMSEdit = _readerSettingsNewMSService.GetAllReaderSettingsNew().Find(x => x.Panel_ID == panelSettings.Panel_ID);
+            if (readerSettingsNewMSEdit == null)
+            {
+                ReaderSettingsNewMS readerSettingsNewMS = new ReaderSettingsNewMS
+                {
+                    Seri_No = panelSettings.Seri_No,
+                    Sira_No = panelSettings.Sira_No,
+                    Panel_ID = panelSettings.Panel_ID,
+                    Panel_Name = panelSettings.Panel_Name,
+                    WKapi_ID = 1,
+                    New_Device_ID = panelSettings.Panel_ID,
+                    WKapi_Kapi_Tipi = 1,
+                    WKapi_Kapi_Kontrol_Modu = 0,
+                    WKapi_Kapi_Gecis_Modu = 0,
+                    RS485_Reader_Type = 0,
+                    LCD_Row_Message = panelSettings.Panel_Name,
+                    WKapi_Keypad_Status = false,
+                    WKapi_Keypad_Menu_Password = 0,
+                    RS485_Reader_Status = false,
+                    Wiegand_Reader_Status = false,
+                    Wiegand_Reader_Type = 0,
+                    Mifare_Reader_Status = false,
+                    Mifare_Kart_Data_Type = 0,
+                    UDP_Haberlesme = false,
+                    Multiple_Clock_Mode_Counter_Usage = false,
+                    Pass_Counter_Auto_Delete_Cancel = false,
+                    Access_Counter_Kontrol = false,
+                    Turnstile_Arm_Tracking = false,
+                    Kart_ID_32_Bit_Clear = false
+                };
+                _readerSettingsNewMSService.AddReaderSettingsNew(readerSettingsNewMS);
+            }
+
+
+
+        }
+
+
+
+        public ActionResult OlayHafizaGonder(int id)
+        {
+
+            if (id != 0)
+            {
+                var panel = _panelSettingsService.GetById(id);
+                if (panel.Panel_Model != (int)PanelModel.Panel_1010)
+                {
+                    try
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_LOGSETTINGS,
+                            IntParam_1 = (int)id,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = id,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, id, 0);
+                        Thread.Sleep(500);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                    }
+                }
+            }
+            return RedirectToAction("Settings", new { @PanelID = id });
+        }
+
+        public ActionResult OlayHafizaAl(int id)
+        {
+
+            if (id != 0)
+            {
+                var panel = _panelSettingsService.GetById(id);
+                if (panel.Panel_Model != (int)PanelModel.Panel_1010)
+                {
+                    try
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_LOGSETTINGS,
+                            IntParam_1 = (int)id,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = id,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, id, 0);
+                        Thread.Sleep(500);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                    }
+                }
+            }
+            return RedirectToAction("Settings", new { @PanelID = id });
+        }
+
 
     }
 }

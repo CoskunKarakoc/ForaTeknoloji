@@ -221,6 +221,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var CheckKartID = _userService.GetAllUsers(x => x.Kart_ID == Addeduser.Kart_ID);
                 if (CheckKartID.Count > 0)
                     throw new Exception("Aynı Kart ID'sine sahip kullanıcı bulunmaktadır.");
+                if (Addeduser.TCKimlik != null)
+                {
+                    var CheckTCNo = _userService.GetAllUsers(x => x.TCKimlik == Addeduser.TCKimlik);
+                    if (CheckTCNo.Count > 0)
+                        throw new Exception("Aynı TC No'suna ait kullanıcı bulunmaktadır.");
+                }
 
                 _userService.AddUsers(Addeduser);
                 _accessDatasService.AddOperatorLog(100, permissionUser.Kullanici_Adi, Addeduser.ID, 0, 0, 0);

@@ -394,11 +394,11 @@
                                     </div>
                                 }
 
-                                <div class="form-group">
-                                    <span class="text-danger">Cihaz Saati: <i class="fas fa-clock"></i> 02.03.2020 10.48</span>
-                                </div>
-
-
+                                @*<div class="form-group">
+                                        <hr />
+                                        <span class="text-info">Panel Saati: <i class="fas fa-clock"></i> @Model.Panel_Saati.Value.ToString("MM-dd-yyyy HH:mm:ss")</span>
+                                        <hr />
+                                    </div>*@
                             </div>
                         </div>
                         <hr />
@@ -471,6 +471,7 @@
                                 <a title="Değişiklikleri Panele Gönder" href="@Url.Action("SendToPanel","PanelSettings",new {Panel=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-paper-plane"></i> Ayarları Gönder</a>
                                 <a title="Panelden Ayarları Al" href="@Url.Action("ReceiveFromPanel","PanelSettings",new {PanelID=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-recycle"></i> Ayarları Al</a>
                                 <a title="Panel Saatini Güncelle" href="@Url.Action("PanelDate","PanelSettings",new {Panel=Model.Panel_ID })" class="btn btn-sm btn-outline-warning"><i class="fas fa-clock-o"></i> Saati Güncelle</a>
+                                @*<a title="Panel Saatini Oku" href="@Url.Action("PanelReceiveDate","PanelSettings",new {Panel=Model.Panel_ID })" class="btn btn-sm btn-outline-info"><i class="fas fa-clock-o"></i> Saati Oku</a>*@
                             </div>
                         </div>
                     </div>
@@ -601,6 +602,8 @@
                                         <hr />
                                     </div>
                                     <div class="col-md-6">
+                                        <p class="text-danger text-center">Olay Hafızası/Geçiş Verileri İzleme ve Kayıt Ayarları</p>
+                                        <hr />
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
                                                 @Html.CheckBox("Offline_Antipassback", Model.Offline_Antipassback ?? false, new { @class = "custom-control-input" })
@@ -627,10 +630,14 @@
                                                 <label class="custom-control-label" for="Offline_Scheduled_Transactions">Programlı İşlemler "Açma/Kapatma" Mesajları</label>
                                             </div>
                                         </div>
+                                        <div class="text-center">
+                                            <a href="@Url.Action("OlayHafizaGonder","PanelSettings",new {@id=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-send mr-1"></i>Ayarları Gönder</a>
+                                            <a href="@Url.Action("OlayHafizaAl","PanelSettings",new {@id=Model.Panel_ID })" class="btn btn-sm btn-outline-success"><i class="fas fa-recycle mr-1"></i>Ayarları Al</a>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-4 offset-md-2">
                                                 <div class="form-group">
                                                     <div class="custom-control custom-checkbox">
                                                         @Html.CheckBox("Status_Data_Update", Model.Status_Data_Update ?? false, new { @class = "custom-control-input" })
