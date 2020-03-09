@@ -26,24 +26,34 @@
                     @Html.Hidden("Cihaz_7", Model.ProgRelay.Cihaz_7)
                     @Html.Hidden("Cihaz_8", Model.ProgRelay.Cihaz_8)
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="custom-control custom-checkbox mt-1">
                                 @Html.CheckBox("Aktif", Model.ProgRelay.Aktif ?? false, new { @class = "custom-control-input" })
                                 <label for="Aktif" class="custom-control-label">Zaman Dilimi Aktif</label>
                             </div>
+                            @*<div class="custom-control custom-checkbox mt-1">
+                                <input type="checkbox" id="Tarih_Aktif" name="Tarih_Aktif" class="custom-control-input" value="True" />
+                                <label for="Tarih_Aktif" class="custom-control-label">Tarih Aktif</label>
+                            </div>*@
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="Saat_1" class="text-muted ">Başlangıç Zamanı</label>
-                                <input class="form-control custom-control-inline" name="Saat_1" type="time" value="@Model.ProgRelay.Saat_1.Value.ToShortTimeString()" id="Saat_1">
+                                <input class="form-control custom-control-inline form-control-sm" name="Saat_1" type="time" value="@Model.ProgRelay.Saat_1.Value.ToShortTimeString()" id="Saat_1">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="Saat_2" class="text-muted form-control-inline">Bitiş Zamanı</label>
-                                <input class="form-control" name="Saat_2" type="time" value="@Model.ProgRelay.Saat_2.Value.ToShortTimeString()" id="Saat_2">
+                                <input class="form-control form-control-sm" name="Saat_2" type="time" value="@Model.ProgRelay.Saat_2.Value.ToShortTimeString()" id="Saat_2">
                             </div>
                         </div>
+                        @*<div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Tarih" class="text-muted form-control-inline">Tarih</label>
+                                <input class="form-control form-control-sm" name="Tarih" type="date" value="@DateTime.Now.ToShortDateString()" id="Tarih">
+                            </div>
+                        </div>*@
                     </div>
 
                     <div class="row">

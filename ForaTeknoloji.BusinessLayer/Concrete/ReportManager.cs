@@ -402,8 +402,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND Users.[Grup No] = " + parameters.Gecis_Grubu;
             }
-
-            queryString += @"AND Users.[Kart ID] <> ALL (SELECT DISTINCT AccessDatas.[Kart ID] 
+            //CHANGE:06032020 Birden Fazla Kart Geldiği İçin Kart ID İptal Oldu
+            //queryString += @"AND Users.[Kart ID] <> ALL (SELECT DISTINCT AccessDatas.[Kart ID] 
+            queryString += @"AND Users.ID <> ALL (SELECT DISTINCT AccessDatas.ID
                 FROM AccessDatas 
                 WHERE AccessDatas.[Kullanici Tipi] = 0 
                 AND AccessDatas.Kod = 1";
@@ -522,8 +523,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
             }
-
-            queryString += @" AND Users.[Kart ID] IN (SELECT DISTINCT AccessDatas.[Kart ID] 
+            //CHANGE: 06032020 Kart ID Sayısı Arttığı İçin KART ID İptal Ettik
+            //queryString += @" AND Users.[Kart ID] IN (SELECT DISTINCT AccessDatas.[Kart ID] 
+            queryString += @" AND Users.ID IN (SELECT DISTINCT AccessDatas.ID 
                 FROM AccessDatas 
                 WHERE AccessDatas.[Kullanici Tipi] = 0 
                 AND AccessDatas.Kod = 1 ";
@@ -632,8 +634,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             {
                 queryString += " AND Users.[Grup No] =" + parameters.Gecis_Grubu;
             }
-
-            queryString += @" AND Users.[Kart ID] <> ALL (SELECT DISTINCT AccessDatas.[Kart ID] 
+            //CHANGE:06032020 Birden Fazla Kart Geldiği İçin Kart ID İptal Oldu
+            //queryString += @" AND Users.[Kart ID] <> ALL (SELECT DISTINCT AccessDatas.[Kart ID] 
+            queryString += @" AND Users.ID <> ALL (SELECT DISTINCT AccessDatas.ID 
                 FROM AccessDatas 
                 WHERE AccessDatas.[Kullanici Tipi] = 0 
                 AND AccessDatas.Kod = 1 ";
@@ -2768,10 +2771,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
 
             if (parameters.Group_ID != null)
-            {
+            {   //CHANGE: LEFT JOIN Users ON AccessDatas.[Kart ID] = Users.[Kart ID] 06032020 Birden Fazla Kart ID Geldiği İçin Değişiklik Yaptık.
                 queryString = @"SELECT COUNT(*),Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]
                         FROM AccessDatas 
-                        LEFT JOIN Users ON AccessDatas.[Kart ID] = Users.[Kart ID]
+                        LEFT JOIN Users ON AccessDatas.ID = Users.ID
                         LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID]                        
                         WHERE AccessDatas.[Gecis Tipi]= 0 AND Users.ID > 0";
                 if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)//Tek Tarih 
@@ -3111,11 +3114,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
+            //CHANGE:LEFT JOIN Users ON AccessDatas.[Kart ID] =Users.[Kart ID] 06032020 Birden Fazla Kart Geldiği İçin Değişiklik Yaptık
             queryString = @"SELECT TOP 200 AccessDatas.[Kayit No],Users.Adi,Users.Soyadi,AccessDatas.[Kart ID],AccessDatas.[Kapi ID],
                                 AccessDatas.[Panel ID],AccessDatas.Kod,CodeOperation.Operasyon,AccessDatas.Tarih,AccessDatas.ID
                                 FROM AccessDatas 
                                 LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod
-                                LEFT JOIN Users ON AccessDatas.[Kart ID] =Users.[Kart ID]
+                                LEFT JOIN Users ON AccessDatas.ID =Users.ID
                                 WHERE AccessDatas.Kod >= 20
                                 AND AccessDatas.Kod <= 27
                                 AND AccessDatas.Kontrol=0

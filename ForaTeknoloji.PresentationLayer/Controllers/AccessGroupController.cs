@@ -484,7 +484,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         }
 
                     }
-                    Thread.Sleep(2000);
                 }
                 catch (Exception)
                 {

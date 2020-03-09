@@ -1059,10 +1059,16 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Durum_Kodu = 4,
                 Durum_Adi = "Zaman Aşımı"
             };
+            StatusCode statusCode5 = new StatusCode
+            {
+                Durum_Kodu = 5,
+                Durum_Adi = "Bağlantı Yok"
+            };
             context.StatusCodes.Add(statusCode1);
             context.StatusCodes.Add(statusCode2);
             context.StatusCodes.Add(statusCode3);
             context.StatusCodes.Add(statusCode4);
+            context.StatusCodes.Add(statusCode5);
 
             TimeZoneIDs timeZoneIDs0 = new TimeZoneIDs
             {
@@ -1190,8 +1196,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                     {
                         ProgRelay2 progRelay2 = new ProgRelay2
                         {
-                            Saat_1 = new DateTime(2019, 11, 25, saat1, 1, 00),
-                            Saat_2 = new DateTime(2019, 11, 25, saat2, 0, 00),
+                            Saat_1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, saat1, 1, 00),
+                            Saat_2 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, saat2, 0, 00),
                             Panel_No = i,
                             Haftanin_Gunu = j,
                             Zaman_Dilimi = k,

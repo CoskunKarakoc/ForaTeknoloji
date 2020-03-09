@@ -26,6 +26,102 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _userDal.Add(users);
         }
 
+        public string AddUserWithCheckCardId(Users users)
+        {
+            string result = "";
+            //Kart ID'sinin Tüm Kartlarda Sorgulanması
+            if (users.Kart_ID != null && users.Kart_ID != "" && users.Kart_ID != "0")
+            {
+                var findUserKart1 = _userDal.Get(x => x.Kart_ID == users.Kart_ID || x.Kart_ID_2 == users.Kart_ID || x.Kart_ID_3 == users.Kart_ID);
+                if (findUserKart1 != null)
+                {
+                    result = "Eklemek İstediğiniz Kullanıcının Kart ID'sini " + findUserKart1.Adi + " " + findUserKart1.Soyadi + " Adlı Kişi kullanıyor!";
+                }
+            }
+            //Kart ID 2'nin Tüm Kartlarda Sorgulanması
+            if (users.Kart_ID_2 != null && users.Kart_ID_2 != "" && users.Kart_ID_2 != "0")
+            {
+                var findUserKart2 = _userDal.Get(x => x.Kart_ID == users.Kart_ID_2 || x.Kart_ID_2 == users.Kart_ID_2 || x.Kart_ID_3 == users.Kart_ID_2);
+                if (findUserKart2 != null)
+                {
+                    result = "Eklemek İstediğiniz Kullanıcının Kart ID 2'sini " + findUserKart2.Adi + " " + findUserKart2.Soyadi + " Adlı Kişi kullanıyor!";
+                }
+            }
+            //Kart ID 3'ün Tüm Kartlarda Sorgulanması
+            if (users.Kart_ID_3 != null && users.Kart_ID_3 != "" && users.Kart_ID_3 != "0")
+            {
+                var findUserKart3 = _userDal.Get(x => x.Kart_ID == users.Kart_ID_3 || x.Kart_ID_2 == users.Kart_ID_3 || x.Kart_ID_3 == users.Kart_ID_3);
+                if (findUserKart3 != null)
+                {
+                    result = "Eklemek İstediğiniz Kullanıcının Kart ID 3'ünü " + findUserKart3.Adi + " " + findUserKart3.Soyadi + " Adlı Kişi kullanıyor!";
+                }
+            }
+            if (result == "")
+            {
+                if (users.Sirket_No == null)
+                    users.Sirket_No = 1;
+                if (users.Departman_No == null)
+                    users.Departman_No = 1;
+                _userDal.Add(users);
+
+                return "";
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        public string UpdateWithCheckCardId(Users users)
+        {
+            string result = "";
+            //Kart ID'sinin Kendi Hariç Tüm Kartlarda Sorgulanması
+            if (users.Kart_ID != null && users.Kart_ID != "" && users.Kart_ID != "0")
+            {
+                var findUserKart1 = _userDal.Get(x => x.ID != users.ID && (x.Kart_ID == users.Kart_ID || x.Kart_ID_2 == users.Kart_ID || x.Kart_ID_3 == users.Kart_ID));
+                if (findUserKart1 != null)
+                {
+                    result = "Güncellemek İstediğiniz Kullanıcının Kart ID'sini " + findUserKart1.Adi + " " + findUserKart1.Soyadi + " Adlı Kişi kullanıyor!";
+                }
+            }
+            //Kart ID 2'nin Kendi Hariç Tüm Kartlarda Sorgulanması
+            if (users.Kart_ID_2 != null && users.Kart_ID_2 != "" && users.Kart_ID_2 != "0")
+            {
+                var findUserKart2 = _userDal.Get(x => x.ID != users.ID && (x.Kart_ID == users.Kart_ID_2 || x.Kart_ID_2 == users.Kart_ID_2 || x.Kart_ID_3 == users.Kart_ID_2));
+                if (findUserKart2 != null)
+                {
+                    result = "Güncellemek İstediğiniz Kullanıcının Kart ID 2'sini " + findUserKart2.Adi + " " + findUserKart2.Soyadi + " Adlı Kişi kullanıyor!";
+                }
+            }
+            //Kart ID 3'ün Kendi Hariç Tüm Kartlarda Sorgulanması
+            if (users.Kart_ID_3 != null && users.Kart_ID_3 != "" && users.Kart_ID_3 != "0")
+            {
+                var findUserKart3 = _userDal.Get(x => x.ID != users.ID && (x.Kart_ID == users.Kart_ID_3 || x.Kart_ID_2 == users.Kart_ID_3 || x.Kart_ID_3 == users.Kart_ID_3));
+                if (findUserKart3 != null)
+                {
+                    result = "Güncellemek İstediğiniz Kullanıcının Kart ID 3'ünü " + findUserKart3.Adi + " " + findUserKart3.Soyadi + " Adlı Kişi kullanıyor!";
+                }
+            }
+
+            if (result == "")
+            {
+                if (users.Sirket_No == null)
+                    users.Sirket_No = 1;
+                if (users.Departman_No == null)
+                    users.Departman_No = 1;
+                _userDal.Update(users);
+
+                return "";
+            }
+            else
+            {
+                return result;
+            }
+
+
+        }
+
+
         public void DeleteUsers(Users users)
         {
             _userDal.Delete(users);

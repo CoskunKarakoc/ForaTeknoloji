@@ -286,7 +286,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             _accessDatasService.AddOperatorLog(323, permissionUser.Kullanici_Adi, VisitorID, 0, item, 0);
                         }
                     }
-                    Thread.Sleep(500);
                 }
                 catch (Exception)
                 {

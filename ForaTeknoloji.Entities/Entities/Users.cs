@@ -19,6 +19,14 @@ namespace ForaTeknoloji.Entities.Entities
         [StringLength(50)]
         public string Kart_ID { get; set; }
 
+        [Column("Kart ID 2")]
+        [StringLength(50)]
+        public string Kart_ID_2 { get; set; }
+
+        [Column("Kart ID 3")]
+        [StringLength(50)]
+        public string Kart_ID_3 { get; set; }
+
         [Column("Dogrulama PIN")]
         [StringLength(50)]
         public string Dogrulama_PIN { get; set; }

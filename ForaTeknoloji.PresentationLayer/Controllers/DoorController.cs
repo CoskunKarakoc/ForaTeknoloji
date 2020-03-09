@@ -220,7 +220,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                         _accessDatasService.AddOperatorLog(171, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
-                        Thread.Sleep(2000);
                     }
                     catch (Exception)
                     {
@@ -257,7 +256,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         };
                         TaskList taskListReceive = _taskListService.AddTaskList(taskList);
                         _accessDatasService.AddOperatorLog(172, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
-                        Thread.Sleep(2000);
                     }
                     catch (Exception)
                     {
