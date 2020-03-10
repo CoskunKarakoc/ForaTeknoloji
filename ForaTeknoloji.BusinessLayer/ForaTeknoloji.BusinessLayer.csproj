@@ -101,6 +101,7 @@
     <Compile Include="Abstract\IStatusCodesService.cs" />
     <Compile Include="Abstract\ITaskCodeService.cs" />
     <Compile Include="Abstract\ITaskListService.cs" />
+    <Compile Include="Abstract\ITatilGunuService.cs" />
     <Compile Include="Abstract\ITimeGroupsService.cs" />
     <Compile Include="Abstract\ITimeZoneCalendarService.cs" />
     <Compile Include="Abstract\ITimeZoneIDsService.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Concrete\StatusCodesManager.cs" />
     <Compile Include="Concrete\TaskCodeManager.cs" />
     <Compile Include="Concrete\TaskListManager.cs" />
+    <Compile Include="Concrete\TatilGunuManager.cs" />
     <Compile Include="Concrete\TimeGroupsManager.cs" />
     <Compile Include="Concrete\TimeZoneCalendarManager.cs" />
     <Compile Include="Concrete\TimeZoneIDsManager.cs" />

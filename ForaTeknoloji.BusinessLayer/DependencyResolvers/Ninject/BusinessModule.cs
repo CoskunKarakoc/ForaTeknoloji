@@ -63,7 +63,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IAltDepartmanDal>().To<EfAltDepartmanDal>().InSingletonScope();
             Bind<IAccessDatasTempDal>().To<EfAccessDatasTempDal>().InSingletonScope();
             Bind<IReaderSettingsNewMSDal>().To<EfReaderSettingsNewMSDal>().InSingletonScope();
-
+            Bind<ITatilGunuDal>().To<EfTatilGunuDal>().InSingletonScope();
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -118,7 +118,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IAltDepartmanService>().To<AltDepartmanManager>().InSingletonScope();
             Bind<IAccessDatasTempService>().To<AccessDatasTempManager>().InSingletonScope();
             Bind<IReaderSettingsNewMSService>().To<ReaderSettingsNewMSManager>().InSingletonScope();
-
+            Bind<ITatilGunuService>().To<TatilGunuManager>().InSingletonScope();
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

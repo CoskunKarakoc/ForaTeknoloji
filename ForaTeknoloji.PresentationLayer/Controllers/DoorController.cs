@@ -25,8 +25,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReaderSettingsNewService _readerSettingsNewService;
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
+        private ITatilGunuService _tatilGunuService;
         public DBUsers user;
-        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IAccessDatasService accessDatasService)
+        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IAccessDatasService accessDatasService, ITatilGunuService tatilGunuService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -40,6 +41,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _readerSettingsNewService = readerSettingsNewService;
             _reportService = reportService;
             _accessDatasService = accessDatasService;
+            _tatilGunuService = tatilGunuService;
         }
         // GET: Door
         public ActionResult Index(int? PanelID)
@@ -133,6 +135,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             gunler.Add(5, "Cuma");
             gunler.Add(6, "Cumartesi");
             gunler.Add(7, "Pazar");
+            var tatilGunu = _tatilGunuService.GetAllTatilGunu();
+            if (tatilGunu != null)
+            {
+                foreach (var gun in tatilGunu)
+                {
+                    gunler.Add(gun.Ozel_Gun_No, gun.Ozel_Gun_Adi);
+                }
+            }
+
+
+
+
+
             if (ListPanel_No == null)
             {
                 var list = _reportService.PanelListesi(user);
@@ -171,6 +186,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             gunler.Add(5, "Cuma");
             gunler.Add(6, "Cumartesi");
             gunler.Add(7, "Pazar");
+            var tatilGunu = _tatilGunuService.GetAllTatilGunu();
+            if (tatilGunu != null)
+            {
+                foreach (var gun in tatilGunu)
+                {
+                    gunler.Add(gun.Ozel_Gun_No, gun.Ozel_Gun_Adi);
+                }
+            }
+
             var editEntity = _progRelay2Service.GetAllProgRelay2().Find(x => x.Panel_No == Panel_No && x.Haftanin_Gunu == Haftanin_Gunu && x.Zaman_Dilimi == Zaman_Dilimi);
             var doorNames = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Panel_No).OrderBy(x => x.WKapi_ID).ToList();
             var model = new ProgRelay2EditViewModel

@@ -95,6 +95,7 @@
     <Compile Include="Abstract\IStatusCodesDal.cs" />
     <Compile Include="Abstract\ITaskCodesDal.cs" />
     <Compile Include="Abstract\ITaskListDal.cs" />
+    <Compile Include="Abstract\ITatilGunuDal.cs" />
     <Compile Include="Abstract\ITimeGroupsDal.cs" />
     <Compile Include="Abstract\ITimeZoneCalendarDal.cs" />
     <Compile Include="Abstract\ITimeZoneIDsDal.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Concrete\EntityFramework\EfStatusCodesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTaskCodeDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTaskListDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfTatilGunuDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTimeGroupsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTimeZoneCalendarDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTimeZoneIDsDal.cs" />

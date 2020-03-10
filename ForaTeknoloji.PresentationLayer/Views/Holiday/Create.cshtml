@@ -1,0 +1,32 @@
+﻿@model ForaTeknoloji.Entities.Entities.TatilGunu
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Holiday", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            @Html.HiddenFor(model => model.Ozel_Gun_No)
+            <div class="card border-left-info h-100 shadow-lg  mt-xl-5 mb-xl-5">
+                <div class="card-header py-1 mt-1">
+                    <h3 class="m-0 font-weight-bold text-secondary text-center">Tatil Günü</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="Ozel_Gun_Adi">Tatil Adı</label>
+                        <input type="text" name="Ozel_Gun_Adi" id="Ozel_Gun_Adi" class="form-control form-control-sm" value="@Model.Ozel_Gun_Adi" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Tarih">Tatil Tarihi</label>
+                        <input type="date" id="Tarih" name="Tarih" class="form-control form-control-sm" value="@Model.Tarih" />
+                    </div>
+                    <hr />
+                    <button type="submit" class="btn btn-sm btn-outline-success float-right"><i class="fas fa-save"></i> Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

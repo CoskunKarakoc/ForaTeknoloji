@@ -149,6 +149,7 @@
     <Compile Include="Entities\StatusCode.cs" />
     <Compile Include="Entities\TaskCode.cs" />
     <Compile Include="Entities\TaskList.cs" />
+    <Compile Include="Entities\TatilGunu.cs" />
     <Compile Include="Entities\TimeGroups.cs" />
     <Compile Include="Entities\TimeZoneCalendar.cs" />
     <Compile Include="Entities\TimeZoneIDs.cs" />

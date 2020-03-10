@@ -2561,6 +2561,7 @@
     <Compile Include="Controllers\FastGroupController.cs" />
     <Compile Include="Controllers\GelenGelmeyenReportController.cs" />
     <Compile Include="Controllers\GlobalZoneController.cs" />
+    <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsideOutReportController.cs" />
     <Compile Include="Controllers\LiftController.cs" />
@@ -2620,6 +2621,7 @@
     <Compile Include="Models\GlobalBolgePanelSettingsListViewModel.cs" />
     <Compile Include="Models\GroupMasterCreateViewModel.cs" />
     <Compile Include="Models\HaberlesmeListViewModel.cs" />
+    <Compile Include="Models\HolidayListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaPersonelListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaTumuListViewModel.cs" />
     <Compile Include="Models\IcerdeDısardaZiyaretciListViewModel.cs" />
@@ -2771,6 +2773,7 @@
     <Content Include="Views\WatchScreen\WatchOuther.cshtml" />
     <Content Include="Views\Panel\ReaderEditMS.cshtml" />
     <Content Include="Views\BackupAccessDatas\Index.cshtml" />
+    <Content Include="Views\Holiday\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
