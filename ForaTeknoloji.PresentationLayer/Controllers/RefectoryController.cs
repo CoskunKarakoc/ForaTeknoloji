@@ -56,12 +56,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 throw new Exception("Yetkisiz Erişim!");
             }
-
-
             var Liste = _reportService.YemekhaneRaporu(parameters);
             var Toplam = _reportService.YemekhaneRaporuTotal(parameters);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
             var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
+            var Departmanlar = _reportService.DepartmanListesi(user);
             var model = new RefectoryListViewModel
             {
                 Group_ID = Groups.Select(a => new SelectListItem
@@ -69,10 +68,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Kapi_Grup_Adi,
                     Value = a.Kapi_Grup_No.ToString()
                 }),
+                Departman_No = Departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
                 YemekhaneListe = Liste,
                 ToplamGecis = Toplam,
                 EmailSettings = Email,
-                User=user
+                User = user
             };
             TempData["UserAccessCount"] = Liste;
             return View(model);
@@ -88,6 +92,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var Total = _reportService.YemekhaneRaporuTotal(parameters);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
             var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
+            var Departmanlar = _reportService.DepartmanListesi(user);
             ViewBag.Kapi_Grup_No = new SelectList(_doorGroupsMasterService.GetAllDoorGroupsMaster(), "Kapi_Grup_No", "Kapi_Grup_Adi", Email.Kapi_Grup_No);
             var model = new RefectoryListViewModel
             {
@@ -96,9 +101,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Kapi_Grup_Adi,
                     Value = a.Kapi_Grup_No.ToString()
                 }),
+                Departman_No = Departmanlar.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Departman_No.ToString()
+                }),
                 ToplamGecis = Total,
                 EmailSettings = Email,
-                User=user
+                User = user
             };
             TempData["UserAccessCountTotal"] = Total;
             return View(model);
@@ -180,25 +190,35 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["A1"].Value = "Personel Geçiş Sayısı Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
-            worksheet.Cells["A6"].Value = "Panel ID";
-            worksheet.Cells["B6"].Value = "Panel Adı";
-            worksheet.Cells["C6"].Value = "Kapı ID";
-            worksheet.Cells["D6"].Value = "Geçiş Sayısı";
+            worksheet.Cells["A6"].Value = "Cihaz No";
+            worksheet.Cells["B6"].Value = "Cihaz Adı";
+            worksheet.Cells["C6"].Value = "İlk İşlem Zamanı";
+            worksheet.Cells["D6"].Value = "Son İşlem Zamanı";
+            worksheet.Cells["E6"].Value = "Onaylı Geçiş Sayısı";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
-            worksheet.Cells["A6:D6"].Style.Font.Size = 13;
-            worksheet.Cells["A6:D6"].Style.Font.Bold = true;
+            worksheet.Cells["A6:E6"].Style.Font.Size = 13;
+            worksheet.Cells["A6:E6"].Style.Font.Bold = true;
             worksheet.Cells["A:AZ"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             worksheet.Cells["A:AZ"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
             int rowStart = 7;
+            int AccessCount = 0;
             foreach (var item in liste)
             {
                 worksheet.Cells[string.Format("A{0}", rowStart)].Value = item.PanelID;
                 worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.PanelAdi;
-                worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.KapiID;
-                worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.GecisSayi;
+                worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Ilk_Kayit;
+                worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Son_Kayit;
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.GecisSayi;
+                AccessCount += (int)item.GecisSayi;
                 rowStart++;
             }
+            worksheet.Cells[string.Format("D{0}", rowStart)].Value = "TOPLAM";
+            worksheet.Cells[string.Format("D{0}", rowStart)].Style.Font.Size = 13;
+            worksheet.Cells[string.Format("D{0}", rowStart)].Style.Font.Bold = true;
+            worksheet.Cells[string.Format("E{0}", rowStart)].Value = AccessCount;
+            worksheet.Cells[string.Format("E{0}", rowStart)].Style.Font.Size = 13;
+            worksheet.Cells[string.Format("E{0}", rowStart)].Style.Font.Bold = true;
             worksheet.Cells["A:AZ"].AutoFitColumns();
             Response.Clear();
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";

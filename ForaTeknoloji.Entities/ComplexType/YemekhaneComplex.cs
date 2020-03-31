@@ -27,5 +27,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public int? Kapi_ID { get; set; }
 
         public string Grup_Adi { get; set; }
+
+        public string Departman_Adi { get; set; }
     }
 }

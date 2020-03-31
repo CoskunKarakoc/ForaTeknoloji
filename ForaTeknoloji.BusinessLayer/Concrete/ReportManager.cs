@@ -2772,11 +2772,25 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
             if (parameters.Group_ID != null)
             {   //CHANGE: LEFT JOIN Users ON AccessDatas.[Kart ID] = Users.[Kart ID] 06032020 Birden Fazla Kart ID Geldiği İçin Değişiklik Yaptık.
-                queryString = @"SELECT COUNT(*),Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]
+                if (parameters.Departman_No != null && parameters.Departman_No != 0)
+                {
+                    queryString = @"SELECT COUNT(*),Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Departmanlar.Adi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]
                         FROM AccessDatas 
                         LEFT JOIN Users ON AccessDatas.ID = Users.ID
+                        LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]
+                        LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID]                        
+                        WHERE  Departmanlar.[Departman No] = " + parameters.Departman_No + " AND AccessDatas.[Gecis Tipi]= 0 AND Users.ID > 0";
+                }
+                else
+                {
+                    queryString = @"SELECT COUNT(*),Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Departmanlar.Adi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]
+                        FROM AccessDatas 
+                        LEFT JOIN Users ON AccessDatas.ID = Users.ID
+                        LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]
                         LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID]                        
                         WHERE AccessDatas.[Gecis Tipi]= 0 AND Users.ID > 0";
+                }
+
                 if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)//Tek Tarih 
                 {
                     if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)//Tek Tarih-İki Saat Arası
@@ -2836,7 +2850,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     }
                     queryString += ")";
                 }
-                queryString += " GROUP BY Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]";
+                queryString += " GROUP BY Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID],Departmanlar.Adi";
             }
             else
             {
@@ -2860,10 +2874,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Kart_ID = reader[2].ToString(),
                             Adi = reader[3].ToString(),
                             Soyadi = reader[4].ToString(),
-                            TC_Kimlik = reader[5].ToString(),
-                            Panel_ID = reader[6] as int? ?? default(int),
-                            Panel_Name = reader[7].ToString(),
-                            Kapi_ID = reader[8] as int? ?? default(int)
+                            Departman_Adi = reader[5].ToString(),
+                            TC_Kimlik = reader[6].ToString(),
+                            Panel_ID = reader[7] as int? ?? default(int),
+                            Panel_Name = reader[8].ToString(),
+                            Kapi_ID = reader[9] as int? ?? default(int)
                         };
                         liste.Add(nesne);
                     }
@@ -2889,11 +2904,30 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
             if (parameters.Group_ID != null)
             {
-                queryString = @"SELECT COUNT(*),PanelSettings.[Panel ID],
-                PanelSettings.[Panel Name],AccessDatas.[Kapi ID] FROM AccessDatas
+                if (parameters.Departman_No != null && parameters.Departman_No != 0)
+                {
+                    queryString = @"SELECT PanelSettings.[Panel ID],PanelSettings.[Panel Name],
+				MIN(AccessDatas.Tarih) AS [İlk Kayıt],
+				MAX(AccessDatas.Tarih) AS [Son Kayıt],
+				COUNT(*) AS  [Onaylı] 
+                FROM AccessDatas
 				LEFT JOIN PanelSettings ON AccessDatas.[Panel ID]=PanelSettings.[Panel ID]
+	            LEFT JOIN Users ON AccessDatas.ID=Users.ID
+                LEFT JOIN Departmanlar ON Departmanlar.[Departman No]=Users.[Departman No]
+				WHERE Departmanlar.[Departman No] = " + parameters.Departman_No + " AND AccessDatas.[Gecis Tipi] = 0 AND AccessDatas.[Kart ID]>0";
+                }
+                else
+                {
+                    queryString = @"SELECT PanelSettings.[Panel ID],PanelSettings.[Panel Name],
+				MIN(AccessDatas.Tarih) AS [İlk Kayıt],
+				MAX(AccessDatas.Tarih) AS [Son Kayıt],
+				COUNT(*) AS  [Onaylı] 
+                FROM AccessDatas
+				LEFT JOIN PanelSettings ON AccessDatas.[Panel ID]=PanelSettings.[Panel ID]
+	            LEFT JOIN Users ON AccessDatas.ID=Users.ID
+                LEFT JOIN Departmanlar ON Departmanlar.[Departman No]=Users.[Departman No]
 				WHERE AccessDatas.[Gecis Tipi] = 0 AND AccessDatas.[Kart ID]>0";
-
+                }
                 if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi == null)//Tek Tarih
                 {
                     if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)
@@ -2972,10 +3006,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     {
                         var nesne = new YemekhaneComplexTotal
                         {
-                            GecisSayi = reader[0] as int? ?? default(int),
-                            PanelID = reader[1] as int? ?? default(int),
-                            PanelAdi = reader[2].ToString(),
-                            KapiID = reader[3] as int? ?? default(int)
+                            PanelID = reader[0] as int? ?? default(int),
+                            PanelAdi = reader[1].ToString(),
+                            Ilk_Kayit = reader[2].ToString(),
+                            Son_Kayit=reader[3].ToString(),
+                            GecisSayi = reader[4] as int? ?? default(int),
                         };
                         liste.Add(nesne);
                     }

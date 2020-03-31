@@ -13,5 +13,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<YemekhaneComplexTotal> ToplamGecis { get; internal set; }
         public EMailSetting EmailSettings { get; internal set; }
         public DBUsers User { get; internal set; }
+        public IEnumerable<SelectListItem> Departman_No { get; internal set; }
     }
 }

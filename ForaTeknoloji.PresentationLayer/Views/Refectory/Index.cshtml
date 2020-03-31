@@ -22,6 +22,11 @@
                         @Html.DropDownListFor(model => model.Group_ID, Model.Group_ID, "Grup Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                         @Html.ValidationMessageFor(model => model.Group_ID, "", new { @class = "text-danger" })
                     </div>
+                    <div class="form-group">
+                        <label>Departman Listesi</label>
+                        @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <div class="custom-control custom-checkbox ">
@@ -70,11 +75,10 @@
         footerStyle: "table-pager",
         columns: webGrid.Columns(
         webGrid.Column("Gecis_Sayisi", "Geçiş Sayısı"),
-        webGrid.Column("ID", "ID"),
         webGrid.Column("Kart_ID", "Kart ID"),
         webGrid.Column("Adi", "Adı"),
         webGrid.Column("Soyadi", "Soyadı"),
-        webGrid.Column("TC_Kimlik", "TC Kimlik"),
+        webGrid.Column("Departman_Adi", "Departman"),
         webGrid.Column("Panel_ID", "Panel ID"),
         webGrid.Column("Panel_Name", "Panel Adı"),
         webGrid.Column("Kapi_ID", "Kapı ID")))

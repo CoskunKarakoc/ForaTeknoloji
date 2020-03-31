@@ -16,6 +16,9 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public int? GecisSayi { get; set; }
 
+        public string Ilk_Kayit { get; set; }
+
+        public string Son_Kayit { get; set; }
 
     }
 }
