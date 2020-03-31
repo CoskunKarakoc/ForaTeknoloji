@@ -1,11 +1,14 @@
 ﻿using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace ForaTeknoloji.BusinessLayer.Abstract
 {
     public interface IReportService
     {
+        void SendAllUserTask(int TaskCode, DateTime Tarih, int DurumKodu, string KullaniciAdi, int PanelNo);
+
         List<ZiyaretciRaporList> GetZiyaretciListesi(VisitorReportParameters parameters);
         List<PersonelList> GetPersonelLists(PersonelListReportParameters parameters);
         List<ReportPersonelList> GetReportPersonelLists(ActiveUserReportParameters parameters);

@@ -31,11 +31,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         private IDoorGroupsDetailDal _doorGroupsDetailDal;
         private IReaderSettingsNewDal _readerSettingsNewDal;
         private IProgInitDal _progInitDal;
+        private IAccessDatasDal _accessDatasDal;
         public string panelListesi = "0";
         public string sirketListesi = "0";
         public string departmanListesi = "0";
         public List<int?> sirketler;
-        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal, IGroupsDetailNewDal groupsDetailNewDal, IDoorGroupsDetailDal doorGroupsDetailDal, IReaderSettingsNewDal readerSettingsNewDal, IProgInitDal progInitDal)
+        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal, IGroupsDetailNewDal groupsDetailNewDal, IDoorGroupsDetailDal doorGroupsDetailDal, IReaderSettingsNewDal readerSettingsNewDal, IProgInitDal progInitDal, IAccessDatasDal accessDatasDal)
         {
             _visitorsDal = visitorsDal;
             _groupsDetailDal = groupsDetailDal;
@@ -56,6 +57,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _doorGroupsDetailDal = doorGroupsDetailDal;
             _readerSettingsNewDal = readerSettingsNewDal;
             _progInitDal = progInitDal;
+            _accessDatasDal = accessDatasDal;
         }
 
         //OutherReport Controller
@@ -3009,7 +3011,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             PanelID = reader[0] as int? ?? default(int),
                             PanelAdi = reader[1].ToString(),
                             Ilk_Kayit = reader[2].ToString(),
-                            Son_Kayit=reader[3].ToString(),
+                            Son_Kayit = reader[3].ToString(),
                             GecisSayi = reader[4] as int? ?? default(int),
                         };
                         liste.Add(nesne);
@@ -3428,6 +3430,206 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
+        public void SendAllUserTask(int TaskCode, DateTime Tarih, int DurumKodu, string KullaniciAdi, int PanelNo)
+        {
+            var progInt = _progInitDal.GetList().FirstOrDefault();
+            var userIDList = _userService.GetUserOnlyUserID();
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = "";
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                connection.Open();
+                foreach (var userID in userIDList)
+                {
+                    queryString = @"INSERT INTO [TaskList] 
+                    ([Gorev Kodu],[IntParam 1],[Panel No],[Deneme Sayisi],
+                    [Durum Kodu],[Tarih],[Kullanici Adi],[Tablo Guncelle])
+                    VALUES(" + TaskCode + "," + userID + "," + PanelNo + "," + 1 + "," +
+                   "" + DurumKodu + ",'" + Tarih.ToString("yyyy-MM-dd HH:mm:ss") + "','" + KullaniciAdi + "'," + 1 + ")";
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    var TResult = command.ExecuteNonQuery();
+                    SendAllUserTaskOperatorLogAdd(103, KullaniciAdi, userID, 0, 0, 0, progInt);
+                }
+            }
+        }
+
+
+        public void ExecuteSendAllUserToAllPanel()
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = "";
+            queryString = "EXCECUTE SendUserAllToAllPanel";
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.ExecuteNonQuery();
+            }
+        }
+
+
+        public void SendAllUserTaskOperatorLogAdd(int? LogType, string UserName, int? Veri1, int? Veri2, int? Panel, int? Kapi, ProgInit progInitParam)
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = "";
+            var progInit = progInitParam;// _progInitDal.GetList().FirstOrDefault();
+            var result = false;
+            if (LogType >= 100 && LogType <= 109)
+            {
+                if (progInit.NoOpLogUser == true)
+                    result = true;
+            }
+            else if (LogType >= 110 && LogType <= 119)
+            {
+                if (progInit.NoOpLogTimeZone == true)
+                    result = true;
+            }
+            else if (LogType >= 120 && LogType <= 129)
+            {
+                if (progInit.NoOpLogGroup == true)
+                    result = true;
+            }
+            else if (LogType >= 130 && LogType <= 139)
+            {
+                if (progInit.NoOpPanelSettings == true)
+                    result = true;
+            }
+            else if (LogType >= 140 && LogType <= 149)
+            {
+                if (progInit.NoOpLogUserAlarm == true)
+                    result = true;
+            }
+            else if (LogType >= 150 && LogType <= 159)
+            {
+                if (progInit.NoOpLogCamera == true)
+                    result = true;
+            }
+            else if (LogType >= 160 && LogType <= 169)
+            {
+                if (progInit.NoOpLogLift == true)
+                    result = true;
+            }
+            else if (LogType >= 170 && LogType <= 179)
+            {
+                if (progInit.NoOpLogProgrammedRelay == true)
+                    result = true;
+            }
+            else if (LogType >= 180 && LogType <= 189)
+            {
+                if (progInit.NoOpLogCompany == true)
+                    result = true;
+            }
+            else if (LogType >= 190 && LogType <= 199)
+            {
+                if (progInit.NoOpLogDepartment == true)
+                    result = true;
+            }
+            else if (LogType >= 200 && LogType <= 209)
+            {
+                if (progInit.NoOpLogBlock == true)
+                    result = true;
+            }
+            else if (LogType >= 210 && LogType <= 219)
+            {
+                if (progInit.NoOpLogImport == true)
+                    result = true;
+            }
+            else if (LogType >= 220 && LogType <= 229)
+            {
+                if (progInit.NoOpLogEmailSMS == true)
+                    result = true;
+            }
+            else if (LogType >= 230 && LogType <= 239)
+            {
+
+            }
+            else if (LogType >= 240 && LogType <= 249)
+            {
+                if (progInit.NoOpLogUserGlobalInterlock == true)
+                    result = true;
+            }
+            else if (LogType >= 250 && LogType <= 259)
+            {
+                if (progInit.NoOpLogGroupCalendar == true)
+                    result = true;
+            }
+            else if (LogType >= 260 && LogType <= 269)
+            {
+
+            }
+            else if (LogType >= 270 && LogType <= 299)
+            {
+                if (progInit.NoOpLogReports == true)
+                    result = true;
+            }
+            else if (LogType >= 300 && LogType <= 309)
+            {
+                if (progInit.NoOpLogDatabase == true)
+                    result = true;
+            }
+            else if (LogType >= 310 && LogType <= 319)
+            {
+                if (progInit.NoOpLogPanelLogs == true)
+                    result = true;
+            }
+            else if (LogType >= 320 && LogType <= 329)
+            {
+                if (progInit.NoOpLogVisitor == true)
+                    result = true;
+            }
+            else
+            {
+                if (progInit.NoOpOther == true)
+                    result = true;
+            }
+
+            if (result == false)
+            {
+                //var access = new AccessDatas();//_accessDatasDal.GetList().FirstOrDefault(x => x.Panel_ID == Panel && x.Kapi_ID == Kapi);
+                //int? _global_bolge_no = null;
+                //int? _lokal_bolge_no = null;
+                //if (access != null)
+                //{
+                //    _global_bolge_no = access.Global_Bolge_No == null ? null : access.Global_Bolge_No;
+                //    _lokal_bolge_no = access.Lokal_Bolge_No == null ? null : access.Lokal_Bolge_No;
+                //}
+
+                var nesne = new AccessDatas
+                {
+                    ID = 0,
+                    Kart_ID = "0",
+                    Kod = LogType,
+                    Kullanici_Adi = UserName.Trim(),
+                    Islem_Verisi_1 = (int)Veri1,
+                    Islem_Verisi_2 = (int)Veri2,
+                    Panel_ID = 0,
+                    Kapi_ID = 0,
+                    Global_Bolge_No = 0,
+                    Lokal_Bolge_No = 0,
+                    Tarih = DateTime.Now,
+                    Kontrol = 0,
+                    Kullanici_Tipi = 0,
+                    Gecis_Tipi = 0,
+                    Plaka = "",
+                };
+                queryString = @"INSERT INTO [AccessDatas]([ID],[Kart ID],[Tarih],[Lokal Bolge No],[Global Bolge No],[Panel ID],[Kapi ID],[Gecis Tipi],[Kod]"
+           + ",[Kullanici Tipi],[Kontrol]"
+           + ",[Plaka],[Kullanici Adi],[Islem Verisi 1],[Islem Verisi 2]) VALUES"
+           + "(" + nesne.ID + ",'" + nesne.Kart_ID + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," + (nesne.Lokal_Bolge_No as int? ?? default(int)) + ""
+           + "," + (nesne.Global_Bolge_No as int? ?? default(int)) + "," + nesne.Panel_ID + "," + nesne.Kapi_ID + "," + nesne.Gecis_Tipi + "," + nesne.Kod + ""
+           + "," + nesne.Kullanici_Tipi + "," + nesne.Kontrol + ""
+           + ",'','" + nesne.Kullanici_Adi + "'"
+           + "," + nesne.Islem_Verisi_1 + "," + nesne.Islem_Verisi_2 + ")";
+                using (SqlConnection connection = new SqlConnection(address))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    var TResult = command.ExecuteNonQuery();
+                }
+            }
+
+
+        }
 
 
 

@@ -124,7 +124,15 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 
         }
 
-
+        public List<int> GetListOnlyUserID()
+        {
+            List<int> liste = new List<int>();
+            using (var context=new ForaContext())
+            {
+                liste= context.Database.SqlQuery<int>("SELECT ID FROM Users").ToList();
+            }
+            return liste;
+        }
 
 
         public class ComplexUser

@@ -222,7 +222,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
-
+        public List<int> GetUserOnlyUserID()
+        {
+            return _userDal.GetListOnlyUserID();
+        }
 
     }
 }

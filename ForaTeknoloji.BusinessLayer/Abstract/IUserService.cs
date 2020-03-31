@@ -22,5 +22,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         Users GetByKayitNo(int? Kayit_No);
         void DeleteAllUsers();
         bool FastGroupAdd(FastGroupParameters parameters);
+        List<int> GetUserOnlyUserID();
     }
 }

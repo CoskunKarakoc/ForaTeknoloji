@@ -511,24 +511,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tarih = DateTime.Now
                             };
                             _taskListService.AddTaskList(maxUser);
+                             _reportService.SendAllUserTask(2620,DateTime.Now,1,permissionUser.Kullanici_Adi,panel);
+                            //foreach (var userID in userListe)
+                            //{
+                            //    TaskList taskList = new TaskList
+                            //    {
+                            //        Deneme_Sayisi = 1,
+                            //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            //        Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
+                            //        IntParam_1 = userID,
+                            //        Kullanici_Adi = user.Kullanici_Adi,
+                            //        Panel_No = panel,
+                            //        Tablo_Guncelle = true,
+                            //        Tarih = DateTime.Now
+                            //    };
+                            //    _taskListService.AddTaskList(taskList);
+                            //    _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, userID, 0, 0, 0);
+                            //}
 
-
-                            foreach (var userID in _userService.GetAllUsers().Select(u => u.ID))
-                            {
-                                TaskList taskList = new TaskList
-                                {
-                                    Deneme_Sayisi = 1,
-                                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                                    Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
-                                    IntParam_1 = userID,
-                                    Kullanici_Adi = user.Kullanici_Adi,
-                                    Panel_No = panel,
-                                    Tablo_Guncelle = true,
-                                    Tarih = DateTime.Now
-                                };
-                                _taskListService.AddTaskList(taskList);
-                                _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, userID, 0, 0, 0);
-                            }
                         }
                     }
                     else if (OprKod == CommandConstants.CMD_ERSALL_USER)

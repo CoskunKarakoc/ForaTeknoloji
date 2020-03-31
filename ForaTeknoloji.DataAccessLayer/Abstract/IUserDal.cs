@@ -12,5 +12,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
         void DeleteAllUsers();
         List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null);
         List<ComplexUser> GetAllUsersWithOutherOnlyUser(Expression<Func<ComplexUser, bool>> filter = null);
+        List<int> GetListOnlyUserID();
     }
 }
