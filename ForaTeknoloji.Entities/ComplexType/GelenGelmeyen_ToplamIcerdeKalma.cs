@@ -16,6 +16,6 @@
         public string Toplam_Saat { get; set; }
         public string Toplam_Dakika { get; set; }
         public string Toplam_Saniye { get; set; }
-
+        public string BirimAdi { get; set; }
     }
 }

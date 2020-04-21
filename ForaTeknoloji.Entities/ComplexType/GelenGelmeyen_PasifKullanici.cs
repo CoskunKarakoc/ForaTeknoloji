@@ -17,5 +17,6 @@
         public int? Daire { get; set; }
         public string Grup_Adi { get; set; }
         public string Global_Bolge_Adi { get; set; }
+        public string BirimAdi { get; set; }
     }
 }

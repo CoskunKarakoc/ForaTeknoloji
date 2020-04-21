@@ -19,11 +19,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IAccessDatasService _accessDatasService;
         private IPanelSettingsService _panelSettingsService;
         private IReportService _reportService;
-        private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+        private IDBUsersSirketService _dBUsersSirketService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
-        public OutherReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        public OutherReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -36,9 +41,26 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _doorNamesService = doorNamesService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
-
+            _dBUsersDepartmanService = dBUsersDepartmanService;
+            _dBUsersSirketService = dBUsersSirketService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);//Account olan kullanıcının panel listeleme metoduna kullanıcı gönderiliyor 
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);//Account olan kullanıcının şirket listeleme metoduna kullanıcı gönderiliyor
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);//Account olan kullanıcının departman listeleme metoduna kullanıcı gönderiliyor
         }
 
 
@@ -46,7 +68,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Index(OutherReportParameters parameters)
         {
             var liste = _reportService.GetDigerGecisListesi(parameters);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && dbPanelList.Contains((int)x.Panel_ID));
             var model = new DigerGecisRaporListViewModel
             {
                 DigerGecisListesi = liste,
@@ -66,7 +88,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult KullaniciAlarm(OutherReportParameters parameters)
         {
             var listKulAlarm = _reportService.GetDigerGecisRaporListKullaniciAlarms(parameters);
-            var panell = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
+            var panell = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && dbPanelList.Contains((int)x.Panel_ID));
             var modelAlarm = new DigerGecisRaporAlarmListViewModel
             {
                 DigerGecisListesiAlarm = listKulAlarm,

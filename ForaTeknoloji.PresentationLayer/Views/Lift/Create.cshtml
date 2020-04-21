@@ -2,12 +2,13 @@
 @{
     ViewBag.Title = "Yeni Asansör Grup";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
-<div class="row animated slideInLeft faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-8 offset-2">
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header py-1 mt-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center"><i>Yeni Asansör Geçiş Grubu</i></h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Yeni Asansör Geçiş Grubu</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Create", "Lift", FormMethod.Post))
@@ -43,15 +44,15 @@
                     <div class="form-group offset-4">
                         <div class="custom-control-inline custom-radio ml-5 mr-5">
                             <input type="radio" value="16" class="custom-control-input" id="16" name="Kat_Sayisi_Base">
-                            <label class="custom-control-label text-dark" for="16">16 Kat</label>
+                            <label class="custom-control-label mr-5" for="16">16 Kat</label>
                         </div>
                         <div class="custom-control-inline custom-radio mr-5">
                             <input type="radio" value="32" class="custom-control-input" id="32" name="Kat_Sayisi_Base">
-                            <label class="custom-control-label text-dark" for="32">32 Kat</label>
+                            <label class="custom-control-label mr-5" for="32">32 Kat</label>
                         </div>
                         <div class="custom-control-inline custom-radio mr-5">
                             <input type="radio" value="64" class="custom-control-input" id="64" name="Kat_Sayisi_Base">
-                            <label class="custom-control-label text-dark" for="64">64 Kat</label>
+                            <label class="custom-control-label mr-5" for="64">64 Kat</label>
                         </div>
                     </div>
                     <div class="row">

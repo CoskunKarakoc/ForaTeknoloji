@@ -116,5 +116,13 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _dBUsersDal.Get(x => x.Sifre == Sifre);
         }
+
+        public DBUsers GetByEmailAdres(string EMailAdress)
+        {
+            return _dBUsersDal.Get(x => x.EMail == EMailAdress);
+        }
+
+
+
     }
 }

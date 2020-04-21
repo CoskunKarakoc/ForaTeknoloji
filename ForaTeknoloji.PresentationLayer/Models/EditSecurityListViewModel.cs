@@ -12,5 +12,7 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<Sirketler> SirketList { get; internal set; }
         public List<DBUsersDepartman> UserDepartmanList { get; internal set; }
         public List<Departmanlar> DepartmanList { get; internal set; }
+        public List<DBUsersAltDepartman> DBUserAltDepartman { get; internal set; }
+        public List<AltDepartman> AltDepartmanListesi { get; internal set; }
     }
 }

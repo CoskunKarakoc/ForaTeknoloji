@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,8 +44,10 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="CommandConstants.cs" />
+    <Compile Include="ConfigHelper.cs" />
     <Compile Include="DefaultCommon.cs" />
     <Compile Include="ICommon.cs" />
+    <Compile Include="MailHelper.cs" />
     <Compile Include="PanelModel.cs" />
     <Compile Include="PanelStatusCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

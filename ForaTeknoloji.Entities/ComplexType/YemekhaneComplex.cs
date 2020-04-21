@@ -29,5 +29,14 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Grup_Adi { get; set; }
 
         public string Departman_Adi { get; set; }
+
+        public string SirketAdi { get; set; }
+
+        public string AltDepartmanAdi { get; set; }
+
+        public string BolumAdi { get; set; }
+
+        public string BirimAdi { get; set; }
+
     }
 }

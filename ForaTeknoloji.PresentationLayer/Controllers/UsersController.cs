@@ -39,9 +39,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReportService _reportService;
         private IUnvanService _unvanService;
         private IAccessDatasService _accessDatasService;
+        private IBirimService _birimService;
+        private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAltDepartmanService altDepartmanService, IBolumService bolumService, IUnvanService unvanService, IAccessDatasService accessDatasService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        List<int> dbAltDepartmanList;
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAltDepartmanService altDepartmanService, IBolumService bolumService, IUnvanService unvanService, IAccessDatasService accessDatasService, IBirimService birimService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -69,6 +75,28 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService = reportService;
             _unvanService = unvanService;
             _accessDatasService = accessDatasService;
+            _birimService = birimService;
+            _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            dbAltDepartmanList = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
+            foreach (var dbUserAltDepartmanNo in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Alt_Departman_No))
+            {
+                dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
+            }
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -85,9 +113,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var model = new UsersListViewModel
             {
-                Users = _userService.GetAllUsersWithOuther(),
+                Users = _userService.GetAllUsersWithOuther(x => dbDepartmanList.Contains((int)x.Departman_No) && dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)),
                 //Users = IndexViewUser(),
-                PanelListesi = _reportService.PanelListesi(user)
+                //PanelListesi = _reportService.PanelListesi(user)
+                PanelListesi = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID))
             };
             return View(model);
 
@@ -95,7 +124,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult UserList()
         {
-            return Json(new { data = _userService.GetAllUsersWithOuther() }, JsonRequestBehavior.AllowGet);
+            var jsonresult = Json(new { data = _userService.GetAllUsersWithOuther(x => dbDepartmanList.Contains((int)x.Departman_No) && dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)) }, JsonRequestBehavior.AllowGet);
+            jsonresult.MaxJsonLength = int.MaxValue;
+            return jsonresult;
         }
 
 
@@ -114,10 +145,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             else
                 MaxID = _userService.GetAllUsers().Max(x => x.ID);
 
-            var Sirketler = _reportService.SirketListesi(user);
-            var Departmanlar = _reportService.DepartmanListesi(user);
-            var AltDepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var Sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No));  /*_reportService.SirketListesi(user);*/
+            var Departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)); /*_reportService.DepartmanListesi(user);*/
+            var AltDepartmanlar = _altDepartmanService.GetAllAltDepartman(x => dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var Bolumler = _bolumService.GetAllBolum();
+            var Birimler = _birimService.GetAllBirim();
             var Bloklar = _bloklarService.GetAllBloklar();
             var Gorevler = _gorevlerService.GetAllGorevler();
             var GecisTipi = _accessModesService.GetAllAccessModes();
@@ -195,6 +227,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Unvan_No.ToString()
+                }),
+                Birim_No = Birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 })
             };
             return View(model);
@@ -270,9 +307,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ViewBag.Grup_No_2 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_2);
             ViewBag.Grup_No_3 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_3);
             ViewBag.Grup_Takvimi_No = new SelectList(_timeZoneCalendarService.GetAllTimeZoneCalendar(), "Grup_Takvimi_No", "Grup_Takvimi_Adi", users.Grup_Takvimi_No);
-            ViewBag.Alt_Departman_No = new SelectList(_altDepartmanService.GetAllAltDepartman(), "Alt_Departman_No", "Adi", users.Alt_Departman_No);
-            ViewBag.Bolum_No = new SelectList(_bolumService.GetAllBolum(), "Bolum_No", "Adi", users.Bolum_No);
+            ViewBag.Alt_Departman_No = new SelectList(_altDepartmanService.GetAllAltDepartman(x => x.Departman_No == users.Departman_No), "Alt_Departman_No", "Adi", users.Alt_Departman_No);
+            ViewBag.Bolum_No = new SelectList(_bolumService.GetAllBolum(x => x.Alt_Departman_No == users.Alt_Departman_No), "Bolum_No", "Adi", users.Bolum_No);
             ViewBag.Unvan_No = new SelectList(_unvanService.GetAllUnvan(), "Unvan_No", "Adi", users.Unvan_No);
+            ViewBag.Birim_No = new SelectList(_birimService.GetAllBirim(x => x.Alt_Departman_No == users.Alt_Departman_No && x.Bolum_No == users.Bolum_No && x.Departman_No == users.Departman_No), "Birim_No", "Adi", users.Birim_No);
             ViewBag.Bitis_Tarihi = users.Bitis_Tarihi;
             ViewBag.Bitis_Saati = users.Bitis_Saati;
             return View(users);
@@ -511,7 +549,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tarih = DateTime.Now
                             };
                             _taskListService.AddTaskList(maxUser);
-                             _reportService.SendAllUserTask(2620,DateTime.Now,1,permissionUser.Kullanici_Adi,panel);
+                            _reportService.SendAllUserTask(2620, DateTime.Now, 1, permissionUser.Kullanici_Adi, panel);
                             //foreach (var userID in userListe)
                             //{
                             //    TaskList taskList = new TaskList
@@ -602,13 +640,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (Departman != 0 && Departman != null)
             {
-                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman);
-                var selectAltDepartman = list.Select(a => new SelectListItem
+                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
+                if (list.Count == 0)
                 {
-                    Text = a.Adi,
-                    Value = a.Alt_Departman_No.ToString()
-                });
-                return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectAltDepartman = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Alt_Departman_No.ToString()
+                    });
+                    return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+                }
+
             }
             List<SelectListItem> defaultValue = new List<SelectListItem>();
             defaultValue.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
@@ -621,18 +669,55 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
 
                 var list = _bolumService.GetAllBolum(x => x.Alt_Departman_No == AltDepartman);
-                var selectBolum = list.Select(a => new SelectListItem
+                if (list.Count == 0)
                 {
-                    Text = a.Adi,
-                    Value = a.Bolum_No.ToString()
-                });
-                return Json(selectBolum, JsonRequestBehavior.AllowGet);
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectBolum = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Bolum_No.ToString()
+                    });
+                    return Json(selectBolum, JsonRequestBehavior.AllowGet);
+                }
+
             }
             List<SelectListItem> defaultValue = new List<SelectListItem>();
             defaultValue.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
             return Json(defaultValue, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult BirimListesi(int? AltDepartman, int? Bolum)
+        {
+            if (AltDepartman != null && AltDepartman != 0 && Bolum != null && Bolum != 0)
+            {
+
+                var list = _birimService.GetAllBirim(x => x.Alt_Departman_No == AltDepartman && x.Bolum_No == Bolum);
+                if (list.Count == 0)
+                {
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Birim Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectBirim = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Birim_No.ToString()
+                    });
+                    return Json(selectBirim, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Birim Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
 
 
 

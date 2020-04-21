@@ -20,9 +20,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReaderSettingsNewService _readerSettingsNewService;
         private IAccessDatasService _accessDatasService;
         private IDBUsersService _dBUsersService;
+        private IDBUsersKapiService _dBUsersKapiService;
         DBUsers dBUsers;
         DBUsers permissionUser;
-        public SpotMonitorController(IReportService reportService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService)
+        public SpotMonitorController(IReportService reportService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IDBUsersKapiService dBUsersKapiService)
         {
             dBUsers = CurrentSession.User;
             if (dBUsers == null)
@@ -34,6 +35,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _readerSettingsNewService = readerSettingsNewService;
             _accessDatasService = accessDatasService;
             _dBUsersService = dBUsersService;
+            _dBUsersKapiService = dBUsersKapiService;
+            _reportService.GetPanelAndDoorListForSpotMonitor(dBUsers == null ? new DBUsers { } : dBUsers);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi);
         }
 
@@ -45,12 +48,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: SpotMonitor
         public ActionResult Index()
         {
-            if (permissionUser.SysAdmin == false)
-                throw new Exception("Yetkisiz Erişim!");
-
-            var Panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            var Panel = SpotMonitorPanelListesi();//_panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var Kapi = _readerSettingsNewService.GetAllReaderSettingsNew();
-            var MonitorList = _reportService.MonitorWatch(CurrentSession.Get<SpotMonitorSettings>("SpotWatchParameter"));
+            var MonitorList = _reportService.MonitorWatch(null /*CurrentSession.Get<SpotMonitorSettings>("SpotWatchParameter")*/);
             var model = new MonitorWatchViewModel
             {
                 Panel_ID = Panel.Select(a => new SelectListItem
@@ -72,9 +72,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult WatchSettings(SpotMonitorSettings parameters)
         {
-            if (permissionUser.SysAdmin == false)
-                throw new Exception("Yetkisiz Erişim!");
-
             if (parameters.Panel_ID != null && parameters.Kapi_ID != null)
             {
                 CurrentSession.Set<SpotMonitorSettings>("SpotWatchParameter", parameters);
@@ -92,16 +89,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Count()
         {
-            var condition = CurrentSession.Get<SpotMonitorSettings>("SpotWatchParameter");
-            if (condition != null)
-            {
-                var count = _reportService.WatchScreenGetCount(condition.Panel_ID, condition.Kapi_ID);
-                return Json(count, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(0, JsonRequestBehavior.AllowGet);
-            }
+            //var condition = CurrentSession.Get<SpotMonitorSettings>("SpotWatchParameter");
+            //if (condition != null)
+            //{
+            var count = _reportService.WatchScreenGetCount(null, null/*condition.Panel_ID, condition.Kapi_ID*/);
+            return Json(count, JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    return Json(0, JsonRequestBehavior.AllowGet);
+            //}
 
         }
 
@@ -110,7 +107,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (PanelID != null && PanelID != 0)
             {
-                var list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
+                var list = SpotMonitorDoorList(PanelID);// _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
                 var selectDoor = list.Select(a => new SelectListItem
                 {
                     Text = a.WKapi_Adi,
@@ -126,9 +123,78 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
+        public List<PanelSettings> SpotMonitorPanelListesi()
+        {
+            List<PanelSettings> KullaniciPaneli = new List<PanelSettings>();
+            bool door = false;
+            foreach (var item in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == permissionUser.Kullanici_Adi))
+            {
+                door = false;
+                if (item.Kapi_1 == true)
+                    door = true;
+                if (item.Kapi_2 == true)
+                    door = true;
+                if (item.Kapi_3 == true)
+                    door = true;
+                if (item.Kapi_4 == true)
+                    door = true;
+                if (item.Kapi_5 == true)
+                    door = true;
+                if (item.Kapi_6 == true)
+                    door = true;
+                if (item.Kapi_7 == true)
+                    door = true;
+                if (item.Kapi_8 == true)
+                    door = true;
 
+                if (door == true)
+                {
+                    KullaniciPaneli.Add(_panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == item.Panel_No));
+                }
+            }
 
+            return KullaniciPaneli;
+        }
 
+        public List<ReaderSettingsNew> SpotMonitorDoorList(int? Panel_ID)
+        {
+            List<ReaderSettingsNew> KullaniciKapi = new List<ReaderSettingsNew>();
+            bool resul = false;
+            var item = _dBUsersKapiService.GetAllDBUsersKapi().FirstOrDefault(x => x.Kullanici_Adi == permissionUser.Kullanici_Adi && x.Panel_No == Panel_ID);
+            if (item.Kapi_1 == true)
+            {
+                KullaniciKapi.Add(_readerSettingsNewService.GetByKapiANDPanel(1, (int)Panel_ID));
+            }
+            if (item.Kapi_2 == true)
+            {
+                KullaniciKapi.Add(_readerSettingsNewService.GetByKapiANDPanel(2, (int)Panel_ID));
+            }
+            if (item.Kapi_3 == true)
+            {
+                KullaniciKapi.Add(_readerSettingsNewService.GetByKapiANDPanel(3, (int)Panel_ID));
+            }
+            if (item.Kapi_4 == true)
+            {
+                KullaniciKapi.Add(_readerSettingsNewService.GetByKapiANDPanel(4, (int)Panel_ID));
+            }
+            if (item.Kapi_5 == true)
+            {
+                KullaniciKapi.Add(_readerSettingsNewService.GetByKapiANDPanel(5, (int)Panel_ID));
+            }
+            if (item.Kapi_6 == true)
+            {
+                KullaniciKapi.Add(_readerSettingsNewService.GetByKapiANDPanel(6, (int)Panel_ID));
+            }
+            if (item.Kapi_7 == true)
+            {
+                KullaniciKapi.Add(_readerSettingsNewService.GetByKapiANDPanel(7, (int)Panel_ID));
+            }
+            if (item.Kapi_8 == true)
+            {
+                KullaniciKapi.Add(_readerSettingsNewService.GetByKapiANDPanel(8, (int)Panel_ID));
+            }
+            return KullaniciKapi;
+        }
 
     }
 }

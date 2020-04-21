@@ -43,6 +43,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetPanelAndDoorListForSpotMonitor(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 

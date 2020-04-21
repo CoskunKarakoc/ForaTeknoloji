@@ -33,5 +33,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public int? Unvan { get; set; }
 
         public int? Bolum { get; set; }
+
+        public int? Birim_No { get; set; }
     }
 }

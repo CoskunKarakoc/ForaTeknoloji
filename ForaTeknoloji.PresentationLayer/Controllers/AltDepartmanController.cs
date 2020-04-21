@@ -17,9 +17,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IAltDepartmanService _altDepartmanService;
         private IDepartmanService _departmanService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+        private IDBUsersSirketService _dBUsersSirketService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public AltDepartmanController(IAltDepartmanService altDepartmanService, IDBUsersService dBUsersService, IDepartmanService departmanService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        public AltDepartmanController(IAltDepartmanService altDepartmanService, IDBUsersService dBUsersService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -29,6 +35,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _altDepartmanService = altDepartmanService;
             _dBUsersService = dBUsersService;
             _departmanService = departmanService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
+            _dBUsersSirketService = dBUsersSirketService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -39,12 +63,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             var model = new AltDepartmanListViewModel
             {
-                Departman_No = _departmanService.GetAllDepartmanlar().Select(a => new SelectListItem
+                Departman_No = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)).Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
                 }),
-                AltDepartmanListesi = _altDepartmanService.ComplexAltDepartmen()
+                AltDepartmanListesi = _altDepartmanService.ComplexAltDepartmen(x => dbDepartmanList.Contains(x.Departman_No))
             };
 
 
@@ -111,7 +135,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
             }
             AltDepartman altDepartman = _altDepartmanService.GetById((int)id);
-            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(), "Departman_No", "Adi", altDepartman.Departman_No);
+            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)), "Departman_No", "Adi", altDepartman.Departman_No);
             if (altDepartman == null)
             {
                 return HttpNotFound();

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Operator Log Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.OperatorLogList, rowsPerPage: 20);
 }
 <style>
@@ -22,8 +23,8 @@
             }
 </style>
 <div class="card border-left-info h-100 mt-2 shadow-lg animated fadeIn">
-    <div class="card-header-tabs mt-1">
-        <h3 class="text-center text-muted">Operator Log Listesi</h3>
+    <div class="card-header py-1">
+        <h3 class="card-title"><i class="fas fa-bookmark"></i> Operator Log Listesi</h3>
     </div>
     <div class="card-body">
         @using (Html.BeginForm("Index", "OperatorLogReport", FormMethod.Get))
@@ -193,15 +194,27 @@
             $("body").append(frame1);
             var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
             frameDoc.document.open();
-            //Create a new HTML document.
-            frameDoc.document.write('<html><head><title>Operator Log Listesi</title>');
-            frameDoc.document.write('</head><body><hr />');
-            frameDoc.document.write('<h3>Operator Log Listesi</h3><hr />');
-            //Append the external CSS file.
+            frameDoc.document.write('<html>');
+            frameDoc.document.write('<head>');
             frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
-            //Append the DIV contents.
+            frameDoc.document.write('<style>');
+            frameDoc.document.write('table{ border-collapse: collapse; width: 100%;}')
+            frameDoc.document.write('table th, td { text-align: center; padding: 8px;} body{padding:10px;}');
+            frameDoc.document.write('tr:nth-child(even) {background-color: #f2f2f2;}');
+            frameDoc.document.write('table tr > *:nth-child(1){ display: none; }');
+            //frameDoc.document.write('table tr > *:nth-child(6){ display: none; }');
+            //frameDoc.document.write('table tr > *:nth-child(12){ display: none; }');
+            //frameDoc.document.write('table tr > *:nth-child(14){ display: none; }');
+            frameDoc.document.write('table tfoot > *:nth-child(2){ display: none; }');
+            frameDoc.document.write('table, th, td {  border: 1px solid black; text-align:center; border-collapse: collapse;}');
+            frameDoc.document.write('thead tr th a { color: black; text-decoration: none; }thead tr th a:hover { color: black; }thead tr th a:visited { color: black; }thead tr th a:active { color: black; }');
+            frameDoc.document.write('</style>');
+            frameDoc.document.write('</head>');
+            frameDoc.document.write('<body>');
+            frameDoc.document.write('<h5>Operatör Log Raporları (' + new Date().toLocaleDateString() + ')</h5><hr/>');
             frameDoc.document.write(contents);
-            frameDoc.document.write('</body></html>');
+            frameDoc.document.write('</body>');
+            frameDoc.document.write('</html>');
             frameDoc.document.close();
             setTimeout(function () {
                 window.frames["frame1"].focus();

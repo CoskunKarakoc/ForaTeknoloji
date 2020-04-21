@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row animated fadeIn faster">
+    <div class="col-md-8 offset-2">
+        <div class="card  shadow-lg mt-3 mb-3 border-left-info h-100">
+            <div class="card-header py-1">
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Panel Listesi</h3>
+            </div>
+            <div class="card-body">
+                <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead class="table-sm">
+                        <tr>
+                            <td>ID</td>
+                            <td>Seri No</td>
+                            <td>Panel Adı</td>
+                            <td>Panel Model</td>
+                            <td>IP Adresi</td>
+                            <td>Panel Operasyon</td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td>ID</td>
+                            <td>Seri No</td>
+                            <td>Panel Adı</td>
+                            <td>Panel Model</td>
+                            <td>IP Adresi</td>
+                            <td>Panel Operasyon</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#PanelTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "ajax": "/PanelSettings/PanelList",
+                "columns": [
+                    { "data": "Panel_ID" },
+                    { "data": "Seri_No" },
+                    { "data": "Panel_Name" },
+                    {
+                        "data": "Panel_Model", "render": function (data) {
+                            var panelModel = '';
+                            if (data == 5) {
+                                panelModel = 'MW-301 (8 Kapı)';
+                            } else if (data == 6) {
+                                panelModel = 'MW-304 (4 Kapı)';
+
+                            } else if (data == 7) {
+                                panelModel = 'MW-302 (2 Kapı)';
+
+                            } else {
+                                panelModel = 'MS-1010';
+                            }
+                            return panelModel;
+                        }
+                    },
+                    { "data": "IP_Adres" },
+                    {
+                        "data": "Panel_ID", "render": function (data) {
+                            var multipleUrl = '<a title="Edit" id="edit" href="/PanelSettings/Settings?id=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
+                                '<a title="Delete" href="/PanelSettings/Delete?PanelID=' + data + '" onclick="return confirm(\'Seçilen Paneli Veritabanından Silmek İstediğinize Emin Misiniz?\')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>' +
+                                '<a title="Panel Ayarlarını Gönder" href="/PanelSettings/SendToPanel?Panel=' + data + '"  onclick="return confirm(\'Panel Ayarlarını Göndermek İstediğinize Emin Misiniz?\')"><i class="fas fa-share text-success mr-2"></i></a>' +
+                                '<a title="Panel Ayarlarını Al" href="/PanelSettings/ReceiveFromPanel?PanelID=' + data + '"  onclick="return confirm(\'Panel Ayarlarını Almak İstediğinize Emin Misiniz?\')"><i class="fas fa-reply text-success mr-2"></i></a>' +
+                                '<a title="Panel Saatini Güncelle" href="/PanelSettings/PanelDate?Panel=' + data + '" onclick="return confirm(\'Panel Saatini Güncellemek İstediğinize Emin Misiniz?\')"><i class="fas fa-clock-o text-warning mr-2"></i></a>';
+                            return multipleUrl;
+                        }
+                    },
+                ],
+                "columnDefs": [
+                    { "orderable": false, "targets": 5 }
+                ]
+            });
+
+        });
+    </script>
+}
+

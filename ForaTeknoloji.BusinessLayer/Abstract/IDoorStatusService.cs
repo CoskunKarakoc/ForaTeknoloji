@@ -16,6 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         DoorStatus AddDoorStatus(DoorStatus doorStatus);
         void DeleteDoorStatus(DoorStatus doorStatus);
         DoorStatus UpdateDoorStatus(DoorStatus doorStatus);
-        List<ComplexDoorStatus> ComplexDoorStatuses();
+        List<ComplexDoorStatus> ComplexDoorStatuses(Expression<Func<ComplexDoorStatus, bool>> filter = null);
     }
 }

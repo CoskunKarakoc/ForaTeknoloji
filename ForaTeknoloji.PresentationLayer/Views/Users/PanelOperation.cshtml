@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Kullanıcı-Panel İşlemleri";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
 
@@ -9,7 +10,7 @@
     <div class="col-md-12">
         <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header py-1 mt-1">
-                <h3 title="Title" class="m-0 font-weight-bold text-secondary text-center">Kullanıcı Ayarları</h3>
+                <h3 title="Title" class="card-title"><i class="fas fa-bookmark"></i> Kullanıcı Ayarları</h3>
             </div>
             <div class="card-body">
                 @if (Model.Users.Count == 0)
@@ -27,17 +28,16 @@
                     <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
                         <thead>
                             <tr>
-                                <td>ID</td>
                                 <td>Kart ID</td>
                                 <td>Adı</td>
                                 <td>Soyadı</td>
-                                <td>Şirket</td>
+                                <td>TC Kimlik</td>
                                 <td>Departman</td>
-                                <td>Görev</td>
-                                <td>Blok</td>
-                                <td>Plaka</td>
+                                <td>Alt Departman</td>
+                                <td>Bölüm</td>
+                                <td>Birim</td>
                                 <td>Geçiş Grubu</td>
-                                <td>Ziyaretçi Grubu</td>
+                                <td>Açıklama</td>
                                 <td>
                                     <a data-toggle="modal" data-target="#panelList" title="Tümünü Panelden Sil" onclick="ekle(0,2629)" id="PanelDelete"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
                                     <a data-toggle="modal" data-target="#panelList" title="Tüm Geçiş Sayacını Sil" onclick="ekle(0,2702)" id="AccessDelete"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
@@ -50,17 +50,16 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <td>ID</td>
                                 <td>Kart ID</td>
                                 <td>Adı</td>
                                 <td>Soyadı</td>
-                                <td>Şirket</td>
+                                <td>TC Kimlik</td>
                                 <td>Departman</td>
-                                <td>Görev</td>
-                                <td>Blok</td>
-                                <td>Plaka</td>
+                                <td>Alt Departman</td>
+                                <td>Bölüm</td>
+                                <td>Birim</td>
                                 <td>Geçiş Grubu</td>
-                                <td>Ziyaretçi Grubu</td>
+                                <td>Açıklama</td>
                                 <td></td>
                             </tr>
                         </tfoot>
@@ -91,7 +90,7 @@
                     </div>
                     <input id="userNo" type="text" hidden name="UserID" value="" />
                     <input id="oprKod" type="number" hidden name="OprKod" value="" />
-                    <table id="PanelTable"  class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
                         <thead class=" table-sm">
                             <tr>
                                 <td>
@@ -165,17 +164,29 @@
                 },
                 "ajax": "/Users/UserList",
                 "columns": [
-                    { "data": "ID" },
                     { "data": "Kart_ID" },
                     { "data": "Adi" },
                     { "data": "Soyadi" },
-                    { "data": "Sirket" },
+                    { "data": "TCKimlik" },
                     { "data": "Departman" },
-                    { "data": "Gorev" },
-                    { "data": "Blok" },
-                    { "data": "Plaka" },
+                    { "data": "AltDepartman" },
+                    { "data": "Bolum" },
+                    { "data": "Birim" },
                     { "data": "Gecis_Grubu" },
-                    { "data": "String_Ziyaretci_Grubu" },
+                    {
+                        "data": "Aciklama", "render": function (data) {
+                            if (data != null) {
+                                var value = data.substring(0, 10);
+                                value += '...';
+                                return value;
+                            } else {
+                                return "";
+                            }
+
+
+
+                        }
+                    },
                     {
                         "data": "ID", "render": function (data) {
                             var multipleUrl = '<a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(' + data + ',2628)" id="PanelDelete"><i class="fas fa-trash-alt text-danger mr-2"></i></a>' +
@@ -187,7 +198,7 @@
                     },
                 ],
                 "columnDefs": [
-                    { "orderable": false, "targets": 11 }
+                    { "orderable": false, "targets": 10 }
                 ]
             });
         });

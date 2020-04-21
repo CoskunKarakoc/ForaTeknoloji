@@ -1,15 +1,15 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.RefectoryListViewModel
 @{
-    ViewBag.Title = "Yemekhane Raporu Total";
+    ViewBag.Title = "Yemekhane Raporu-TOPLAM";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.ToplamGecis, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
     webGrid.Pager(WebGridPagerModes.NextPrevious);
 }
 
-<div class="card border-left-info h-100 mt-1 shadow-lg animated slideInLeft faster">
-    <div class="card-header">
-        <h3 class="text-muted text-center">Yemekhane Raporu (Toplam)</h3>
+<div class="card border-left-info h-100 mt-1 shadow-lg">
+    <div class="card-header py-1">
+        <h3 class="card-title"><i class="fas fa-bookmark"></i> Yemekhane Raporu (Toplam)</h3>
         @if (Model.User.SysAdmin == true)
         {
             <div class="text-right">
@@ -28,9 +28,26 @@
                         @Html.ValidationMessageFor(model => model.Group_ID, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
-                        <label>Departman Listesi</label>
-                        @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                        @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
+                        <label for="SirketSirketNo">Şirket Seçimi</label>
+                        @Html.DropDownListFor(model => model.Sirket_No, Model.Sirket_No, "Şirket Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                    <div class="form-group">
+                        <label for="DepartmanNo">Departman Seçimi</label>
+                        @Html.DropDownListFor(model => model.Departman_No, Model.Departman_No, "Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Alt_Departman_No">Alt Departman Seçimi</label>
+                        @Html.DropDownListFor(model => model.Alt_Departman_No, Model.Alt_Departman_No, "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Bolum_No">Bölüm Seçimi</label>
+                        @Html.DropDownListFor(model => model.Bolum_No, Model.Bolum_No, "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Birim_No">Birim Seçimi</label>
+                        @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -45,8 +62,6 @@
                         <label for="exampleFormControlInput1">Bitiş</label>
                         <input class="form-control form-control-sm" name="Bitis_Tarihi" disabled type="date" value="" id="Tarih2">
                     </div>
-                </div>
-                <div class="col-md-4">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
                         <label class="custom-control-label mb-2" for="ikiSaat">İki Saat Arası</label>
@@ -74,15 +89,15 @@
                     @if (Model.ToplamGecis.Count > 0)
                     {
                         @webGrid.GetHtml(
-        htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-        selectedRowStyle: "selectRow",
-        footerStyle: "table-pager",
-        columns: webGrid.Columns(
-        webGrid.Column("PanelID", "Cihaz No"),
-        webGrid.Column("PanelAdi", "Cihaz Adı"),
-        webGrid.Column("Ilk_Kayit", "İlk İşlem Zamanı"),
-        webGrid.Column("Son_Kayit", "Son İşlem Zamanı"),
-        webGrid.Column("GecisSayi", "Onaylı Geçiş Sayısı")))
+htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+selectedRowStyle: "selectRow",
+footerStyle: "table-pager",
+columns: webGrid.Columns(
+webGrid.Column("PanelID", "Cihaz No"),
+webGrid.Column("PanelAdi", "Cihaz Adı"),
+webGrid.Column("Ilk_Kayit", "İlk İşlem Zamanı"),
+webGrid.Column("Son_Kayit", "Son İşlem Zamanı"),
+webGrid.Column("GecisSayi", "Onaylı Geçiş Sayısı")))
                     }
                     else
                     {
@@ -96,7 +111,8 @@
                 </div>
             </div>
             <div class="col-md-12 text-right">
-                <p class="text-info"><i class="fas fa-info-circle"></i> Toplam Geçiş Sayısı: @Model.ToplamGecis.Select(x => x.GecisSayi).Sum()</p>
+                <input type="text" hidden id="GecisSayisiHidden" name="name" value="@Model.ToplamGecis.Select(x => x.GecisSayi).Sum()" />
+                @*<p class="text-info"><i class="fas fa-info-circle"></i> Toplam Geçiş Sayısı: @Model.ToplamGecis.Select(x => x.GecisSayi).Sum()</p>*@
             </div>
         </div>
     </div>
@@ -173,11 +189,106 @@
     </div>
 </div>
 
-
 <script>
     $(document).ready(function () {
         $('.chosen-select').chosen();
         $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+        $("#Departman_No").chosen().change(function () {
+            var departmanNo = $(this).val();
+            if (departmanNo == 0 || departmanNo == null) {
+                $("#Alt_Departman_No").empty();
+                $("#Bolum_No").empty();
+                $("#Birim_No").empty();
+                $("#Alt_Departman_No").append('<option > Alt Departman Seçiniz... </option>');
+                $("#Bolum_No").append('<option > Bölüm Seçiniz... </option>');
+                $("#Birim_No").append('<option > Birim Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/PersonelListReport/AltDepartmanListesi?Departman=' + departmanNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Alt_Departman_No").empty();
+                    $("#Alt_Departman_No").append('<option > Alt Departman Seçiniz... </option>');
+                    $.each(data, function (index, row) {
+                        $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    });
+                    var altdepartmanNo = $("#Alt_Departman_No").val();
+                    $.ajax({
+                        url: '/PersonelListReport/BolumListesi?AltDepartman=' + altdepartmanNo,
+                        type: 'GET',
+                        dataType: 'json'
+                    }).done(function (data) {
+                        $("#Bolum_No").empty();
+                        $.each(data, function (index, row) {
+                            $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                        });
+                        var bolumNo = $("#Bolum_No").val();
+                        $.ajax({
+                            url: '/PersonelListReport/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                            type: 'GET',
+                            dataType: 'json'
+                        }).done(function (data) {
+                            $("#Birim_No").empty();
+                            $.each(data, function (index, row) {
+                                $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                            });
+                        });
+                    });
+
+                });
+            }
+        });
+        $("#Alt_Departman_No").chosen().change(function () {
+            var altdepartmanNo = $(this).val();
+            $.ajax({
+                url: '/PersonelListReport/BolumListesi?AltDepartman=' + altdepartmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Bolum_No").empty();
+                $.each(data, function (index, row) {
+                    $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                });
+                var bolumNo = $("#Bolum_No").val();
+                $.ajax({
+                    url: '/PersonelListReport/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Birim_No").empty();
+                    $.each(data, function (index, row) {
+                        $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    });
+                });
+            });
+        })
+
+        $("#Bolum_No").chosen().change(function () {
+            var bolumNo = $(this).val();
+            var altdepartmanNo = $("#Alt_Departman_No").val();
+            $.ajax({
+                url: '/PersonelListReport/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Birim_No").empty();
+                $.each(data, function (index, row) {
+                    $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                });
+            });
+        })
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+        var gecisSayisi = $('#GecisSayisiHidden').val();
+        var html = '<tfoot><tr><td></td><td></td><td></td><td><b>TOPLAM</b></td><td>' + gecisSayisi + '</td></tr></tfoot>';
+        $('#table').append(html);
+
     });
 </script>
 
@@ -212,14 +323,20 @@
         $("body").append(frame1);
         var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
         frameDoc.document.open();
-        //Create a new HTML document.
-        frameDoc.document.write('<html><head><title>Personel Geçiş Sayısı Raporları</title>');
-        frameDoc.document.write('</head><body><hr />');
-        //Append the external CSS file.
+        frameDoc.document.write('<html>');
+        frameDoc.document.write('<head>');
         frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
-        //Append the DIV contents.
+        frameDoc.document.write('<style>');
+        frameDoc.document.write('table, th, td {border-collapse: collapse;} body{padding:10px;}');
+        frameDoc.document.write('table, th, td {  border: 1px solid black; text-align:center; border-collapse: collapse;}');
+        frameDoc.document.write('thead tr th a { color: black; text-decoration: none; }thead tr th a:hover { color: black; }thead tr th a:visited { color: black; }thead tr th a:active { color: black; }');
+        frameDoc.document.write('</style>');
+        frameDoc.document.write('</head>');
+        frameDoc.document.write('<body>');
+        frameDoc.document.write('<h5>(PDKS-YEMEKHANE) Terminal Toplam Hareket Sayıları (' + new Date().toLocaleDateString() + ')</h5><hr/>');
         frameDoc.document.write(contents);
-        frameDoc.document.write('</body></html>');
+        frameDoc.document.write('</body>');
+        frameDoc.document.write('</html>');
         frameDoc.document.close();
         setTimeout(function () {
 

@@ -8,9 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>MaviSoft 301 - @ViewBag.Title</title>
+    <title>MaviSoft - @ViewBag.Title</title>
     <!-- Custom fonts for this template-->
     @RenderSection("Styles", false)
+
+
+
     <link runat="server" rel="shortcut icon" href="~/Content/Images/favicon.ico" type="image/x-icon" />
     <link runat="server" rel="icon" href="~/Content/Images/favicon.ico" type="image/ico" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -66,301 +69,437 @@
     <!--Chose Select Search---->
     <link href="~/Content/SiteContent/searchSelect.css" rel="stylesheet" />
     <!--Chose Select Search---->
-
+ 
 
 </head>
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <!-- Sidebar - Brand -->
-            <a id="Logo" class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index","Home")">
-                <img class="img-thumbnail" src="~/Images/MavisoftYatayOrtaLogo.png" />
-            </a>
-            <p id="Versiyon" class="text-center text-white">Geçiş Kontrol Sistemleri<sup> V3.0</sup></p>
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active ml-2">
-                <a class="nav-link" href="@Url.Action("Index","Home")">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Anasayfa</span>
+        @{
+            OperatorTransactionList MenuListUser = CurrentSession.UserManagmentList;
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+                <!-- Sidebar - Brand -->
+                <a id="Logo" class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index","Home")">
+                    <img class="img-thumbnail" src="~/Images/MavisoftYatayOrtaLogo.png" />
                 </a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-            <li class="nav-item ml-2 active">
-                <a class="nav-link " href="@Url.Action("Index","WatchScreen")">
-                    <i class="fas fa-desktop"></i>
-                    <span>Canlı İzleme</span>
-                </a>
-            </li>
-            <hr class="sidebar-divider">
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Geçiş Kontrol Yönetim
-            </div>
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li id="Genel" class="nav-item ">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGenel" aria-expanded="true" aria-controls="collapseGenel">
-                    <i class="fas fa-bookmark"></i>
-                    <span>Genel</span>
-                </a>
-                <div id="collapseGenel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index","Alarm")">Kullanıcı Alarm Tanımları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","CameraSettings")">Kameralar</a>
-                        <a class="collapse-item" href="#">Haritalar</a>
-                        <a class="collapse-item" href="@Url.Action("LiftGroups","Lift")">Asansör Geçiş Grupları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","GlobalZone")">Global Bölgeler</a>
-                        <a class="collapse-item text-muted" href="#">Global Bölge Interlock</a>
-                        <a class="collapse-item" href="#">Plaka Tanıma Kameraları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı İşlemleri</a>
-                        @{
-                            DBUsers Paswordusers = CurrentSession.User;
-                            if (Paswordusers.SysAdmin == true)
-                            {
-                                <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Güvenlik Ayarları</a>
-                            }
-                            else
-                            {
-                                <a class="collapse-item" href="@Url.Action("ChangePassword","SecuritySettings")">Güvenlik Ayarları</a>
-                            }
-                        }
-                        <a class="collapse-item" href="#">Harici Okuyucu</a>
-                        <a class="collapse-item" href="@Url.Action("Add","EMail")">E-Mail Gönderme Ayarları</a>
-                        <a class="collapse-item" href="@Url.Action("Add","SMS")">SMS Gönderme Ayarları</a>
-                        @{
-                            DBUsers AccessReceive = CurrentSession.User;
-                            if (AccessReceive.SysAdmin == true)
-                            {
-                                <a class="collapse-item" href="@Url.Action("Index","AccessReceive")">Geçiş-Olay Verileri</a>
-                            }
-                        }
-                        @{
-                            DBUsers BacupAccessDatas = CurrentSession.User;
-                            if (BacupAccessDatas.SysAdmin == true)
-                            {
-                                <a class="collapse-item" href="@Url.Action("Index","BackupAccessDatas")">Geçiş-Olay Yedekle</a>
-                            }
-
-                        }
-
-                    </div>
-
-                </div>
-            </li>
-
-
-            <li id="Tanimlar" class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTanim" aria-expanded="true" aria-controls="collapseTanim">
-                    <i class="fas fa-flag"></i>
-                    <span>Tanımlamalar</span>
-                </a>
-                <div id="collapseTanim" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Genel Tanımlamalar</h6>
-                        @{
-                            DBUsers PaswordusersKayit = CurrentSession.User;
-                            if (PaswordusersKayit.SysAdmin == true)
-                            {
-                                <a class="collapse-item" href="@Url.Action("Index","Company")">Şirket Tanımları</a>
-                                <a class="collapse-item" href="@Url.Action("Index","Department")">Departman Tanımları</a>
-                                <a class="collapse-item" href="@Url.Action("Index","AltDepartman")">Alt Departman Tanımları</a>
-                                <a class="collapse-item" href="@Url.Action("Index","Bolum")">Bölüm Tanımları</a>
-                                <a class="collapse-item" href="@Url.Action("Index","Block")">Blok Tanımları</a>
-                                <a class="collapse-item" href="@Url.Action("Index","Unvan")">Ünvan Tanımları</a>
-                                <a class="collapse-item" href="@Url.Action("Index","Employment")">Görev Tanımları</a>
-                            }
-                        }
-                    </div>
-                </div>
-            </li>
-
-
-
-
-
-
-
-            <li id="Sistem" class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePanel" aria-expanded="true" aria-controls="collapsePanel">
-                    <i class="fas fa-cogs"></i>
-                    <span>Sistem Ayarları</span>
-                </a>
-                <div id="collapsePanel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Panel Ayarları</h6>
-                        @{
-                            DBUsers users = CurrentSession.User;
-                            if (users.SysAdmin == true)
-                            {
-                                <a class="collapse-item" href="@Url.Action("Create","PanelSettings")">Panel Ekle</a>
-                            }
-                        }
-                        <a class="collapse-item" href="@Url.Action("Settings","PanelSettings")">Panel Ayarları</a>
-                        <a class="collapse-item" href="@Url.Action("ReaderList","Panel")">Kapı Ayarları</a>
-                        <h6 class="collapse-header">Zaman Bölgeleri</h6>
-                        <a class="collapse-item" href="@Url.Action("Add","TimeGroups")">Yeni Zaman Bölgesi</a>
-                        <a class="collapse-item" href="@Url.Action("Index","TimeGroups")">Zaman Bölgesi Ayarları</a>
-                        <h6 class="collapse-header">Geçiş Grupları</h6>
-                        <a class="collapse-item" href="@Url.Action("Create","AccessGroup")">Yeni Geçiş Grubu</a>
-                        <a class="collapse-item" href="@Url.Action("Groups","AccessGroup")">Geçiş Grupları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","FastGroup")">Hızlı Grup Atama</a>
-                        <a class="collapse-item" href="@Url.Action("GroupImport","ExternalData")">Dış Veri Al</a>
-                    </div>
-                </div>
-            </li>
-
-
-            <li id="Door" class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDoor" aria-expanded="true" aria-controls="collapseDoor">
-                    <i class="fas fa-door-open"></i>
-                    <span>Kapı İşlemleri</span>
-                </a>
-                <div id="collapseDoor" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Genel Ayarları</h6>
-                        <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı Operasyon</a>
-                        <a class="collapse-item" href="@Url.Action("Index","DoorStatus")">Kapı Durumları</a>
-                        @{
-                            DBUsers yemekhaneGrup = CurrentSession.User;
-                            if (yemekhaneGrup.SysAdmin == true)
-                            {
-                                <a class="collapse-item" href="@Url.Action("Index","DoorGroup")">Kapı Grupları</a>
-                            }
-                        }
-                        <a class="collapse-item" href="@Url.Action("Create","Holiday")">Tatil Planı</a>
-                        <a class="collapse-item" href="@Url.Action("ProgRelay","Door")">Programlı Kapı<br /> Açma/Kapama</a>
-                    </div>
-
-                </div>
-            </li>
-
-
-            <li id="User" class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
-                    <i class="fas fa-users"></i>
-                    <span>Kullanıcılar</span>
-                </a>
-                <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Kullanıcılar</h6>
-                        <a class="collapse-item" href="@Url.Action("Create","Users")">Yeni Kullanıcı</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Users")">Kullanıcı Ayarları</a>
-                        <a class="collapse-item" href="@Url.Action("PanelOperation","Users")">Kullanıcı Panel İşlemleri</a>
-                        <a class="collapse-item" href="@Url.Action("UserImport","ExternalData")">Dış Veri Al</a>
-                    </div>
-
-                </div>
-            </li>
-
-            <li id="Visitor" class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisitor" aria-expanded="true" aria-controls="collapseVisitor">
-                    <i class="fas fa-user-clock"></i>
-                    <span>Ziyaretçiler</span>
-                </a>
-                <div id="collapseVisitor" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Ziyaretçiler</h6>
-                        <a class="collapse-item" href="@Url.Action("Create","Visitor")">Yeni Ziyaretçi</a>
-                        <a class="collapse-item" href="@Url.Action("Index","Visitor")">Ziyaretçi Ayarları</a>
-                    </div>
-
-                </div>
-            </li>
-
-
-            <li id="Map" class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMaps" aria-expanded="true" aria-controls="collapseMaps">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <span>Haritalar</span>
-                </a>
-                <div id="collapseMaps" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Panel Ayarları</h6>
-                        <a class="collapse-item" href="#">Harita Ayarları</a>
-                    </div>
-
-                </div>
-            </li>
-
-            <li id="Report" class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
-                    <i class="fas fa-file-signature"></i>
-                    <span>Raporlar</span>
-                </a>
-                <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Personel ve Kullanıcı</h6>
-                        <a class="collapse-item" href="@Url.Action("Index","PersonelListReport")">Personel Listesi</a>
-                        <a class="collapse-item" href="@Url.Action("Index","ReportPersonel")">Aktif Kullanıcı Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("OldStaff","ReportPersonel")">Eski Kullanıcı Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("DeletedUsers","ReportPersonel")">Aktif Olmayanlar</a>
-                        <hr />
-                        <h6 class="collapse-header">Genel Raporlar</h6>
-                        <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">İlk Giriş Son Çıkış</a>
-                        <a class="collapse-item" href="@Url.Action("ToplamIcerdeKalma","GelenGelmeyenReport")">Toplam İçerde Kalma</a>
-                        <a class="collapse-item" href="@Url.Action("Gelenler","GelenGelmeyenReport")">Gelen Kişi Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("Gelmeyenler","GelenGelmeyenReport")">Gelmeyen Kişi Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("PasifKullanici","GelenGelmeyenReport")">Pasif Kullanıcı Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("TopluGirisSayisi","GelenGelmeyenReport")">Toplu Giriş Sayısı Raporları</a>
-
-                        <h6 class="collapse-header">İçerde Dışarda Raporları</h6>
-                        <a class="collapse-item" href="@Url.Action("InOutPersonel","InsideOutReport")">Personel</a>
-                        <a class="collapse-item" href="@Url.Action("InOutVisitor","InsideOutReport")">Ziyaretçi</a>
-                        <a class="collapse-item" href="@Url.Action("InOutAll","InsideOutReport")">Tümü</a>
-                        <hr />
-                        @{
-                            DBUsers yemekhaneUser = CurrentSession.User;
-                            if (users.SysAdmin == true)
-                            {
-                                <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları-Kişi</a>
-                                <a class="collapse-item" href="@Url.Action("Total","Refectory")">Yemekhane Raporları-Toplu</a>
-                            }
-                        }
-                        <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Diğer Raporlar</a>
-                        <a class="collapse-item" href="@Url.Action("KullaniciAlarm","OutherReport")">Kullanıcı Alarm Raporu</a>
-                        <a class="collapse-item" href="@Url.Action("Index","VisitorReport")">Ziyaretçi Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Tanımsız Kullanıcı Raporları</a>
-                        <hr />
-                        <a class="collapse-item" href="@Url.Action("Index","OperatorLogReport")">Operator Log Raporları</a>
-                        <a class="collapse-item" href="@Url.Action("TaskTable","Task")">Panel Durum Tablosu</a>
-                    </div>
-
-                </div>
-            </li>
-            @*Nav Item - Utilities Collapse Menu
-                    <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-file-invoice"></i>
-                        <span>Hızlı Raporlar</span>
+                <p id="Versiyon" class="text-center text-white">Geçiş Kontrol Sistemleri<sup> V3.0</sup></p>
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+                <!-- Nav Item - Dashboard -->
+                <li class="nav-item active ml-2">
+                    <a class="nav-link" href="@Url.Action("Index","Home")">
+                        <i class="fas fa-fw fa-home"></i>
+                        <span>Anasayfa</span>
                     </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Hızlı Rapor Sayfaları</h6>
-                            <a class="collapse-item" href="utilities-color.html">Hangi Kapıdan<br />Kim Geçmiş?</a>
-                            <a class="collapse-item" href="utilities-border.html">Borders</a>
-                            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                            <a class="collapse-item" href="utilities-other.html">Other</a>
+                </li>
+                <!-- Divider -->
+                @{
+                    if (MenuListUser.Canli_Izleme == true)
+                    {
+                        <hr class="sidebar-divider">
+                        <li class="nav-item ml-2 active">
+                            <a class="nav-link " href="@Url.Action("Index","WatchScreen")">
+                                <i class="fas fa-desktop"></i>
+                                <span>Canlı İzleme</span>
+                            </a>
+                        </li>
+                        <hr class="sidebar-divider">
+                    }
+                }
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Geçiş Kontrol Yönetim
+                </div>
+                <!-- Nav Item - Pages Collapse Menu -->
+                @if (MenuListUser.Kullanici_Alarm_Ekleme == true || MenuListUser.Kamera_Ekleme == true || MenuListUser.Asansor_Gecis_Grubu_Ekleme == true
+                    || MenuListUser.Global_Bolge_Guncelleme == true || MenuListUser.Kapi_Operasyon == true || MenuListUser.E_Mail_Gonderme_Ayarlari == true
+                    || MenuListUser.SMS_Gonderme_Ayarlari == true || MenuListUser.Gecis_Olay_Verileri == true || MenuListUser.Gecis_Olay_Yedekle == true)
+                {
+                    <li id="Genel" class="nav-item ">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGenel" aria-expanded="true" aria-controls="collapseGenel">
+                            <i class="fas fa-bookmark"></i>
+                            <span>Genel</span>
+                        </a>
+                        <div id="collapseGenel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                @{
+                                    if (MenuListUser.Kullanici_Alarm_Ekleme == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","Alarm")">Kullanıcı Alarm Tanımları</a>
+                                    }
+                                }
+                                @{
+                                    if (MenuListUser.Kamera_Ekleme == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","CameraSettings")">Kameralar</a>
+                                    }
+                                }
+                                @{
+                                    if (MenuListUser.Asansor_Gecis_Grubu_Ekleme == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("LiftGroups","Lift")">Asansör Geçiş Grupları</a>
+                                    }
+                                }
+                                @{
+                                    if (MenuListUser.Global_Bolge_Guncelleme == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","GlobalZone")">Global Bölgeler</a>
+                                    }
+                                }
+                                @{
+                                    if (MenuListUser.Kapi_Operasyon == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı İşlemleri</a>
+                                    }
+                                }
+                                @{
+                                    DBUsers Paswordusers = CurrentSession.User;
+                                    if (Paswordusers.SysAdmin == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Güvenlik Ayarları</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("ChangePassword","SecuritySettings")">Güvenlik Ayarları</a>
+                                    }
+                                }
+                                @{
+                                    if (MenuListUser.E_Mail_Gonderme_Ayarlari == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Add","EMail")">E-Mail Gönderme Ayarları</a>
+                                    }
+                                }
+                                @{
+                                    if (MenuListUser.SMS_Gonderme_Ayarlari == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Add","SMS")">SMS Gönderme Ayarları</a>
+                                    }
+
+                                }
+                                @{
+                                    if (MenuListUser.Gecis_Olay_Verileri == true)
+                                    {
+                                        DBUsers AccessReceive = CurrentSession.User;
+                                        if (AccessReceive.SysAdmin == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Index","AccessReceive")">Geçiş-Olay Verileri</a>
+                                        }
+
+                                    }
+                                }
+                                @{
+                                    if (MenuListUser.Gecis_Olay_Yedekle == true)
+                                    {
+                                        DBUsers BacupAccessDatas = CurrentSession.User;
+                                        if (BacupAccessDatas.SysAdmin == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Index","BackupAccessDatas")">Geçiş-Olay Yedekle</a>
+                                        }
+                                    }
+                                }
+                            </div>
+
                         </div>
-                    </div>
-                </li>*@
-            <!-- LogOut -->
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Logout","Home")">
-                    <i class="fas  fa-fw fa-sign-out-alt"></i>
-                    <span>Çıkış</span>
-                </a>
-            </li>
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-        </ul>
+                    </li>
+                }
+                @{
+                    if (MenuListUser.Tanimlamalar == true)
+                    {
+                        <li id="Tanimlar" class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTanim" aria-expanded="true" aria-controls="collapseTanim">
+                                <i class="fas fa-flag"></i>
+                                <span>Tanımlamalar</span>
+                            </a>
+                            <div id="collapseTanim" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <h6 class="collapse-header">Genel Tanımlamalar</h6>
+                                    @{
+                                        DBUsers PaswordusersKayit = CurrentSession.User;
+                                        if (PaswordusersKayit.SysAdmin == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Index","Company")">Şirket Tanımları</a>
+                                            <a class="collapse-item" href="@Url.Action("Index","Department")">Departman Tanımları</a>
+                                            <a class="collapse-item" href="@Url.Action("Index","AltDepartman")">Alt Departman Tanımları</a>
+                                            <a class="collapse-item" href="@Url.Action("Index","Bolum")">Bölüm Tanımları</a>
+                                            <a class="collapse-item" href="@Url.Action("Index","Birim")">Birim Tanımları</a>
+                                            <a class="collapse-item" href="@Url.Action("Index","Block")">Blok Tanımları</a>
+                                            <a class="collapse-item" href="@Url.Action("Index","Unvan")">Ünvan Tanımları</a>
+                                            <a class="collapse-item" href="@Url.Action("Index","Employment")">Görev Tanımları</a>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                }
+                @{
+                    DBUsers users = CurrentSession.User;
+                    if (users.SysAdmin == true && MenuListUser.Panel_Ekleme == true || MenuListUser.Panel_Guncelleme == true || MenuListUser.Zaman_Bolgesi_Ayarlari == true || MenuListUser.Gecis_Grup_Ayarlari == true)
+                    {
+
+                        <li id="Sistem" class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePanel" aria-expanded="true" aria-controls="collapsePanel">
+                                <i class="fas fa-cogs"></i>
+                                <span>Sistem Ayarları</span>
+                            </a>
+                            <div id="collapsePanel" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+
+                                    @if (users.SysAdmin == true)
+                                    {
+                                        if (MenuListUser.Panel_Ekleme == true || MenuListUser.Panel_Guncelleme == true)
+                                        {
+                                            <h6 class="collapse-header">Panel Ayarları</h6>
+                                            if (MenuListUser.Panel_Ekleme == true)
+                                            {
+                                                <a class="collapse-item" href="@Url.Action("Create","PanelSettings")">Panel Ekle</a>
+                                            }
+                                            if (MenuListUser.Panel_Guncelleme == true)
+                                            {
+                                                <a class="collapse-item" href="@Url.Action("Settings","PanelSettings")">Panel Ayarları</a>
+                                                <a class="collapse-item" href="@Url.Action("ReaderList","Panel")">Kapı Ayarları</a>
+                                            }
+
+                                        }
+                                    }
+                                    @if (MenuListUser.Zaman_Bolgesi_Ayarlari == true)
+                                    {
+                                        <h6 class="collapse-header">Zaman Bölgeleri</h6>
+                                        <a class="collapse-item" href="@Url.Action("Add","TimeGroups")">Yeni Zaman Bölgesi</a>
+                                        <a class="collapse-item" href="@Url.Action("Index","TimeGroups")">Zaman Bölgesi Ayarları</a>
+                                    }
+                                    @if (MenuListUser.Gecis_Grup_Ayarlari == true)
+                                    {
+                                        <h6 class="collapse-header">Geçiş Grupları</h6>
+                                        <a class="collapse-item" href="@Url.Action("Create","AccessGroup")">Yeni Geçiş Grubu</a>
+                                        <a class="collapse-item" href="@Url.Action("Groups","AccessGroup")">Geçiş Grupları</a>
+                                        <a class="collapse-item" href="@Url.Action("Index","FastGroup")">Hızlı Grup Atama</a>
+                                        <a class="collapse-item" href="@Url.Action("GroupImport","ExternalData")">Dış Veri Al</a>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+                @{
+
+                    if (MenuListUser.Kapi_Operasyon == true || MenuListUser.Grup_Takvimi_Olusturma == true || MenuListUser.Kapi_Grup_Olusturma == true)
+                    {
+                        <li id="Door" class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDoor" aria-expanded="true" aria-controls="collapseDoor">
+                                <i class="fas fa-door-open"></i>
+                                <span>Kapı İşlemleri</span>
+                            </a>
+                            <div id="collapseDoor" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <h6 class="collapse-header">Genel Ayarları</h6>
+                                    @if (MenuListUser.Kapi_Operasyon == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı Operasyon</a>
+                                        <a class="collapse-item" href="@Url.Action("Index","DoorStatus")">Kapı Durumları</a>
+                                    }
+                                    @if (MenuListUser.Kapi_Grup_Olusturma == true)
+                                    {
+                                        DBUsers yemekhaneGrup = CurrentSession.User;
+                                        if (yemekhaneGrup.SysAdmin == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Index","DoorGroup")">Kapı Grupları</a>
+                                        }
+                                    }
+                                    @if (MenuListUser.Grup_Takvimi_Olusturma == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Create","Holiday")">Tatil Planı</a>
+                                        <a class="collapse-item" href="@Url.Action("ProgRelay","Door")">Programlı Kapı<br /> Açma/Kapama</a>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+
+                @{
+                    if (MenuListUser.Kullanici_Ekleme == true || MenuListUser.Kullanici_Gonderme == true || MenuListUser.Kullanici_Duzenleme == true)
+                    {
+                        <li id="User" class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
+                                <i class="fas fa-users"></i>
+                                <span>Kullanıcılar</span>
+                            </a>
+                            <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <h6 class="collapse-header">Kullanıcılar</h6>
+                                    <a class="collapse-item" href="@Url.Action("Create","Users")">Yeni Kullanıcı</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","Users")">Kullanıcı Ayarları</a>
+                                    <a class="collapse-item" href="@Url.Action("PanelOperation","Users")">Kullanıcı Panel İşlemleri</a>
+                                    <a class="collapse-item" href="@Url.Action("UserImport","ExternalData")">Dış Veri Al</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                }
+
+                @{
+
+                    if (MenuListUser.Ziyaretci_Ekleme == true || MenuListUser.Ziyaretci_Duzenleme == true)
+                    {
+                        <li id="Visitor" class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVisitor" aria-expanded="true" aria-controls="collapseVisitor">
+                                <i class="fas fa-user-clock"></i>
+                                <span>Ziyaretçiler</span>
+                            </a>
+                            <div id="collapseVisitor" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <h6 class="collapse-header">Ziyaretçiler</h6>
+                                    <a class="collapse-item" href="@Url.Action("Create","Visitor")">Yeni Ziyaretçi</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","Visitor")">Ziyaretçi Ayarları</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+                @{
+
+                    if (MenuListUser.Personel_Listesi == true || MenuListUser.Aktif_Personel_Raporlari == true
+                        || MenuListUser.Eski_Personel_Raporlari == true || MenuListUser.Aktif_Olmayanlar_Listesi == true
+                        || MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true || MenuListUser.Toplam_Icerde_Kalma_Raporu == true
+                        || MenuListUser.Gelen_Kisi_Raporlari == true || MenuListUser.Gelmeyen_Kisi_Raporlari == true
+                        || MenuListUser.Pasif_Kullanici_Raporlari == true || MenuListUser.Toplu_Giris_Sayisi_Raporlari == true
+                        || MenuListUser.Icerde_Disarda_Personel_Raporlari == true || MenuListUser.Icerde_Disarda_Ziyaretci_Raporlari == true || MenuListUser.Icerde_Disarda_Tumu == true
+                        || MenuListUser.Yemekhane_Kisi_Bazli_Rapor == true || MenuListUser.Yemekhane_Toplu_Gecis_Sayisi_Raporlari == true
+                        || MenuListUser.Diger_Raporlar == true || MenuListUser.Kullanici_Alarm_Raporu == true
+                        || MenuListUser.Ziyaretci_Raporlari == true || MenuListUser.Tanimsiz_Kullanici_Raporlari == true || MenuListUser.Operator_Log_Raporlari == true || MenuListUser.Panel_Durum_Tablosu == true)
+                    {
+                        <li id="Report" class="nav-item">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
+                                <i class="fas fa-file-signature"></i>
+                                <span>Raporlar</span>
+                            </a>
+                            <div id="collapseReport" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    @if (MenuListUser.Personel_Listesi == true || MenuListUser.Aktif_Personel_Raporlari == true || MenuListUser.Eski_Personel_Raporlari == true || MenuListUser.Aktif_Olmayanlar_Listesi == true)
+                                    {
+                                        <h6 class="collapse-header">Personel ve Kullanıcı</h6>
+                                        if (MenuListUser.Personel_Listesi == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Index","PersonelListReport")">Personel Listesi</a>
+                                        }
+                                        if (MenuListUser.Aktif_Personel_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Index","ReportPersonel")">Aktif Kullanıcı Raporları</a>
+                                        }
+                                        if (MenuListUser.Eski_Personel_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("OldStaff","ReportPersonel")">Eski Kullanıcı Raporları</a>
+                                        }
+                                        if (MenuListUser.Aktif_Olmayanlar_Listesi == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("DeletedUsers","ReportPersonel")">Aktif Olmayanlar</a>
+                                        }
+                                        <hr />
+                                    }
+                                    @if (MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true || MenuListUser.Toplam_Icerde_Kalma_Raporu == true || MenuListUser.Gelen_Kisi_Raporlari == true || MenuListUser.Gelmeyen_Kisi_Raporlari == true || MenuListUser.Pasif_Kullanici_Raporlari == true || MenuListUser.Toplu_Giris_Sayisi_Raporlari == true)
+                                    {
+                                        <h6 class="collapse-header">Genel Raporlar</h6>
+                                        if (MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">İlk Giriş Son Çıkış</a>
+                                        }
+                                        if (MenuListUser.Toplam_Icerde_Kalma_Raporu == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("ToplamIcerdeKalma","GelenGelmeyenReport")">Toplam İçerde Kalma</a>
+                                        }
+                                        if (MenuListUser.Gelen_Kisi_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Gelenler","GelenGelmeyenReport")">Gelen Kişi Raporları</a>
+                                        }
+                                        if (MenuListUser.Gelmeyen_Kisi_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Gelmeyenler","GelenGelmeyenReport")">Gelmeyen Kişi Raporları</a>
+                                        }
+                                        if (MenuListUser.Pasif_Kullanici_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("PasifKullanici","GelenGelmeyenReport")">Pasif Kullanıcı Raporları</a>
+                                        }
+                                        if (MenuListUser.Toplu_Giris_Sayisi_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("TopluGirisSayisi","GelenGelmeyenReport")">Toplu Giriş Sayısı Raporları</a>
+                                        }
+                                    }
+                                    @if (MenuListUser.Icerde_Disarda_Personel_Raporlari == true || MenuListUser.Icerde_Disarda_Ziyaretci_Raporlari == true || MenuListUser.Icerde_Disarda_Tumu == true)
+                                    {
+                                        <h6 class="collapse-header">İçerde Dışarda Raporları</h6>
+                                        if (MenuListUser.Icerde_Disarda_Personel_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("InOutPersonel","InsideOutReport")">Personel</a>
+                                        }
+                                        if (MenuListUser.Icerde_Disarda_Ziyaretci_Raporlari == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("InOutVisitor","InsideOutReport")">Ziyaretçi</a>
+                                        }
+                                        if (MenuListUser.Icerde_Disarda_Tumu == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("InOutAll","InsideOutReport")">Tümü</a>
+                                        }
+                                        <hr />
+                                    }
+                                    @if (MenuListUser.Yemekhane_Kisi_Bazli_Rapor == true || MenuListUser.Yemekhane_Toplu_Gecis_Sayisi_Raporlari == true)
+                                    {
+                                        DBUsers yemekhaneUser = CurrentSession.User;
+                                        if (yemekhaneUser.SysAdmin == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları-Kişi</a>
+                                            <a class="collapse-item" href="@Url.Action("Total","Refectory")">Yemekhane Raporları-Toplu</a>
+                                        }
+                                    }
+                                    @if (MenuListUser.Diger_Raporlar == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","OutherReport")">Diğer Raporlar</a>
+                                    }
+                                    @if (MenuListUser.Kullanici_Alarm_Raporu == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("KullaniciAlarm","OutherReport")">Kullanıcı Alarm Raporu</a>
+                                    }
+                                    @if (MenuListUser.Ziyaretci_Raporlari == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","VisitorReport")">Ziyaretçi Raporları</a>
+                                    }
+                                    @if (MenuListUser.Tanimsiz_Kullanici_Raporlari == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","UndefinedUserReport")">Tanımsız Kullanıcı Raporları</a>
+                                    }
+                                    <hr />
+                                    @if (MenuListUser.Operator_Log_Raporlari == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("Index","OperatorLogReport")">Operator Log Raporları</a>
+                                    }
+                                    @if (MenuListUser.Panel_Durum_Tablosu == true)
+                                    {
+                                        <a class="collapse-item" href="@Url.Action("TaskTable","Task")">Panel Durum Tablosu</a>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Logout","Home")">
+                        <i class="fas  fa-fw fa-sign-out-alt"></i>
+                        <span>Çıkış</span>
+                    </a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider d-none d-md-block">
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
+            </ul>
+        }
+
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -374,37 +513,53 @@
                     </button>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        @Html.Partial("_PartialAlarm")
-
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a title="Panel Durumları" class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-info-circle fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">4+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Son Hareketler
-                                </h6>
-                                @Html.Action("TopManuTask", "Task")
-                                <a class="dropdown-item text-center small text-gray-500" href="@Url.Action("TaskTable","Task")">Tüm Durumları Göster</a>
-                            </div>
-                        </li>
+                        @{
+                            DBUsers alarmBar = CurrentSession.User;
+                            if (alarmBar.SysAdmin == true)
+                            {
+                                @Html.Partial("_PartialAlarm")
+                            }
+                        }
+                        @if (MenuListUser.Panel_Durum_Tablosu == true)
+                        {
+                            <!-- Nav Item - Alerts -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a title="Panel Durumları" class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-info-circle fa-fw"></i>
+                                    <!-- Counter - Alerts -->
+                                    <span class="badge badge-danger badge-counter">4+</span>
+                                </a>
+                                <!-- Dropdown - Alerts -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                                    <h6 class="dropdown-header">
+                                        Son Hareketler
+                                    </h6>
+                                    @Html.Action("TopManuTask", "Task")
+                                    <a class="dropdown-item text-center small text-gray-500" href="@Url.Action("TaskTable","Task")">Tüm Durumları Göster</a>
+                                </div>
+                            </li>
+                        }
                         <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a title="Canlı İzleme" class="nav-link dropdown-toggle" href="@Url.Action("Index","WatchScreen")">
-                                <i class="fas fa-desktop"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a title="Kapı Operasyon" class="nav-link dropdown-toggle" href="@Url.Action("Index","Door")">
-                                <i class="fas fa-door-open"></i>
-                            </a>
-                        </li>
+                        @if (MenuListUser.Canli_Izleme == true)
+                        {
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a title="Canlı İzleme" class="nav-link dropdown-toggle" href="@Url.Action("Index","WatchScreen")">
+                                    <i class="fas fa-desktop"></i>
+                                </a>
+                            </li>
+                        }
+                        @if (MenuListUser.Kapi_Operasyon == true)
+                        {
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a title="Kapı Operasyon" class="nav-link dropdown-toggle" href="@Url.Action("Index","Door")">
+                                    <i class="fas fa-door-open"></i>
+                                </a>
+                            </li>
+                        }
+
+
+
+
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -435,25 +590,26 @@
                                     }
 
                                 }
-                                <a class="dropdown-item" href="@Url.Action("Settings","PanelSettings")">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                @{
-                                    DBUsers monitorUser = CurrentSession.User;
-                                    if (monitorUser.SysAdmin == true)
-                                    {
-                                        <a class="dropdown-item" href="@Url.Action("Index","SpotMonitor")">
-                                            <i class="fas fa-desktop fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Spot Monitör
-                                        </a>
-
-                                        <a class="dropdown-item" href="@Url.Action("WatchOuther","WatchScreen")">
-                                            <i class="fas fa-desktop fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Anlık Geçişler
-                                        </a>
-
-                                    }
+                                @if (MenuListUser.Panel_Guncelleme == true)
+                                {
+                                    <a class="dropdown-item" href="@Url.Action("Settings","PanelSettings")">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Settings
+                                    </a>
+                                }
+                                @if (MenuListUser.Spot_Monitor == true)
+                                {
+                                    <a class="dropdown-item" href="@Url.Action("Index","SpotMonitor")">
+                                        <i class="fas fa-desktop fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Spot Monitör
+                                    </a>
+                                }
+                                @if (MenuListUser.Canli_Izleme == true)
+                                {
+                                    <a class="dropdown-item" href="@Url.Action("WatchOuther","WatchScreen")">
+                                        <i class="fas fa-desktop fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Anlık Geçişler
+                                    </a>
                                 }
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="@Url.Action("Logout","Home")">
@@ -464,7 +620,6 @@
                         </li>
                     </ul>
                 </nav>
-
                 <div class="container-fluid">
                     @RenderBody()
                     @RenderSection("camera", false)

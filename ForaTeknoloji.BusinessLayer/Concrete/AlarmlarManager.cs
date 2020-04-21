@@ -21,9 +21,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _alarmlarDal.Add(alarmlar);
         }
 
-        public List<ComplexAlarm> AlarmAndTip()
+        public List<ComplexAlarm> AlarmAndTip(Expression<Func<ComplexAlarm, bool>> filter = null)
         {
-            return _alarmlarDal.AlarmAndAlarmTip();
+            return filter == null ? _alarmlarDal.AlarmAndAlarmTip() : _alarmlarDal.AlarmAndAlarmTip(filter);
         }
 
         public void DeleteAlarmlar(Alarmlar alarmlar)

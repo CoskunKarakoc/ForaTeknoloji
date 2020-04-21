@@ -45,9 +45,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
-        public List<ComplexDoorStatus> ComplexDoorStatuses()
+        public List<ComplexDoorStatus> ComplexDoorStatuses(Expression<Func<ComplexDoorStatus, bool>> filter = null)
         {
-            return _doorStatusDal.ComplexDoorStatus();
+            return filter == null ? _doorStatusDal.ComplexDoorStatus() : _doorStatusDal.ComplexDoorStatus(filter);
         }
 
     }

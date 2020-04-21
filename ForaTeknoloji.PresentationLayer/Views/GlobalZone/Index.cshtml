@@ -2,13 +2,14 @@
 @{
     ViewBag.Title = "Global Bölge";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
-<div class="row  animated slideInDown">
+<div class="row  animated fadeIn">
     <div class="col-md-8 offset-md-2 mt-xl-5 my-xl-5">
         <div class=" card border-left-info h-100 shadow-lg mt-2">
             <div class="card-header py-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Global Bölgeler</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Global Bölgeler</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Edit", "GlobalZone"))
@@ -26,7 +27,7 @@
                 }
                 <hr />
                 <table id="mytable" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
+                    <thead>
                         <tr>
                             <td>Global Bölge No</td>
                             <td>Global Bölge Adı</td>

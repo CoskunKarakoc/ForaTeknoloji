@@ -1,8 +1,10 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.DataAccessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace ForaTeknoloji.BusinessLayer.Concrete
 {
@@ -25,9 +27,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _departmanDal.Delete(departman);
         }
 
-        public List<Departmanlar> GetAllDepartmanlar()
+        public List<Departmanlar> GetAllDepartmanlar(Expression<Func<Departmanlar, bool>> filter = null)
         {
-            return _departmanDal.GetList();
+            return filter == null ? _departmanDal.GetList() : _departmanDal.GetList(filter);
         }
 
         public Departmanlar GetById(int id)

@@ -1,10 +1,12 @@
 ﻿/*Bismillahirrahmanirrahim*/
 using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.DataTransferObjects;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
+using System.Text;
 using System.Web.Mvc;
 namespace ForaTeknoloji.PresentationLayer.Controllers
 {
@@ -13,10 +15,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     public class HomeController : Controller
     {
         private IDBUsersService _dBUsersService;
-        public HomeController(IDBUsersService dBUsersService)
+        private IOperatorTransactionListService _operatorTransactionListService;
+        public HomeController(IDBUsersService dBUsersService, IOperatorTransactionListService operatorTransactionListService)
         {
             _dBUsersService = dBUsersService;
-
+            _operatorTransactionListService = operatorTransactionListService;
         }
 
         [Auth]
@@ -29,7 +32,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //GET:Login
         public ActionResult Login()
         {
-
             return View();
         }
 
@@ -45,7 +47,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     ModelState.AddModelError("", "Tanımsız Kullanıcı Girişi!");
                     return View(login);
                 }
+                OperatorTransactionList oprtrList = _operatorTransactionListService.GetByKullaniciAdi(user.Kullanici_Adi);
                 CurrentSession.Set<DBUsers>("login", user);//Session'a bilgi saklama
+                CurrentSession.Set<OperatorTransactionList>("loginUserList", oprtrList);//Session'a bilgi saklama
                 return RedirectToAction("Index", "Home");
             }
             return View(login);
@@ -69,7 +73,44 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View();
         }
 
+        public ActionResult RecoverPassword()
+        {
+            return View();
+        }
 
+
+        [HttpPost]
+        public ActionResult RecoverPassword(string eMailAdress)
+        {
+            var checkUser = _dBUsersService.GetByEmailAdres(eMailAdress);
+            if (checkUser == null)
+            {
+                ModelState.AddModelError("", "Sistemde bu mail adresi ile kayıtlı kullanıcı bulunamadı!");
+            }
+            else
+            {
+                checkUser.Sifre = RandomPassword();
+                var updatedUser = _dBUsersService.UpdateDBUsers(checkUser);
+                string body = $"<p>Sisteme Giriş Yapabilmeniz İçin Kullanıcı Adı: <b>{updatedUser.Kullanici_Adi}</b> ve Şifreniz: <b>{updatedUser.Sifre}</b></p>";
+                MailHelper.SendMail(body, updatedUser.EMail, "Şifre Kurtarma");
+                return RedirectToAction("Login", "Home");
+            }
+            return View();
+        }
+
+
+        public string RandomPassword()
+        {
+            Random Rnd = new Random();
+            StringBuilder StrBuild = new StringBuilder();
+            for (int i = 0; i < 5; i++)
+            {
+                int ASCII = Rnd.Next(97, 123);
+                char Karakter = Convert.ToChar(ASCII);
+                StrBuild.Append(Karakter);
+            }
+            return StrBuild.ToString();
+        }
 
     }
 }

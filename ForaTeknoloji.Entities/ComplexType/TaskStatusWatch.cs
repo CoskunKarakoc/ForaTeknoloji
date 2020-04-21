@@ -23,5 +23,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Soyadi { get; set; }
 
         public string Kullanici_Adi { get; set; }
+
+        public int Kayit_No { get; set; }
     }
 }

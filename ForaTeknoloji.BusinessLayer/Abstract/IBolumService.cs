@@ -17,6 +17,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteBolum(Bolum bolum);
         Bolum UpdateBolum(Bolum bolum);
         void DeleteAll();
-        List<ComplexBolum> ComplexBolums();
+        List<ComplexBolum> ComplexBolums(Expression<Func<ComplexBolum, bool>> filter = null);
     }
 }

@@ -2,14 +2,15 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
 
-<div class="row animated slideInLeft faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-4 offset-md-4">
         <div class="card border-left-info h-100 shadow-lg  mt-xl-5 mb-xl-5">
             <div class="card-header py-1 mt-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Bölüm Düzenleme</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Bölüm Düzenleme</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm())
@@ -22,14 +23,14 @@
                             <div class="form-group">
                                 <label>Üst Departman</label>
                                 <div class="form-group">
-                                    @Html.DropDownList("Departman_No", null, "Ana Departman Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Departman_No", null, "Ana Departman Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })@*bg-translated text-light*@
                                     @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Alt Departman</label>
                                 <div class="form-group">
-                                    @Html.DropDownList("Alt_Departman_No", null, "Alt Departman Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Alt_Departman_No", null, "Alt Departman Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })@*bg-translated text-light*@
                                     @Html.ValidationMessageFor(model => model.Alt_Departman_No, "", new { @class = "text-danger" })
                                 </div>
                             </div>

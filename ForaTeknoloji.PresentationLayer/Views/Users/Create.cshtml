@@ -244,8 +244,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="form-group">
                                 <label class="control-label col-md-4">Şirket</label>
                                 <div class="col-md-12">
@@ -255,7 +253,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-4">Departmanlar</label>
                                 <div class="col-md-12">
@@ -265,7 +262,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-4">Alt Departmanlar</label>
                                 <div class="col-md-12">
@@ -275,15 +271,7 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
-
-
-
-
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Soyadı</label>
@@ -293,16 +281,14 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-4">TC Kimlik</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" name="TCKimlik" maxlength="11" value="" />
+                                        <input type="text" class="form-control form-control-sm" pattern="\d{11}" title="Bu alana sadece 11 karakterli sayısal değer girilebilir" name="TCKimlik" maxlength="11" value="" />
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-4">Telefon</label>
                                 <div class="col-md-12">
@@ -328,9 +314,7 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label col-md-4">Bölümler</label>
@@ -341,7 +325,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-4">
                                     <label>&nbsp;Kan Grubu:</label>
@@ -415,6 +398,15 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="control-label col-md-4">Birimler</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(model => model.Birim_No, new SelectList(""), "Birim Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Birim_No, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label col-md-4">Görevler</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -456,8 +448,10 @@
             if (departmanNo == 0 || departmanNo == null) {
                 $("#Alt_Departman_No").empty();
                 $("#Bolum_No").empty();
+                $("#Birim_No").empty();
                 $("#Alt_Departman_No").append('<option > Alt Departman Seçiniz... </option>');
                 $("#Bolum_No").append('<option > Bölüm Seçiniz... </option>');
+                $("#Birim_No").append('<option > Birim Seçiniz... </option>');
             } else {
                 $.ajax({
                     url: '/Users/AltDepartmanListesi?Departman=' + departmanNo,
@@ -469,7 +463,6 @@
                     $.each(data, function (index, row) {
                         $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                     });
-
                     var altdepartmanNo = $("#Alt_Departman_No").val();
                     $.ajax({
                         url: '/Users/BolumListesi?AltDepartman=' + altdepartmanNo,
@@ -479,6 +472,17 @@
                         $("#Bolum_No").empty();
                         $.each(data, function (index, row) {
                             $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                        });
+                        var bolumNo = $("#Bolum_No").val();
+                        $.ajax({
+                            url: '/Users/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                            type: 'GET',
+                            dataType: 'json'
+                        }).done(function (data) {
+                            $("#Birim_No").empty();
+                            $.each(data, function (index, row) {
+                                $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                            });
                         });
                     });
 
@@ -496,9 +500,39 @@
                 $.each(data, function (index, row) {
                     $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
                 });
-            });
+                var bolumNo = $("#Bolum_No").val();
+                $.ajax({
+                    url: '/Users/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Birim_No").empty();
+                    $.each(data, function (index, row) {
+                        $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    });
+                });
 
+
+
+
+            });
         })
+
+        $("#Bolum_No").chosen().change(function () {
+            var bolumNo = $(this).val();
+            var altdepartmanNo = $("#Alt_Departman_No").val();
+            $.ajax({
+                url: '/Users/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Birim_No").empty();
+                $.each(data, function (index, row) {
+                    $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                });
+            });
+        })
+
 
 
     });

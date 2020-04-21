@@ -2,12 +2,13 @@
 @{
     ViewBag.Title = "Grup Düzenleme";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
-<div id="Liste" class="row animated slideInLeft faster">
+<div id="Liste" class="row animated fadeIn faster">
     <div class="col-md-8 offset-2">
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header py-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Geçiş Grup Ayarları</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Geçiş Grup Ayarları</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("GroupSettings", "AccessGroup", FormMethod.Post))
@@ -26,7 +27,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="Gunluk_Aylik">Günlük/Aylık Seçimi...</label>
-                                        <select class="form-control chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                        <select class="form-control bg-translated text-light chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">@*bg-translated rext-light*@
                                             <option value="">Günlük/Aylık Seçimi...</option>
                                             <option selected value="0">Günlük</option>
                                             <option value="1">Aylık</option>
@@ -39,7 +40,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="Gunluk_Aylik">Günlük/Aylık Seçimi...</label>
-                                        <select class="form-control chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                        <select class="form-control bg-translated text-light chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">
                                             <option value="">Günlük/Aylık Seçimi...</option>
                                             <option value="0">Günlük</option>
                                             <option selected value="1">Aylık</option>
@@ -52,7 +53,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="Gunluk_Aylik">Günlük/Aylık Seçimi</label>
-                                        <select class="form-control chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">
+                                        <select class="form-control bg-translated text-light chosen-select" tabindex="2" name="Gunluk_Aylik" id="Gunluk_Aylik">
                                             <option selected value="">Günlük/Aylık Seçimi...</option>
                                             <option value="0">Günlük</option>
                                             <option value="1">Aylık</option>
@@ -61,12 +62,12 @@
                                 </div>
                             }
                             <div class="form-group">
-                                <label>Giriş Sayısı</label>
+                                <label class="mt-3">Giriş Sayısı</label>
                                 @Html.TextBoxFor(model => model.Grup_Gecis_Sayisi, new { @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <label>Grup İçerdeki Kişi Sayısı Global Bölge No</label>
-                                @Html.DropDownList("Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control chosen-select", tabindex = "2" })
+                                @Html.DropDownList("Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control chosen-select", tabindex = "2" })@*bg-translated text-light*@
                                 @Html.ValidationMessageFor(model => model.Grup_Icerdeki_Kisi_Sayisi_Global_Bolge_No, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -81,7 +82,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Grup Geçiş Sayısı Global Bölge No</label>
-                                @Html.DropDownList("Grup_Gecis_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control chosen-select", tabindex = "2" })
+                                @Html.DropDownList("Grup_Gecis_Sayisi_Global_Bolge_No", null, "Global Bölge Seçiniz", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })@*bg-translated text-light*@
                                 @Html.ValidationMessageFor(model => model.Grup_Gecis_Sayisi_Global_Bolge_No, "", new { @class = "text-danger" })
                             </div>
                         </div>

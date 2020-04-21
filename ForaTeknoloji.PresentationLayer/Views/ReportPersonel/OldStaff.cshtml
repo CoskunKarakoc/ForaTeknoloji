@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Eski Personel Raporları";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.ReportPersonel, rowsPerPage: 20, canPage: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "gridContent");
     webGrid.Pager(WebGridPagerModes.NextPrevious);
     string img = "#";
@@ -33,9 +34,9 @@
                 background-color: #f0f0f0;
             }
 </style>
-<div class="card border-left-info h-100 mt-1 shadow-lg animated fadeIn">
-    <div class="card-header-tabs mt-1">
-        <h3 class="text-center text-muted">Eski Kullanıcı Raporları</h3>
+<div class="card border-left-info h-100 mt-1 shadow-lg">
+    <div class="card-header py-1">
+        <h3 class="card-title"><i class="fas fa-bookmark"></i> Eski Kullanıcı Raporları</h3>
     </div>
     <div class="card-body">
         @using (Html.BeginForm("OldStaff", "ReportPersonel", FormMethod.Get))
@@ -172,20 +173,17 @@
                     </div>
                     <div class="form-group">
                         <label>Alt Departmanlar</label>
-                        @Html.DropDownListFor(model => model.AltDepartman, new SelectList(""), "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.DropDownListFor(model => model.AltDepartman, Model.AltDepartman, "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
                     <div class="form-group">
                         <label>Bölümler</label>
-                        @Html.DropDownListFor(model => model.Bolum, new SelectList(""), "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.DropDownListFor(model => model.Bolum, Model.Bolum, "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
-
                     <div class="form-group">
-                        <label>Global Kapı Bölgesi</label>
-                        <div class="form-group">
-                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-
-                        </div>
+                        <label>Birimler</label>
+                        @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
+
                     <div class="form-group">
                         @*<div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="true" name="Tum_Kullanici" class="custom-control-input" id="TümKullanici" />
@@ -221,12 +219,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Plaka">Plaka Seçimi</label>
-                        <input type="text" placeholder="Plaka" class="form-control form-control-sm" id="Plaka" name="Plaka" value="" />
+                        <label>Global Kapı Bölgesi</label>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Global_Kapi_Bolgesi, Model.Global_Kapi_Bolgesi, "Global Kapı Bölgesi Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="Daire">Daire Seçimi</label>
-                        <input type="number" class="form-control form-control-sm" id="Daire" placeholder="Daire" name="Daire" value="" min="0" max="3" step="1" />
+                        <label for="Plaka">Plaka Seçimi</label>
+                        <input type="text" placeholder="Plaka" class="form-control form-control-sm" id="Plaka" name="Plaka" value="" />
                     </div>
                     <div class="form-group">
                         <label>Bloklar</label>
@@ -265,13 +266,16 @@
         webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
         webGrid.Column("ID", "ID"),
         webGrid.Column("Kart_ID", "Kart ID"),
+        webGrid.Column("UnvanAdi", "Ünvan"),
         webGrid.Column("Adi", "Adı"),
         webGrid.Column("Soyadi", "Soyadı"),
         webGrid.Column("TCKimlik", "TC Kimlik"),
         webGrid.Column("Telefon", "Telefon"),
         webGrid.Column("SirketAdi", "Şirket"),
         webGrid.Column("DepartmanAdi", "Departman"),
-        webGrid.Column("Plaka", "Plaka"),
+        webGrid.Column("AltDepartmanAdi", "Alt Departman"),
+        webGrid.Column("BolumAdi", "Bölüm"),
+        webGrid.Column("BirimAdi", "Birim"),
         webGrid.Column("BlokAdi", "Blok"),
         webGrid.Column("Daire", "Daire"),
         webGrid.Column("Grup_Adi", "Grup"),
@@ -375,11 +379,184 @@
         })
     </script>
 }
+    <script>
+        $(document).ready(function () {
+            var panelNo = $("#Panel").val();
+            $.ajax({
+                url: '/ReportPersonel/PanelKapiListesi?PanelNo=' + panelNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $.each(data, function (index, row) {
+                    if (row.Value == 1) {
+                        $("label[for='Kapi1']").text(row.Text);
+                    }
+                    if (row.Value == 2) {
+                        $("label[for='Kapi2']").text(row.Text);
+                    }
+                    if (row.Value == 3) {
+                        $("label[for='Kapi3']").text(row.Text);
+                    }
+                    if (row.Value == 4) {
+                        $("label[for='Kapi4']").text(row.Text);
+                    }
+                    if (row.Value == 5) {
+                        $("label[for='Kapi5']").text(row.Text);
+                    }
+                    if (row.Value == 6) {
+                        $("label[for='Kapi6']").text(row.Text);
+                    }
+                    if (row.Value == 7) {
+                        $("label[for='Kapi7']").text(row.Text);
+                    }
+                    if (row.Value == 8) {
+                        $("label[for='Kapi8']").text(row.Text);
+                    }
+                });
+            });
 
+            $("#Panel").chosen().change(function () {
+                var panelNo = $(this).val();
+                $.ajax({
+                    url: '/ReportPersonel/PanelKapiListesi?PanelNo=' + panelNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $.each(data, function (index, row) {
+                        if (row.Value == 1) {
+                            $("label[for='Kapi1']").text(row.Text);
+                        }
+                        if (row.Value == 2) {
+                            $("label[for='Kapi2']").text(row.Text);
+                        }
+                        if (row.Value == 3) {
+                            $("label[for='Kapi3']").text(row.Text);
+                        }
+                        if (row.Value == 4) {
+                            $("label[for='Kapi4']").text(row.Text);
+                        }
+                        if (row.Value == 5) {
+                            $("label[for='Kapi5']").text(row.Text);
+                        }
+                        if (row.Value == 6) {
+                            $("label[for='Kapi6']").text(row.Text);
+                        }
+                        if (row.Value == 7) {
+                            $("label[for='Kapi7']").text(row.Text);
+                        }
+                        if (row.Value == 8) {
+                            $("label[for='Kapi8']").text(row.Text);
+                        }
+                    });
+                });
+
+            })
+
+
+
+
+        });
+    </script>
 <script>
     $(document).ready(function () {
         $('.chosen-select').chosen();
         $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+        $("#Departman").chosen().change(function () {
+            var departmanNo = $(this).val();
+            if (departmanNo == 0 || departmanNo == null) {
+                $("#AltDepartman").empty();
+                $("#Bolum").empty();
+                $("#Birim_No").empty();
+                $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
+                $("#Bolum").append('<option > Bölüm Seçiniz... </option>');
+                $("#Birim_No").append('<option > Birim Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/ReportPersonel/AltDepartmanListesi?Departman=' + departmanNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#AltDepartman").empty();
+                    $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
+                    $.each(data, function (index, row) {
+                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    });
+                    var altdepartmanNo = $("#AltDepartman").val();
+                    $.ajax({
+                        url: '/ReportPersonel/BolumListesi?AltDepartman=' + altdepartmanNo,
+                        type: 'GET',
+                        dataType: 'json'
+                    }).done(function (data) {
+                        $("#Bolum").empty();
+                        $.each(data, function (index, row) {
+                            $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                        });
+                        var bolumNo = $("#Bolum").val();
+                        $.ajax({
+                            url: '/ReportPersonel/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                            type: 'GET',
+                            dataType: 'json'
+                        }).done(function (data) {
+                            $("#Birim_No").empty();
+                            $.each(data, function (index, row) {
+                                $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                            });
+                        });
+                    });
+
+                });
+            }
+        });
+        $("#AltDepartman").chosen().change(function () {
+            var altdepartmanNo = $(this).val();
+            $.ajax({
+                url: '/ReportPersonel/BolumListesi?AltDepartman=' + altdepartmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Bolum").empty();
+                $.each(data, function (index, row) {
+                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                });
+                var bolumNo = $("#Bolum").val();
+                $.ajax({
+                    url: '/ReportPersonel/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Birim_No").empty();
+                    $.each(data, function (index, row) {
+                        $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    });
+                });
+
+
+
+
+            });
+        })
+
+        $("#Bolum").chosen().change(function () {
+            var bolumNo = $(this).val();
+            var altdepartmanNo = $("#AltDepartman").val();
+            $.ajax({
+                url: '/ReportPersonel/BirimListesi?AltDepartman=' + altdepartmanNo + '&Bolum=' + bolumNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Birim_No").empty();
+                $.each(data, function (index, row) {
+                    $("#Birim_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                });
+            });
+        })
+
+
+
+
+
+
+
         $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
         // buton aktif durum css
         $("tfoot td")
@@ -402,55 +579,7 @@
                 $(this).addClass("table-success");
         });
 
-        $("#Departman").chosen().change(function () {
-            var departmanNo = $(this).val();
-            if (departmanNo == 0 || departmanNo == null) {
-                $("#AltDepartman").empty();
-                $("#Bolum").empty();
-                $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
-                $("#Bolum").append('<option > Bölüm Seçiniz... </option>');
-            } else {
-                $.ajax({
-                    url: '/ReportPersonel/AltDepartmanListesi?Departman=' + departmanNo,
-                    type: 'GET',
-                    dataType: 'json'
-                }).done(function (data) {
-                    $("#AltDepartman").empty();
-                    $("#AltDepartman").append('<option > Alt Departman Seçiniz... </option>');
-                    $.each(data, function (index, row) {
-                        $("#AltDepartman").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
-                    });
 
-                    var altdepartmanNo = $("#AltDepartman").val();
-                    $.ajax({
-                        url: '/ReportPersonel/BolumListesi?AltDepartman=' + altdepartmanNo,
-                        type: 'GET',
-                        dataType: 'json'
-                    }).done(function (data) {
-                        $("#Bolum").empty();
-                        $.each(data, function (index, row) {
-                            $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
-                        });
-                    });
-
-                });
-            }
-
-        });
-        $("#AltDepartman").change(function () {
-            var altdepartmanNo = $(this).val();
-            $.ajax({
-                url: '/ReportPersonel/BolumListesi?AltDepartman=' + altdepartmanNo,
-                type: 'GET',
-                dataType: 'json'
-            }).done(function (data) {
-                $("#Bolum").empty();
-                $.each(data, function (index, row) {
-                    $("#Bolum").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
-                });
-            });
-
-        })
     });
 
 
@@ -562,15 +691,25 @@
         $("body").append(frame1);
         var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
         frameDoc.document.open();
-        //Create a new HTML document.
-        frameDoc.document.write('<html><head><title>Personel Raporları</title>');
-        frameDoc.document.write('</head><body><hr />');
-        frameDoc.document.write('<h3>Personel Raporları</h3><hr />');
-        //Append the external CSS file.
+        frameDoc.document.write('<html>');
+        frameDoc.document.write('<head>');
         frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
-        //Append the DIV contents.
+        frameDoc.document.write('<style>');
+        frameDoc.document.write('table{ border-collapse: collapse; width: 100%;}')
+        frameDoc.document.write('table th, td { text-align: center; padding: 8px;} body{padding:10px;}');
+        frameDoc.document.write('tr:nth-child(even) {background-color: #f2f2f2;}');
+        frameDoc.document.write('table tr > *:nth-child(8){ display: none; }');
+        frameDoc.document.write('table tr > *:nth-child(12){ display: none; }');
+        frameDoc.document.write('table tfoot > *:nth-child(2){ display: none; }');
+        frameDoc.document.write('table, th, td {  border: 1px solid black; text-align:center; border-collapse: collapse;}');
+        frameDoc.document.write('thead tr th a { color: black; text-decoration: none; }thead tr th a:hover { color: black; }thead tr th a:visited { color: black; }thead tr th a:active { color: black; }');
+        frameDoc.document.write('</style>');
+        frameDoc.document.write('</head>');
+        frameDoc.document.write('<body>');
+        frameDoc.document.write('<h5>Eski Personel Listesi (' + new Date().toLocaleDateString() + ')</h5><hr/>');
         frameDoc.document.write(contents);
-        frameDoc.document.write('</body></html>');
+        frameDoc.document.write('</body>');
+        frameDoc.document.write('</html>');
         frameDoc.document.close();
         setTimeout(function () {
 

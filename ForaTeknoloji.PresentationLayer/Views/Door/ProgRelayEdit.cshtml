@@ -2,13 +2,14 @@
 @{
     ViewBag.Title = "ProgRelay Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
 <div class="row">
     <div class="col-md-6 offset-3">
-        <div class="card shadow-lg border-left-info h-100 animated slideInLeft mx-lg-5 my-lg-5 faster">
+        <div class="card shadow-lg border-left-info h-100 animated fadeIn mx-lg-5 my-lg-5 faster">
             <div class="card-header py-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">ProgRelay</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> ProgRelay</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("ProgRelayEdit", "Door", FormMethod.Post))

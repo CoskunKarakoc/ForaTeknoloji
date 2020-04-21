@@ -12,6 +12,8 @@
 
         public int? Unvan_No { get; set; }
 
+        public int? Birim_No { get; set; }
+
         public int? Daire { get; set; }
 
         public int? Blok { get; set; }

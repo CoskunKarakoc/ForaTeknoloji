@@ -30,6 +30,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             join grv in context.Gorevlers
                             on u.Gorev_No equals grv.Gorev_No into tb6
                             from tbl6 in tb6.DefaultIfEmpty()
+                            join alt in context.AltDepartman
+                             on u.Alt_Departman_No equals alt.Alt_Departman_No into tb7
+                            from tbl7 in tb7.DefaultIfEmpty()
                             select new ComplexUserOld
                             {
                                 Kayit_No = u.Kayit_No,
@@ -43,7 +46,10 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Plaka = u.Plaka,
                                 Gecis_Grubu = tbl4.Grup_Adi,
                                 Ziyaretci_Grubu = u.Visitor_Grup_No,
-                                Gorev = tbl6.Adi
+                                Gorev = tbl6.Adi,
+                                Sirket_No = u.Sirket_No,
+                                Departman_No = u.Departman_No,
+                                Alt_Departman_No = u.Alt_Departman_No
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();
@@ -74,6 +80,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Plaka { get; set; }
             public string Gecis_Grubu { get; set; }
             public int? Ziyaretci_Grubu { get; set; }
+            public int? Departman_No { get; set; }
+            public int? Sirket_No { get; set; }
+            public int? Alt_Departman_No { get; set; }
         }
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="ComplexType\AlarmDatasComplex.cs" />
     <Compile Include="ComplexType\CamerasComplex.cs" />
     <Compile Include="ComplexType\ComplexAltDepartman.cs" />
+    <Compile Include="ComplexType\ComplexBirim.cs" />
     <Compile Include="ComplexType\ComplexBolum.cs" />
     <Compile Include="ComplexType\ComplexDoorStatus.cs" />
     <Compile Include="ComplexType\ComplexGroupsDetailNew.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="ComplexType\OperatorLogComplex.cs" />
     <Compile Include="ComplexType\OperatorLogParameters.cs" />
     <Compile Include="ComplexType\OutherReportParameters.cs" />
+    <Compile Include="ComplexType\PanelDataTableListViewModel.cs" />
     <Compile Include="ComplexType\PersonelList.cs" />
     <Compile Include="ComplexType\PersonelListReportParameters.cs" />
     <Compile Include="ComplexType\RefectoryParameters.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="Entities\Alarmlar.cs" />
     <Compile Include="Entities\AlarmTipleri.cs" />
     <Compile Include="Entities\AltDepartman.cs" />
+    <Compile Include="Entities\Birim.cs" />
     <Compile Include="Entities\Bloklar.cs" />
     <Compile Include="Entities\Bolum.cs" />
     <Compile Include="Entities\Cameras.cs" />
@@ -115,7 +118,9 @@
     <Compile Include="Entities\CodeOperation.cs" />
     <Compile Include="Entities\DBRoles.cs" />
     <Compile Include="Entities\DBUsers.cs" />
+    <Compile Include="Entities\DBUsersAltDepartman.cs" />
     <Compile Include="Entities\DBUsersDepartman.cs" />
+    <Compile Include="Entities\DBUsersKapi.cs" />
     <Compile Include="Entities\DBUsersPanels.cs" />
     <Compile Include="Entities\DBUsersSirket.cs" />
     <Compile Include="Entities\Departmanlar.cs" />
@@ -136,6 +141,7 @@
     <Compile Include="Entities\LiftGroups.cs" />
     <Compile Include="Entities\MapObjects.cs" />
     <Compile Include="Entities\Maps.cs" />
+    <Compile Include="Entities\OperatorTransactionList.cs" />
     <Compile Include="Entities\PanelSettings.cs" />
     <Compile Include="Entities\ProgInit.cs" />
     <Compile Include="Entities\ProgRelay2.cs" />

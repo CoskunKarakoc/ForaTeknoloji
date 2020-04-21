@@ -64,9 +64,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
-        public List<TaskStatusWatch> TaskStatusWatch()
+        public List<TaskStatusWatch> TaskStatusWatch(Expression<Func<TaskStatusWatch, bool>> filter = null)
         {
-            return _taskListDal.GetAllTaskStatusWatch();
+            return filter == null ? _taskListDal.GetAllTaskStatusWatch() : _taskListDal.GetAllTaskStatusWatch(filter);
         }
 
 
@@ -75,9 +75,14 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _taskListDal.ComplexTaskList().OrderBy(x => x.Kayit_No).Where(x => x.Kullanici_Adi == UserName).ToList();
         }
 
+        public void DeleteAllWithUserName(string kullaniciAdi)
+        {
+            _taskListDal.ClearTakList(kullaniciAdi);
+        }
+
         public void DeleteAll()
         {
-            _taskListDal.ClearTakList();
+            _taskListDal.ClearAllTakList();
         }
     }
 }

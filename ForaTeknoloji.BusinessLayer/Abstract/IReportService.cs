@@ -80,7 +80,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <param name="watchParameters">İzleme parametrelerine göre kriter uyguluyor.</param>
         /// <returns></returns>
         List<WatchEntityComplex> GetWatch(WatchParameters watchParameters);
-        
+
         /// <summary>
         /// Sondan başlayarak geriye complex geçiş verileri gönderiyor textboxlar ve resimler bu listeyi kullanan view'de yok
         /// </summary>
@@ -118,6 +118,20 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// </summary>
         /// <param name="users">UI Katmanında ki Session'da saklanan kullanıcının bilgileri ile filtreleniyor.</param>
         void GetDepartmanList(DBUsers users);
+
+        /// <summary>
+        /// Kullanıcı adına göre 'altdepartmanListesi' değişkenine id'leri sıralıyor.
+        /// Eğer kullanıcı admin ise altdepartman listesindeki geçerli altdepartmanların tümü ekleniyor.
+        /// </summary>
+        /// <param name="users"></param>
+        void GetAltDepartmanList(DBUsers users);
+
+        /// <summary>
+        /// Spot Monitör İçin Panel Listesi ve Kapı Listesi
+        /// </summary>
+        /// <param name="user"></param>
+        void GetPanelAndDoorListForSpotMonitor(DBUsers user);
+
 
         /// <summary>
         /// Kullanıcının yetkilerine göre panel listesi gönderiyor.
@@ -164,5 +178,8 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// </summary>
         /// <returns></returns>
         int WatchScreenGetCount(int? panelID, int? KapiID);
+
+
+        List<PanelDataTableListViewModel> PanelDataTableList(DBUsers dBUsers);
     }
 }

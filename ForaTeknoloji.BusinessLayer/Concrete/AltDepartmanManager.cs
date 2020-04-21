@@ -24,9 +24,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _altDepartmanDal.Add(altDepartman);
         }
 
-        public List<ComplexAltDepartman> ComplexAltDepartmen()
+        public List<ComplexAltDepartman> ComplexAltDepartmen(Expression<Func<ComplexAltDepartman, bool>> filter = null)
         {
-            return _altDepartmanDal.ComplexAltDepartman();
+            return filter == null ? _altDepartmanDal.ComplexAltDepartman() : _altDepartmanDal.ComplexAltDepartman(filter);
         }
 
         public void DeleteAll()

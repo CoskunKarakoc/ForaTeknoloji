@@ -28,9 +28,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersSirketService _dBUsersSirketService;
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
+        private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         private DBUsers user;
         private DBUsers permissionUser;
-        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAccessDatasService accessDatasService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        List<int> dbAltDepartmanList;
+        public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -48,6 +53,27 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersSirketService = dBUsersSirketService;
             _reportService = reportService;
             _accessDatasService = accessDatasService;
+            _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            dbAltDepartmanList = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
+            foreach (var dbUserAltDepartmanNo in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Alt_Departman_No))
+            {
+                dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
+            }
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -325,29 +351,30 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public List<ComplexUser> ModalUser()
         {
-
-            List<ComplexUser> liste = new List<ComplexUser>();
-            List<ComplexUser> userList = _userService.GetAllUsersWithOuther();
+            List<ComplexUser> userList = new List<ComplexUser>();
             if (permissionUser.SysAdmin == true)
             {
-                return userList;
+                return userList = _userService.GetAllUsersWithOuther();
             }
             else
             {
-                foreach (var sirket in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                {
-                    foreach (var departman in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                    {
-                        foreach (var user in userList)
-                        {
-                            if (user.Sirket_No == sirket.Sirket_No && user.Departman_No == departman.Departman_No)
-                            {
-                                liste.Add(user);
-                            }
-                        }
-                    }
-                }
-                return liste.OrderByDescending(x => x.Kayit_No).ToList();
+
+                userList = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No));
+
+                //foreach (var sirket in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                //{
+                //    foreach (var departman in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi))
+                //    {
+                //        foreach (var user in userList)
+                //        {
+                //            if (user.Sirket_No == sirket.Sirket_No && user.Departman_No == departman.Departman_No)
+                //            {
+                //                liste.Add(user);
+                //            }
+                //        }
+                //    }
+                //}
+                return userList.OrderByDescending(x => x.Kayit_No).ToList();
             }
         }
 

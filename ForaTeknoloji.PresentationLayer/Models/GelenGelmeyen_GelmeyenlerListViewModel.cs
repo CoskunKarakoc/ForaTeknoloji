@@ -17,5 +17,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> Bolum { get; internal set; }
         public DateTime? Saat { get; internal set; }
         public bool? ReportByHour { get; internal set; }
+        public IEnumerable<SelectListItem> Birim_No { get; internal set; }
     }
 }

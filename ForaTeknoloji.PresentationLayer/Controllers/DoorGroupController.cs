@@ -23,9 +23,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReportService _reportService;
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersService _dBUsersService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
         DBUsers dBUsers;
         DBUsers permissionUser;
-        public DoorGroupController(IDoorGroupsDetailService doorGroupsDetailService, IDoorGroupsMasterService doorGroupsMasterService, IGroupsDetailNewService groupsDetailNewService, IGroupMasterService groupMasterService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IPanelSettingsService panelSettingsService, IDBUsersService dBUsersService)
+        List<int> dbPanelList;
+        public DoorGroupController(IDoorGroupsDetailService doorGroupsDetailService, IDoorGroupsMasterService doorGroupsMasterService, IGroupsDetailNewService groupsDetailNewService, IGroupMasterService groupMasterService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IPanelSettingsService panelSettingsService, IDBUsersService dBUsersService, IDBUsersPanelsService dBUsersPanelsService)
         {
             dBUsers = CurrentSession.User;
             if (dBUsers == null)
@@ -41,6 +43,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService = reportService;
             _panelSettingsService = panelSettingsService;
             _dBUsersService = dBUsersService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            dbPanelList = new List<int>();
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi);
         }
 
@@ -125,7 +133,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (permissionUser.SysAdmin == false)
                 throw new Exception("Yetkisiz Erişim!");
 
-            var Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            var Paneller = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID) && x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var DoorGroupName = _doorGroupsMasterService.GetById((int)DoorGroupID);
             var model = new DoorGroupReaderCreateViewModel
             {
@@ -167,7 +175,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (permissionUser.SysAdmin == false)
                 throw new Exception("Yetkisiz Erişim!");
 
-            var Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            var Paneller = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID) && x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var DoorGroupName = _doorGroupsMasterService.GetById((int)DoorGroupID);
             var model = new DoorGroupReaderCreateViewModel
             {

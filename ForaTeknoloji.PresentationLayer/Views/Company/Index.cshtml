@@ -2,12 +2,13 @@
 @{
     ViewBag.Title = "Şirket Tanımları";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
-<div class="row animated slideInDown faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-6 offset-md-3 mt-xl-5 mb-xl-5">
         <div class=" card border-left-info h-100 shadow-lg mt-2">
             <div class="card-header py-1">
-                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center">Şirket Tanımları</h3>
+                <h3 id="Title" class="card-title"><i class="fas fa-bookmark"></i> Şirket Tanımları</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Create", "Company"))

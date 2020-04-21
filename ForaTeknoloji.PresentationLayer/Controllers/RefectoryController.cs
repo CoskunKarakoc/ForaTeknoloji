@@ -26,9 +26,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDoorGroupsMasterService _doorGroupsMasterService;
         private IDoorGroupsDetailService _doorGroupsDetailService;
         private IEmailSettingsService _emailSettingsService;
+        private ISirketService _sirketService;
+        private IAltDepartmanService _altDepartmanService;
+        private IBolumService _bolumService;
+        private IBirimService _birimService;
+        private IDepartmanService _departmanService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+        private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         DBUsers user;
         DBUsers permissionUser;
-        public RefectoryController(IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersService dBUsersService, IGroupMasterService groupMasterService, IGroupsDetailNewService groupsDetailNewService, IDoorGroupsMasterService doorGroupsMasterService, IDoorGroupsDetailService doorGroupsDetailService, IEmailSettingsService emailSettingsService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        List<int> dbAltDepartmanList;
+        public RefectoryController(IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersService dBUsersService, IGroupMasterService groupMasterService, IGroupsDetailNewService groupsDetailNewService, IDoorGroupsMasterService doorGroupsMasterService, IDoorGroupsDetailService doorGroupsDetailService, IEmailSettingsService emailSettingsService, ISirketService sirketService, IDepartmanService departmanService, IAltDepartmanService altDepartmanService, IBolumService bolumService, IBirimService birimService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -44,6 +57,39 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _doorGroupsDetailService = doorGroupsDetailService;
             _doorGroupsMasterService = doorGroupsMasterService;
             _emailSettingsService = emailSettingsService;
+            _sirketService = sirketService;
+            _departmanService = departmanService;
+            _altDepartmanService = altDepartmanService;
+            _bolumService = bolumService;
+            _birimService = birimService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
+            _dBUsersSirketService = dBUsersSirketService;
+            _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            dbAltDepartmanList = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
+            foreach (var dbUserAltDepartmanNo in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Alt_Departman_No))
+            {
+                dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
+            }
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -60,7 +106,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var Toplam = _reportService.YemekhaneRaporuTotal(parameters);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
             var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
-            var Departmanlar = _reportService.DepartmanListesi(user);
+            var Sikterler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_reportService.SirketListesi(user);
+            var Departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)); //_reportService.DepartmanListesi(user);
+            var AltDepartman = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman_No && dbAltDepartmanList.Contains(x.Alt_Departman_No));
+            var Bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.Alt_Departman_No && x.Departman_No == parameters.Departman_No);
+            var Birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman_No && x.Alt_Departman_No == parameters.Alt_Departman_No && x.Bolum_No == parameters.Bolum_No);
             var model = new RefectoryListViewModel
             {
                 Group_ID = Groups.Select(a => new SelectListItem
@@ -68,10 +118,30 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Kapi_Grup_Adi,
                     Value = a.Kapi_Grup_No.ToString()
                 }),
+                Sirket_No = Sikterler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
                 Departman_No = Departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
+                }),
+                Alt_Departman_No = AltDepartman.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Bolum_No = Bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = Birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 }),
                 YemekhaneListe = Liste,
                 ToplamGecis = Toplam,
@@ -92,7 +162,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var Total = _reportService.YemekhaneRaporuTotal(parameters);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
             var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
-            var Departmanlar = _reportService.DepartmanListesi(user);
+            var Departmanlar = _departmanService.GetAllDepartmanlar(x => dbSirketList.Contains(x.Departman_No)); //_reportService.DepartmanListesi(user);
+            var Sikterler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_reportService.SirketListesi(user);
+            var AltDepartman = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman_No && dbAltDepartmanList.Contains(x.Alt_Departman_No));
+            var Bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.Alt_Departman_No && x.Departman_No == parameters.Departman_No);
+            var Birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman_No && x.Alt_Departman_No == parameters.Alt_Departman_No && x.Bolum_No == parameters.Bolum_No);
             ViewBag.Kapi_Grup_No = new SelectList(_doorGroupsMasterService.GetAllDoorGroupsMaster(), "Kapi_Grup_No", "Kapi_Grup_Adi", Email.Kapi_Grup_No);
             var model = new RefectoryListViewModel
             {
@@ -101,10 +175,30 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Kapi_Grup_Adi,
                     Value = a.Kapi_Grup_No.ToString()
                 }),
+                Sirket_No = Sikterler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Sirket_No.ToString()
+                }),
                 Departman_No = Departmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
+                }),
+                Alt_Departman_No = AltDepartman.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Alt_Departman_No.ToString()
+                }),
+                Bolum_No = Bolumler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = Birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 }),
                 ToplamGecis = Total,
                 EmailSettings = Email,
@@ -138,7 +232,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Personel Geçiş Sayısı Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:HH: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Geçiş Sayısı";
             worksheet.Cells["B6"].Value = "ID";
             worksheet.Cells["C6"].Value = "Kart ID";
@@ -189,7 +283,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Personel Geçiş Sayısı Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
-            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:HH: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A6"].Value = "Cihaz No";
             worksheet.Cells["B6"].Value = "Cihaz Adı";
             worksheet.Cells["C6"].Value = "İlk İşlem Zamanı";

@@ -2,15 +2,25 @@
 using ForaTeknoloji.DataAccessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
     public class EfTaskListDal : EfEntityRepositoryBase<TaskList, ForaContext>, ITaskListDal
     {
 
-        public void ClearTakList()
+        public void ClearTakList(string kullaniciAdi)
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("DELETE FROM TaskList WHERE [Kullanici Adi] = '" + kullaniciAdi + "'");
+            }
+        }
+
+        public void ClearAllTakList()
         {
             using (var context = new ForaContext())
             {
@@ -20,8 +30,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 
 
 
-
-        public List<TaskStatusWatch> GetAllTaskStatusWatch()
+        public List<TaskStatusWatch> GetAllTaskStatusWatch(Expression<Func<TaskStatusWatch, bool>> filter = null)
         {
             IQueryable<TaskStatusWatch> query;
             using (var context = new ForaContext())
@@ -50,9 +59,10 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             Durum_Kodu = tl.Durum_Kodu,
                             Gorev_Kodu = tl.Gorev_Kodu,
                             Panel_ID = (int)tl.Panel_No,
-                            Kullanici_Adi = tl.Kullanici_Adi
+                            Kullanici_Adi = tl.Kullanici_Adi,
+                            Kayit_No = tl.Kayit_No
                         };
-                return query.ToList();
+                return filter == null ? query.ToList() : query.Where(filter).ToList();
             }
 
         }

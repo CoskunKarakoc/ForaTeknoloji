@@ -24,9 +24,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _bolumDal.Add(bolum);
         }
 
-        public List<ComplexBolum> ComplexBolums()
+        public List<ComplexBolum> ComplexBolums(Expression<Func<ComplexBolum, bool>> filter = null)
         {
-            return _bolumDal.ComplexBolum();
+            return filter == null ? _bolumDal.ComplexBolum() : _bolumDal.ComplexBolum(filter);
         }
 
         public void DeleteAll()

@@ -2,12 +2,13 @@
 @{
     ViewBag.Title = "Asansör Geçiş Grupları";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
-<div class="row animated slideInDown faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-6 offset-md-3">
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header py-1">
-                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center"><i>Asansör Grupları</i></h3>
+                <h3 id="Title" class="card-title"><i class="fas fa-bookmark"></i> Asansör Grupları</h3>
             </div>
             <div class="card-body">
                 @if (Model.LiftGroup.Count == 0)
@@ -22,7 +23,7 @@
                 }
                 <input type="text" id="LiftCount" hidden name="name" value="@Model.LiftGroup.Count" />
                 <table id="LiftList" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
+                    <thead>
                         <tr>
                             <td>Asansör Grup No</td>
                             <td>Asansör Grup Adı</td>

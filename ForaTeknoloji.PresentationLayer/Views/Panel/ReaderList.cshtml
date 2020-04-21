@@ -3,22 +3,23 @@
 @{
     ViewBag.Title = "Okuyucular";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
 <div class="row">
     @Html.HiddenFor(model => model.Panel_ID)
-    <div class="col-md-4 mx-lg-4 my-lg-4 animated slideInLeft faster">
+    <div class="col-md-4 mx-lg-4 my-lg-4 animated fadeIn faster">
         @Html.Partial("_PartialPanelSettingsList", Model.Paneller)
     </div>
 
-    <div class="col-md-6 offset-1  mx-lg-4 my-lg-4 animated slideInRight faster">
+    <div class="col-md-6 offset-1  mx-lg-4 my-lg-4 animated fadeIn faster">
         <div class="card border-bottom-info h-100 shadow-lg ml-5">
             <div class="card-header py-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Kapı Listesi</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Kapı Listesi</h3>
             </div>
             <div class="card-body">
                 <table class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
+                    <thead>
                         <tr>
                             <td>ID</td>
                             <td>Aktif</td>
@@ -43,8 +44,8 @@
                                     }
                                     else
                                     {
-                                        <td class="text-danger">Hayır</td>
-                                        <td class="text-danger">@Model.Okuyucular[i].WKapi_Adi.Trim()</td>
+                                        <td class="text-danger"><span class="text-danger">Hayır</span></td>
+                                        <td class="text-danger"><span class="text-danger">@Model.Okuyucular[i].WKapi_Adi.Trim()</span></td>
                                         <td>
                                             <a title="Edit" id="edit" href="@Url.Action("ReaderEditMS","Panel",new { Wid=Model.Okuyucular[i].WKapi_ID,MSPanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
                                         </td>
@@ -70,8 +71,8 @@
                                     }
                                     else
                                     {
-                                        <td class="text-danger">Hayır</td>
-                                        <td class="text-danger">@item.WKapi_Adi.Trim()</td>
+                                        <td class="text-danger"><span class="text-danger">Hayır</span> </td>
+                                        <td class="text-danger"><span class="text-danger">@item.WKapi_Adi.Trim()</span></td>
                                         <td>
                                             <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
                                         </td>

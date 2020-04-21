@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Panel Ekle";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 <div class="row">
 
@@ -126,7 +127,7 @@
                                 <div class="form-group">
                                     <label class="text-muted">Alarm/Yangın Giriş Kontrolü</label>
 
-                                    <span class="text-dark"><b>Hırsız Alarm Mod</b></span>
+                                    <span class="text-danger"><b>Hırsız Alarm Modu</b></span>
                                     <div class="custom-control custom-checkbox">
                                         <div id="Kapilar"></div>
                                         <input type="checkbox" name="Panel_Alarm_Mode_Role_Ok" value="true" class="custom-control-input" />
@@ -136,7 +137,7 @@
                                         <input type="checkbox" name="Panel_Alarm_Mode" value="true" class="custom-control-input" />
                                         <label class="custom-control-label" for="Panel_Alarm_Mode">Seçilen Kapıları Kilitle</label>
                                     </div>
-                                    <span class="text-dark"><b>Yangın Alarm Mod</b></span>
+                                    <span class="text-danger"><b>Yangın Alarm Modu</b></span>
 
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="Panel_Fire_Mode_Role_Ok" value="true" class="custom-control-input" />
@@ -146,12 +147,12 @@
                                         <input type="checkbox" name="Panel_Fire_Mode" value="true" class="custom-control-input" />
                                         <label class="custom-control-label" for="Panel_Fire_Mode">Seçilen Kapıları Aç</label>
                                     </div>
-                                    <span class="text-dark"><b>Kapı Alarm Modu</b></span>
+                                    <span class="text-danger"><b>Kapı Alarm Modu</b></span>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="Panel_Door_Alarm_Role_Ok" value="true" class="custom-control-input" />
                                         <label class="custom-control-label" for="Panel_Door_Alarm_Role_Ok">Alarm Rolesini Çek</label>
                                     </div>
-                                    <span class="text-dark"><b>Alarm Yayın Modu</b></span>
+                                    <span class="text-danger"><b>Alarm Yayın Modu</b></span>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="Panel_Alarm_Broadcast_Ok" value="true" class="custom-control-input" />
                                         <label class="custom-control-label" for="Panel_Alarm_Broadcast_Ok">Hırsız Alarmı Yayın</label>
@@ -334,24 +335,24 @@
                                             <div class="col-md-3">
                                                 <label>Ağ Geçidi</label>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_GW1" value="192" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_GW1" value="192" class="form-control form-control-sm"  style="width:60px;"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_GW2" value="168" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_GW2" value="168" class="form-control form-control-sm" style="width:60px;"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_GW3" value="1" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_GW3" value="1" class="form-control form-control-sm" style="width:60px;"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_GW4" value="1" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_GW4" value="1" class="form-control form-control-sm" style="width:60px;"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -359,24 +360,24 @@
                                             <div class="col-md-3">
                                                 <label>Alt Ağ Maskesi Geçidi</label>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_Subnet1" value="255" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_Subnet1" value="255" class="form-control form-control-sm"  style="width:60px;"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_Subnet2" value="255" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_Subnet2" value="255" class="form-control form-control-sm"  style="width:60px;"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_Subnet3" value="255" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_Subnet3" value="255" class="form-control form-control-sm"  style="width:60px;"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_Subnet4" value="0" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_Subnet4" value="0" class="form-control form-control-sm"  style="width:60px;"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -384,24 +385,24 @@
                                             <div class="col-md-3">
                                                 <label>Lokal IP Adres</label>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_IP1" value="192" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_IP1" value="192" class="form-control form-control-sm" style="width:60px;" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_IP2" value="168" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_IP2" value="168" class="form-control form-control-sm" style="width:60px;" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_IP3" value="" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_IP3" value="" class="form-control form-control-sm" style="width:60px;" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_IP4" value="" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_IP4" value="" class="form-control form-control-sm" style="width:60px;" />
                                                 </div>
                                             </div>
                                         </div>
@@ -409,24 +410,24 @@
                                             <div class="col-md-3">
                                                 <label>Remote IP Adres</label>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_Remote_IP1" value="192" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_Remote_IP1" value="192" class="form-control form-control-sm" style="width:60px;"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_Remote_IP2" value="168" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_Remote_IP2" value="168" class="form-control form-control-sm" style="width:60px;"/>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_Remote_IP3" value="1" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_Remote_IP3" value="1" class="form-control form-control-sm" style="width:60px;" />
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mr-1">
                                                 <div class="form-group">
-                                                    <input type="text" name="Panel_Remote_IP4" value="3" class="form-control form-control-sm" />
+                                                    <input type="text" name="Panel_Remote_IP4" value="3" class="form-control form-control-sm" style="width:60px;"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -806,49 +807,49 @@
                         <label class="text-center text-info">Lokal Bölge 1 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge1", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Panel_Global_Bolge1", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge1, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 2 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Panel_Global_Bolge2", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge2, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 3 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge3", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Panel_Global_Bolge3", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge3, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 4 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge4", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Panel_Global_Bolge4", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge4, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 5 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge5", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Panel_Global_Bolge5", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge5, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 6 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge6", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Panel_Global_Bolge6", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge6, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 7 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge7", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Panel_Global_Bolge7", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge7, "", new { @class = "text-danger" })
                         </div>
                         <label class="text-center text-info">Lokal Bölge 8 İçin</label>
                         <hr />
                         <div class="form-group">
-                            @Html.DropDownList("Panel_Global_Bolge8", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                            @Html.DropDownList("Panel_Global_Bolge8", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                             @Html.ValidationMessageFor(model => model.Panel_Global_Bolge8, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -871,14 +872,14 @@
                                     <div class="col-md-6">
                                         <label>Grup 1-1:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G1_1", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                            @Html.DropDownList("LocalInterlock_G1_1", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G1_1, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Grup 1-2:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G1_2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                            @Html.DropDownList("LocalInterlock_G1_2", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G1_2, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -887,14 +888,14 @@
                                     <div class="col-md-6">
                                         <label>Grup 2-1:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G2_1", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                            @Html.DropDownList("LocalInterlock_G2_1", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G2_1, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Grup 2-2:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G2_2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                            @Html.DropDownList("LocalInterlock_G2_2", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G2_2, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -903,14 +904,14 @@
                                     <div class="col-md-6">
                                         <label>Grup 3-1:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G3_1", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                            @Html.DropDownList("LocalInterlock_G3_1", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G3_1, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Grup 3-2:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G3_2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                            @Html.DropDownList("LocalInterlock_G3_2", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G3_2, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -919,14 +920,14 @@
                                     <div class="col-md-6">
                                         <label>Grup 4-1:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G4_1", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                            @Html.DropDownList("LocalInterlock_G4_1", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G4_1, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Grup 4-2:</label>
                                         <div class="form-group">
-                                            @Html.DropDownList("LocalInterlock_G4_2", null, "Global Bölge Seçiniz", new { @class = "form-control" })
+                                            @Html.DropDownList("LocalInterlock_G4_2", null, "Global Bölge Seçiniz", new { @class = "form-control form-control-sm" })
                                             @Html.ValidationMessageFor(model => model.LocalInterlock_G4_2, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -944,8 +945,8 @@
                                 <label>Genişleme Port 1 (RS485)</label>
                             </div>
                             <div class="col-md-8">
-                                <div class="form-group">
-                                    <select class="form-control" name="Panel_Expansion" id="Panel_Expansion">
+                                <div class="form-group ">
+                                    <select class="form-control form-control-sm" name="Panel_Expansion" id="Panel_Expansion">
                                         <option selected value="0">İptal</option>
                                         <option value="1">MW 301 EXP</option>
                                         <option value="2">MW 650 Asansör</option>
@@ -958,7 +959,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <select class="form-control" name="Panel_Expansion_2" id="Panel_Expansion_2">
+                                    <select class="form-control form-control-sm" name="Panel_Expansion_2" id="Panel_Expansion_2">
                                         <option selected value="0">İptal</option>
                                         <option value="1">MW 650 Asansör</option>
                                         <option value="2">MW 650 Standart</option>
@@ -971,7 +972,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <select class="form-control" name="Lift_Capacity" id="Lift_Capacity">
+                                    <select class="form-control form-control-sm" name="Lift_Capacity" id="Lift_Capacity">
                                         <option selected value="0">İptal</option>
                                         <option value="1">Max 8 Asansör,Max 16 Kat</option>
                                         <option value="2">Max 8 Asansör,Max 32 Kat</option>

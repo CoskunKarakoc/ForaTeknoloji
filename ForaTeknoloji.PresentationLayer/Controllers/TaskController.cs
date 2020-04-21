@@ -18,9 +18,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ITaskListService _taskListService;
         private IPanelSettingsService _panelSettingsService;
         private IStatusCodesService _statusCodesService;
-        private IDBUsersPanelsService _dBUsersPanelsService;
         private ITaskCodeService _taskCodeService;
         private IReportService _reportService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        List<int> dbPanelList;
         public DBUsers user;
         public TaskController(ITaskListService taskListService, IPanelSettingsService panelSettingsService, IStatusCodesService statusCodesService, IDBUsersPanelsService dBUsersPanelsService, ITaskCodeService taskCodeService, IReportService reportService)
         {
@@ -35,6 +36,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _taskCodeService = taskCodeService;
             _reportService = reportService;
+            dbPanelList = new List<int>();
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
         }
 
 
@@ -42,7 +48,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult TaskTable(int? Panel, int? Gorev, int? Durum, DateTime? Tarih)
         {
             Tarih = Tarih == null ? DateTime.Now.Date : Tarih;
-            var Paneller = _reportService.PanelListesi(user);
+            var Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)); //_reportService.PanelListesi(user);
             var StatusCodes = _statusCodesService.GetAllStatusCodes();
             var TaskCode = _taskCodeService.GetAllTaskCodes();
             var List = QueryList(Panel, Gorev, Durum, Tarih);
@@ -75,11 +81,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             IEnumerable<TaskStatusWatch> liste;
             if (user.SysAdmin == true)
             {
-                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi || x.Kullanici_Adi.Contains("System")).OrderByDescending(x => x.Tarih).Take(100);
+                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi || x.Kullanici_Adi.Contains("System")).OrderByDescending(x => x.Kayit_No).Take(100);
             }
             else
             {
-                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderByDescending(x => x.Tarih).Take(100);
+                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderByDescending(x => x.Kayit_No).Take(100);
             }
             if (Panel != null)
             {
@@ -103,11 +109,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult ClearTask()
         {
-            _taskListService.DeleteAll();
+            _taskListService.DeleteAllWithUserName(user.Kullanici_Adi);
             return RedirectToAction("TaskTable", "Task");
         }
 
 
+        public ActionResult ClearALLTask()
+        {
+            _taskListService.DeleteAll();
+            return RedirectToAction("TaskTable", "Task");
+        }
 
 
 

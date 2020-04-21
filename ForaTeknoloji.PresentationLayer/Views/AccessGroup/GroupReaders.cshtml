@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Kapı ve Geçiş Ayarları";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 @using (Html.BeginForm("GroupReaders", "AccessGroup", FormMethod.Post))
 {
@@ -13,7 +14,7 @@
         <div class="col-md-8 ">
             <div class="card border-left-info h-100 shadow-lg mx-lg-4 my-lg-4">
                 <div class="card-header py-1 mt-1">
-                    <h3 class="m-0 font-weight-bold text-secondary text-center">Geçiş Grup Kapı Ayarları - <span class="text-primary"><i>@Model.Groups.FirstOrDefault().Grup_Adi</i></span></h3>
+                    <h3 class="card-title"><i class="fas fa-bookmark"></i> Geçiş Grup Kapı Ayarları - <span class="text-primary"><i>@Model.Groups.FirstOrDefault().Grup_Adi</i></span></h3>
                 </div>
                 <div class="card-body">
                     @Html.HiddenFor(model => model.Panel_ID)
@@ -33,15 +34,15 @@
                             <div class="col-md-4">
                                 <label for="Kapi_Zaman_Grup_No">Kapı Zaman Bölgesi</label>
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[0]", Model.Kapi_Zaman_Grup_No[0], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[0]", Model.Kapi_Zaman_Grup_No[0], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             @*<div class="col-md-4">
-                                <label for="Kapi_Zaman_Grup_No">Kapı Asansör Grubu</label>
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[0]", Model.Kapi_Asansor_Bolge_No[0], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                                </div>
-                            </div>*@
+                                    <label for="Kapi_Zaman_Grup_No">Kapı Asansör Grubu</label>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[0]", Model.Kapi_Asansor_Bolge_No[0], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    </div>
+                                </div>*@
 
                         }
                         else
@@ -50,19 +51,19 @@
                                 <label class="text-muted">Kapı Geçiş Onayı</label>
                                 <div class="custom-control custom-checkbox">
                                     @Html.CheckBox("Kapi_1", Model.Groups[0].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_1">@Model.Groups[0].Kapi_Adi</label>
+                                    <label class="custom-control-label " for="Kapi_1">@Model.Groups[0].Kapi_Adi</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="Kapi_Zaman_Grup_No">Kapı Zaman Bölgesi</label>
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[0]", Model.Kapi_Zaman_Grup_No[0], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[0]", Model.Kapi_Zaman_Grup_No[0], new { @class = "form-control  text-dark chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="Kapi_Zaman_Grup_No">Kapı Asansör Grubu</label>
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[0]", Model.Kapi_Asansor_Bolge_No[0], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[0]", Model.Kapi_Asansor_Bolge_No[0], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -74,12 +75,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[1]", Model.Kapi_Zaman_Grup_No[1], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[1]", Model.Kapi_Zaman_Grup_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[1]", Model.Kapi_Asansor_Bolge_No[1], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[1]", Model.Kapi_Asansor_Bolge_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -95,12 +96,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[2]", Model.Kapi_Zaman_Grup_No[2], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[2]", Model.Kapi_Zaman_Grup_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[2]", Model.Kapi_Asansor_Bolge_No[2], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[2]", Model.Kapi_Asansor_Bolge_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -116,12 +117,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[3]", Model.Kapi_Zaman_Grup_No[3], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[3]", Model.Kapi_Zaman_Grup_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[3]", Model.Kapi_Asansor_Bolge_No[3], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[3]", Model.Kapi_Asansor_Bolge_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -138,12 +139,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[4]", Model.Kapi_Zaman_Grup_No[4], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[4]", Model.Kapi_Zaman_Grup_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[4]", Model.Kapi_Asansor_Bolge_No[4], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[4]", Model.Kapi_Asansor_Bolge_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -160,12 +161,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[5]", Model.Kapi_Zaman_Grup_No[5], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[5]", Model.Kapi_Zaman_Grup_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[5]", Model.Kapi_Asansor_Bolge_No[5], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[5]", Model.Kapi_Asansor_Bolge_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -182,12 +183,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[6]", Model.Kapi_Zaman_Grup_No[6], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[6]", Model.Kapi_Zaman_Grup_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[6]", Model.Kapi_Asansor_Bolge_No[6], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[6]", Model.Kapi_Asansor_Bolge_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -204,12 +205,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[7]", Model.Kapi_Zaman_Grup_No[7], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[7]", Model.Kapi_Zaman_Grup_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[7]", Model.Kapi_Asansor_Bolge_No[7], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[7]", Model.Kapi_Asansor_Bolge_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -225,12 +226,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[8]", Model.Kapi_Zaman_Grup_No[8], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[8]", Model.Kapi_Zaman_Grup_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[8]", Model.Kapi_Asansor_Bolge_No[8], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[8]", Model.Kapi_Asansor_Bolge_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -246,12 +247,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[9]", Model.Kapi_Zaman_Grup_No[9], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[9]", Model.Kapi_Zaman_Grup_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[9]", Model.Kapi_Asansor_Bolge_No[9], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[9]", Model.Kapi_Asansor_Bolge_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -267,12 +268,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[10]", Model.Kapi_Zaman_Grup_No[10], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[10]", Model.Kapi_Zaman_Grup_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[10]", Model.Kapi_Asansor_Bolge_No[10], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[10]", Model.Kapi_Asansor_Bolge_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -287,12 +288,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[11]", Model.Kapi_Zaman_Grup_No[11], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[11]", Model.Kapi_Zaman_Grup_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[11]", Model.Kapi_Asansor_Bolge_No[11], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[11]", Model.Kapi_Asansor_Bolge_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -307,12 +308,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[12]", Model.Kapi_Zaman_Grup_No[12], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[12]", Model.Kapi_Zaman_Grup_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[12]", Model.Kapi_Asansor_Bolge_No[12], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[12]", Model.Kapi_Asansor_Bolge_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -328,12 +329,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[13]", Model.Kapi_Zaman_Grup_No[13], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[13]", Model.Kapi_Zaman_Grup_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[13]", Model.Kapi_Asansor_Bolge_No[13], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[13]", Model.Kapi_Asansor_Bolge_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -349,12 +350,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[14]", Model.Kapi_Zaman_Grup_No[14], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[14]", Model.Kapi_Zaman_Grup_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[14]", Model.Kapi_Asansor_Bolge_No[14], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[14]", Model.Kapi_Asansor_Bolge_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -370,12 +371,12 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[15]", Model.Kapi_Zaman_Grup_No[15], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Zaman_Grup_No[15]", Model.Kapi_Zaman_Grup_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[15]", Model.Kapi_Asansor_Bolge_No[15], new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[15]", Model.Kapi_Asansor_Bolge_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                 </div>
                             </div>
 
@@ -406,7 +407,7 @@
         $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
         for (var i = 0; i < 16; i++) {
             var value = "#Kapi_" + (i + 1);
-            var label = "label[for=Kapi_" + (i + 1) + "]"
+            var label = "label[for=Kapi_" + (i + 1) + "]";
             var kapiZaman = "#Kapi_Zaman_Grup_No_" + i + "_";
             var kapiAsansor = "#Kapi_Asansor_Bolge_No_" + i + "_";
             if ($(value).prop("checked")) {

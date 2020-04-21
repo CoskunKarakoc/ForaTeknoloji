@@ -29,5 +29,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Bolum_Adi { get; set; }
 
         public int? Giris_Sayisi { get; set; }
+
+        public string BirimAdi { get; set; }
     }
 }

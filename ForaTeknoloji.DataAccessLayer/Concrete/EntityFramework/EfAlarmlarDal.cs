@@ -1,15 +1,17 @@
 ﻿using ForaTeknoloji.Core.DataAccess.EntityFramework;
 using ForaTeknoloji.DataAccessLayer.Abstract;
 using ForaTeknoloji.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
 {
     public class EfAlarmlarDal : EfEntityRepositoryBase<Alarmlar, ForaContext>, IAlarmlarDal
     {
 
-        public List<ComplexAlarm> AlarmAndAlarmTip()
+        public List<ComplexAlarm> AlarmAndAlarmTip(Expression<Func<ComplexAlarm, bool>> filter = null)
         {
             using (var context = new ForaContext())
             {
@@ -21,10 +23,11 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                  Alarm_No = a.Alarm_No,
                                  Adi = at.Adi,
                                  Alarm_Tipi = at.Alarm_Tipi,
-                                 Alarm_Adi = a.Alarm_Adi
+                                 Alarm_Adi = a.Alarm_Adi,
+                                 PanelNo = a.Panel_No
                              };
 
-                return entity.ToList();
+                return filter == null ? entity.ToList() : entity.Where(filter).ToList();
             }
         }
         public class ComplexAlarm
@@ -33,6 +36,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Alarm_Adi { get; set; }
             public int Alarm_Tipi { get; set; }
             public string Adi { get; set; }
+            public int? PanelNo { get; set; }
         }
 
     }

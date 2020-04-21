@@ -16,8 +16,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IAccessDatasService _accessDatasService;
         private IProgInitService _progInitService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+        private IDBUsersSirketService _dBUsersSirketService;
         public DBUsers user;
-        public CameraSettingsController(ICamerasService camerasService, ICameraTypesService cameraTypesService, IPanelSettingsService panelSettingsService, IAccessDatasService accessDatasService, IProgInitService progInitService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        public CameraSettingsController(ICamerasService camerasService, ICameraTypesService cameraTypesService, IPanelSettingsService panelSettingsService, IAccessDatasService accessDatasService, IProgInitService progInitService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -29,13 +35,31 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _accessDatasService = accessDatasService;
             _progInitService = progInitService;
+            _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
+            _dBUsersSirketService = dBUsersSirketService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
         }
 
 
         // GET: CameraSettings
         public ActionResult Index()
         {
-            var cameras = _camerasService.GetAllCamerasComplex();
+            var cameras = _camerasService.GetAllCamerasComplex(x => dbPanelList.Contains((int)x.Panel_ID));
             return View(cameras);
         }
 
@@ -103,7 +127,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 MaxID = _camerasService.GetAllCameras().Max(x => x.Kamera_No);
 
             var Kameralar = _cameraTypesService.GetAllCameraTypes();
-            var Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            var Paneller = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
             var model = new CameraAddListViewModel
             {
                 Kamera_No = MaxID + 1,

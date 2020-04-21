@@ -19,5 +19,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> AltDepartman { get; internal set; }
         public IEnumerable<SelectListItem> Unvan { get; internal set; }
         public IEnumerable<SelectListItem> Bolum { get; internal set; }
+        public IEnumerable<SelectListItem> Birim_No { get; internal set; }
     }
 }

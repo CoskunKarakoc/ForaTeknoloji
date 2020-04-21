@@ -36,6 +36,8 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public string Grup_Adi { get; set; }
 
+        public string Birim_Adi { get; set; }
+
         public string Tmp { get; set; }
         public bool? Kapi1 { get; set; }
         public bool? Kapi2 { get; set; }

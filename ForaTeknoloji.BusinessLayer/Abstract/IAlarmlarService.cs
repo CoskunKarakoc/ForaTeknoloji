@@ -14,6 +14,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteAlarmlar(Alarmlar alarmlar);
         Alarmlar UpdateAlarmlar(Alarmlar alarmlar);
         Alarmlar GetByAlarmAdi(string alarmAdi);
-        List<ComplexAlarm> AlarmAndTip();
+        List<ComplexAlarm> AlarmAndTip(Expression<Func<ComplexAlarm, bool>> filter = null);
     }
 }

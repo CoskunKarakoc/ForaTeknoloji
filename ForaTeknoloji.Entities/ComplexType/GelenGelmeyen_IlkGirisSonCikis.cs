@@ -16,6 +16,6 @@
         public string Ilk_Kayit { get; set; }
         public string Son_Kayit { get; set; }
         public string Fark { get; set; }
-
+        public string BirimAdi { get; set; }
     }
 }

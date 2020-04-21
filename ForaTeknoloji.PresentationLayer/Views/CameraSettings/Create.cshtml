@@ -2,13 +2,14 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+   //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
-<div class="row  animated slideInLeft faster">
+<div class="row  animated fadeIn faster">
     <div class="col-md-8 offset-2">
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header py-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Yeni Kamera</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Yeni Kamera</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Create", "CameraSettings", FormMethod.Post))
@@ -31,7 +32,7 @@
                                 <label class="control-label col-md-5">Kamera Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kamera_Tipi", Model.Kamera_Tipi, "Kamera Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Kamera_Tipi", Model.Kamera_Tipi, "Kamera Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select ", tabindex = "2" })@*bg-transparent text-light*@
                                         @Html.ValidationMessageFor(model => model.Kamera_Tipi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -56,7 +57,7 @@
                                 <label class="control-label col-md-5">Kapı Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_ID", new SelectList(Model.Kapi_ID), "Kapı Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Kapi_ID", new SelectList(Model.Kapi_ID), "Kapı Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select ", tabindex = "2" })@*bg-transparent text-light*@
                                         @Html.ValidationMessageFor(model => model.Kapi_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -99,7 +100,7 @@
                                 <label class="control-label col-md-5">Panel Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Panel_ID", Model.Panel_ID, "Panel Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Panel_ID", Model.Panel_ID, "Panel Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select ", tabindex = "2" })@*bg-transparent text-light*@
                                         @Html.ValidationMessageFor(model => model.Panel_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

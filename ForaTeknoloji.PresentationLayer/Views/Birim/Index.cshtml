@@ -1,0 +1,184 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.BirimListViewModel
+@{
+    ViewBag.Title = "Birim Tanımları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
+}
+<div class="row animated fadeIn faster">
+    <div class="col-md-8 offset-md-2 mt-xl-5 mb-xl-5">
+        <div class=" card border-left-info h-100 shadow-lg mt-2">
+            <div class="card-header py-1">
+                <h3 id="Title" class="card-title"><i class="fas fa-bookmark"></i> Birim Tanımları</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "Birim"))
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.DropDownList("Departman_No", Model.Departman_No, "Departman Seçiniz", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                            @Html.ValidationMessageFor(model => model.Departman_No, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Alt_Departman_No, new SelectList(""), "Alt Departman Seçiniz", new { @class = "form-control chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                            @Html.ValidationMessageFor(model => model.Alt_Departman_No, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Bolum_No, new SelectList(""), "Bölüm Seçiniz", new { @class = "form-control chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                            @Html.ValidationMessageFor(model => model.Bolum_No, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="birimAdi" name="Adi" placeholder="Birim Tanımlama" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" name="Birim  No" hidden value="" />
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="submit" id="newBirim"><i class="fas fa-plus mr-2"></i>Yeni Birim</button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                <hr />
+                @if (Model.BirimListesi.Count() == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">Geçerli birim kaydı bulunamadı.</p>
+                        <hr>
+                        <p class="mb-0 text-center">Dilerseniz yukarıdaki "Yeni Birim Tanımlama" kısmına birim adı girip "Yeni Birim" butonuna basarak birim ekleyebilirsiniz.</p>
+
+                    </div>
+                }
+                else
+                {
+
+                    <input type="text" hidden id="AltDepartmanCount" name="name" value="@Model.BirimListesi.Count()" />
+                    <table id="BirimList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <td>Birim No</td>
+                                <td>Birim Adı</td>
+                                <td>Bölüm Adı</td>
+                                <td>Alt Departman Adı</td>
+                                <td>Ana Departman Adı</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BirimListesi)
+                            {
+                                <tr>
+                                    <td>@item.Birim_No</td>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Bolum_Adi</td>
+                                    <td>@item.Alt_Departman_Adi</td>
+                                    <td>@item.Departman_Adi</td>
+
+                                    <td>
+                                        <a title="Edit" id="edit" href="@Url.Action("Edit","Birim",new { id=item.Birim_No})"><i class="fas fa-edit text-info mr-5"></i></a>
+                                        <a title="Delete" href="@Url.Action("Delete",new {id=item.Birim_No })" onclick="return confirm('Seçilen Birimi Silmek İstediğinize Emin Misiniz?')" class="text-danger"><i class="fas fa-trash-alt text-danger"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#BirimList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+        });
+    </script>
+
+
+}
+
+
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+        var count = $("#BirimCount").val();
+        if (count == 0) {
+            $("#BirimList").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#BirimList").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
+
+        $("#Departman_No").chosen().change(function () {
+            var departmanNo = $(this).val();
+            if (departmanNo == 0 || departmanNo == null) {
+                $("#Alt_Departman_No").empty();
+                $("#Bolum_No").empty();
+                $("#Alt_Departman_No").append('<option > Alt Departman Seçiniz... </option>');
+                $("#Bolum_No").append('<option > Bölüm Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/Users/AltDepartmanListesi?Departman=' + departmanNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Alt_Departman_No").empty();
+                    $("#Alt_Departman_No").append('<option > Alt Departman Seçiniz... </option>');
+                    $.each(data, function (index, row) {
+                        $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    });
+                    var altdepartmanNo = $("#Alt_Departman_No").val();
+                    $.ajax({
+                        url: '/Users/BolumListesi?AltDepartman=' + altdepartmanNo,
+                        type: 'GET',
+                        dataType: 'json'
+                    }).done(function (data) {
+                        $("#Bolum_No").empty();
+                        $.each(data, function (index, row) {
+                            $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                        });
+                    });
+                });
+            }
+        });
+
+        $("#Alt_Departman_No").chosen().change(function () {
+            var altdepartmanNo = $(this).val();
+            $.ajax({
+                url: '/Users/BolumListesi?AltDepartman=' + altdepartmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Bolum_No").empty();
+                $.each(data, function (index, row) {
+                    $("#Bolum_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                });
+            });
+        });
+
+
+    });
+</script>
+
+

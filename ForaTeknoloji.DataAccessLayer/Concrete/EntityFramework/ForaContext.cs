@@ -70,7 +70,10 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<AccessDatasTemp> AccessDatasTemp { get; set; }
         public virtual DbSet<ReaderSettingsNewMS> ReaderSettingsNewMs { get; set; }
         public virtual DbSet<TatilGunu> TatilGunu { get; set; }
-
+        public virtual DbSet<OperatorTransactionList> OperatorTransactionLists { get; set; }
+        public virtual DbSet<Birim> Birim { get; set; }
+        public virtual DbSet<DBUsersAltDepartman> DBUsersAltDepartman { get; set; }
+        public virtual DbSet<DBUsersKapi> DBUsersKapi { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

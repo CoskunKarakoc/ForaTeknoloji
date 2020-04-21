@@ -2,13 +2,14 @@
 @{
     ViewBag.Title = "Yeni Zaman Bölgesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
-<div class="row animated slideInLeft faster">
-    <div class="col-md-10 offset-md-1">
+<div class="row animated fadeIn faster">
+    <div class="col-md-9 offset-md-1">
         <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header py-1 mt-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Yeni Zaman Bölgesi</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Yeni Zaman Bölgesi</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Add", "TimeGroups", FormMethod.Post))
@@ -40,7 +41,7 @@
                                 <label class="control-label col-md-12">Zaman Bölge Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Gecis_Sinirlama_Tipi", Model.Gecis_Sinirlama_Tipi, "Zaman Bölge Tipi Seçiniz...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Gecis_Sinirlama_Tipi", Model.Gecis_Sinirlama_Tipi, "Zaman Bölge Tipi Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Gecis_Sinirlama_Tipi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

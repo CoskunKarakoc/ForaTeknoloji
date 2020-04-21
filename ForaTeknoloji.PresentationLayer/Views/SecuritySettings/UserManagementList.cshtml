@@ -1,0 +1,232 @@
+﻿@model ForaTeknoloji.Entities.Entities.OperatorTransactionList
+@{
+    ViewBag.Title = "UserManagementList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card shadow-lg mx-lg-5 my-lg-5 animated fadeIn border-left-info h-100 faster">
+            <div class="card-header py-1 mt-1">
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Kullanıcı Yönetim Listesi</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("UserManagementList", "SecuritySettings", FormMethod.Post))
+                {
+                    <div class="form-group row">
+                        <label for="Kullanici_Adi" class="col-sm-4 col-form-label text-right">Kullanıcı Adı</label>
+                        <div class="col-sm-5">
+                            <input type="text" hidden name="Kullanici_Adi_Yonetim_Listesi" value="@Model.Kullanici_Adi_Yonetim_Listesi" />
+                            @Html.EditorFor(model => model.Kullanici_Adi_Yonetim_Listesi, null, "Kullanici_Adi_Yonetim_Listesi", new { htmlAttributes = new { @class = "form-control form-control-sm", disabled = true } })
+                            @Html.ValidationMessageFor(model => model.Kullanici_Adi_Yonetim_Listesi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Canli_Izleme", Model.Canli_Izleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label " for="Canli_Izleme">Canlı İzleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Spot_Monitor", Model.Spot_Monitor ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label " for="Spot_Monitor">Spot Monitör</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Panel_Ekleme", Model.Panel_Ekleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Panel_Ekleme">Panel Ekleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Panel_Guncelleme", Model.Panel_Guncelleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label " for="Panel_Guncelleme">Panel Güncelleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Panel_Ayar_Gonderme", Model.Panel_Ayar_Gonderme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Panel_Ayar_Gonderme">Panel Ayar Gönderme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Zaman_Bolgesi_Ayarlari", Model.Zaman_Bolgesi_Ayarlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label " for="Zaman_Bolgesi_Ayarlari">Zaman_Bölgesi Ayarları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Gecis_Grup_Ayarlari", Model.Gecis_Grup_Ayarlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Gecis_Grup_Ayarlari">Geciş Grup Ayarları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Kullanici_Ekleme", Model.Kullanici_Ekleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label " for="Kullanici_Ekleme">Kullanıcı Ekleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Kullanici_Duzenleme", Model.Kullanici_Duzenleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Kullanici_Duzenleme">Kullanıcı Düzenleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Kullanici_Gonderme", Model.Kullanici_Gonderme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Kullanici_Gonderme">Kullanıcı Gönderme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Ziyaretci_Ekleme", Model.Ziyaretci_Ekleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Ziyaretci_Ekleme">Ziyaretçi Ekleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Ziyaretci_Duzenleme", Model.Ziyaretci_Duzenleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Ziyaretci_Duzenleme">Ziyaretçi Düzenleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Ziyaretci_Gonderme", Model.Ziyaretci_Gonderme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Ziyaretci_Gonderme">Ziyaretçi Gönderme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Kapi_Operasyon", Model.Kapi_Operasyon ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Kapi_Operasyon">Kapı Operasyon</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Kapi_Grup_Olusturma", Model.Kapi_Grup_Olusturma ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Kapi_Grup_Olusturma">Kapı Grup Oluşturma</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Grup_Takvimi_Olusturma", Model.Grup_Takvimi_Olusturma ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Grup_Takvimi_Olusturma">Grup Takvimi Oluşturma</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Tanimlamalar", Model.Tanimlamalar ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Tanimlamalar">Tanımlamalar</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Kullanici_Alarm_Ekleme", Model.Kullanici_Alarm_Ekleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Kullanici_Alarm_Ekleme">Kullanıcı Alarm Ekleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Kamera_Ekleme", Model.Kamera_Ekleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Kamera_Ekleme">Kamera Ekleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Asansor_Gecis_Grubu_Ekleme", Model.Asansor_Gecis_Grubu_Ekleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Asansor_Gecis_Grubu_Ekleme">Asansör Geciş Grubu Ekleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Global_Bolge_Guncelleme", Model.Global_Bolge_Guncelleme ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Global_Bolge_Guncelleme">Global Bölge Güncelleme</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("E_Mail_Gonderme_Ayarlari", Model.E_Mail_Gonderme_Ayarlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="E_Mail_Gonderme_Ayarlari">E Mail Gönderme Ayarları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("SMS_Gonderme_Ayarlari", Model.SMS_Gonderme_Ayarlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="SMS_Gonderme_Ayarlari">SMS Gönderme Ayarları</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Gecis_Olay_Verileri", Model.Gecis_Olay_Verileri ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Gecis_Olay_Verileri">Geciş Olay Verileri</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Gecis_Olay_Yedekle", Model.Gecis_Olay_Yedekle ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Gecis_Olay_Yedekle">Geciş Olay Yedekle</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Personel_Listesi", Model.Personel_Listesi ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Personel_Listesi">Personel Listesi</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Aktif_Personel_Raporlari", Model.Aktif_Personel_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Aktif_Personel_Raporlari">Aktif Personel Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Eski_Personel_Raporlari", Model.Eski_Personel_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Eski_Personel_Raporlari">Eski Personel Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Aktif_Olmayanlar_Listesi", Model.Aktif_Olmayanlar_Listesi ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Aktif_Olmayanlar_Listesi">Aktif Olmayanlar Listesi</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Ilk_Giris_Son_Cikis_Raporlari", Model.Ilk_Giris_Son_Cikis_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Ilk_Giris_Son_Cikis_Raporlari">İlk Giriş Son Cıkış Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Toplam_Icerde_Kalma_Raporu", Model.Toplam_Icerde_Kalma_Raporu ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Toplam_Icerde_Kalma_Raporu">Toplam İçerde Kalma Raporu</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Gelen_Kisi_Raporlari", Model.Gelen_Kisi_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Gelen_Kisi_Raporlari">Gelen Kişi Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Gelmeyen_Kisi_Raporlari", Model.Gelmeyen_Kisi_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Gelmeyen_Kisi_Raporlari">Gelmeyen Kişi Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Pasif_Kullanici_Raporlari", Model.Pasif_Kullanici_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Pasif_Kullanici_Raporlari">Pasif Kullanıcı Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Toplu_Giris_Sayisi_Raporlari", Model.Toplu_Giris_Sayisi_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Toplu_Giris_Sayisi_Raporlari">Toplu Giriş Sayısı Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Icerde_Disarda_Personel_Raporlari", Model.Icerde_Disarda_Personel_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Icerde_Disarda_Personel_Raporlari">İçerde Dişarda Personel Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Icerde_Disarda_Ziyaretci_Raporlari", Model.Icerde_Disarda_Ziyaretci_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Icerde_Disarda_Ziyaretci_Raporlari">İçerde Dışarda Ziyaretçi Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Icerde_Disarda_Tumu", Model.Icerde_Disarda_Tumu ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Icerde_Disarda_Tumu">İçerde Dışarda Tümü</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Yemekhane_Kisi_Bazli_Rapor", Model.Yemekhane_Kisi_Bazli_Rapor ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Yemekhane_Kisi_Bazli_Rapor">Yemekhane Kişi Bazlı Rapor</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Yemekhane_Toplu_Gecis_Sayisi_Raporlari", Model.Yemekhane_Toplu_Gecis_Sayisi_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Yemekhane_Toplu_Gecis_Sayisi_Raporlari">Yemekhane Toplu Geçiş Sayısı Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Diger_Raporlar", Model.Diger_Raporlar ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Diger_Raporlar">Diğer Raporlar</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Kullanici_Alarm_Raporu", Model.Kullanici_Alarm_Raporu ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Kullanici_Alarm_Raporu">Kullanıcı Alarm Raporu</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Ziyaretci_Raporlari", Model.Ziyaretci_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Ziyaretci_Raporlari">Ziyaretçi Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Tanimsiz_Kullanici_Raporlari", Model.Tanimsiz_Kullanici_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Tanimsiz_Kullanici_Raporlari">Tanımsız Kullanıcı Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Operator_Log_Raporlari", Model.Operator_Log_Raporlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Operator_Log_Raporlari">Operator Log Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Panel_Durum_Tablosu", Model.Panel_Durum_Tablosu ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Panel_Durum_Tablosu">Panel Durum Tablosu</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <a href="@Url.Action("Index","SecuritySettings")" class="btn btn-sm btn-outline-info"><i class="fas fa-hand-o-left"></i> Listeye Geri Dön</a>
+                            <button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-save"></i> Değişikliği Güncelle</button>
+                        </div>
+                    </div>
+
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

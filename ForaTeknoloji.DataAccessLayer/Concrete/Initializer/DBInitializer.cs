@@ -26,6 +26,58 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 OtherDeviceReports = null
             };
             context.DBUsers.Add(dBUsers);
+            OperatorTransactionList operatorTransactionList = new OperatorTransactionList
+            {
+                Kullanici_Adi_Yonetim_Listesi = "sa",
+                Aktif_Olmayanlar_Listesi = true,
+                Aktif_Personel_Raporlari = true,
+                Asansor_Gecis_Grubu_Ekleme = true,
+                Canli_Izleme = true,
+                Diger_Raporlar = true,
+                Eski_Personel_Raporlari = true,
+                E_Mail_Gonderme_Ayarlari = true,
+                Gecis_Grup_Ayarlari = true,
+                Gecis_Olay_Verileri = true,
+                Gecis_Olay_Yedekle = true,
+                Gelen_Kisi_Raporlari = true,
+                Gelmeyen_Kisi_Raporlari = true,
+                Global_Bolge_Guncelleme = true,
+                Grup_Takvimi_Olusturma = true,
+                Icerde_Disarda_Tumu = true,
+                Icerde_Disarda_Ziyaretci_Raporlari = true,
+                Icerde_Disarda_Personel_Raporlari = true,
+                Ilk_Giris_Son_Cikis_Raporlari = true,
+                Kamera_Ekleme = true,
+                Kapi_Grup_Olusturma = true,
+                Kapi_Operasyon = true,
+                Kullanici_Alarm_Ekleme = true,
+                Kullanici_Alarm_Raporu = true,
+                Kullanici_Duzenleme = true,
+                Kullanici_Ekleme = true,
+                Kullanici_Gonderme = true,
+                Operator_Log_Raporlari = true,
+                Panel_Ayar_Gonderme = true,
+                Panel_Durum_Tablosu = true,
+                Panel_Ekleme = true,
+                Panel_Guncelleme = true,
+                Pasif_Kullanici_Raporlari = true,
+                Personel_Listesi = true,
+                SMS_Gonderme_Ayarlari = true,
+                Tanimlamalar = true,
+                Tanimsiz_Kullanici_Raporlari = true,
+                Toplam_Icerde_Kalma_Raporu = true,
+                Toplu_Giris_Sayisi_Raporlari = true,
+                Yemekhane_Kisi_Bazli_Rapor = true,
+                Yemekhane_Toplu_Gecis_Sayisi_Raporlari = true,
+                Zaman_Bolgesi_Ayarlari = true,
+                Ziyaretci_Duzenleme = true,
+                Ziyaretci_Ekleme = true,
+                Ziyaretci_Gonderme = true,
+                Ziyaretci_Raporlari = true,
+                Spot_Monitor=true
+            };
+            context.OperatorTransactionLists.Add(operatorTransactionList);
+
             AccessCountTypes gunluk = new AccessCountTypes
             {
                 Gecis_Sayisi_Tipi = "Günlük"

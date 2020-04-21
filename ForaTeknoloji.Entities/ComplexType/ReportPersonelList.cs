@@ -28,6 +28,8 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public string BolumAdi { get; set; }
 
+        public string BirimAdi { get; set; }
+
         public string Plaka { get; set; }
 
         public string BlokAdi { get; set; }

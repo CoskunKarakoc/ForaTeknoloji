@@ -5,6 +5,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         }
 
 
-        public List<ComplexAltDepartman> ComplexAltDepartman()
+        public List<ComplexAltDepartman> ComplexAltDepartman(Expression<Func<ComplexAltDepartman, bool>> filter = null)
         {
             using (var context = new ForaContext())
             {
@@ -35,7 +36,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Departman_Adi = ud.Adi,
                                 Departman_No = ud.Departman_No
                             };
-                return query.ToList();
+                return filter == null ? query.ToList() : query.Where(filter).ToList();
             }
         }
 

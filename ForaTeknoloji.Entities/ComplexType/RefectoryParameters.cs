@@ -19,5 +19,15 @@ namespace ForaTeknoloji.Entities.ComplexType
         public DateTime? Bitis_Saati { get; set; }
 
         public int? Departman_No { get; set; }
+
+        public int? Sirket_No { get; set; }
+
+        public int? Alt_Departman_No { get; set; }
+
+        public int? Bolum_No { get; set; }
+
+        public int? Birim_No { get; set; }
+
+
     }
 }

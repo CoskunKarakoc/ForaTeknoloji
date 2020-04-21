@@ -17,8 +17,9 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         TaskList GetByStatusCode(int StatusCode);
         TaskList GetByUserName(string kullaniciAdi);
         TaskList GetByGrupNo(int KayitNo);
-        List<TaskStatusWatch> TaskStatusWatch();
+        List<TaskStatusWatch> TaskStatusWatch(Expression<Func<TaskStatusWatch, bool>> filter = null);
         List<ComplexTaskList> ComplexTaskList(string UserName);
+        void DeleteAllWithUserName(string kullaniciAdi);
         void DeleteAll();
     }
 }

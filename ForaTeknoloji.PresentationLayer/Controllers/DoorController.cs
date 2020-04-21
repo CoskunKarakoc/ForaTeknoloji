@@ -20,14 +20,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
         private ITaskListService _taskListService;
         private IProgRelay2Service _progRelay2Service;
-        private IDBUsersPanelsService _dBUsersPanelsService;
         private IPanelSettingsService _panelSettingsService;
         private IReaderSettingsNewService _readerSettingsNewService;
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
         private ITatilGunuService _tatilGunuService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+        private IDBUsersSirketService _dBUsersSirketService;
         public DBUsers user;
-        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IAccessDatasService accessDatasService, ITatilGunuService tatilGunuService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IAccessDatasService accessDatasService, ITatilGunuService tatilGunuService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -42,6 +47,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService = reportService;
             _accessDatasService = accessDatasService;
             _tatilGunuService = tatilGunuService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
+            _dBUsersSirketService = dBUsersSirketService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
         }
         // GET: Door
         public ActionResult Index(int? PanelID)
@@ -120,7 +142,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PartialDoorPanelList()
         {
-            var model = _reportService.PanelListesi(user);
+            var model = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)); // _reportService.PanelListesi(user);
             return PartialView("PartialDoorPanelList", model);
         }
 
@@ -159,7 +181,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var model = new ProgRelayListViewModel
             {
-                Panel_No = _reportService.PanelListesi(user).Select(a => new SelectListItem
+                Panel_No = _panelSettingsService.GetAllPanelSettings(x=>x.Panel_TCP_Port!=0 && x.Panel_IP1!=0 && x.Panel_IP2!=0 && x.Panel_IP3!=0 && x.Panel_IP4!=0 && dbPanelList.Contains((int)x.Panel_ID)).Select(a => new SelectListItem
                 {
                     Text = (a.Panel_ID + " - " + a.Panel_Name),
                     Value = a.Panel_ID.ToString()

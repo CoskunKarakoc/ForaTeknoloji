@@ -5,6 +5,7 @@ using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
     public class EfDoorStatusDal : EfEntityRepositoryBase<DoorStatus, ForaContext>, IDoorStatusDal
     {
 
-        public List<ComplexDoorStatus> ComplexDoorStatus()
+        public List<ComplexDoorStatus> ComplexDoorStatus(Expression<Func<ComplexDoorStatus, bool>> filter = null)
         {
             using (var context = new ForaContext())
             {
@@ -41,7 +42,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Kapi_15_Baglanti = d.Kapi_15_Baglanti,
                                 Kapi_16_Baglanti = d.Kapi_16_Baglanti
                             };
-                return query.ToList();
+                return filter == null ? query.ToList() : query.Where(filter).ToList();
             }
         }
 

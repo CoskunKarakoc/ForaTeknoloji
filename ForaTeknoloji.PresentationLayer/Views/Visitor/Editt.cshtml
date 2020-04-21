@@ -39,7 +39,7 @@
                                 <label class="control-label col-md-5">TC Kimlik No</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.TextBox("TCKimlik", Model.Ziyaretci.TCKimlik, new { @class = "form-control form-control-sm", maxlength = 11 })
+                                        @Html.TextBox("TCKimlik", Model.Ziyaretci.TCKimlik, new { @class = "form-control form-control-sm", maxlength = 11, pattern = "\\d{11}", title = "Bu alana sadece 11 karakterli sayısal değer girilebilir" })
                                         @Html.ValidationMessageFor(model => model.Ziyaretci.TCKimlik, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -354,7 +354,6 @@
             if (!selected)
                 $(this).addClass("table-success");
         });
-
         $("#cardTable tbody tr").click(function () {
             var cardID = $(this).children("td").data("cardid");
             var userID = $(this).children("td").data("userid");

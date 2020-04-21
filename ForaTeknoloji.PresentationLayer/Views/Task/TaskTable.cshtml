@@ -4,6 +4,7 @@
 
     ViewBag.Title = "Görev Tablosu";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
     WebGrid webGrid = new WebGrid(source: Model.Liste, rowsPerPage: 10);
 }
 <style>
@@ -27,11 +28,11 @@
 
 
 
-<div class="row animated slideInLeft faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-8 offset-2">
         <div class="card shadow-lg mt-3 mb-3 border-left-info h-100">
             <div class="card-header py-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Görev Durum Tablosu</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Görev Durum Tablosu</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("TaskTable", "Task", FormMethod.Get))
@@ -40,19 +41,19 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="Panel_ID">Panel Listesi</label>
-                                @Html.DropDownListFor(model => model.Panel, null, "Panel Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                @Html.DropDownListFor(model => model.Panel, null, "Panel Seçiniz...", new { @class = "form-control  chosen-select", tabindex = "2" })@*bg-translate text-light*@
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="Gorev_Kodu">Görev Adı</label>
-                                @Html.DropDownListFor(model => model.Gorev, null, "Görev Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                @Html.DropDownListFor(model => model.Gorev, null, "Görev Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })@*bg-translate text-light*@
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="Durum_Kodu">Durum</label>
-                                @Html.DropDownListFor(model => model.Durum, null, "Durum Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                @Html.DropDownListFor(model => model.Durum, null, "Durum Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })@*bg-translate text-light*@
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -71,7 +72,8 @@
                         }
                         <div class="col-md-12 text-right">
                             <hr />
-                            <a href="@Url.Action("ClearTask","Task")" onclick="return confirm('Tüm Görevleri Silmek İstedeğinize Emin Misiniz?')" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> Görevleri Temizle</a>
+                            <a href="@Url.Action("ClearAllTask","Task")" onclick="return confirm('Tüm Görevleri Silmek İstedeğinize Emin Misiniz?')" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> Tüm Görevleri Temizle</a>
+                            <a href="@Url.Action("ClearTask","Task")" onclick="return confirm('Tüm Görevlerinizi Silmek İstedeğinize Emin Misiniz?')" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> Kendi Görevlerimi Temizle</a>
                             <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                         </div>
                     </div>

@@ -28,7 +28,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IGlobalZoneService _globalZoneService;
         private IReportService _reportService;
         private IUsersOLDService _usersOLDService;
-        private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
         private IDBUsersService _dBUsersService;
         private IAltDepartmanService _altDepartmanService;
@@ -36,9 +35,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IBolumService _bolumService;
         private ITaskListService _taskListService;
         private IAccessDatasService _accessDatasService;
-        List<int?> kullaniciyaAitPaneller = new List<int?>();
+        private IBirimService _birimService;
+        private IReaderSettingsNewService _readerSettingsNewService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+        private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         DBUsers user;
-        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersService dBUsersService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, ITaskListService taskListService, IAccessDatasService accessDatasService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        List<int> dbAltDepartmanList;
+        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersService dBUsersService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, ITaskListService taskListService, IAccessDatasService accessDatasService, IBirimService birimService, IReaderSettingsNewService readerSettingsNewService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -63,26 +71,55 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _bolumService = bolumService;
             _taskListService = taskListService;
             _accessDatasService = accessDatasService;
-            kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
+            _birimService = birimService;
+            _readerSettingsNewService = readerSettingsNewService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
+            _dBUsersSirketService = dBUsersSirketService;
+            _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            dbAltDepartmanList = new List<int>();
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
+            foreach (var dbUserAltDepartmanNo in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Alt_Departman_No))
+            {
+                dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
+            }
 
         }
         // GET: ReportPersonelAktif
         public ActionResult Index(ActiveUserReportParameters parameters)
         {
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && dbPanelList.Contains((int)x.Panel_ID));
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)); //_departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
             var liste = _reportService.GetReportPersonelLists(parameters);
             var kullanicilar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
             var eskiKullanicilar = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
-            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var alddepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
-            var bolumler = _bolumService.GetAllBolum();
+            var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
+            var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
             var model = new ReportPersonelViewModel
             {
                 ReportPersonel = liste,
@@ -118,7 +155,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Grup_Adi,
                     Value = a.Grup_No.ToString()
                 }),
-                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                AltDepartman = alddepartmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Alt_Departman_No.ToString()
@@ -132,6 +169,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 })
 
 
@@ -149,20 +191,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult OldStaff(ActiveUserReportParameters parameters)
         {
 
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && dbPanelList.Contains((int)x.Panel_ID));
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)); // _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
             var bloklar = _bloklarService.GetAllBloklar();
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); // _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
             var liste = _reportService.GetReportPersonelListsEski(parameters);
             var kullanicilar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
             var eskiKullanicilar = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
-            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var alddepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
-            var bolumler = _bolumService.GetAllBolum();
+            var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
+            var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
             var model = new ReportPersonelViewModel
             {
                 ReportPersonel = liste,
@@ -198,7 +241,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Grup_Adi,
                     Value = a.Grup_No.ToString()
                 }),
-                AltDepartman = altdepartmanlar.Select(a => new SelectListItem
+                AltDepartman = alddepartmanlar.Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Alt_Departman_No.ToString()
@@ -212,6 +255,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 })
 
 
@@ -224,13 +272,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (Departman != 0 && Departman != null)
             {
-                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman);
-                var selectAltDepartman = list.Select(a => new SelectListItem
+                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
+                if (list.Count == 0)
                 {
-                    Text = a.Adi,
-                    Value = a.Alt_Departman_No.ToString()
-                });
-                return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectAltDepartman = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Alt_Departman_No.ToString()
+                    });
+                    return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+                }
+
             }
             List<SelectListItem> defaultValue = new List<SelectListItem>();
             defaultValue.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
@@ -243,29 +301,94 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
 
                 var list = _bolumService.GetAllBolum(x => x.Alt_Departman_No == AltDepartman);
-                var selectBolum = list.Select(a => new SelectListItem
+                if (list.Count == 0)
                 {
-                    Text = a.Adi,
-                    Value = a.Bolum_No.ToString()
-                });
-                return Json(selectBolum, JsonRequestBehavior.AllowGet);
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectBolum = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Bolum_No.ToString()
+                    });
+                    return Json(selectBolum, JsonRequestBehavior.AllowGet);
+                }
+
             }
             List<SelectListItem> defaultValue = new List<SelectListItem>();
             defaultValue.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
             return Json(defaultValue, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult BirimListesi(int? AltDepartman, int? Bolum)
+        {
+            if (AltDepartman != null && AltDepartman != 0 && Bolum != null && Bolum != 0)
+            {
+
+                var list = _birimService.GetAllBirim(x => x.Alt_Departman_No == AltDepartman && x.Bolum_No == Bolum);
+                if (list.Count == 0)
+                {
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Birim Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectBirim = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Birim_No.ToString()
+                    });
+                    return Json(selectBirim, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Birim Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult PanelKapiListesi(int? PanelNo)
+        {
+            if (PanelNo != null && PanelNo != 0)
+            {
+                var liste = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo);
+                List<SelectListItem> doorNameList = new List<SelectListItem>();
+                var selectedPanel = liste.Select(a => new SelectListItem
+                {
+                    Text = a.WKapi_Adi,
+                    Value = a.WKapi_ID.ToString()
+                });
+                return Json(selectedPanel, JsonRequestBehavior.AllowGet);
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Kapi 1", Value = 1.ToString() });
+            defaultValue.Add(new SelectListItem { Text = "Kapi 2", Value = 2.ToString() });
+            defaultValue.Add(new SelectListItem { Text = "Kapi 3", Value = 3.ToString() });
+            defaultValue.Add(new SelectListItem { Text = "Kapi 4", Value = 4.ToString() });
+            defaultValue.Add(new SelectListItem { Text = "Kapi 5", Value = 5.ToString() });
+            defaultValue.Add(new SelectListItem { Text = "Kapi 6", Value = 6.ToString() });
+            defaultValue.Add(new SelectListItem { Text = "Kapi 7", Value = 7.ToString() });
+            defaultValue.Add(new SelectListItem { Text = "Kapi 8", Value = 8.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         public ActionResult AktifZiyaretciler()//Popup'a Aktif Kulanıcı Yükleniyor
         {
             List<EfUserDal.ComplexUser> liste = new List<EfUserDal.ComplexUser>();
-            liste = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            liste = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)).OrderBy(x => x.Kayit_No).ToList();
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult EskiZiyaretciler()//Popup'a Eski Kullanıcı Yükleniyor
         {
             List<EfUsersOLDDal.ComplexUserOld> liste = new List<EfUsersOLDDal.ComplexUserOld>();
-            liste = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            liste = _usersOLDService.GetAllUserOLDWithOuther(x => dbAltDepartmanList.Contains((int)x.Departman_No) && dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)).OrderBy(x => x.Kayit_No).ToList();
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
@@ -277,12 +400,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     throw new Exception("Yetkisiz Erişim!");
             }
 
-            return View(_usersOLDService.GetAllUserOLDWithOuther());
+            return View(_usersOLDService.GetAllUserOLDWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)));
         }
 
         public ActionResult DeletedUserList()
         {
-            return Json(new { data = _usersOLDService.GetAllUserOLDWithOuther() }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _usersOLDService.GetAllUserOLDWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No) && dbDepartmanList.Contains((int)x.Departman_No)) }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult TurnBackUser(int? id)
@@ -358,9 +481,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["F6"].Value = "Telefon";
             worksheet.Cells["G6"].Value = "Şirket";
             worksheet.Cells["H6"].Value = "Departman";
-            worksheet.Cells["I6"].Value = "Plaka";
-            worksheet.Cells["J6"].Value = "Blok";
-            worksheet.Cells["K6"].Value = "Daire";
+            worksheet.Cells["I6"].Value = "Alt Departman";
+            worksheet.Cells["J6"].Value = "Bölüm";
+            worksheet.Cells["K6"].Value = "Birim";
             worksheet.Cells["L6"].Value = "Grup Adı";
             worksheet.Cells["M6"].Value = "Panel";
             worksheet.Cells["N6"].Value = "Kapı";
@@ -385,9 +508,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Telefon;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.SirketAdi;
                 worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.DepartmanAdi;
-                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Plaka;
-                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.BlokAdi;
-                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Daire;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.AltDepartmanAdi;
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.BolumAdi;
+                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.BirimAdi;
                 worksheet.Cells[string.Format("L{0}", rowStart)].Value = item.Grup_Adi;
                 worksheet.Cells[string.Format("M{0}", rowStart)].Value = item.Panel_ID;
                 worksheet.Cells[string.Format("N{0}", rowStart)].Value = item.Kapi;

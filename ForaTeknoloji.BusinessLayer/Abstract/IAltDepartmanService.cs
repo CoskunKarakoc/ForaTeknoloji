@@ -17,6 +17,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteAltDepartman(AltDepartman altDepartman);
         void DeleteAll();
         AltDepartman UpdateAltDepartman(AltDepartman altDepartman);
-        List<ComplexAltDepartman> ComplexAltDepartmen();
+        List<ComplexAltDepartman> ComplexAltDepartmen(Expression<Func<ComplexAltDepartman, bool>> filter = null);
     }
 }

@@ -2,12 +2,13 @@
 @{
     ViewBag.Title = "Yeni Alarm";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
-<div class="row animated slideInLeft faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-8 offset-md-2">
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 my-lg-5">
             <div class="card-header py-1 mt-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Yeni Alarm Ayarı</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Yeni Alarm Ayarı</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Create", "Alarm", FormMethod.Post))
@@ -21,7 +22,7 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" name="Alarm_No_Value" class="form-control" value="@Model.Alarm_No" disabled />
+                                            <input type="text" name="Alarm_No_Value" class="form-control text-light" value="@Model.Alarm_No" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -40,7 +41,7 @@
                                 <label class="control-label col-md-5">Alarm Tipi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Alarm_Tipi", Model.AlarmTipleri, "Alarm Tipi Seçimi...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Alarm_Tipi", Model.AlarmTipleri, "Alarm Tipi Seçimi...", new { @class = "form-control bg-transparent text-light chosen-select", tabindex = "2" })  @*bg-transparent text-light*@
                                         @Html.ValidationMessageFor(model => model.AlarmTipleri, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -51,7 +52,7 @@
                                 <label class="control-label col-md-5">Panel Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Panel_No", Model.Paneller, "Panel Seçimi...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Panel_No", Model.Paneller, "Panel Seçimi...", new { @class = "form-control bg-transparent text-light chosen-select", tabindex = "2" })  @*bg-transparent text-light*@
                                         @Html.ValidationMessageFor(model => model.Paneller, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -60,7 +61,7 @@
                                 <label class="control-label col-md-5">Kapı Seçimi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_No", null, "Kapı Seçimi...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Kapi_No", null, "Kapı Seçimi...", new { @class = "form-control bg-transparent text-light chosen-select", tabindex = "2" })  @*bg-transparent text-light*@
                                         @Html.ValidationMessageFor(model => model.Kapilar, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -69,7 +70,7 @@
                                 <label class="control-label col-md-12">Harici Alarm Rolesi No</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Kapi_Role_No", null, "Harici Alarm Rolesi...", new { @class = "form-control chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Kapi_Role_No", null, "Harici Alarm Rolesi...", new { @class = "form-control bg-transparent text-light chosen-select", tabindex = "2" }) @*bg-transparent text-light*@
                                         @Html.ValidationMessageFor(model => model.AlarmRolesi, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -156,7 +157,7 @@
 
             <div class="modal-body ">
                 <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                    <thead >
+                    <thead>
                         <tr>
                             <td>ID</td>
                             <td>Kart ID</td>

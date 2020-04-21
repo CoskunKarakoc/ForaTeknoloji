@@ -44,11 +44,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                         Kapi_ID = cam.Kapi_ID,
                         Panel_Name = pan.Panel_Name
                     });
-                if (filter != null)
-                {
-                    query.Where(filter);
-                }
-                return query.ToList();
+
+                return filter == null ? query.ToList() : query.Where(filter).ToList();
             }
 
         }

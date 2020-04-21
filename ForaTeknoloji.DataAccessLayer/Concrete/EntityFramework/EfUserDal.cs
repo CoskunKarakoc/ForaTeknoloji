@@ -43,6 +43,15 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                             join grv in context.Gorevlers
                             on u.Gorev_No equals grv.Gorev_No into tb7
                             from tbl7 in tb7.DefaultIfEmpty()
+                            join birim in context.Birim
+                            on u.Birim_No equals birim.Birim_No into tb8
+                            from tbl8 in tb8.DefaultIfEmpty()
+                            join altd in context.AltDepartman
+                            on u.Alt_Departman_No equals altd.Alt_Departman_No into tb9
+                            from tbl9 in tb9.DefaultIfEmpty()
+                            join bolum in context.Bolum
+                            on u.Bolum_No equals bolum.Bolum_No into tb10
+                            from tbl10 in tb10.DefaultIfEmpty()
                             select new ComplexUser
                             {
                                 Kayit_No = u.Kayit_No,
@@ -50,6 +59,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Kart_ID = u.Kart_ID,
                                 Adi = u.Adi,
                                 Soyadi = u.Soyadi,
+                                TCKimlik = u.TCKimlik,
                                 Sirket = tbl1.Adi,
                                 Departman = tbl2.Adi,
                                 Blok = tbl3.Adi,
@@ -62,7 +72,11 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Sirket_No = tbl1.Sirket_No,
                                 Departman_No = tbl2.Departman_No,
                                 Aciklama = u.Aciklama,
-                                Adres = u.Adres
+                                Adres = u.Adres,
+                                Birim = tbl8.Adi,
+                                AltDepartman = tbl9.Adi,
+                                Bolum = tbl10.Adi,
+                                Alt_Departman_No = tbl9.Alt_Departman_No
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();
@@ -127,9 +141,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public List<int> GetListOnlyUserID()
         {
             List<int> liste = new List<int>();
-            using (var context=new ForaContext())
+            using (var context = new ForaContext())
             {
-                liste= context.Database.SqlQuery<int>("SELECT ID FROM Users").ToList();
+                liste = context.Database.SqlQuery<int>("SELECT ID FROM Users").ToList();
             }
             return liste;
         }
@@ -145,6 +159,9 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Sirket { get; set; }
             public string Gorev { get; set; }
             public string Departman { get; set; }
+            public string AltDepartman { get; set; }
+            public string Bolum { get; set; }
+            public string Birim { get; set; }
             public string Blok { get; set; }
             public string Plaka { get; set; }
             public string Gecis_Grubu { get; set; }
@@ -152,9 +169,11 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public int? Ziyaretci_Grubu { get; set; }
             public int? Sirket_No { get; set; }
             public int? Departman_No { get; set; }
+            public int? Alt_Departman_No { get; set; }
             public string String_Ziyaretci_Grubu { get; set; }
             public string Aciklama { get; set; }
             public string Adres { get; set; }
+            public string TCKimlik { get; set; }
         }
     }
 }

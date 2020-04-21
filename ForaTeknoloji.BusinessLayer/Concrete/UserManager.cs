@@ -227,5 +227,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _userDal.GetListOnlyUserID();
         }
 
+
     }
 }

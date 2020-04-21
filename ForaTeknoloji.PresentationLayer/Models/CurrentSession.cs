@@ -15,6 +15,12 @@ namespace ForaTeknoloji.PresentationLayer.Models
 
         }
 
+
+        public static OperatorTransactionList UserManagmentList
+        {
+            get { return Get<OperatorTransactionList>("loginUserList"); }
+        }
+
         /// <summary>
         /// Session'da ki paneli gönderiyor.
         /// </summary>

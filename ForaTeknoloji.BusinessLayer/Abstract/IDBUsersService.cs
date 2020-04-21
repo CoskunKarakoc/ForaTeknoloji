@@ -15,5 +15,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         DBUsers UpdateDBUsers(DBUsers dBUsers);
         DBUsers LoginUsers(LoginViewModel model);
         DBUsers GetBySifre(string Sifre);
+        DBUsers GetByEmailAdres(string EMailAdress);
     }
 }

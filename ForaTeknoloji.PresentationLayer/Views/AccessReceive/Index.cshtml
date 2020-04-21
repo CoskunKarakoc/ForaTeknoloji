@@ -2,13 +2,14 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
 <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-8 offset-md-2 animated fadeIn faster">
         <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header py-1 mt-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Geçiş Olay Verileri</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Geçiş Olay Verileri</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("Index", "AccessReceive", FormMethod.Post))

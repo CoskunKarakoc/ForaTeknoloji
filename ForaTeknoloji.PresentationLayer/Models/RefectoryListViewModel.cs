@@ -14,5 +14,9 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public EMailSetting EmailSettings { get; internal set; }
         public DBUsers User { get; internal set; }
         public IEnumerable<SelectListItem> Departman_No { get; internal set; }
+        public IEnumerable<SelectListItem> Birim_No { get; internal set; }
+        public IEnumerable<SelectListItem> Bolum_No { get; internal set; }
+        public IEnumerable<SelectListItem> Alt_Departman_No { get; internal set; }
+        public IEnumerable<SelectListItem> Sirket_No { get; internal set; }
     }
 }

@@ -64,6 +64,11 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IAccessDatasTempDal>().To<EfAccessDatasTempDal>().InSingletonScope();
             Bind<IReaderSettingsNewMSDal>().To<EfReaderSettingsNewMSDal>().InSingletonScope();
             Bind<ITatilGunuDal>().To<EfTatilGunuDal>().InSingletonScope();
+            Bind<IOperatorTransactionListDal>().To<EfOperatorTransactionListDal>().InSingletonScope();
+            Bind<IBirimDal>().To<EfBirimDal>().InSingletonScope();
+            Bind<IDBUsersAltDepartmanDal>().To<EfDBUsersAltDepartmanDal>().InSingletonScope();
+            Bind<IDBUsersKapiDal>().To<EfDBUsersKapiDal>().InSingletonScope();
+
 
             /*Business-Layer-Binding*/
             Bind<IUserService>().To<UserManager>().InSingletonScope();
@@ -119,6 +124,11 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IAccessDatasTempService>().To<AccessDatasTempManager>().InSingletonScope();
             Bind<IReaderSettingsNewMSService>().To<ReaderSettingsNewMSManager>().InSingletonScope();
             Bind<ITatilGunuService>().To<TatilGunuManager>().InSingletonScope();
+            Bind<IOperatorTransactionListService>().To<OperatorTransactionListManagerr>().InSingletonScope();
+            Bind<IBirimService>().To<BirimManager>().InSingletonScope();
+            Bind<IDBUsersAltDepartmanService>().To<DBUsersAltDepartmanManager>().InSingletonScope();
+            Bind<IDBUsersKapiService>().To<DBUsersKapiManager>().InSingletonScope();
+
 
             /*Context*/
             Bind<DbContext>().To<ForaContext>();

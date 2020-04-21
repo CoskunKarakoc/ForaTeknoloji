@@ -1,0 +1,145 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.UserDoorToWatchListViewModel
+@{
+    ViewBag.Title = "UserDoorToWatch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card border-left-success shadow-lg h-100 py-2">
+            <div class="row no-gutters align-items-center">
+                <div class="col-md-8 offset-2">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Kullanıcı İçin Panel-Kapı Listesi</div>
+                    </div>
+                    @using (Html.BeginForm("UserDoorToWatch", "SecuritySettings", FormMethod.Post))
+                    {
+
+                        @Html.HiddenFor(model => model.Kullanici_Adi)
+                        <div class="form-group">
+                            <label>Paneller</label>
+                            <div class="form-group col-md-6">
+                                @Html.DropDownListFor(model => model.Panel_ID, Model.Panel_ID, "Panel Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+
+                            </div>
+                            <div class="col-md-12" id="ReaderList">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_1" value="1">
+                                    <label class="custom-control-label" for="Kapi_1">Kapi 1</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_2" value="2">
+                                    <label class="custom-control-label" for="Kapi_2">Kapi 2</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_3" value="3">
+                                    <label class="custom-control-label" for="Kapi_3">Kapi 3</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_4" value="4">
+                                    <label class="custom-control-label" for="Kapi_4">Kapi 4</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_5" value="5">
+                                    <label class="custom-control-label" for="Kapi_5">Kapi 5</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_6" value="6">
+                                    <label class="custom-control-label" for="Kapi_6">Kapi 6</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_7" value="7">
+                                    <label class="custom-control-label" for="Kapi_7">Kapi 7</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_8" value="8">
+                                    <label class="custom-control-label" for="Kapi_8">Kapi 8</label>
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-save"></i> Kapıları Kaydet</button>
+                    }
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+        $("#Panel_ID").change(function () {
+            var panelID = $(this).val();
+            var kulAdi = $("#Kullanici_Adi").val();
+            if (panelID == null || panelID == 0) {
+                $("#ReaderList").empty();
+            }
+            $.ajax({
+                url: '/SecuritySettings/ReaderEditList?PanelID=' + panelID + '&Kullanici_Adi=' + kulAdi,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                console.log(data);
+                if (data.Kapi_1 == true) {
+                    $("#Kapi_1").attr("checked", true);
+                } else {
+                    $("#Kapi_1").attr("checked", false);
+                }
+                if (data.Kapi_2 == true) {
+                    $("#Kapi_2").attr("checked", true);
+                } else {
+                    $("#Kapi_2").attr("checked", false);
+                }
+
+                if (data.Kapi_3 == true) {
+                    $("#Kapi_3").attr("checked", true);
+                } else {
+                    $("#Kapi_3").attr("checked", false);
+                }
+
+                if (data.Kapi_4 == true) {
+                    $("#Kapi_4").attr("checked", true);
+                } else {
+                    $("#Kapi_4").attr("checked", false);
+                }
+
+                if (data.Kapi_5 == true) {
+                    $("#Kapi_5").attr("checked", true);
+                } else {
+                    $("#Kapi_5").attr("checked", false);
+                }
+
+                if (data.Kapi_6 == true) {
+                    $("#Kapi_6").attr("checked", true);
+                } else {
+                    $("#Kapi_6").attr("checked", false);
+                }
+
+                if (data.Kapi_7 == true) {
+                    $("#Kapi_7").attr("checked", true);
+                } else {
+                    $("#Kapi_7").attr("checked", false);
+                }
+
+                if (data.Kapi_8 == true) {
+                    $("#Kapi_8").attr("checked", true);
+                } else {
+                    $("#Kapi_8").attr("checked", false);
+                }
+            });
+
+
+        });
+    });
+</script>
+

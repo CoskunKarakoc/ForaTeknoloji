@@ -37,7 +37,7 @@
                                 <label class="control-label col-md-5">TC Kimlik No</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" name="TCKimlik" class="form-control form-control-sm" maxlength="11" value="" />
+                                        <input type="text" name="TCKimlik" class="form-control form-control-sm" maxlength="11" pattern="\d{11}" title="Bu alana sadece 11 karakterli sayısal değer girilebilir" value="" />
 
                                     </div>
                                 </div>
@@ -324,7 +324,6 @@
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
                 }
             });
-
         });
     </script>
 
@@ -336,7 +335,6 @@
     $(document).ready(function () {
         var today = new Date();
         $('#Tarih').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
-
         $("#myTable tbody tr").click(function () {
             $("#alertMain").prop("hidden", false);
             var ID = $(this).children("td").data("id");
@@ -351,7 +349,6 @@
             $("#Grup_Adi").attr('value', GrupAdi);
             $("#alert").text(Adi + " " + Soyadi + " Seçildi!");
         });
-
         $("#cardTable tbody tr").click(function () {
             var cardID = $(this).children("td").data("cardid");
             var userID = $(this).children("td").data("userid");
@@ -361,7 +358,6 @@
             $("#cardTable tbody tr").removeClass("table-success");
             $(this).toggleClass("table-success");
         });
-
     });
     $("#temizle").click(function () {
         $("#Personel_ID").attr("value", null);
@@ -370,6 +366,4 @@
         $("#alert").text("");
         $("#alertMain").prop("hidden", true);
     });
-
 </script>
-

@@ -2,14 +2,15 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
 
-<div class="row animated slideInLeft faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-4 offset-md-4">
         <div class="card border-left-info h-100 shadow-lg  mt-xl-5 mb-xl-5">
             <div class="card-header py-1 mt-1">
-                <h3 class="m-0 font-weight-bold text-secondary text-center">Şirket Düzenleme</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Şirket Düzenleme</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm())

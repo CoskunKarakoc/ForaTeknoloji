@@ -21,6 +21,9 @@ namespace ForaTeknoloji.Entities.Entities
         [StringLength(50)]
         public string Soyadi { get; set; }
 
+        [StringLength(250)]
+        public string EMail { get; set; }
+
         public bool? SysAdmin { get; set; }
 
         [Column("Kullanici Islemleri")]

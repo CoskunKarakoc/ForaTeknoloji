@@ -2,20 +2,21 @@
 @{
     ViewBag.Title = "Kat İsimleri";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
 
-<div class="row animated slideInLeft faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-4 offset-4">
         <div class="card border-left-info h-100 shadow-lg my-lg-5">
-            <div class="card-header-tabs py-1">
+            <div class="card-header py-1">
                 <div class="row">
-                    <div class="col-md-8 offset-2 mt-1">
-                        <h3 class="font-weight-bold text-secondary text-center">Kat İsimleri</h3>
+                    <div class="col-md-12 text-left">
+                        <h3 class="card-title"><i class="fas fa-bookmark"></i> Kat İsimleri</h3>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-8 offset-2">
+                    <div class="col-md-12 text-center">
                         <a onclick="return confirm('Tüm Kat İsimlerini Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("AllNameRemove","Lift")" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i> Kat İsimlerini Sil</a>
                         <a onclick="return confirm('Kat İsimlerini Sıralı Olarak Doldurmak İstediğinize Emin Misiniz?')" href="@Url.Action("AllNameAdd","Lift")" class="btn btn-sm btn-outline-info ml-5"><i class="fas fa-download"></i> Kat İsimlerini Doldur</a>
                         <hr />
@@ -29,7 +30,7 @@
                     </div>
                 </div>
                 <table id="table" class="table-borderless table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
+                    <thead>
                         <tr>
                             <td><a title="Asansör Geçiş Grup Listesi" href="@Url.Action("LiftGroups","Lift")" class="text-info"><i class="fas fa-long-arrow-alt-left fa-2x"></i></a></td>
                             <td>Kat No</td>
@@ -72,7 +73,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Kat No</label>
                             <div class="col-md-12">
-                                <div class="form-group">
+                                <div class="form-group text-light">
                                     <input hidden type="text" name="Kat_No" id="Kat_No" class="form-control" value="" />
                                     <input type="text" class="form-control" id="Kat_No_Visible" name="Kat_No_Visible" value="" disabled />
                                 </div>

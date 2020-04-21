@@ -27,10 +27,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUnvanService _unvanService;
         private IBolumService _bolumService;
         private IProgInitService _progInitService;
+        private IBirimService _birimService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
+        private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         public DBUsers user;
         public DateTime DefaultTarih1;
         public DateTime DefaultTarih2;
-        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService, IGroupMasterService groupMasterService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, IProgInitService progInitService)
+        List<int> dbDepartmanList;
+        List<int> dbPanelList;
+        List<int> dbSirketList;
+        List<int> dbAltDepartmanList;
+        public GelenGelmeyenReportController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupsDetailService groupsDetailService, IVisitorsService visitorsService, IGlobalZoneService globalZoneService, IReportService reportService, IGroupMasterService groupMasterService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, IProgInitService progInitService, IBirimService birimService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -49,13 +58,37 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _bolumService = bolumService;
             _reportService = reportService;
             _progInitService = progInitService;
+            _birimService = birimService;
+            _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
             DefaultTarih1 = DateTime.Now;
             DefaultTarih2 = DateTime.Now;
-
-
+            _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
+            _dBUsersSirketService = dBUsersSirketService;
+            dbDepartmanList = new List<int>();
+            dbPanelList = new List<int>();
+            dbSirketList = new List<int>();
+            dbAltDepartmanList = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanList.Add((int)dbUserDepartmanNo);
+            }
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketList.Add((int)dbUserSirketNo);
+            }
+            foreach (var dbUserAltDepartmanNo in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Alt_Departman_No))
+            {
+                dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
+            }
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
         }
 
 
@@ -65,13 +98,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Gelenler(GelenGelmeyenReportParameters parameters)
         {
             var nesne = _reportService.GelenGelmeyen_Gelenlers(parameters);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No));// _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
-            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)); // _departmanService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
-            var bolumler = _bolumService.GetAllBolum();
+            var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
+            var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
             var model = new GelenGelmeyen_GelenlerListViewModel
             {
                 Gelenler = nesne,
@@ -109,6 +143,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 })
             };
             TempData["Gelenler"] = nesne;
@@ -121,13 +160,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Gelmeyenler(GelenGelmeyenReportParameters parameters)
         {
             var nesne = _reportService.GelenGelmeyen_Gelmeyens(parameters);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No));
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
-            var bolumler = _bolumService.GetAllBolum();
+            var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
+            var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
             var model = new GelenGelmeyen_GelmeyenlerListViewModel
             {
                 Gelmeyenler = nesne,
@@ -166,6 +206,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
                 }),
+                Birim_No = birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
+                }),
                 Saat = _progInitService.GetAllProgInit().FirstOrDefault().EndlessReportTime,
                 ReportByHour = _progInitService.GetAllProgInit().FirstOrDefault().ReportByHour
             };
@@ -178,13 +223,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult PasifKullanici(GelenGelmeyenReportParameters parameters)
         {
             var nesne = _reportService.GelenGelmeyen_PasifKullanicis(parameters);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No));
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
-            var bolumler = _bolumService.GetAllBolum();
+            var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
+            var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
             var model = new GelenGelmeyen_PasifListViewModel
             {
                 Pasif = nesne,
@@ -222,6 +268,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 })
             };
             TempData["Pasif"] = nesne;
@@ -234,14 +285,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult ToplamIcerdeKalma(GelenGelmeyenReportParameters parameters)
         {
             var nesne = _reportService.GelenGelmeyen_ToplamIcerdeKalmas(parameters);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No));
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
-            var bolumler = _bolumService.GetAllBolum();
+            var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
-            var usersComplex = _userService.GetAllUsersWithOuther();
+            var usersComplex = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No));
+            var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
             var model = new GelenGelmeyen_ToplamIcerdeKalmaListViewModel
             {
                 ToplamIcerdeKalma = nesne,
@@ -280,6 +332,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 })
             };
             TempData["Toplam"] = nesne;
@@ -291,14 +348,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult IlkGirisSonCikis(GelenGelmeyenReportParameters parameters)
         {
             var nesne = _reportService.GelenGelmeyen_IlkGirisSonCikis(parameters);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No));
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
-            var bolumler = _bolumService.GetAllBolum();
+            var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
-            var usersComplex = _userService.GetAllUsersWithOuther();
+            var usersComplex = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No));
+            var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
             var model = new GelenGelmeyen_IlkGirisSonCikisListViewModel
             {
                 IlkGirisSonCikis = nesne,
@@ -337,6 +395,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 })
             };
             TempData["IlkGirisSonCikis"] = nesne;
@@ -347,14 +410,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult TopluGirisSayisi(GelenGelmeyenReportParameters parameters)
         {
             var nesne = _reportService.GelenGelmeyen_TopluGirisSayisi(parameters);
-            var sirketler = _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
+            var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
-            var departmanlar = _departmanService.GetAllDepartmanlar();
-            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman();
+            var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No));
+            var altdepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
-            var bolumler = _bolumService.GetAllBolum();
+            var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
-            var usersComplex = _userService.GetAllUsersWithOuther();
+            var usersComplex = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No));
+            var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
             var model = new GelenGelmeyen_TopluGirisSayisiListViewModel
             {
                 TopluGirisSayisi = nesne,
@@ -393,6 +457,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
+                }),
+                Birim_No = birimler.Select(a => new SelectListItem
+                {
+                    Text = a.Adi,
+                    Value = a.Birim_No.ToString()
                 })
             };
             TempData["TopluGirisSayisi"] = nesne;
@@ -404,7 +473,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult ComplexUser()
         {
             List<EfUserDal.ComplexUser> liste = new List<EfUserDal.ComplexUser>();
-            liste = _userService.GetAllUsersWithOuther();
+            liste = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No));
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
@@ -413,13 +482,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (Departman != 0 && Departman != null)
             {
-                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman);
-                var selectAltDepartman = list.Select(a => new SelectListItem
+                var list = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
+                if (list.Count == 0)
                 {
-                    Text = a.Adi,
-                    Value = a.Alt_Departman_No.ToString()
-                });
-                return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectAltDepartman = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Alt_Departman_No.ToString()
+                    });
+                    return Json(selectAltDepartman, JsonRequestBehavior.AllowGet);
+                }
+
             }
             List<SelectListItem> defaultValue = new List<SelectListItem>();
             defaultValue.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
@@ -432,17 +511,61 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
 
                 var list = _bolumService.GetAllBolum(x => x.Alt_Departman_No == AltDepartman);
-                var selectBolum = list.Select(a => new SelectListItem
+                if (list.Count == 0)
                 {
-                    Text = a.Adi,
-                    Value = a.Bolum_No.ToString()
-                });
-                return Json(selectBolum, JsonRequestBehavior.AllowGet);
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectBolum = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Bolum_No.ToString()
+                    });
+                    return Json(selectBolum, JsonRequestBehavior.AllowGet);
+                }
+
             }
             List<SelectListItem> defaultValue = new List<SelectListItem>();
             defaultValue.Add(new SelectListItem { Text = "Bölüm Seçiniz...", Value = 0.ToString() });
             return Json(defaultValue, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult BirimListesi(int? AltDepartman, int? Bolum)
+        {
+            if (AltDepartman != null && AltDepartman != 0 && Bolum != null && Bolum != 0)
+            {
+
+                var list = _birimService.GetAllBirim(x => x.Alt_Departman_No == AltDepartman && x.Bolum_No == Bolum);
+                if (list.Count == 0)
+                {
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Birim Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectBirim = list.Select(a => new SelectListItem
+                    {
+                        Text = a.Adi,
+                        Value = a.Birim_No.ToString()
+                    });
+                    return Json(selectBirim, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Birim Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
 
         [HttpPost]
         public ActionResult ReportTime(DateTime? Report_Time, bool? ReportByHour)
@@ -481,9 +604,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Tc Kimlik No";
             worksheet.Cells["F6"].Value = "Şirket";
             worksheet.Cells["G6"].Value = "Departman";
-            worksheet.Cells["H6"].Value = "Plaka";
-            worksheet.Cells["I6"].Value = "Blok";
-            worksheet.Cells["J6"].Value = "Daire";
+            worksheet.Cells["H6"].Value = "Alt Departman";
+            worksheet.Cells["I6"].Value = "Bölüm";
+            worksheet.Cells["J6"].Value = "Birim";
             worksheet.Cells["K6"].Value = "Geçiş Grubu";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
@@ -501,9 +624,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.TCKimlik;
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.SirketAdi;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.DepartmanAdi;
-                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Plaka;
-                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.BlokAdi;
-                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Daire;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.AltDepartmanAdi;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.BolumAdi;
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.BirimAdi;
                 worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Grup_Adi;
                 rowStart++;
             }
@@ -537,9 +660,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Tc Kimlik No";
             worksheet.Cells["F6"].Value = "Şirket";
             worksheet.Cells["G6"].Value = "Departman";
-            worksheet.Cells["H6"].Value = "Plaka";
-            worksheet.Cells["I6"].Value = "Blok";
-            worksheet.Cells["J6"].Value = "Daire";
+            worksheet.Cells["H6"].Value = "Alt Departman";
+            worksheet.Cells["I6"].Value = "Bölüm";
+            worksheet.Cells["J6"].Value = "Birim";
             worksheet.Cells["K6"].Value = "Geçiş Grubu";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
@@ -557,9 +680,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.TCKimlik;
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.SirketAdi;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.DepartmanAdi;
-                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Plaka;
-                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.BlokAdi;
-                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Daire;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.AltDepartmanAdi;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.BolumAdi;
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.BirimAdi;
                 worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Grup_Adi;
                 rowStart++;
             }
@@ -650,9 +773,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Tc Kimlik No";
             worksheet.Cells["F6"].Value = "Şirket";
             worksheet.Cells["G6"].Value = "Departman";
-            worksheet.Cells["H6"].Value = "Plaka";
-            worksheet.Cells["I6"].Value = "Blok";
-            worksheet.Cells["J6"].Value = "Daire";
+            worksheet.Cells["H6"].Value = "Alt Departman";
+            worksheet.Cells["I6"].Value = "Bölüm";
+            worksheet.Cells["J6"].Value = "Birim";
             worksheet.Cells["K6"].Value = "Geçiş Grubu";
             worksheet.Cells["L6"].Value = "Global Bölge Adı";
             worksheet.Cells["A1"].Style.Font.Size = 13;
@@ -671,9 +794,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.TCKimlik;
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.SirketAdi;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.DepartmanAdi;
-                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Plaka;
-                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.BlokAdi;
-                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Daire;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.AltDepartmanAdi;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.BolumAdi;
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.BirimAdi;
                 worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Grup_Adi;
                 worksheet.Cells[string.Format("L{0}", rowStart)].Value = item.Global_Bolge_Adi;
                 rowStart++;
@@ -707,15 +830,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["D6"].Value = "Soyadı";
             worksheet.Cells["E6"].Value = "Şirket";
             worksheet.Cells["F6"].Value = "Departman";
-            worksheet.Cells["G6"].Value = "Grup";
-            worksheet.Cells["H6"].Value = "Tarih Değeri";
-            worksheet.Cells["I6"].Value = "İlk Kayıt";
-            worksheet.Cells["J6"].Value = "Son Kayıt";
-            worksheet.Cells["K6"].Value = "Fark";
+            worksheet.Cells["G6"].Value = "Alt Departman";
+            worksheet.Cells["H6"].Value = "Bölüm";
+            worksheet.Cells["I6"].Value = "Birim";
+            worksheet.Cells["J6"].Value = "Grup";
+            worksheet.Cells["K6"].Value = "Tarih Değeri";
+            worksheet.Cells["L6"].Value = "İlk Kayıt";
+            worksheet.Cells["M6"].Value = "Son Kayıt";
+            worksheet.Cells["N6"].Value = "Fark";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
-            worksheet.Cells["A6:K6"].Style.Font.Size = 13;
-            worksheet.Cells["A6:K6"].Style.Font.Bold = true;
+            worksheet.Cells["A6:N6"].Style.Font.Size = 13;
+            worksheet.Cells["A6:N6"].Style.Font.Bold = true;
             worksheet.Cells["A:AZ"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             worksheet.Cells["A:AZ"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
             int rowStart = 7;
@@ -727,11 +853,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Soyadi;
                 worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.SirketAdi;
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.DepartmanAdi;
-                worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.Grup_Adi;
-                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Tarih_Degeri;
-                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Ilk_Kayit;
-                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Son_Kayit;
-                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Fark;
+                worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.AltDepartmanAdi;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.BolumAdi;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.BirimAdi;
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.Grup_Adi;
+                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Tarih_Degeri;
+                worksheet.Cells[string.Format("L{0}", rowStart)].Value = item.Ilk_Kayit;
+                worksheet.Cells[string.Format("M{0}", rowStart)].Value = item.Son_Kayit;
+                worksheet.Cells[string.Format("N{0}", rowStart)].Value = item.Fark;
                 rowStart++;
             }
             worksheet.Cells[string.Format("A{0}", rowStart + 3)].Value = "Toplam Kayıt=" + liste.Count();
@@ -764,7 +893,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["E6"].Value = "Grup Adı";
             worksheet.Cells["F6"].Value = "Şirket";
             worksheet.Cells["G6"].Value = "Departman";
-            worksheet.Cells["H6"].Value = "Giriş Sayısı";
+            worksheet.Cells["H6"].Value = "Alt Departman";
+            worksheet.Cells["I6"].Value = "Bölüm";
+            worksheet.Cells["J6"].Value = "Birim";
+            worksheet.Cells["K6"].Value = "Giriş Sayısı";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
             worksheet.Cells["A6:K6"].Style.Font.Size = 13;
@@ -781,7 +913,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Grup_Adi;
                 worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Sirket_Adi;
                 worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.Departman_Adi;
-                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Giris_Sayisi;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Alt_Departman_Adi;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Bolum_Adi;
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.BirimAdi;
+                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.Giris_Sayisi;
                 rowStart++;
             }
             worksheet.Cells[string.Format("A{0}", rowStart + 3)].Value = "Toplam Kayıt=" + liste.Count();

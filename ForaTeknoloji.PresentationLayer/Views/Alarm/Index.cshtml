@@ -3,14 +3,15 @@
 @{
     ViewBag.Title = "Alarmlar";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 
 
-<div class="row animated slideInDown faster">
+<div class="row animated fadeIn faster">
     <div class="col-md-8 offset-2">
         <div class="card border-left-info h-100 shadow-lg mt-5">
             <div class="card-header py-1 mt-1">
-                <h3 id="Title" class="m-0 font-weight-bold text-secondary text-center"><i>Kullanıcı Alarm Tanımları</i></h3>
+                <h3 id="Title" class="card-title"><i class="fas fa-bookmark"></i> Kullanıcı Alarm Tanımları</h3>
             </div>
             <div class="card-body">
                 @if (Model.Alarmlar.Count == 0)
@@ -23,39 +24,42 @@
 
                     </div>
                 }
-
+                else
+                {
+                    <table id="AlarmList" class="table table-hover text-center table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <td>Alarm No</td>
+                                <td>Alarm Adi</td>
+                                <td>Alarm Tipi Adi</td>
+                                <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Alarmlar)
+                            {
+                                <tr>
+                                    <td>@item.Alarm_No</td>
+                                    <td>@item.Alarm_Adi</td>
+                                    <td>@item.Adi</td>
+                                    <td>
+                                        <a title="Düzenle" href="@Url.Action("Edit", "Alarm", new { id = item.Alarm_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
+                                        <a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(@item.Alarm_No,2654)" class="text-danger mr-2"><i class="fas fa-dumpster-fire"></i></a>
+                                        <a title="Veritabanından Sil" href="@Url.Action("DatabaseRemove",new {id=item.Alarm_No })" onclick="return confirm('Seçilen Alarmı Veritabanından Silmek İstediğinize Emin Misiniz?')" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
+                                        <a data-toggle="modal" data-target="#panelList" title="Panele Gönder" onclick="ekle(@item.Alarm_No,2650)" class="text-success"><i class="fas fa-share"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
                 <div class="row">
                     <input type="text" id="AlarmCount" hidden name="name" value="@Model.Alarmlar.Count" />
                     <div class="col-md-12 text-right">
                         <a href="@Url.Action("Create", "Alarm")" class="btn btn-sm btn-outline-success my-3"><i class="fas fa-calendar-plus mr-2"></i> Yeni Alarm Ekle</a>
                     </div>
                 </div>
-                <table id="AlarmList" class="table table-hover text-center table-striped table-sm">
-                    <thead class="table-info">
-                        <tr>
-                            <td>Alarm No</td>
-                            <td>Alarm Adi</td>
-                            <td>Alarm Tipi Adi</td>
-                            <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Alarmlar)
-                        {
-                            <tr>
-                                <td>@item.Alarm_No</td>
-                                <td>@item.Alarm_Adi</td>
-                                <td>@item.Adi</td>
-                                <td>
-                                    <a title="Düzenle" href="@Url.Action("Edit", "Alarm", new { id = item.Alarm_No })" class="text-info mr-2"><i class="fas fa-edit"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Panelden Sil" onclick="ekle(@item.Alarm_No,2654)" class="text-danger mr-2"><i class="fas fa-dumpster-fire"></i></a>
-                                    <a title="Veritabanından Sil" href="@Url.Action("DatabaseRemove",new {id=item.Alarm_No })" onclick="return confirm('Seçilen Alarmı Veritabanından Silmek İstediğinize Emin Misiniz?')" class="text-warning mr-2"><i class="fas fa-trash"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Panele Gönder" onclick="ekle(@item.Alarm_No,2650)" class="text-success"><i class="fas fa-share"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+
             </div>
         </div>
     </div>
