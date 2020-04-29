@@ -45,6 +45,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         // GET: TimeGroups
+
         public ActionResult Index(string Search = null)
         {
             if (permissionUser.SysAdmin == false)
@@ -134,6 +135,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         timeGroups.Bitis_Tarihi = Bitis_Tarihi_Two;
                     }
                 }
+
+                if (timeGroups.Gecis_Sinirlama_Tipi == null)
+                    throw new Exception("Geçiş sınırlama tipi seçilmeli!");
+
+
+
                 _timeGroupsService.AddTimeGroups(timeGroups);
                 _accessDatasService.AddOperatorLog(110, permissionUser.Kullanici_Adi, timeGroups.Zaman_Grup_No, 0, 0, 0);
                 return RedirectToAction("Index");

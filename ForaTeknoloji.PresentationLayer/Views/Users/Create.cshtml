@@ -122,15 +122,24 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Yemekhane Grubu</label>
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="col-md-12">
+                                        @Html.DropDownList("Grup_No_1", Model.Grup_No_2, "Yemekhane Grubu Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_2, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <div class="col-md-12 text-center">
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" value="true" name="C3_Grup" class="custom-control-input" id="3Gecis" />
                                                     <label class="custom-control-label" for="3Gecis">3 Geçiş Grubu</label>
+                                                    <hr />
                                                 </div>
                                             </div>
                                         </div>
@@ -415,9 +424,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <br />
-                            <br />
-                            <br />
                             <div class="form-group mt-2">
                                 <label class="control-label col-md-4">Açıklama</label>
                                 <div class="col-md-12">

@@ -58,26 +58,84 @@
 
                             foreach (var item in Model.Okuyucular)
                             {
+                                if (Model.PanelModel == (int)PanelModel.Panel_301)
+                                {
+                                    if (item.WKapi_ID <= 8)
+                                    {
+                                        <tr>
+                                            <td>@item.WKapi_ID</td>
+                                            @if (item.WKapi_Aktif == true)
+                                            {
+                                                <td><b><i class="text-success">Evet</i></b></td>
+                                                <td><b><i class="text-success">@item.WKapi_Adi.Trim()</i></b></td>
+                                                <td>
+                                                    <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-danger"><span class="text-danger">Hayır</span> </td>
+                                                <td class="text-danger"><span class="text-danger">@item.WKapi_Adi.Trim()</span></td>
+                                                <td>
+                                                    <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                                else if (Model.PanelModel == (int)PanelModel.Panel_302)
+                                {
+                                    if (item.WKapi_ID <= 2)
+                                    {
+                                        <tr>
+                                            <td>@item.WKapi_ID</td>
+                                            @if (item.WKapi_Aktif == true)
+                                            {
+                                                <td><b><i class="text-success">Evet</i></b></td>
+                                                <td><b><i class="text-success">@item.WKapi_Adi.Trim()</i></b></td>
+                                                <td>
+                                                    <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-danger"><span class="text-danger">Hayır</span> </td>
+                                                <td class="text-danger"><span class="text-danger">@item.WKapi_Adi.Trim()</span></td>
+                                                <td>
+                                                    <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    if (item.WKapi_ID <= 4)
+                                    {
+                                        <tr>
+                                            <td>@item.WKapi_ID</td>
+                                            @if (item.WKapi_Aktif == true)
+                                            {
+                                                <td><b><i class="text-success">Evet</i></b></td>
+                                                <td><b><i class="text-success">@item.WKapi_Adi.Trim()</i></b></td>
+                                                <td>
+                                                    <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-danger"><span class="text-danger">Hayır</span> </td>
+                                                <td class="text-danger"><span class="text-danger">@item.WKapi_Adi.Trim()</span></td>
+                                                <td>
+                                                    <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                }
 
-                                <tr>
-                                    <td>@item.WKapi_ID</td>
-                                    @if (item.WKapi_Aktif == true)
-                                    {
-                                        <td><b><i class="text-success">Evet</i></b></td>
-                                        <td><b><i class="text-success">@item.WKapi_Adi.Trim()</i></b></td>
-                                        <td>
-                                            <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td class="text-danger"><span class="text-danger">Hayır</span> </td>
-                                        <td class="text-danger"><span class="text-danger">@item.WKapi_Adi.Trim()</span></td>
-                                        <td>
-                                            <a title="Edit" id="edit" href="@Url.Action("ReaderEdit","Panel",new { id=item.WKapi_ID,PanelID=Model.Panel_ID})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                        </td>
-                                    }
-                                </tr>
+
+
 
                             }
                         }

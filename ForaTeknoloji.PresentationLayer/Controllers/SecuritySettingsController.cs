@@ -110,7 +110,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Yetkisiz Erişim!");
             }
 
-
             var kullanici = _dBUsersService.GetById(Kullanici_Adi);
             var userPanel = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == Kullanici_Adi);
             var userSirket = _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == Kullanici_Adi);
@@ -120,6 +119,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var departmanList = _departmanService.GetAllDepartmanlar();
             var dbUserAltDepartmanList = _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == Kullanici_Adi);
             var altDepartmanList = _altDepartmanService.GetAllAltDepartman();
+            TreeViewDataBindDepartmanAndAltDepartman();
             var model = new EditSecurityListViewModel
             {
                 Kullanicilar = kullanici,
@@ -144,15 +144,36 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(DBUsers dBUsers, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
+        public ActionResult Edit(DBUsers dBUsers, string selectedItems, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             if (ModelState.IsValid)
             {
                 if (dBUsers != null)
                 {
+                    List<TreeViewNode> items = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
+                    List<DBUsersAltDepartman> dBUsersAltDepartmen = new List<DBUsersAltDepartman>();
+                    _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                    _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                    foreach (var treeEntity in items)
+                    {
+                        int AltDepartmanID = Convert.ToInt32(treeEntity.id);
+                        var altDepartmanEntity = _altDepartmanService.GetAllAltDepartman().FirstOrDefault(x => x.Alt_Departman_No == AltDepartmanID);
+                        var addedDbUserAltDepartman = new DBUsersAltDepartman { Departman_No = altDepartmanEntity.Departman_No, Alt_Departman_No = altDepartmanEntity.Alt_Departman_No, Kullanici_Adi = dBUsers.Kullanici_Adi };
+                        var checkUserDBDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Departman_No == altDepartmanEntity.Departman_No);
+                        if (checkUserDBDepartman == null || checkUserDBDepartman.Count == 0)
+                        {
+                            var addedDBUserDepartman = new DBUsersDepartman { Kullanici_Adi = dBUsers.Kullanici_Adi, Departman_No = altDepartmanEntity.Departman_No };
+                            _dBUsersDepartmanService.AddDBUsersDepartman(addedDBUserDepartman);
+                        }
+                        _dBUsersAltDepartmanService.AddDBUsersAltDepartman(addedDbUserAltDepartman);
+                    }
+
+
+
+
                     DBUserSirketUpdate(dBUsers, Sirketler);
                     DBUserPanelUpdate(dBUsers, Paneller);
-                    DBUserDepartmanUpdate(dBUsers, Departmanlar);
+                    //DBUserDepartmanUpdate(dBUsers, Departmanlar);
                     var updatedUser = _dBUsersService.UpdateDBUsers(dBUsers);
                     //Spot Monitor İçin Panel ve Kapı Listesi Oluşturma
                     DBUserKapiFill(updatedUser, Paneller);
@@ -244,7 +265,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 throw new Exception("Yetkisiz Erişim!");
             }
-            TreeViewDataBind();
+            TreeViewDataBindDepartmanAndAltDepartman();
             var model = new SecurityCreateViewModel
             {
                 Roller = _dBRolesService.GetAllDBRoles().Select(a => new SelectListItem
@@ -718,7 +739,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
-        public void TreeViewDataBind()
+        public void TreeViewDataBindDepartmanAndAltDepartman()
         {
             List<TreeViewNode> nodes = new List<TreeViewNode>();
             //Ana Root
@@ -734,6 +755,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             //Serialize to JSON string.
             ViewBag.Json = (new JavaScriptSerializer()).Serialize(nodes);
         }
+
+
+
 
         public ActionResult GetDoorToPanel(int? PanelNo)
         {
@@ -808,6 +832,68 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
+
+
+        /// <summary>
+        /// Operatör kullanıcısı güncelleme işlemi esnasında departman ve alt departman değerlerinin id'ye göre seçim işlemi
+        /// </summary>
+        /// <param name="Kullanici_Adi">
+        /// Güncellenen operatör kullanıcısının kullanıcı adına göre id değerleri gönderiyor.
+        /// </param>
+        /// <returns></returns>
+        public ActionResult TreeViewEditCheckList(string Kullanici_Adi)
+        {
+            List<string> treeViewCheckList = new List<string>();
+            List<TreeViewNode> nodes = new List<TreeViewNode>();
+            List<int> tempDepartman = GetEditUserDepartmanList(Kullanici_Adi);
+            List<int> tempAltDepartman = GetEditUserAltDepartmanList(Kullanici_Adi);
+            //Ana Root
+            foreach (Departmanlar type in _departmanService.GetAllDepartmanlar(x => tempDepartman.Contains(x.Departman_No)))
+            {
+                nodes.Add(new TreeViewNode { id = type.Departman_No.ToString(), parent = "#", text = type.Adi });
+            }
+            //SubRoot
+            foreach (AltDepartman subType in _altDepartmanService.GetAllAltDepartman(x => tempDepartman.Contains((int)x.Departman_No) && tempAltDepartman.Contains(x.Alt_Departman_No)))
+            {
+                // nodes.Add(new TreeViewNode { id = subType.Departman_No.ToString() + "-" + subType.Alt_Departman_No.ToString(), parent = subType.Departman_No.ToString(), text = subType.Adi });
+                treeViewCheckList.Add(subType.Departman_No.ToString() + "-" + subType.Alt_Departman_No.ToString());
+            }
+            return Json(treeViewCheckList, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Edit sayfasından gelen kullanıcı adına göre o kullanıcıya ait departman listesinin id değerleri geri dönüyor.
+        /// </summary>
+        /// <param name="Kullanici_Adi">
+        /// Edit sayfasında güncellenen kullanıcının 'Kullanıcı Adı'
+        /// </param>
+        /// <returns></returns>
+        public List<int> GetEditUserDepartmanList(string Kullanici_Adi)
+        {
+            List<int> dbDepartmanListEditUser = new List<int>();
+            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == Kullanici_Adi).Select(a => a.Departman_No))
+            {
+                dbDepartmanListEditUser.Add((int)dbUserDepartmanNo);
+            }
+            return dbDepartmanListEditUser;
+        }
+
+        /// <summary>
+        /// Edit sayfasından gelen kullanıcı adına göre o kullanıcıya ait alt departman listesinin id değerleri geri dönüyor.
+        /// </summary>
+        /// <param name="Kullanici_Adi">
+        /// Edit sayfasında güncellenen kullanıcının 'Kullanıcı Adı'
+        /// </param>
+        /// <returns></returns>
+        public List<int> GetEditUserAltDepartmanList(string Kullanici_Adi)
+        {
+            List<int> dbAltDepartmanListEditUser = new List<int>();
+            foreach (var dbUserAltDepartmanNo in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == Kullanici_Adi).Select(a => a.Alt_Departman_No))
+            {
+                dbAltDepartmanListEditUser.Add((int)dbUserAltDepartmanNo);
+            }
+            return dbAltDepartmanListEditUser;
+        }
 
 
     }

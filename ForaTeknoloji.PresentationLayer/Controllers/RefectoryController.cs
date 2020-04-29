@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
@@ -149,6 +150,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 User = user
             };
             TempData["UserAccessCount"] = Liste;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
+
             return View(model);
         }
 
@@ -205,6 +209,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 User = user
             };
             TempData["UserAccessCountTotal"] = Total;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
             return View(model);
         }
 
@@ -230,9 +236,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "Personel Geçiş Sayısı Listesi";
-            worksheet.Cells["A3"].Value = "Tarih";
+            worksheet.Cells["A1"].Value = "Yemekhane Raporları";
+            worksheet.Cells["A3"].Value = "Tarihi";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:HH: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "Geçiş Sayısı";
             worksheet.Cells["B6"].Value = "ID";
             worksheet.Cells["C6"].Value = "Kart ID";
@@ -281,9 +289,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "Personel Geçiş Sayısı Listesi";
+            worksheet.Cells["A1"].Value = "Yemekhane Raporları";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:HH: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "Cihaz No";
             worksheet.Cells["B6"].Value = "Cihaz Adı";
             worksheet.Cells["C6"].Value = "İlk İşlem Zamanı";
@@ -322,7 +332,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-
-
+       
     }
 }

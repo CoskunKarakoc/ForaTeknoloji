@@ -358,7 +358,8 @@
             frameDoc.document.write('</style>');
             frameDoc.document.write('</head>');
             frameDoc.document.write('<body>');
-            frameDoc.document.write('<h5>Diğer Geçiş Raporları (' + new Date().toLocaleDateString() + ')</h5><hr/>');
+            frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
+            frameDoc.document.write('<h5>Diğer Geçiş Raporları (' + '@TempData["DateAndTimeView"]' + ')</h5>');
             frameDoc.document.write(contents);
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');

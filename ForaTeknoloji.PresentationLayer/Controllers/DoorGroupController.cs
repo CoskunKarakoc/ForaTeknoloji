@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -209,6 +210,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
                 return RedirectToAction("Index", "DoorGroup");
             }
+            else
+            {
+                _doorGroupsDetailService.DeleteByGrupNoANDPanelID(Panel_ID, Grup_No);
+            }
             return RedirectToAction("ReaderEdit", "DoorGroup", new { DoorGroupID = Grup_No });
         }
 
@@ -221,8 +226,28 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (PanelID != null)
             {
-                var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
-                return Json(readerList, JsonRequestBehavior.AllowGet);
+                var panelModel = _panelSettingsService.GetById((int)PanelID).Panel_Model;
+                if (panelModel == (int)PanelModel.Panel_301)
+                {
+                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 8);
+                    return Json(readerList, JsonRequestBehavior.AllowGet);
+                }
+                else if (panelModel == (int)PanelModel.Panel_302)
+                {
+                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 2);
+                    return Json(readerList, JsonRequestBehavior.AllowGet);
+                }
+                else if (panelModel == (int)PanelModel.Panel_304)
+                {
+                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 4);
+                    return Json(readerList, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 1);
+                    return Json(readerList, JsonRequestBehavior.AllowGet);
+                }
+
             }
             return null;
         }

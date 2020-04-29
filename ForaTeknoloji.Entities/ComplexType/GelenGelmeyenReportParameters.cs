@@ -22,6 +22,10 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public DateTime? Bitis_Tarihi { get; set; }
 
+        public DateTime? Baslangic_Saati { get; set; }
+
+        public DateTime? Bitis_Saati { get; set; }
+
         public double? Fark { get; set; }
 
         public int? User { get; set; }
@@ -35,5 +39,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public int? Bolum { get; set; }
 
         public int? Birim_No { get; set; }
+
+
     }
 }

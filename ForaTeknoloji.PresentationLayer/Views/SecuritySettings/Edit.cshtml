@@ -176,51 +176,59 @@
                                 <div class="col-md-5 mt-3 mb-4">
                                     <div class="card border-left-warning shadow-lg h-100 py-2">
                                         <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Departmanlar</div>
-                                                </div>
-                                                <table id="DepartmanTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                                    <thead class="table-warning">
-                                                        <tr>
-                                                            <td>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="AllDepartman" />
-                                                                    <label class="custom-control-label" for="AllDepartman"></label>
-                                                                </div>
-                                                            </td>
-                                                            <td>Departman No</td>
-                                                            <td>Adı</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in Model.AltDepartmanListesi)
-                                                        {
+                                            @*<div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Departmanlar</div>
+                                                    </div>
+                                                    <table id="DepartmanTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                        <thead class="table-warning">
                                                             <tr>
                                                                 <td>
-                                                                    @if (Model.DBUserAltDepartman.Any(x => x.Alt_Departman_No == item.Alt_Departman_No))
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" checked name="Departmanlar" id="@("Departman_"+item.Alt_Departman_No)" value="@item.Alt_Departman_No">
-                                                                            <label class="custom-control-label" for="@("Departman_"+item.Alt_Departman_No)"></label>
-                                                                        </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" name="Departmanlar" id="@("Departman_"+item.Alt_Departman_No)" value="@item.Alt_Departman_No">
-                                                                            <label class="custom-control-label" for="@("Departman_"+item.Alt_Departman_No)"></label>
-                                                                        </div>
-                                                                    }
-
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="AllDepartman" />
+                                                                        <label class="custom-control-label" for="AllDepartman"></label>
+                                                                    </div>
                                                                 </td>
-                                                                <td>@item.Alt_Departman_No</td>
-                                                                <td>@item.Adi</td>
+                                                                <td>Departman No</td>
+                                                                <td>Adı</td>
                                                             </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in Model.AltDepartmanListesi)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @if (Model.DBUserAltDepartman.Any(x => x.Alt_Departman_No == item.Alt_Departman_No))
+                                                                        {
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" checked name="Departmanlar" id="@("Departman_"+item.Alt_Departman_No)" value="@item.Alt_Departman_No">
+                                                                                <label class="custom-control-label" for="@("Departman_"+item.Alt_Departman_No)"></label>
+                                                                            </div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" name="Departmanlar" id="@("Departman_"+item.Alt_Departman_No)" value="@item.Alt_Departman_No">
+                                                                                <label class="custom-control-label" for="@("Departman_"+item.Alt_Departman_No)"></label>
+                                                                            </div>
+                                                                        }
+
+                                                                    </td>
+                                                                    <td>@item.Alt_Departman_No</td>
+                                                                    <td>@item.Adi</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>*@
+
+                                            <p class="text-warning card-title">Alt Departman Seçimi</p>
+                                            <hr />
+                                            <div id="jstree">
                                             </div>
+                                            <input type="hidden" name="selectedItems" id="selectedItems" />
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -273,6 +281,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -284,6 +293,80 @@
         </div>
     </div>
 </div>
+
+
+
+@section Scripts{
+    <link href="~/Content/SiteContent/TreeView/jstree3.2.1.css" rel="stylesheet" />
+    <script src="~/Content/SiteContent/TreeView/jstree.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#jstree').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItems = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItems').val(JSON.stringify(selectedItems));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.Json)
+                    },
+                "checkbox": {
+                    "keep_selected_style": false,
+
+                },
+                "plugins": ["wholerow", "checkbox"],
+                });
+
+
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            jQuery("#jstree").bind("loaded.jstree", function (event, data) {
+                $.ajax({
+                    url: '/SecuritySettings/TreeViewEditCheckList?Kullanici_Adi=' + $("#Kullanici_Adi").val(),
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $('#jstree').jstree("open_node", 1);
+                    $.each(data, function (index, row) {
+                        var element = "#" + row;
+                        $('#jstree').jstree("check_node", element);
+                    })
+                });
+            });
+        });
+    </script>
+
+
+}
+
+
+
 <script>
     $(document).ready(function () {
         $('.chosen-select').chosen();

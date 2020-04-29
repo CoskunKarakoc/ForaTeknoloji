@@ -22,6 +22,8 @@
                     @Html.HiddenFor(model => model.Groups.FirstOrDefault().Grup_No)
                     @Html.HiddenFor(model => model.Groups.FirstOrDefault().Grup_Adi)
                     <div class="row">
+
+
                         @if (Model.PanelModel == (int)PanelModel.Panel_1010)
                         {
                             <div class="col-md-4">
@@ -47,345 +49,1024 @@
                         }
                         else
                         {
-                            <div class="col-md-4">
-                                <label class="text-muted">Kapı Geçiş Onayı</label>
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_1", Model.Groups[0].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label " for="Kapi_1">@Model.Groups[0].Kapi_Adi</label>
+                            if (Model.PanelModel == (int)PanelModel.Panel_301)
+                            {
+                                <div class="col-md-4">
+                                    <label class="text-muted">Kapı Geçiş Onayı</label>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_1", Model.Groups[0].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label " for="Kapi_1">@Model.Groups[0].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="Kapi_Zaman_Grup_No">Kapı Zaman Bölgesi</label>
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[0]", Model.Kapi_Zaman_Grup_No[0], new { @class = "form-control  text-dark chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <label for="Kapi_Zaman_Grup_No">Kapı Zaman Bölgesi</label>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[0]", Model.Kapi_Zaman_Grup_No[0], new { @class = "form-control  text-dark chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="Kapi_Zaman_Grup_No">Kapı Asansör Grubu</label>
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[0]", Model.Kapi_Asansor_Bolge_No[0], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <label for="Kapi_Zaman_Grup_No">Kapı Asansör Grubu</label>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[0]", Model.Kapi_Asansor_Bolge_No[0], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_2", Model.Groups[1].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_2">@Model.Groups[1].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_2", Model.Groups[1].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_2">@Model.Groups[1].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[1]", Model.Kapi_Zaman_Grup_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[1]", Model.Kapi_Zaman_Grup_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[1]", Model.Kapi_Asansor_Bolge_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[1]", Model.Kapi_Asansor_Bolge_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
 
 
 
 
 
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_3", Model.Groups[2].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_3">@Model.Groups[2].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_3", Model.Groups[2].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_3">@Model.Groups[2].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[2]", Model.Kapi_Zaman_Grup_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[2]", Model.Kapi_Zaman_Grup_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[2]", Model.Kapi_Asansor_Bolge_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[2]", Model.Kapi_Asansor_Bolge_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
 
 
 
 
 
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_4", Model.Groups[3].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_4">@Model.Groups[3].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_4", Model.Groups[3].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_4">@Model.Groups[3].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[3]", Model.Kapi_Zaman_Grup_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[3]", Model.Kapi_Zaman_Grup_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[3]", Model.Kapi_Asansor_Bolge_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[3]", Model.Kapi_Asansor_Bolge_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
 
 
 
 
 
 
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_5", Model.Groups[4].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_5">@Model.Groups[4].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_5", Model.Groups[4].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_5">@Model.Groups[4].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[4]", Model.Kapi_Zaman_Grup_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[4]", Model.Kapi_Zaman_Grup_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[4]", Model.Kapi_Asansor_Bolge_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[4]", Model.Kapi_Asansor_Bolge_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
 
 
 
 
 
 
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_6", Model.Groups[5].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_6">@Model.Groups[5].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_6", Model.Groups[5].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_6">@Model.Groups[5].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[5]", Model.Kapi_Zaman_Grup_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[5]", Model.Kapi_Zaman_Grup_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[5]", Model.Kapi_Asansor_Bolge_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[5]", Model.Kapi_Asansor_Bolge_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
 
 
 
 
 
 
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_7", Model.Groups[6].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_7">@Model.Groups[6].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_7", Model.Groups[6].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_7">@Model.Groups[6].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[6]", Model.Kapi_Zaman_Grup_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[6]", Model.Kapi_Zaman_Grup_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[6]", Model.Kapi_Asansor_Bolge_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[6]", Model.Kapi_Asansor_Bolge_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
 
 
 
 
 
 
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_8", Model.Groups[7].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_8">@Model.Groups[7].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_8", Model.Groups[7].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_8">@Model.Groups[7].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[7]", Model.Kapi_Zaman_Grup_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[7]", Model.Kapi_Zaman_Grup_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[7]", Model.Kapi_Asansor_Bolge_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[7]", Model.Kapi_Asansor_Bolge_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div hidden>
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_9", Model.Groups[8].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_9">@Model.Groups[8].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[8]", Model.Kapi_Zaman_Grup_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[8]", Model.Kapi_Asansor_Bolge_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
 
 
 
 
 
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_9", Model.Groups[8].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_9">@Model.Groups[8].Kapi_Adi</label>
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_10", Model.Groups[9].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_10">@Model.Groups[9].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[9]", Model.Kapi_Zaman_Grup_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[9]", Model.Kapi_Asansor_Bolge_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_11", Model.Groups[10].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_11">@Model.Groups[10].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[10]", Model.Kapi_Zaman_Grup_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[10]", Model.Kapi_Asansor_Bolge_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_12", Model.Groups[11].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_12">@Model.Groups[11].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[11]", Model.Kapi_Zaman_Grup_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[11]", Model.Kapi_Asansor_Bolge_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_13", Model.Groups[12].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_13">@Model.Groups[12].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[12]", Model.Kapi_Zaman_Grup_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[12]", Model.Kapi_Asansor_Bolge_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_14", Model.Groups[13].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_14">@Model.Groups[13].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[13]", Model.Kapi_Zaman_Grup_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[13]", Model.Kapi_Asansor_Bolge_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_15", Model.Groups[14].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_15">@Model.Groups[14].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[14]", Model.Kapi_Zaman_Grup_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[14]", Model.Kapi_Asansor_Bolge_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_16", Model.Groups[15].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_16">@Model.Groups[15].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[15]", Model.Kapi_Zaman_Grup_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[15]", Model.Kapi_Asansor_Bolge_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[8]", Model.Kapi_Zaman_Grup_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                            }
+                            else if (Model.PanelModel == (int)PanelModel.Panel_304)
+                            {
+                                <div class="col-md-4">
+                                    <label class="text-muted">Kapı Geçiş Onayı</label>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_1", Model.Groups[0].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label " for="Kapi_1">@Model.Groups[0].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[8]", Model.Kapi_Asansor_Bolge_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <label for="Kapi_Zaman_Grup_No">Kapı Zaman Bölgesi</label>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[0]", Model.Kapi_Zaman_Grup_No[0], new { @class = "form-control  text-dark chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_10", Model.Groups[9].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_10">@Model.Groups[9].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <label for="Kapi_Zaman_Grup_No">Kapı Asansör Grubu</label>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[0]", Model.Kapi_Asansor_Bolge_No[0], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[9]", Model.Kapi_Zaman_Grup_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_2", Model.Groups[1].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_2">@Model.Groups[1].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[9]", Model.Kapi_Asansor_Bolge_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[1]", Model.Kapi_Zaman_Grup_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_11", Model.Groups[10].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_11">@Model.Groups[10].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[1]", Model.Kapi_Asansor_Bolge_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[10]", Model.Kapi_Zaman_Grup_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+
+
+
+
+
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_3", Model.Groups[2].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_3">@Model.Groups[2].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[10]", Model.Kapi_Asansor_Bolge_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[2]", Model.Kapi_Zaman_Grup_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-
-
-
-
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_12", Model.Groups[11].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_12">@Model.Groups[11].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[2]", Model.Kapi_Asansor_Bolge_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[11]", Model.Kapi_Zaman_Grup_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+
+
+
+
+
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_4", Model.Groups[3].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_4">@Model.Groups[3].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[11]", Model.Kapi_Asansor_Bolge_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[3]", Model.Kapi_Zaman_Grup_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-
-
-
-
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_13", Model.Groups[12].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_13">@Model.Groups[12].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[3]", Model.Kapi_Asansor_Bolge_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[12]", Model.Kapi_Zaman_Grup_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+
+
+
+
+
+
+
+                                <div hidden>
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_5", Model.Groups[4].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_5">@Model.Groups[4].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[4]", Model.Kapi_Zaman_Grup_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[4]", Model.Kapi_Asansor_Bolge_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_6", Model.Groups[5].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_6">@Model.Groups[5].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[5]", Model.Kapi_Zaman_Grup_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[5]", Model.Kapi_Asansor_Bolge_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_7", Model.Groups[6].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_7">@Model.Groups[6].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[6]", Model.Kapi_Zaman_Grup_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[6]", Model.Kapi_Asansor_Bolge_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_8", Model.Groups[7].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_8">@Model.Groups[7].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[7]", Model.Kapi_Zaman_Grup_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[7]", Model.Kapi_Asansor_Bolge_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_9", Model.Groups[8].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_9">@Model.Groups[8].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[8]", Model.Kapi_Zaman_Grup_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[8]", Model.Kapi_Asansor_Bolge_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_10", Model.Groups[9].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_10">@Model.Groups[9].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[9]", Model.Kapi_Zaman_Grup_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[9]", Model.Kapi_Asansor_Bolge_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_11", Model.Groups[10].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_11">@Model.Groups[10].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[10]", Model.Kapi_Zaman_Grup_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[10]", Model.Kapi_Asansor_Bolge_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_12", Model.Groups[11].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_12">@Model.Groups[11].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[11]", Model.Kapi_Zaman_Grup_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[11]", Model.Kapi_Asansor_Bolge_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_13", Model.Groups[12].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_13">@Model.Groups[12].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[12]", Model.Kapi_Zaman_Grup_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[12]", Model.Kapi_Asansor_Bolge_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_14", Model.Groups[13].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_14">@Model.Groups[13].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[13]", Model.Kapi_Zaman_Grup_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[13]", Model.Kapi_Asansor_Bolge_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_15", Model.Groups[14].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_15">@Model.Groups[14].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[14]", Model.Kapi_Zaman_Grup_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[14]", Model.Kapi_Asansor_Bolge_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_16", Model.Groups[15].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_16">@Model.Groups[15].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[15]", Model.Kapi_Zaman_Grup_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[15]", Model.Kapi_Asansor_Bolge_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[12]", Model.Kapi_Asansor_Bolge_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                            }
+                            else if (Model.PanelModel == (int)PanelModel.Panel_302)
+                            {
+                                <div class="col-md-4">
+                                    <label class="text-muted">Kapı Geçiş Onayı</label>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_1", Model.Groups[0].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label " for="Kapi_1">@Model.Groups[0].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_14", Model.Groups[13].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_14">@Model.Groups[13].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <label for="Kapi_Zaman_Grup_No">Kapı Zaman Bölgesi</label>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[0]", Model.Kapi_Zaman_Grup_No[0], new { @class = "form-control  text-dark chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[13]", Model.Kapi_Zaman_Grup_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <label for="Kapi_Zaman_Grup_No">Kapı Asansör Grubu</label>
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[0]", Model.Kapi_Asansor_Bolge_No[0], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[13]", Model.Kapi_Asansor_Bolge_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+
+                                <div class="col-md-4">
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Kapi_2", Model.Groups[1].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="Kapi_2">@Model.Groups[1].Kapi_Adi</label>
+                                    </div>
                                 </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_15", Model.Groups[14].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_15">@Model.Groups[14].Kapi_Adi</label>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Zaman_Grup_No[1]", Model.Kapi_Zaman_Grup_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[14]", Model.Kapi_Zaman_Grup_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Kapi_Asansor_Bolge_No[1]", Model.Kapi_Asansor_Bolge_No[1], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[14]", Model.Kapi_Asansor_Bolge_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+
+
+
+
+
+                                <div hidden>
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_3", Model.Groups[2].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_3">@Model.Groups[2].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[2]", Model.Kapi_Zaman_Grup_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[2]", Model.Kapi_Asansor_Bolge_No[2], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_4", Model.Groups[3].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_4">@Model.Groups[3].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[3]", Model.Kapi_Zaman_Grup_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[3]", Model.Kapi_Asansor_Bolge_No[3], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_5", Model.Groups[4].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_5">@Model.Groups[4].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[4]", Model.Kapi_Zaman_Grup_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[4]", Model.Kapi_Asansor_Bolge_No[4], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_6", Model.Groups[5].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_6">@Model.Groups[5].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[5]", Model.Kapi_Zaman_Grup_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[5]", Model.Kapi_Asansor_Bolge_No[5], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_7", Model.Groups[6].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_7">@Model.Groups[6].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[6]", Model.Kapi_Zaman_Grup_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[6]", Model.Kapi_Asansor_Bolge_No[6], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_8", Model.Groups[7].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_8">@Model.Groups[7].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[7]", Model.Kapi_Zaman_Grup_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[7]", Model.Kapi_Asansor_Bolge_No[7], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_9", Model.Groups[8].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_9">@Model.Groups[8].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[8]", Model.Kapi_Zaman_Grup_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[8]", Model.Kapi_Asansor_Bolge_No[8], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_10", Model.Groups[9].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_10">@Model.Groups[9].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[9]", Model.Kapi_Zaman_Grup_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[9]", Model.Kapi_Asansor_Bolge_No[9], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_11", Model.Groups[10].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_11">@Model.Groups[10].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[10]", Model.Kapi_Zaman_Grup_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[10]", Model.Kapi_Asansor_Bolge_No[10], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_12", Model.Groups[11].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_12">@Model.Groups[11].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[11]", Model.Kapi_Zaman_Grup_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[11]", Model.Kapi_Asansor_Bolge_No[11], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_13", Model.Groups[12].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_13">@Model.Groups[12].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[12]", Model.Kapi_Zaman_Grup_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[12]", Model.Kapi_Asansor_Bolge_No[12], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_14", Model.Groups[13].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_14">@Model.Groups[13].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[13]", Model.Kapi_Zaman_Grup_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[13]", Model.Kapi_Asansor_Bolge_No[13], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_15", Model.Groups[14].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_15">@Model.Groups[14].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[14]", Model.Kapi_Zaman_Grup_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[14]", Model.Kapi_Asansor_Bolge_No[14], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBox("Kapi_16", Model.Groups[15].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="Kapi_16">@Model.Groups[15].Kapi_Adi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Zaman_Grup_No[15]", Model.Kapi_Zaman_Grup_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.DropDownList("Kapi_Asansor_Bolge_No[15]", Model.Kapi_Asansor_Bolge_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Kapi_16", Model.Groups[15].Kapi_Aktif ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="Kapi_16">@Model.Groups[15].Kapi_Adi</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Zaman_Grup_No[15]", Model.Kapi_Zaman_Grup_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.DropDownList("Kapi_Asansor_Bolge_No[15]", Model.Kapi_Asansor_Bolge_No[15], new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })
-                                </div>
-                            </div>
-
-
+                            }
                         }
 
-
-
-
+                        <div class="col-md-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" name="Tumu" id="Tumu" class="custom-control-input" value="" />
+                                <label class="custom-control-label " for="Tumu">Tümünü Seç</label>
+                            </div>
+                        </div>
 
                         <div class="col-md-12 text-right">
                             <hr />
@@ -425,13 +1106,28 @@
                 $(label).removeClass("text-success");
                 $(label).addClass("text-danger");
             }
-
         }
-
         var currentPanel = $("#Panel_ID").val();
         $("#" + currentPanel).toggleClass("active");
-
-
-
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $("#Tumu").click(function () {
+            if (this.checked == true) {
+                for (var i = 1; i < 17; i++) {
+                    var selector = "#Kapi_" + i;
+                    $(selector).prop("checked", true);
+                }
+            } else {
+                for (var i = 1; i < 17; i++) {
+                    var selector = "#Kapi_" + i;
+                    $(selector).prop("checked", false);
+                }
+            }
+
+        });
+    })
+</script>
+

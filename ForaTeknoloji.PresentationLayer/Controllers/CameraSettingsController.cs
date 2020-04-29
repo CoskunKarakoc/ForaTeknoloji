@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -19,11 +20,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
+        private IReaderSettingsNewService _readerSettingsNewService;
         public DBUsers user;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
-        public CameraSettingsController(ICamerasService camerasService, ICameraTypesService cameraTypesService, IPanelSettingsService panelSettingsService, IAccessDatasService accessDatasService, IProgInitService progInitService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService)
+        public CameraSettingsController(ICamerasService camerasService, ICameraTypesService cameraTypesService, IPanelSettingsService panelSettingsService, IAccessDatasService accessDatasService, IProgInitService progInitService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService,IReaderSettingsNewService readerSettingsNewService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -38,6 +40,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
+            _readerSettingsNewService = readerSettingsNewService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
             dbSirketList = new List<int>();
@@ -86,7 +89,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Edit(int? id)
         {
-            List<int> kapiListesi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8 };
+            List<ReaderSettingsNew> kapiListesi = new List<ReaderSettingsNew>();
             if (id == null)
             {
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
@@ -96,9 +99,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 return HttpNotFound();
             }
+            var panelModel = _panelSettingsService.GetById((int)cameras.Panel_ID).Panel_Model;
+            if (panelModel == (int)PanelModel.Panel_301)
+                kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == cameras.Panel_ID && x.WKapi_ID <= 8);
+            else if (panelModel == (int)PanelModel.Panel_302)
+                kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == cameras.Panel_ID && x.WKapi_ID <= 2);
+            else if (panelModel == (int)PanelModel.Panel_304)
+                kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == cameras.Panel_ID && x.WKapi_ID <= 4);
+            else
+                kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == cameras.Panel_ID && x.WKapi_ID <= 1);
+
             ViewBag.Kamera_Tipi = new SelectList(_cameraTypesService.GetAllCameraTypes(), "Kamera_Tipi", "Adi", cameras.Kamera_Tipi);
             ViewBag.Panel_ID = new SelectList(_panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0), "Panel_ID", "Panel_Name", cameras.Panel_ID);
-            ViewBag.Kapi_ID = new SelectList(kapiListesi, cameras.Kapi_ID);
+            ViewBag.Kapi_ID = new SelectList(kapiListesi, "WKapi_ID", "WKapi_Adi", cameras.Kapi_ID);
             return View(cameras);
         }
 
@@ -128,6 +141,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var Kameralar = _cameraTypesService.GetAllCameraTypes();
             var Paneller = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+            ViewBag.Kapi_ID = new SelectList(kapiListesi);
             var model = new CameraAddListViewModel
             {
                 Kamera_No = MaxID + 1,
@@ -160,6 +174,52 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return View(cameras);
         }
+
+
+
+        public ActionResult KapiListesi(int? Paneller)
+        {
+            if (Paneller != 0 && Paneller != null)
+            {
+                var panelModel = _panelSettingsService.GetById((int)Paneller).Panel_Model;
+                List<ReaderSettingsNew> list = new List<ReaderSettingsNew>();
+                if (panelModel == (int)PanelModel.Panel_301)
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 8);
+                else if (panelModel == (int)PanelModel.Panel_302)
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 2);
+                else if (panelModel == (int)PanelModel.Panel_304)
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 4);
+                else
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 1);
+
+                if (list.Count == 0)
+                {
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Kapı Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectKapi = list.Select(a => new SelectListItem
+                    {
+                        Text = a.WKapi_Adi,
+                        Value = a.WKapi_ID.ToString()
+                    });
+                    return Json(selectKapi, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
+
 
 
         private void RouteValueCheck()

@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
@@ -106,6 +107,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
+            var kullanici = _userService.GetAllUsersWithOuther(a => dbSirketList.Contains((int)a.Sirket_No) && dbDepartmanList.Contains((int)a.Departman_No) && dbAltDepartmanList.Contains((int)a.Alt_Departman_No)).OrderBy(x => x.Kayit_No).ToList();
             var model = new GelenGelmeyen_GelenlerListViewModel
             {
                 Gelenler = nesne,
@@ -148,9 +150,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     Text = a.Adi,
                     Value = a.Birim_No.ToString()
-                })
+                }),
+                Kullanıcı = kullanici
             };
             TempData["Gelenler"] = nesne;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi,parameters.Baslangic_Saati,parameters.Bitis_Saati);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
             return View(model);
         }
 
@@ -168,6 +173,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman && x.Alt_Departman_No == parameters.AltDepartman && x.Bolum_No == parameters.Bolum);
+            var kullanici = _userService.GetAllUsersWithOuther(a => dbSirketList.Contains((int)a.Sirket_No) && dbDepartmanList.Contains((int)a.Departman_No) && dbAltDepartmanList.Contains((int)a.Alt_Departman_No)).OrderBy(x => x.Kayit_No).ToList();
             var model = new GelenGelmeyen_GelmeyenlerListViewModel
             {
                 Gelmeyenler = nesne,
@@ -212,9 +218,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.Birim_No.ToString()
                 }),
                 Saat = _progInitService.GetAllProgInit().FirstOrDefault().EndlessReportTime,
-                ReportByHour = _progInitService.GetAllProgInit().FirstOrDefault().ReportByHour
+                ReportByHour = _progInitService.GetAllProgInit().FirstOrDefault().ReportByHour,
+                Kullanıcı = kullanici
             };
             TempData["Gelmeyenler"] = nesne;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
             return View(model);
         }
 
@@ -276,6 +285,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 })
             };
             TempData["Pasif"] = nesne;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi);
             return View(model);
         }
 
@@ -340,6 +351,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 })
             };
             TempData["Toplam"] = nesne;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi);
             return View(model);
         }
 
@@ -403,6 +416,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 })
             };
             TempData["IlkGirisSonCikis"] = nesne;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi);
             return View(model);
         }
 
@@ -465,6 +480,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 })
             };
             TempData["TopluGirisSayisi"] = nesne;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi);
             return View(model);
         }
 
@@ -592,11 +609,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 liste = _reportService.GelenGelmeyen_Gelenlers(new GelenGelmeyenReportParameters());
             }
+
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
             worksheet.Cells["A1"].Value = "Gelen Kullanıcı Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -653,6 +673,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["A1"].Value = "Gelmeyen Kullanıcı Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -709,6 +731,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["A1"].Value = "Toplam İçerde Kalma Raporları";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -766,6 +790,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["A1"].Value = "Pasif Kullanıcı Raporları";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -824,6 +850,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["A1"].Value = "İlk Giriş Son Çıkış";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";
@@ -875,6 +903,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         //Toplu Giris Sayısı
         public void TopluGirisSayisiExcell()
         {
+
             List<GelenGelmeyen_TopluGiris> liste = new List<GelenGelmeyen_TopluGiris>();
             liste = TempData["TopluGirisSayisi"] as List<GelenGelmeyen_TopluGiris>;
             if (liste == null || liste.Count == 0)
@@ -886,6 +915,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["A1"].Value = "Toplu Giriş Sayısı";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";

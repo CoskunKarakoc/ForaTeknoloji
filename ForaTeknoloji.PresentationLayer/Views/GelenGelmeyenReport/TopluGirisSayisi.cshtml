@@ -252,7 +252,8 @@
             frameDoc.document.write('</style>');
             frameDoc.document.write('</head>');
             frameDoc.document.write('<body>');
-            frameDoc.document.write('<h5>Toplu Giriş Sayısı Raporu (' + new Date().toLocaleDateString() + ')</h5><hr/>');
+            frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
+            frameDoc.document.write('<h5>Toplu Giriş Sayısı Raporu (' + '@TempData["DateAndTimeView"]' + ')</h5>');
             frameDoc.document.write(contents);
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');

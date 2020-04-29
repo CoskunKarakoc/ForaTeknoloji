@@ -332,6 +332,37 @@
 
             });
         });
+        $("#Panel_No").chosen().change(function () {
+            var panelNo = $(this).val();
+            if (panelNo == 0 || panelNo == null) {
+                $("#Kapi_No").empty();
+                $("#Kapi_No").append('<option > Kapı Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/Alarm/KapiListesi?Paneller=' + panelNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Kapi_No").empty();
+                    $("#Kapi_No").append('<option > Kapı Seçiniz... </option>');
+                    $.each(data, function (index, row) {
+                        $("#Kapi_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    })
+                });
+            }
+
+        });
+
+
+
+
+
+
+
+
+
+
+
 
     });
     $("#temizle").click(function () {

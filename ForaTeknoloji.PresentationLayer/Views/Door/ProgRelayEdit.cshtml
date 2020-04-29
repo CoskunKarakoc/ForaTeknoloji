@@ -1,4 +1,5 @@
 ﻿@model ForaTeknoloji.PresentationLayer.Models.ProgRelay2EditViewModel
+@using ForaTeknoloji.Common
 @{
     ViewBag.Title = "ProgRelay Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,9 +34,9 @@
                                 <label for="Aktif" class="custom-control-label">Zaman Dilimi Aktif</label>
                             </div>
                             @*<div class="custom-control custom-checkbox mt-1">
-                                <input type="checkbox" id="Tarih_Aktif" name="Tarih_Aktif" class="custom-control-input" value="True" />
-                                <label for="Tarih_Aktif" class="custom-control-label">Tarih Aktif</label>
-                            </div>*@
+                                    <input type="checkbox" id="Tarih_Aktif" name="Tarih_Aktif" class="custom-control-input" value="True" />
+                                    <label for="Tarih_Aktif" class="custom-control-label">Tarih Aktif</label>
+                                </div>*@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
@@ -50,149 +51,446 @@
                             </div>
                         </div>
                         @*<div class="col-md-3">
-                            <div class="form-group">
-                                <label for="Tarih" class="text-muted form-control-inline">Tarih</label>
-                                <input class="form-control form-control-sm" name="Tarih" type="date" value="@DateTime.Now.ToShortDateString()" id="Tarih">
-                            </div>
-                        </div>*@
+                                <div class="form-group">
+                                    <label for="Tarih" class="text-muted form-control-inline">Tarih</label>
+                                    <input class="form-control form-control-sm" name="Tarih" type="date" value="@DateTime.Now.ToShortDateString()" id="Tarih">
+                                </div>
+                            </div>*@
                     </div>
 
                     <div class="row">
                         <div class="col-md-12"><hr /></div>
-                        <div class="col-md-6">
-                            <label class="text-center text-muted">Master Role</label>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_1", Model.ProgRelay.Role_1 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_1" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 1).WKapi_Adi.Trim()</label>
+
+                        @if (Model.PanelModel == (int)PanelModel.Panel_301)
+                        {
+
+                            <div class="col-md-6">
+                                <label class="text-center text-muted">Master Role</label>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_1", Model.ProgRelay.Role_1 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_1" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 1).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_2", Model.ProgRelay.Role_2 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_2" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 2).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_3", Model.ProgRelay.Role_3 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_3" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 3).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_4", Model.ProgRelay.Role_4 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_4" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 4).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_5", Model.ProgRelay.Role_5 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_5" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 5).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_6", Model.ProgRelay.Role_6 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_6" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 6).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_7", Model.ProgRelay.Role_7 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_7" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 7).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_8", Model.ProgRelay.Role_8 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_8" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 8).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div hidden>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_9", Model.ProgRelay.Role_9 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_9" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 9).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_10", Model.ProgRelay.Role_10 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_10" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 10).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_11", Model.ProgRelay.Role_11 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_11" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 11).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_12", Model.ProgRelay.Role_12 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_12" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 12).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_13", Model.ProgRelay.Role_13 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_13" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 13).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_14", Model.ProgRelay.Role_14 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_14" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 14).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_15", Model.ProgRelay.Role_15 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_15" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 15).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_16", Model.ProgRelay.Role_16 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_16" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 16).WKapi_Adi.Trim()</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_2", Model.ProgRelay.Role_2 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_2" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 2).WKapi_Adi.Trim()</label>
+                            <div class="col-md-6">
+                                <label class="text-muted text-center">Durumu</label>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_1", Model.ProgRelay.Durum_1 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_1" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_2", Model.ProgRelay.Durum_2 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_2" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_3", Model.ProgRelay.Durum_3 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_3" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_4", Model.ProgRelay.Durum_4 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_4" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_5", Model.ProgRelay.Durum_5 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_5" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_6", Model.ProgRelay.Durum_6 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_6" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_7", Model.ProgRelay.Durum_7 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_7" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_8", Model.ProgRelay.Durum_8 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_8" class="custom-control-label">Aç</label>
+                                </div>
+                                <div hidden>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_9", Model.ProgRelay.Durum_9 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_9" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_10", Model.ProgRelay.Durum_10 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_10" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_11", Model.ProgRelay.Durum_11 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_11" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_12", Model.ProgRelay.Durum_12 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_12" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_13", Model.ProgRelay.Durum_13 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_13" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_14", Model.ProgRelay.Durum_14 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_14" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_15", Model.ProgRelay.Durum_15 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_15" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_16", Model.ProgRelay.Durum_16 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_16" class="custom-control-label">Aç</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_3", Model.ProgRelay.Role_3 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_3" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 3).WKapi_Adi.Trim()</label>
+                        }
+                        else if (Model.PanelModel == (int)PanelModel.Panel_302)
+                        {
+                            <div class="col-md-6">
+                                <label class="text-center text-muted">Master Role</label>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_1", Model.ProgRelay.Role_1 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_1" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 1).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_2", Model.ProgRelay.Role_2 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_2" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 2).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div hidden>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_3", Model.ProgRelay.Role_3 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_3" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 3).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_4", Model.ProgRelay.Role_4 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_4" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 4).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_5", Model.ProgRelay.Role_5 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_5" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 5).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_6", Model.ProgRelay.Role_6 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_6" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 6).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_7", Model.ProgRelay.Role_7 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_7" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 7).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_8", Model.ProgRelay.Role_8 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_8" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 8).WKapi_Adi.Trim()</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_9", Model.ProgRelay.Role_9 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_9" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 9).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_10", Model.ProgRelay.Role_10 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_10" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 10).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_11", Model.ProgRelay.Role_11 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_11" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 11).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_12", Model.ProgRelay.Role_12 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_12" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 12).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_13", Model.ProgRelay.Role_13 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_13" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 13).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_14", Model.ProgRelay.Role_14 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_14" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 14).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_15", Model.ProgRelay.Role_15 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_15" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 15).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_16", Model.ProgRelay.Role_16 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_16" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 16).WKapi_Adi.Trim()</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_4", Model.ProgRelay.Role_4 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_4" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 4).WKapi_Adi.Trim()</label>
+                            <div class="col-md-6">
+                                <label class="text-muted text-center">Durumu</label>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_1", Model.ProgRelay.Durum_1 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_1" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_2", Model.ProgRelay.Durum_2 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_2" class="custom-control-label">Aç</label>
+                                </div>
+                                <div hidden>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_3", Model.ProgRelay.Durum_3 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_3" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_4", Model.ProgRelay.Durum_4 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_4" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_5", Model.ProgRelay.Durum_5 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_5" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_6", Model.ProgRelay.Durum_6 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_6" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_7", Model.ProgRelay.Durum_7 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_7" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_8", Model.ProgRelay.Durum_8 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_8" class="custom-control-label">Aç</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_9", Model.ProgRelay.Durum_9 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_9" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_10", Model.ProgRelay.Durum_10 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_10" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_11", Model.ProgRelay.Durum_11 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_11" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_12", Model.ProgRelay.Durum_12 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_12" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_13", Model.ProgRelay.Durum_13 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_13" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_14", Model.ProgRelay.Durum_14 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_14" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_15", Model.ProgRelay.Durum_15 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_15" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_16", Model.ProgRelay.Durum_16 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_16" class="custom-control-label">Aç</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_5", Model.ProgRelay.Role_5 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_5" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 5).WKapi_Adi.Trim()</label>
+                        }
+                        else if (Model.PanelModel == (int)PanelModel.Panel_304)
+                        {
+                            <div class="col-md-6">
+                                <label class="text-center text-muted">Master Role</label>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_1", Model.ProgRelay.Role_1 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_1" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 1).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_2", Model.ProgRelay.Role_2 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_2" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 2).WKapi_Adi.Trim()</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_3", Model.ProgRelay.Role_3 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_3" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 3).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Role_4", Model.ProgRelay.Role_4 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Role_4" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 4).WKapi_Adi.Trim()</label>
+                                </div>
+                                <div hidden>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_5", Model.ProgRelay.Role_5 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_5" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 5).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_6", Model.ProgRelay.Role_6 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_6" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 6).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_7", Model.ProgRelay.Role_7 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_7" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 7).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_8", Model.ProgRelay.Role_8 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_8" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 8).WKapi_Adi.Trim()</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_9", Model.ProgRelay.Role_9 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_9" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 9).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_10", Model.ProgRelay.Role_10 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_10" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 10).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_11", Model.ProgRelay.Role_11 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_11" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 11).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_12", Model.ProgRelay.Role_12 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_12" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 12).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_13", Model.ProgRelay.Role_13 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_13" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 13).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_14", Model.ProgRelay.Role_14 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_14" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 14).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_15", Model.ProgRelay.Role_15 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_15" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 15).WKapi_Adi.Trim()</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Role_16", Model.ProgRelay.Role_16 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Role_16" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 16).WKapi_Adi.Trim()</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_6", Model.ProgRelay.Role_6 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_6" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 6).WKapi_Adi.Trim()</label>
+                            <div class="col-md-6">
+                                <label class="text-muted text-center">Durumu</label>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_1", Model.ProgRelay.Durum_1 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_1" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_2", Model.ProgRelay.Durum_2 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_2" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_3", Model.ProgRelay.Durum_3 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_3" class="custom-control-label">Aç</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("Durum_4", Model.ProgRelay.Durum_4 ?? false, new { @class = "custom-control-input" })
+                                    <label for="Durum_4" class="custom-control-label">Aç</label>
+                                </div>
+                                <div hidden>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_5", Model.ProgRelay.Durum_5 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_5" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_6", Model.ProgRelay.Durum_6 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_6" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_7", Model.ProgRelay.Durum_7 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_7" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_8", Model.ProgRelay.Durum_8 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_8" class="custom-control-label">Aç</label>
+                                    </div>
+
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_9", Model.ProgRelay.Durum_9 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_9" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_10", Model.ProgRelay.Durum_10 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_10" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_11", Model.ProgRelay.Durum_11 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_11" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_12", Model.ProgRelay.Durum_12 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_12" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_13", Model.ProgRelay.Durum_13 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_13" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_14", Model.ProgRelay.Durum_14 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_14" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_15", Model.ProgRelay.Durum_15 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_15" class="custom-control-label">Aç</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        @Html.CheckBox("Durum_16", Model.ProgRelay.Durum_16 ?? false, new { @class = "custom-control-input" })
+                                        <label for="Durum_16" class="custom-control-label">Aç</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_7", Model.ProgRelay.Role_7 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_7" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 7).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_8", Model.ProgRelay.Role_8 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_8" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 8).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_9", Model.ProgRelay.Role_9 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_9" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 9).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_10", Model.ProgRelay.Role_10 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_10" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 10).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_11", Model.ProgRelay.Role_11 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_11" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 11).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_12", Model.ProgRelay.Role_12 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_12" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 12).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_13", Model.ProgRelay.Role_13 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_13" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 13).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_14", Model.ProgRelay.Role_14 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_14" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 14).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_15", Model.ProgRelay.Role_15 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_15" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 15).WKapi_Adi.Trim()</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Role_16", Model.ProgRelay.Role_16 ?? false, new { @class = "custom-control-input" })
-                                <label for="Role_16" class="custom-control-label">@Model.DoorNames.Find(x => x.WKapi_ID == 16).WKapi_Adi.Trim()</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="text-muted text-center">Durumu</label>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_1", Model.ProgRelay.Durum_1 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_1" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_2", Model.ProgRelay.Durum_2 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_2" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_3", Model.ProgRelay.Durum_3 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_3" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_4", Model.ProgRelay.Durum_4 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_4" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_5", Model.ProgRelay.Durum_5 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_5" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_6", Model.ProgRelay.Durum_6 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_6" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_7", Model.ProgRelay.Durum_7 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_7" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_8", Model.ProgRelay.Durum_8 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_8" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_9", Model.ProgRelay.Durum_9 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_9" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_10", Model.ProgRelay.Durum_10 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_10" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_11", Model.ProgRelay.Durum_11 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_11" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_12", Model.ProgRelay.Durum_12 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_12" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_13", Model.ProgRelay.Durum_13 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_13" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_14", Model.ProgRelay.Durum_14 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_14" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_15", Model.ProgRelay.Durum_15 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_15" class="custom-control-label">Aç</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBox("Durum_16", Model.ProgRelay.Durum_16 ?? false, new { @class = "custom-control-input" })
-                                <label for="Durum_16" class="custom-control-label">Aç</label>
-                            </div>
-                        </div>
+                        }
+
                         <div class="col-md-12 text-right mt-5">
                             <a href="@Url.Action("ProgRelay","Door")" class="btn btn-sm btn-outline-secondary"><i class="fas fa-ban"></i> Vazgeç</a>
                             <button type="submit" class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i> Güncelle</button>

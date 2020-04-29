@@ -7,5 +7,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
     {
         public ProgRelay2 ProgRelay { get; set; }
         public List<ReaderSettingsNew> DoorNames { get; set; }
+        public int? PanelModel { get; internal set; }
     }
 }

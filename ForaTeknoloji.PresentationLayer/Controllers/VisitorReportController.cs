@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
@@ -77,6 +78,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
             };
             TempData["VisitorsList"] = liste;
+            TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
+            TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
             return View(model);
         }
 
@@ -94,7 +97,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public void ZiyaretciListesi()
         {
             List<ZiyaretciRaporList> liste = new List<ZiyaretciRaporList>();
-
+            
             liste = TempData["VisitorsList"] as List<ZiyaretciRaporList>;
 
             if (liste == null || liste.Count == 0)
@@ -106,6 +109,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             worksheet.Cells["A1"].Value = "Ziyaretçi Listesi";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
             worksheet.Cells["A6"].Value = "ID";
             worksheet.Cells["B6"].Value = "Kart ID";
             worksheet.Cells["C6"].Value = "Adı";

@@ -181,7 +181,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var model = new ProgRelayListViewModel
             {
-                Panel_No = _panelSettingsService.GetAllPanelSettings(x=>x.Panel_TCP_Port!=0 && x.Panel_IP1!=0 && x.Panel_IP2!=0 && x.Panel_IP3!=0 && x.Panel_IP4!=0 && dbPanelList.Contains((int)x.Panel_ID)).Select(a => new SelectListItem
+                Panel_No = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)).Select(a => new SelectListItem
                 {
                     Text = (a.Panel_ID + " - " + a.Panel_Name),
                     Value = a.Panel_ID.ToString()
@@ -216,13 +216,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     gunler.Add(gun.Ozel_Gun_No, gun.Ozel_Gun_Adi);
                 }
             }
-
+            var panelModel = _panelSettingsService.GetById(Panel_No).Panel_Model;
             var editEntity = _progRelay2Service.GetAllProgRelay2().Find(x => x.Panel_No == Panel_No && x.Haftanin_Gunu == Haftanin_Gunu && x.Zaman_Dilimi == Zaman_Dilimi);
             var doorNames = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Panel_No).OrderBy(x => x.WKapi_ID).ToList();
             var model = new ProgRelay2EditViewModel
             {
                 ProgRelay = editEntity,
-                DoorNames = doorNames
+                DoorNames = doorNames,
+                PanelModel = panelModel
             };
             return View(model);
         }

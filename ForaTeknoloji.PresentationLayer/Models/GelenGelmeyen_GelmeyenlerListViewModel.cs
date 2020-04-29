@@ -1,4 +1,5 @@
-﻿using ForaTeknoloji.Entities.ComplexType;
+﻿using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
+using ForaTeknoloji.Entities.ComplexType;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -18,5 +19,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public DateTime? Saat { get; internal set; }
         public bool? ReportByHour { get; internal set; }
         public IEnumerable<SelectListItem> Birim_No { get; internal set; }
+        public List<EfUserDal.ComplexUser> Kullanıcı { get; internal set; }
     }
 }

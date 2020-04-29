@@ -42,17 +42,15 @@
                         <label>Ünvan</label>
                         <div class="form-group">
                             @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <div class="custom-control">
-                            <label for="exampleFormControlInput1">Tarih</label>
-                            <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
+                        <label for="Ziyaretci">Kullanıcılar</label>
+                        <div class="form-group">
+                            <input type="text" id="Ziyaretci" class="form-control form-control-sm" name="Users" />
+                            <input type="text" id="UserKayitNo" hidden name="User" value="" />
                         </div>
                     </div>
-
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
@@ -65,7 +63,7 @@
                         @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                         @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
                     </div>
-                    
+
 
                 </div>
                 <div class="col-md-2">
@@ -89,6 +87,33 @@
                         <div class="form-group">
                             @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="custom-control">
+                            <label for="Tarih">Başlangıç Tarihi</label>
+                            <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control">
+                            <label for="Tarih2">Bitiş Tarihi</label>
+                            <input class="form-control form-control-sm" name="Bitis_Tarihi" type="date" value="2019-08-13" id="Tarih2">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="custom-control custom-checkbox ">
+                        <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
+                        <label class="custom-control-label mb-2" for="ikiSaat">İki Saat Arası</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="time" class="form-control form-control-sm" disabled name="Baslangic_Saati" id="Saat1" value="@DateTime.Now.ToShortTimeString()" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput2">Bitiş Saati</label>
+                        <input type="time" class="form-control form-control-sm" name="Bitis_Saati" disabled id="Saat2" value="@DateTime.Now.ToShortTimeString()" />
                     </div>
                 </div>
                 <div class="col-md-12 text-right float-right">
@@ -181,7 +206,61 @@
 
     </div>
 </div>
+@*Aktif Kullanıcı Listesi*@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-muted">Kullanıcı Arama</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td>Kayıt No</td>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Şirket</td>
+                            <td>Departman</td>
+                            <td>Blok</td>
+                            <td>Plaka</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Ziyaretçi Grubu</td>
+                        </tr>
+                    </thead>
+                    <tbody id="zyrt">
+                        @foreach (var item in Model.Kullanıcı)
+                        {
+                            <tr>
+                                <td data-kayitno="@item.Kayit_No" data-visitor="@(item.Adi+" "+item.Soyadi )">@item.Kayit_No</td>
+                                <td>@item.ID</td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                <td>@item.Sirket</td>
+                                <td>@item.Departman</td>
+                                <td>@item.Blok</td>
+                                <td>@item.Plaka</td>
+                                <td>@item.Gecis_Grubu</td>
+                                <td>@item.Ziyaretci_Grubu</td>
+                            </tr>
 
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="temizle" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
+                <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
@@ -306,7 +385,8 @@
             frameDoc.document.write('</style>');
             frameDoc.document.write('</head>');
             frameDoc.document.write('<body>');
-            frameDoc.document.write('<h5>Gelmeyen Kişi Raporu (' + new Date().toLocaleDateString() + ')</h5><hr/>');
+            frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
+            frameDoc.document.write('<h5>Gelmeyen Kişi Raporu (' + '@TempData["DateAndTimeView"] ' + ')</h5><hr/>');
             frameDoc.document.write(contents);
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
@@ -360,4 +440,92 @@
     });
     var today = new Date();
     $('#Tarih').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+    $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+</script>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#myTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+        });
+    </script>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#myTable tbody tr").click(function () {
+            var kayitNo = $(this).children("td").data("kayitno");
+            var name = $(this).children("td").data("visitor");
+            $("#Ziyaretci").attr('value', name);
+            $("#UserKayitNo").attr('value', kayitNo);
+            var selected = $(this).hasClass("table-success");
+            $("#myTable tbody tr").removeClass("table-success");
+            if (!selected)
+                $(this).addClass("table-success");
+        });
+
+        $("#TümKullanici").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Ziyaretci").attr("disabled", true);
+                $("#UserKayitNo").attr("value", null);
+                $("#Ziyaretci").attr("value", null);
+            } else {
+                $("#Ziyaretci").attr("disabled", false);
+            }
+        });
+        $("#temizle").click(function () {
+            $("#UserKayitNo").attr("value", null);
+            $("#Ziyaretci").attr("value", null);
+            $("#alert").text("");
+        });
+        $("#Ziyaretci").focus(function () {
+            $("#exampleModal").modal("show");
+            $("#myTable tbody tr").click(function () {
+                var kayitNo = $(this).children("td").data("kayitno");
+                var name = $(this).children("td").data("visitor");
+                $("#Ziyaretci").attr('value', name);
+                $("#UserKayitNo").attr('value', kayitNo);
+            });
+        });
+
+        var today = new Date();
+        $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+        $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+        $("#ikiTarih").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Tarih2").attr("disabled", false);
+            } else {
+                $("#Tarih2").attr("disabled", true);
+            }
+
+        });
+        $("#ikiSaat").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#Saat1").attr("disabled", false);
+                $("#Saat2").attr("disabled", false);
+            } else {
+                $("#Saat1").attr("disabled", true);
+                $("#Saat2").attr("disabled", true);
+            }
+        });
+
+    });
 </script>

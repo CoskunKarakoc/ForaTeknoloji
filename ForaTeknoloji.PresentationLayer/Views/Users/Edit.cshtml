@@ -128,34 +128,49 @@
                                 <label class="control-label col-md-12">Geçiş Grubu(Ana)</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No", null, "", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Grup_No", null, "Ana Grup Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Grup_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Yemekhane Grubu</label>
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="col-md-12">
+                                        @Html.DropDownList("Grup_No_1", null, "Yemekhane Grubu Seçininiz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_2, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <div class="col-md-12 text-center">
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" hidden value="@Model.C3_Grup" name="CC3_GrupHiden" class="custom-control-input" id="3GecisHidden" />
                                                     <input type="checkbox" value="" name="C3_Grup" class="custom-control-input" id="3Gecis" />
                                                     <label class="custom-control-label" for="3Gecis">3 Geçiş Grubu</label>
+                                                  
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-4">
                                     <a href="@Url.Action("Grup","Users",new { DeleteID=Model.ID })" class="btn btn-sm btn-secondary">Grup 2 ve 3'ü Sil</a>
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <hr />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-4">Geçiş Grubu 2</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No_2", null, "", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Grup_No_2", null, "Geçiş Grubu 2 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Grup_No_2, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -164,7 +179,7 @@
                                 <label class="control-label col-md-4">Geçiş Grubu 3</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.DropDownList("Grup_No_3", null, "", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.DropDownList("Grup_No_3", null, "Geçiş Grubu 3 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                                         @Html.ValidationMessageFor(model => model.Grup_No_3, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -958,9 +973,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <br />
-                            <br />
-                            <br />
                             <div class="form-group  mt-2">
                                 <label class="control-label col-md-4">Açıklama</label>
                                 <div class="col-md-12">

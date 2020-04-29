@@ -28,13 +28,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
+        private IReaderSettingsNewService _readerSettingsNewService;
         public DBUsers user;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
         List<int> dbAltDepartmanList;
-        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
+        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IReaderSettingsNewService readerSettingsNewService)
         {
 
             user = CurrentSession.User;
@@ -54,6 +55,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
             _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
+            _readerSettingsNewService = readerSettingsNewService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
             dbSirketList = new List<int>();
@@ -130,16 +132,27 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             if (id != null)
             {
+                List<ReaderSettingsNew> kapiListesi = new List<ReaderSettingsNew>();
                 var entity = _alarmlarService.GetById((int)id);
                 var paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0 && dbPanelList.Contains((int)x.Panel_ID));
                 var kullanıcılar = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)).OrderBy(x => x.Kayit_No).ToList();
                 var seciliKullanici = _userService.GetById((int)entity.User_ID);
                 var alarmTipleri = _alarmTipleriService.GetAllAlarmlar();
-                List<int> KapıListesi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+
+                var panelModel = _panelSettingsService.GetById((int)entity.Panel_No).Panel_Model;
+                if (panelModel == (int)PanelModel.Panel_301)
+                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 8);
+                else if (panelModel == (int)PanelModel.Panel_302)
+                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 2);
+                else if (panelModel == (int)PanelModel.Panel_304)
+                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 4);
+                else
+                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 1);
+
                 List<int> HariciAlarmRolesi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
                 ViewBag.Panel_No = new SelectList(paneller, "Panel_ID", "Panel_Name", entity.Panel_No);
                 ViewBag.Alarm_Tipi = new SelectList(alarmTipleri, "Alarm_Tipi", "Adi", entity.Alarm_Tipi);
-                ViewBag.Kapi_No = new SelectList(KapıListesi, entity.Kapi_No);
+                ViewBag.Kapi_No = new SelectList(kapiListesi, "WKapi_ID", "WKapi_Adi", entity.Kapi_No);
                 ViewBag.Kapi_Role_No = new SelectList(HariciAlarmRolesi, entity.Kapi_Role_No);
                 var model = new AlarmEditListViewModel
                 {
@@ -222,6 +235,43 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(alarmlar);
         }
 
+
+        public ActionResult KapiListesi(int? Paneller)
+        {
+            if (Paneller != 0 && Paneller != null)
+            {
+                var panelModel = _panelSettingsService.GetById((int)Paneller).Panel_Model;
+                List<ReaderSettingsNew> list = new List<ReaderSettingsNew>();
+                if (panelModel == (int)PanelModel.Panel_301)
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 8);
+                else if (panelModel == (int)PanelModel.Panel_302)
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 2);
+                else if (panelModel == (int)PanelModel.Panel_304)
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 4);
+                else
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 1);
+
+                if (list.Count == 0)
+                {
+                    List<SelectListItem> defaultValuee = new List<SelectListItem>();
+                    defaultValuee.Add(new SelectListItem { Text = "Kapı Seçiniz...", Value = 0.ToString() });
+                    return Json(defaultValuee, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var selectKapi = list.Select(a => new SelectListItem
+                    {
+                        Text = a.WKapi_Adi,
+                        Value = a.WKapi_ID.ToString()
+                    });
+                    return Json(selectKapi, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            defaultValue.Add(new SelectListItem { Text = "Alt Departman Seçiniz...", Value = 0.ToString() });
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
 
 
         public ActionResult DatabaseRemove(int? id)

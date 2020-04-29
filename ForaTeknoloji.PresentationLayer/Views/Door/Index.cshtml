@@ -37,12 +37,36 @@
                             <div class="col-md-4">
                                 @foreach (var item in Model.ReaderList)
                                 {
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" id="@("Kapi_"+item.WKapi_ID)" name="@("Kapi_"+item.WKapi_ID)" value="true" class="custom-control-input" />
-                                        <label class="custom-control-label" for="@("Kapi_"+item.WKapi_ID)">@item.WKapi_Adi.Trim()</label>
-                                    </div>
-
+                                    if (Model.PanelModeli == (int)PanelModel.Panel_301)
+                                    {
+                                        if (item.WKapi_ID <= 8)
+                                        {
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="@("Kapi_"+item.WKapi_ID)" name="@("Kapi_"+item.WKapi_ID)" value="true" class="custom-control-input" />
+                                                <label class="custom-control-label" for="@("Kapi_"+item.WKapi_ID)">@item.WKapi_Adi.Trim()</label>
+                                            </div>
+                                        }
+                                    }
+                                    else if (Model.PanelModeli == (int)PanelModel.Panel_302)
+                                    {
+                                        if (item.WKapi_ID <= 2)
+                                        {
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="@("Kapi_"+item.WKapi_ID)" name="@("Kapi_"+item.WKapi_ID)" value="true" class="custom-control-input" />
+                                                <label class="custom-control-label" for="@("Kapi_"+item.WKapi_ID)">@item.WKapi_Adi.Trim()</label>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item.WKapi_ID <= 4)
+                                        {
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="@("Kapi_"+item.WKapi_ID)" name="@("Kapi_"+item.WKapi_ID)" value="true" class="custom-control-input" />
+                                                <label class="custom-control-label" for="@("Kapi_"+item.WKapi_ID)">@item.WKapi_Adi.Trim()</label>
+                                            </div>
+                                        }
+                                    }
                                 }
                                 <hr />
                                 <div class="custom-control custom-checkbox">

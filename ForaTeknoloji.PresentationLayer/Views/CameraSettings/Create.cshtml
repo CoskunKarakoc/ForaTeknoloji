@@ -153,5 +153,28 @@
     $(document).ready(function () {
         $('.chosen-select').chosen();
         $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+
+        $("#Panel_ID").chosen().change(function () {
+            var panelNo = $(this).val();
+            if (panelNo == 0 || panelNo == null) {
+                $("#Kapi_ID").empty();
+                $("#Kapi_ID").append('<option > Kapı Seçiniz... </option>');
+            } else {
+                $.ajax({
+                    url: '/CameraSettings/KapiListesi?Paneller=' + panelNo,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#Kapi_ID").empty();
+                    $("#Kapi_ID").append('<option > Kapı Seçiniz... </option>');
+                    $.each(data, function (index, row) {
+                        $("#Kapi_ID").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    })
+                });
+            }
+
+        });
+
+
     });
 </script>
