@@ -25,13 +25,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
+        private IDBUsersKapiService _dBUsersKapiService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
+        List<int> dbDoorList;
         List<int> dbSirketList;
         List<int> dbAltDepartmanList;
-        public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService, IDBUsersPanelsService dBUsersPanelsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
+        public InsideOutReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IReportService reportService, IReaderSettingsService readerSettingsService, IDBUsersPanelsService dBUsersPanelsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IDBUsersKapiService dBUsersKapiService)
         {
 
 
@@ -50,9 +52,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
             _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
+            _dBUsersKapiService = dBUsersKapiService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             dbSirketList = new List<int>();
             dbAltDepartmanList = new List<int>();
             foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
@@ -63,6 +67,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 dbPanelList.Add((int)dbUserPanelNo);
             }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
+            }
             foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
             {
                 dbSirketList.Add((int)dbUserSirketNo);
@@ -72,6 +80,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
             }
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetDoorList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
             _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
@@ -284,7 +293,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Reader(int Paneller)
         {
             //var nesne = _readerSettingsService.GetAllreaderSettings(x => x.Panel_ID == Paneller);
-            var nesne = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller);
+            var nesne = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && dbDoorList.Contains(x.Kayit_No));
             return Json(nesne, JsonRequestBehavior.AllowGet);
         }
 

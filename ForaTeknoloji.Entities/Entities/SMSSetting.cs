@@ -58,5 +58,10 @@ namespace ForaTeknoloji.Entities.Entities
         [Column("HerGirisCikista Mesaj")]
         [StringLength(250)]
         public string HerGirisCikista_Mesaj { get; set; }
+
+        [Column("PanelBaglantiDurumu Gonder")]
+        public bool? PanelBaglantiDurumu_Gonder { get; set; }
+
+
     }
 }

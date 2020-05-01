@@ -232,55 +232,66 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="offset-1 col-md-10 mt-3 mb-4">
+                                <div class="offset-3 col-md-6 mt-3 mb-4">
                                     <div class="card border-left-success shadow-lg h-100 py-2">
                                         <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Paneller</div>
-                                                </div>
-                                                <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                                    <thead class="table-success">
-                                                        <tr>
-                                                            <td>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="AllPanel" />
-                                                                    <label class="custom-control-label" for="AllPanel"></label>
-                                                                </div>
-                                                            </td>
-                                                            <td>Panel ID</td>
-                                                            <td>Panel Adı</td>
-                                                            <td>Panel IP Adres</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in Model.PanelList)
-                                                        {
+                                            <p class="text-success card-title">Panel ve Kapı Seçimi</p>
+                                            <hr />
+                                            <div id="jstreeDoor">
+                                            </div>
+                                            <input type="hidden" name="selectedItemsDoor" id="selectedItemsDoor" />
+                                            @*<div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Paneller</div>
+                                                    </div>
+                                                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                        <thead class="table-success">
                                                             <tr>
                                                                 <td>
-                                                                    @if (Model.UserPanelList.Any(x => x.Panel_No == item.Panel_ID))
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" checked name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
-                                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
-                                                                        </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
-                                                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
-                                                                        </div>
-                                                                    }
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                                                        <label class="custom-control-label" for="AllPanel"></label>
+                                                                    </div>
                                                                 </td>
-                                                                <td>@item.Panel_ID</td>
-                                                                <td>@item.Panel_Name</td>
-                                                                <td>@(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</td>
+                                                                <td>Panel ID</td>
+                                                                <td>Panel Adı</td>
+                                                                <td>Panel IP Adres</td>
                                                             </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in Model.PanelList)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @if (Model.UserPanelList.Any(x => x.Panel_No == item.Panel_ID))
+                                                                        {
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" checked name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                                                            </div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                                                            </div>
+                                                                        }
+                                                                    </td>
+                                                                    <td>@item.Panel_ID</td>
+                                                                    <td>@item.Panel_Name</td>
+                                                                    <td>@(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+
+
+
+
+
+
+                                                </div>*@
 
                                         </div>
                                     </div>
@@ -344,6 +355,54 @@
 
     </script>
 
+    <script type="text/javascript">
+        $(function () {
+            $('#jstreeDoor').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItemsDoor = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItemsDoor.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItemsDoor').val(JSON.stringify(selectedItemsDoor));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.JsonDoor)
+                    },
+                "checkbox": {
+                    "keep_selected_style": false,
+
+                },
+                "plugins": ["wholerow", "checkbox"],
+                });
+
+
+        });
+
+    </script>
+
+
+
+
+
     <script>
         $(document).ready(function () {
             jQuery("#jstree").bind("loaded.jstree", function (event, data) {
@@ -361,6 +420,29 @@
             });
         });
     </script>
+
+
+    <script>
+        $(document).ready(function () {
+            jQuery("#jstreeDoor").bind("loaded.jstree", function (event, data) {
+                $.ajax({
+                    url: '/SecuritySettings/TreeViewEditCheckListForPanelAndDoor?Kullanici_Adi=' + $("#Kullanici_Adi").val(),
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $('#jstreeDoor').jstree("open_node", 1);
+                    $.each(data, function (index, row) {
+                        var element = "#" + row;
+                        $('#jstreeDoor').jstree("check_node", element);
+                    })
+                });
+            });
+        });
+    </script>
+
+
+
+
 
 
 }

@@ -24,12 +24,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersKapiService _dBUsersKapiService;
+        private IReaderSettingsNewService _readerSettingsNewService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
+        List<int> dbDoorList;
         List<int> dbSirketList;
-        public OutherReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService)
+        public OutherReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersKapiService dBUsersKapiService, IReaderSettingsNewService readerSettingsNewService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -41,11 +44,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService = reportService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _doorNamesService = doorNamesService;
+            _dBUsersKapiService = dBUsersKapiService;
+            _readerSettingsNewService = readerSettingsNewService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             dbSirketList = new List<int>();
             foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
             {
@@ -55,13 +61,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 dbPanelList.Add((int)dbUserPanelNo);
             }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
+            }
             foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
             {
                 dbSirketList.Add((int)dbUserSirketNo);
             }
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);//Account olan kullanıcının panel listeleme metoduna kullanıcı gönderiliyor 
+            _reportService.GetDoorList(user == null ? new DBUsers { } : user);//Account olan kullanıcının kapı listeleme metoduna kullanıcı gönderiliyor 
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);//Account olan kullanıcının şirket listeleme metoduna kullanıcı gönderiliyor
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);//Account olan kullanıcının departman listeleme metoduna kullanıcı gönderiliyor
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);//Account olan kullanıcının alt departman listeleme metoduna kullanıcı gönderiliyor 
         }
 
 
@@ -108,7 +120,39 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult PanelKapiListesi(int? PanelNo)
+        {
+            if (PanelNo != null && PanelNo != 0)
+            {
+                List<ReaderSettingsNew> readerSettingsNews = new List<ReaderSettingsNew>();
+                if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_301)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 8);
+                }
+                else if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_302)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 2);
+                }
+                else if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_304)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 4);
+                }
+                else
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 1);
+                }
 
+                List<SelectListItem> doorNameList = new List<SelectListItem>();
+                var selectedPanel = readerSettingsNews.Select(a => new SelectListItem
+                {
+                    Text = a.WKapi_Adi,
+                    Value = a.WKapi_ID.ToString()
+                });
+                return Json(selectedPanel, JsonRequestBehavior.AllowGet);
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
 
 
         //Export Excell

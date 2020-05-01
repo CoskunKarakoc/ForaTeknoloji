@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -120,6 +121,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var dbUserAltDepartmanList = _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == Kullanici_Adi);
             var altDepartmanList = _altDepartmanService.GetAllAltDepartman();
             TreeViewDataBindDepartmanAndAltDepartman();
+            TreeViewDataBindPanelAndKapi();
             var model = new EditSecurityListViewModel
             {
                 Kullanicilar = kullanici,
@@ -144,13 +146,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(DBUsers dBUsers, string selectedItems, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
+        public ActionResult Edit(DBUsers dBUsers, string selectedItems, string selectedItemsDoor, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             if (ModelState.IsValid)
             {
                 if (dBUsers != null)
                 {
                     List<TreeViewNode> items = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
+                    List<TreeViewNode> DoorItems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItemsDoor);
                     List<DBUsersAltDepartman> dBUsersAltDepartmen = new List<DBUsersAltDepartman>();
                     _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
                     _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
@@ -169,14 +172,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     }
 
 
-
+                    DbUsersDoorAndPanelAddDatabase(DoorItems, dBUsers);
 
                     DBUserSirketUpdate(dBUsers, Sirketler);
-                    DBUserPanelUpdate(dBUsers, Paneller);
+                    // DBUserPanelUpdate(dBUsers, Paneller);
                     //DBUserDepartmanUpdate(dBUsers, Departmanlar);
                     var updatedUser = _dBUsersService.UpdateDBUsers(dBUsers);
-                    //Spot Monitor İçin Panel ve Kapı Listesi Oluşturma
-                    DBUserKapiFill(updatedUser, Paneller);
                     if (updatedUser.SysAdmin == true)
                     {
                         var MenuUserList = _operatorTransactionListService.GetByKullaniciAdi(updatedUser.Kullanici_Adi);
@@ -266,6 +267,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Yetkisiz Erişim!");
             }
             TreeViewDataBindDepartmanAndAltDepartman();
+            TreeViewDataBindPanelAndKapi();
             var model = new SecurityCreateViewModel
             {
                 Roller = _dBRolesService.GetAllDBRoles().Select(a => new SelectListItem
@@ -283,29 +285,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Create(string selectedItems, DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
+        public ActionResult Create(string selectedItems, string selectedItemsDoor, DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             DBUsers addedUser = new DBUsers();
             if (ModelState.IsValid)
             {
                 if (dBUsers != null)
                 {
-                    List<TreeViewNode> items = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
-                    List<DBUsersAltDepartman> dBUsersAltDepartmen = new List<DBUsersAltDepartman>();
-                    foreach (var treeEntity in items)
-                    {
-                        int AltDepartmanID = Convert.ToInt32(treeEntity.id);
-                        var altDepartmanEntity = _altDepartmanService.GetAllAltDepartman().FirstOrDefault(x => x.Alt_Departman_No == AltDepartmanID);
-                        var addedDbUserAltDepartman = new DBUsersAltDepartman { Departman_No = altDepartmanEntity.Departman_No, Alt_Departman_No = altDepartmanEntity.Alt_Departman_No, Kullanici_Adi = dBUsers.Kullanici_Adi };
-                        var checkUserDBDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Departman_No == altDepartmanEntity.Departman_No);
-                        if (checkUserDBDepartman == null || checkUserDBDepartman.Count == 0)
-                        {
-                            var addedDBUserDepartman = new DBUsersDepartman { Kullanici_Adi = dBUsers.Kullanici_Adi, Departman_No = altDepartmanEntity.Departman_No };
-                            _dBUsersDepartmanService.AddDBUsersDepartman(addedDBUserDepartman);
-                        }
-                        _dBUsersAltDepartmanService.AddDBUsersAltDepartman(addedDbUserAltDepartman);
-                    }
-
                     var Kullanici = _dBUsersService.GetById(dBUsers.Kullanici_Adi);
                     if (Kullanici != null && Kullanici.Sifre == dBUsers.Sifre)
                     {
@@ -320,6 +306,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         }
                     }
                     addedUser = _dBUsersService.AddDBUsers(dBUsers);
+
+                    List<TreeViewNode> items = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
+                    List<TreeViewNode> DoorItems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItemsDoor);
+                    List<DBUsersAltDepartman> dBUsersAltDepartmen = new List<DBUsersAltDepartman>();
+                    foreach (var treeEntity in items)
+                    {
+                        int AltDepartmanID = Convert.ToInt32(treeEntity.id);
+                        var altDepartmanEntity = _altDepartmanService.GetAllAltDepartman().FirstOrDefault(x => x.Alt_Departman_No == AltDepartmanID);
+                        var addedDbUserAltDepartman = new DBUsersAltDepartman { Departman_No = altDepartmanEntity.Departman_No, Alt_Departman_No = altDepartmanEntity.Alt_Departman_No, Kullanici_Adi = dBUsers.Kullanici_Adi };
+                        var checkUserDBDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Departman_No == altDepartmanEntity.Departman_No);
+                        if (checkUserDBDepartman == null || checkUserDBDepartman.Count == 0)
+                        {
+                            var addedDBUserDepartman = new DBUsersDepartman { Kullanici_Adi = dBUsers.Kullanici_Adi, Departman_No = altDepartmanEntity.Departman_No };
+                            _dBUsersDepartmanService.AddDBUsersDepartman(addedDBUserDepartman);
+                        }
+                        _dBUsersAltDepartmanService.AddDBUsersAltDepartman(addedDbUserAltDepartman);
+                    }
+                    DbUsersDoorAndPanelAddDatabase(DoorItems, dBUsers);
                     if (addedUser.SysAdmin == true)
                     {
                         var checkOperator = _operatorTransactionListService.GetByKullaniciAdi(addedUser.Kullanici_Adi);
@@ -448,10 +452,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         _dBUsersDepartmanService.AddDBUsersDepartman(new DBUsersDepartman { Kullanici_Adi = addedUser.Kullanici_Adi, Departman_No = departman });
                     }
-                    foreach (var panel in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).Select(a => a.Panel_ID))
-                    {
-                        _dBUsersPanelsService.AddDBUsersPanels(new DBUsersPanels { Kullanici_Adi = addedUser.Kullanici_Adi, Panel_No = panel });
-                    }
                 }
                 else
                 {
@@ -462,17 +462,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             _dBUsersSirketService.AddDBUsersSirket(new DBUsersSirket { Kullanici_Adi = addedUser.Kullanici_Adi, Sirket_No = item });
                         }
                     }
-                    if (Paneller != null)
-                    {
-                        foreach (var item in Paneller)
-                        {
-                            _dBUsersPanelsService.AddDBUsersPanels(new DBUsersPanels { Kullanici_Adi = addedUser.Kullanici_Adi, Panel_No = item });
-                        }
-                    }
                 }
 
-                //Monitor Watch İçin Panel ve kapı seçimi
-                DBUserKapiFill(addedUser, Paneller);
+
                 return RedirectToAction("Index");
             }
             return View(dBUsers);
@@ -504,77 +496,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             throw new Exception("Böyle bir kullanıcı bulunamadı!");
         }
-
-
-        public ActionResult UserDoorToWatch(string Kullanici_Adi)
-        {
-            List<PanelSettings> panelListesi = new List<PanelSettings>();
-            var dbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == Kullanici_Adi);
-            foreach (var item in dbUserPanel)
-            {
-                panelListesi.Add(_panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == item.Panel_No));
-            }
-
-            if (panelListesi.Count == 0)
-                throw new Exception("Bu kullanıcı için panel seçimi yapmanız gerekmektedir!");
-
-            var model = new UserDoorToWatchListViewModel
-            {
-                Panel_ID = panelListesi.Select(a => new SelectListItem
-                {
-                    Text = a.Panel_Name,
-                    Value = a.Panel_ID.ToString()
-                }),
-                Kullanici_Adi = dbUserPanel.FirstOrDefault().Kullanici_Adi
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult UserDoorToWatch(int? Panel_ID, string Kullanici_Adi, List<int> ReaderList)
-        {
-            bool Kapi1 = false, Kapi2 = false, Kapi3 = false, Kapi4 = false, Kapi5 = false, Kapi6 = false, Kapi7 = false, Kapi8 = false;
-            if (Kullanici_Adi != null && Panel_ID != null)
-            {
-                foreach (var item in ReaderList)
-                {
-                    if (item == 1)
-                        Kapi1 = true;
-                    if (item == 2)
-                        Kapi2 = true;
-                    if (item == 3)
-                        Kapi3 = true;
-                    if (item == 4)
-                        Kapi4 = true;
-                    if (item == 5)
-                        Kapi5 = true;
-                    if (item == 6)
-                        Kapi6 = true;
-                    if (item == 7)
-                        Kapi7 = true;
-                    if (item == 8)
-                        Kapi8 = true;
-                }
-                var updatedUserDoor = _dBUsersKapiService.GetAllDBUsersKapi().FirstOrDefault(x => x.Kullanici_Adi == Kullanici_Adi && x.Panel_No == Panel_ID);
-                updatedUserDoor.Kapi_1 = Kapi1;
-                updatedUserDoor.Kapi_2 = Kapi2;
-                updatedUserDoor.Kapi_3 = Kapi3;
-                updatedUserDoor.Kapi_4 = Kapi4;
-                updatedUserDoor.Kapi_5 = Kapi5;
-                updatedUserDoor.Kapi_6 = Kapi6;
-                updatedUserDoor.Kapi_7 = Kapi7;
-                updatedUserDoor.Kapi_8 = Kapi8;
-                _dBUsersKapiService.UpdateDBUsersKapi(updatedUserDoor);
-
-                return RedirectToAction("Index", "SecuritySettings");
-            }
-            else
-            {
-                return RedirectToAction("UserDoorToWatch", "SecuritySettings", new { @Kullanici_Adi = Kullanici_Adi });
-            }
-        }
-
-
 
         public ActionResult ReaderEditList(int PanelID, string Kullanici_Adi)
         {
@@ -623,6 +544,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Panel_No = panel
                     };
                     _dBUsersPanelsService.AddDBUsersPanels(dBUsersPanels);
+                }
+            }
+        }
+
+        public void DBUserDoorUpdate(DBUsers dBUsers, List<int> Door)
+        {
+            _dBUsersKapiService.DeleteByUserName(dBUsers.Kullanici_Adi);
+            if (Door != null)
+            {
+                foreach (var door in Door)
+                {
+                    DBUsersKapi dBUsersKapi = new DBUsersKapi
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Panel_No = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == door).Panel_ID,
+                        Kapi_Kayit_No = door
+                    };
+                    _dBUsersKapiService.AddDBUsersKapi(dBUsersKapi);
                 }
             }
         }
@@ -692,39 +631,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
-        public void DBUsersKapiUpdate(DBUsers dBUsers)
-        {
-            foreach (var panelNo in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).Select(a => a.Panel_ID).Cast<int>().ToList())
-            {
-                var checkDBUsersKapi = _dBUsersKapiService.GetAllDBUsersKapi().FirstOrDefault(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Panel_No == panelNo);
-                if (checkDBUsersKapi == null)
-                {
-                    var entity = new DBUsersKapi
-                    {
-                        Kapi_1 = true,
-                        Kapi_2 = true,
-                        Kapi_3 = true,
-                        Kapi_4 = true,
-                        Kapi_5 = true,
-                        Kapi_6 = true,
-                        Kapi_7 = true,
-                        Kapi_8 = true,
-                        Kapi_9 = true,
-                        Kapi_10 = true,
-                        Kapi_11 = true,
-                        Kapi_12 = true,
-                        Kapi_13 = true,
-                        Kapi_14 = true,
-                        Kapi_15 = true,
-                        Kapi_16 = true,
-                        Kullanici_Adi = dBUsers.Kullanici_Adi,
-                        Panel_No = panelNo
-                    };
-                    _dBUsersKapiService.AddDBUsersKapi(entity);
-                }
 
-            }
-        }
 
         //System Admini olan kullanıcının default şirket,departman,panel check işlemleri
         public void SystemAdminSirketDepartmanPanelFill()
@@ -732,8 +639,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var systemAdmin = _dBUsersService.GetAllDBUsers(x => x.SysAdmin == true);
             foreach (var userSys in systemAdmin)
             {
-                DBUsersKapiUpdate(userSys);
                 DBUserPanelUpdate(userSys, _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).Select(a => a.Panel_ID).Cast<int>().ToList());
+                DBUserDoorUpdate(userSys, _readerSettingsNewService.GetAllReaderSettingsNew().Select(a => a.Kayit_No).Cast<int>().ToList());
                 DBUserSirketUpdate(userSys, _sirketService.GetAllSirketler().Select(a => a.Sirket_No).ToList());
                 DBUserDepartmanUpdate(userSys, _altDepartmanService.GetAllAltDepartman().Select(a => a.Alt_Departman_No).ToList());
             }
@@ -756,7 +663,50 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ViewBag.Json = (new JavaScriptSerializer()).Serialize(nodes);
         }
 
+        public void TreeViewDataBindPanelAndKapi()
+        {
+            List<TreeViewNode> nodes = new List<TreeViewNode>();
+            //Ana Root
+            foreach (PanelSettings type in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0))
+            {
+                nodes.Add(new TreeViewNode { id = type.Panel_ID.ToString(), parent = "#", text = type.Panel_Name });
+            }
+            //SubRoot
+            foreach (ReaderSettingsNew subType in _readerSettingsNewService.GetAllReaderSettingsNew())
+            {
+                if (_panelSettingsService.GetById((int)subType.Panel_ID).Panel_Model == (int)PanelModel.Panel_301)
+                {
+                    if (subType.WKapi_ID <= 8)
+                    {
+                        nodes.Add(new TreeViewNode { id = subType.Panel_ID.ToString() + "-" + subType.Kayit_No.ToString(), parent = subType.Panel_ID.ToString(), text = subType.WKapi_Adi });
+                    }
+                }
+                else if (_panelSettingsService.GetById((int)subType.Panel_ID).Panel_Model == (int)PanelModel.Panel_302)
+                {
+                    if (subType.WKapi_ID <= 2)
+                    {
+                        nodes.Add(new TreeViewNode { id = subType.Panel_ID.ToString() + "-" + subType.Kayit_No.ToString(), parent = subType.Panel_ID.ToString(), text = subType.WKapi_Adi });
+                    }
+                }
+                else if (_panelSettingsService.GetById((int)subType.Panel_ID).Panel_Model == (int)PanelModel.Panel_304)
+                {
+                    if (subType.WKapi_ID <= 4)
+                    {
+                        nodes.Add(new TreeViewNode { id = subType.Panel_ID.ToString() + "-" + subType.Kayit_No.ToString(), parent = subType.Panel_ID.ToString(), text = subType.WKapi_Adi });
+                    }
+                }
+                else
+                {
+                    if (subType.WKapi_ID <= 1)
+                    {
+                        nodes.Add(new TreeViewNode { id = subType.Panel_ID.ToString() + "-" + subType.Kayit_No.ToString(), parent = subType.Panel_ID.ToString(), text = subType.WKapi_Adi });
+                    }
+                }
 
+            }
+            //Serialize to JSON string.
+            ViewBag.JsonDoor = (new JavaScriptSerializer()).Serialize(nodes);
+        }
 
 
         public ActionResult GetDoorToPanel(int? PanelNo)
@@ -764,74 +714,131 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(_readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo), JsonRequestBehavior.AllowGet);
         }
 
-        public void DBUserKapiFill(DBUsers dBUsersKapi, List<int> Panel)
+
+        public void DbUsersDoorAndPanelAddDatabase(List<TreeViewNode> DoorItems, DBUsers dBUsers)
         {
-            if (Panel != null)
+            var checkList = _dBUsersKapiService.GetByKullaniciAdi(dBUsers.Kullanici_Adi);
+            if (dBUsers.SysAdmin == false)
             {
-                var checkDBDoor = _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == dBUsersKapi.Kullanici_Adi);
-                if (checkDBDoor != null || checkDBDoor.Count > 0)
+                if (checkList == null)
                 {
-                    _dBUsersKapiService.DeleteByUserName(dBUsersKapi.Kullanici_Adi);
-                }
-                if (dBUsersKapi.SysAdmin == true)
-                {
-                    foreach (var p in Panel)
+                    foreach (var item in DoorItems)
                     {
-                        var entity = new DBUsersKapi
+                        int readerKayitNo = Convert.ToInt32(item.id);
+                        var panelId = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == readerKayitNo).Panel_ID;
+                        var dbUserKapi = new DBUsersKapi
                         {
-                            Kapi_1 = true,
-                            Kapi_2 = true,
-                            Kapi_3 = true,
-                            Kapi_4 = true,
-                            Kapi_5 = true,
-                            Kapi_6 = true,
-                            Kapi_7 = true,
-                            Kapi_8 = true,
-                            Kapi_9 = true,
-                            Kapi_10 = true,
-                            Kapi_11 = true,
-                            Kapi_12 = true,
-                            Kapi_13 = true,
-                            Kapi_14 = true,
-                            Kapi_15 = true,
-                            Kapi_16 = true,
-                            Kullanici_Adi = dBUsersKapi.Kullanici_Adi,
-                            Panel_No = p
+                            Kapi_Kayit_No = readerKayitNo,
+                            Kullanici_Adi = dBUsers.Kullanici_Adi,
+                            Panel_No = panelId
                         };
-                        _dBUsersKapiService.AddDBUsersKapi(entity);
+                        _dBUsersKapiService.AddDBUsersKapi(dbUserKapi);
+                        var checkListDbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels().FirstOrDefault(x => x.Panel_No == panelId && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
+                        if (checkListDbUserPanel == null)
+                        {
+                            var dbUserPanel = new DBUsersPanels
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Panel_No = panelId
+                            };
+                            _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                        }
+                        else
+                        {
+                            _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                            var dbUserPanel = new DBUsersPanels
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Panel_No = panelId
+                            };
+                            _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                        }
                     }
                 }
                 else
                 {
-                    foreach (var p in Panel)
+                    _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                    _dBUsersKapiService.DeleteByUserName(dBUsers.Kullanici_Adi);
+                    foreach (var item in DoorItems)
                     {
-                        var entity = new DBUsersKapi
+                        int readerKayitNo = Convert.ToInt32(item.id);
+                        var panelId = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == readerKayitNo).Panel_ID;
+                        var dbUserKapi = new DBUsersKapi
                         {
-                            Kapi_1 = false,
-                            Kapi_2 = false,
-                            Kapi_3 = false,
-                            Kapi_4 = false,
-                            Kapi_5 = false,
-                            Kapi_6 = false,
-                            Kapi_7 = false,
-                            Kapi_8 = false,
-                            Kapi_9 = false,
-                            Kapi_10 = false,
-                            Kapi_11 = false,
-                            Kapi_12 = false,
-                            Kapi_13 = false,
-                            Kapi_14 = false,
-                            Kapi_15 = false,
-                            Kapi_16 = false,
-                            Kullanici_Adi = dBUsersKapi.Kullanici_Adi,
-                            Panel_No = p
+                            Kapi_Kayit_No = readerKayitNo,
+                            Kullanici_Adi = dBUsers.Kullanici_Adi,
+                            Panel_No = panelId
                         };
-                        _dBUsersKapiService.AddDBUsersKapi(entity);
+                        _dBUsersKapiService.AddDBUsersKapi(dbUserKapi);
+                        var checkListDbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels().FirstOrDefault(x => x.Panel_No == panelId && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
+                        if (checkListDbUserPanel == null)
+                        {
+                            var dbUserPanel = new DBUsersPanels
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Panel_No = panelId
+                            };
+                            _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (checkList == null)
+                {
+                    foreach (var item in _readerSettingsNewService.GetAllReaderSettingsNew().Select(a => a.Kayit_No))
+                    {
+                        int readerKayitNo = item;
+                        var panelId = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == readerKayitNo).Panel_ID;
+                        var dbUserKapi = new DBUsersKapi
+                        {
+                            Kapi_Kayit_No = readerKayitNo,
+                            Kullanici_Adi = dBUsers.Kullanici_Adi,
+                            Panel_No = panelId
+                        };
+                        _dBUsersKapiService.AddDBUsersKapi(dbUserKapi);
+                        var checkListDbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels().FirstOrDefault(x => x.Panel_No == panelId && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
+                        if (checkListDbUserPanel == null)
+                        {
+                            var dbUserPanel = new DBUsersPanels
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Panel_No = panelId
+                            };
+                            _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                        }
+                    }
+                }
+                else
+                {
+                    _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                    _dBUsersKapiService.DeleteByUserName(dBUsers.Kullanici_Adi);
+                    foreach (var item in _readerSettingsNewService.GetAllReaderSettingsNew().Select(a => a.Kayit_No))
+                    {
+                        int readerKayitNo = item;
+                        var panelId = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == readerKayitNo).Panel_ID;
+                        var dbUserKapi = new DBUsersKapi
+                        {
+                            Kapi_Kayit_No = readerKayitNo,
+                            Kullanici_Adi = dBUsers.Kullanici_Adi,
+                            Panel_No = panelId
+                        };
+                        _dBUsersKapiService.AddDBUsersKapi(dbUserKapi);
+                        var checkListDbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels().FirstOrDefault(x => x.Panel_No == panelId && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
+                        if (checkListDbUserPanel == null)
+                        {
+                            var dbUserPanel = new DBUsersPanels
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Panel_No = panelId
+                            };
+                            _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                        }
                     }
                 }
             }
         }
-
 
 
         /// <summary>
@@ -860,6 +867,36 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return Json(treeViewCheckList, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// Operatör kullanıcısı güncelleme işlemi esnasında panel ve kapı değerlerinin id'ye göre seçim işlemi
+        /// </summary>
+        /// <param name="Kullanici_Adi">
+        /// Güncellenen operatör kullanıcısının kullanıcı adına göre id değerleri gönderiyor.
+        /// </param>
+        /// <returns></returns>
+        public ActionResult TreeViewEditCheckListForPanelAndDoor(string Kullanici_Adi)
+        {
+            List<string> treeViewCheckList = new List<string>();
+            List<TreeViewNode> nodes = new List<TreeViewNode>();
+            List<int> tempPanel = GetEditUserPanelList(Kullanici_Adi);
+            List<int> tempDoor = GetEditUserDoorList(Kullanici_Adi);
+            //Ana Root
+            foreach (PanelSettings type in _panelSettingsService.GetAllPanelSettings(x => tempPanel.Contains((int)x.Panel_ID)))
+            {
+                nodes.Add(new TreeViewNode { id = type.Panel_ID.ToString(), parent = "#", text = type.Panel_Name });
+            }
+            //SubRoot
+            foreach (ReaderSettingsNew subType in _readerSettingsNewService.GetAllReaderSettingsNew(x => tempPanel.Contains((int)x.Panel_ID) && tempDoor.Contains(x.Kayit_No)))
+            {
+                treeViewCheckList.Add(subType.Panel_ID.ToString() + "-" + subType.Kayit_No.ToString());
+            }
+            return Json(treeViewCheckList, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
 
         /// <summary>
         /// Edit sayfasından gelen kullanıcı adına göre o kullanıcıya ait departman listesinin id değerleri geri dönüyor.
@@ -895,6 +932,39 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return dbAltDepartmanListEditUser;
         }
 
+        /// <summary>
+        /// Edit sayfasından gelen kullanıcı adına göre o kullanıcıya ait panel listesinin id değerleri geri dönüyor.
+        /// </summary>
+        /// <param name="Kullanici_Adi">
+        /// Edit sayfasında güncellenen kullanıcının 'Kullanıcı Adı'
+        /// </param>
+        /// <returns></returns>
+        public List<int> GetEditUserPanelList(string Kullanici_Adi)
+        {
+            List<int> dbPanelListEditUser = new List<int>();
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelListEditUser.Add((int)dbUserPanelNo);
+            }
+            return dbPanelListEditUser;
+        }
+
+        /// <summary>
+        /// Edit sayfasından gelen kullanıcı adına göre o kullanıcıya ait kapı listesinin kayit no değerleri geri dönüyor.
+        /// </summary>
+        /// <param name="Kullanici_Adi">
+        /// Edit sayfasında güncellenen kullanıcının 'Kullanıcı Adı'
+        /// </param>
+        /// <returns></returns>
+        public List<int> GetEditUserDoorList(string Kullanici_Adi)
+        {
+            List<int> dbDoorListEditUser = new List<int>();
+            foreach (var dbUserDoorKayitNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorListEditUser.Add((int)dbUserDoorKayitNo);
+            }
+            return dbDoorListEditUser;
+        }
 
     }
 }

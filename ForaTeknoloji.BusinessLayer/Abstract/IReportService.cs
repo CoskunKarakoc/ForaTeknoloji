@@ -105,6 +105,8 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <param name="user">UI Katmanında ki Session'da saklanan kullanıcının bilgileri ile filtreleniyor.</param>
         void GetPanelList(DBUsers user);
 
+        void GetDoorList(DBUsers users);
+
         /// <summary>
         /// Kullanıcı adına göre 'sirketListesi' değişkenine id'leri sıralıyor.
         /// Eğer kullanıcı admin ise şirket listesindeki geçerli şirketlerin tümü ekleniyor.

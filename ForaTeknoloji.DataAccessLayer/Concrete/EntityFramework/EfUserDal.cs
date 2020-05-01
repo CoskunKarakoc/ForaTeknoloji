@@ -76,7 +76,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                                 Birim = tbl8.Adi,
                                 AltDepartman = tbl9.Adi,
                                 Bolum = tbl10.Adi,
-                                Alt_Departman_No = tbl9.Alt_Departman_No
+                                Alt_Departman_No = tbl9.Alt_Departman_No,
+                                Telefon = u.Telefon
                             };
 
                 return filter == null ? query.ToList() : query.Where(filter).ToList();
@@ -174,6 +175,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             public string Aciklama { get; set; }
             public string Adres { get; set; }
             public string TCKimlik { get; set; }
+            public string Telefon { get; set; }
         }
     }
 }

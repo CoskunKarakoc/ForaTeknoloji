@@ -256,7 +256,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<ComplexGroupsDetailNew> nesne = new List<ComplexGroupsDetailNew>();
             if (PanelID == null)
             {
-                PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).FirstOrDefault().Panel_ID;
+                PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)).FirstOrDefault().Panel_ID;
                 var timezonegroupcount = _timeGroupsService.GetAllTimeGroups().Count;
                 if (timezonegroupcount == 0)
                     throw new Exception("Zaman Bölgesi Gerekli!");

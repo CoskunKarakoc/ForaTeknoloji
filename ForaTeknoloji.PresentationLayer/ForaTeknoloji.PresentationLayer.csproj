@@ -2989,6 +2989,7 @@
     <Compile Include="Models\MonitorWatchViewModel.cs" />
     <Compile Include="Models\OfflineAccessReceiveListViewModel.cs" />
     <Compile Include="Models\OperatorLogListViewModel.cs" />
+    <Compile Include="Models\PanelConnectionSMSViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ProgRelay2EditViewModel.cs" />
     <Compile Include="Models\ProgRelayListViewModel.cs" />
@@ -3142,6 +3143,7 @@
     <Content Include="Views\TreeView\Index.cshtml" />
     <Content Include="Views\TreeView\DoorTrigger.cshtml" />
     <Content Include="Views\SecuritySettings\UserDoorToWatch.cshtml" />
+    <Content Include="Views\SMS\PanelConnectionStatus.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

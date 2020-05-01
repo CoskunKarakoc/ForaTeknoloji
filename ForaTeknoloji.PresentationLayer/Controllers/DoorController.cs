@@ -28,11 +28,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersKapiService _dBUsersKapiService;
         public DBUsers user;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
+        List<int> dbDoorList;
         List<int> dbSirketList;
-        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IAccessDatasService accessDatasService, ITatilGunuService tatilGunuService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService)
+        public DoorController(ITaskListService taskListService, IProgRelay2Service progRelay2Service, IDBUsersPanelsService dBUsersPanelsService, IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IAccessDatasService accessDatasService, ITatilGunuService tatilGunuService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersKapiService dBUsersKapiService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -49,8 +51,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _tatilGunuService = tatilGunuService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
+            _dBUsersKapiService = dBUsersKapiService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             dbSirketList = new List<int>();
             foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
             {
@@ -59,6 +63,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
             {
                 dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
             }
             foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
             {
@@ -75,7 +83,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
                 PanelID = list.FirstOrDefault().Panel_ID;
             }
-            var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
+            var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && dbDoorList.Contains(x.Kayit_No)).OrderBy(x => x.WKapi_ID).ToList();
             var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
             var model = new ReaderOperationListViewModel
             {
@@ -192,7 +200,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Value = a.Key.ToString()
                 }),
                 Liste = liste,
-                Kapilar = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == ListPanel_No).OrderBy(x => x.WKapi_ID).ToList()
+                Kapilar = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == ListPanel_No && dbDoorList.Contains(x.Kayit_No)).OrderBy(x => x.WKapi_ID).ToList()
             };
             return View(model);
         }

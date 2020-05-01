@@ -74,7 +74,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Ziyaretci_Ekleme = true,
                 Ziyaretci_Gonderme = true,
                 Ziyaretci_Raporlari = true,
-                Spot_Monitor=true
+                Spot_Monitor = true
             };
             context.OperatorTransactionLists.Add(operatorTransactionList);
 
@@ -1661,7 +1661,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 IcerdeDisarda_Saat = DateTime.Now,
                 IcerdeDisarda_Global_Bolge = 1,
                 HerGirisCikista_Gonder = false,
-                HerGirisCikista_Mesaj = "TEST"
+                HerGirisCikista_Mesaj = "TEST",
+                PanelBaglantiDurumu_Gonder = false
             };
             context.SMSSettings.Add(sMSSetting);
             Sirketler sirket = new Sirketler

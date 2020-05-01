@@ -1,0 +1,138 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.PanelConnectionSMSViewModel
+@{
+    ViewBag.Title = "PanelConnectionStatus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 id="Title" class="card-title"><i class="fas fa-bookmark"></i> Panel Bağlantısı Kopması Durumunda SMS Atılacak Kişiler</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="checkList"></div>
+                        <input type="text" hidden id="PhoneNumber" name="Phone" value="" />
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                            <thead class="table-sm">
+                                <tr>
+                                    <td>Kart ID</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>TC Kimlik</td>
+                                    <td>Telefon</td>
+                                    <td>Departman</td>
+                                    <td>Alt Departman</td>
+                                    <td>Bölüm</td>
+                                    <td>Birim</td>
+                                    <td>Geçiş Grubu</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Kullanicilar)
+                                {
+                                    <tr>
+                                        <td>@item.Kart_ID</td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.TCKimlik</td>
+                                        <td>@item.Telefon</td>
+                                        <td>@item.Departman</td>
+                                        <td>@item.AltDepartman</td>
+                                        <td>@item.Bolum</td>
+                                        <td>@item.Birim</td>
+                                        <td>@item.Gecis_Grubu</td>
+                                        <td><a href="#" onclick="CheckListAddPhone(@item.Telefon)" class="text-success"><i class="fas fa-plus-circle"></i></a></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            //$.fn.dataTable.ext.classes.sPageButton = 'btn btn-sm btn-info mr-1 ml-1';
+            //$.fn.dataTable.ext.classes.sFilterInput = "form-control form-control-sm";
+            $("#UserList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+
+        });
+    </script>
+}
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/SMS/PhoneList',
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            $("checkList").html("");
+            $.each(data, function (index, row) {
+                $("#checkList").append('<span id="' + row.Phone_Number + '" class="badge badge-pill badge-success mr-3">' + row.Phone_Number + '<i onclick="CheckListDeletePhone(' + row.Phone_Number + ')" class="fas fa-close text-default ml-2"></i></span>');
+            });
+        });
+
+    });
+</script>
+
+<script>
+    function CheckListAddPhone(Phone) {
+        $("#" + Phone).remove();
+        $("#checkList").append('<span id="' + Phone + '" class="badge badge-pill badge-success mr-3">' + Phone + '<i onclick="CheckListDeletePhone(' + Phone + ')" class="fas fa-close text-default ml-2"></i></span>');
+        $.ajax({
+            url: '/SMS/PhoneAdd?Phone=' + Phone,
+            type: 'POST',
+            dataType: 'json'
+        });
+    }
+
+    function CheckListDeletePhone(Phone) {
+        $("#" + Phone).remove();
+        $.ajax({
+            url: '/SMS/PhoneRemove?Phone=' + Phone,
+            type: 'POST',
+            dataType: 'json'
+        });
+    }
+
+
+</script>

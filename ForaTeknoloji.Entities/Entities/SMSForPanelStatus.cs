@@ -9,23 +9,15 @@ using System.Threading.Tasks;
 
 namespace ForaTeknoloji.Entities.Entities
 {
-    [Table("DBUsersKapi")]
-    public class DBUsersKapi : IEntity
+    [Table("SMSForPanelStatus")]
+    public partial class SMSForPanelStatus : IEntity
     {
         [Key]
         [Column("Kayit No")]
         public int Kayit_No { get; set; }
 
-        [Column("Kullanici Adi")]
-        [Required]
+        [Column("Phone Number")]
         [StringLength(50)]
-        public string Kullanici_Adi { get; set; }
-
-        [Column("Panel No")]
-        public int? Panel_No { get; set; }
-
-        [Column("Kapi Kayit No")]
-        public int? Kapi_Kayit_No { get; set; }
-
+        public string Phone_Number { get; set; }
     }
 }

@@ -24,11 +24,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersKapiService _dBUsersKapiService;
         public DBUsers user;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
+        List<int> dbDoorList;
         List<int> dbSirketList;
-        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService, IReportService reportService, IAccessDatasService accessDatasService, ITaskListService taskListService, IReaderSettingsNewMSService readerSettingsNewMSService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService)
+        public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService, IReportService reportService, IAccessDatasService accessDatasService, ITaskListService taskListService, IReaderSettingsNewMSService readerSettingsNewMSService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersKapiService dBUsersKapiService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -44,8 +46,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _readerSettingsNewMSService = readerSettingsNewMSService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
+            _dBUsersKapiService = dBUsersKapiService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             dbSirketList = new List<int>();
             foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
             {
@@ -54,6 +58,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
             {
                 dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
             }
             foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
             {
@@ -100,11 +108,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (PanelID == null)
             {
                 PanelID = _reportService.PanelListesi(user).FirstOrDefault().Panel_ID;
-                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
+                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && dbDoorList.Contains(x.Kayit_No)).OrderBy(x => x.WKapi_ID).ToList();
             }
             else
             {
-                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID).OrderBy(x => x.WKapi_ID).ToList();
+                okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && dbDoorList.Contains(x.Kayit_No)).OrderBy(x => x.WKapi_ID).ToList();
             }
             if (okuyucular == null)
                 throw new Exception("Bu panele ait okuyucu bulunmamaktadır.");

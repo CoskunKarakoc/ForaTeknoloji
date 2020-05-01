@@ -69,7 +69,7 @@
     <!--Chose Select Search---->
     <link href="~/Content/SiteContent/searchSelect.css" rel="stylesheet" />
     <!--Chose Select Search---->
- 
+
 
 </head>
 <body id="page-top">
@@ -214,20 +214,14 @@
                             <div id="collapseTanim" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                 <div class="bg-white py-2 collapse-inner rounded">
                                     <h6 class="collapse-header">Genel Tanımlamalar</h6>
-                                    @{
-                                        DBUsers PaswordusersKayit = CurrentSession.User;
-                                        if (PaswordusersKayit.SysAdmin == true)
-                                        {
-                                            <a class="collapse-item" href="@Url.Action("Index","Company")">Şirket Tanımları</a>
-                                            <a class="collapse-item" href="@Url.Action("Index","Department")">Departman Tanımları</a>
-                                            <a class="collapse-item" href="@Url.Action("Index","AltDepartman")">Alt Departman Tanımları</a>
-                                            <a class="collapse-item" href="@Url.Action("Index","Bolum")">Bölüm Tanımları</a>
-                                            <a class="collapse-item" href="@Url.Action("Index","Birim")">Birim Tanımları</a>
-                                            <a class="collapse-item" href="@Url.Action("Index","Block")">Blok Tanımları</a>
-                                            <a class="collapse-item" href="@Url.Action("Index","Unvan")">Ünvan Tanımları</a>
-                                            <a class="collapse-item" href="@Url.Action("Index","Employment")">Görev Tanımları</a>
-                                        }
-                                    }
+                                    <a class="collapse-item" href="@Url.Action("Index","Company")">Şirket Tanımları</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","Department")">Departman Tanımları</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","AltDepartman")">Alt Departman Tanımları</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","Bolum")">Bölüm Tanımları</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","Birim")">Birim Tanımları</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","Block")">Blok Tanımları</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","Unvan")">Ünvan Tanımları</a>
+                                    <a class="collapse-item" href="@Url.Action("Index","Employment")">Görev Tanımları</a>
                                 </div>
                             </div>
                         </li>

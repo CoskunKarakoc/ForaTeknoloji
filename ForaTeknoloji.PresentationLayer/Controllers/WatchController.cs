@@ -41,6 +41,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _progInitService = progInitService;
             _dBUsersService = dBUsersService;
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetDoorList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
             _reportService.GetPanelAndDoorListForSpotMonitor(user == null ? new DBUsers { } : user);

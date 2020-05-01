@@ -96,6 +96,7 @@
     <Compile Include="Abstract\IReaderSettingsNewDal.cs" />
     <Compile Include="Abstract\IReaderSettingsNewMSDal.cs" />
     <Compile Include="Abstract\ISirketDal.cs" />
+    <Compile Include="Abstract\ISMSForPanelStatusDal.cs" />
     <Compile Include="Abstract\IStatusCodesDal.cs" />
     <Compile Include="Abstract\ITaskCodesDal.cs" />
     <Compile Include="Abstract\ITaskListDal.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfReaderSettingsNewMSDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSirketDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfSMSForPanelStatusDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfSmsSettingsDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfStatusCodesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfTaskCodeDal.cs" />

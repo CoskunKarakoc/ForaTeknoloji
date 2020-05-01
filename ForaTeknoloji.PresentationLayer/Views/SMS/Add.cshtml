@@ -16,40 +16,52 @@
                     @Html.Hidden("Kayit_No", Model.Kayit_No)
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="Kullanici_Adi">Kullanıcı Adı</label>
-                        <div class="col-sm-9"> @Html.TextBox("Kullanici_Adi", Model.Kullanici_Adi, new { @class = "form-control form-control-sm" })</div>
+                        <div class="col-sm-9">@Html.TextBoxFor(model => model.Kullanici_Adi, new { @class = "form-control form-control-sm" }) </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="Sifre">Şifre</label>
-                        <div class="col-sm-9"> @Html.TextBox("Sifre", Model.Sifre, new { @class = "form-control form-control-sm", type = "password" })</div>
+                        <div class="col-sm-9">@Html.TextBoxFor(model => model.Sifre, new { @class = "form-control form-control-sm", type = "password" })</div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label" for="Originator">Originator</label>
-                        <div class="col-sm-9"> @Html.TextBox("Originator", Model.Originator, new { @class = "form-control form-control-sm" })</div>
+                        <div class="col-sm-9">@Html.TextBoxFor(model => model.Originator, new { @class = "form-control form-control-sm" })</div>
                     </div>
-                    @*<div class="panel panel-default">
-                            <div class="panel-heading">
-                                Gelmeyenler Raporu Gönder
-                                <hr />
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Gelmeyenler Raporu Gönder
+                            <hr />
+                        </div>
+                        <div class="panel-body">
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Gelmeyenler_Gonder", Model.Gelmeyenler_Gonder ?? false, new { @class = "custom-control-input" })
+                                <label for="Gelmeyenler_Gonder" class="custom-control-label">Gönder</label>
                             </div>
-                            <div class="panel-body">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("Gelmeyenler_Gonder", Model.Gelmeyenler_Gonder ?? false, new { @class = "custom-control-input" })
-                                    <label for="Gelmeyenler_Gonder" class="custom-control-label">Gönder</label>
-                                </div>
-                                <div class="form-group">
-                                    <Label>Mesaj</Label>
-                                    @Html.TextBox("Gelmeyenler_Mesaj", Model.Gelmeyenler_Mesaj, new { @class = "form-control" })
-                                </div>
+                            <div class="form-group">
+                                <Label>Mesaj</Label>
+                                @Html.TextBoxFor(model => model.Gelmeyenler_Mesaj, new { @class = "form-control form-control-sm" })
+                            </div>
+                            @if (Model.Gelmeyenler_Saat == null)
+                            {
                                 <div class="form-group">
                                     <label for="Gelmeyenler_Saat">Saat</label>
-                                    <input type="time" id="Gelmeyenler_Saat" class="form-control" name="Gelmeyenler_Saat" value="@Model.Gelmeyenler_Saat.Value.ToShortTimeString()" />
+                                    <input type="time" id="Gelmeyenler_Saat" class="form-control form-control-sm" name="Gelmeyenler_Saat" value="@DateTime.Now.ToShortTimeString()" />
                                 </div>
+                            }
+                            else
+                            {
                                 <div class="form-group">
-                                    <label for="Gelmeyenler_Global_Bolge">Global Bölge</label>
-                                    @Html.TextBox("Gelmeyenler_Global_Bolge", Model.Gelmeyenler_Global_Bolge, new { @class = "form-control", type = "number", min = 0 })
+                                    <label for="Gelmeyenler_Saat">Saat</label>
+                                    <input type="time" id="Gelmeyenler_Saat" class="form-control form-control-sm" name="Gelmeyenler_Saat" value="@Model.Gelmeyenler_Saat.Value.ToShortTimeString()" />
                                 </div>
+                            }
+
+                            <div class="form-group">
+                                <label for="Gelmeyenler_Global_Bolge">Global Bölge</label>
+                                @Html.TextBoxFor(model => model.Gelmeyenler_Global_Bolge, new { @class = "form-control form-control-sm", type = "number", min = 0 })
                             </div>
-                        </div>*@
+                        </div>
+                    </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             İçerde/Dışarda Raporu Gönder
@@ -62,11 +74,11 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="Icerde_Mesaj">Mesaj(İçerde)</label>
-                                <div class="col-sm-9">  @Html.TextBox("Icerde_Mesaj", Model.Icerde_Mesaj, new { @class = "form-control form-control-sm" })</div>
+                                <div class="col-sm-9"> @Html.TextBoxFor(model => model.Icerde_Mesaj, new { @class = "form-control form-control-sm" })</div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="Disarda_Mesaj">Mesaj(Dışarda)</label>
-                                <div class="col-sm-9">  @Html.TextBox("Disarda_Mesaj", Model.Disarda_Mesaj, new { @class = "form-control form-control-sm" })</div>
+                                <div class="col-sm-9">@Html.TextBoxFor(model => model.Disarda_Mesaj, new { @class = "form-control form-control-sm" })</div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="IcerdeDisarda_Saat">Saat</label>
@@ -74,7 +86,7 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="IcerdeDisarda_Global_Bolge">Global Bölge</label>
-                                <div class="col-sm-9">  @Html.TextBox("IcerdeDisarda_Global_Bolge", Model.IcerdeDisarda_Global_Bolge, new { @class = "form-control form-control-sm", type = "number", min = 0 })</div>
+                                <div class="col-sm-9">@Html.TextBoxFor(model => model.IcerdeDisarda_Global_Bolge, new { @class = "form-control form-control-sm", type = "number", min = 0 })</div>
                             </div>
                         </div>
                     </div>
@@ -90,7 +102,23 @@
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="HerGirisCikista_Mesaj">Mesaj</label>
-                                <div class="col-sm-9"> @Html.TextBox("HerGirisCikista_Mesaj", Model.HerGirisCikista_Mesaj, new { @class = "form-control form-control-sm" })</div>
+                                <div class="col-sm-9">@Html.TextBoxFor(model => model.HerGirisCikista_Mesaj, new { @class = "form-control form-control-sm" })</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Panel Bağlantısı Koptuğu Anda Gönder
+                            <hr />
+                        </div>
+                        <div class="panel-body">
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("PanelBaglantiDurumu_Gonder", Model.PanelBaglantiDurumu_Gonder ?? false, new { @class = "custom-control-input" })
+                                <label for="PanelBaglantiDurumu_Gonder" class="custom-control-label">Gönder</label>
+                            </div>
+                            <div class="form-group row mt-3">
+                                <a href="@Url.Action("PanelConnectionStatus","SMS")" class="btn btn-sm btn-outline-default mr-3" title="Mesaj Gidecek Kişiler">Mesaj Gidecek Kişileri Seç   <i class="fas fa-user-plus"></i></a>
                             </div>
                         </div>
                     </div>

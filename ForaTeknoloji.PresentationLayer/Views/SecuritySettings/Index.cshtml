@@ -42,7 +42,6 @@
                                 <td>
                                     <a title="Edit" id="edit" href="@Url.Action("Edit","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-edit text-info mr-2"></i></a>
                                     <a title="Check List" href="@Url.Action("UserManagementList","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-check-circle text-primary mr-2"></i></a>
-                                    <a title="Panel Kapı İzni (Spot Monitor İçin)" id="door" href="@Url.Action("UserDoorToWatch","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-door-open text-success mr-2"></i></a>
                                     <a title="Delete" href="@Url.Action("Delete","SecuritySettings",new {kullaniciAdi=item.Kullanici_Adi })" onclick="return confirm('Kullanıcıyı silmek istediğinize emin misiniz?')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
                                 </td>
                             </tr>

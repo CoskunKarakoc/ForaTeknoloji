@@ -330,7 +330,7 @@
                                 <label class="control-label col-md-4">Telefon</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                        @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control form-control-sm", maxlength = 10, pattern = "\\d{10}", title = "Telefon alanına başında 0 olmadan giriş yapmalısınız." } })
                                         @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

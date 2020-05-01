@@ -143,6 +143,7 @@
     <Compile Include="Entities\Maps.cs" />
     <Compile Include="Entities\OperatorTransactionList.cs" />
     <Compile Include="Entities\PanelSettings.cs" />
+    <Compile Include="Entities\SMSForPanelStatus.cs" />
     <Compile Include="Entities\ProgInit.cs" />
     <Compile Include="Entities\ProgRelay2.cs" />
     <Compile Include="Entities\RawGroups.cs" />

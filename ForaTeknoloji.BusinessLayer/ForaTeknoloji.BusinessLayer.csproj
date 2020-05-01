@@ -101,6 +101,7 @@
     <Compile Include="Abstract\IReaderSettingsService.cs" />
     <Compile Include="Abstract\IReportService.cs" />
     <Compile Include="Abstract\ISirketService.cs" />
+    <Compile Include="Abstract\ISMSForPanelStatusService.cs" />
     <Compile Include="Abstract\ISmsSettingsService.cs" />
     <Compile Include="Abstract\IStatusCodesService.cs" />
     <Compile Include="Abstract\ITaskCodeService.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Concrete\ReaderSettingsNewMSManager.cs" />
     <Compile Include="Concrete\ReportManager.cs" />
     <Compile Include="Concrete\SirketManager.cs" />
+    <Compile Include="Concrete\SMSForPanelStatusManager.cs" />
     <Compile Include="Concrete\SmsSettingsManager.cs" />
     <Compile Include="Concrete\StatusCodesManager.cs" />
     <Compile Include="Concrete\TaskCodeManager.cs" />

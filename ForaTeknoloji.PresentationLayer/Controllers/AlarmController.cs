@@ -29,13 +29,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersSirketService _dBUsersSirketService;
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         private IReaderSettingsNewService _readerSettingsNewService;
+        private IDBUsersKapiService _dBUsersKapiService;
         public DBUsers user;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
+        List<int> dbDoorList;
         List<int> dbSirketList;
         List<int> dbAltDepartmanList;
-        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IReaderSettingsNewService readerSettingsNewService)
+        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IReaderSettingsNewService readerSettingsNewService, IDBUsersKapiService dBUsersKapiService)
         {
 
             user = CurrentSession.User;
@@ -56,8 +58,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersSirketService = dBUsersSirketService;
             _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
             _readerSettingsNewService = readerSettingsNewService;
+            _dBUsersKapiService = dBUsersKapiService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             dbSirketList = new List<int>();
             dbAltDepartmanList = new List<int>();
             foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
@@ -68,6 +72,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 dbPanelList.Add((int)dbUserPanelNo);
             }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
+            }
+
             foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
             {
                 dbSirketList.Add((int)dbUserSirketNo);
@@ -141,13 +150,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
                 var panelModel = _panelSettingsService.GetById((int)entity.Panel_No).Panel_Model;
                 if (panelModel == (int)PanelModel.Panel_301)
-                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 8);
+                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 8 && dbDoorList.Contains(x.Kayit_No));
                 else if (panelModel == (int)PanelModel.Panel_302)
-                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 2);
+                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 2 && dbDoorList.Contains(x.Kayit_No));
                 else if (panelModel == (int)PanelModel.Panel_304)
-                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 4);
+                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 4 && dbDoorList.Contains(x.Kayit_No));
                 else
-                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 1);
+                    kapiListesi = _readerSettingsNewService.GetAllReaderSettingsNew(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_ID == entity.Panel_No && x.WKapi_ID <= 1 && dbDoorList.Contains(x.Kayit_No));
 
                 List<int> HariciAlarmRolesi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
                 ViewBag.Panel_No = new SelectList(paneller, "Panel_ID", "Panel_Name", entity.Panel_No);
@@ -197,7 +206,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 maxID = _alarmlarService.GetAllAlarmlar().Count;
             }
-            List<int> KapıListesi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+            List<int> KapıListesi = new List<int> { };
             List<int> HariciAlarmRolesi = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
             ViewBag.Kapi_No = new SelectList(KapıListesi);
             ViewBag.Kapi_Role_No = new SelectList(HariciAlarmRolesi);
@@ -243,13 +252,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var panelModel = _panelSettingsService.GetById((int)Paneller).Panel_Model;
                 List<ReaderSettingsNew> list = new List<ReaderSettingsNew>();
                 if (panelModel == (int)PanelModel.Panel_301)
-                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 8);
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 8 && dbDoorList.Contains(x.Kayit_No));
                 else if (panelModel == (int)PanelModel.Panel_302)
-                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 2);
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 2 && dbDoorList.Contains(x.Kayit_No));
                 else if (panelModel == (int)PanelModel.Panel_304)
-                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 4);
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 4 && dbDoorList.Contains(x.Kayit_No));
                 else
-                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 1);
+                    list = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == Paneller && x.WKapi_ID <= 1 && dbDoorList.Contains(x.Kayit_No));
 
                 if (list.Count == 0)
                 {

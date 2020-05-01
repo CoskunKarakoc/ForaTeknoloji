@@ -17,9 +17,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDoorStatusService _doorStatusService;
         private IReaderSettingsNewService _readerSettingsNewService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersKapiService _dBUsersKapiService;
         DBUsers dBUsers;
         List<int> dbPanelList;
-        public DoorStatusController(IDoorStatusService doorStatusService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService)
+        List<int> dbDoorList;
+        public DoorStatusController(IDoorStatusService doorStatusService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersKapiService dBUsersKapiService)
         {
             dBUsers = CurrentSession.User;
             if (dBUsers == null)
@@ -27,12 +29,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 dBUsers = new DBUsers();
             }
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             _readerSettingsNewService = readerSettingsNewService;
             _doorStatusService = doorStatusService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersKapiService = dBUsersKapiService;
             foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi).Select(a => a.Panel_No))
             {
                 dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
             }
         }
 

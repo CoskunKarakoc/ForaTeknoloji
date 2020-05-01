@@ -35,6 +35,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         private IDBUsersAltDepartmanDal _dBUsersAltDepartmanDal;
         private IDBUsersKapiDal _dBUsersKapiDal;
         public string panelListesi = "0";
+        public string doorListesi = "0";
         public string sirketListesi = "0";
         public string departmanListesi = "0";
         public string altDepartmanListesi = "0";
@@ -78,7 +79,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis, 
                 CodeOperation.Operasyon, AccessDatas.Tarih 
                 FROM (CodeOperation RIGHT JOIN 
-                (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) 
+                (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + @")) 
                 ON CodeOperation.TKod = AccessDatas.Kod ) 
                 WHERE AccessDatas.Kod >= 5 AND AccessDatas.Kod <= 27 ";
 
@@ -107,7 +108,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis, 
                     CodeOperation.Operasyon, AccessDatas.Tarih 
                     FROM (CodeOperation RIGHT JOIN 
-                    (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) 
+                    (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]  AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + @")) 
                     ON CodeOperation.TKod = AccessDatas.Kod ) 
                     WHERE AccessDatas.Kod >= 22 AND AccessDatas.Kod <= 25";
             }
@@ -117,7 +118,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.[Gecis Tipi] As Gecis, 
                     CodeOperation.Operasyon, AccessDatas.Tarih 
                     FROM (CodeOperation RIGHT JOIN 
-                    (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) 
+                    (AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]  AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + @")) 
                     ON CodeOperation.TKod = AccessDatas.Kod ) 
                     WHERE AccessDatas.Kod = " + parameters.Kod + "";
             }
@@ -241,7 +242,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     Sirketler.Adi AS Sirket, AccessDatas.[Panel ID] As Panel, ReaderSettingsNew.[WKapi Adi] As Kapi, 
                     AccessDatas.[Gecis Tipi] As Gecis,CodeOperation.Operasyon,
                     AccessDatas.Tarih 
-                    FROM ReaderSettingsNew RIGHT JOIN (CodeOperation RIGHT JOIN (AccessDatas RIGHT JOIN (Users RIGHT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) ON CodeOperation.TKod = AccessDatas.Kod) ON (ReaderSettingsNew.[WKapi ID] = AccessDatas.[Kapi ID]) AND (ReaderSettingsNew.[Panel ID] = AccessDatas.[Panel ID]) 
+                    FROM ReaderSettingsNew RIGHT JOIN (CodeOperation RIGHT JOIN (AccessDatas RIGHT JOIN (Users RIGHT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) ON CodeOperation.TKod = AccessDatas.Kod) ON (ReaderSettingsNew.[WKapi ID] = AccessDatas.[Kapi ID]) AND (ReaderSettingsNew.[Panel ID] = AccessDatas.[Panel ID]) AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + @")
                     WHERE AccessDatas.Kod >= 26 AND AccessDatas.Kod <= 27 ";
 
             queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
@@ -449,7 +450,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     }
                 }
             }
-  
+
             queryString += " AND AccessDatas.[Gecis Tipi] = 0";
             queryString += ")";
             List<GelenGelmeyen_Gelmeyen> liste = new List<GelenGelmeyen_Gelmeyen>();
@@ -1346,6 +1347,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 queryString += " AND AccessDatas.[Kapi ID] IN(" + kapilar + ")";
             }
 
+            queryString += " AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
+
+
+
             if (parameters.Panel != null)
             {
                 queryString += " AND AccessDatas.[Panel ID] =" + parameters.Panel;
@@ -1582,7 +1587,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 queryString += " AND AccessDatas.[Kapi ID] IN(" + kapilar + ")";
             }
 
-
+            queryString += " AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
 
             if (parameters.Gecis_Tipi == null || parameters.Gecis_Tipi == 3)//Tümü
             {
@@ -1709,7 +1714,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             AccessDatas.[Panel ID] As Panel, ReaderSettingsNew.[WKapi Adi] As Kapi, 
             AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, AccessDatas.[Canli Resim]  
             FROM AccessDatas RIGHT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID] AND AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] 
-            WHERE AccessDatas.Kod = 4 ";
+            WHERE AccessDatas.Kod = 4 AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
             if (parameters.Panel != null)
             {
                 queryString += " AND AccessDatas.[Panel ID] =" + parameters.Panel;
@@ -1839,7 +1844,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 			LEFT JOIN Users ON Visitors.ID = Users.ID)
 			LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND (AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID])
             WHERE AccessDatas.[Kullanici Tipi] = 1 ";
-
+            queryString += " AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
             if (parameters.All_Visitor != true)
             {
                 if (parameters.Visitor != null)
@@ -2397,7 +2402,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
                 " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],AccessDatas.[Canli Resim]" +
                 " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
-                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
+                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")  AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
             //Server-Mod
             //queryString = " SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
             //    "Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket, " +
@@ -2492,7 +2497,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod)
                 LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) 
                 LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]
-                WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
+                WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ") AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
             //queryString = "SELECT DISTINCT TOP 50 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
             //    " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
             //    " Departmanlar.Adi AS Departman," +
@@ -2650,7 +2655,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
                 " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
                 " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
-                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")";
+                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ") AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
             //Server-Mod
             //queryString = " SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
             //    "Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket, " +
@@ -2736,7 +2741,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
               " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
               " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],AccessDatas.[Canli Resim]" +
               " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
-              " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ") AND AccessDatas.[Kayit No] = " + Kayit_No;
+              " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ") AND ReaderSettingsNew.[Kayit No] IN (" + doorListesi + ") AND AccessDatas.[Kayit No] = " + Kayit_No;
             }
             else
             {
@@ -2800,11 +2805,13 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
-            queryString = "SELECT COUNT(*) FROM AccessDatas";
+            queryString = @"SELECT COUNT(*) FROM AccessDatas
+                            LEFT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID]
+                            WHERE AccessDatas.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN (" + spotMonitorKapiListesi + ")";
             //if (panelID != null && KapiID != null)
             //{
-            queryString += " WHERE [Panel ID] IN(" + spotMonitorPanelListesi + ")";
-            queryString += " AND [Kapi ID] IN(" + spotMonitorKapiListesi + ")";
+            // queryString += " WHERE [Panel ID] IN(" + spotMonitorPanelListesi + ")";
+            //queryString += " AND [Kapi ID] IN(" + spotMonitorKapiListesi + ")";
             //}
             using (SqlConnection connection = new SqlConnection(address))
             {
@@ -2852,7 +2859,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID])                    
                     LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID])
                     LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]
-                    WHERE AccessDatas.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND AccessDatas.[Kapi ID] IN( " + spotMonitorKapiListesi + ") ORDER BY AccessDatas.[Kayit No] DESC";
+                    WHERE AccessDatas.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN( " + spotMonitorKapiListesi + ") ORDER BY AccessDatas.[Kayit No] DESC";
             //}
             //else
             //{
@@ -3516,51 +3523,46 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             // }
         }
 
+        public void GetDoorList(DBUsers users)
+        {
+            var doors = _dBUsersKapiDal.GetList(x => x.Kullanici_Adi == users.Kullanici_Adi).OrderBy(x => x.Kullanici_Adi).Select(x => x.Kapi_Kayit_No).ToList();
+            doorListesi = "";
+            if (doors.Count > 0)
+            {
+                doorListesi = "";
+                foreach (var item in doors)
+                {
+                    doorListesi += item + ",";
+                }
+                doorListesi = doorListesi.Substring(0, doorListesi.Length - 1);
+            }
+            else
+            {
+                doorListesi = "0";
+            }
+        }
+
         public void GetPanelAndDoorListForSpotMonitor(DBUsers user)
         {
             var DBUserKapi = _dBUsersKapiDal.GetList(x => x.Kullanici_Adi == user.Kullanici_Adi);
-            if (DBUserKapi != null || DBUserKapi.Count > 0)
+            var DBUserPanel = _dbUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi);
+
+            if (DBUserPanel != null || DBUserPanel.Count > 0)
             {
-                spotMonitorPanelListesi = "";
-                spotMonitorKapiListesi = "";
-                foreach (var item in DBUserKapi)
+                spotMonitorPanelListesi = "1000,";
+                foreach (var item in DBUserPanel)
                 {
                     spotMonitorPanelListesi += item.Panel_No + ",";
-                    spotMonitorKapiListesi += "1000,";
-                    if (item.Kapi_1 == true)
-                        spotMonitorKapiListesi += "1,";
-                    if (item.Kapi_2 == true)
-                        spotMonitorKapiListesi += "2,";
-                    if (item.Kapi_3 == true)
-                        spotMonitorKapiListesi += "3,";
-                    if (item.Kapi_4 == true)
-                        spotMonitorKapiListesi += "4,";
-                    if (item.Kapi_5 == true)
-                        spotMonitorKapiListesi += "5,";
-                    if (item.Kapi_6 == true)
-                        spotMonitorKapiListesi += "6,";
-                    if (item.Kapi_7 == true)
-                        spotMonitorKapiListesi += "7,";
-                    if (item.Kapi_8 == true)
-                        spotMonitorKapiListesi += "8,";
-                    if (item.Kapi_9 == true)
-                        spotMonitorKapiListesi += "9,";
-                    if (item.Kapi_10 == true)
-                        spotMonitorKapiListesi += "10,";
-                    if (item.Kapi_11 == true)
-                        spotMonitorKapiListesi += "11,";
-                    if (item.Kapi_12 == true)
-                        spotMonitorKapiListesi += "12,";
-                    if (item.Kapi_13 == true)
-                        spotMonitorKapiListesi += "13,";
-                    if (item.Kapi_14 == true)
-                        spotMonitorKapiListesi += "14,";
-                    if (item.Kapi_15 == true)
-                        spotMonitorKapiListesi += "15,";
-                    if (item.Kapi_16 == true)
-                        spotMonitorKapiListesi += "16,";
                 }
                 spotMonitorPanelListesi = spotMonitorPanelListesi.Substring(0, spotMonitorPanelListesi.Length - 1);
+            }
+            if (DBUserKapi != null || DBUserKapi.Count > 0)
+            {
+                spotMonitorKapiListesi = "1000,";
+                foreach (var item in DBUserKapi)
+                {
+                    spotMonitorKapiListesi += item.Kapi_Kayit_No + ",";
+                }
                 spotMonitorKapiListesi = spotMonitorKapiListesi.Substring(0, spotMonitorKapiListesi.Length - 1);
             }
         }

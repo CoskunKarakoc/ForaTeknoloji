@@ -41,12 +41,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
+        private IDBUsersKapiService _dBUsersKapiService;
         DBUsers user;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
+        List<int> dbDoorList;
         List<int> dbSirketList;
         List<int> dbAltDepartmanList;
-        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersService dBUsersService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, ITaskListService taskListService, IAccessDatasService accessDatasService, IBirimService birimService, IReaderSettingsNewService readerSettingsNewService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
+        public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersService dBUsersService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, ITaskListService taskListService, IAccessDatasService accessDatasService, IBirimService birimService, IReaderSettingsNewService readerSettingsNewService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IDBUsersKapiService dBUsersKapiService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -72,15 +74,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _taskListService = taskListService;
             _accessDatasService = accessDatasService;
             _birimService = birimService;
+            _dBUsersKapiService = dBUsersKapiService;
             _readerSettingsNewService = readerSettingsNewService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
             _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             dbSirketList = new List<int>();
             dbAltDepartmanList = new List<int>();
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetDoorList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
             _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
@@ -91,6 +96,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
             {
                 dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
             }
             foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
             {
@@ -359,9 +368,26 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (PanelNo != null && PanelNo != 0)
             {
-                var liste = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo);
+                List<ReaderSettingsNew> readerSettingsNews = new List<ReaderSettingsNew>();
+                if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_301)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 8);
+                }
+                else if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_302)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 2);
+                }
+                else if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_304)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 4);
+                }
+                else
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 1);
+                }
+
                 List<SelectListItem> doorNameList = new List<SelectListItem>();
-                var selectedPanel = liste.Select(a => new SelectListItem
+                var selectedPanel = readerSettingsNews.Select(a => new SelectListItem
                 {
                     Text = a.WKapi_Adi,
                     Value = a.WKapi_ID.ToString()
@@ -369,14 +395,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 return Json(selectedPanel, JsonRequestBehavior.AllowGet);
             }
             List<SelectListItem> defaultValue = new List<SelectListItem>();
-            defaultValue.Add(new SelectListItem { Text = "Kapi 1", Value = 1.ToString() });
-            defaultValue.Add(new SelectListItem { Text = "Kapi 2", Value = 2.ToString() });
-            defaultValue.Add(new SelectListItem { Text = "Kapi 3", Value = 3.ToString() });
-            defaultValue.Add(new SelectListItem { Text = "Kapi 4", Value = 4.ToString() });
-            defaultValue.Add(new SelectListItem { Text = "Kapi 5", Value = 5.ToString() });
-            defaultValue.Add(new SelectListItem { Text = "Kapi 6", Value = 6.ToString() });
-            defaultValue.Add(new SelectListItem { Text = "Kapi 7", Value = 7.ToString() });
-            defaultValue.Add(new SelectListItem { Text = "Kapi 8", Value = 8.ToString() });
             return Json(defaultValue, JsonRequestBehavior.AllowGet);
         }
 

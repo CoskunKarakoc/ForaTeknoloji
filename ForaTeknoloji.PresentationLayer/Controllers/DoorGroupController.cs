@@ -25,10 +25,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IPanelSettingsService _panelSettingsService;
         private IDBUsersService _dBUsersService;
         private IDBUsersPanelsService _dBUsersPanelsService;
+        private IDBUsersKapiService _dBUsersKapiService;
         DBUsers dBUsers;
         DBUsers permissionUser;
         List<int> dbPanelList;
-        public DoorGroupController(IDoorGroupsDetailService doorGroupsDetailService, IDoorGroupsMasterService doorGroupsMasterService, IGroupsDetailNewService groupsDetailNewService, IGroupMasterService groupMasterService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IPanelSettingsService panelSettingsService, IDBUsersService dBUsersService, IDBUsersPanelsService dBUsersPanelsService)
+        List<int> dbDoorList;
+        public DoorGroupController(IDoorGroupsDetailService doorGroupsDetailService, IDoorGroupsMasterService doorGroupsMasterService, IGroupsDetailNewService groupsDetailNewService, IGroupMasterService groupMasterService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IPanelSettingsService panelSettingsService, IDBUsersService dBUsersService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersKapiService dBUsersKapiService)
         {
             dBUsers = CurrentSession.User;
             if (dBUsers == null)
@@ -45,10 +47,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _panelSettingsService = panelSettingsService;
             _dBUsersService = dBUsersService;
             _dBUsersPanelsService = dBUsersPanelsService;
+            _dBUsersKapiService = dBUsersKapiService;
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi).Select(a => a.Panel_No))
             {
                 dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
             }
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi);
         }
@@ -229,22 +237,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 var panelModel = _panelSettingsService.GetById((int)PanelID).Panel_Model;
                 if (panelModel == (int)PanelModel.Panel_301)
                 {
-                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 8);
+                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 8 && dbDoorList.Contains(x.Kayit_No));
                     return Json(readerList, JsonRequestBehavior.AllowGet);
                 }
                 else if (panelModel == (int)PanelModel.Panel_302)
                 {
-                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 2);
+                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 2 && dbDoorList.Contains(x.Kayit_No));
                     return Json(readerList, JsonRequestBehavior.AllowGet);
                 }
                 else if (panelModel == (int)PanelModel.Panel_304)
                 {
-                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 4);
+                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 4 && dbDoorList.Contains(x.Kayit_No));
                     return Json(readerList, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 1);
+                    var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && x.WKapi_ID <= 1 && dbDoorList.Contains(x.Kayit_No));
                     return Json(readerList, JsonRequestBehavior.AllowGet);
                 }
 
@@ -257,7 +265,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (PanelID != null)
             {
                 var readerEditList = _doorGroupsDetailService.GetAllDoorGroupsDetail(x => x.Panel_ID == PanelID && x.Kapi_Grup_No == GrupNo).Select(x => x.Kapi_ID);
-                //var readerList = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID);
                 return Json(readerEditList, JsonRequestBehavior.AllowGet);
             }
             return null;

@@ -176,38 +176,7 @@
                                 <input type="checkbox" value="true" name="Tümü" class="custom-control-input" id="TumKapi" />
                                 <label class="custom-control-label" for="TumKapi">Tüm Kapılar</label>
                             </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="1" name="Kapi" class="custom-control-input" id="Kapi1" />
-                                <label class="custom-control-label" for="Kapi1">Kapı 1</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="2" name="Kapi" class="custom-control-input" id="Kapi2" />
-                                <label class="custom-control-label" for="Kapi2">Kapı 2</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="3" name="Kapi" class="custom-control-input" id="Kapi3" />
-                                <label class="custom-control-label" for="Kapi3">Kapı 3</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="4" name="Kapi" class="custom-control-input" id="Kapi4" />
-                                <label class="custom-control-label" for="Kapi4">Kapı 4</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="5" name="Kapi" class="custom-control-input" id="Kapi5" />
-                                <label class="custom-control-label" for="Kapi5">Kapı 5</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="6" name="Kapi" class="custom-control-input" id="Kapi6" />
-                                <label class="custom-control-label" for="Kapi6">Kapı 6</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="7" name="Kapi" class="custom-control-input" id="Kapi7" />
-                                <label class="custom-control-label" for="Kapi7">Kapı 7</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="8" name="Kapi" class="custom-control-input" id="Kapi8" />
-                                <label class="custom-control-label" for="Kapi8">Kapı 8</label>
-                            </div>
+                            <div id="KapiListesi"></div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
@@ -259,70 +228,26 @@
     $(document).ready(function () {
         var panelNo = $("#Panel").val();
         $.ajax({
-            url: '/ReportPersonel/PanelKapiListesi?PanelNo=' + panelNo,
+            url: '/OutherReport/PanelKapiListesi?PanelNo=' + panelNo,
             type: 'GET',
             dataType: 'json'
         }).done(function (data) {
+            $("#KapiListesi").html('');
             $.each(data, function (index, row) {
-                if (row.Value == 1) {
-                    $("label[for='Kapi1']").text(row.Text);
-                }
-                if (row.Value == 2) {
-                    $("label[for='Kapi2']").text(row.Text);
-                }
-                if (row.Value == 3) {
-                    $("label[for='Kapi3']").text(row.Text);
-                }
-                if (row.Value == 4) {
-                    $("label[for='Kapi4']").text(row.Text);
-                }
-                if (row.Value == 5) {
-                    $("label[for='Kapi5']").text(row.Text);
-                }
-                if (row.Value == 6) {
-                    $("label[for='Kapi6']").text(row.Text);
-                }
-                if (row.Value == 7) {
-                    $("label[for='Kapi7']").text(row.Text);
-                }
-                if (row.Value == 8) {
-                    $("label[for='Kapi8']").text(row.Text);
-                }
+                $("#KapiListesi").append('<div class="custom-control custom-checkbox"><input type = "checkbox" value = "' + row.Value + '" name = "Kapi" class= "custom-control-input" id = "' + ('Kapi' + row.Value) + '" /><label class="custom-control-label" for="' + ('Kapi' + row.Value) + '">' + row.Text + '</label></div >');
             });
         });
 
         $("#Panel").chosen().change(function () {
             var panelNo = $(this).val();
             $.ajax({
-                url: '/ReportPersonel/PanelKapiListesi?PanelNo=' + panelNo,
+                url: '/OutherReport/PanelKapiListesi?PanelNo=' + panelNo,
                 type: 'GET',
                 dataType: 'json'
             }).done(function (data) {
+                $("#KapiListesi").html('');
                 $.each(data, function (index, row) {
-                    if (row.Value == 1) {
-                        $("label[for='Kapi1']").text(row.Text);
-                    }
-                    if (row.Value == 2) {
-                        $("label[for='Kapi2']").text(row.Text);
-                    }
-                    if (row.Value == 3) {
-                        $("label[for='Kapi3']").text(row.Text);
-                    }
-                    if (row.Value == 4) {
-                        $("label[for='Kapi4']").text(row.Text);
-                    }
-                    if (row.Value == 5) {
-                        $("label[for='Kapi5']").text(row.Text);
-                    }
-                    if (row.Value == 6) {
-                        $("label[for='Kapi6']").text(row.Text);
-                    }
-                    if (row.Value == 7) {
-                        $("label[for='Kapi7']").text(row.Text);
-                    }
-                    if (row.Value == 8) {
-                        $("label[for='Kapi8']").text(row.Text);
-                    }
+                    $("#KapiListesi").append('<div class="custom-control custom-checkbox"><input type = "checkbox" value = "' + row.Value + '" name = "Kapi" class= "custom-control-input" id = "' + ('Kapi' + row.Value) + '" /><label class="custom-control-label" for="' + ('Kapi' + row.Value) + '">' + row.Text + '</label></div >');
                 });
             });
 

@@ -23,9 +23,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReportService _reportService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDoorNamesService _doorNamesService;
+        private IDBUsersKapiService _dBUsersKapiService;
+        private IReaderSettingsNewService _readerSettingsNewService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
         DBUsers user;
-        public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService)
+        List<int> dbPanelList;
+        List<int> dbDoorList;
+        public VisitorReportController(IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersKapiService dBUsersKapiService, IReaderSettingsNewService readerSettingsNewService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -39,9 +43,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService = reportService;
             _dBUsersPanelsService = dBUsersPanelsService;
             _doorNamesService = doorNamesService;
+            _dBUsersKapiService = dBUsersKapiService;
+            _readerSettingsNewService = readerSettingsNewService;
             kullaniciyaAitPaneller = _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No).ToList();
-
+            dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
+            }
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetDoorList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
 
@@ -52,7 +68,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<Visitors> visitors = new List<Visitors>();
 
             var liste = _reportService.GetZiyaretciListesi(parameters);
-            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != 0 && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
+            var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != 0 && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && dbPanelList.Contains((int)x.Panel_ID));
             visitors = _visitorsService.GetAllVisitors();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
@@ -91,13 +107,45 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(liste, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult PanelKapiListesi(int? PanelNo)
+        {
+            if (PanelNo != null && PanelNo != 0)
+            {
+                List<ReaderSettingsNew> readerSettingsNews = new List<ReaderSettingsNew>();
+                if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_301)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 8);
+                }
+                else if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_302)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 2);
+                }
+                else if (_panelSettingsService.GetById((int)PanelNo).Panel_Model == (int)PanelModel.Panel_304)
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 4);
+                }
+                else
+                {
+                    readerSettingsNews = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelNo && dbDoorList.Contains(x.Kayit_No) && x.WKapi_ID <= 1);
+                }
 
+                List<SelectListItem> doorNameList = new List<SelectListItem>();
+                var selectedPanel = readerSettingsNews.Select(a => new SelectListItem
+                {
+                    Text = a.WKapi_Adi,
+                    Value = a.WKapi_ID.ToString()
+                });
+                return Json(selectedPanel, JsonRequestBehavior.AllowGet);
+            }
+            List<SelectListItem> defaultValue = new List<SelectListItem>();
+            return Json(defaultValue, JsonRequestBehavior.AllowGet);
+        }
 
         //EXCELL EXPORT
         public void ZiyaretciListesi()
         {
             List<ZiyaretciRaporList> liste = new List<ZiyaretciRaporList>();
-            
+
             liste = TempData["VisitorsList"] as List<ZiyaretciRaporList>;
 
             if (liste == null || liste.Count == 0)
