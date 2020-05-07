@@ -13,5 +13,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeletDoorGroupsMaster(DoorGroupsMaster doorGroupsMaster);
         void DeleteAll();
         DoorGroupsMaster UpdateDoorGroupsMaster(DoorGroupsMaster doorGroupsMaster);
+        void DeleteByKapiGrupNo(int Kapi_Grup_No);
+        DoorGroupsMaster GetByKapiGrupNo(int Kapi_Grup_No);
     }
 }

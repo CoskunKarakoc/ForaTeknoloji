@@ -22,6 +22,12 @@ namespace ForaTeknoloji.Entities.Entities
         [StringLength(150)]
         public string Originator { get; set; }
 
+        [StringLength(150)]
+        public string UserCode { get; set; }
+
+        [StringLength(150)]
+        public string AccountID { get; set; }
+
         [Column("Gelmeyenler Gonder")]
         public bool? Gelmeyenler_Gonder { get; set; }
 

@@ -20,16 +20,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IAccessDatasService _accessDatasService;
         private IProgInitService _progInitService;
-        DBUsers user;
+        DBUsers user = CurrentSession.User;
         DBUsers permissionUser;
         WatchParameters WtchPrmtrs;
         public WatchScreenController(IReportService reportService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService, IProgInitService progInitService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             WtchPrmtrs = CurrentSession.Get<WatchParameters>("WatchParameter");
             if (WtchPrmtrs == null)
             {
@@ -43,6 +43,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetDoorList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             _reportService.GetPanelAndDoorListForSpotMonitor(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
@@ -66,7 +68,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult WatchList()
         {
-            return Json(_reportService.GetWatch(WtchPrmtrs), JsonRequestBehavior.AllowGet);
+            return Json(_reportService.GetWatch(WtchPrmtrs, CurrentSession.User), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ByRegistrationNumber(int KayitNo)
@@ -137,7 +139,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult WatchListOther()
         {
-            return Json(_reportService.GetWatchOuther(), JsonRequestBehavior.AllowGet);
+            return Json(_reportService.GetWatchOuther(CurrentSession.User), JsonRequestBehavior.AllowGet);
         }
 
 

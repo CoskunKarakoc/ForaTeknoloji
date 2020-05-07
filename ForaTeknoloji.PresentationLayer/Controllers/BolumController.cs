@@ -21,18 +21,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
         public BolumController(IDBUsersService dBUsersService, IBolumService bolumService, IAltDepartmanService altDepartmanService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _bolumService = bolumService;
             _dBUsersService = dBUsersService;
             _altDepartmanService = altDepartmanService;
@@ -69,12 +69,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Adi,
                     Value = a.Alt_Departman_No.ToString()
                 }),
-                Departman_No = _departmanService.GetAllDepartmanlar(x=>dbDepartmanList.Contains(x.Departman_No)).Select(a => new SelectListItem
+                Departman_No = _departmanService.GetAllDepartmanlar().Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
                 }),
-                BolumListesi = _bolumService.ComplexBolums(x=>dbDepartmanList.Contains(x.Departman_No))
+                BolumListesi = _bolumService.ComplexBolums()
             };
 
 
@@ -141,7 +141,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
             }
             Bolum bolum = _bolumService.GetById((int)id);
-            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(x=>dbDepartmanList.Contains(x.Departman_No)), "Departman_No", "Adi", bolum.Departman_No);
+            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(), "Departman_No", "Adi", bolum.Departman_No);
             ViewBag.Alt_Departman_No = new SelectList(_altDepartmanService.GetAllAltDepartman(x => x.Departman_No == bolum.Departman_No), "Alt_Departman_No", "Adi", bolum.Alt_Departman_No);
             if (bolum == null)
             {

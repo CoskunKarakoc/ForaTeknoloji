@@ -6,6 +6,7 @@ using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
 using System;
+using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 namespace ForaTeknoloji.PresentationLayer.Controllers
@@ -16,8 +17,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
     {
         private IDBUsersService _dBUsersService;
         private IOperatorTransactionListService _operatorTransactionListService;
-        public HomeController(IDBUsersService dBUsersService, IOperatorTransactionListService operatorTransactionListService)
+        private IEmailSettingsService _emailSettingsService;
+        public HomeController(IDBUsersService dBUsersService, IOperatorTransactionListService operatorTransactionListService, IEmailSettingsService emailSettingsService)
         {
+            _emailSettingsService = emailSettingsService;
             _dBUsersService = dBUsersService;
             _operatorTransactionListService = operatorTransactionListService;
         }
@@ -83,6 +86,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult RecoverPassword(string eMailAdress)
         {
             var checkUser = _dBUsersService.GetByEmailAdres(eMailAdress);
+            var eMailSetting = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
+
             if (checkUser == null)
             {
                 ModelState.AddModelError("", "Sistemde bu mail adresi ile kayıtlı kullanıcı bulunamadı!");
@@ -92,7 +97,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 checkUser.Sifre = RandomPassword();
                 var updatedUser = _dBUsersService.UpdateDBUsers(checkUser);
                 string body = $"<p>Sisteme Giriş Yapabilmeniz İçin Kullanıcı Adı: <b>{updatedUser.Kullanici_Adi}</b> ve Şifreniz: <b>{updatedUser.Sifre}</b></p>";
-                MailHelper.SendMail(body, updatedUser.EMail, "Şifre Kurtarma");
+                MailHelper.SendMail(body, updatedUser.EMail, "Şifre Kurtarma", eMailSetting.Kullanici_Adi);
                 return RedirectToAction("Login", "Home");
             }
             return View();

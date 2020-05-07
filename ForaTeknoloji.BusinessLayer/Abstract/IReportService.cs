@@ -10,9 +10,9 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void SendAllUserTask(int TaskCode, DateTime Tarih, int DurumKodu, string KullaniciAdi, int PanelNo);
 
         List<ZiyaretciRaporList> GetZiyaretciListesi(VisitorReportParameters parameters);
-        List<PersonelList> GetPersonelLists(PersonelListReportParameters parameters);
-        List<ReportPersonelList> GetReportPersonelLists(ActiveUserReportParameters parameters);
-        List<ReportPersonelList> GetReportPersonelListsEski(ActiveUserReportParameters parameters);
+        List<PersonelList> GetPersonelLists(PersonelListReportParameters parameters, DBUsers dBUsers);
+        List<ReportPersonelList> GetReportPersonelLists(ActiveUserReportParameters parameters, DBUsers dBUsers);
+        List<ReportPersonelList> GetReportPersonelListsEski(ActiveUserReportParameters parameters, DBUsers dBUsers);
         List<AccessDatasComplex> GetTanimsizListesi(TanimsizReportParameters parameters);
 
 
@@ -22,7 +22,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
 
 
 
-        List<IcerdeDisardaPersonel> GetIcerdeDisardaPersonels(IcerdeDisardaReportParameters parameters);
+        List<IcerdeDisardaPersonel> GetIcerdeDisardaPersonels(IcerdeDisardaReportParameters parameters, DBUsers dBUsers);
         List<IcerdeDısardaZiyaretci> GetIcerdeDısardaZiyaretci(IcerdeDisardaReportParameters parameters);
         List<IcerdeDısardaTümü> GetIcerdeDısardaTümü(IcerdeDisardaReportParameters parameters);
 
@@ -32,14 +32,14 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// </summary>
         /// <param name="parameters">Şirket,Departman,Global Kapı Bölgesi,Geçiş Grubu,Başlangıç ve Bitiş Tarihleri,Gün Bazında Fark,Kullanıcı</param>
         /// <returns>Geriye pasif kullanıcıların listesi dönüyor.</returns>
-        List<GelenGelmeyen_Gelmeyen> GelenGelmeyen_Gelmeyens(GelenGelmeyenReportParameters parameters);
+        List<GelenGelmeyen_Gelmeyen> GelenGelmeyen_Gelmeyens(GelenGelmeyenReportParameters parameters, DBUsers dBUsers);
 
         /// <summary>
         /// Gelen gelmeyen raporlarında ki gelenlerin listesi gönderiyor.
         /// </summary>
         /// <param name="parameters">Şirket,Departman,Global Kapı Bölgesi,Geçiş Grubu,Başlangıç ve Bitiş Tarihleri,Gün Bazında Fark,Kullanıcı</param>
         /// <returns>Geriye pasif kullanıcıların listesi dönüyor.</returns>
-        List<GelenGelmeyen_Gelenler> GelenGelmeyen_Gelenlers(GelenGelmeyenReportParameters parameters);
+        List<GelenGelmeyen_Gelenler> GelenGelmeyen_Gelenlers(GelenGelmeyenReportParameters parameters, DBUsers dBUsers);
 
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// </summary>
         /// <param name="parameters">Şirket,Departman,Global Kapı Bölgesi,Geçiş Grubu,Başlangıç ve Bitiş Tarihleri,Gün Bazında Fark,Kullanıcı</param>
         /// <returns>Geriye pasif kullanıcıların listesi dönüyor.</returns>
-        List<GelenGelmeyen_PasifKullanici> GelenGelmeyen_PasifKullanicis(GelenGelmeyenReportParameters parameters);
+        List<GelenGelmeyen_PasifKullanici> GelenGelmeyen_PasifKullanicis(GelenGelmeyenReportParameters parameters, DBUsers dBUsers);
 
 
 
@@ -56,21 +56,28 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// </summary>
         /// <param name="parameters">Şirket,Departman,Global Kapı Bölgesi,Geçiş Grubu,Başlangıç ve Bitiş Tarihleri,Gün Bazında Fark,Kullanıcı</param>
         /// <returns>Geriye toplam içiride geçirilen sürelin listesi dönüyor.</returns>
-        List<GelenGelmeyen_ToplamIcerdeKalma> GelenGelmeyen_ToplamIcerdeKalmas(GelenGelmeyenReportParameters parameters);
+        List<GelenGelmeyen_ToplamIcerdeKalma> GelenGelmeyen_ToplamIcerdeKalmas(GelenGelmeyenReportParameters parameters, DBUsers dBUsers);
 
         /// <summary>
         /// Gelen gelmeyen raporlarında ki toplam içerde kalma sürelerini veren parametreli sorgu.
         /// </summary>
         /// <param name="parameters">Şirket,Departman,Global Kapı Bölgesi,Geçiş Grubu,Başlangıç ve Bitiş Tarihleri,Gün Bazında Fark,Kullanıcı</param>
         /// <returns>Geriye ilk giriş son çıkışların listesi dönüyor.</returns>
-        List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(GelenGelmeyenReportParameters parameters);
+        List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_IlkGirisSonCikis(GelenGelmeyenReportParameters parameters, DBUsers dBUsers);
+
+        /// <summary>
+        /// Gelen gelmeyen raporlarında ki toplam içerde kalma sürelerini başlangıç tarihi ve bitiş tarihine göre günlük olarak  veren parametreli sorgu.
+        /// </summary>
+        /// <param name="parameters">Şirket,Departman,Global Kapı Bölgesi,Geçiş Grubu,Başlangıç ve Bitiş Tarihleri,Gün Bazında Fark,Kullanıcı</param>
+        /// <returns>Geriye ilk giriş son çıkışların listesi dönüyor.</returns>
+        List<GelenGelmeyen_IlkGirisSonCikis> GelenGelmeyen_GecGelenErkenCikan(GelenGelmeyenReportParameters parameters, DBUsers dBUsers);
 
         /// <summary>
         /// Gelen gelmeyen raporları iki tarih arasında ki kullanıcı bazında toplu geçiş sayısı gönderiyor.
         /// </summary>
         /// <param name="parameters">Şirket,Departman,Geçiş Grubu,Başlangıç ve Bitiş Tarihleri,Gün Bazında Fark,Kullanıcı</param>
         /// <returns></returns>
-        List<GelenGelmeyen_TopluGiris> GelenGelmeyen_TopluGirisSayisi(GelenGelmeyenReportParameters parameters);
+        List<GelenGelmeyen_TopluGiris> GelenGelmeyen_TopluGirisSayisi(GelenGelmeyenReportParameters parameters, DBUsers dBUsers);
 
 
 
@@ -79,13 +86,13 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// </summary>
         /// <param name="watchParameters">İzleme parametrelerine göre kriter uyguluyor.</param>
         /// <returns></returns>
-        List<WatchEntityComplex> GetWatch(WatchParameters watchParameters);
+        List<WatchEntityComplex> GetWatch(WatchParameters watchParameters, DBUsers dBUsers);
 
         /// <summary>
         /// Sondan başlayarak geriye complex geçiş verileri gönderiyor textboxlar ve resimler bu listeyi kullanan view'de yok
         /// </summary>
         /// <returns></returns>
-        List<WatchEntityComplex> GetWatchOuther();
+        List<WatchEntityComplex> GetWatchOuther(DBUsers dBUsers);
 
         WatchEntityComplex GetWatchTopOne(WatchParameters watchParameters);
         /// <summary>
@@ -129,10 +136,18 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void GetAltDepartmanList(DBUsers users);
 
         /// <summary>
+        /// Kullanıcı adına göre 'bolumListesi' değişkenine id'leri sıralıyor.
+        /// Eğer kullanıcı admin ise bolum listesindeki geçerli bolumun tümü ekleniyor.
+        /// </summary>
+        /// <param name="user"></param>
+        void GetBolumList(DBUsers users);
+
+        /// <summary>
         /// Spot Monitör İçin Panel Listesi ve Kapı Listesi
         /// </summary>
         /// <param name="user"></param>
         void GetPanelAndDoorListForSpotMonitor(DBUsers user);
+
 
 
         /// <summary>
@@ -156,8 +171,8 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         /// <returns></returns>
         List<Sirketler> SirketListesi(DBUsers dBUsers);
 
-        List<YemekhaneComplex> YemekhaneRaporu(RefectoryParameters parameters);
-        List<YemekhaneComplexTotal> YemekhaneRaporuTotal(RefectoryParameters parameters);
+        List<YemekhaneComplex> YemekhaneRaporu(RefectoryParameters parameters, DBUsers dBUsers);
+        List<YemekhaneComplexTotal> YemekhaneRaporuTotal(RefectoryParameters parameters, DBUsers dBUsers);
 
         /// <summary>
         /// Seçilen Panel ve Kapı ID'lerine göre geçiş verileri gönderiyor.

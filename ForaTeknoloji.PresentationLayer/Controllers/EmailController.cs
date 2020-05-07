@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
+using ForaTeknoloji.Common;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -15,15 +16,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IEmailSettingsService _emailSettingsService;
         private IAccessDatasService _accessDatasService;
         private IDBUsersService _dBUsersService;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         public EmailController(IEmailSettingsService emailSettingsService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _emailSettingsService = emailSettingsService;
             _accessDatasService = accessDatasService;
             _dBUsersService = dBUsersService;
@@ -51,7 +52,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (permissionUser.SysAdmin == false)
                     throw new Exception("Yetkisiz Erişim!");
 
-                _emailSettingsService.UpdateEMailSetting(eMailSetting);
+                var updatedemail = _emailSettingsService.UpdateEMailSetting(eMailSetting);
+                ConfigHelper.SetEmailConfig(updatedemail);
                 _accessDatasService.AddOperatorLog(220, user.Kullanici_Adi, eMailSetting.Kayit_No, 0, 0, 0);
                 return RedirectToAction("Add", "Email");
             }

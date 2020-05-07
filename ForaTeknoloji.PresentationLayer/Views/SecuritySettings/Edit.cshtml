@@ -4,6 +4,269 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
+
+@section Scripts{
+    <link href="~/Content/SiteContent/TreeView/jstree3.2.1.css" rel="stylesheet" />
+    <script src="~/Content/SiteContent/TreeView/jstree.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#jstree').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItems = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItems').val(JSON.stringify(selectedItems));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.Json)
+                    },
+                "checkbox": {
+                    "keep_selected_style": false,
+
+                },
+                "plugins": ["wholerow", "checkbox"],
+                });
+
+
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#jstreeDoor').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItemsDoor = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItemsDoor.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItemsDoor').val(JSON.stringify(selectedItemsDoor));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.JsonDoor)
+                    },
+                "checkbox": {
+                    "keep_selected_style": false,
+
+                },
+                "plugins": ["wholerow", "checkbox"],
+                });
+
+
+        });
+
+    </script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#jstreeBolum').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItemsBolum = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItemsBolum.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItemsBolum').val(JSON.stringify(selectedItemsBolum));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.JsonBolum)
+                    },
+                "checkbox": {
+                    "keep_selected_style": false,
+
+                },
+                "plugins": ["wholerow", "checkbox"],
+                });
+
+
+        });
+
+    </script>
+
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#jstreeSirket').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItemsSirket = [];
+                for(i = 0, j = data.selected.length; i < j; i++) {
+
+                    //Fetch the Id.
+                    var id = data.selected[i];
+
+                    //Remove the ParentId.
+                    if(id.indexOf('-') != -1){
+                        id = id.split("-")[1];
+                    }
+
+                    //Add the Node to the JSON Array.
+                    selectedItemsSirket.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        parent: data.node.parents[0]
+                    });
+                }
+
+                //Serialize the JSON Array and save in HiddenField.
+                $('#selectedItemsSirket').val(JSON.stringify(selectedItemsSirket));
+            }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": @Html.Raw(ViewBag.JsonSirket)
+                    },
+                "checkbox": {
+                    "keep_selected_style": false,
+
+                },
+                "plugins": ["wholerow", "checkbox"],
+                });
+
+
+        });
+
+    </script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            jQuery("#jstree").bind("loaded.jstree", function (event, data) {
+                $.ajax({
+                    url: '/SecuritySettings/TreeViewEditCheckList?Kullanici_Adi=' + $("#Kullanici_Adi").val(),
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $('#jstree').jstree("open_node", 1);
+                    $.each(data, function (index, row) {
+                        var element = "#" + row;
+                        $('#jstree').jstree("check_node", element);
+                    })
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            jQuery("#jstreeDoor").bind("loaded.jstree", function (event, data) {
+                $.ajax({
+                    url: '/SecuritySettings/TreeViewEditCheckListForPanelAndDoor?Kullanici_Adi=' + $("#Kullanici_Adi").val(),
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $('#jstreeDoor').jstree("open_node", 1);
+                    $.each(data, function (index, row) {
+                        var element = "#" + row;
+                        $('#jstreeDoor').jstree("check_node", element);
+                    })
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            jQuery("#jstreeSirket").bind("loaded.jstree", function (event, data) {
+                $.ajax({
+                    url: '/SecuritySettings/TreeViewEditCheckListForSirket?Kullanici_Adi=' + $("#Kullanici_Adi").val(),
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    console.log(data);
+                    $.each(data, function (index, row) {
+                        var element = "#" + row;
+                        $('#jstreeSirket').jstree("check_node", element);
+                    })
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            jQuery("#jstreeBolum").bind("loaded.jstree", function (event, data) {
+                $.ajax({
+                    url: '/SecuritySettings/TreeViewEditCheckListForBolum?Kullanici_Adi=' + $("#Kullanici_Adi").val(),
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    console.log(data);
+                    $.each(data, function (index, row) {
+                        var element = "#" + row;
+                        $('#jstreeBolum').jstree("check_node", element);
+                    })
+                });
+            });
+        });
+    </script>
+
+}
+
+
 <div class="row animated fadeIn faster">
     <div class="col-md-12">
         <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
@@ -121,59 +384,81 @@
                         <div class="col-md-12"><hr /></div>
                         <div class="col-md-12">
                             <div class="row">
-
+                                @*Şirket Seçimi*@
                                 <div class="offset-1 col-md-5 mt-3 mb-4">
                                     <div class="card border-left-danger shadow-lg h-100 py-2">
                                         <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Şirketler</div>
-                                                </div>
-                                                <table id="SirketTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                                    <thead class="table-danger">
-                                                        <tr>
-                                                            <td>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="AllSirket" />
-                                                                    <label class="custom-control-label" for="AllSirket"></label>
-                                                                </div>
-                                                            </td>
-                                                            <td>Şirket No</td>
-                                                            <td>Adı</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in Model.SirketList)
-                                                        {
-                                                            <tr>
-                                                                <td>
-                                                                    @if (Model.UserSirketList.Any(x => x.Sirket_No == item.Sirket_No))
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" checked name="Sirketler" id="@("Sirket_"+item.Sirket_No)" value="@item.Sirket_No">
-                                                                            <label class="custom-control-label" for="@("Sirket_"+item.Sirket_No)"></label>
-                                                                        </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" name="Sirketler" id="@("Sirket_"+item.Sirket_No)" value="@item.Sirket_No">
-                                                                            <label class="custom-control-label" for="@("Sirket_"+item.Sirket_No)"></label>
-                                                                        </div>
-                                                                    }
-
-                                                                </td>
-                                                                <td>@item.Sirket_No</td>
-                                                                <td>@item.Adi</td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
+                                            <p class="text-danger card-title">Şirket Seçimi</p>
+                                            <hr />
+                                            <div id="jstreeSirket">
                                             </div>
+                                            <input type="hidden" name="selectedItemsSirket" id="selectedItemsSirket" />
                                         </div>
                                     </div>
                                 </div>
+
+                                @*Panel ve Kapı seçimi*@
                                 <div class="col-md-5 mt-3 mb-4">
+                                    <div class="card border-left-success shadow-lg h-100 py-2">
+                                        <div class="card-body">
+                                            <p class="text-success card-title">Panel ve Kapı Seçimi</p>
+                                            <hr />
+                                            <div id="jstreeDoor">
+                                            </div>
+                                            <input type="hidden" name="selectedItemsDoor" id="selectedItemsDoor" />
+                                            @*<div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Paneller</div>
+                                                    </div>
+                                                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
+                                                        <thead class="table-success">
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                                                        <label class="custom-control-label" for="AllPanel"></label>
+                                                                    </div>
+                                                                </td>
+                                                                <td>Panel ID</td>
+                                                                <td>Panel Adı</td>
+                                                                <td>Panel IP Adres</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in Model.PanelList)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @if (Model.UserPanelList.Any(x => x.Panel_No == item.Panel_ID))
+                                                                        {
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" checked name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                                                            </div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
+                                                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                                                            </div>
+                                                                        }
+                                                                    </td>
+                                                                    <td>@item.Panel_ID</td>
+                                                                    <td>@item.Panel_Name</td>
+                                                                    <td>@(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>*@
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Departman ve Alt Departman Seçimi*@
+                                <div class="offset-1 col-md-5 mt-3 mb-4">
                                     <div class="card border-left-warning shadow-lg h-100 py-2">
                                         <div class="card-body">
                                             @*<div class="row no-gutters align-items-center">
@@ -232,70 +517,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="offset-3 col-md-6 mt-3 mb-4">
-                                    <div class="card border-left-success shadow-lg h-100 py-2">
+
+                                @*Bölüm Seçimi*@
+                                <div class="col-md-5 mt-3 mb-4">
+                                    <div class="card border-left-info shadow-lg h-100 py-2">
                                         <div class="card-body">
-                                            <p class="text-success card-title">Panel ve Kapı Seçimi</p>
+                                            <p class="text-info card-title">Bölüm Seçimi</p>
                                             <hr />
-                                            <div id="jstreeDoor">
+                                            <div id="jstreeBolum">
                                             </div>
-                                            <input type="hidden" name="selectedItemsDoor" id="selectedItemsDoor" />
-                                            @*<div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Paneller</div>
-                                                    </div>
-                                                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                                                        <thead class="table-success">
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
-                                                                        <label class="custom-control-label" for="AllPanel"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>Panel ID</td>
-                                                                <td>Panel Adı</td>
-                                                                <td>Panel IP Adres</td>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var item in Model.PanelList)
-                                                            {
-                                                                <tr>
-                                                                    <td>
-                                                                        @if (Model.UserPanelList.Any(x => x.Panel_No == item.Panel_ID))
-                                                                        {
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" checked name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
-                                                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
-                                                                            </div>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="Paneller" id="@item.Panel_ID" value="@item.Panel_ID">
-                                                                                <label class="custom-control-label" for="@item.Panel_ID"></label>
-                                                                            </div>
-                                                                        }
-                                                                    </td>
-                                                                    <td>@item.Panel_ID</td>
-                                                                    <td>@item.Panel_Name</td>
-                                                                    <td>@(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-
-
-
-
-
-
-                                                </div>*@
-
+                                            <input type="hidden" name="selectedItemsBolum" id="selectedItemsBolum" />
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -305,147 +541,6 @@
     </div>
 </div>
 
-
-
-@section Scripts{
-    <link href="~/Content/SiteContent/TreeView/jstree3.2.1.css" rel="stylesheet" />
-    <script src="~/Content/SiteContent/TreeView/jstree.js"></script>
-
-    <script type="text/javascript">
-        $(function () {
-            $('#jstree').on('changed.jstree', function (e, data) {
-                var i, j;
-                var selectedItems = [];
-                for(i = 0, j = data.selected.length; i < j; i++) {
-
-                    //Fetch the Id.
-                    var id = data.selected[i];
-
-                    //Remove the ParentId.
-                    if(id.indexOf('-') != -1){
-                        id = id.split("-")[1];
-                    }
-
-                    //Add the Node to the JSON Array.
-                    selectedItems.push({
-                        text: data.instance.get_node(data.selected[i]).text,
-                        id: id,
-                        parent: data.node.parents[0]
-                    });
-                }
-
-                //Serialize the JSON Array and save in HiddenField.
-                $('#selectedItems').val(JSON.stringify(selectedItems));
-            }).jstree({
-                "core": {
-                    "themes": {
-                        "variant": "large"
-                    },
-                    "data": @Html.Raw(ViewBag.Json)
-                    },
-                "checkbox": {
-                    "keep_selected_style": false,
-
-                },
-                "plugins": ["wholerow", "checkbox"],
-                });
-
-
-        });
-
-    </script>
-
-    <script type="text/javascript">
-        $(function () {
-            $('#jstreeDoor').on('changed.jstree', function (e, data) {
-                var i, j;
-                var selectedItemsDoor = [];
-                for(i = 0, j = data.selected.length; i < j; i++) {
-
-                    //Fetch the Id.
-                    var id = data.selected[i];
-
-                    //Remove the ParentId.
-                    if(id.indexOf('-') != -1){
-                        id = id.split("-")[1];
-                    }
-
-                    //Add the Node to the JSON Array.
-                    selectedItemsDoor.push({
-                        text: data.instance.get_node(data.selected[i]).text,
-                        id: id,
-                        parent: data.node.parents[0]
-                    });
-                }
-
-                //Serialize the JSON Array and save in HiddenField.
-                $('#selectedItemsDoor').val(JSON.stringify(selectedItemsDoor));
-            }).jstree({
-                "core": {
-                    "themes": {
-                        "variant": "large"
-                    },
-                    "data": @Html.Raw(ViewBag.JsonDoor)
-                    },
-                "checkbox": {
-                    "keep_selected_style": false,
-
-                },
-                "plugins": ["wholerow", "checkbox"],
-                });
-
-
-        });
-
-    </script>
-
-
-
-
-
-    <script>
-        $(document).ready(function () {
-            jQuery("#jstree").bind("loaded.jstree", function (event, data) {
-                $.ajax({
-                    url: '/SecuritySettings/TreeViewEditCheckList?Kullanici_Adi=' + $("#Kullanici_Adi").val(),
-                    type: 'GET',
-                    dataType: 'json'
-                }).done(function (data) {
-                    $('#jstree').jstree("open_node", 1);
-                    $.each(data, function (index, row) {
-                        var element = "#" + row;
-                        $('#jstree').jstree("check_node", element);
-                    })
-                });
-            });
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function () {
-            jQuery("#jstreeDoor").bind("loaded.jstree", function (event, data) {
-                $.ajax({
-                    url: '/SecuritySettings/TreeViewEditCheckListForPanelAndDoor?Kullanici_Adi=' + $("#Kullanici_Adi").val(),
-                    type: 'GET',
-                    dataType: 'json'
-                }).done(function (data) {
-                    $('#jstreeDoor').jstree("open_node", 1);
-                    $.each(data, function (index, row) {
-                        var element = "#" + row;
-                        $('#jstreeDoor').jstree("check_node", element);
-                    })
-                });
-            });
-        });
-    </script>
-
-
-
-
-
-
-}
 
 
 

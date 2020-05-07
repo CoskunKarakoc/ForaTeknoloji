@@ -33,7 +33,6 @@
                                 <td>Departman</td>
                                 <td>Alt Departman</td>
                                 <td>Bölüm</td>
-                                <td>Birim</td>
                                 <td>Geçiş Grubu</td>
                                 <td>Açıklama</td>
                                 <td title="Panel Durum Tablosu" class="text-right">
@@ -52,7 +51,6 @@
                                 <td>Departman</td>
                                 <td>Alt Departman</td>
                                 <td>Bölüm</td>
-                                <td>Birim</td>
                                 <td>Geçiş Grubu</td>
                                 <td>Açıklama</td>
                                 <td></td>
@@ -230,11 +228,10 @@
                     { "data": "Adi" },
                     { "data": "Soyadi" },
                     { "data": "TCKimlik" },
-                    { "data": "Departman" },
-                    { "data": "AltDepartman" },
-                    { "data": "Bolum" },
-                    { "data": "Birim" },
-                    { "data": "Gecis_Grubu" },
+                    { "data": "DepartmanAdi" },
+                    { "data": "AltDepartmanAdi" },
+                    { "data": "BolumAdi" },
+                    { "data": "Grup_Adi" },
                     {
                         "data": "Aciklama", "render": function (data) {
                             if (data != null) {
@@ -254,13 +251,15 @@
                             var multipleUrl = '<a title="Edit" id="edit" href="/Users/Edit?id=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
                                 '<a title="Delete" href="/Users/Delete?id=' + data + '" onclick="return confirm(\'Seçilen Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?\')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>' +
                                 '<a data-toggle="modal" data-target="#panelList" title="Send To Panel" onclick="ekle(' + data + ',2620)" id="send"><i class="fas fa-share text-success mr-2"></i></a>' +
-                                '<a data-toggle="modal" data-target="#panelListReceive" title="Receive From Panel" onclick="receiveAdd(' + data + ')" id="send"><i class="fas fa-reply text-success mr-2"></i></a>';
+                                '<a data-toggle="modal" data-target="#panelListReceive" title="Receive From Panel" onclick="receiveAdd(' + data + ')" id="send"><i class="fas fa-reply text-success mr-2"></i></a>' +
+                                '<a title="Çoklu Grup Ayarları" id="group" href="/Users/Groups?id=' + data + '"><i class="fas fa-layer-group text-primary mr-2"></i></a>';
+
                             return multipleUrl;
                         }
                     },
                 ],
                 "columnDefs": [
-                    { "orderable": false, "targets": 10 }
+                    { "orderable": false, "targets": 9 }
                 ]
             });
 

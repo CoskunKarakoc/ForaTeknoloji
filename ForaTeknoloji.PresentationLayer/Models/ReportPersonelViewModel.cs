@@ -8,8 +8,8 @@ namespace ForaTeknoloji.PresentationLayer.Models
     public class ReportPersonelViewModel
     {
         public List<ReportPersonelList> ReportPersonel { get; internal set; }
-        public List<EfUserDal.ComplexUser> Kullanıcı { get; internal set; }
-        public List<EfUsersOLDDal.ComplexUserOld> EskiKullanicilar { get; internal set; }
+        public List<PersonelList> Kullanıcı { get; internal set; }
+        public List<ReportPersonelList> EskiKullanicilar { get; internal set; }
         public IEnumerable<SelectListItem> Gecis_Grubu { get; internal set; }
         public IEnumerable<SelectListItem> Sirket { get; internal set; }
         public IEnumerable<SelectListItem> Blok { get; internal set; }

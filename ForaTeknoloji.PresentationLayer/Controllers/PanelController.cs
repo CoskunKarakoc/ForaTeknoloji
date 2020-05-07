@@ -25,18 +25,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
         private IDBUsersKapiService _dBUsersKapiService;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbDoorList;
         List<int> dbSirketList;
         public PanelController(IPanelSettingsService panelSettingsService, IReaderSettingsNewService readerSettingsNewService, IDBUsersPanelsService dBUsersPanelsService, IReportService reportService, IAccessDatasService accessDatasService, ITaskListService taskListService, IReaderSettingsNewMSService readerSettingsNewMSService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersKapiService dBUsersKapiService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _panelSettingsService = panelSettingsService;
             _readerSettingsNewService = readerSettingsNewService;
             _dBUsersPanelsService = dBUsersPanelsService;
@@ -119,7 +119,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
             var model = new ReaderEditViewModel
             {
-                Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)), // _reportService.PanelListesi(user),
+                Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0), // _reportService.PanelListesi(user),
                 Okuyucular = okuyucular.OrderBy(x => x.WKapi_ID).ToList(),
                 Panel_ID = PanelID,
                 PanelModel = panelModel

@@ -54,5 +54,11 @@
     <Compile Include="ReportParamatersDateAndTime.cs" />
     <Compile Include="SecurityCode.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ForaTeknoloji.Entities\ForaTeknoloji.Entities.csproj">
+      <Project>{3CDA063D-8FEB-43B9-A4FD-1A78147E5ACC}</Project>
+      <Name>ForaTeknoloji.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

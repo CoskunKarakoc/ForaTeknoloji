@@ -24,15 +24,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
         private FloorNames tempFloor;
-        private DBUsers user;
+        private DBUsers user = CurrentSession.User;
         private DBUsers permissionUser;
         public LiftController(IFloorNamesService floorNamesService, ILiftGroupsService liftGroupsService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService, IAccessDatasService accessDatasService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _floorNamesService = floorNamesService;
             _liftGroupsService = liftGroupsService;
             _taskListService = taskListService;
@@ -77,6 +77,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 MaxID = 0;
             else
                 MaxID = _liftGroupsService.GetAllLiftGroups().Max(x => x.Asansor_Grup_No);
+
             var model = new LiftGroupsAddViewModel
             {
                 Asansor_Grup_No = MaxID + 1,
@@ -90,7 +91,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _liftGroupsService.AddLiftGroup(liftGroups);
-                _accessDatasService.AddOperatorLog(160, user.Kullanici_Adi, liftGroups.Asansor_No, 0, 0, 0);
+                _accessDatasService.AddOperatorLog(160, user.Kullanici_Adi, liftGroups.Asansor_Grup_No, 0, 0, 0);
                 return RedirectToAction("LiftGroups", "Lift");
             }
             return View(liftGroups);
@@ -134,7 +135,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _liftGroupsService.UpdateLiftGroup(liftGroups);
-                _accessDatasService.AddOperatorLog(161, user.Kullanici_Adi, liftGroups.Asansor_No, 0, 0, 0);
+                _accessDatasService.AddOperatorLog(161, user.Kullanici_Adi, liftGroups.Asansor_Grup_No, 0, 0, 0);
                 return RedirectToAction("LiftGroups", "Lift");
             }
             return View(liftGroups);

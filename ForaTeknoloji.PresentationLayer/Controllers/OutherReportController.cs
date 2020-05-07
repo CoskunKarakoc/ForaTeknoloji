@@ -27,18 +27,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersKapiService _dBUsersKapiService;
         private IReaderSettingsNewService _readerSettingsNewService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
-        DBUsers user;
+        DBUsers user = CurrentSession.User;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbDoorList;
         List<int> dbSirketList;
         public OutherReportController(IAccessDatasService accessDatasService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersKapiService dBUsersKapiService, IReaderSettingsNewService readerSettingsNewService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _accessDatasService = accessDatasService;
             _panelSettingsService = panelSettingsService;
             _reportService = reportService;
@@ -74,6 +74,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);//Account olan kullanıcının şirket listeleme metoduna kullanıcı gönderiliyor
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);//Account olan kullanıcının departman listeleme metoduna kullanıcı gönderiliyor
             _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);//Account olan kullanıcının alt departman listeleme metoduna kullanıcı gönderiliyor 
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);//Account olan kullanıcının bolum listeleme metoduna kullanıcı gönderiliyor 
         }
 
 

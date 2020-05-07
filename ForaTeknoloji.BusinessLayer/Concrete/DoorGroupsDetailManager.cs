@@ -52,5 +52,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _doorGroupsDetailDal.DeleteByGrupNoANDPanelID(PanelID, GrupNo);
         }
 
+        public void DeleteByKapiGrupNo(int Kapi_Grup_No)
+        {
+            _doorGroupsDetailDal.DeleteByKapiGrupNo(Kapi_Grup_No);
+        }
+
     }
 }

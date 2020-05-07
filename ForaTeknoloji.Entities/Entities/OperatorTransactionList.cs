@@ -155,5 +155,12 @@ namespace ForaTeknoloji.Entities.Entities
         [Column("Spot Monitor")]
         public bool? Spot_Monitor { get; set; }
 
+        [Column("Gec Gelen Erken Cikan")]
+        public bool? Gec_Gelen_Erken_Cikan { get; set; }
+
+        [Column("Guvenlik Ayarlari")]
+        public bool? Guvenlik_Ayarlari { get; set; }
+
+
     }
 }

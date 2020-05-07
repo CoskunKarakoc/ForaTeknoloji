@@ -11,22 +11,22 @@ namespace ForaTeknoloji.Common
 {
     public class MailHelper
     {
-        public static bool SendMail(string body, string to, string subject, bool isHtml = true)
+        public static bool SendMail(string body, string to, string subject, string displayName, bool isHtml = true)
         {
-            return SendMail(body, new List<string> { to }, subject, isHtml);
+            return SendMail(body, new List<string> { to }, subject, displayName, isHtml);
         }
-        public static bool SendMail(string body, List<string> to, string subject, bool isHtml = true)
+        public static bool SendMail(string body, List<string> to, string subject, string displayName, bool isHtml = true)
         {
             bool result = false;
             try
             {
                 var message = new MailMessage();
-                message.From = new MailAddress(ConfigHelper.Get<string>("MailUser"), "Fora Teknoloji");
+                message.From = new MailAddress(ConfigHelper.Get<string>("MailUser"), displayName);
                 to.ForEach(x =>
                 {
                     message.To.Add(new MailAddress(x));
                 });
-                message.Subject = subject;
+                message.Subject = "Kartlı Geçiş Kontrol Sistemi";
                 message.Body = body;
                 message.IsBodyHtml = isHtml;
                 using (var smtp = new SmtpClient(ConfigHelper.Get<string>("MailHost"),

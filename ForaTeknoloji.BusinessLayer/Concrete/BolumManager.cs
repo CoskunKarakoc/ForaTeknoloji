@@ -49,6 +49,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _bolumDal.Get(x => x.Bolum_No == Bolum_No);
         }
 
+        public Bolum GetByBolumAdi(string Bolum_Adi)
+        {
+            return _bolumDal.Get(x => x.Adi == Bolum_Adi);
+        }
+
         public Bolum UpdateBolum(Bolum bolum)
         {
             return _bolumDal.Update(bolum);

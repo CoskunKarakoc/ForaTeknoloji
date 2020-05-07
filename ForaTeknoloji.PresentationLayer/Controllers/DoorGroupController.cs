@@ -26,17 +26,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersKapiService _dBUsersKapiService;
-        DBUsers dBUsers;
+        DBUsers dBUsers = CurrentSession.User;
         DBUsers permissionUser;
         List<int> dbPanelList;
         List<int> dbDoorList;
         public DoorGroupController(IDoorGroupsDetailService doorGroupsDetailService, IDoorGroupsMasterService doorGroupsMasterService, IGroupsDetailNewService groupsDetailNewService, IGroupMasterService groupMasterService, IReaderSettingsNewService readerSettingsNewService, IReportService reportService, IPanelSettingsService panelSettingsService, IDBUsersService dBUsersService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersKapiService dBUsersKapiService)
         {
-            dBUsers = CurrentSession.User;
-            if (dBUsers == null)
-            {
-                dBUsers = new DBUsers();
-            }
+            //dBUsers = CurrentSession.User;
+            //if (dBUsers == null)
+            //{
+            //    dBUsers = new DBUsers();
+            //}
 
             _doorGroupsDetailService = doorGroupsDetailService;
             _doorGroupsMasterService = doorGroupsMasterService;
@@ -65,8 +65,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: DoorGroup
         public ActionResult Index()
         {
-            if (permissionUser.SysAdmin == false)
-                throw new Exception("Yetkisiz Erişim!");
+            //if (permissionUser.SysAdmin == false)
+            //    throw new Exception("Yetkisiz Erişim!");
 
             var model = new DoorGroupsListViewModel
             {
@@ -80,8 +80,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Create()
         {
-            if (permissionUser.SysAdmin == false)
-                throw new Exception("Yetkisiz Erişim!");
+            //if (permissionUser.SysAdmin == false)
+            //    throw new Exception("Yetkisiz Erişim!");
 
             int maxID;
             if (_doorGroupsMasterService.GetAllDoorGroupsMaster().Count > 0)
@@ -108,13 +108,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Edit(int? ID)
         {
-            if (permissionUser.SysAdmin == false)
-                throw new Exception("Yetkisiz Erişim!");
+            //if (permissionUser.SysAdmin == false)
+            //    throw new Exception("Yetkisiz Erişim!");
 
             DoorGroupsMaster model = new DoorGroupsMaster();
             if (ID != null)
             {
-                model = _doorGroupsMasterService.GetById((int)ID);
+                model = _doorGroupsMasterService.GetByKapiGrupNo((int)ID);
             }
 
             return View(model);
@@ -139,11 +139,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Reader(int? DoorGroupID)
         {
-            if (permissionUser.SysAdmin == false)
-                throw new Exception("Yetkisiz Erişim!");
+            //if (permissionUser.SysAdmin == false)
+            //    throw new Exception("Yetkisiz Erişim!");
 
             var Paneller = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID) && x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
-            var DoorGroupName = _doorGroupsMasterService.GetById((int)DoorGroupID);
+            var DoorGroupName = _doorGroupsMasterService.GetByKapiGrupNo((int)DoorGroupID);
             var model = new DoorGroupReaderCreateViewModel
             {
                 Panel_ID = Paneller.Select(a => new SelectListItem
@@ -174,18 +174,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }
                 return RedirectToAction("Index", "DoorGroup");
             }
-            return RedirectToAction("Reader", "DoorGroup", new { DoorGroupID = Grup_No });
+            _doorGroupsMasterService.DeleteByKapiGrupNo(Grup_No);
+            return RedirectToAction("Index", "DoorGroup");
         }
 
 
 
         public ActionResult ReaderEdit(int? DoorGroupID)
         {
-            if (permissionUser.SysAdmin == false)
-                throw new Exception("Yetkisiz Erişim!");
+            //if (permissionUser.SysAdmin == false)
+            //    throw new Exception("Yetkisiz Erişim!");
 
             var Paneller = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID) && x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
-            var DoorGroupName = _doorGroupsMasterService.GetById((int)DoorGroupID);
+            var DoorGroupName = _doorGroupsMasterService.GetByKapiGrupNo((int)DoorGroupID);
             var model = new DoorGroupReaderCreateViewModel
             {
                 Panel_ID = Paneller.Select(a => new SelectListItem
@@ -275,23 +276,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Delete(int id = -1)
         {
-            if (permissionUser.SysAdmin == false)
-                throw new Exception("Yetkisiz Erişim!");
+            //if (permissionUser.SysAdmin == false)
+            //    throw new Exception("Yetkisiz Erişim!");
 
 
             if (id != -1)
             {
-                var entity = _doorGroupsMasterService.GetById(id);
-                if (entity != null)
-                {
-                    _doorGroupsMasterService.DeletDoorGroupsMaster(entity);
-                    foreach (var item in _doorGroupsDetailService.GetAllDoorGroupsDetail(x => x.Kapi_Grup_No == entity.Kapi_Grup_No))
-                    {
-                        _doorGroupsDetailService.DeletDoorGroupsDetail(item);
-                    }
-                    return RedirectToAction("Index");
-                }
-                throw new Exception("Böyle bir kayıt bulunamadı");
+                var entity = _doorGroupsMasterService.GetByKapiGrupNo(id);
+                _doorGroupsMasterService.DeleteByKapiGrupNo(entity.Kapi_Grup_No);
+                _doorGroupsDetailService.DeleteByKapiGrupNo(entity.Kapi_Grup_No);
             }
             return RedirectToAction("Index", "DoorGroup");
         }

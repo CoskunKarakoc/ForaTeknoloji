@@ -28,16 +28,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IDoorStatusService _doorStatusService;
         private IReaderSettingsNewMSService _readerSettingsNewMSService;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         DBUsers permissionUser;
         List<int> dbPanelList;
         public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IDoorStatusService doorStatusService, IReaderSettingsNewMSService readerSettingsNewMSService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _panelSettingsService = panelSettingsService;
             _readerSettingsService = readerSettingsService;
             _globalZoneService = globalZoneService;
@@ -75,7 +75,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (PanelID == null)
             {
-                var list = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID) && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0); //_reportService.PanelListesi(user);
+                var list = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0); //_reportService.PanelListesi(user);
                 if (list.Count == 0)
                     throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");
 
@@ -316,7 +316,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult PanelSelectedSettings()
         {
-            var model = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)); //_reportService.PanelListesi(user);
+            var model = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0); //_reportService.PanelListesi(user);
             if (model.Count == 0)
             {
                 throw new Exception("Sistemde Kayıtlı Herhangi Bir Panel Bulunamadı!");

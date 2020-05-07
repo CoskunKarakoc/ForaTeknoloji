@@ -91,15 +91,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-md-6">Otopark Modu</label>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.DropDownList("Gecis_Modu", Model.Gecis_Modu, "Geçiş Modu Seçiniz", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                                        @Html.ValidationMessageFor(model => model.Gecis_Modu, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
+                          
 
                             <div class="form-group">
                                 <label class="control-label col-md-6">Kullanıcı Tipi</label>
@@ -131,42 +123,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <div class="col-md-12 text-center">
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" value="true" name="C3_Grup" class="custom-control-input" id="3Gecis" />
-                                                    <label class="custom-control-label" for="3Gecis">3 Geçiş Grubu</label>
-                                                    <hr />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Geçiş Grubu 2</label>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.DropDownList("Grup_No_2", Model.Grup_No_2, "Geçiş Grubu 2 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                                        @Html.ValidationMessageFor(model => model.Grup_No_2, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-4">Geçiş Grubu 3</label>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        @Html.DropDownList("Grup_No_3", Model.Grup_No_3, "Geçiş Grubu 3 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                                        @Html.ValidationMessageFor(model => model.Grup_No_3, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="form-group">
                                 <label class="control-label col-md-4">Ziyaretçi Grubu</label>
                                 <div class="col-md-12">
@@ -178,6 +134,17 @@
                             </div>
 
                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-6">Otopark Modu</label>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @Html.DropDownList("Gecis_Modu", Model.Gecis_Modu, "Geçiş Modu Seçiniz", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                                @Html.ValidationMessageFor(model => model.Gecis_Modu, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="col-md-12">
@@ -216,6 +183,7 @@
                                         @Html.ValidationMessageFor(model => model.Grup_Takvimi_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -406,7 +374,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label class="control-label col-md-4">Birimler</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -414,7 +382,7 @@
                                         @Html.ValidationMessageFor(model => model.Birim_No, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="form-group">
                                 <label class="control-label col-md-4">Görevler</label>
                                 <div class="col-md-12">
@@ -444,7 +412,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $('.chosen-select').chosen();

@@ -26,7 +26,14 @@
                         <label class="col-sm-3 col-form-label" for="Originator">Originator</label>
                         <div class="col-sm-9">@Html.TextBoxFor(model => model.Originator, new { @class = "form-control form-control-sm" })</div>
                     </div>
-
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="UserCode">UserCode</label>
+                        <div class="col-sm-9">@Html.TextBoxFor(model => model.UserCode, new { @class = "form-control form-control-sm" })</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label" for="AccountID">AccountID</label>
+                        <div class="col-sm-9">@Html.TextBoxFor(model => model.AccountID, new { @class = "form-control form-control-sm" })</div>
+                    </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Gelmeyenler Raporu Gönder

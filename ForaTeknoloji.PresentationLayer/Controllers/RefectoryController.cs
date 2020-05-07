@@ -36,7 +36,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
-        DBUsers user;
+        DBUsers user = CurrentSession.User;
         DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
@@ -44,11 +44,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         List<int> dbAltDepartmanList;
         public RefectoryController(IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, IReportService reportService, IDBUsersService dBUsersService, IGroupMasterService groupMasterService, IGroupsDetailNewService groupsDetailNewService, IDoorGroupsMasterService doorGroupsMasterService, IDoorGroupsDetailService doorGroupsDetailService, IEmailSettingsService emailSettingsService, ISirketService sirketService, IDepartmanService departmanService, IAltDepartmanService altDepartmanService, IBolumService bolumService, IBirimService birimService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _readerSettingsNewService = readerSettingsNewService;
             _panelSettingsService = panelSettingsService;
             _reportService = reportService;
@@ -91,6 +91,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
             _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -99,12 +100,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: Refectory
         public ActionResult Index(RefectoryParameters parameters)
         {
-            if (permissionUser.SysAdmin == false)
-            {
-                throw new Exception("Yetkisiz Erişim!");
-            }
-            var Liste = _reportService.YemekhaneRaporu(parameters);
-            var Toplam = _reportService.YemekhaneRaporuTotal(parameters);
+            var Liste = _reportService.YemekhaneRaporu(parameters, CurrentSession.User);
+            var Toplam = _reportService.YemekhaneRaporuTotal(parameters, CurrentSession.User);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
             var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
             var Sikterler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_reportService.SirketListesi(user);
@@ -158,12 +155,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Total(RefectoryParameters parameters)
         {
-            if (permissionUser.SysAdmin == false)
-            {
-                throw new Exception("Yetkisiz Erişim!");
-            }
-
-            var Total = _reportService.YemekhaneRaporuTotal(parameters);
+            var Total = _reportService.YemekhaneRaporuTotal(parameters, CurrentSession.User);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
             var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
             var Departmanlar = _departmanService.GetAllDepartmanlar(x => dbSirketList.Contains(x.Departman_No)); //_reportService.DepartmanListesi(user);
@@ -219,6 +211,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (permissionUser.SysAdmin == false)
+                {
+                    throw new Exception("Yetkisiz Erişim!");
+                }
                 _emailSettingsService.UpdateEMailSetting(eMailSetting);
                 return RedirectToAction("Total", "Refectory");
             }
@@ -332,6 +328,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-       
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ForaTeknoloji.BusinessLayer.Abstract;
 using ForaTeknoloji.Common;
+using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using ForaTeknoloji.PresentationLayer.Filters;
 using ForaTeknoloji.PresentationLayer.Models;
@@ -29,7 +30,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReportService _reportService;
         private IAccessDatasService _accessDatasService;
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
-        private DBUsers user;
+        private DBUsers user = CurrentSession.User;
         private DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
@@ -37,11 +38,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         List<int> dbAltDepartmanList;
         public VisitorController(IVisitorsService visitorsService, IUserService userService, IGroupMasterService groupMasterService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _visitorsService = visitorsService;
             _userService = userService;
             _groupMasterService = groupMasterService;
@@ -74,6 +75,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
             }
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -126,7 +132,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
                 Personeller = Personel,
                 Ziyaretciler = Ziyaretci,
-                ComplexPersoneller = ModalUser(),
+                ComplexPersoneller = _reportService.GetPersonelLists(null, CurrentSession.User),
                 VisitorCardList = CardModelUser()
             };
 
@@ -137,9 +143,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpPost]
         public ActionResult Create(Visitors visitors, HttpPostedFileBase ProfileImage)
         {
-
-
-
             if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" || ProfileImage.ContentType == "image/jpg" || ProfileImage.ContentType == "image/png"))
             {
                 string filename = $"visitor_{visitors.ID}.{ProfileImage.ContentType.Split('/')[1]}";
@@ -196,7 +199,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Ziyaretci = visitors,
                 GrupAdi = _groupMasterService.GetById((int)visitors.Grup_No).Grup_Adi,
                 Personel = users,
-                Personeller = ModalUser(),
+                Personeller = _reportService.GetPersonelLists(null, CurrentSession.User),
                 VisitorCardList = CardModelUser()
             };
 
@@ -250,7 +253,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 Ziyaretci = visitors,
                 GrupAdi = null,
                 Personel = null,
-                Personeller = ModalUser(),
+                Personeller = _reportService.GetPersonelLists(null, CurrentSession.User),
                 VisitorCardList = CardModelUser()
             };
             return View(model);
@@ -346,35 +349,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     }
                 }
                 return liste.OrderByDescending(x => x.Kayit_No).ToList();
-            }
-        }
-
-        public List<ComplexUser> ModalUser()
-        {
-            List<ComplexUser> userList = new List<ComplexUser>();
-            if (permissionUser.SysAdmin == true)
-            {
-                return userList = _userService.GetAllUsersWithOuther();
-            }
-            else
-            {
-
-                userList = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No));
-
-                //foreach (var sirket in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                //{
-                //    foreach (var departman in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi))
-                //    {
-                //        foreach (var user in userList)
-                //        {
-                //            if (user.Sirket_No == sirket.Sirket_No && user.Departman_No == departman.Departman_No)
-                //            {
-                //                liste.Add(user);
-                //            }
-                //        }
-                //    }
-                //}
-                return userList.OrderByDescending(x => x.Kayit_No).ToList();
             }
         }
 

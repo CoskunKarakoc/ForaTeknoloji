@@ -14,5 +14,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Departman { get; set; }
         public DateTime? Tarih { get; set; }
         public int? Gecis_Tipi { get; set; }
+        public string AltDepartman { get; set; }
+        public string Bolum { get; set; }
     }
 }

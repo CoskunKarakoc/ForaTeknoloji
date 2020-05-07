@@ -14,5 +14,7 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<Departmanlar> DepartmanList { get; internal set; }
         public List<DBUsersAltDepartman> DBUserAltDepartman { get; internal set; }
         public List<AltDepartman> AltDepartmanListesi { get; internal set; }
+        public List<Bolum> BolumListesi { get; internal set; }
+        public List<DBUsersBolum> UserBolumList { get; internal set; }
     }
 }

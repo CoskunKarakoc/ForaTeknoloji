@@ -41,19 +41,21 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IAccessDatasService _accessDatasService;
         private IBirimService _birimService;
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
-        public DBUsers user;
+        private IDBUsersKapiService _dBUsersKapiService;
+        public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
+        List<int> dbDoorList;
         List<int> dbSirketList;
         List<int> dbAltDepartmanList;
-        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAltDepartmanService altDepartmanService, IBolumService bolumService, IUnvanService unvanService, IAccessDatasService accessDatasService, IBirimService birimService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
+        public UsersController(IUserService userService, IDepartmanService departmanService, ISirketService sirketService, IGroupMasterService groupMasterService, IUserTypesService userTypesService, IBloklarService bloklarService, IAccessModesService accessModesService, ITimeZoneCalendarService timeZoneCalendarService, ITaskListService taskListService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IUsersOLDService usersOLDService, IGorevlerService gorevlerService, IDBUsersSirketService dBUsersSirketService, IDBUsersDepartmanService dBUsersDepartmanService, IReportService reportService, IAltDepartmanService altDepartmanService, IBolumService bolumService, IUnvanService unvanService, IAccessDatasService accessDatasService, IBirimService birimService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IDBUsersKapiService dBUsersKapiService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _userService = userService;
             _departmanService = departmanService;
             _sirketService = sirketService;
@@ -71,6 +73,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersSirketService = dBUsersSirketService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _altDepartmanService = altDepartmanService;
+            _dBUsersKapiService = dBUsersKapiService;
             _bolumService = bolumService;
             _reportService = reportService;
             _unvanService = unvanService;
@@ -79,6 +82,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
+            dbDoorList = new List<int>();
             dbSirketList = new List<int>();
             dbAltDepartmanList = new List<int>();
             foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
@@ -89,6 +93,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 dbPanelList.Add((int)dbUserPanelNo);
             }
+            foreach (var dbUserDoorNo in _dBUsersKapiService.GetAllDBUsersKapi(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Kapi_Kayit_No))
+            {
+                dbDoorList.Add((int)dbUserDoorNo);
+            }
             foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
             {
                 dbSirketList.Add((int)dbUserSirketNo);
@@ -97,6 +105,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
             }
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetDoorList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -113,7 +127,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var model = new UsersListViewModel
             {
-                Users = _userService.GetAllUsersWithOuther(x => dbDepartmanList.Contains((int)x.Departman_No) && dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)),
+                Users = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) || dbAltDepartmanList.Contains((int)x.Alt_Departman_No)),
                 //Users = IndexViewUser(),
                 //PanelListesi = _reportService.PanelListesi(user)
                 PanelListesi = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID))
@@ -124,7 +138,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult UserList()
         {
-            var jsonresult = Json(new { data = _userService.GetAllUsersWithOuther(x => dbDepartmanList.Contains((int)x.Departman_No) && dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)) }, JsonRequestBehavior.AllowGet);
+            var jsonresult = Json(new { data = _reportService.GetPersonelLists(null, CurrentSession.User) }, JsonRequestBehavior.AllowGet);
             jsonresult.MaxJsonLength = int.MaxValue;
             return jsonresult;
         }
@@ -251,7 +265,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ProfileImage == null)
                 Addeduser.Resim = "BaseUser.jpg";
 
-
+            if (Addeduser.Kart_ID == null || Addeduser.Kart_ID == "")
+                throw new Exception("Kart ID Değeri Boş Bırakılamaz!");
 
             if (Addeduser != null && Addeduser.ID != 0 && Addeduser.Kart_ID != null)
             {
@@ -307,6 +322,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             ViewBag.Grup_No_1 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_1);
             ViewBag.Grup_No_2 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_2);
             ViewBag.Grup_No_3 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_3);
+            ViewBag.Grup_No_4 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_4);
+            ViewBag.Grup_No_5 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_5);
+            ViewBag.Grup_No_6 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_6);
+            ViewBag.Grup_No_7 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_7);
+            ViewBag.Grup_No_8 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_8);
             ViewBag.Grup_Takvimi_No = new SelectList(_timeZoneCalendarService.GetAllTimeZoneCalendar(), "Grup_Takvimi_No", "Grup_Takvimi_Adi", users.Grup_Takvimi_No);
             ViewBag.Alt_Departman_No = new SelectList(_altDepartmanService.GetAllAltDepartman(x => x.Departman_No == users.Departman_No), "Alt_Departman_No", "Adi", users.Alt_Departman_No);
             ViewBag.Bolum_No = new SelectList(_bolumService.GetAllBolum(x => x.Alt_Departman_No == users.Alt_Departman_No), "Bolum_No", "Adi", users.Bolum_No);
@@ -346,7 +366,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         throw new Exception("Yetkisiz Şirket Ataması!");
                     if (!CheckDepartman((int)entity.Departman_No))
                         throw new Exception("Yetkisiz Departman Ataması!");
-
+                    if (entity.Kart_ID == null || entity.Kart_ID == "")
+                        throw new Exception("Kart ID Değeri Boş Geçilemez!");
 
                     //  _userService.UpdateUsers(entity);
                     var result = _userService.UpdateWithCheckCardId(entity);
@@ -358,6 +379,53 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return View(entity);
         }
+
+
+        public ActionResult Groups(int? id)
+        {
+            if (permissionUser.SysAdmin == false)
+            {
+                if (permissionUser.Grup_Islemleri == (int)SecurityCode.Sadece_Izleme || permissionUser.Grup_Islemleri == (int)SecurityCode.Yetkisiz)
+                    throw new Exception("Kullanıcı düzenleme yetkiniz yok!");
+            }
+            if (id == null)
+                throw new Exception("Upps! Yanlış giden birşeyler var.");
+
+            Users users = _userService.GetById((int)id);
+
+            if (users.Resim == null)
+                users.Resim = "BaseUser.jpg";
+
+            if (users == null)
+                return HttpNotFound();
+
+            ViewBag.Sirket_No = new SelectList(_sirketService.GetAllSirketler(), "Sirket_No", "Adi", users.Sirket_No);
+            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(), "Departman_No", "Adi", users.Departman_No);
+            ViewBag.Blok_No = new SelectList(_bloklarService.GetAllBloklar(), "Blok_No", "Adi", users.Blok_No);
+            ViewBag.Gorev_No = new SelectList(_gorevlerService.GetAllGorevler(), "Gorev_No", "Adi", users.Gorev_No);
+            ViewBag.Grup_No = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No);
+            ViewBag.Kullanici_Tipi = new SelectList(_userTypesService.GetAllUserTypes(), "Kullanici_Tipi", "Ad", users.Kullanici_Tipi);
+            ViewBag.Gecis_Modu = new SelectList(_accessModesService.GetAllAccessModes(), "Gecis_Modu", "Adi", users.Gecis_Modu);
+            ViewBag.Visitor_Grup_No = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Visitor_Grup_No);
+            ViewBag.Grup_No_1 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_1);
+            ViewBag.Grup_No_2 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_2);
+            ViewBag.Grup_No_3 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_3);
+            ViewBag.Grup_No_4 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_4);
+            ViewBag.Grup_No_5 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_5);
+            ViewBag.Grup_No_6 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_6);
+            ViewBag.Grup_No_7 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_7);
+            ViewBag.Grup_No_8 = new SelectList(_groupMasterService.GetAllGroupsMaster(), "Grup_No", "Grup_Adi", users.Grup_No_8);
+            ViewBag.Grup_Takvimi_No = new SelectList(_timeZoneCalendarService.GetAllTimeZoneCalendar(), "Grup_Takvimi_No", "Grup_Takvimi_Adi", users.Grup_Takvimi_No);
+            ViewBag.Alt_Departman_No = new SelectList(_altDepartmanService.GetAllAltDepartman(x => x.Departman_No == users.Departman_No), "Alt_Departman_No", "Adi", users.Alt_Departman_No);
+            ViewBag.Bolum_No = new SelectList(_bolumService.GetAllBolum(x => x.Alt_Departman_No == users.Alt_Departman_No), "Bolum_No", "Adi", users.Bolum_No);
+            ViewBag.Unvan_No = new SelectList(_unvanService.GetAllUnvan(), "Unvan_No", "Adi", users.Unvan_No);
+            ViewBag.Birim_No = new SelectList(_birimService.GetAllBirim(x => x.Alt_Departman_No == users.Alt_Departman_No && x.Bolum_No == users.Bolum_No && x.Departman_No == users.Departman_No), "Birim_No", "Adi", users.Birim_No);
+            ViewBag.Bitis_Tarihi = users.Bitis_Tarihi;
+            ViewBag.Bitis_Saati = users.Bitis_Saati;
+            return View(users);
+        }
+
+
 
 
         public ActionResult Delete(int id = -1)

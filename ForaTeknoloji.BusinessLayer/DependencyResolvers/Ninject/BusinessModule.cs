@@ -69,6 +69,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IDBUsersAltDepartmanDal>().To<EfDBUsersAltDepartmanDal>().InSingletonScope();
             Bind<IDBUsersKapiDal>().To<EfDBUsersKapiDal>().InSingletonScope();
             Bind<ISMSForPanelStatusDal>().To<EfSMSForPanelStatusDal>().InSingletonScope();
+            Bind<IDBUsersBolumDal>().To<EfDBUsersBolumDal>().InSingletonScope();
 
 
             /*Business-Layer-Binding*/
@@ -130,6 +131,7 @@ namespace ForaTeknoloji.BusinessLayer.DependencyResolvers.Ninject
             Bind<IDBUsersAltDepartmanService>().To<DBUsersAltDepartmanManager>().InSingletonScope();
             Bind<IDBUsersKapiService>().To<DBUsersKapiManager>().InSingletonScope();
             Bind<ISMSForPanelStatusService>().To<SMSForPanelStatusManager>().InSingletonScope();
+            Bind<IDBUsersBolumService>().To<DBUsersBolumManager>().InSingletonScope();
 
 
             /*Context*/

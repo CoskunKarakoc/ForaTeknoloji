@@ -25,6 +25,10 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Guvenlik_Ayarlari", Model.Guvenlik_Ayarlari ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Guvenlik_Ayarlari">Güvenlik Ayarları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
                                 @Html.CheckBox("Canli_Izleme", Model.Canli_Izleme ?? false, new { @class = "custom-control-input" })
                                 <label class="custom-control-label " for="Canli_Izleme">Canlı İzleme</label>
                             </div>
@@ -116,6 +120,7 @@
                                 @Html.CheckBox("SMS_Gonderme_Ayarlari", Model.SMS_Gonderme_Ayarlari ?? false, new { @class = "custom-control-input" })
                                 <label class="custom-control-label" for="SMS_Gonderme_Ayarlari">SMS Gönderme Ayarları</label>
                             </div>
+
                         </div>
                         <div class="col-md-6">
 
@@ -147,6 +152,10 @@
                             <div class="custom-control custom-checkbox">
                                 @Html.CheckBox("Ilk_Giris_Son_Cikis_Raporlari", Model.Ilk_Giris_Son_Cikis_Raporlari ?? false, new { @class = "custom-control-input" })
                                 <label class="custom-control-label" for="Ilk_Giris_Son_Cikis_Raporlari">İlk Giriş Son Cıkış Raporları</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("Gec_Gelen_Erken_Cikan", Model.Gec_Gelen_Erken_Cikan ?? false, new { @class = "custom-control-input" })
+                                <label class="custom-control-label" for="Gec_Gelen_Erken_Cikan">Geç Gelen Erken Çıkan Raporları</label>
                             </div>
                             <div class="custom-control custom-checkbox">
                                 @Html.CheckBox("Toplam_Icerde_Kalma_Raporu", Model.Toplam_Icerde_Kalma_Raporu ?? false, new { @class = "custom-control-input" })

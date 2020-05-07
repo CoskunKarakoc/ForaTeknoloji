@@ -42,9 +42,21 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _doorGroupsMasterDal.Get(x => x.Kayit_No == id);
         }
 
+        public DoorGroupsMaster GetByKapiGrupNo(int Kapi_Grup_No)
+        {
+            return _doorGroupsMasterDal.Get(x => x.Kapi_Grup_No == Kapi_Grup_No);
+        }
+
+
         public DoorGroupsMaster UpdateDoorGroupsMaster(DoorGroupsMaster doorGroupsMaster)
         {
             return _doorGroupsMasterDal.Update(doorGroupsMaster);
         }
+
+        public void DeleteByKapiGrupNo(int Kapi_Grup_No)
+        {
+            _doorGroupsMasterDal.DeleteByKapiGrupNo(Kapi_Grup_No);
+        }
+
     }
 }

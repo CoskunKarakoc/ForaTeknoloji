@@ -18,9 +18,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IUserService _userService;
         private ISMSForPanelStatusService _sMSForPanelStatusService;
+        private IReportService _reportService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public SMSController(ISmsSettingsService smsSettingsService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IUserService userService, ISMSForPanelStatusService sMSForPanelStatusService)
+        public SMSController(ISmsSettingsService smsSettingsService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IUserService userService, ISMSForPanelStatusService sMSForPanelStatusService, IReportService reportService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -30,8 +31,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _smsSettingsService = smsSettingsService;
             _accessDatasService = accessDatasService;
             _dBUsersService = dBUsersService;
+            _reportService = reportService;
             _userService = userService;
             _sMSForPanelStatusService = sMSForPanelStatusService;
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetDoorList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
 
         }
@@ -71,7 +79,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Yetkisiz Erişim!");
 
             var smsSettings = _smsSettingsService.GetAllSMSSetting().FirstOrDefault();
-            var kullanicilar = _userService.GetAllUsersWithOuther();
+            var kullanicilar = _reportService.GetPersonelLists(null, CurrentSession.User);
             var model = new PanelConnectionSMSViewModel
             {
                 SMS = smsSettings,

@@ -52,12 +52,22 @@ namespace ForaTeknoloji.Entities.DataTransferObjects
                 Tmp = users.Tmp,
                 Visitor_Grup_No = users.Visitor_Grup_No,
                 User_Kayit_No = users.Kayit_No,
-                Gorev_No = users.Gorev_No
+                Gorev_No = users.Gorev_No,
+                Birim_No = users.Birim_No,
+                Bitis_Saati = users.Bitis_Saati,
+                Grup_No_4 = users.Grup_No_4,
+                Grup_No_5 = users.Grup_No_5,
+                Grup_No_6 = users.Grup_No_6,
+                Grup_No_7 = users.Grup_No_7,
+                Grup_No_8 = users.Grup_No_8,
+                Kan_Grubu = users.Kan_Grubu,
+                Kart_ID_2 = users.Kart_ID_2,
+                Kart_ID_3 = users.Kart_ID_3,
             };
 
             return usersOld;
         }
-      
+
         /// <summary>
         /// Excel'den alınan verileri User nesnesine çevirme.
         /// </summary>
@@ -153,7 +163,17 @@ namespace ForaTeknoloji.Entities.DataTransferObjects
                 Telefon = usersOLD.Telefon,
                 Tmp = usersOLD.Tmp,
                 Visitor_Grup_No = usersOLD.Visitor_Grup_No,
-                Gorev_No = usersOLD.Gorev_No
+                Gorev_No = usersOLD.Gorev_No,
+                Birim_No = usersOLD.Birim_No,
+                Bitis_Saati = usersOLD.Bitis_Saati,
+                Grup_No_4 = usersOLD.Grup_No_4,
+                Grup_No_5 = usersOLD.Grup_No_5,
+                Grup_No_6 = usersOLD.Grup_No_6,
+                Grup_No_7 = usersOLD.Grup_No_7,
+                Grup_No_8 = usersOLD.Grup_No_8,
+                Kan_Grubu = usersOLD.Kan_Grubu,
+                Kart_ID_2 = usersOLD.Kart_ID_2,
+                Kart_ID_3 = usersOLD.Kart_ID_3
             };
             return user;
         }

@@ -19,18 +19,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
         public BirimController(IDBUsersService dBUsersService, IBolumService bolumService, IAltDepartmanService altDepartmanService, IDepartmanService departmanService, IBirimService birimService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _bolumService = bolumService;
             _dBUsersService = dBUsersService;
             _altDepartmanService = altDepartmanService;
@@ -68,7 +68,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Adi,
                     Value = a.Alt_Departman_No.ToString()
                 }),
-                Departman_No = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)).Select(a => new SelectListItem
+                Departman_No = _departmanService.GetAllDepartmanlar().Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
@@ -78,7 +78,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Adi,
                     Value = a.Bolum_No.ToString()
                 }),
-                BirimListesi = _birimService.ComplexBirim(x => dbDepartmanList.Contains(x.Departman_No))
+                BirimListesi = _birimService.ComplexBirim()
             };
             return View(model);
         }
@@ -141,8 +141,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
             }
             Birim birim = _birimService.GetById((int)id);
-            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)), "Departman_No", "Adi", birim.Departman_No);
-            ViewBag.Alt_Departman_No = new SelectList(_altDepartmanService.GetAllAltDepartman(x => x.Departman_No == birim.Departman_No), "Alt_Departman_No", "Adi", birim.Alt_Departman_No);
+            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(), "Departman_No", "Adi", birim.Departman_No);
+            ViewBag.Alt_Departman_No = new SelectList(_altDepartmanService.GetAllAltDepartman(), "Alt_Departman_No", "Adi", birim.Alt_Departman_No);
             ViewBag.Bolum_No = new SelectList(_bolumService.GetAllBolum(x => x.Departman_No == birim.Departman_No && x.Alt_Departman_No == birim.Alt_Departman_No), "Bolum_No", "Adi", birim.Bolum_No);
             if (birim == null)
             {

@@ -165,24 +165,26 @@
                             <td>Soyadı</td>
                             <td>Şirket</td>
                             <td>Departman</td>
+                            <td>Alt Departman</td>
+                            <td>Bölüm</td>
                             <td>Blok</td>
                             <td>Kendi Geçiş Grubu</td>
-                            <td>Ziyaretçi Geçiş Grubu</td>
                         </tr>
                     </thead>
                     <tbody id="zyrt">
                         @foreach (var item in Model.Kullanıcılar)
                         {
                             <tr>
-                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-gecisgrubu="@item.Gecis_Grubu" data-personelsoyadi="@item.Soyadi" data-kartid="@item.Kart_ID">@item.ID</td>
+                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-gecisgrubu="@item.Grup_Adi" data-personelsoyadi="@item.Soyadi" data-kartid="@item.Kart_ID">@item.ID</td>
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
-                                <td>@item.Sirket</td>
-                                <td>@item.Departman</td>
-                                <td>@item.Blok</td>
-                                <td>@item.Gecis_Grubu</td>
-                                <td>@item.String_Ziyaretci_Grubu</td>
+                                <td>@item.SirketAdi</td>
+                                <td>@item.DepartmanAdi</td>
+                                <td>@item.AltDepartmanAdi</td>
+                                <td>@item.BolumAdi</td>
+                                <td>@item.BlokAdi</td>
+                                <td>@item.Grup_Adi</td>
                             </tr>
 
                         }
@@ -248,50 +250,6 @@
         });
 
 
-        $("#SearchBtn").click(function () {
-            var arama = $("#Search").val();
-            $("#Search").val("");
-            $("#zyrt").val("");
-            $.ajax({
-                url: '/Alarm/Personeller',
-                type: 'GET',
-                dataType: 'json',
-                data: { Search: arama }
-            }).done(function (data) {
-                for (var i in data) {
-                    $("#zyrt").append("<tr><td data-id=" + data[i].ID + " data-personeladi=" + data[i].Adi + " data-personelsoyadi=" + data[i].Soyadi + ">" +
-                        data[i].ID +
-                        "</td><td>" + data[i].Kart_ID +
-                        "</td><td>" + data[i].Adi +
-                        "</td><td>" + data[i].Soyadi +
-                        "</td><td>" + data[i].Sirket +
-                        "</td><td>" + data[i].Departman +
-                        "</td><td>" + data[i].Blok +
-                        "</td><td>" + data[i].Gecis_Grubu +
-                        "</td><td>" + data[i].Ziyaretci_Grubu +
-                        "</td></tr>");
-                }
-            }).always(function () {
-                $("#myTable tbody tr").click(function () {
-                    $("#alertMain").prop("hidden", false);
-                    var ID = $(this).children("td").data("id");
-                    var Adi = $(this).children("td").data("personeladi");
-                    var Soyadi = $(this).children("td").data("personelsoyadi");
-                    var KartID = $(this).children("td").data("kartid");
-                    var GecisGrubu = $(this).children("td").data("gecisgrubu");
-                    $("#User_ID").attr('value', ID);
-                    $("#Adi").attr('value', Adi);
-                    $("#Soyadi").attr('value', Soyadi);
-                    $("#Kart_ID").attr('value', KartID);
-                    $("#Grup_No").attr('value', GecisGrubu);
-                    $("#alert").text(Adi + " " + Soyadi + " Seçildi!");
-                });
-
-            });
-
-        });
-
-
         $("#yenile").click(function () {
             $("#Search").html("");
             $("#zyrt").html("");
@@ -307,11 +265,12 @@
                         "</td><td>" + data[i].Kart_ID +
                         "</td><td>" + data[i].Adi +
                         "</td><td>" + data[i].Soyadi +
-                        "</td><td>" + data[i].Sirket +
-                        "</td><td>" + data[i].Departman +
-                        "</td><td>" + data[i].Blok +
-                        "</td><td>" + data[i].Gecis_Grubu +
-                        "</td><td>" + data[i].Ziyaretci_Grubu +
+                        "</td><td>" + data[i].SirketAdi +
+                        "</td><td>" + data[i].DepartmanAdi +
+                        "</td><td>" + data[i].AltDepartmanAdi +
+                        "</td><td>" + data[i].BolumAdi +
+                        "</td><td>" + data[i].BlokAdi +
+                        "</td><td>" + data[i].Grup_Adi +
                         "</td></tr>");
                 }
             }).always(function () {

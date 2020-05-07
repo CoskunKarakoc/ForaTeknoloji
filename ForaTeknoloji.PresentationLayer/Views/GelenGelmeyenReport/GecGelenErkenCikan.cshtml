@@ -1,9 +1,9 @@
-﻿@model ForaTeknoloji.PresentationLayer.Models.GelenGelmeyen_GelmeyenlerListViewModel
+﻿@model ForaTeknoloji.PresentationLayer.Models.GelenGelmeyen_IlkGirisSonCikisListViewModel
 @{
-    ViewBag.Title = "Gelmeyen Kişi Raporları";
+    ViewBag.Title = "Geç Gelen Erken Çıkan";
     Layout = "~/Views/Shared/_Layout.cshtml";
     //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
-    WebGrid webGrid = new WebGrid(source: Model.Gelmeyenler, rowsPerPage: 20);
+    WebGrid webGrid = new WebGrid(source: Model.IlkGirisSonCikis, rowsPerPage: 20);
 }
 <style>
     .table-pager > td {
@@ -23,87 +23,30 @@
 </style>
 <div class="card border-left-info h-100 shadow-lg mt-2">
     <div class="card-header py-1">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="card-title"><i class="fas fa-bookmark"></i> Gelmeyen Kişi Raporları</h3>
-            </div>
-            <div class="col-md-12 text-right">
-                <a data-toggle="modal" data-target="#GelmeyenReportTime"><i class="fas fa-cogs fa-2x text-secondary"></i></a>
-            </div>
-        </div>
+        <h3 class="card-title"><i class="fas fa-bookmark"></i> Geç Gelen Erken Çıkan</h3>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("Gelmeyenler", "GelenGelmeyenReport", FormMethod.Get))
+        @using (Html.BeginForm("GecGelenErkenCikan", "GelenGelmeyenReport", FormMethod.Get))
         {
-
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label>Ünvan</label>
                         <div class="form-group">
-                            @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                            <label for="exampleFormControlInput1">İlk Tarih</label>
+                            <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih1">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Ziyaretci">Kullanıcılar</label>
                         <div class="form-group">
-                            <input type="text" id="Ziyaretci" class="form-control form-control-sm" name="Users" />
-                            <input type="text" id="UserKayitNo" hidden name="User" value="" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label>Şirketler</label>
-                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                        @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        <label>Departmanlar</label>
-                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                        @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
-                    </div>
-
-
-                </div>
-                <div class="col-md-2">
-
-                    <div class="form-group">
-                        <label>Alt Departmanlar</label>
-                        @Html.DropDownListFor(model => model.AltDepartman, Model.AltDepartman, "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>
-                    <div class="form-group">
-                        <label>Bölümler</label>
-                        @Html.DropDownListFor(model => model.Bolum, Model.Bolum, "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    @*<div class="form-group">
-                        <label>Birimler</label>
-                        @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>*@
-                    <div class="form-group">
-                        <label>Geçiş Grupları</label>
-                        <div class="form-group">
-                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <div class="custom-control">
-                            <label for="Tarih">Başlangıç Tarihi</label>
-                            <input class="form-control form-control-sm" name="Baslangic_Tarihi" type="date" value="2019-08-13" id="Tarih">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control">
-                            <label for="Tarih2">Bitiş Tarihi</label>
+                            <label for="exampleFormControlInput1">Son Tarih</label>
                             <input class="form-control form-control-sm" name="Bitis_Tarihi" type="date" value="2019-08-13" id="Tarih2">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label>Ünvan</label>
+                        @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Unvan, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="custom-control custom-checkbox ">
                         <input type="checkbox" value="true" name="ikiSaat" class="custom-control-input" id="ikiSaat" />
                         <label class="custom-control-label mb-2" for="ikiSaat">İki Saat Arası</label>
@@ -116,43 +59,93 @@
                         <input type="time" class="form-control form-control-sm" name="Bitis_Saati" disabled id="Saat2" value="@DateTime.Now.ToShortTimeString()" />
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Şirketler</label>
+                        @Html.DropDownListFor(model => model.Sirket, Model.Sirket, "Şirket Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Sirket, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Departmanlar</label>
+                        @Html.DropDownListFor(model => model.Departman, Model.Departman, "Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Departman, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Alt Departmanlar</label>
+                        @Html.DropDownListFor(model => model.AltDepartman, Model.AltDepartman, "Alt Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Bölümler</label>
+                        @Html.DropDownListFor(model => model.Bolum, Model.Bolum, "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                    @*<div class="form-group">
+                        <label>Birimler</label>
+                        @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>*@
+                    <div class="form-group">
+                        <label>Geçiş Grupları</label>
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" value="true" name="TümZiyaret" class="custom-control-input" id="TümZiyaret" />
+                            <label class="custom-control-label" for="TümZiyaret">Tüm Kullanıcılar</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="Kullanici" class="form-control form-control-sm" name="Kullanici" />
+                            <input type="text" id="USERID" hidden value="" name="User" />
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12 text-right float-right">
-                    <h4 class="text-info text-right">@Model.Gelmeyenler.Count Adet Kayıt Listelendi</h4>
+                    <h4 class="text-info text-right">@Model.IlkGirisSonCikis.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("GelmeyenlerExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("GecGelenErkenCikanExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
+
 
                 <div class="col-md-12">
 
                     <div id="print_div" class="mt-4">
 
-                        @if (Model.Gelmeyenler.Count > 0)
+                        @if (Model.IlkGirisSonCikis.Count > 0)
                         {
                             @webGrid.GetHtml(
-                   htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-                   footerStyle: "table-pager",
-                   columns: webGrid.Columns(
-                       webGrid.Column("ID", "ID"),
-                       webGrid.Column("Kart_ID", "Kart ID"),
-                       webGrid.Column("Unvan", "Ünvanı"),
-                       webGrid.Column("Adi", "Adı"),
-                       webGrid.Column("Soyadi", "Soyadı"),
-                       webGrid.Column("TCKimlik", "TC Kimlik"),
-                       webGrid.Column("SirketAdi", "Şirket"),
-                       webGrid.Column("DepartmanAdi", "Departman"),
-                       webGrid.Column("AltDepartmanAdi", "Alt Departman"),
-                       webGrid.Column("BolumAdi", "Bölüm"),
-                      // webGrid.Column("BirimAdi", "Birim"),
-                       webGrid.Column("Grup_Adi", "Geçiş Grubu")))
+            htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+            footerStyle: "table-pager",
+            columns: webGrid.Columns(
+               webGrid.Column("ID", "ID"),
+               webGrid.Column("Kart_ID", "Kart ID"),
+               webGrid.Column("Adi", "Adı"),
+               webGrid.Column("Soyadi", "Soyadı"),
+               webGrid.Column("SirketAdi", "Şirket"),
+               webGrid.Column("DepartmanAdi", "Departman"),
+               webGrid.Column("AltDepartmanAdi", "Alt Departman"),
+               webGrid.Column("BolumAdi", "Bölüm"),
+               //webGrid.Column("BirimAdi", "Birim"),
+               webGrid.Column("Grup_Adi", "Grup No"),
+               webGrid.Column("Tarih_Degeri", "Tarih Değeri"),
+               webGrid.Column("Ilk_Kayit", "İlk Kayıt"),
+               webGrid.Column("Son_Kayit", "Son Kayıt"),
+               webGrid.Column("Fark", "Fark")))
+
+
                         }
                         else
                         {
                             <div class="alert alert-info alert-message">
                                 <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
                             </div>
-
                         }
 
 
@@ -163,66 +156,28 @@
 
                 </div>
             </div>
+
         }
     </div>
 </div>
-<!--Gelmeyen Saat Ayarları Modal -->
-<div class="modal fade" id="GelmeyenReportTime" tabindex="-1" role="dialog" aria-labelledby="GelmeyenlerReportTime" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
 
-        <div class="modal-content">
-            @using (Html.BeginForm("ReportTime", "GelenGelmeyenReport", FormMethod.Post))
-            {
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Gelmeyenler Rapor Saati</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="ReportTime">Gelmeyenler Rapor Saati</label>
-                                <input class="form-control form-control-sm" name="Report_Time" type="time" value="@Model.Saat.Value.ToLongTimeString()" id="ReportTime">
-                            </div>
-                        </div>
-                        <div class="col-md-6 mt-4">
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
-                                    @Html.CheckBox("ReportByHour", Model.ReportByHour ?? false, new { @class = "custom-control-input" })
-                                    <label class="custom-control-label" for="ReportByHour">Saate Göre Raporla</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Vazgeç</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Değişikliği Kaydet</button>
-                </div>
-            }
-        </div>
-
-    </div>
-</div>
-@*Aktif Kullanıcı Listesi*@
+<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="text-muted">Kullanıcı Arama</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body ">
+                <div hidden id="alertMain" class="alert-success">
+                    <h2 id="alert" class="text-center text-muted"></h2>
+                </div>
                 <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
                     <thead>
                         <tr>
                             <td>Kayıt No</td>
-                            <td>ID</td>
                             <td>Kart ID</td>
+                            <td>TC Kimlik</td>
                             <td>Adı</td>
                             <td>Soyadı</td>
                             <td>Şirket</td>
@@ -232,15 +187,16 @@
                             <td>Blok</td>
                             <td>Plaka</td>
                             <td>Geçiş Grubu</td>
+
                         </tr>
                     </thead>
-                    <tbody id="zyrt">
-                        @foreach (var item in Model.Kullanıcı)
+                    <tbody id="SearchTable">
+                        @foreach (var item in Model.KullaniciComplex)
                         {
                             <tr>
-                                <td data-kayitno="@item.Kayit_No" data-visitor="@(item.Adi+" "+item.Soyadi )">@item.Kayit_No</td>
-                                <td>@item.ID</td>
+                                <td data-kayitno="@item.ID" data-visitor="@(item.Adi+' '+item.Soyadi)">@item.Kayit_No</td>
                                 <td>@item.Kart_ID</td>
+                                <td>@item.TCKimlik</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
                                 <td>@item.SirketAdi</td>
@@ -251,18 +207,46 @@
                                 <td>@item.Plaka</td>
                                 <td>@item.Grup_Adi</td>
                             </tr>
-
                         }
                     </tbody>
+
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" id="temizle" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
+                <button type="button" class="btn btn-success" id="temizle"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
                 <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#myTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+        });
+    </script>
+
+}
 
 <script>
     $(document).ready(function () {
@@ -342,7 +326,6 @@
 
             });
         })
-
         $("#Bolum").chosen().change(function () {
             var bolumNo = $(this).val();
             var altdepartmanNo = $("#AltDepartman").val();
@@ -360,7 +343,37 @@
 
 
 
+        $("#myTable tbody tr").click(function () {
+            $("#alertMain").prop("hidden", false);
+            var kayitNo = $(this).children("td").data("kayitno");
+            var name = $(this).children("td").data("visitor");
+            $("#Kullanici").attr('value', name);
+            $("#USERID").attr('value', kayitNo);
+            $("#alert").text(name + " Seçildi!");
+            var selected = $(this).hasClass("table-success");
+            $("#myTable tbody tr").removeClass("table-success");
+            if (!selected)
+                $(this).addClass("table-success");
+        });
+
+        $("#Kullanici").attr('value', null);
+        $("#USERID").attr('value', null);
+        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
+        // buton aktif durum css
+        $("tfoot td")
+            .contents()
+            .filter(function () {
+                if (this.nodeType === 3 && this.length > 1) {
+                    return this.nodeType
+                }
+            })
+            .wrap('<span class=" btn btn-primary" />');
+
+
     });
+
+</script>
+<script>
     $(function () {
         $("#btnPrint").click(function () {
             var contents = $("#print_div").html();
@@ -378,9 +391,9 @@
             frameDoc.document.write('table th, td { text-align: center; padding: 8px;} body{padding:10px;}');
             frameDoc.document.write('tr:nth-child(even) {background-color: #f2f2f2;}');
             frameDoc.document.write('table tr > *:nth-child(1){ display: none; }');
-            frameDoc.document.write('table tr > *:nth-child(6){ display: none; }');
-            frameDoc.document.write('table tr > *:nth-child(12){ display: none; }');
-            // frameDoc.document.write('table tr > *:nth-child(15){ display: none; }');
+            frameDoc.document.write('table tr > *:nth-child(5){ display: none; }');
+            //frameDoc.document.write('table tr > *:nth-child(9){ display: none; }');
+            frameDoc.document.write('table tr > *:nth-child(15){ display: none; }');
             frameDoc.document.write('table tfoot > *:nth-child(2){ display: none; }');
             frameDoc.document.write('table, th, td {  border: 1px solid black; text-align:center; border-collapse: collapse;}');
             frameDoc.document.write('thead tr th a { color: black; text-decoration: none; }thead tr th a:hover { color: black; }thead tr th a:visited { color: black; }thead tr th a:active { color: black; }');
@@ -388,7 +401,7 @@
             frameDoc.document.write('</head>');
             frameDoc.document.write('<body>');
             frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
-            frameDoc.document.write('<h5>Gelmeyen Kişi Raporu (' + '@TempData["DateAndTimeView"] ' + ')</h5><hr/>');
+            frameDoc.document.write('<h5>İlk Giriş-Son Çıkış Raporu (' + '@TempData["DateAndTimeView"]'  + ')</h5>');
             frameDoc.document.write(contents);
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
@@ -401,133 +414,52 @@
             }, 500);
 
         });
-        $("#TümDepartman").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Departmanlar").attr("disabled", true);
-            } else {
-                $("#Departmanlar").attr("disabled", false);
-            }
-        });
-        $("#TümSirket").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Sirketler").attr("disabled", true);
-            } else {
-                $("#Sirketler").attr("disabled", false);
-            }
-        });
-        $("#TümGlobal").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Global_Bolge_Adi").attr("disabled", true);
-            } else {
-                $("#Global_Bolge_Adi").attr("disabled", false);
-            }
-        });
-        $("#TümGecis").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Groupsdetail").attr("disabled", true);
-            } else {
-                $("#Groupsdetail").attr("disabled", false);
-            }
-        });
-        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
-        // buton aktif durum css
-        $("tfoot td")
-            .contents()
-            .filter(function () {
-                if (this.nodeType === 3 && this.length > 1) {
-                    return this.nodeType
-                }
-            })
-            .wrap('<span class=" btn btn-primary" />');
-    });
-    var today = new Date();
-    $('#Tarih').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
-    $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
-</script>
-@section Scripts{
-    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
-    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
-    <style>
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background: none;
-            color: black !important;
-            border-radius: 4px;
-            border: 1px solid #828282;
-        }
 
-        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
-            background: none;
-            color: black !important;
-        }
-    </style>
-    <script>
-        $(document).ready(function () {
-            $("#myTable").DataTable({
-                "language": {
-                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
-                }
-            });
-        });
-    </script>
-}
-
-<script>
-    $(document).ready(function () {
-        $("#myTable tbody tr").click(function () {
-            var kayitNo = $(this).children("td").data("kayitno");
-            var name = $(this).children("td").data("visitor");
-            $("#Ziyaretci").attr('value', name);
-            $("#UserKayitNo").attr('value', kayitNo);
-            var selected = $(this).hasClass("table-success");
-            $("#myTable tbody tr").removeClass("table-success");
-            if (!selected)
-                $(this).addClass("table-success");
-        });
-
-        $("#TümKullanici").change(function () {
+        $("#TümZiyaret").change(function () {
             if ($(this).prop("checked") == true) {
-                $("#Ziyaretci").attr("disabled", true);
-                $("#UserKayitNo").attr("value", null);
-                $("#Ziyaretci").attr("value", null);
+                $("#Kullanici").attr("disabled", true);
+                $("#USERID").attr("value", null);
+                $("#Kullanici").attr("value", null);
+                $("#alertMain").text("");
             } else {
-                $("#Ziyaretci").attr("disabled", false);
+                $("#Kullanici").attr("disabled", false);
             }
         });
-        $("#temizle").click(function () {
-            $("#UserKayitNo").attr("value", null);
-            $("#Ziyaretci").attr("value", null);
-            $("#alert").text("");
-        });
-        $("#Ziyaretci").focus(function () {
+        $("#Kullanici").focus(function () {
             $("#exampleModal").modal("show");
             $("#myTable tbody tr").click(function () {
+                $("#alertMain").prop("hidden", false);
                 var kayitNo = $(this).children("td").data("kayitno");
                 var name = $(this).children("td").data("visitor");
-                $("#Ziyaretci").attr('value', name);
-                $("#UserKayitNo").attr('value', kayitNo);
+                $("#Kullanici").attr('value', name);
+                $("#USERID").attr('value', kayitNo);
+                $("#alert").text(name + " Seçildi!");
+                var selected = $(this).hasClass("table-success");
+                $("#myTable tbody tr").removeClass("table-success");
+                if (!selected)
+                    $(this).addClass("table-success");
             });
         });
-
-        var today = new Date();
-        $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
-        $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
-        $("#ikiTarih").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Tarih2").attr("disabled", false);
-            } else {
-                $("#Tarih2").attr("disabled", true);
-            }
-
-        });
-        $("#ikiSaat").change(function () {
-            if ($(this).prop("checked") == true) {
-                $("#Saat1").attr("disabled", false);
-                $("#Saat2").attr("disabled", false);
-            } else {
-                $("#Saat1").attr("disabled", true);
-                $("#Saat2").attr("disabled", true);
-            }
-        });
+    });
+    $("#temizle").click(function () {
+        $("#User").attr("value", null);
+        $("#Kullanici").attr("value", null);
+        $("#alertMain").prop("hidden", true);
 
     });
+    $("#ikiSaat").change(function () {
+        if ($(this).prop("checked") == true) {
+            $("#Saat1").attr("disabled", false);
+            $("#Saat2").attr("disabled", false);
+        } else {
+            $("#Saat1").attr("disabled", true);
+            $("#Saat2").attr("disabled", true);
+        }
+    });
+
+
+
+    var today = new Date();
+    $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+    $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
 </script>

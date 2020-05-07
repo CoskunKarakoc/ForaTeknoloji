@@ -67,10 +67,10 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label>Birimler</label>
                         @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         <label>Ünvan</label>
                         @Html.DropDownListFor(model => model.Unvan, Model.Unvan, "Ünvan Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
@@ -121,7 +121,7 @@
                webGrid.Column("DepartmanAdi", "Departman"),
                webGrid.Column("AltDepartmanAdi", "Alt Departman"),
                webGrid.Column("BolumAdi", "Bölüm"),
-               webGrid.Column("BirimAdi", "Birim"),
+               //webGrid.Column("BirimAdi", "Birim"),
                webGrid.Column("Grup_Adi", "Geçiş Grubu")))
                         }
                         else

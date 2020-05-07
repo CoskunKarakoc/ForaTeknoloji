@@ -42,7 +42,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersSirketService _dBUsersSirketService;
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         private IDBUsersKapiService _dBUsersKapiService;
-        DBUsers user;
+        DBUsers user=CurrentSession.User;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbDoorList;
@@ -50,11 +50,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         List<int> dbAltDepartmanList;
         public ReportPersonelController(ISirketService sirketService, IDepartmanService departmanService, IBloklarService bloklarService, IVisitorsService visitorsService, IPanelSettingsService panelSettingsService, IGlobalZoneService globalZoneService, IGroupMasterService groupMasterService, IUserService userService, IReportService reportService, IUsersOLDService usersOLDService, IDBUsersPanelsService dBUsersPanelsService, IDoorNamesService doorNamesService, IDBUsersService dBUsersService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, ITaskListService taskListService, IAccessDatasService accessDatasService, IBirimService birimService, IReaderSettingsNewService readerSettingsNewService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IDBUsersKapiService dBUsersKapiService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _userService = userService;
             _sirketService = sirketService;
             _departmanService = departmanService;
@@ -89,6 +89,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
             _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
             {
                 dbDepartmanList.Add((int)dbUserDepartmanNo);
@@ -122,9 +123,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
-            var liste = _reportService.GetReportPersonelLists(parameters);
-            var kullanicilar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
-            var eskiKullanicilar = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            var liste = _reportService.GetReportPersonelLists(parameters, CurrentSession.User);
+            var kullanicilar = _reportService.GetPersonelLists(null, CurrentSession.User);
             var alddepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
             var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
@@ -133,7 +133,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 ReportPersonel = liste,
                 Kullanıcı = kullanicilar,
-                EskiKullanicilar = eskiKullanicilar,
+                EskiKullanicilar = null,
                 Panel = panel.Select(a => new SelectListItem
                 {
                     Text = a.Panel_Name,
@@ -184,9 +184,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Text = a.Adi,
                     Value = a.Birim_No.ToString()
                 })
-
-
-
             };
             TempData["ReportPersonel"] = liste;
             TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
@@ -210,9 +207,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var sirketler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); // _sirketService.GetByKullaniciAdi(user.Kullanici_Adi);
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
             var visitors = _visitorsService.GetAllVisitors();
-            var liste = _reportService.GetReportPersonelListsEski(parameters);
-            var kullanicilar = _userService.GetAllUsersWithOuther().OrderBy(x => x.Kayit_No).ToList();
-            var eskiKullanicilar = _usersOLDService.GetAllUserOLDWithOuther().OrderBy(x => x.Kayit_No).ToList();
+            var liste = _reportService.GetReportPersonelListsEski(parameters, CurrentSession.User);
+            var eskiKullanicilar = _reportService.GetReportPersonelListsEski(null, CurrentSession.User);
             var alddepartmanlar = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var unvanlar = _unvanService.GetAllUnvan();
             var bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.AltDepartman && x.Departman_No == parameters.Departman);
@@ -220,7 +216,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var model = new ReportPersonelViewModel
             {
                 ReportPersonel = liste,
-                Kullanıcı = kullanicilar,
+                Kullanıcı = null,
                 EskiKullanicilar = eskiKullanicilar,
                 Panel = panel.Select(a => new SelectListItem
                 {
@@ -421,13 +417,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (user.Kullanici_Islemleri == (int)SecurityCode.Yetkisiz)
                     throw new Exception("Yetkisiz Erişim!");
             }
-
-            return View(_usersOLDService.GetAllUserOLDWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)));
+            return View(_reportService.GetReportPersonelListsEski(null, CurrentSession.User));
         }
 
         public ActionResult DeletedUserList()
         {
-            return Json(new { data = _usersOLDService.GetAllUserOLDWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No) && dbDepartmanList.Contains((int)x.Departman_No)) }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _reportService.GetReportPersonelListsEski(null, CurrentSession.User) }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult TurnBackUser(int? id)
@@ -488,7 +483,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["ReportPersonel"] as List<ReportPersonelList>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetReportPersonelLists(new ActiveUserReportParameters());
+                liste = _reportService.GetReportPersonelLists(new ActiveUserReportParameters(), CurrentSession.User);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

@@ -71,6 +71,7 @@
     <Compile Include="Abstract\ICodeOperationService.cs" />
     <Compile Include="Abstract\IDBRolesService.cs" />
     <Compile Include="Abstract\IDBUsersAltDepartmanService.cs" />
+    <Compile Include="Abstract\IDBUsersBolumService.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanService.cs" />
     <Compile Include="Abstract\IDBUsersKapiService.cs" />
     <Compile Include="Abstract\IDBUsersPanelsService.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Concrete\CodeOperationManager.cs" />
     <Compile Include="Concrete\DBRolesManager.cs" />
     <Compile Include="Concrete\DBUsersAltDepartmanManager.cs" />
+    <Compile Include="Concrete\DBUsersBolumManager.cs" />
     <Compile Include="Concrete\DBUsersDepartmanManager.cs" />
     <Compile Include="Concrete\DBUsersKapiManager.cs" />
     <Compile Include="Concrete\DBUsersManager.cs" />

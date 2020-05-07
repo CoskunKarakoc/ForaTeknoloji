@@ -29,7 +29,6 @@
                                     <td>Alt Departman</td>
                                     <td>Bölüm</td>
                                     <td>Birim</td>
-                                    <td>Geçiş Grubu</td>
                                     <td></td>
                                 </tr>
                             </thead>
@@ -42,11 +41,10 @@
                                         <td>@item.Soyadi</td>
                                         <td>@item.TCKimlik</td>
                                         <td>@item.Telefon</td>
-                                        <td>@item.Departman</td>
-                                        <td>@item.AltDepartman</td>
-                                        <td>@item.Bolum</td>
-                                        <td>@item.Birim</td>
-                                        <td>@item.Gecis_Grubu</td>
+                                        <td>@item.DepartmanAdi</td>
+                                        <td>@item.AltDepartmanAdi</td>
+                                        <td>@item.BolumAdi</td>
+                                        <td>@item.Grup_Adi</td>
                                         <td><a href="#" onclick="CheckListAddPhone(@item.Telefon)" class="text-success"><i class="fas fa-plus-circle"></i></a></td>
                                     </tr>
                                 }
@@ -116,13 +114,18 @@
 
 <script>
     function CheckListAddPhone(Phone) {
-        $("#" + Phone).remove();
-        $("#checkList").append('<span id="' + Phone + '" class="badge badge-pill badge-success mr-3">' + Phone + '<i onclick="CheckListDeletePhone(' + Phone + ')" class="fas fa-close text-default ml-2"></i></span>');
-        $.ajax({
-            url: '/SMS/PhoneAdd?Phone=' + Phone,
-            type: 'POST',
-            dataType: 'json'
-        });
+        if (Phone != null && Phone != '') {
+            $("#" + Phone).remove();
+            $("#checkList").append('<span id="' + Phone + '" class="badge badge-pill badge-success mr-3">' + Phone + '<i onclick="CheckListDeletePhone(' + Phone + ')" class="fas fa-close text-default ml-2"></i></span>');
+            $.ajax({
+                url: '/SMS/PhoneAdd?Phone=' + Phone,
+                type: 'POST',
+                dataType: 'json'
+            });
+        } else {
+            alert("Seçilen Kullanıcının Telefon Numarası Yok!");
+        }
+
     }
 
     function CheckListDeletePhone(Phone) {

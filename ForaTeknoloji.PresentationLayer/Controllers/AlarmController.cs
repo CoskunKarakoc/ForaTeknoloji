@@ -30,7 +30,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         private IReaderSettingsNewService _readerSettingsNewService;
         private IDBUsersKapiService _dBUsersKapiService;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
@@ -40,11 +40,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IReaderSettingsNewService readerSettingsNewService, IDBUsersKapiService dBUsersKapiService)
         {
 
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _alarmlarService = alarmlarService;
             _alarmTipleriService = alarmTipleriService;
             _userService = userService;
@@ -85,6 +85,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
             }
+            _reportService.GetPanelList(user == null ? new DBUsers { } : user);
+            _reportService.GetSirketList(user == null ? new DBUsers { } : user);
+            _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsers.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -144,7 +149,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 List<ReaderSettingsNew> kapiListesi = new List<ReaderSettingsNew>();
                 var entity = _alarmlarService.GetById((int)id);
                 var paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0 && dbPanelList.Contains((int)x.Panel_ID));
-                var kullanıcılar = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)).OrderBy(x => x.Kayit_No).ToList();
+                var kullanıcılar = _reportService.GetPersonelLists(null, user);
                 var seciliKullanici = _userService.GetById((int)entity.User_ID);
                 var alarmTipleri = _alarmTipleriService.GetAllAlarmlar();
 
@@ -200,7 +205,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             var maxID = 0;
             var paneller = _panelSettingsService.GetAllPanelSettings(x => x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0 && dbPanelList.Contains((int)x.Panel_ID));
-            var kullanıcılar = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)).OrderBy(x => x.Kayit_No).ToList();
+            var kullanıcılar = _reportService.GetPersonelLists(null, CurrentSession.User);
             var alarmTipleri = _alarmTipleriService.GetAllAlarmlar();
             if (_alarmlarService.GetAllAlarmlar().Count > 0)
             {
@@ -305,21 +310,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public ActionResult Personeller(string Search)
+        public ActionResult Personeller()
         {
-            List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser> liste = new List<DataAccessLayer.Concrete.EntityFramework.EfUserDal.ComplexUser>();
-
-            if (Search != null && Search != "")
-            {
-                liste = _userService.GetAllUsersWithOuther(x => dbDepartmanList.Contains((int)x.Departman_No) && dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No) && x.Adi.Contains(Search.Trim()) || x.Kart_ID.Contains(Search.Trim()) || x.Soyadi.Contains(Search.Trim()) || x.Plaka.Contains(Search.Trim()) || x.Sirket.Contains(Search.Trim()) || x.Departman.Contains(Search.Trim()) || x.Blok.Contains(Search.Trim()) || x.Gecis_Grubu.Contains(Search.Trim())).OrderBy(x => x.Kayit_No).ToList();
-            }
-            else
-            {
-                liste = _userService.GetAllUsersWithOuther(x => dbDepartmanList.Contains((int)x.Departman_No) && dbSirketList.Contains((int)x.Sirket_No) && dbAltDepartmanList.Contains((int)x.Alt_Departman_No)).OrderBy(x => x.Kayit_No).ToList();
-            }
-
-            return Json(liste, JsonRequestBehavior.AllowGet);
-
+            return Json(_reportService.GetPersonelLists(null, CurrentSession.User), JsonRequestBehavior.AllowGet);
         }
 
 

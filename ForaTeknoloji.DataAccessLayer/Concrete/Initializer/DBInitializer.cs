@@ -74,9 +74,19 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Ziyaretci_Ekleme = true,
                 Ziyaretci_Gonderme = true,
                 Ziyaretci_Raporlari = true,
-                Spot_Monitor = true
+                Spot_Monitor = true,
+                Gec_Gelen_Erken_Cikan = true,
+                Guvenlik_Ayarlari = true
             };
             context.OperatorTransactionLists.Add(operatorTransactionList);
+
+            LiftGroups liftGroups = new LiftGroups
+            {
+                Asansor_Grup_Adi = "Asansör",
+                Asansor_Grup_No = 1,
+                Kat_Sayisi = 16
+            };
+            context.LiftGroups.Add(liftGroups);
 
             AccessCountTypes gunluk = new AccessCountTypes
             {

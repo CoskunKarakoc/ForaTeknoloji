@@ -10,5 +10,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<Sirketler> Sirketler { get; set; }
         public List<PanelSettings> Paneller { get; set; }
         public List<Departmanlar> Departmanlar { get; internal set; }
+        public List<Bolum> Bolumler { get; internal set; }
     }
 }

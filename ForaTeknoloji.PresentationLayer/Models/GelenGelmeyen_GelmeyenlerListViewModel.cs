@@ -19,6 +19,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public DateTime? Saat { get; internal set; }
         public bool? ReportByHour { get; internal set; }
         public IEnumerable<SelectListItem> Birim_No { get; internal set; }
-        public List<EfUserDal.ComplexUser> Kullanıcı { get; internal set; }
+        public List<PersonelList> Kullanıcı { get; internal set; }
     }
 }

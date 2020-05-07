@@ -14,5 +14,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteAll();
         void DeleteByGrupNoANDPanelID(int? PanelID, int? GrupNo);
         DoorGroupsDetail UpdateDoorGroupsDetail(DoorGroupsDetail doorGroupsDetail);
+        void DeleteByKapiGrupNo(int Kapi_Grup_No);
     }
 }

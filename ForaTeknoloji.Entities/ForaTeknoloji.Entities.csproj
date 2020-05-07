@@ -119,6 +119,7 @@
     <Compile Include="Entities\DBRoles.cs" />
     <Compile Include="Entities\DBUsers.cs" />
     <Compile Include="Entities\DBUsersAltDepartman.cs" />
+    <Compile Include="Entities\DBUsersBolum.cs" />
     <Compile Include="Entities\DBUsersDepartman.cs" />
     <Compile Include="Entities\DBUsersKapi.cs" />
     <Compile Include="Entities\DBUsersPanels.cs" />

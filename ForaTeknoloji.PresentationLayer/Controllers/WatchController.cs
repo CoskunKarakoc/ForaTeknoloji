@@ -19,16 +19,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IReportService _reportService;
         private IProgInitService _progInitService;
         private IDBUsersService _dBUsersService;
-        DBUsers user;
+        DBUsers user = CurrentSession.User;
         DBUsers permissionUser;
         WatchParameters WtchPrmtrs;
         public WatchController(IAccessDatasService accessDatasService, IUserService userService, IReportService reportService, IProgInitService progInitService, IDBUsersService dBUsersService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             WtchPrmtrs = CurrentSession.Get<WatchParameters>("WatchParameter");
             if (WtchPrmtrs == null)
             {
@@ -44,6 +44,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetDoorList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             _reportService.GetPanelAndDoorListForSpotMonitor(user == null ? new DBUsers { } : user);
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
@@ -58,7 +60,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     throw new Exception("Yetkisiz Erişim!");
             }
             var lastrecordwatch = _reportService.GetWatchTopOne(WtchPrmtrs); //_reportService.LastRecordWatch(null);
-            var cmplxwatch = _reportService.GetWatch(WtchPrmtrs);
+            var cmplxwatch = _reportService.GetWatch(WtchPrmtrs, CurrentSession.User);
             var model = new WatchIndexViewModel
             {
                 ComplexAccessDatas = cmplxwatch,

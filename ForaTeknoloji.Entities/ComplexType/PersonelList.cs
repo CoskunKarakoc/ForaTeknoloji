@@ -8,6 +8,8 @@ namespace ForaTeknoloji.Entities.ComplexType
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
+        public int Kayit_No { get; set; }
+
         public string Kart_ID { get; set; }
 
         public string Adi { get; set; }
@@ -37,6 +39,10 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Grup_Adi { get; set; }
 
         public string Birim_Adi { get; set; }
+
+        public string Telefon { get; set; }
+
+        public string Aciklama { get; set; }
 
         public string Tmp { get; set; }
         public bool? Kapi1 { get; set; }

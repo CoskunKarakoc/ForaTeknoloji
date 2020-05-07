@@ -75,6 +75,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         public virtual DbSet<DBUsersAltDepartman> DBUsersAltDepartman { get; set; }
         public virtual DbSet<DBUsersKapi> DBUsersKapi { get; set; }
         public virtual DbSet<SMSForPanelStatus> SMSForPanelStatuses { get; set; }
+        public virtual DbSet<DBUsersBolum> DBUsersBolum { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

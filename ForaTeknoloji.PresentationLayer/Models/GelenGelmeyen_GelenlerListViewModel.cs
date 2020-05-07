@@ -16,6 +16,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public IEnumerable<SelectListItem> Unvan { get; internal set; }
         public IEnumerable<SelectListItem> Bolum { get; internal set; }
         public IEnumerable<SelectListItem> Birim_No { get; internal set; }
-        public List<EfUserDal.ComplexUser> Kullanıcı { get; internal set; }
+        public List<PersonelList> Kullanıcı { get; internal set; }
     }
 }

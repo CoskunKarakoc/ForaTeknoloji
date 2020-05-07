@@ -67,6 +67,7 @@
     <Compile Include="Abstract\ICodeOperationDal.cs" />
     <Compile Include="Abstract\IDBRolesDal.cs" />
     <Compile Include="Abstract\IDBUsersAltDepartmanDal.cs" />
+    <Compile Include="Abstract\IDBUsersBolumDal.cs" />
     <Compile Include="Abstract\IDBUsersDal.cs" />
     <Compile Include="Abstract\IDBUsersDepartmanDal.cs" />
     <Compile Include="Abstract\IDBUsersKapiDal.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Concrete\EntityFramework\EfCodeOperationDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBRolesDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersAltDepartmanDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfDBUsersBolumDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersDepartmanDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfDBUsersKapiDal.cs" />

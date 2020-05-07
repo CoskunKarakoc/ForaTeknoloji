@@ -226,24 +226,26 @@
                             <td>Soyadı</td>
                             <td>Şirket</td>
                             <td>Departman</td>
+                            <td>Alt Departman</td>
+                            <td>Bölüm</td>
                             <td>Blok</td>
                             <td>Kendi Geçiş Grubu</td>
-                            <td>Ziyaretçi Geçiş Grubu</td>
                         </tr>
                     </thead>
                     <tbody id="zyrt">
                         @foreach (var item in Model.ComplexPersoneller)
                         {
                             <tr>
-                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-personelsoyadi="@item.Soyadi" data-groupno="@item.Grup_No" data-groupadi="@item.Gecis_Grubu">@item.ID</td>
+                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-personelsoyadi="@item.Soyadi" data-groupno="@item.Grup_No" data-groupadi="@item.Grup_Adi">@item.ID</td>
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
-                                <td>@item.Sirket</td>
-                                <td>@item.Departman</td>
-                                <td>@item.Blok</td>
-                                <td>@item.Gecis_Grubu</td>
-                                <td>@item.String_Ziyaretci_Grubu</td>
+                                <td>@item.SirketAdi</td>
+                                <td>@item.DepartmanAdi</td>
+                                <td>@item.AltDepartmanAdi</td>
+                                <td>@item.BolumAdi</td>
+                                <td>@item.BlokAdi</td>
+                                <td>@item.Grup_Adi</td>
                             </tr>
 
                         }

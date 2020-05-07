@@ -114,7 +114,7 @@
                 <!-- Nav Item - Pages Collapse Menu -->
                 @if (MenuListUser.Kullanici_Alarm_Ekleme == true || MenuListUser.Kamera_Ekleme == true || MenuListUser.Asansor_Gecis_Grubu_Ekleme == true
                     || MenuListUser.Global_Bolge_Guncelleme == true || MenuListUser.Kapi_Operasyon == true || MenuListUser.E_Mail_Gonderme_Ayarlari == true
-                    || MenuListUser.SMS_Gonderme_Ayarlari == true || MenuListUser.Gecis_Olay_Verileri == true || MenuListUser.Gecis_Olay_Yedekle == true)
+                    || MenuListUser.SMS_Gonderme_Ayarlari == true || MenuListUser.Gecis_Olay_Verileri == true || MenuListUser.Gecis_Olay_Yedekle == true || MenuListUser.Guvenlik_Ayarlari == true)
                 {
                     <li id="Genel" class="nav-item ">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGenel" aria-expanded="true" aria-controls="collapseGenel">
@@ -296,11 +296,7 @@
                                     }
                                     @if (MenuListUser.Kapi_Grup_Olusturma == true)
                                     {
-                                        DBUsers yemekhaneGrup = CurrentSession.User;
-                                        if (yemekhaneGrup.SysAdmin == true)
-                                        {
-                                            <a class="collapse-item" href="@Url.Action("Index","DoorGroup")">Kapı Grupları</a>
-                                        }
+                                        <a class="collapse-item" href="@Url.Action("Index","DoorGroup")">Kapı Grupları</a>
                                     }
                                     @if (MenuListUser.Grup_Takvimi_Olusturma == true)
                                     {
@@ -364,7 +360,7 @@
                         || MenuListUser.Icerde_Disarda_Personel_Raporlari == true || MenuListUser.Icerde_Disarda_Ziyaretci_Raporlari == true || MenuListUser.Icerde_Disarda_Tumu == true
                         || MenuListUser.Yemekhane_Kisi_Bazli_Rapor == true || MenuListUser.Yemekhane_Toplu_Gecis_Sayisi_Raporlari == true
                         || MenuListUser.Diger_Raporlar == true || MenuListUser.Kullanici_Alarm_Raporu == true
-                        || MenuListUser.Ziyaretci_Raporlari == true || MenuListUser.Tanimsiz_Kullanici_Raporlari == true || MenuListUser.Operator_Log_Raporlari == true || MenuListUser.Panel_Durum_Tablosu == true)
+                        || MenuListUser.Ziyaretci_Raporlari == true || MenuListUser.Tanimsiz_Kullanici_Raporlari == true || MenuListUser.Operator_Log_Raporlari == true || MenuListUser.Panel_Durum_Tablosu == true || MenuListUser.Gec_Gelen_Erken_Cikan == true)
                     {
                         <li id="Report" class="nav-item">
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true" aria-controls="collapseReport">
@@ -394,13 +390,19 @@
                                         }
                                         <hr />
                                     }
-                                    @if (MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true || MenuListUser.Toplam_Icerde_Kalma_Raporu == true || MenuListUser.Gelen_Kisi_Raporlari == true || MenuListUser.Gelmeyen_Kisi_Raporlari == true || MenuListUser.Pasif_Kullanici_Raporlari == true || MenuListUser.Toplu_Giris_Sayisi_Raporlari == true)
+                                    @if (MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true || MenuListUser.Toplam_Icerde_Kalma_Raporu == true || MenuListUser.Gelen_Kisi_Raporlari == true || MenuListUser.Gelmeyen_Kisi_Raporlari == true || MenuListUser.Pasif_Kullanici_Raporlari == true || MenuListUser.Toplu_Giris_Sayisi_Raporlari == true || MenuListUser.Gec_Gelen_Erken_Cikan == true)
                                     {
                                         <h6 class="collapse-header">Genel Raporlar</h6>
                                         if (MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true)
                                         {
                                             <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">İlk Giriş Son Çıkış</a>
                                         }
+
+                                        if (MenuListUser.Gec_Gelen_Erken_Cikan == true)
+                                        {
+                                            <a class="collapse-item" href="@Url.Action("GecGelenErkenCikan","GelenGelmeyenReport")">Geç Gelen Erken Çıkan</a>
+                                        }
+
                                         if (MenuListUser.Toplam_Icerde_Kalma_Raporu == true)
                                         {
                                             <a class="collapse-item" href="@Url.Action("ToplamIcerdeKalma","GelenGelmeyenReport")">Toplam İçerde Kalma</a>
@@ -442,11 +444,9 @@
                                     @if (MenuListUser.Yemekhane_Kisi_Bazli_Rapor == true || MenuListUser.Yemekhane_Toplu_Gecis_Sayisi_Raporlari == true)
                                     {
                                         DBUsers yemekhaneUser = CurrentSession.User;
-                                        if (yemekhaneUser.SysAdmin == true)
-                                        {
-                                            <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları-Kişi</a>
-                                            <a class="collapse-item" href="@Url.Action("Total","Refectory")">Yemekhane Raporları-Toplu</a>
-                                        }
+                                        <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları-Kişi</a>
+                                        <a class="collapse-item" href="@Url.Action("Total","Refectory")">Yemekhane Raporları-Toplu</a>
+
                                     }
                                     @if (MenuListUser.Diger_Raporlar == true)
                                     {

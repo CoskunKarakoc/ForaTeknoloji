@@ -23,6 +23,14 @@ namespace ForaTeknoloji.Entities.Entities
         [StringLength(50)]
         public string Kart_ID { get; set; }
 
+        [Column("Kart ID 2")]
+        [StringLength(50)]
+        public string Kart_ID_2 { get; set; }
+
+        [Column("Kart ID 3")]
+        [StringLength(50)]
+        public string Kart_ID_3 { get; set; }
+
         [Column("Dogrulama PIN")]
         [StringLength(50)]
         public string Dogrulama_PIN { get; set; }
@@ -119,6 +127,21 @@ namespace ForaTeknoloji.Entities.Entities
         [Column("Grup No 3")]
         public int? Grup_No_3 { get; set; }
 
+        [Column("Grup No 4")]
+        public int? Grup_No_4 { get; set; }
+
+        [Column("Grup No 5")]
+        public int? Grup_No_5 { get; set; }
+
+        [Column("Grup No 6")]
+        public int? Grup_No_6 { get; set; }
+
+        [Column("Grup No 7")]
+        public int? Grup_No_7 { get; set; }
+
+        [Column("Grup No 8")]
+        public int? Grup_No_8 { get; set; }
+
         [StringLength(50)]
         public string Tmp { get; set; }
 
@@ -128,10 +151,17 @@ namespace ForaTeknoloji.Entities.Entities
         [Column("Bitis Tarihi")]
         public DateTime? Bitis_Tarihi { get; set; }
 
+        [Column("Bitis Saati")]
+        public DateTime? Bitis_Saati { get; set; }
+
         [StringLength(50)]
         public string Telefon { get; set; }
 
         [Column("3 Grup")]
         public bool? C3_Grup { get; set; }
+
+        [StringLength(5)]
+        [Column("Kan Grubu")]
+        public string Kan_Grubu { get; set; }
     }
 }

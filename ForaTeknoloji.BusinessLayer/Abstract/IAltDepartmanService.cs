@@ -13,6 +13,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
     {
         List<AltDepartman> GetAllAltDepartman(Expression<Func<AltDepartman, bool>> filter = null);
         AltDepartman GetById(int Alt_Departman_No);
+        AltDepartman GetByAltDepartmanAdi(string AltDepartmanAdi);
         AltDepartman AddAltDepartman(AltDepartman altDepartman);
         void DeleteAltDepartman(AltDepartman altDepartman);
         void DeleteAll();

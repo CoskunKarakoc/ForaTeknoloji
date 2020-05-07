@@ -23,6 +23,13 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             }
         }
 
+        public void DeleteByKapiGrupNo(int Kapi_Grup_No)
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("DELETE FROM [DoorGroupsDetail] WHERE [Kapi Grup No] = " + Kapi_Grup_No);
+            }
+        }
 
 
 

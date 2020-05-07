@@ -31,18 +31,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IUserService _userService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
         public AccessGroupController(IGroupMasterService groupMasterService, IGlobalZoneService globalZoneService, IGroupsDetailNewService groupsDetailNewService, ITimeGroupsService timeGroupsService, ILiftGroupsService liftGroupsService, IReaderSettingsNewService readerSettingsNewService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsersService, IReportService reportService, IAccessDatasService accessDatasService, IUserService userService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _groupMasterService = groupMasterService;
             _globalZoneService = globalZoneService;
             _groupsDetailNewService = groupsDetailNewService;
@@ -256,40 +256,53 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<ComplexGroupsDetailNew> nesne = new List<ComplexGroupsDetailNew>();
             if (PanelID == null)
             {
-                PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)).FirstOrDefault().Panel_ID;
+
+                try
+                {
+                    PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)).FirstOrDefault().Panel_ID;
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Sistemde kayıtlı panel bulunamadı!");
+                }
+                   
+
+
+
                 var timezonegroupcount = _timeGroupsService.GetAllTimeGroups().Count;
                 if (timezonegroupcount == 0)
                     throw new Exception("Zaman Bölgesi Gerekli!");
-                var liftgroupcount = _liftGroupsService.GetAllLiftGroups().Count;
 
+                var liftgroupcount = _liftGroupsService.GetAllLiftGroups().Count;
                 if (liftgroupcount == 0)
                     throw new Exception("Asansör Geçiş Grubu Gerekli!");
+
                 nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
-            }
+                }
             else
             {
-                nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
+                    nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
+                }
+
+                foreach (var item in nesne)
+                {
+                    KapiZamanGrupNo.Add(new SelectList(_timeGroupsService.GetAllTimeGroups(), "Zaman_Grup_No", "Zaman_Grup_Adi", item.Zaman_Grup_No));
+                    KapiAsansorBolgeNo.Add(new SelectList(_liftGroupsService.GetAllLiftGroups(), "Asansor_Grup_No", "Asansor_Grup_Adi", item.Asansor_Grup_No));
+                }
+
+
+                var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
+                var model = new CreateReaderModel
+                {
+                    Kapi_Asansor_Bolge_No = KapiAsansorBolgeNo,
+                    Kapi_Zaman_Grup_No = KapiZamanGrupNo,
+                    Groups = nesne,
+                    Panel_ID = PanelID,
+                    PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)), //_reportService.PanelListesi(user),
+                    PanelModel = panelModel
+                };
+                return View(model);
             }
-
-            foreach (var item in nesne)
-            {
-                KapiZamanGrupNo.Add(new SelectList(_timeGroupsService.GetAllTimeGroups(), "Zaman_Grup_No", "Zaman_Grup_Adi", item.Zaman_Grup_No));
-                KapiAsansorBolgeNo.Add(new SelectList(_liftGroupsService.GetAllLiftGroups(), "Asansor_Grup_No", "Asansor_Grup_Adi", item.Asansor_Grup_No));
-            }
-
-
-            var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
-            var model = new CreateReaderModel
-            {
-                Kapi_Asansor_Bolge_No = KapiAsansorBolgeNo,
-                Kapi_Zaman_Grup_No = KapiZamanGrupNo,
-                Groups = nesne,
-                Panel_ID = PanelID,
-                PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)), //_reportService.PanelListesi(user),
-                PanelModel = panelModel
-            };
-            return View(model);
-        }
 
         [HttpPost]
         public ActionResult GroupReaders(GroupReadersParameters parameters)

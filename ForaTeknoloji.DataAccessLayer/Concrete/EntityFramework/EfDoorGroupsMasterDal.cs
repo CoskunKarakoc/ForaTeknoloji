@@ -13,5 +13,14 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
                 context.Database.ExecuteSqlCommand("TRUNCATE TABLE [DoorGroupsMaster]");
             }
         }
+
+        public void DeleteByKapiGrupNo(int Kapi_Grup_No)
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("DELETE FROM [DoorGroupsMaster] WHERE [Kapi Grup No]=" + Kapi_Grup_No);
+            }
+        }
+
     }
 }

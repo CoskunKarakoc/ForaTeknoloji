@@ -15,5 +15,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         ReaderSettingsNew UpdateReaderSettingsNew(ReaderSettingsNew readerSettingsNew);
         ReaderSettingsNew GetByKapiANDPanel(int KapiID, int PanelID);
         void DeleteReaderSettingsNewByPanelID(int PanelID);
+        ReaderSettingsNew GetByFilter(Expression<Func<ReaderSettingsNew, bool>> filter = null);
     }
 }

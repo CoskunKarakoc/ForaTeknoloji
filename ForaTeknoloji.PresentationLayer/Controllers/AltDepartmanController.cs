@@ -20,18 +20,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
         public AltDepartmanController(IAltDepartmanService altDepartmanService, IDBUsersService dBUsersService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _altDepartmanService = altDepartmanService;
             _dBUsersService = dBUsersService;
             _departmanService = departmanService;
@@ -63,12 +63,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             var model = new AltDepartmanListViewModel
             {
-                Departman_No = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)).Select(a => new SelectListItem
+                Departman_No = _departmanService.GetAllDepartmanlar().Select(a => new SelectListItem
                 {
                     Text = a.Adi,
                     Value = a.Departman_No.ToString()
                 }),
-                AltDepartmanListesi = _altDepartmanService.ComplexAltDepartmen(x => dbDepartmanList.Contains(x.Departman_No))
+                AltDepartmanListesi = _altDepartmanService.ComplexAltDepartmen()
             };
 
 
@@ -135,7 +135,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 throw new Exception("Upps! Yanlış giden birşeyler var.");
             }
             AltDepartman altDepartman = _altDepartmanService.GetById((int)id);
-            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)), "Departman_No", "Adi", altDepartman.Departman_No);
+            ViewBag.Departman_No = new SelectList(_departmanService.GetAllDepartmanlar(), "Departman_No", "Adi", altDepartman.Departman_No);
             if (altDepartman == null)
             {
                 return HttpNotFound();

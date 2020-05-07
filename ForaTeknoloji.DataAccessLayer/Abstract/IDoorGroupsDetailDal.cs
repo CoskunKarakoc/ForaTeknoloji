@@ -7,5 +7,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     {
         void DeleteAll();
         void DeleteByGrupNoANDPanelID(int? PanelID, int? GrupNo);
+        void DeleteByKapiGrupNo(int Kapi_Grup_No);
     }
 }

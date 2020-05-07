@@ -1,0 +1,191 @@
+﻿@model ForaTeknoloji.Entities.Entities.Users
+@{
+    ViewBag.Title = "Kullanıcı Ek Grupları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row animated slideInLeft faster">
+    <div class="col-md-8 offset-md-2">
+        <div class="card border-left-info h-100 shadow-lg  mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Kullanıcı Ek Grup Ayarları</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Edit", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Resim)
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.HiddenFor(model => model.Kart_ID)
+                    @Html.HiddenFor(model => model.Kart_ID_2)
+                    @Html.HiddenFor(model => model.Kart_ID_3)
+                    @Html.HiddenFor(model => model.Kart_ID)
+                    @Html.HiddenFor(model => model.Sifre)
+                    @Html.HiddenFor(model => model.Plaka)
+                    @Html.HiddenFor(model => model.Gecis_Modu)
+                    @Html.HiddenFor(model => model.Kullanici_Tipi)
+                    @Html.HiddenFor(model => model.Grup_No)
+                    @Html.HiddenFor(model => model.Grup_No_1)
+                    @Html.HiddenFor(model => model.Visitor_Grup_No)
+                    @Html.HiddenFor(model => model.Sureli_Kullanici)
+                    @Html.HiddenFor(model => model.Bitis_Tarihi)
+                    @Html.HiddenFor(model => model.Bitis_Saati)
+                    @Html.HiddenFor(model => model.Grup_Takvimi_Aktif)
+                    @Html.HiddenFor(model => model.Grup_Takvimi_No)
+                    @Html.HiddenFor(model => model.Resim)
+                    @Html.HiddenFor(model => model.Adi)
+                    @Html.HiddenFor(model => model.Unvan_No)
+                    @Html.HiddenFor(model => model.Sirket_No)
+                    @Html.HiddenFor(model => model.Departman_No)
+                    @Html.HiddenFor(model => model.Alt_Departman_No)
+                    @Html.HiddenFor(model => model.Soyadi)
+                    @Html.HiddenFor(model => model.TCKimlik)
+                    @Html.HiddenFor(model => model.Telefon)
+                    @Html.HiddenFor(model => model.Blok_No)
+                    @Html.HiddenFor(model => model.Daire)
+                    @Html.HiddenFor(model => model.Bolum_No)
+                    @Html.HiddenFor(model => model.Kan_Grubu)
+                    @Html.HiddenFor(model => model.Adres)
+                    @Html.HiddenFor(model => model.Birim_No)
+                    @Html.HiddenFor(model => model.Gorev_No)
+                    @Html.HiddenFor(model => model.Aciklama)
+                    @Html.HiddenFor(model => model.Adres)
+                    @Html.HiddenFor(model => model.Adres)
+                    @Html.HiddenFor(model => model.Adres)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" hidden value="@Model.C3_Grup" name="CC3_GrupHiden" class="custom-control-input" id="3GecisHidden" />
+                                            <input type="checkbox" value="" name="C3_Grup" class="custom-control-input" id="3Gecis" />
+                                            <label class="custom-control-label" for="3Gecis">Çoklu Geçiş Grubu Aktif Et</label>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Ek Geçiş Grubu 1</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No_2", null, "Geçiş Grubu 1 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_2, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Ek Geçiş Grubu 3</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No_4", null, "Geçiş Grubu 3 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_4, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Ek Geçiş Grubu 5</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No_6", null, "Geçiş Grubu 5 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_6, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Ek Geçiş Grubu 2</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No_3", null, "Geçiş Grubu 2 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_3, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Ek Geçiş Grubu 4</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No_5", null, "Geçiş Grubu 4 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_5, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Ek Geçiş Grubu 6</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No_7", null, "Geçiş Grubu 6 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_7, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Ek Geçiş Grubu 7</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No_8", null, "Geçiş Grubu 7 Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No_8, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        <a href="@Url.Action("Index","Users")" class="btn btn-sm btn-outline-info"><i class="fa fa-hand-point-left"></i> Listeye Geri Dön</a>
+                        <a href="@Url.Action("Grup","Users",new { DeleteID=Model.ID })" class="btn btn-sm btn-secondary"><i class="fas fa-trash-alt"></i> Ek Grupları Sil</a>
+                        <button type="submit" class="btn btn-sm btn-outline-success"><i class="fa fa-edit"></i> Güncelle</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+        var sureli = $("#SureliHidden").attr("value");
+        if (sureli) {
+            $("#Sureli").prop("checked", true);
+            $("#Sureli").attr("value", true);
+        } else {
+            $("#Sureli").prop("checked", false);
+            $("#Sureli").attr("value", false);
+        }
+        var gecis = $("#3GecisHidden").attr("value");
+        if (gecis) {
+            $("#3Gecis").prop("checked", true);
+            $("#3Gecis").attr("value", true);
+        } else {
+            $("#3Gecis").prop("checked", false);
+            $("#3Gecis").attr("value", false);
+        }
+
+        $("#3Gecis").change(function () {
+            if ($(this).prop("checked") == true) {
+                $("#3Gecis").attr("value", true);
+            } else {
+                $("#3Gecis").attr("value", false);
+            }
+        });
+
+    });
+</script>
+
+
+

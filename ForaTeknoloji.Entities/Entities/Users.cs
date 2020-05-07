@@ -123,6 +123,21 @@ namespace ForaTeknoloji.Entities.Entities
         [Column("Grup No 3")]
         public int? Grup_No_3 { get; set; }
 
+        [Column("Grup No 4")]
+        public int? Grup_No_4 { get; set; }
+
+        [Column("Grup No 5")]
+        public int? Grup_No_5 { get; set; }
+
+        [Column("Grup No 6")]
+        public int? Grup_No_6 { get; set; }
+
+        [Column("Grup No 7")]
+        public int? Grup_No_7 { get; set; }
+
+        [Column("Grup No 8")]
+        public int? Grup_No_8 { get; set; }
+
         [StringLength(50)]
         public string Tmp { get; set; }
 

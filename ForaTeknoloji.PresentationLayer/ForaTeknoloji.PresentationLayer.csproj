@@ -3144,6 +3144,8 @@
     <Content Include="Views\TreeView\DoorTrigger.cshtml" />
     <Content Include="Views\SecuritySettings\UserDoorToWatch.cshtml" />
     <Content Include="Views\SMS\PanelConnectionStatus.cshtml" />
+    <Content Include="Views\GelenGelmeyenReport\GecGelenErkenCikan.cshtml" />
+    <Content Include="Views\Users\Groups.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

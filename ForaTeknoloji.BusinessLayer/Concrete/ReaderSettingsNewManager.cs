@@ -46,6 +46,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _readerSettingsNewDal.Get(x => x.WKapi_ID == KapiID);
         }
 
+        public ReaderSettingsNew GetByFilter(Expression<Func<ReaderSettingsNew, bool>> filter = null)
+        {
+            return _readerSettingsNewDal.Get(filter);
+        }
+
         public ReaderSettingsNew UpdateReaderSettingsNew(ReaderSettingsNew readerSettingsNew)
         {
             return _readerSettingsNewDal.Update(readerSettingsNew);

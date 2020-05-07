@@ -35,7 +35,6 @@
                                 <td>Departman</td>
                                 <td>Alt Departman</td>
                                 <td>Bölüm</td>
-                                <td>Birim</td>
                                 <td>Geçiş Grubu</td>
                                 <td>Açıklama</td>
                                 <td>
@@ -57,7 +56,6 @@
                                 <td>Departman</td>
                                 <td>Alt Departman</td>
                                 <td>Bölüm</td>
-                                <td>Birim</td>
                                 <td>Geçiş Grubu</td>
                                 <td>Açıklama</td>
                                 <td></td>
@@ -168,11 +166,10 @@
                     { "data": "Adi" },
                     { "data": "Soyadi" },
                     { "data": "TCKimlik" },
-                    { "data": "Departman" },
-                    { "data": "AltDepartman" },
-                    { "data": "Bolum" },
-                    { "data": "Birim" },
-                    { "data": "Gecis_Grubu" },
+                    { "data": "DepartmanAdi" },
+                    { "data": "AltDepartmanAdi" },
+                    { "data": "BolumAdi" },
+                    { "data": "Grup_Adi" },
                     {
                         "data": "Aciklama", "render": function (data) {
                             if (data != null) {
@@ -198,7 +195,7 @@
                     },
                 ],
                 "columnDefs": [
-                    { "orderable": false, "targets": 10 }
+                    { "orderable": false, "targets": 9 }
                 ]
             });
         });

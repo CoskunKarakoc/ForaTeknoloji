@@ -49,6 +49,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _altDepartmanDal.Get(x => x.Alt_Departman_No == Alt_Departman_No);
         }
 
+        public AltDepartman GetByAltDepartmanAdi(string AltDepartmanAdi)
+        {
+            return _altDepartmanDal.Get(x => x.Adi == AltDepartmanAdi);
+        }
+
         public AltDepartman UpdateAltDepartman(AltDepartman altDepartman)
         {
             return _altDepartmanDal.Update(altDepartman);

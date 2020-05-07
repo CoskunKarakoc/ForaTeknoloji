@@ -1,4 +1,5 @@
 ﻿using ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework;
+using ForaTeknoloji.Entities.ComplexType;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -11,6 +12,6 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public List<int> Kapilar { get; set; }
         public List<int> AlarmRolesi { get; set; }
         public int Alarm_No { get; internal set; }
-        public List<EfUserDal.ComplexUser> Kullanıcılar { get; internal set; }
+        public List<PersonelList> Kullanıcılar { get; internal set; }
     }
 }

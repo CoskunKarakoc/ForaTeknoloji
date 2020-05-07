@@ -70,10 +70,10 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label>Birimler</label>
                         @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         <label>Geçiş Grupları</label>
                         <div class="form-group">
@@ -134,7 +134,7 @@
                          webGrid.Column("DepartmanAdi", "Departman"),
                          webGrid.Column("AltDepartmanAdi", "Alt Departman"),
                          webGrid.Column("BolumAdi", "Bölüm"),
-                         webGrid.Column("BirimAdi", "Birim"),
+                         //webGrid.Column("BirimAdi", "Birim"),
                          webGrid.Column("Plaka", "Plaka"),
                          webGrid.Column("BlokAdi", "Blok"),
                          webGrid.Column("Daire", "Daire"),
@@ -179,10 +179,11 @@
                             <td>Soyadı</td>
                             <td>Şirket</td>
                             <td>Departman</td>
+                            <td>Alt Departman</td>
+                            <td>Bölüm</td>
                             <td>Blok</td>
                             <td>Plaka</td>
                             <td>Geçiş Grubu</td>
-                            <td>Ziyaretçi Grubu</td>
                         </tr>
                     </thead>
                     <tbody id="zyrt">
@@ -194,12 +195,13 @@
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
-                                <td>@item.Sirket</td>
-                                <td>@item.Departman</td>
-                                <td>@item.Blok</td>
+                                <td>@item.SirketAdi</td>
+                                <td>@item.DepartmanAdi</td>
+                                <td>@item.AltDepartmanAdi</td>
+                                <td>@item.BolumAdi</td>
+                                <td>@item.BlokAdi</td>
                                 <td>@item.Plaka</td>
-                                <td>@item.Gecis_Grubu</td>
-                                <td>@item.Ziyaretci_Grubu</td>
+                                <td>@item.Grup_Adi</td>
                             </tr>
 
                         }

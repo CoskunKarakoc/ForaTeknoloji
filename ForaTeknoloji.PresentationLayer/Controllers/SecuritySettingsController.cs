@@ -37,13 +37,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersKapiService _dBUsersKapiService;
         private IReaderSettingsNewService _readerSettingsNewService;
 
+
+        private IDBUsersBolumService _dBUsersBolumService;
+        private IBolumService _bolumService;
+        private
         DBUsers user;
         DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbAltDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
-        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IAccessDatasService accessDatasService, IOperatorTransactionListService operatorTransactionListService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IAltDepartmanService altDepartmanService, IDBUsersKapiService dBUsersKapiService, IReaderSettingsNewService readerSettingsNewService)
+        public SecuritySettingsController(IDBUsersService dBUsersService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBRolesService dBRolesService, IPanelSettingsService panelSettingsService, ISirketService sirketService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IAccessDatasService accessDatasService, IOperatorTransactionListService operatorTransactionListService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IAltDepartmanService altDepartmanService, IDBUsersKapiService dBUsersKapiService, IReaderSettingsNewService readerSettingsNewService, IDBUsersBolumService dBUsersBolumService, IBolumService bolumService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -64,6 +68,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _operatorTransactionListService = operatorTransactionListService;
             _dBUsersKapiService = dBUsersKapiService;
             _readerSettingsNewService = readerSettingsNewService;
+            _dBUsersBolumService = dBUsersBolumService;
+            _bolumService = bolumService;
             dbDepartmanList = new List<int>();
             dbAltDepartmanList = new List<int>();
             dbPanelList = new List<int>();
@@ -85,6 +91,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
             }
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
+            SystemAdminSirketDepartmanPanelFill();
         }
 
 
@@ -95,7 +102,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 throw new Exception("Yetkisiz Erişim!");
             }
-            SystemAdminSirketDepartmanPanelFill();
+
             var model = new SecuritySettingsListViewModel
             {
                 Kullanıcılar = _dBUsersService.GetAllDBUsers()
@@ -120,8 +127,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var departmanList = _departmanService.GetAllDepartmanlar();
             var dbUserAltDepartmanList = _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == Kullanici_Adi);
             var altDepartmanList = _altDepartmanService.GetAllAltDepartman();
+            var bolumList = _bolumService.GetAllBolum();
+            var userBolum = _dBUsersBolumService.GetAllDBUsersBolum(x => x.Kullanici_Adi == Kullanici_Adi);
             TreeViewDataBindDepartmanAndAltDepartman();
             TreeViewDataBindPanelAndKapi();
+            TreeViewDataBindSirket();
+            TreeViewDataBindBolum();
             var model = new EditSecurityListViewModel
             {
                 Kullanicilar = kullanici,
@@ -132,7 +143,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 UserDepartmanList = userDepartman,
                 DepartmanList = departmanList,
                 DBUserAltDepartman = dbUserAltDepartmanList,
-                AltDepartmanListesi = altDepartmanList
+                AltDepartmanListesi = altDepartmanList,
+                BolumListesi = bolumList,
+                UserBolumList = userBolum
             };
             ViewBag.Kullanici_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Kullanici_Islemleri);
             ViewBag.Grup_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Grup_Islemleri);
@@ -146,37 +159,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         [HttpPost]
-        public ActionResult Edit(DBUsers dBUsers, string selectedItems, string selectedItemsDoor, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
+        public ActionResult Edit(DBUsers dBUsers, string selectedItems, string selectedItemsDoor, string selectedItemsBolum, string selectedItemsSirket, List<int> Bolumler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             if (ModelState.IsValid)
             {
                 if (dBUsers != null)
                 {
-                    List<TreeViewNode> items = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
+                    List<TreeViewNode> Sirketitems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItemsSirket);
+                    List<TreeViewNode> DepartmanAndAltDepartmanitems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
                     List<TreeViewNode> DoorItems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItemsDoor);
-                    List<DBUsersAltDepartman> dBUsersAltDepartmen = new List<DBUsersAltDepartman>();
-                    _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-                    _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-                    foreach (var treeEntity in items)
-                    {
-                        int AltDepartmanID = Convert.ToInt32(treeEntity.id);
-                        var altDepartmanEntity = _altDepartmanService.GetAllAltDepartman().FirstOrDefault(x => x.Alt_Departman_No == AltDepartmanID);
-                        var addedDbUserAltDepartman = new DBUsersAltDepartman { Departman_No = altDepartmanEntity.Departman_No, Alt_Departman_No = altDepartmanEntity.Alt_Departman_No, Kullanici_Adi = dBUsers.Kullanici_Adi };
-                        var checkUserDBDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Departman_No == altDepartmanEntity.Departman_No);
-                        if (checkUserDBDepartman == null || checkUserDBDepartman.Count == 0)
-                        {
-                            var addedDBUserDepartman = new DBUsersDepartman { Kullanici_Adi = dBUsers.Kullanici_Adi, Departman_No = altDepartmanEntity.Departman_No };
-                            _dBUsersDepartmanService.AddDBUsersDepartman(addedDBUserDepartman);
-                        }
-                        _dBUsersAltDepartmanService.AddDBUsersAltDepartman(addedDbUserAltDepartman);
-                    }
-
+                    List<TreeViewNode> BolumItems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItemsBolum);
 
                     DbUsersDoorAndPanelAddDatabase(DoorItems, dBUsers);
+                    DbUsersDepartmanAndAltDepartmanDatabase(DepartmanAndAltDepartmanitems, dBUsers, Sirketitems, BolumItems);
 
-                    DBUserSirketUpdate(dBUsers, Sirketler);
-                    // DBUserPanelUpdate(dBUsers, Paneller);
-                    //DBUserDepartmanUpdate(dBUsers, Departmanlar);
                     var updatedUser = _dBUsersService.UpdateDBUsers(dBUsers);
                     if (updatedUser.SysAdmin == true)
                     {
@@ -268,6 +264,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             TreeViewDataBindDepartmanAndAltDepartman();
             TreeViewDataBindPanelAndKapi();
+            TreeViewDataBindSirket();
+            TreeViewDataBindBolum();
             var model = new SecurityCreateViewModel
             {
                 Roller = _dBRolesService.GetAllDBRoles().Select(a => new SelectListItem
@@ -277,15 +275,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 }),
                 Sirketler = _sirketService.GetAllSirketler(),
                 Departmanlar = _departmanService.GetAllDepartmanlar(),
-                Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0)
-
+                Paneller = _panelSettingsService.GetAllPanelSettings(x => x.Seri_No != 0 && x.Panel_ID != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0),
+                Bolumler = _bolumService.GetAllBolum()
             };
             return View(model);
         }
 
 
         [HttpPost]
-        public ActionResult Create(string selectedItems, string selectedItemsDoor, DBUsers dBUsers = null, List<int> Sirketler = null, List<int> Paneller = null, List<int> Departmanlar = null)
+        public ActionResult Create(string selectedItems, string selectedItemsDoor, string selectedItemsBolum, string selectedItemsSirket, DBUsers dBUsers = null, List<int> Bolumler = null, List<int> Paneller = null, List<int> Departmanlar = null)
         {
             DBUsers addedUser = new DBUsers();
             if (ModelState.IsValid)
@@ -306,24 +304,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         }
                     }
                     addedUser = _dBUsersService.AddDBUsers(dBUsers);
-
-                    List<TreeViewNode> items = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
+                    List<TreeViewNode> Sirketitems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItemsSirket);
+                    List<TreeViewNode> DepartmanAndAltDepartmanitems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItems);
                     List<TreeViewNode> DoorItems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItemsDoor);
-                    List<DBUsersAltDepartman> dBUsersAltDepartmen = new List<DBUsersAltDepartman>();
-                    foreach (var treeEntity in items)
-                    {
-                        int AltDepartmanID = Convert.ToInt32(treeEntity.id);
-                        var altDepartmanEntity = _altDepartmanService.GetAllAltDepartman().FirstOrDefault(x => x.Alt_Departman_No == AltDepartmanID);
-                        var addedDbUserAltDepartman = new DBUsersAltDepartman { Departman_No = altDepartmanEntity.Departman_No, Alt_Departman_No = altDepartmanEntity.Alt_Departman_No, Kullanici_Adi = dBUsers.Kullanici_Adi };
-                        var checkUserDBDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Departman_No == altDepartmanEntity.Departman_No);
-                        if (checkUserDBDepartman == null || checkUserDBDepartman.Count == 0)
-                        {
-                            var addedDBUserDepartman = new DBUsersDepartman { Kullanici_Adi = dBUsers.Kullanici_Adi, Departman_No = altDepartmanEntity.Departman_No };
-                            _dBUsersDepartmanService.AddDBUsersDepartman(addedDBUserDepartman);
-                        }
-                        _dBUsersAltDepartmanService.AddDBUsersAltDepartman(addedDbUserAltDepartman);
-                    }
+                    List<TreeViewNode> BolumItems = (new JavaScriptSerializer()).Deserialize<List<TreeViewNode>>(selectedItemsBolum);
                     DbUsersDoorAndPanelAddDatabase(DoorItems, dBUsers);
+                    DbUsersDepartmanAndAltDepartmanDatabase(DepartmanAndAltDepartmanitems, dBUsers, Sirketitems, BolumItems);
+
                     if (addedUser.SysAdmin == true)
                     {
                         var checkOperator = _operatorTransactionListService.GetByKullaniciAdi(addedUser.Kullanici_Adi);
@@ -377,7 +364,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Ziyaretci_Ekleme = true,
                                 Ziyaretci_Gonderme = true,
                                 Ziyaretci_Raporlari = true,
-                                Spot_Monitor = true
+                                Spot_Monitor = true,
+                                Guvenlik_Ayarlari = true,
+                                Gec_Gelen_Erken_Cikan = true
                             };
                             _operatorTransactionListService.AddOperatorTransactionList(operatorTransactionList);
                         }
@@ -435,35 +424,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Ziyaretci_Ekleme = false,
                                 Ziyaretci_Gonderme = false,
                                 Ziyaretci_Raporlari = false,
-                                Spot_Monitor = false
+                                Spot_Monitor = false,
+                                Gec_Gelen_Erken_Cikan = false,
+                                Guvenlik_Ayarlari = false
                             };
                             _operatorTransactionListService.AddOperatorTransactionList(operatorTransactionList);
                         }
                     }
                     _accessDatasService.AddOperatorLog(230, user.Kullanici_Adi, 0, 0, 0, 0);
                 }
-                if (addedUser.SysAdmin == true)
-                {
-                    foreach (var sirket in _sirketService.GetAllSirketler().Select(a => a.Sirket_No).ToList())
-                    {
-                        _dBUsersSirketService.AddDBUsersSirket(new DBUsersSirket { Kullanici_Adi = addedUser.Kullanici_Adi, Sirket_No = sirket });
-                    }
-                    foreach (var departman in _departmanService.GetAllDepartmanlar().Select(a => a.Departman_No).ToList())
-                    {
-                        _dBUsersDepartmanService.AddDBUsersDepartman(new DBUsersDepartman { Kullanici_Adi = addedUser.Kullanici_Adi, Departman_No = departman });
-                    }
-                }
-                else
-                {
-                    if (Sirketler != null)
-                    {
-                        foreach (var item in Sirketler)
-                        {
-                            _dBUsersSirketService.AddDBUsersSirket(new DBUsersSirket { Kullanici_Adi = addedUser.Kullanici_Adi, Sirket_No = item });
-                        }
-                    }
-                }
-
 
                 return RedirectToAction("Index");
             }
@@ -490,6 +459,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     _dBUsersPanelsService.DeleteAllWithUserName(user.Kullanici_Adi);
                     _dBUsersAltDepartmanService.DeleteAllWithUserName(user.Kullanici_Adi);
                     _dBUsersDepartmanService.DeleteAllWithUserName(user.Kullanici_Adi);
+                    _dBUsersBolumService.DeleteAllWithUserName(user.Kullanici_Adi);
                     _accessDatasService.AddOperatorLog(231, user.Kullanici_Adi, 0, 0, 0, 0);
                     return RedirectToAction("Index", "SecuritySettings");
                 }
@@ -531,105 +501,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public void DBUserPanelUpdate(DBUsers dBUsers, List<int> Paneller)
-        {
-            _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-            if (Paneller != null)
-            {
-                foreach (var panel in Paneller)
-                {
-                    DBUsersPanels dBUsersPanels = new DBUsersPanels
-                    {
-                        Kullanici_Adi = dBUsers.Kullanici_Adi,
-                        Panel_No = panel
-                    };
-                    _dBUsersPanelsService.AddDBUsersPanels(dBUsersPanels);
-                }
-            }
-        }
 
-        public void DBUserDoorUpdate(DBUsers dBUsers, List<int> Door)
-        {
-            _dBUsersKapiService.DeleteByUserName(dBUsers.Kullanici_Adi);
-            if (Door != null)
-            {
-                foreach (var door in Door)
-                {
-                    DBUsersKapi dBUsersKapi = new DBUsersKapi
-                    {
-                        Kullanici_Adi = dBUsers.Kullanici_Adi,
-                        Panel_No = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == door).Panel_ID,
-                        Kapi_Kayit_No = door
-                    };
-                    _dBUsersKapiService.AddDBUsersKapi(dBUsersKapi);
-                }
-            }
-        }
-
-        public void DBUserSirketUpdate(DBUsers dBUsers, List<int> Sirketler)
-        {
-            _dBUsersSirketService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-            if (Sirketler != null)
-            {
-                foreach (var sirket in Sirketler)
-                {
-                    DBUsersSirket dBUsersSirket = new DBUsersSirket
-                    {
-                        Kullanici_Adi = dBUsers.Kullanici_Adi,
-                        Sirket_No = sirket
-                    };
-                    _dBUsersSirketService.AddDBUsersSirket(dBUsersSirket);
-                }
-            }
-        }
-
-        public void DBUserDepartmanUpdate(DBUsers dBUsers, List<int> AltDepartmanlar)
-        {
-            _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-            _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-            if (AltDepartmanlar != null)
-            {
-                foreach (var altdepartman in AltDepartmanlar)
-                {
-                    var altdepartmanNo = _altDepartmanService.GetAllAltDepartman().FirstOrDefault(x => x.Alt_Departman_No == altdepartman);
-                    var dbUsersDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman().FirstOrDefault(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Departman_No == altdepartmanNo.Departman_No);
-                    if (dbUsersDepartman == null)
-                    {
-                        DBUsersDepartman dBUsersDepartman = new DBUsersDepartman
-                        {
-                            Kullanici_Adi = dBUsers.Kullanici_Adi,
-                            Departman_No = altdepartmanNo.Departman_No
-                        };
-                        _dBUsersDepartmanService.AddDBUsersDepartman(dBUsersDepartman);
-                    }
-                    DBUsersAltDepartman dBUsersAltDepartman = new DBUsersAltDepartman
-                    {
-                        Kullanici_Adi = dBUsers.Kullanici_Adi,
-                        Departman_No = altdepartmanNo.Departman_No,
-                        Alt_Departman_No = altdepartmanNo.Alt_Departman_No,
-                    };
-                    _dBUsersAltDepartmanService.AddDBUsersAltDepartman(dBUsersAltDepartman);
-                }
-            }
-        }
-
-        public void DBUserAltDepartmanUpdate(DBUsers dBUsers, int Departman, List<int> AltDepartmanlar)
-        {
-            _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-            if (AltDepartmanlar != null)
-            {
-                foreach (var altdepartman in AltDepartmanlar)
-                {
-                    DBUsersAltDepartman dBUsersAltDepartman = new DBUsersAltDepartman
-                    {
-                        Kullanici_Adi = dBUsers.Kullanici_Adi,
-                        Departman_No = Departman,
-                        Alt_Departman_No = altdepartman
-                    };
-                    _dBUsersAltDepartmanService.AddDBUsersAltDepartman(dBUsersAltDepartman);
-                }
-            }
-        }
 
 
 
@@ -639,11 +511,111 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var systemAdmin = _dBUsersService.GetAllDBUsers(x => x.SysAdmin == true);
             foreach (var userSys in systemAdmin)
             {
-                DBUserPanelUpdate(userSys, _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).Select(a => a.Panel_ID).Cast<int>().ToList());
-                DBUserDoorUpdate(userSys, _readerSettingsNewService.GetAllReaderSettingsNew().Select(a => a.Kayit_No).Cast<int>().ToList());
-                DBUserSirketUpdate(userSys, _sirketService.GetAllSirketler().Select(a => a.Sirket_No).ToList());
-                DBUserDepartmanUpdate(userSys, _altDepartmanService.GetAllAltDepartman().Select(a => a.Alt_Departman_No).ToList());
+                DBUserPanelUpdate(userSys);
+                DBUserDoorUpdate(userSys);
+                DBUserSirketUpdate(userSys);
+                DBUserDepartmanAltDepartmanUpdate(userSys);
             }
+
+            void DBUserPanelUpdate(DBUsers dBUsers)
+            {
+                _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                foreach (var panel in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).Select(a => a.Panel_ID).Cast<int>().ToList())
+                {
+                    DBUsersPanels dBUsersPanels = new DBUsersPanels
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Panel_No = panel
+                    };
+                    _dBUsersPanelsService.AddDBUsersPanels(dBUsersPanels);
+                }
+
+            }
+
+            void DBUserDoorUpdate(DBUsers dBUsers)
+            {
+                _dBUsersKapiService.DeleteByUserName(dBUsers.Kullanici_Adi);
+
+                foreach (var door in _readerSettingsNewService.GetAllReaderSettingsNew().Select(a => a.Kayit_No).Cast<int>().ToList())
+                {
+                    DBUsersKapi dBUsersKapi = new DBUsersKapi
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Panel_No = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == door).Panel_ID,
+                        Kapi_Kayit_No = door
+                    };
+                    _dBUsersKapiService.AddDBUsersKapi(dBUsersKapi);
+                }
+
+            }
+
+            void DBUserSirketUpdate(DBUsers dBUsers)
+            {
+                _dBUsersSirketService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+
+                foreach (var sirket in _sirketService.GetAllSirketler().Select(a => a.Sirket_No).ToList())
+                {
+                    DBUsersSirket dBUsersSirket = new DBUsersSirket
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Sirket_No = sirket
+                    };
+                    _dBUsersSirketService.AddDBUsersSirket(dBUsersSirket);
+                }
+
+            }
+
+            void DBUserDepartmanAltDepartmanUpdate(DBUsers dBUsers)
+            {
+                _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                foreach (var departman in _departmanService.GetAllDepartmanlar())
+                {
+                    var addDBDepartman = new DBUsersDepartman
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Departman_No = departman.Departman_No
+                    };
+                    _dBUsersDepartmanService.AddDBUsersDepartman(addDBDepartman);
+                }
+
+                foreach (var altDepartman in _altDepartmanService.GetAllAltDepartman())
+                {
+                    var addDBAltDepartman = new DBUsersAltDepartman
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Departman_No = altDepartman.Departman_No,
+                        Alt_Departman_No = altDepartman.Alt_Departman_No
+                    };
+                    _dBUsersAltDepartmanService.AddDBUsersAltDepartman(addDBAltDepartman);
+                }
+            }
+
+        }
+
+        public void TreeViewDataBindSirket()
+        {
+            List<TreeViewNode> nodes = new List<TreeViewNode>();
+            //Ana Root
+            foreach (Sirketler type in _sirketService.GetAllSirketler())
+            {
+                nodes.Add(new TreeViewNode { id = type.Sirket_No.ToString(), parent = "#", text = type.Adi });
+            }
+
+            //Serialize to JSON string.
+            ViewBag.JsonSirket = (new JavaScriptSerializer()).Serialize(nodes);
+        }
+        public void TreeViewDataBindBolum()
+        {
+            List<TreeViewNode> nodes = new List<TreeViewNode>();
+            //Ana Root
+            foreach (Bolum type in _bolumService.GetAllBolum())
+            {
+                nodes.Add(new TreeViewNode { id = type.Bolum_No.ToString(), parent = "#", text = type.Adi });
+            }
+
+            //Serialize to JSON string.
+            ViewBag.JsonBolum = (new JavaScriptSerializer()).Serialize(nodes);
         }
 
         public void TreeViewDataBindDepartmanAndAltDepartman()
@@ -720,68 +692,84 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var checkList = _dBUsersKapiService.GetByKullaniciAdi(dBUsers.Kullanici_Adi);
             if (dBUsers.SysAdmin == false)
             {
-                if (checkList == null)
+                if (DoorItems != null)
                 {
-                    foreach (var item in DoorItems)
+                    if (checkList == null)
                     {
-                        int readerKayitNo = Convert.ToInt32(item.id);
-                        var panelId = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == readerKayitNo).Panel_ID;
-                        var dbUserKapi = new DBUsersKapi
+                        foreach (var item in DoorItems)
                         {
-                            Kapi_Kayit_No = readerKayitNo,
-                            Kullanici_Adi = dBUsers.Kullanici_Adi,
-                            Panel_No = panelId
-                        };
-                        _dBUsersKapiService.AddDBUsersKapi(dbUserKapi);
-                        var checkListDbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels().FirstOrDefault(x => x.Panel_No == panelId && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
-                        if (checkListDbUserPanel == null)
-                        {
-                            var dbUserPanel = new DBUsersPanels
+                            int readerKayitNo = Convert.ToInt32(item.id);
+                            var panelEntity = _readerSettingsNewService.GetByFilter(x => x.Kayit_No == readerKayitNo);
+                            if (panelEntity != null)
                             {
-                                Kullanici_Adi = dBUsers.Kullanici_Adi,
-                                Panel_No = panelId
-                            };
-                            _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                                var panelId = panelEntity.Panel_ID;
+                                var dbUserKapi = new DBUsersKapi
+                                {
+                                    Kapi_Kayit_No = readerKayitNo,
+                                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                    Panel_No = panelId
+                                };
+                                _dBUsersKapiService.AddDBUsersKapi(dbUserKapi);
+                                var checkListDbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels().FirstOrDefault(x => x.Panel_No == panelId && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
+                                if (checkListDbUserPanel == null)
+                                {
+                                    var dbUserPanel = new DBUsersPanels
+                                    {
+                                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                        Panel_No = panelId
+                                    };
+                                    _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                                }
+                                else
+                                {
+                                    _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                                    var dbUserPanel = new DBUsersPanels
+                                    {
+                                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                        Panel_No = panelId
+                                    };
+                                    _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                                }
+                            }
+
                         }
-                        else
+                    }
+                    else
+                    {
+                        _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                        _dBUsersKapiService.DeleteByUserName(dBUsers.Kullanici_Adi);
+                        foreach (var item in DoorItems)
                         {
-                            _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-                            var dbUserPanel = new DBUsersPanels
+                            int readerKayitNo = Convert.ToInt32(item.id);
+                            var panelEntity = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == readerKayitNo);
+                            if (panelEntity != null)
                             {
-                                Kullanici_Adi = dBUsers.Kullanici_Adi,
-                                Panel_No = panelId
-                            };
-                            _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                                var panelId = panelEntity.Panel_ID;
+                                var dbUserKapi = new DBUsersKapi
+                                {
+                                    Kapi_Kayit_No = readerKayitNo,
+                                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                    Panel_No = panelId
+                                };
+                                _dBUsersKapiService.AddDBUsersKapi(dbUserKapi);
+                                var checkListDbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels().FirstOrDefault(x => x.Panel_No == panelId && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
+                                if (checkListDbUserPanel == null)
+                                {
+                                    var dbUserPanel = new DBUsersPanels
+                                    {
+                                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                        Panel_No = panelId
+                                    };
+                                    _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
+                                }
+                            }
+                            
                         }
                     }
                 }
-                else
-                {
-                    _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
-                    _dBUsersKapiService.DeleteByUserName(dBUsers.Kullanici_Adi);
-                    foreach (var item in DoorItems)
-                    {
-                        int readerKayitNo = Convert.ToInt32(item.id);
-                        var panelId = _readerSettingsNewService.GetAllReaderSettingsNew().FirstOrDefault(x => x.Kayit_No == readerKayitNo).Panel_ID;
-                        var dbUserKapi = new DBUsersKapi
-                        {
-                            Kapi_Kayit_No = readerKayitNo,
-                            Kullanici_Adi = dBUsers.Kullanici_Adi,
-                            Panel_No = panelId
-                        };
-                        _dBUsersKapiService.AddDBUsersKapi(dbUserKapi);
-                        var checkListDbUserPanel = _dBUsersPanelsService.GetAllDBUsersPanels().FirstOrDefault(x => x.Panel_No == panelId && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
-                        if (checkListDbUserPanel == null)
-                        {
-                            var dbUserPanel = new DBUsersPanels
-                            {
-                                Kullanici_Adi = dBUsers.Kullanici_Adi,
-                                Panel_No = panelId
-                            };
-                            _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
-                        }
-                    }
-                }
+
+
+
             }
             else
             {
@@ -840,6 +828,191 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
+        public void DbUsersDepartmanAndAltDepartmanDatabase(List<TreeViewNode> DepartmanAndAltDepartmanItems, DBUsers dBUsers, List<TreeViewNode> Sirketler, List<TreeViewNode> Bolumler)
+        {
+            if (dBUsers.SysAdmin == false)
+            {
+                _dBUsersSirketService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                _dBUsersBolumService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                if (DepartmanAndAltDepartmanItems != null)
+                {
+                    foreach (var departmanAndAltDepartmanItems in DepartmanAndAltDepartmanItems)
+                    {
+                        #region Departmanlar
+                        DBUsersDepartman checkDbDepartman = new DBUsersDepartman();
+                        DBUsersAltDepartman checkDbAltDepartmanForDepartman = new DBUsersAltDepartman();
+                        Departmanlar departman = new Departmanlar();
+                        AltDepartman altDepartmanForDepartman = new AltDepartman();
+                        departman = _departmanService.GetByDepartmanAdi(departmanAndAltDepartmanItems.text);
+                        if (departman != null)
+                            checkDbDepartman = _dBUsersDepartmanService.GetAllDBUsersDepartman().FirstOrDefault(x => x.Departman_No == departman.Departman_No && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
+                        else
+                            altDepartmanForDepartman = _altDepartmanService.GetByAltDepartmanAdi(departmanAndAltDepartmanItems.text);
+
+                        if (departman != null && checkDbDepartman == null)
+                        {
+                            var addDBDepartman = new DBUsersDepartman
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Departman_No = departman.Departman_No
+                            };
+                            _dBUsersDepartmanService.AddDBUsersDepartman(addDBDepartman);
+                        }
+                        else if (altDepartmanForDepartman != null && _dBUsersDepartmanService.GetAllDBUsersDepartman().FirstOrDefault(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Departman_No == altDepartmanForDepartman.Departman_No) == null)
+                        {
+                            var addDBDepartman = new DBUsersDepartman
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Departman_No = altDepartmanForDepartman.Departman_No
+                            };
+                            _dBUsersDepartmanService.AddDBUsersDepartman(addDBDepartman);
+                        }
+                        #endregion
+
+                        #region AltDepartman
+                        DBUsersAltDepartman checkDbAltDepartman = new DBUsersAltDepartman();
+                        AltDepartman altDepartman = new AltDepartman();
+                        altDepartman = _altDepartmanService.GetByAltDepartmanAdi(departmanAndAltDepartmanItems.text);
+                        if (altDepartman != null)
+                            checkDbAltDepartman = _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman().FirstOrDefault(x => x.Alt_Departman_No == altDepartman.Alt_Departman_No && x.Kullanici_Adi == dBUsers.Kullanici_Adi);
+
+                        if (altDepartman != null && checkDbAltDepartman == null)
+                        {
+                            var addDBAltDepartman = new DBUsersAltDepartman
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Alt_Departman_No = altDepartman.Alt_Departman_No,
+                                Departman_No = altDepartman.Departman_No
+                            };
+                            _dBUsersAltDepartmanService.AddDBUsersAltDepartman(addDBAltDepartman);
+                        }
+                        #endregion
+                    }
+                }
+
+                #region Sirketler
+                if (Sirketler != null)
+                {
+                    foreach (var sirket in Sirketler)
+                    {
+                        Sirketler sirketler = _sirketService.GetBySirketAdi(sirket.text);
+                        var addDBSirket = new DBUsersSirket
+                        {
+                            Kullanici_Adi = dBUsers.Kullanici_Adi,
+                            Sirket_No = sirketler.Sirket_No
+                        };
+                        _dBUsersSirketService.AddDBUsersSirket(addDBSirket);
+                    }
+                }
+                #endregion
+
+                #region Bolumler
+                if (Bolumler != null)
+                {
+                    foreach (var bolumler in Bolumler)
+                    {
+                        Bolum entity = _bolumService.GetByBolumAdi(bolumler.text);
+                        var addDBBolum = new DBUsersBolum
+                        {
+                            Kullanici_Adi = dBUsers.Kullanici_Adi,
+                            Bolum_No = entity.Bolum_No,
+                            Alt_Departman_No = entity.Alt_Departman_No,
+                            Departman_No = entity.Departman_No
+                        };
+                        _dBUsersBolumService.AddDBUsersBolum(addDBBolum);
+
+                        var checkDBUserDepertman = _dBUsersDepartmanService.GetAllDBUsersDepartman().FirstOrDefault(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Departman_No == entity.Departman_No);
+                        if (checkDBUserDepertman == null)
+                        {
+                            var dbUsersDepartman = new DBUsersDepartman
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Departman_No = entity.Departman_No
+                            };
+                            _dBUsersDepartmanService.AddDBUsersDepartman(dbUsersDepartman);
+                        }
+
+                        var checkDBUserAltDepertman = _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman().FirstOrDefault(x => x.Kullanici_Adi == dBUsers.Kullanici_Adi && x.Alt_Departman_No == entity.Alt_Departman_No && x.Departman_No == entity.Departman_No);
+                        if (checkDBUserAltDepertman == null)
+                        {
+                            var dbUsersAltDepartman = new DBUsersAltDepartman
+                            {
+                                Kullanici_Adi = dBUsers.Kullanici_Adi,
+                                Departman_No = entity.Departman_No,
+                                Alt_Departman_No = entity.Alt_Departman_No
+                            };
+                            _dBUsersAltDepartmanService.AddDBUsersAltDepartman(dbUsersAltDepartman);
+                        }
+
+                    }
+                }
+
+                #endregion
+
+            }
+            else
+            {
+                _dBUsersSirketService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+                _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+
+                #region Departmanlar
+                foreach (var departman in _departmanService.GetAllDepartmanlar())
+                {
+                    var addDBDepartman = new DBUsersDepartman
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Departman_No = departman.Departman_No
+                    };
+                    _dBUsersDepartmanService.AddDBUsersDepartman(addDBDepartman);
+                }
+                #endregion
+
+                #region AltDepartmanlar
+                foreach (var altDepartman in _altDepartmanService.GetAllAltDepartman())
+                {
+                    var addDBAltDepartman = new DBUsersAltDepartman
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Alt_Departman_No = altDepartman.Alt_Departman_No,
+                        Departman_No = altDepartman.Departman_No
+                    };
+                    _dBUsersAltDepartmanService.AddDBUsersAltDepartman(addDBAltDepartman);
+                }
+                #endregion
+
+                #region Sirketler
+                foreach (var sirket in _sirketService.GetAllSirketler())
+                {
+                    var addDBSirket = new DBUsersSirket
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Sirket_No = sirket.Sirket_No
+                    };
+                    _dBUsersSirketService.AddDBUsersSirket(addDBSirket);
+                }
+                #endregion
+
+                #region Bolumler
+                foreach (var bolum in _bolumService.GetAllBolum())
+                {
+                    var addDBBolum = new DBUsersBolum
+                    {
+                        Kullanici_Adi = dBUsers.Kullanici_Adi,
+                        Bolum_No = bolum.Bolum_No,
+                        Alt_Departman_No = bolum.Alt_Departman_No,
+                        Departman_No = bolum.Departman_No
+                    };
+                    _dBUsersBolumService.AddDBUsersBolum(addDBBolum);
+                }
+
+                #endregion
+
+
+            }
+        }
 
         /// <summary>
         /// Operatör kullanıcısı güncelleme işlemi esnasında departman ve alt departman değerlerinin id'ye göre seçim işlemi
@@ -857,16 +1030,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             //Ana Root
             foreach (Departmanlar type in _departmanService.GetAllDepartmanlar(x => tempDepartman.Contains(x.Departman_No)))
             {
-                nodes.Add(new TreeViewNode { id = type.Departman_No.ToString(), parent = "#", text = type.Adi });
+                if (_altDepartmanService.GetAllAltDepartman().FirstOrDefault(x => x.Departman_No == type.Departman_No) == null)
+                {
+                    treeViewCheckList.Add(type.Departman_No.ToString());
+                }
             }
             //SubRoot
-            foreach (AltDepartman subType in _altDepartmanService.GetAllAltDepartman(x => tempDepartman.Contains((int)x.Departman_No) && tempAltDepartman.Contains(x.Alt_Departman_No)))
+            foreach (AltDepartman subType in _altDepartmanService.GetAllAltDepartman(x => tempAltDepartman.Contains(x.Alt_Departman_No)))
             {
                 // nodes.Add(new TreeViewNode { id = subType.Departman_No.ToString() + "-" + subType.Alt_Departman_No.ToString(), parent = subType.Departman_No.ToString(), text = subType.Adi });
                 treeViewCheckList.Add(subType.Departman_No.ToString() + "-" + subType.Alt_Departman_No.ToString());
             }
             return Json(treeViewCheckList, JsonRequestBehavior.AllowGet);
         }
+
 
         /// <summary>
         /// Operatör kullanıcısı güncelleme işlemi esnasında panel ve kapı değerlerinin id'ye göre seçim işlemi
@@ -881,11 +1058,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<TreeViewNode> nodes = new List<TreeViewNode>();
             List<int> tempPanel = GetEditUserPanelList(Kullanici_Adi);
             List<int> tempDoor = GetEditUserDoorList(Kullanici_Adi);
-            //Ana Root
-            foreach (PanelSettings type in _panelSettingsService.GetAllPanelSettings(x => tempPanel.Contains((int)x.Panel_ID)))
-            {
-                nodes.Add(new TreeViewNode { id = type.Panel_ID.ToString(), parent = "#", text = type.Panel_Name });
-            }
             //SubRoot
             foreach (ReaderSettingsNew subType in _readerSettingsNewService.GetAllReaderSettingsNew(x => tempPanel.Contains((int)x.Panel_ID) && tempDoor.Contains(x.Kayit_No)))
             {
@@ -894,7 +1066,33 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(treeViewCheckList, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult TreeViewEditCheckListForSirket(string Kullanici_Adi)
+        {
+            List<string> treeViewCheckList = new List<string>();
+            List<TreeViewNode> nodes = new List<TreeViewNode>();
+            List<int> tempSirket = GetEditUserSirketList(Kullanici_Adi);
+            //Ana Root
+            foreach (Sirketler type in _sirketService.GetAllSirketler(x => tempSirket.Contains((int)x.Sirket_No)))
+            {
+                treeViewCheckList.Add(type.Sirket_No.ToString());
+            }
 
+            return Json(treeViewCheckList, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult TreeViewEditCheckListForBolum(string Kullanici_Adi)
+        {
+            List<string> treeViewCheckList = new List<string>();
+            List<TreeViewNode> nodes = new List<TreeViewNode>();
+            List<int> tempBolum = GetEditUserBolumList(Kullanici_Adi);
+            //Ana Root
+            foreach (Bolum type in _bolumService.GetAllBolum(x => tempBolum.Contains((int)x.Bolum_No)))
+            {
+                treeViewCheckList.Add(type.Bolum_No.ToString());
+            }
+
+            return Json(treeViewCheckList, JsonRequestBehavior.AllowGet);
+        }
 
 
 
@@ -965,6 +1163,34 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             return dbDoorListEditUser;
         }
+
+        /// <summary>
+        /// Edit sayfasından gelen kullanıcı adına göre o kullanıcıya ait sirket listesininsirket no değerleri geri dönüyor.
+        /// </summary>
+        /// <param name="Kullanici_Adi">
+        /// Edit sayfasında güncellenen kullanıcının 'Kullanıcı Adı'
+        /// </param>
+        /// <returns></returns>
+        public List<int> GetEditUserSirketList(string Kullanici_Adi)
+        {
+            List<int> dbSirketListEditUser = new List<int>();
+            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == Kullanici_Adi).Select(a => a.Sirket_No))
+            {
+                dbSirketListEditUser.Add((int)dbUserSirketNo);
+            }
+            return dbSirketListEditUser;
+        }
+
+        public List<int> GetEditUserBolumList(string Kullanici_Adi)
+        {
+            List<int> dbBolumListEditUser = new List<int>();
+            foreach (var dbUserBolumNo in _dBUsersBolumService.GetAllDBUsersBolum(x => x.Kullanici_Adi == Kullanici_Adi).Select(a => a.Bolum_No))
+            {
+                dbBolumListEditUser.Add((int)dbUserBolumNo);
+            }
+            return dbBolumListEditUser;
+        }
+
 
     }
 }

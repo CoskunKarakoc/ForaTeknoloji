@@ -35,14 +35,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         List<int> dbPanelList;
         List<int> dbSirketList;
         List<int> dbAltDepartmanList;
-        public DBUsers user;
+        public DBUsers user = CurrentSession.User;
         public PersonelListReportController(IUserService userService, IDepartmanService departmanService, IBloklarService bloklarService, IGroupMasterService groupMasterService, ISirketService sirketService, IGlobalZoneService globalZoneService, IReportService reportService, IAltDepartmanService altDepartmanService, IUnvanService unvanService, IBolumService bolumService, IAccessDatasService accessDatasService, IBirimService birimService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _userService = userService;
             _departmanService = departmanService;
             _bloklarService = bloklarService;
@@ -83,6 +83,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
             _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
         }
 
 
@@ -90,7 +91,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         // GET: PersonelListReport
         public ActionResult Index(PersonelListReportParameters parameters)
         {
-            var personelLists = _reportService.GetPersonelLists(parameters);
+            var personelLists = _reportService.GetPersonelLists(parameters, CurrentSession.User);
             var departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No));
             var bloklar = _bloklarService.GetAllBloklar();
             var groupsdetail = _groupMasterService.GetAllGroupsMaster();
@@ -254,7 +255,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetPersonelLists(new PersonelListReportParameters());
+                liste = _reportService.GetPersonelLists(new PersonelListReportParameters(), CurrentSession.User);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");

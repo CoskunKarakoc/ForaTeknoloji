@@ -27,7 +27,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         private IDBUsersKapiService _dBUsersKapiService;
         List<int?> kullaniciyaAitPaneller = new List<int?>();
-        DBUsers user;
+        DBUsers user = CurrentSession.User;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbDoorList;
@@ -37,11 +37,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
 
 
-            user = CurrentSession.User;
-            if (user == null)
-            {
-                user = new DBUsers();
-            }
+            //user = CurrentSession.User;
+            //if (user == null)
+            //{
+            //    user = new DBUsers();
+            //}
             _dBUsersPanelsService = dBUsersPanelsService;
             _visitorsService = visitorsService;
             _panelSettingsService = panelSettingsService;
@@ -84,13 +84,14 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
             _reportService.GetDepartmanList(user == null ? new DBUsers { } : user);
             _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
+            _reportService.GetBolumList(user == null ? new DBUsers { } : user);
         }
 
         public ActionResult InOutPersonel(IcerdeDisardaReportParameters parameters)
         {
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && x.Seri_No != 0 && dbPanelList.Contains((int)x.Panel_ID));
             var globalBolge = _globalZoneService.GetAllGlobalZones();
-            var liste = _reportService.GetIcerdeDisardaPersonels(parameters);
+            var liste = _reportService.GetIcerdeDisardaPersonels(parameters, CurrentSession.User);
             var model = new IcerdeDısardaPersonelListViewModel
             {
                 Panel = panel.Select(a => new SelectListItem
@@ -162,7 +163,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Personel(IcerdeDisardaReportParameters parameters)
         {
 
-            var liste = _reportService.GetIcerdeDisardaPersonels(parameters);
+            var liste = _reportService.GetIcerdeDisardaPersonels(parameters, CurrentSession.User);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && x.Seri_No != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();
             var model = new IcerdeDısardaPersonelListViewModel
@@ -357,7 +358,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             liste = TempData["Personel"] as List<IcerdeDisardaPersonel>;
             if (liste == null || liste.Count == 0)
             {
-                liste = _reportService.GetIcerdeDisardaPersonels(null);
+                liste = _reportService.GetIcerdeDisardaPersonels(null, CurrentSession.User);
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
