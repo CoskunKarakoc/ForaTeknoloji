@@ -73,6 +73,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Settings(int? PanelID)
         {
+            if (user.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
+
             if (PanelID == null)
             {
                 var list = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && x.Panel_TCP_Port != 0); //_reportService.PanelListesi(user);
@@ -378,6 +382,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Create()
         {
             List<int> interlock = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+
+            if (user.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
 
             ViewBag.Panel_Global_Bolge1 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");
             ViewBag.Panel_Global_Bolge2 = new SelectList(_globalZoneService.GetAllGlobalZones(), "Global_Bolge_No", "Global_Bolge_Adi");

@@ -10,6 +10,7 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
 
         List<ComplexGroupsDetailNew> GetComplexGroups();
         void DeleteAll();
-
+        void UpdateTSQL(string GrupAdi, int GrupNo);
+        void DeleteWithGrupNoTSQL(int GrupNo);
     }
 }

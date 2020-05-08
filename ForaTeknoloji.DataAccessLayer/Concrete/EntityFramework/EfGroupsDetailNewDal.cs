@@ -3,6 +3,7 @@ using ForaTeknoloji.DataAccessLayer.Abstract;
 using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
@@ -50,5 +51,22 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
         }
 
 
+        public void UpdateTSQL(string GrupAdi, int GrupNo)
+        {
+            using (var context = new ForaContext())
+            {
+                var query = "UPDATE GroupsDetailNew SET [Grup Adi]='" + GrupAdi + "' WHERE [Grup No]=" + GrupNo;
+                context.Database.ExecuteSqlCommand(query);
+            }
+        }
+
+        public void DeleteWithGrupNoTSQL(int GrupNo)
+        {
+            using (var context = new ForaContext())
+            {
+                var query = "DELETE FROM GroupsDetailNew WHERE [Grup No]=" + GrupNo;
+                context.Database.ExecuteSqlCommand(query);
+            }
+        }
     }
 }

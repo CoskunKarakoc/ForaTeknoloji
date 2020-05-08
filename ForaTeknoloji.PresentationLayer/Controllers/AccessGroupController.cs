@@ -131,15 +131,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 _groupMasterService.UpdateGroupsMaster(groupsMaster);
+                _groupsDetailNewService.UpdateTSQL(groupsMaster.Grup_Adi, groupsMaster.Grup_No);
+                _accessDatasService.AddOperatorLog(122, permissionUser.Kullanici_Adi, groupsMaster.Grup_No, 0, 0, 0);
 
-                foreach (var item in _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Grup_No == groupsMaster.Grup_No))
-                {
-                    var entity = item;
-                    entity.Grup_Adi = groupsMaster.Grup_Adi;
-                    _groupsDetailNewService.UpdateGroupsDetailNew(entity);
-                    _accessDatasService.AddOperatorLog(122, permissionUser.Kullanici_Adi, groupsMaster.Grup_No, 0, 0, 0);
-
-                }
                 return RedirectToAction("Groups", "AccessGroup");
             }
             return View(groupsMaster);
@@ -231,11 +225,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (entity != null)
                 {
                     _groupMasterService.DeleteGroupsMaster(entity);
+                    _groupsDetailNewService.DeleteWithGrupNoTSQL(entity.Grup_No);
                     _accessDatasService.AddOperatorLog(121, permissionUser.Kullanici_Adi, id, 0, 0, 0);
-                    foreach (var item in _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Grup_Adi == entity.Grup_Adi))
-                    {
-                        _groupsDetailNewService.DeleteGroupsDetailNew(item);
-                    }
                     return RedirectToAction("Groups");
                 }
                 throw new Exception("Böyle bir kayıt bulunamadı");
@@ -265,7 +256,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     throw new Exception("Sistemde kayıtlı panel bulunamadı!");
                 }
-                   
+
 
 
 
@@ -278,31 +269,31 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     throw new Exception("Asansör Geçiş Grubu Gerekli!");
 
                 nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
-                }
+            }
             else
             {
-                    nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
-                }
-
-                foreach (var item in nesne)
-                {
-                    KapiZamanGrupNo.Add(new SelectList(_timeGroupsService.GetAllTimeGroups(), "Zaman_Grup_No", "Zaman_Grup_Adi", item.Zaman_Grup_No));
-                    KapiAsansorBolgeNo.Add(new SelectList(_liftGroupsService.GetAllLiftGroups(), "Asansor_Grup_No", "Asansor_Grup_Adi", item.Asansor_Grup_No));
-                }
-
-
-                var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
-                var model = new CreateReaderModel
-                {
-                    Kapi_Asansor_Bolge_No = KapiAsansorBolgeNo,
-                    Kapi_Zaman_Grup_No = KapiZamanGrupNo,
-                    Groups = nesne,
-                    Panel_ID = PanelID,
-                    PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)), //_reportService.PanelListesi(user),
-                    PanelModel = panelModel
-                };
-                return View(model);
+                nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
             }
+
+            foreach (var item in nesne)
+            {
+                KapiZamanGrupNo.Add(new SelectList(_timeGroupsService.GetAllTimeGroups(), "Zaman_Grup_No", "Zaman_Grup_Adi", item.Zaman_Grup_No));
+                KapiAsansorBolgeNo.Add(new SelectList(_liftGroupsService.GetAllLiftGroups(), "Asansor_Grup_No", "Asansor_Grup_Adi", item.Asansor_Grup_No));
+            }
+
+
+            var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
+            var model = new CreateReaderModel
+            {
+                Kapi_Asansor_Bolge_No = KapiAsansorBolgeNo,
+                Kapi_Zaman_Grup_No = KapiZamanGrupNo,
+                Groups = nesne,
+                Panel_ID = PanelID,
+                PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)), //_reportService.PanelListesi(user),
+                PanelModel = panelModel
+            };
+            return View(model);
+        }
 
         [HttpPost]
         public ActionResult GroupReaders(GroupReadersParameters parameters)

@@ -102,12 +102,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult ReaderList(int? PanelID)
         {
             ReaderFill();
-            if (_reportService.PanelListesi(user).Count == 0)
+
+            if (user.SysAdmin == false)
+                throw new Exception("Yetkisiz Erişim!");
+
+
+            if (_panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).Count == 0)
                 throw new Exception("Sistemde kayıtlı panel bulunamadı");
             List<ReaderSettingsNew> okuyucular = new List<ReaderSettingsNew>();
             if (PanelID == null)
             {
-                PanelID = _reportService.PanelListesi(user).FirstOrDefault().Panel_ID;
+                PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0).OrderBy(x => x.Kayit_No).FirstOrDefault().Panel_ID;
                 okuyucular = _readerSettingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == PanelID && dbDoorList.Contains(x.Kayit_No)).OrderBy(x => x.WKapi_ID).ToList();
             }
             else

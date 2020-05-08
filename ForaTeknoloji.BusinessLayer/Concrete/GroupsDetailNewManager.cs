@@ -57,5 +57,16 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _groupsDetailNewDal.DeleteAll();
         }
 
+
+        public void UpdateTSQL(string GrupAdi, int GrupNo)
+        {
+            _groupsDetailNewDal.UpdateTSQL(GrupAdi, GrupNo);
+        }
+
+
+        public void DeleteWithGrupNoTSQL(int GrupNo)
+        {
+            _groupsDetailNewDal.DeleteWithGrupNoTSQL(GrupNo);
+        }
     }
 }
