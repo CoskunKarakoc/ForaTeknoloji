@@ -43,6 +43,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return filter == null ? _dBUsersKapiDal.GetList() : _dBUsersKapiDal.GetList(filter);
         }
 
+        public DBUsersKapi GetByQuery(Expression<Func<DBUsersKapi, bool>> filter = null)
+        {
+            return filter == null ? null : _dBUsersKapiDal.Get(filter);
+        }
+
         public DBUsersKapi GetById(int Kayit_No)
         {
             return _dBUsersKapiDal.Get(x => x.Kayit_No == Kayit_No);

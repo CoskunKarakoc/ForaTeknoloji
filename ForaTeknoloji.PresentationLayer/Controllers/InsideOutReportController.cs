@@ -191,7 +191,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult Ziyaretci(IcerdeDisardaReportParameters parameters)
         {
-            //TODO:Tablodan multiselect işlemi uygulanacak
             var liste = _reportService.GetIcerdeDısardaZiyaretci(parameters);
             var panel = _panelSettingsService.GetAllPanelSettings(x => x.Panel_IP1 != null && x.Panel_IP1 != 0 && x.Panel_TCP_Port != 0 && x.Panel_ID != 0 && kullaniciyaAitPaneller.Contains(x.Panel_ID));
             var globalBolgeAdi = _globalZoneService.GetAllGlobalZones();

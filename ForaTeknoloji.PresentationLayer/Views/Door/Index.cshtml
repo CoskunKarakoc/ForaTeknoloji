@@ -73,13 +73,14 @@
                                     <input type="checkbox" id="Alarm" name="Alarm" value="true" class="custom-control-input" />
                                     <label class="custom-control-label" for="Alarm">Alarm Rolesi</label>
                                 </div>
+
                             </div>
                         }
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" value="2770" class="custom-control-input" id="Tetikle" name="OprKod">
+                                        <input type="radio" value="2770" class="custom-control-input" id="Tetikle" checked name="OprKod">
                                         <label class="custom-control-label text-info" for="Tetikle">Tetikle</label>
                                     </div>
                                     <div class="custom-control custom-radio">
@@ -94,8 +95,14 @@
                                         <input type="radio" value="2772" class="custom-control-input" id="Serbest" name="OprKod">
                                         <label class="custom-control-label text-secondary" for="Serbest">Serbest Bırak</label>
                                     </div>
+
                                 </div>
                                 <div class="col-md-7">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="Tumu" name="Tumu" value="true" class="custom-control-input" />
+                                        <label class="custom-control-label" for="Tumu">Tüm Kapıları Seç</label>
+                                    </div>
+                                    <hr />
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" id="TumPanel" name="Tum_Panel" value="true" class="custom-control-input" />
                                         <label class="custom-control-label" for="TumPanel">Tüm Panellere Uygula</label>
@@ -120,5 +127,20 @@
     $(document).ready(function () {
         var currentPanel = $("#Panel_ID").val();
         $("#" + currentPanel).toggleClass("active");
+        $("#Tumu").click(function () {
+            if ($(this).is(":checked")) {
+                var element = "#Kapi_";
+                for (var i = 1; i < 17; i++) {
+                    $(element + "" + i).prop("checked", true);
+                }
+            } else {
+                var element = "#Kapi_";
+                for (var i = 1; i < 17; i++) {
+                    $(element + "" + i).prop("checked", false);
+                }
+            }
+        });
+
+
     });
 </script>

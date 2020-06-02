@@ -19,5 +19,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         DBUsersKapi UpdateDBUsersKapi(DBUsersKapi dBUsersKapi);
         void DeleteAll();
         void DeleteByUserName(string Kullanici_Adi);
+        DBUsersKapi GetByQuery(Expression<Func<DBUsersKapi, bool>> filter = null);
     }
 }

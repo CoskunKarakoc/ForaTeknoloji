@@ -19,6 +19,16 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             }
         }
 
+        public int CountByGroupNumber(int GrupNo)
+        {
+            using (var context = new ForaContext())
+            {
+                var query = "SELECT COUNT(*) FROM Users WHERE [Grup No]=" + GrupNo;
+                var result = context.Database.SqlQuery<int>(query).First();
+                return result;
+            }
+        }
+
 
         public List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null)
         {

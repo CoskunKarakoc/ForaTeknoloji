@@ -1,0 +1,54 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.QuicResponseViewModel
+@{
+    ViewBag.Title = "PrintQRCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="offset-4 col-md-4">
+        <div class="card border-info h-100 shadow-lg  mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">QR Kodlu Geçiş Sistemi</h3>
+            </div>
+            <div class="card-body text-center">
+                <img id="code" class="mt-xl-5" src='@Url.Action("PrintImage",new{QRCode=Model.QRCode})' alt="QR Code ID" />
+            </div>
+            <div class="card-footer text-center">
+                <a href="@Url.Action("Index","QuickResponse")" class="btn btn-sm btn-outline-info"><h2><i class="fas fa-hand-o-left"></i> Listeye Dön</h2></a>
+                <a id="btnPrint" class="btn btn-sm btn-outline-success text-success"><h2><i class="fas fa-print"></i> QR Kodu Yazdır </h2></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnPrint").click(function () {
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html>');
+            frameDoc.document.write('<head>');
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            frameDoc.document.write('<style>');
+            frameDoc.document.write('');
+            frameDoc.document.write('</style>');
+            frameDoc.document.write('</head>');
+            frameDoc.document.write('<body>');
+            frameDoc.document.write('<img id="code" src="@Url.Action("PrintImage",new{QRCode=Model.QRCode})" alt="QR Code ID"/>');
+            frameDoc.document.write('</body>');
+            frameDoc.document.write('</html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+        });
+
+    })
+</script>

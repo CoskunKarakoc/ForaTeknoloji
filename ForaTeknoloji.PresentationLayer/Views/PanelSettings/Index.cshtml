@@ -83,8 +83,8 @@
                     { "data": "IP_Adres" },
                     {
                         "data": "Panel_ID", "render": function (data) {
-                            var multipleUrl = '<a title="Edit" id="edit" href="/PanelSettings/Settings?id=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
-                                '<a title="Delete" href="/PanelSettings/Delete?PanelID=' + data + '" onclick="return confirm(\'Seçilen Paneli Veritabanından Silmek İstediğinize Emin Misiniz?\')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>' +
+                            var multipleUrl = '<a title="Paneli Güncelle" id="edit" href="/PanelSettings/Settings?id=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
+                                '<a title="Paneli Sil" href="/PanelSettings/Delete?PanelID=' + data + '" onclick="return confirm(\'Seçilen Paneli Veritabanından Silmek İstediğinize Emin Misiniz?\')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>' +
                                 '<a title="Panel Ayarlarını Gönder" href="/PanelSettings/SendToPanel?Panel=' + data + '"  onclick="return confirm(\'Panel Ayarlarını Göndermek İstediğinize Emin Misiniz?\')"><i class="fas fa-share text-success mr-2"></i></a>' +
                                 '<a title="Panel Ayarlarını Al" href="/PanelSettings/ReceiveFromPanel?PanelID=' + data + '"  onclick="return confirm(\'Panel Ayarlarını Almak İstediğinize Emin Misiniz?\')"><i class="fas fa-reply text-success mr-2"></i></a>' +
                                 '<a title="Panel Saatini Güncelle" href="/PanelSettings/PanelDate?Panel=' + data + '" onclick="return confirm(\'Panel Saatini Güncellemek İstediğinize Emin Misiniz?\')"><i class="fas fa-clock-o text-warning mr-2"></i></a>';

@@ -51,5 +51,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _timeGroupsDal.DeleteAll();
         }
 
+        public int Count()
+        {
+            return _timeGroupsDal.Count();
+        }
     }
 }

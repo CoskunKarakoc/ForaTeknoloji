@@ -28,10 +28,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IDoorStatusService _doorStatusService;
         private IReaderSettingsNewMSService _readerSettingsNewMSService;
+        private IDBUsersKapiService _dBUsersKapi;
         public DBUsers user = CurrentSession.User;
         DBUsers permissionUser;
         List<int> dbPanelList;
-        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IDoorStatusService doorStatusService, IReaderSettingsNewMSService readerSettingsNewMSService)
+        public PanelSettingsController(IPanelSettingsService panelSettingsService, IReaderSettingsService readerSettingsService, IGlobalZoneService globalZoneService, IReaderSettingsNewService settingsNewService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IGroupsDetailNewService groupsDetailNewService, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersService dBUsersService, IDoorStatusService doorStatusService, IReaderSettingsNewMSService readerSettingsNewMSService, IDBUsersKapiService dBUsersKapi)
         {
             //user = CurrentSession.User;
             //if (user == null)
@@ -50,6 +51,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersService = dBUsersService;
             _doorStatusService = doorStatusService;
             _readerSettingsNewMSService = readerSettingsNewMSService;
+            _dBUsersKapi = dBUsersKapi;
             dbPanelList = new List<int>();
             foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
             {
@@ -312,6 +314,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         }
                     }
                 }
+                else
+                {
+                    foreach (var reader in readers)
+                    {
+                        if (reader.Panel_Name != panel.Panel_Name)
+                        {
+                            reader.Panel_Name = panel.Panel_Name;
+                            _settingsNewService.UpdateReaderSettingsNew(reader);
+                        }
+                    }
+                }
                 return RedirectToAction("Settings", new { @PanelID = panel.Panel_ID });
             }
 
@@ -354,30 +367,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             throw new Exception("Silmek istenen kayıt veritabanında yok!");
         }
 
-        public ActionResult SendToPanel(int? Panel)
-        {
-            try
-            {
-                TaskList taskList = new TaskList
-                {
-                    Deneme_Sayisi = 1,
-                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                    Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
-                    IntParam_1 = (int)Panel,
-                    Kullanici_Adi = user.Kullanici_Adi,
-                    Panel_No = Panel,
-                    Tablo_Guncelle = true,
-                    Tarih = DateTime.Now
-                };
-                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, Panel, 0);
-            }
-            catch (Exception)
-            {
-                throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
-            }
-            return RedirectToAction("Settings", new { @PanelID = Panel });
-        }
+      
 
         public ActionResult Create()
         {
@@ -426,6 +416,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     var defaultPanel = _panelSettingsService.GetAllPanelSettings().Find(x => x.Sira_No == panelSettings.Panel_ID);
                     panelSettings.Kayit_No = defaultPanel.Kayit_No;
                     _panelSettingsService.UpdatePanelSetting(panelSettings);
+
+                    ReaderSettingsNewFill(panelSettings);
+                    DBUserPanelAndKapiFill(_settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == panelSettings.Panel_ID).ToList());
                     _accessDatasService.AddOperatorLog(130, user.Kullanici_Adi, 0, 0, panelSettings.Panel_ID, 0);
                     return RedirectToAction("Settings", "PanelSettings");
                 }
@@ -433,24 +426,166 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return View(panelSettings);
         }
 
+
+        public ActionResult SendToPanel(int? Panel)
+        {
+            try
+            {
+                //TaskList taskList = new TaskList
+                //{
+                //    Deneme_Sayisi = 1,
+                //    Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                //    Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
+                //    IntParam_1 = (int)Panel,
+                //    Kullanici_Adi = user.Kullanici_Adi,
+                //    Panel_No = Panel,
+                //    Tablo_Guncelle = true,
+                //    Tarih = DateTime.Now
+                //};
+                //TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                #region FortigatePanelAyarları
+                if (_panelSettingsService.GetById((int)Panel).Panel_Model == (int)PanelModel.Panel_1010)
+                {
+                    TaskList taskListms = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
+                        IntParam_1 = (int)Panel,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = Panel,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceiveMS = _taskListService.AddTaskList(taskListms);
+                }
+                else
+                {
+                    TaskList taskList3 = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_3,
+                        IntParam_1 = (int)Panel,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = Panel,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive3 = _taskListService.AddTaskList(taskList3);
+                    TaskList taskList2 = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_2,
+                        IntParam_1 = (int)Panel,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = Panel,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive2 = _taskListService.AddTaskList(taskList2);
+                    TaskList taskList1 = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_1,
+                        IntParam_1 = (int)Panel,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = Panel,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive1 = _taskListService.AddTaskList(taskList1);
+                }
+                #endregion
+                _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, Panel, 0);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+            }
+            return RedirectToAction("Settings", new { @PanelID = Panel });
+        }
+
+
+
+
         public ActionResult ReceiveFromPanel(int? PanelID)
         {
             if (PanelID != null)
             {
                 try
                 {
-                    TaskList taskList = new TaskList
+                    //TaskList taskList = new TaskList
+                    //{
+                    //    Deneme_Sayisi = 1,
+                    //    Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                    //    Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
+                    //    IntParam_1 = (int)PanelID,
+                    //    Kullanici_Adi = user.Kullanici_Adi,
+                    //    Panel_No = PanelID,
+                    //    Tablo_Guncelle = true,
+                    //    Tarih = DateTime.Now
+                    //};
+                    //TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    #region FortigatePanelAyarlarıAlma
+                    if (_panelSettingsService.GetById((int)PanelID).Panel_Model == (int)PanelModel.Panel_1010)
                     {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
-                        IntParam_1 = (int)PanelID,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        TaskList taskListms = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
+                            IntParam_1 = (int)PanelID,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = PanelID,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceiveMS = _taskListService.AddTaskList(taskListms);
+                    }
+                    else
+                    {
+
+                        TaskList taskList1 = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_1,
+                            IntParam_1 = (int)PanelID,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = PanelID,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive1 = _taskListService.AddTaskList(taskList1);
+                        TaskList taskList2 = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_2,
+                            IntParam_1 = (int)PanelID,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = PanelID,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive2 = _taskListService.AddTaskList(taskList2);
+                        TaskList taskList3 = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_3,
+                            IntParam_1 = (int)PanelID,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = PanelID,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive3 = _taskListService.AddTaskList(taskList3);
+                    }
+                    #endregion
                     Thread.Sleep(500);
                 }
                 catch (Exception)
@@ -588,9 +723,112 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 };
                 _readerSettingsNewMSService.AddReaderSettingsNew(readerSettingsNewMS);
             }
+        }
 
+        public void ReaderSettingsNewFill(PanelSettings panelSettings)
+        {
+            var readers = _settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == panelSettings.Panel_ID);
+            if (readers == null || readers.Count == 0)
+            {
+                if (panelSettings.Panel_Model == (int)PanelModel.Panel_1010)
+                {
+                    for (int i = 1; i < 17; i++)
+                    {
+                        ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                        {
+                            Panel_ID = panelSettings.Panel_ID,
+                            Panel_Name = panelSettings.Panel_Name,
+                            Seri_No = panelSettings.Seri_No,
+                            Sira_No = panelSettings.Sira_No,
+                            WKapi_ID = i,
+                            WKapi_Adi = "Kapi " + i,
+                            WKapi_Aktif = false,
+                            WKapi_Zorlama_Alarmi = false,
+                            WKapi_Yangin_Modu = false,
+                            WKapi_Sirali_Gecis_Ana_Kapi = false,
+                            WKapi_Ana_Alarm_Rolesi = false,
+                            WKapi_Acik_Sure_Alarmi = false,
+                            WKapi_Acilma_Alarmi = false,
+                            WKapi_Coklu_Onay = false,
+                            WKapi_Lift_Aktif = false,
+                            WKapi_Pin_Dogrulama = false,
+                            WKapi_Panik_Buton_Alarmi = false,
+                            WKapi_WIGType = 1,
+                            WKapi_Acik_Sure = 1,
+                            WKapi_Alarm_Modu = false,
+                            WKapi_Gecis_Modu = 0,
+                            WKapi_Harici_Alarm_Rolesi = 1,
+                            WKapi_Itme_Gecikmesi = 1,
+                            WKapi_Lokal_Bolge = 1,
+                            WKapi_Role_No = i,
+                            WKapi_User_Count = 1,
+                            WKapi_Kapi_Tipi = 1,
+                        };
+                        _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < 17; i++)
+                    {
+                        ReaderSettingsNew readerSettingsNew = new ReaderSettingsNew
+                        {
+                            Panel_ID = panelSettings.Panel_ID,
+                            Panel_Name = panelSettings.Panel_Name,
+                            Seri_No = panelSettings.Seri_No,
+                            Sira_No = panelSettings.Sira_No,
+                            WKapi_ID = i,
+                            WKapi_Adi = "Kapi " + i,
+                            WKapi_Aktif = false,
+                            WKapi_Zorlama_Alarmi = false,
+                            WKapi_Yangin_Modu = false,
+                            WKapi_Sirali_Gecis_Ana_Kapi = false,
+                            WKapi_Ana_Alarm_Rolesi = false,
+                            WKapi_Acik_Sure_Alarmi = false,
+                            WKapi_Acilma_Alarmi = false,
+                            WKapi_Coklu_Onay = false,
+                            WKapi_Lift_Aktif = false,
+                            WKapi_Pin_Dogrulama = false,
+                            WKapi_Panik_Buton_Alarmi = false,
+                            WKapi_WIGType = 1,
+                            WKapi_Acik_Sure = 1,
+                            WKapi_Alarm_Modu = false,
+                            WKapi_Gecis_Modu = 0,
+                            WKapi_Harici_Alarm_Rolesi = 1,
+                            WKapi_Itme_Gecikmesi = 1,
+                            WKapi_Lokal_Bolge = 1,
+                            WKapi_Role_No = i,
+                            WKapi_User_Count = 1,
+                            WKapi_Kapi_Tipi = 1,
+                        };
+                        _settingsNewService.AddReaderSettingsNew(readerSettingsNew);
+                    }
+                }
+            }
+        }
 
+        public void DBUserPanelAndKapiFill(List<ReaderSettingsNew> ReaderList)
+        {
+            foreach (var dBUsers in _dBUsersService.GetAllDBUsers(x => x.SysAdmin == true))
+            {
+                var dbuserPanel = new DBUsersPanels
+                {
+                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                    Panel_No = ReaderList.FirstOrDefault().Panel_ID
+                };
+                _dBUsersPanelsService.AddDBUsersPanels(dbuserPanel);
 
+                foreach (var reader in ReaderList)
+                {
+                    var dbUserKapi = new DBUsersKapi
+                    {
+                        Kapi_Kayit_No = reader.Kayit_No,
+                        Panel_No = reader.Panel_ID,
+                        Kullanici_Adi = dBUsers.Kullanici_Adi
+                    };
+                    _dBUsersKapi.AddDBUsersKapi(dbUserKapi);
+                }
+            }
         }
 
 

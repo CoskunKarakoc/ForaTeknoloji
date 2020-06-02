@@ -20,12 +20,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
-        public AltDepartmanController(IAltDepartmanService altDepartmanService, IDBUsersService dBUsersService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService)
+        public AltDepartmanController(IAltDepartmanService altDepartmanService, IDBUsersService dBUsersService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersAltDepartmanService dBUsersAltDepartmanService)
         {
             //user = CurrentSession.User;
             //if (user == null)
@@ -38,6 +39,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
+            _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
             dbSirketList = new List<int>();
@@ -95,6 +97,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             _altDepartmanService.DeleteAll();
 
                         _altDepartmanService.AddAltDepartman(AltDepartman);
+
+                        foreach (var dbSysAdmin in _dBUsersService.GetAllDBUsers(x => x.SysAdmin == true))
+                        {
+                            var dbAltDepartman = new DBUsersAltDepartman
+                            {
+                                Kullanici_Adi = dbSysAdmin.Kullanici_Adi,
+                                Departman_No = AltDepartman.Departman_No,
+                                Alt_Departman_No = AltDepartman.Alt_Departman_No
+                            };
+                            _dBUsersAltDepartmanService.AddDBUsersAltDepartman(dbAltDepartman);
+                        }
+
+
                         return RedirectToAction("Index");
                     }
                     throw new Exception("Yanlış yada eksik karakter girdiniz.");

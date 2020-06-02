@@ -44,5 +44,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _liftGroupsDal.DeleteAll();
         }
 
+        public int Count()
+        {
+            return _liftGroupsDal.Count();
+        }
     }
 }

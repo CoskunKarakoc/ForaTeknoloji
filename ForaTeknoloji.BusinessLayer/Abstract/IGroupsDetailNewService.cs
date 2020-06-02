@@ -2,6 +2,7 @@
 using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace ForaTeknoloji.BusinessLayer.Abstract
@@ -18,5 +19,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteAll();
         void UpdateTSQL(string GrupAdi, int GrupNo);
         void DeleteWithGrupNoTSQL(int GrupNo);
+        GroupsDetailNew GetByQuery(Expression<Func<GroupsDetailNew, bool>> filter = null);
+        List<ComplexGroupsDetailNew> GetComplexGroupsWithQuery(Expression<Func<ComplexGroupsDetailNew, bool>> filter = null);
     }
 }

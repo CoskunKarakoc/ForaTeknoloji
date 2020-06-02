@@ -47,6 +47,7 @@
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="DefaultCommon.cs" />
     <Compile Include="ICommon.cs" />
+    <Compile Include="LongRandom.cs" />
     <Compile Include="MailHelper.cs" />
     <Compile Include="PanelModel.cs" />
     <Compile Include="PanelStatusCode.cs" />

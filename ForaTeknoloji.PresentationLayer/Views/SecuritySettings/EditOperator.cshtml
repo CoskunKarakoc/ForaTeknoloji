@@ -1,0 +1,135 @@
+﻿@model ForaTeknoloji.Entities.Entities.DBUsers
+@{
+    ViewBag.Title = "Operator Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row animated fadeIn faster">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Güvenlik Ayarları</h3>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("EditOperator", "SecuritySettings", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group row">
+                                <label for="Adi" class="col-sm-4 col-form-label">Adı</label>
+                                <div class="col-sm-6">
+                                    @Html.EditorFor(model => model.Adi, null, "Adi", new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                    @Html.ValidationMessageFor(model => model.Adi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Soyadi" class="col-sm-4 col-form-label">Soyadı</label>
+                                <div class="col-sm-6">
+                                    @Html.EditorFor(model => model.Soyadi, null, "Soyadi", new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                    @Html.ValidationMessageFor(model => model.Soyadi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Adi" class="col-sm-4 col-form-label">Kullanıcı Adı</label>
+                                <div class="col-sm-6">
+                                    @Html.EditorFor(model => model.Kullanici_Adi, null, "Kullanici_Adi", new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                    @Html.ValidationMessageFor(model => model.Kullanici_Adi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Sifre" class="col-sm-4 col-form-label">Şifre</label>
+                                <div class="col-sm-6">
+                                    @Html.EditorFor(model => model.Sifre, null, "Sifre", new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                    @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Email" class="col-sm-4 col-form-label">EMail</label>
+                                <div class="col-sm-6">
+                                    @Html.EditorFor(model => model.EMail, null, "EMail", new { htmlAttributes = new { @class = "form-control form-control-sm", type = "email" } })
+                                    @Html.ValidationMessageFor(model => model.EMail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Kullanıcı İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Kullanici_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                                    @Html.ValidationMessageFor(model => model.Kullanici_Islemleri, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Geçiş Grup İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Grup_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                                    @Html.ValidationMessageFor(model => model.Grup_Islemleri, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Kapı İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Programli_Kapi_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" }) @*bg-translated text-light*@
+                                    @Html.ValidationMessageFor(model => model.Programli_Kapi_Islemleri, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Geçiş Verileri-Raporlar</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Gecis_Verileri_Rapor_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                                    @Html.ValidationMessageFor(model => model.Gecis_Verileri_Rapor_Islemleri, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Ziyaretçi İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Ziyaretci_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                                    @Html.ValidationMessageFor(model => model.Ziyaretci_Islemleri, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Canlı İzleme</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Canli_Izleme", null, "Yetki Tipi Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                                    @Html.ValidationMessageFor(model => model.Canli_Izleme, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Kullanici_Islemleri" class="col-sm-6 col-form-label">Alarm İşlemleri</label>
+                                <div class="col-sm-6">
+                                    @Html.DropDownList("Alarm_Islemleri", null, "Yetki Tipi Seçiniz...", new { @class = "form-control bg-translated text-light chosen-select", tabindex = "2" })@*bg-translated text-light*@
+                                    @Html.ValidationMessageFor(model => model.Alarm_Islemleri, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("OtherDeviceReports", Model.OtherDeviceReports ?? false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label ml-2 mr-4" for="OtherDeviceReports">Diğer Cihaz Raporları</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    @Html.CheckBox("SysAdmin", Model.SysAdmin ?? false, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="SysAdmin">Sistem Yöneticisi</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <a href="@Url.Action("Index","SecuritySettings")" class="btn btn-sm btn-outline-info"><i class="fas fa-hand-o-left"></i> Listeye Geri Dön</a>
+                            <button type="submit" class="btn btn-sm btn-outline-success "><i class="fas fa-id-card"></i> Kullanıcıyı Güncelle</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+    });
+</script>

@@ -60,6 +60,9 @@
     <Reference Include="LinqToExcel, Version=1.11.0.0, Culture=neutral, PublicKeyToken=9c8ea65a58f03f1f, processorArchitecture=MSIL">
       <HintPath>..\packages\LinqToExcel.1.11.0\lib\LinqToExcel.dll</HintPath>
     </Reference>
+    <Reference Include="MessagingToolkit.QRCode, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Antiforgery, Version=1.1.3.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Antiforgery.1.1.3\lib\net451\Microsoft.AspNetCore.Antiforgery.dll</HintPath>
     </Reference>
@@ -2920,11 +2923,17 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsideOutReportController.cs" />
     <Compile Include="Controllers\LiftController.cs" />
+    <Compile Include="Controllers\OperatorAltDepartmanController.cs" />
+    <Compile Include="Controllers\OperatorBolumController.cs" />
+    <Compile Include="Controllers\OperatorDepartmanController.cs" />
+    <Compile Include="Controllers\OperatorKapiController.cs" />
     <Compile Include="Controllers\OperatorLogReportController.cs" />
+    <Compile Include="Controllers\OperatorSirketController.cs" />
     <Compile Include="Controllers\OutherReportController.cs" />
     <Compile Include="Controllers\PanelController.cs" />
     <Compile Include="Controllers\PanelSettingsController.cs" />
     <Compile Include="Controllers\PersonelListReportController.cs" />
+    <Compile Include="Controllers\QuickResponseController.cs" />
     <Compile Include="Controllers\RefectoryController.cs" />
     <Compile Include="Controllers\ReportPersonelController.cs" />
     <Compile Include="Controllers\SecuritySettingsController.cs" />
@@ -2988,11 +2997,17 @@
     <Compile Include="Models\LiftGroupsListViewModel.cs" />
     <Compile Include="Models\MonitorWatchViewModel.cs" />
     <Compile Include="Models\OfflineAccessReceiveListViewModel.cs" />
+    <Compile Include="Models\OperatorAltDepartmanViewModel.cs" />
+    <Compile Include="Models\OperatorBolumViewModel.cs" />
+    <Compile Include="Models\OperatorDepartmanViewModel.cs" />
+    <Compile Include="Models\OperatorKapiViewModel.cs" />
     <Compile Include="Models\OperatorLogListViewModel.cs" />
+    <Compile Include="Models\OperatorSirketViewModel.cs" />
     <Compile Include="Models\PanelConnectionSMSViewModel.cs" />
     <Compile Include="Models\PersonelListViewModel.cs" />
     <Compile Include="Models\ProgRelay2EditViewModel.cs" />
     <Compile Include="Models\ProgRelayListViewModel.cs" />
+    <Compile Include="Models\QuicResponseViewModel.cs" />
     <Compile Include="Models\ReaderEditMS1010ViewModel.cs" />
     <Compile Include="Models\ReaderEditViewModel.cs" />
     <Compile Include="Models\ReaderOperationListViewModel.cs" />
@@ -3146,6 +3161,17 @@
     <Content Include="Views\SMS\PanelConnectionStatus.cshtml" />
     <Content Include="Views\GelenGelmeyenReport\GecGelenErkenCikan.cshtml" />
     <Content Include="Views\Users\Groups.cshtml" />
+    <Content Include="Views\QuickResponse\Create.cshtml" />
+    <Content Include="Views\QuickResponse\Index.cshtml" />
+    <Content Include="Views\QuickResponse\Edit.cshtml" />
+    <Content Include="Views\QuickResponse\PrintQRCode.cshtml" />
+    <Content Include="Views\OperatorSirket\Index.cshtml" />
+    <Content Include="Views\OperatorDepartman\Index.cshtml" />
+    <Content Include="Views\OperatorAltDepartman\Index.cshtml" />
+    <Content Include="Views\OperatorBolum\Index.cshtml" />
+    <Content Include="Views\OperatorKapi\Index.cshtml" />
+    <Content Include="Views\SecuritySettings\EditOperator.cshtml" />
+    <Content Include="Views\SecuritySettings\CreateOperator.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

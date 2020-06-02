@@ -11,5 +11,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     {
         List<ComplexTimeGroups> GetComplexTimeGroups(Expression<Func<ComplexTimeGroups, bool>> filter = null);
         void DeleteAll();
+        int Count();
     }
 }

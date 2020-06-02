@@ -264,8 +264,8 @@
 
 
 <!--Card List Modal -->
-<div class="modal fade" id="userCardModal" tabindex="-1" role="dialog" aria-labelledby="userCardLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade  bd-example-modal-lg" id="userCardModal" tabindex="-1" role="dialog" aria-labelledby="userCardLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ziyaretçi Kartları</h5>
@@ -275,14 +275,13 @@
             </div>
             <div class="modal-body">
                 <table id="cardTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                    <thead class="table-info">
+                    <thead class="table-sm">
                         <tr>
                             <td>ID</td>
                             <td>Kart ID</td>
                             <td>Adı</td>
                             <td>Soyadı</td>
                             <td>Grup No</td>
-                            <td>Grup Adı</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -294,7 +293,6 @@
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
                                 <td>@item.Grup_No</td>
-                                <td></td>
                             </tr>
                         }
                     </tbody>
@@ -322,6 +320,11 @@
     <script>
         $(document).ready(function () {
             $("#myTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+            $("#cardTable").DataTable({
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
                 }

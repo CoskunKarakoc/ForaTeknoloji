@@ -30,7 +30,7 @@
                         <label for="DepartmanNo">Departman Seçimi</label>
                         @Html.DropDownListFor(model => model.Departman_No, Model.Departman_No, "Departman Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
-                   
+
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -42,9 +42,9 @@
                         @Html.DropDownListFor(model => model.Bolum_No, Model.Bolum_No, "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
                     @*<div class="form-group">
-                        <label for="Birim_No">Birim Seçimi</label>
-                        @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>*@
+                            <label for="Birim_No">Birim Seçimi</label>
+                            @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        </div>*@
 
                 </div>
                 <div class="col-md-4">
@@ -74,7 +74,7 @@
                 <div class="col-md-12 text-right">
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
-                    <a id="Excell" href="@Url.Action("UserAccessCount", "Refectory")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("YemekhaneRaporlariKisiBazli", "Refectory")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
 
                 </div>
             </div>
@@ -90,19 +90,18 @@
         selectedRowStyle: "selectRow",
         footerStyle: "table-pager",
         columns: webGrid.Columns(
-        webGrid.Column("Gecis_Sayisi", "Geçiş Sayısı"),
+        webGrid.Column("Tarih", "Tarih"),
+        webGrid.Column("Gun_Adi", "Gün"),
         webGrid.Column("Kart_ID", "Kart ID"),
         webGrid.Column("Adi", "Adı"),
         webGrid.Column("Soyadi", "Soyadı"),
         webGrid.Column("TC_Kimlik", "TC Kimlik"),
-        webGrid.Column("SirketAdi", "Şirket"),
         webGrid.Column("Departman_Adi", "Departman"),
         webGrid.Column("AltDepartmanAdi", "Alt Departman"),
         webGrid.Column("BolumAdi", "Bölüm"),
         //webGrid.Column("BirimAdi", "Birim"),
         webGrid.Column("Panel_ID", "Panel ID"),
-        webGrid.Column("Panel_Name", "Panel Adı"),
-        webGrid.Column("Kapi_ID", "Kapı ID")))
+        webGrid.Column("Panel_Name", "Panel Adı")))
                     }
                     else
                     {
@@ -208,6 +207,24 @@
                 });
             });
         })
+
+
+        $("tfoot a").addClass('btn btn-sm  btn-default'); // buton normal durum css
+        // buton aktif durum css
+        $("tfoot td")
+            .contents()
+            .filter(function () {
+                if (this.nodeType === 3 && this.length > 1) {
+                    return this.nodeType
+                }
+            })
+            .wrap('<span class=" btn btn-primary" />');
+
+
+
+
+
+
     });
 </script>
 

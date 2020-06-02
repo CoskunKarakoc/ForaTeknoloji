@@ -13,57 +13,43 @@
                 <h3 title="Title" class="card-title"><i class="fas fa-bookmark"></i> Kullanıcı Ayarları</h3>
             </div>
             <div class="card-body">
-                @if (Model.Users.Count == 0)
-                {
-                    <div class="alert alert-info" role="alert">
-                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
-                        <p class="text-center">Geçerli  'Kullanıcı'  kaydı bulunamadı.</p>
-                        <hr>
-                        <p class="mb-0 text-center">Dilerseniz açılır menüden 'Kullanıcılar' > 'Yeni Kullanıcı' butonuna basarak ekleyebilirsiniz.</p>
+                <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>TC Kimlik</td>
+                            <td>Departman</td>
+                            <td>Alt Departman</td>
+                            <td>Bölüm</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Açıklama</td>
+                            <td>
+                                <a data-toggle="modal" data-target="#panelList" title="Tümünü Panelden Sil" onclick="ekle(0,2629)" id="PanelDelete"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
+                                <a data-toggle="modal" data-target="#panelList" title="Tüm Geçiş Sayacını Sil" onclick="ekle(0,2702)" id="AccessDelete"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
+                                <a data-toggle="modal" data-target="#panelList" title="Tüm Antipassback Sayacını Sil" onclick="ekle(0,2711)" id="AntiDelete"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
+                                <a title="Tüm Kullanıcıları Sil" onclick="return confirm('Kullanıcıların Tümünü Veritabanından Silmek İstediğinize Emin Misiniz?')" id="AllDataUser" href="@Url.Action("DeleteDatabaseAll","Users")"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
+                                <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a>
+                            </td>
 
-                    </div>
-                }
-                else
-                {
-                    <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                        <thead>
-                            <tr>
-                                <td>Kart ID</td>
-                                <td>Adı</td>
-                                <td>Soyadı</td>
-                                <td>TC Kimlik</td>
-                                <td>Departman</td>
-                                <td>Alt Departman</td>
-                                <td>Bölüm</td>
-                                <td>Geçiş Grubu</td>
-                                <td>Açıklama</td>
-                                <td>
-                                    <a data-toggle="modal" data-target="#panelList" title="Tümünü Panelden Sil" onclick="ekle(0,2629)" id="PanelDelete"><i class="fas fa-trash-restore-alt text-danger mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Tüm Geçiş Sayacını Sil" onclick="ekle(0,2702)" id="AccessDelete"><i class="fas fa-trash-restore-alt text-warning mr-2"></i></a>
-                                    <a data-toggle="modal" data-target="#panelList" title="Tüm Antipassback Sayacını Sil" onclick="ekle(0,2711)" id="AntiDelete"><i class="fas fa-trash-restore-alt text-dark mr-2"></i></a>
-                                    <a title="Tüm Kullanıcıları Sil" onclick="return confirm('Kullanıcıların Tümünü Veritabanından Silmek İstediğinize Emin Misiniz?')" id="AllDataUser" href="@Url.Action("DeleteDatabaseAll","Users")"><i class="fas fa-dumpster-fire text-dark mr-2"></i></a>
-                                    <a title="Panel Durum Tablosu" href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a>
-                                </td>
-
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <td>Kart ID</td>
-                                <td>Adı</td>
-                                <td>Soyadı</td>
-                                <td>TC Kimlik</td>
-                                <td>Departman</td>
-                                <td>Alt Departman</td>
-                                <td>Bölüm</td>
-                                <td>Geçiş Grubu</td>
-                                <td>Açıklama</td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                }
-
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>TC Kimlik</td>
+                            <td>Departman</td>
+                            <td>Alt Departman</td>
+                            <td>Bölüm</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Açıklama</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>

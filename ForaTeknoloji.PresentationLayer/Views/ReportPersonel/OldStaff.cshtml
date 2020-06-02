@@ -113,10 +113,10 @@
                             <label class="custom-control-label" for="ikiSaat">İki Saat Arası</label>
                         </div>
                         <div class="form-group">
-                            <input class="form-control form-control-sm" name="Baslangic_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat1">
+                            <input class="form-control form-control-sm" name="Baslangic_Saati" type="time" disabled value="@DateTime.Now.ToShortTimeString()" id="Saat1">
                         </div>
                         <div class="form-group">
-                            <input class="form-control form-control-sm" name="Bitis_Saati" type="time" disabled value="@DateTime.Now.ToLongTimeString()" id="Saat2">
+                            <input class="form-control form-control-sm" name="Bitis_Saati" type="time" disabled value="@DateTime.Now.ToShortTimeString()" id="Saat2">
                         </div>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" value="true" name="Gunluk_Saat_Dilimi" class="custom-control-input" id="Günlük" />
@@ -210,7 +210,7 @@
                     <h4 class="text-info text-right">@Model.ReportPersonel.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("PersonelRaporları", "ReportPersonel")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("EskiPersonelRaporları", "ReportPersonel")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
 
 
@@ -282,7 +282,7 @@
                             <td>Kart ID</td>
                             <td>Adı</td>
                             <td>Soyadı</td>
-                            <td>Şirket</td>
+                            <td>TC Kimlik</td>
                             <td>Departman</td>
                             <td>Alt Departman</td>
                             <td>Bölüm</td>
@@ -300,7 +300,7 @@
                                 <td>@item.Kart_ID</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
-                                <td>@item.SirketAdi</td>
+                                <td>@item.TCKimlik</td>
                                 <td>@item.DepartmanAdi</td>
                                 <td>@item.AltDepartmanAdi</td>
                                 <td>@item.BolumAdi</td>

@@ -36,6 +36,17 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             }
         }
 
+        public int Count()
+        {
+            using (var context = new ForaContext())
+            {
+                var query = "SELECT COUNT(*) FROM [TimeGroups]";
+                var result = context.Database.SqlQuery<int>(query).First();
+                return result;
+            }
+        }
+
+
         public class ComplexTimeGroups
         {
             public int Zaman_Grup_No { get; set; }

@@ -21,12 +21,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersPanelsService _dBUsersPanelsService;
         private IDBUsersDepartmanService _dBUsersDepartmanService;
         private IDBUsersSirketService _dBUsersSirketService;
+        private IDBUsersBolumService _dBUsersBolum;
         public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
         List<int> dbPanelList;
         List<int> dbSirketList;
-        public BolumController(IDBUsersService dBUsersService, IBolumService bolumService, IAltDepartmanService altDepartmanService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService)
+        public BolumController(IDBUsersService dBUsersService, IBolumService bolumService, IAltDepartmanService altDepartmanService, IDepartmanService departmanService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersBolumService dBUsersBolum)
         {
             //user = CurrentSession.User;
             //if (user == null)
@@ -40,6 +41,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersPanelsService = dBUsersPanelsService;
             _dBUsersDepartmanService = dBUsersDepartmanService;
             _dBUsersSirketService = dBUsersSirketService;
+            _dBUsersBolum = dBUsersBolum;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
             dbSirketList = new List<int>();
@@ -101,6 +103,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             _bolumService.DeleteAll();
 
                         _bolumService.AddBolum(Bolum);
+
+                        foreach (var dbsysAdmin in _dBUsersService.GetAllDBUsers(x => x.SysAdmin == true))
+                        {
+                            var dbBolum = new DBUsersBolum
+                            {
+                                Kullanici_Adi = dbsysAdmin.Kullanici_Adi,
+                                Departman_No = Bolum.Departman_No,
+                                Alt_Departman_No = Bolum.Alt_Departman_No,
+                                Bolum_No = Bolum.Bolum_No
+                            };
+                            _dBUsersBolum.AddDBUsersBolum(dbBolum);
+                        }
+
+
                         return RedirectToAction("Index");
                     }
                     throw new Exception("Yanlış yada eksik karakter girdiniz.");

@@ -6,5 +6,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     public interface ILiftGroupsDal : IEntityRepository<LiftGroups>
     {
         void DeleteAll();
+        int Count();
     }
 }

@@ -900,13 +900,13 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
             DBUsersPanels dBUsersPanels = new DBUsersPanels
             {
                 Panel_No = 1,
-                Kullanici_Adi = "admin"
+                Kullanici_Adi = "sa"
             };
             context.DBUsersPanels.Add(dBUsersPanels);
             DBUsersSirket dBUsersSirket = new DBUsersSirket
             {
                 Sirket_No = 1,
-                Kullanici_Adi = "admin"
+                Kullanici_Adi = "sa"
             };
             context.DBUsersSirket.Add(dBUsersSirket);
 
@@ -1637,6 +1637,42 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gorev_Adi = "Zaman Gruplarının Silinmesi(Tümü)"
             };
             context.TaskCodes.Add(taskCode2605);
+            TaskCode taskCode2763 = new TaskCode
+            {
+                Gorev_Kodu = 2763,
+                Gorev_Adi = "Panel Ayarlarının Gönderilmesi(Sadece Panel)"
+            };
+            context.TaskCodes.Add(taskCode2763);
+            TaskCode taskCode2764 = new TaskCode
+            {
+                Gorev_Kodu = 2764,
+                Gorev_Adi = "Kapı Ayarlarının Gönderilmesi(1 ile 8 Okuyucular)"
+            };
+            context.TaskCodes.Add(taskCode2764);
+            TaskCode taskCode2765 = new TaskCode
+            {
+                Gorev_Kodu = 2765,
+                Gorev_Adi = "Kapı Ayarlarının Gönderilmesi(9 ile 16 Okuyucular)"
+            };
+            context.TaskCodes.Add(taskCode2765);
+            TaskCode taskCode2766 = new TaskCode
+            {
+                Gorev_Kodu = 2766,
+                Gorev_Adi = "Panel Ayarlarının Alınması(Sadece Panel)"
+            };
+            context.TaskCodes.Add(taskCode2766);
+            TaskCode taskCode2767 = new TaskCode
+            {
+                Gorev_Kodu = 2767,
+                Gorev_Adi = "Kapı Ayarlarının Alınması(1 ile 8 Okuyucular)"
+            };
+            context.TaskCodes.Add(taskCode2767);
+            TaskCode taskCode2768 = new TaskCode
+            {
+                Gorev_Kodu = 2768,
+                Gorev_Adi = "Kapı Ayarlarının Alınması(9 ile 16 Okuyucular)"
+            };
+            context.TaskCodes.Add(taskCode2768);
             EMailSetting eMailSetting = new EMailSetting
             {
                 E_Mail_Adres = "sample@abcd.com",
@@ -1685,6 +1721,12 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Adi = "Departman"
             };
             context.Departmanlar.Add(departman);
+            AltDepartman altdepartman = new AltDepartman
+            {
+                Adi = "Alt Departman",
+                Departman_No = 1
+            };
+            context.AltDepartman.Add(altdepartman);
 
             ProgInit progInit = new ProgInit
             {

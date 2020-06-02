@@ -1,0 +1,168 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.QuicResponseViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row animated slideInLeft faster">
+    <div class="col-md-6 offset-md-3">
+        <div class="card border-left-info h-100 shadow-lg  mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Ziyaretçi Tanımla</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "QuickResponse", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" id="Kart_ID" name="Kart_ID" hidden value="@Model.QRCode" />
+                                        <input type="text" id="User_ID" name="User_ID" hidden value="" />
+                                        <input type="text" class="form-control form-control-sm" value="@Model.QRCode" hidden disabled name="HiddenKart_ID" id="HiddenKart_ID" aria-describedby="basic-addon2">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">TC Kimlik No</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" name="TCKimlik" class="form-control form-control-sm" maxlength="11" pattern="\d{11}" title="Bu alana sadece 11 karakterli sayısal değer girilebilir" value="" />
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Adı</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-sm" name="Adi" value="" />
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Soyadı</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-sm" name="Soyadi" value="" />
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Plaka</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-sm" name="Plaka" value="" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Telefon</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-sm" pattern="\d{10}" title="Telefon alanına başında 0 olmadan giriş yapmalısınız." name="Telefon" maxlength="10" value="" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Firma</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-sm" name="Firma" value="" />
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-12">Ziyaretçi Geçiş Grubu</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No", Model.Grup_No, "Ziyaretçi Grubu Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                        @Html.ValidationMessageFor(model => model.Grup_No, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Ziyaret Tarihi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="date" class="form-control form-control-sm" name="Tarih" id="Tarih" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Ziyaret Sebebi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control form-control-sm" cols="3" rows="3" name="Ziyaret_Sebebi"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <a href="@Url.Action("Index","QuickResponse")" class="btn btn-sm btn-outline-info"><i class="fas fa-hand-o-left"></i> Listeye Dön</a>
+                            <button type="submit" class="btn btn-sm btn-success"><i class="fas fa-address-card"></i> Ziyaretçi Ekle</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var today = new Date();
+        $('#Tarih').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
+        $('.chosen-select').chosen();
+        $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+
+
+        $("#btnPrint").click(function () {
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html>');
+            frameDoc.document.write('<head>');
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            frameDoc.document.write('<style>');
+            frameDoc.document.write('');
+            frameDoc.document.write('</style>');
+            frameDoc.document.write('</head>');
+            frameDoc.document.write('<body>');
+            frameDoc.document.write('<img id="code" src="@Url.Action("PrintImage",new{QRCode=Model.QRCode})" alt="QR Code ID"/>');
+            frameDoc.document.write('</body>');
+            frameDoc.document.write('</html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+        });
+
+    })
+</script>
+

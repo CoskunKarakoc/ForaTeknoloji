@@ -1,0 +1,320 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.VisitorEditViewModel
+@{
+    ViewBag.Title = "Ziyaretçi Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row animated slideInLeft faster">
+    <div class="col-md-8 offset-md-2">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Ziyaretçi Ayarları</h3>
+            </div>
+
+            @using (Html.BeginForm("Edit", "QuickResponse", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="card-body">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.Hidden("Kayit_No", Model.Ziyaretci.Kayit_No)
+                    @Html.Hidden("Saat", Model.Ziyaretci.Saat)
+                    @Html.Hidden("ID", Model.Ziyaretci.ID)
+                    @Html.Hidden("Saat", Model.Ziyaretci.Saat)
+                    @Html.Hidden("User_ID", Model.Ziyaretci.User_ID)
+                    @Html.Hidden("UseUserGroup", Model.Ziyaretci.UseUserGroup)
+                    @Html.Hidden("Kart_ID", Model.Ziyaretci.Kart_ID)
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Ziyaretçi Kart ID</label>
+                                <div class="col-md-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control form-control-sm" value="@Model.Ziyaretci.Kart_ID" disabled name="Kart_ID" id="Kart_ID" aria-describedby="basic-addon2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-5">TC Kimlik No</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextBox("TCKimlik", Model.Ziyaretci.TCKimlik, new { @class = "form-control form-control-sm", maxlength = 11, pattern = "\\d{11}", title = "Bu alana sadece 11 karakterli sayısal değer girilebilir" })
+                                        @Html.ValidationMessageFor(model => model.Ziyaretci.TCKimlik, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Adı</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextBox("Adi", Model.Ziyaretci.Adi, new { @class = "form-control form-control-sm" })
+                                        @Html.ValidationMessageFor(model => model.Ziyaretci.Adi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Soyadı</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextBox("Soyadi", Model.Ziyaretci.Soyadi, new { @class = "form-control form-control-sm" })
+                                        @Html.ValidationMessageFor(model => model.Ziyaretci.Soyadi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Ziyaretci.Plaka, htmlAttributes: new { @class = "control-label col-md-5" })
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextBox("Plaka", Model.Ziyaretci.Plaka, new { @class = "form-control form-control-sm" })
+                                        @Html.ValidationMessageFor(model => model.Ziyaretci.Plaka, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Telefon</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.EditorFor(model => model.Ziyaretci.Telefon, new { htmlAttributes = new { @class = "form-control form-control-sm", maxlength = 10, pattern = "\\d{10}", title = "Telefon alanına başında 0 olmadan giriş yapmalısınız." } })
+                                        @Html.ValidationMessageFor(model => model.Ziyaretci.Telefon, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="control-label col-md-5">Firma</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextBox("Firma", Model.Ziyaretci.Firma, new { @class = "form-control form-control-sm" })
+                                        @Html.ValidationMessageFor(model => model.Ziyaretci.Firma, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-12">Ziyaretçi Geçiş Grubu</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.DropDownList("Grup_No", null, "Ziyaretçi Geçiş Grubu Seçiniz...", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (Model.Ziyaretci.Tarih == null)
+                            {
+                                <label class="control-label col-md-5">Ziyaret Tarihi</label>
+                                <div class="col-md-12"> <input type="date" class="form-control form-control-sm" name="Tarih" id="Tarih" /></div>
+                            }
+                            else
+                            {
+                                <label class="control-label col-md-5">Ziyaret Tarihi</label>
+                                <div class="col-md-12">  @Html.TextBox("Tarih", Model.Ziyaretci.Tarih, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", @type = "date" })</div>
+                            }
+
+
+                            <div class="form-group mt-2">
+                                <label class="control-label col-md-5">Ziyaret Sebebi</label>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextArea("Ziyaret_Sebebi", Model.Ziyaretci.Ziyaret_Sebebi, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Ziyaretci.Ziyaret_Sebebi, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="offset-1 col-md-3 text-center">
+                            <p class="text-info">QR Kodlu Geçiş Sistemi</p>
+                            <img id="code" src='@Url.Action("PrintImage",new{QRCode=Model.Ziyaretci.Kart_ID})' alt="QR Code ID" />
+                            <hr />
+                            <a id="btnPrint" class="btn btn-sm btn-outline-success"><i class="fas fa-print"></i> QR Code Yazdır</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <hr />
+                            <a href="@Url.Action("Index","QuickResponse")" class="btn btn-sm btn-outline-info"><i class="fas fa-hand-o-left"></i> Listeye Dön</a>
+                            <button type="submit" class="btn btn-sm btn-success"><i class="fas fa-address-card"></i> Ziyaretçi Güncelle</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Modal Aktif -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-md-12 text-success">
+
+                        <div hidden id="alertMain" class="text-success">
+                            <h2 id="alert" class="text-center "></h2>
+                        </div>
+                        <div id="alertMain" class="text-muted">
+                            <h2 class="text-center ">Kullanıcı Arama</h2>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="modal-body ">
+                <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Şirket</td>
+                            <td>Departman</td>
+                            <td>Alt Departman</td>
+                            <td>Bölüm</td>
+                            <td>Blok</td>
+                            <td>Kendi Geçiş Grubu</td>
+                        </tr>
+                    </thead>
+                    <tbody id="zyrt">
+                        @foreach (var item in Model.Personeller)
+                        {
+                            <tr>
+                                <td data-id="@item.ID" data-personeladi="@item.Adi" data-personelsoyadi="@item.Soyadi" data-grup="@item.Grup_No" data-grupadi="@item.Grup_Adi">@item.ID</td>
+                                <td>@item.Kart_ID</td>
+                                <td>@item.Adi</td>
+                                <td>@item.Soyadi</td>
+                                <td>@item.SirketAdi</td>
+                                <td>@item.DepartmanAdi</td>
+                                <td>@item.AltDepartmanAdi</td>
+                                <td>@item.BolumAdi</td>
+                                <td>@item.BlokAdi</td>
+                                <td>@item.Grup_Adi</td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="temizle" class="btn btn-success"><i class="fas fa-trash-alt"></i> Seçimi İptal Et</button>
+                <button type="button" id="close" class="btn btn-secondary " data-dismiss="modal"><i class="fas fa-times"></i> Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#myTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                }
+            });
+        });
+    </script>
+
+
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("#myTable tbody tr").click(function () {
+            $("#alertMain").prop("hidden", false);
+            var ID = $(this).children("td").data("id");
+            var Adi = $(this).children("td").data("personeladi");
+            var Soyadi = $(this).children("td").data("personelsoyadi");
+            var grup = $(this).children("td").data("grup");
+            var grupAdi = $(this).children("td").data("grupadi");
+            $("#Grup_No").attr("value", grup);
+            $("#Grup_Adi").attr("value", grupAdi);
+            $("#ID").attr('value', ID);
+            $("#Personel_Adi").attr('value', Adi);
+            $("#Personel_Soyadi").attr('value', Soyadi);
+            $("#alert").text(Adi + " " + Soyadi + " Seçildi!");
+            var selected = $(this).hasClass("table-success");
+            $("#myTable tbody tr").removeClass("table-success");
+            if (!selected)
+                $(this).addClass("table-success");
+        });
+        $("#cardTable tbody tr").click(function () {
+            var cardID = $(this).children("td").data("cardid");
+            var userID = $(this).children("td").data("userid");
+            $("#Kart_ID").attr('value', cardID);
+            $("#User_ID").attr('value', userID);
+            $("#HiddenKart_ID").attr('value', cardID);
+            $("#cardTable tbody tr").removeClass("table-success");
+            $(this).toggleClass("table-success");
+        });
+    });
+    $("#temizle").click(function () {
+        $("#ID").attr("value", null);
+        $("#Personel_Adi").attr("value", null);
+        $("#Personel_Soyadi").attr("value", null);
+        $("#alert").text("");
+        $("#alertMain").prop("hidden", true);
+    });
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#btnPrint").click(function () {
+            var frame1 = $('<iframe />');
+            frame1[0].name = "frame1";
+            frame1.css({ "position": "absolute" });
+            $("body").append(frame1);
+            var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html>');
+            frameDoc.document.write('<head>');
+            frameDoc.document.write('<link href="style.css" rel="stylesheet" type="text/css" media="print" />');
+            frameDoc.document.write('<style>');
+            frameDoc.document.write('');
+            frameDoc.document.write('</style>');
+            frameDoc.document.write('</head>');
+            frameDoc.document.write('<body>');
+            frameDoc.document.write('<img id="code" src="@Url.Action("PrintImage",new{QRCode=Model.Ziyaretci.Kart_ID})" alt="QR Code ID"/>');
+            frameDoc.document.write('</body>');
+            frameDoc.document.write('</html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                frame1.remove();
+            }, 500);
+
+        });
+
+    })
+</script>
+

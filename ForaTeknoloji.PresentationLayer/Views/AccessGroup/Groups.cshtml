@@ -44,10 +44,8 @@
                                     <tr>
                                         <td>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="Groups" id="@item.Grup_No" value="@item.Grup_No">
-
-
-                                                <label class="custom-control-label" for="@item.Grup_No"></label>
+                                                <input type="checkbox" class="custom-control-input" name="Groups" id="@("G_"+item.Grup_No)" value="@item.Grup_No">
+                                                <label class="custom-control-label" for="@("G_"+item.Grup_No)"></label>
                                             </div>
                                         </td>
                                         <td>@item.Grup_No</td>
@@ -191,8 +189,8 @@
 
 
 @section Scripts{
-   <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
-   <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
             background: none;

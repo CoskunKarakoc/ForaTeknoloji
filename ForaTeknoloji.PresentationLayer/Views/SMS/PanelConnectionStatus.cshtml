@@ -32,24 +32,20 @@
                                     <td></td>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach (var item in Model.Kullanicilar)
-                                {
-                                    <tr>
-                                        <td>@item.Kart_ID</td>
-                                        <td>@item.Adi</td>
-                                        <td>@item.Soyadi</td>
-                                        <td>@item.TCKimlik</td>
-                                        <td>@item.Telefon</td>
-                                        <td>@item.DepartmanAdi</td>
-                                        <td>@item.AltDepartmanAdi</td>
-                                        <td>@item.BolumAdi</td>
-                                        <td>@item.Grup_Adi</td>
-                                        <td><a href="#" onclick="CheckListAddPhone(@item.Telefon)" class="text-success"><i class="fas fa-plus-circle"></i></a></td>
-                                    </tr>
-                                }
-
-                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Kart ID</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>TC Kimlik</td>
+                                    <td>Telefon</td>
+                                    <td>Departman</td>
+                                    <td>Alt Departman</td>
+                                    <td>Bölüm</td>
+                                    <td>Birim</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -60,9 +56,6 @@
         </div>
     </div>
 </div>
-
-
-
 @section Scripts{
     <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
     <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
@@ -84,7 +77,7 @@
 
             //$.fn.dataTable.ext.classes.sPageButton = 'btn btn-sm btn-info mr-1 ml-1';
             //$.fn.dataTable.ext.classes.sFilterInput = "form-control form-control-sm";
-            $("#UserList").DataTable({
+            $("#PanelTable").DataTable({
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
                 },
@@ -93,9 +86,48 @@
                 ]
             });
 
+            $("#PanelTableReceice").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+
+
+
+            $("#UserList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "ajax": "/SMS/UserList",
+                "columns": [
+                    { "data": "Kart_ID" },
+                    { "data": "Adi" },
+                    { "data": "Soyadi" },
+                    { "data": "TCKimlik" },
+                    { "data": "Telefon" },
+                    { "data": "DepartmanAdi" },
+                    { "data": "AltDepartmanAdi" },
+                    { "data": "BolumAdi" },
+                    { "data": "Grup_Adi" },
+                    {
+                        "data": "Telefon", "render": function (data) {
+                            var multipleUrl = '<a href="#" onclick="CheckListAddPhone(' + data + ')" class="text-success"><i class="fas fa-plus-circle"></i></a></td>';
+                            return multipleUrl;
+                        }
+                    },
+                ],
+                "columnDefs": [
+                    { "orderable": false, "targets": 9 }
+                ]
+            });
+
         });
     </script>
 }
+
 <script>
     $(document).ready(function () {
         $.ajax({

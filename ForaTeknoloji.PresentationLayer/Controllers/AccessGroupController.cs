@@ -87,15 +87,17 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     throw new Exception("Yetkisiz Erişim!");
             }
             IDictionary<int, int> keyValues = new Dictionary<int, int>();
-            foreach (var group in _groupMasterService.GetAllGroupsMaster())
+            var groupList = _groupMasterService.GetAllGroupsMaster();
+            var panelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID));
+            foreach (var group in groupList)
             {
-                var groupUserCount = _userService.GetAllUsers().Where(x => x.Grup_No == group.Grup_No).Count();
+                var groupUserCount = _userService.CountByGroupNumber(group.Grup_No);
                 keyValues.Add(group.Grup_No, groupUserCount);
             }
             var model = new GecisGrupListViewModel
             {
-                Gruplar = _groupMasterService.GetAllGroupsMaster(),
-                PanelListesi = _reportService.PanelListesi(user),
+                Gruplar = groupList,
+                PanelListesi = panelList,
                 GroupUserCount = keyValues
             };
 
@@ -150,7 +152,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             int maxID;
 
             if (_groupMasterService.GetAllGroupsMaster().Count > 0)
-                maxID = _groupMasterService.GetAllGroupsMaster().Count;
+                maxID = _groupMasterService.GetAllGroupsMaster().Max(x => x.Grup_No);
             else
                 maxID = 0;
 
@@ -245,12 +247,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             List<SelectList> KapiZamanGrupNo = new List<SelectList>();
             List<SelectList> KapiAsansorBolgeNo = new List<SelectList>();
             List<ComplexGroupsDetailNew> nesne = new List<ComplexGroupsDetailNew>();
+            var timeList = _timeGroupsService.GetAllTimeGroups();
+            var liftList = _liftGroupsService.GetAllLiftGroups();
+            var panelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID));
             if (PanelID == null)
             {
 
                 try
                 {
-                    PanelID = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)).FirstOrDefault().Panel_ID;
+                    PanelID = panelList.FirstOrDefault().Panel_ID;// _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)).FirstOrDefault().Panel_ID;
                 }
                 catch (Exception)
                 {
@@ -260,36 +265,38 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-                var timezonegroupcount = _timeGroupsService.GetAllTimeGroups().Count;
+                var timezonegroupcount = _timeGroupsService.Count();
                 if (timezonegroupcount == 0)
                     throw new Exception("Zaman Bölgesi Gerekli!");
 
-                var liftgroupcount = _liftGroupsService.GetAllLiftGroups().Count;
+                var liftgroupcount = _liftGroupsService.Count();
                 if (liftgroupcount == 0)
                     throw new Exception("Asansör Geçiş Grubu Gerekli!");
 
-                nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
+                nesne = _groupsDetailNewService.GetComplexGroupsWithQuery(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
             }
             else
             {
-                nesne = _groupsDetailNewService.GetComplexGroups().Where(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
+                nesne = _groupsDetailNewService.GetComplexGroupsWithQuery(x => x.Grup_No == id && x.Panel_No == PanelID && x.Reader_Panel_No == PanelID).ToList();
             }
+
 
             foreach (var item in nesne)
             {
-                KapiZamanGrupNo.Add(new SelectList(_timeGroupsService.GetAllTimeGroups(), "Zaman_Grup_No", "Zaman_Grup_Adi", item.Zaman_Grup_No));
-                KapiAsansorBolgeNo.Add(new SelectList(_liftGroupsService.GetAllLiftGroups(), "Asansor_Grup_No", "Asansor_Grup_Adi", item.Asansor_Grup_No));
+                KapiZamanGrupNo.Add(new SelectList(timeList, "Zaman_Grup_No", "Zaman_Grup_Adi", item.Zaman_Grup_No));
+                KapiAsansorBolgeNo.Add(new SelectList(liftList, "Asansor_Grup_No", "Asansor_Grup_Adi", item.Asansor_Grup_No));
             }
 
 
-            var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
+            // var panelModel = _panelSettingsService.GetAllPanelSettings().FirstOrDefault(x => x.Panel_ID == PanelID).Panel_Model;
+            var panelModel = _panelSettingsService.GetByQuery(x => x.Panel_ID == PanelID).Panel_Model;
             var model = new CreateReaderModel
             {
                 Kapi_Asansor_Bolge_No = KapiAsansorBolgeNo,
                 Kapi_Zaman_Grup_No = KapiZamanGrupNo,
                 Groups = nesne,
                 Panel_ID = PanelID,
-                PanelList = _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0 && dbPanelList.Contains((int)x.Panel_ID)), //_reportService.PanelListesi(user),
+                PanelList = panelList,
                 PanelModel = panelModel
             };
             return View(model);
@@ -310,6 +317,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         var group = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Kapi_No == (i + 1) && x.Panel_No == parameters.Panel_ID && x.Grup_No == parameters.Grup_No).FirstOrDefault();
                         if (group == null)
                         {
+                            var panel = _panelSettingsService.GetById(parameters.Panel_ID);
                             GroupsDetailNew createGroup = new GroupsDetailNew
                             {
                                 Asansor_Grup_No = 1,
@@ -319,19 +327,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Kapi_Aktif = kapiStatus[i],
                                 Kapi_No = i + 1,
                                 Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i],
-                                Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name,
-                                Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID,
-                                Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No
+                                Panel_Adi = panel.Panel_Name,
+                                Panel_No = (short)panel.Panel_ID,
+                                Seri_No = panel.Seri_No
                             };
                             _groupsDetailNewService.AddGroupsDetailNew(createGroup);
                         }
                         else
                         {
+                            var panel = _panelSettingsService.GetById(parameters.Panel_ID);
                             group.Grup_Adi = parameters.Grup_Adi;
                             group.Grup_No = parameters.Grup_No;
-                            group.Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name;
-                            group.Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID;
-                            group.Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No;
+                            group.Panel_Adi = panel.Panel_Name;
+                            group.Panel_No = (short)panel.Panel_ID;
+                            group.Seri_No = panel.Seri_No;
                             group.Kapi_No = i + 1;
                             group.Global_Bolge_No = 1;
                             group.Asansor_Grup_No = 1;
@@ -363,10 +372,12 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     kapiStatus.Add(parameters.Kapi_14);
                     kapiStatus.Add(parameters.Kapi_15);
                     kapiStatus.Add(parameters.Kapi_16);
-
+                    var panel = _panelSettingsService.GetById(parameters.Panel_ID);
                     for (int i = 0; i < 16; i++)
                     {
-                        var group = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Kapi_No == (i + 1) && x.Panel_No == parameters.Panel_ID && x.Grup_No == parameters.Grup_No).FirstOrDefault();
+                        // var group = _groupsDetailNewService.GetAllGroupsDetailNew(x => x.Kapi_No == (i + 1) && x.Panel_No == parameters.Panel_ID && x.Grup_No == parameters.Grup_No).FirstOrDefault();
+                        var group = _groupsDetailNewService.GetByQuery(x => x.Kapi_No == (i + 1) && x.Panel_No == parameters.Panel_ID && x.Grup_No == parameters.Grup_No);
+
                         if (group == null)
                         {
                             GroupsDetailNew createGroup = new GroupsDetailNew
@@ -378,9 +389,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Kapi_Aktif = kapiStatus[i],
                                 Kapi_No = i + 1,
                                 Zaman_Grup_No = parameters.Kapi_Zaman_Grup_No[i],
-                                Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name,
-                                Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID,
-                                Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No
+                                Panel_Adi = panel.Panel_Name,
+                                Panel_No = (short)panel.Panel_ID,
+                                Seri_No = panel.Seri_No
                             };
                             _groupsDetailNewService.AddGroupsDetailNew(createGroup);
                         }
@@ -388,9 +399,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             group.Grup_Adi = parameters.Grup_Adi;
                             group.Grup_No = parameters.Grup_No;
-                            group.Panel_Adi = _panelSettingsService.GetById(parameters.Panel_ID).Panel_Name;
-                            group.Panel_No = (short)_panelSettingsService.GetById(parameters.Panel_ID).Panel_ID;
-                            group.Seri_No = _panelSettingsService.GetById(parameters.Panel_ID).Seri_No;
+                            group.Panel_Adi = panel.Panel_Name;
+                            group.Panel_No = (short)panel.Panel_ID;
+                            group.Seri_No = panel.Seri_No;
                             group.Kapi_No = i + 1;
                             group.Global_Bolge_No = 1;
                             group.Asansor_Grup_No = parameters.Kapi_Asansor_Bolge_No[i];

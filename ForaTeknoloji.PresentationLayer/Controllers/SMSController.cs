@@ -85,12 +85,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 SMS = smsSettings,
                 Kullanicilar = kullanicilar
             };
-
-
             return View(model);
-
-
         }
+
+        public ActionResult UserList()
+        {
+            var jsonresult = Json(new { data = _reportService.GetPersonelLists(null, CurrentSession.User) }, JsonRequestBehavior.AllowGet);
+            jsonresult.MaxJsonLength = int.MaxValue;
+            return jsonresult;
+        }
+
         public ActionResult PhoneAdd(string Phone)
         {
             var checkList = _sMSForPanelStatusService.GetByTelNo(Phone);

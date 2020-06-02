@@ -7,6 +7,7 @@ using ForaTeknoloji.PresentationLayer.Models;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -96,7 +97,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-
         // GET: Refectory
         public ActionResult Index(RefectoryParameters parameters)
         {
@@ -149,7 +149,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             TempData["UserAccessCount"] = Liste;
             TempData["DateAndTime"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
             TempData["DateAndTimeView"] = ReportParamatersDateAndTime.ParametersDateAndTimeBindForReport(parameters.Baslangic_Tarihi, parameters.Bitis_Tarihi, parameters.Baslangic_Saati, parameters.Bitis_Saati);
-
             return View(model);
         }
 
@@ -222,7 +221,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public void UserAccessCount()
+        public void YemekhaneRaporlariKisiBazli()
         {
             List<YemekhaneComplex> liste = new List<YemekhaneComplex>();
             liste = TempData["UserAccessCount"] as List<YemekhaneComplex>;
@@ -232,20 +231,20 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "Yemekhane Raporları";
+            worksheet.Cells["A1"].Value = "Kişi Bazlı-Yemekhane Raporları";
             worksheet.Cells["A3"].Value = "Tarihi";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:HH: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";
             worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
-            worksheet.Cells["A6"].Value = "Geçiş Sayısı";
-            worksheet.Cells["B6"].Value = "ID";
-            worksheet.Cells["C6"].Value = "Kart ID";
-            worksheet.Cells["D6"].Value = "Adı";
-            worksheet.Cells["E6"].Value = "Soyadı";
-            worksheet.Cells["F6"].Value = "Tc Kimlik No";
-            worksheet.Cells["G6"].Value = "Panel ID";
-            worksheet.Cells["H6"].Value = "Panel Adı";
-            worksheet.Cells["I6"].Value = "Kapı ID";
+            worksheet.Cells["A6"].Value = "Tarih";
+            worksheet.Cells["B6"].Value = "Gün";
+            worksheet.Cells["C6"].Value = "ID";
+            worksheet.Cells["D6"].Value = "Kart ID";
+            worksheet.Cells["E6"].Value = "Adı";
+            worksheet.Cells["F6"].Value = "Soyadı";
+            worksheet.Cells["G6"].Value = "Tc Kimlik No";
+            worksheet.Cells["H6"].Value = "Panel ID";
+            worksheet.Cells["I6"].Value = "Panel Adı";
             worksheet.Cells["A1"].Style.Font.Size = 13;
             worksheet.Cells["A1"].Style.Font.Bold = true;
             worksheet.Cells["A6:I6"].Style.Font.Size = 13;
@@ -255,15 +254,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             int rowStart = 7;
             foreach (var item in liste)
             {
-                worksheet.Cells[string.Format("A{0}", rowStart)].Value = item.Gecis_Sayisi;
-                worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.ID;
-                worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Kart_ID;
-                worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Adi;
-                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Soyadi;
-                worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.TC_Kimlik;
-                worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.Panel_ID;
-                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Panel_Name;
-                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Kapi_ID;
+                worksheet.Cells[string.Format("A{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:HH: mm ss}", item.Tarih);
+                worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Gun_Adi;
+                worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.ID;
+                worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Kart_ID;
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.Adi;
+                worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Soyadi;
+                worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.TC_Kimlik;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.Panel_ID;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.Panel_Name;
                 rowStart++;
             }
             worksheet.Cells["A:AZ"].AutoFitColumns();
@@ -275,7 +274,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-        public void UserAccessCountTotal()
+        public void YemekhaneRaporlariToplam()
         {
             List<YemekhaneComplexTotal> liste = new List<YemekhaneComplexTotal>();
             liste = TempData["UserAccessCountTotal"] as List<YemekhaneComplexTotal>;
@@ -285,7 +284,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "Yemekhane Raporları";
+            worksheet.Cells["A1"].Value = "Toplu-Yemekhane Raporları";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:HH: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";

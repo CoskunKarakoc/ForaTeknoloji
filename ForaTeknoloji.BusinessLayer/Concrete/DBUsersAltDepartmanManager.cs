@@ -45,6 +45,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return filter == null ? _dBUsersAltDepartmanDal.GetList() : _dBUsersAltDepartmanDal.GetList(filter);
         }
 
+        public DBUsersAltDepartman GetByQuery(Expression<Func<DBUsersAltDepartman, bool>> filter = null)
+        {
+            return filter == null ? null : _dBUsersAltDepartmanDal.Get(filter);
+        }
+
         public DBUsersAltDepartman GetById(int Kayit_No)
         {
             return _dBUsersAltDepartmanDal.Get(x => x.Kayit_No == Kayit_No);
@@ -54,5 +59,16 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _dBUsersAltDepartmanDal.Update(dBUsersAltDepartman);
         }
+
+        public void DeleteAllWithUserNameAndDepartmanNo(string UserName, int DepartmanNo)
+        {
+            _dBUsersAltDepartmanDal.DeleteAllWithUserNameAndDepartmanNo(UserName, DepartmanNo);
+        }
+
+        public void DeleteAllWithUserNameAndDepartmanNoAndAltDepartman(string UserName, int DepartmanNo, int AltDepartmanNo)
+        {
+            _dBUsersAltDepartmanDal.DeleteAllWithUserNameAndDepartmanNoAndAltDepartman(UserName, DepartmanNo, AltDepartmanNo);
+        }
+
     }
 }

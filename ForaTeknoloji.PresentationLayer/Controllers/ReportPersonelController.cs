@@ -476,7 +476,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         //EXCELL EXPORT
-        public void PersonelRaporları()
+        public void AktifPersonelRaporları()
         {
 
             List<ReportPersonelList> liste = new List<ReportPersonelList>();
@@ -487,7 +487,78 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "Personel Raporları";
+            worksheet.Cells["A1"].Value = "Aktif Personel Raporları";
+            worksheet.Cells["A3"].Value = "Tarih";
+            worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
+            worksheet.Cells["A4"].Value = "Rapor Alınma Tarihi";
+            worksheet.Cells["B4"].Value = TempData["DateAndTime"].ToString();
+            worksheet.Cells["A6"].Value = "ID";
+            worksheet.Cells["B6"].Value = "Kart ID";
+            worksheet.Cells["C6"].Value = "Adı";
+            worksheet.Cells["D6"].Value = "Soyadı";
+            worksheet.Cells["E6"].Value = "TC Kimlik";
+            worksheet.Cells["F6"].Value = "Telefon";
+            worksheet.Cells["G6"].Value = "Şirket";
+            worksheet.Cells["H6"].Value = "Departman";
+            worksheet.Cells["I6"].Value = "Alt Departman";
+            worksheet.Cells["J6"].Value = "Bölüm";
+            worksheet.Cells["K6"].Value = "Birim";
+            worksheet.Cells["L6"].Value = "Grup Adı";
+            worksheet.Cells["M6"].Value = "Panel";
+            worksheet.Cells["N6"].Value = "Kapı";
+            worksheet.Cells["O6"].Value = "Geçiş";
+            worksheet.Cells["P6"].Value = "Tarih";
+            worksheet.Cells["A1"].Style.Font.Size = 13;
+            worksheet.Cells["A1"].Style.Font.Bold = true;
+            worksheet.Cells["A6:P6"].Style.Font.Size = 13;
+            worksheet.Cells["A6:P6"].Style.Font.Bold = true;
+            worksheet.Cells["A:AZ"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            worksheet.Cells["A:AZ"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            int rowStart = 7;
+            foreach (var item in liste)
+            {
+                // worksheet.Row(rowStart).Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                // worksheet.Row(rowStart).Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(string.Format("pink")));
+                worksheet.Cells[string.Format("A{0}", rowStart)].Value = item.ID;
+                worksheet.Cells[string.Format("B{0}", rowStart)].Value = item.Kart_ID;
+                worksheet.Cells[string.Format("C{0}", rowStart)].Value = item.Adi;
+                worksheet.Cells[string.Format("D{0}", rowStart)].Value = item.Soyadi;
+                worksheet.Cells[string.Format("E{0}", rowStart)].Value = item.TCKimlik;
+                worksheet.Cells[string.Format("F{0}", rowStart)].Value = item.Telefon;
+                worksheet.Cells[string.Format("G{0}", rowStart)].Value = item.SirketAdi;
+                worksheet.Cells[string.Format("H{0}", rowStart)].Value = item.DepartmanAdi;
+                worksheet.Cells[string.Format("I{0}", rowStart)].Value = item.AltDepartmanAdi;
+                worksheet.Cells[string.Format("J{0}", rowStart)].Value = item.BolumAdi;
+                worksheet.Cells[string.Format("K{0}", rowStart)].Value = item.BirimAdi;
+                worksheet.Cells[string.Format("L{0}", rowStart)].Value = item.Grup_Adi;
+                worksheet.Cells[string.Format("M{0}", rowStart)].Value = item.Panel_ID;
+                worksheet.Cells[string.Format("N{0}", rowStart)].Value = item.Kapi;
+                worksheet.Cells[string.Format("O{0}", rowStart)].Value = item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış";
+                worksheet.Cells[string.Format("P{0}", rowStart)].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", item.Tarih);
+                rowStart++;
+
+            }
+            worksheet.Cells[string.Format("A{0}", rowStart + 3)].Value = "Toplam Kayıt=" + liste.Count();
+            worksheet.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-dispositon", "attachment: filename=" + "ExcelReport.xlsx");
+            Response.BinaryWrite(package.GetAsByteArray());
+            Response.End();
+        }
+
+        public void EskiPersonelRaporları()
+        {
+
+            List<ReportPersonelList> liste = new List<ReportPersonelList>();
+            liste = TempData["ReportPersonel"] as List<ReportPersonelList>;
+            if (liste == null || liste.Count == 0)
+            {
+                liste = _reportService.GetReportPersonelLists(new ActiveUserReportParameters(), CurrentSession.User);
+            }
+            ExcelPackage package = new ExcelPackage();
+            ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
+            worksheet.Cells["A1"].Value = "Eski Personel Raporları";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A4"].Value = "Rapor Alınma Tarihi";

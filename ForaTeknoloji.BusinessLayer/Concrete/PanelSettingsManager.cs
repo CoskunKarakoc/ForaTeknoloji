@@ -30,9 +30,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return filter == null ? _panelSettingsDal.GetList() : _panelSettingsDal.GetList(filter);
         }
 
-        public PanelSettings GetById(int id)
+        public PanelSettings GetById(int PanelID)
         {
-            return _panelSettingsDal.Get(x => x.Panel_ID == id);
+            return _panelSettingsDal.Get(x => x.Panel_ID == PanelID);
         }
 
         public PanelSettings UpdatePanelSetting(PanelSettings panelSettings)

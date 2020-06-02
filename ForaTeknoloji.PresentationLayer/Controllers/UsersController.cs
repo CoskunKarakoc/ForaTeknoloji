@@ -127,9 +127,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var model = new UsersListViewModel
             {
-                Users = _userService.GetAllUsersWithOuther(x => dbSirketList.Contains((int)x.Sirket_No) && dbDepartmanList.Contains((int)x.Departman_No) || dbAltDepartmanList.Contains((int)x.Alt_Departman_No)),
-                //Users = IndexViewUser(),
-                //PanelListesi = _reportService.PanelListesi(user)
                 PanelListesi = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID))
             };
             return View(model);
@@ -138,7 +135,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult UserList()
         {
-            var jsonresult = Json(new { data = _reportService.GetPersonelLists(null, CurrentSession.User) }, JsonRequestBehavior.AllowGet);
+            var jsonresult = Json(new { data = _reportService.GetPersonelLists(null, user) }, JsonRequestBehavior.AllowGet);
             jsonresult.MaxJsonLength = int.MaxValue;
             return jsonresult;
         }
@@ -487,10 +484,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             var model = new UsersListViewModel
             {
-                Users = _userService.GetAllUsersWithOuther(),
-                //Users = IndexViewUser(),
                 PanelListesi = _reportService.PanelListesi(user)
-
             };
             return View(model);
         }

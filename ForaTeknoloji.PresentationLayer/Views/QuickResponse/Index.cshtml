@@ -1,0 +1,196 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.VisitorListViewModel
+@{
+    ViewBag.Title = "Ziyaretçiler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 id="Title" class="card-title"><i class="fas fa-bookmark"></i> Ziyaretçi Ayarları</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Visitor.Count == 0)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
+                        <p class="text-center">Geçerli  'Ziyaretçi'  kaydı bulunamadı.</p>
+                        <hr>
+                        <p class="mb-0 text-center">Dilerseniz açılır menüden 'Ziyaretçiler' > 'Yeni Ziyaretçi' butonuna basarak ekleyebilirsiniz.</p>
+
+                    </div>
+                }
+                else
+                {
+                    <table id="VisitorList" class="table-borderless table table-hover text-center table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Kart ID</td>
+                                <td>TC Kimlik</td>
+                                <td>Telefon</td>
+                                <td>Plaka</td>
+                                <td>Tarih</td>
+                                <td>Ziyaret Sebebi</td>
+                                <td>Firma</td>
+                                <td title="Panel Durum Tablosu" class="text-right"><a href="@Url.Action("TaskTable","Task")" class="text-secondary"><i class="fas fa-tasks"></i> </a></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Visitor)
+                            {
+                                <tr>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Soyadi</td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.TCKimlik</td>
+                                    <td>@item.Telefon</td>
+                                    <td>@item.Plaka</td>
+                                    @if (item.Tarih == null)
+                                    {
+                                        <td></td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.Tarih.Value.ToShortDateString()</td>
+                                    }
+                                    <td>@item.Ziyaret_Sebebi</td>
+                                    <td>@item.Firma</td>
+                                    <td>
+                                        <a title="Edit" id="edit" href="@Url.Action("Edit","QuickResponse",new { id=item.Kayit_No})"><i class="fas fa-edit text-info mr-2"></i></a>
+                                        <a title="Delete" onclick="return confirm('Kullanıcıyı Veritabanından Silmek İstediğinize Emin Misiniz?')" href="@Url.Action("Delete","QuickResponse",new { id=item.Kayit_No})"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                        <a data-toggle="modal" data-target="#panelList" title="Visitor Send To Panel" onclick="ekle(@item.ID)" id="send" href="#"><i class="fas fa-share text-success mr-2"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Panel List Modal -->
+<div class="modal fade" id="panelList" tabindex="-1" role="dialog" aria-labelledby="panelListTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Send", "QuickResponse", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <div hidden id="message">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
+                    <input id="visitorNo" type="text" hidden name="VisitorID" value="" />
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="AllPanel" />
+                                        <label class="custom-control-label" for="AllPanel"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelList" id="@item.Panel_ID" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@item.Panel_ID"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnTask" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#PanelTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+            $("#VisitorList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 9 }
+                ]
+            });
+        });
+    </script>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#AllPanel").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", true);
+            } else {
+                $("#PanelTable tbody tr input[type='checkbox']").prop("checked", false);
+            }
+        });
+        $("#btnTask").click(function () {
+            $("#message").prop("hidden", false);
+            setTimeout(function () {
+                $("#message").prop("hidden", true);
+            }, 1000);
+        });
+    });
+    function ekle(visitorNo) {
+        $("#visitorNo").prop("value", visitorNo);
+    }
+</script>
+
+
+

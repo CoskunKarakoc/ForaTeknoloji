@@ -23,5 +23,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteAllUsers();
         bool FastGroupAdd(FastGroupParameters parameters);
         List<int> GetUserOnlyUserID();
+        int CountByGroupNumber(int GrupNo);
     }
 }

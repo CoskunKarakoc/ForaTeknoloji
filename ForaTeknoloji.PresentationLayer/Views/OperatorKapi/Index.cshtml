@@ -1,0 +1,92 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.OperatorKapiViewModel
+@{
+    ViewBag.Title = "İzlenecek Kapı Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <div class="alert alert-primary" role="alert">
+            <h2>
+                Operatör Kapı Listesi-@Model.KullaniciAdi
+            </h2>
+        </div>
+    </div>
+    <div class="col-md-5 offset-1">
+        <div class="card text-white bg-primary mb-3" style="max-width: 36rem;">
+            <div class="card-header bg-primary text-center">Kapı Listesi</div>
+            <div class="card-body text-center">
+                <div id="readerList">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-5 offset-1">
+        <div class="card text-white bg-success mb-3" style="max-width: 36rem;">
+            <div class="card-header bg-success text-center">İzlenecek Kapı Listesi</div>
+            <div class="card-body text-center">
+                <div id="watchList"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+            $.ajax({
+            url: '/OperatorKapi/ReaderList?kullaniciAdi=@Model.KullaniciAdi.ToString()',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#readerList").html("");
+                $("#watchList").html("");
+                $.each(data, function (index, row) {
+                    $("#readerList").append("<div id='" + row.Kayit_No + "' class='animated'><span class='badge badge-pill badge-success mr-3'>" + row.Panel_Name + "-" + row.WKapi_Adi + "<i onclick='AddListReader(" + row.Kayit_No + ",\"" + row.Panel_Name + "-" +row.WKapi_Adi + "\")' class='fas fa-check fa-1x text-default ml-2'></i></span><br /></div>");
+                });
+
+                $.ajax({
+                    url: '/OperatorKapi/UserReaderID?kullaniciAdi=@Model.KullaniciAdi.ToString()',
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $.each(data, function (index, row) {
+                        $("#readerList #" + row.Kayit_No).prop("hidden", true);
+                        $("#watchList").append("<div id='add_" + row.Kayit_No + "'><span class='badge badge-pill badge-primary mr-3'>" + row.Panel_Name + "-" + row.WKapi_Adi + "<i onclick='DeleteListReader(" + row.Kayit_No + ",\"" + row.Panel_Name + "-" +row.WKapi_Adi + "\")'  class='fas fa-times fa-1x text-default ml-2'></i></span><br /></div>");
+                    });
+                });
+            });
+
+
+    });
+
+      function AddListReader(ReaderNo_No, Adi) {
+          var element = "#readerList #" + ReaderNo_No;
+            $(element).prop("hidden", true);
+          $("#watchList").append("<div id='add_" + ReaderNo_No + "' class='animated bounceInLeft'><span class='badge badge-pill badge-primary mr-3'>" + Adi + "<i onclick='DeleteListReader(" + ReaderNo_No + ",\"" + Adi + "\")'  class='fas fa-times fa-1x text-default ml-2'></i></span><br /></div>");
+            $.ajax({
+                url: '/OperatorKapi/AddReader?ReaderNo=' + ReaderNo_No + '&kullaniciAdi=@Model.KullaniciAdi.ToString()',
+                type: 'POST',
+                dataType: 'json'
+            }).done(function (data) {
+
+            });
+        }
+
+        function DeleteListReader(ReaderNo_No, Adi) {
+            var elementAdd = "#watchList #add_" + ReaderNo_No;
+            $("#readerList").append("<div id='" + ReaderNo_No + "' class='animated bounceInRight'><span class='badge badge-pill badge-success mr-3'>" + Adi + "<i onclick='AddListReader(" + ReaderNo_No + ",\"" + Adi + "\")' class='fas fa-check fa-1x text-default ml-2'></i></span><br /></div>");
+            $(elementAdd).remove();
+            $.ajax({
+                url: '/OperatorKapi/RemoveKapi?ReaderNo=' + ReaderNo_No + '&kullaniciAdi=@Model.KullaniciAdi.ToString()',
+                type: 'POST',
+                dataType: 'json'
+            }).done(function (data) {
+
+            });
+        }
+
+
+</script>
+

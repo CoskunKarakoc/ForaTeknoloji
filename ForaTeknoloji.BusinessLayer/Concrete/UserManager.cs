@@ -22,7 +22,8 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 users.Sirket_No = 1;
             if (users.Departman_No == null)
                 users.Departman_No = 1;
-
+            if (users.Alt_Departman_No == null)
+                users.Alt_Departman_No = 1;
             return _userDal.Add(users);
         }
 
@@ -225,6 +226,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public List<int> GetUserOnlyUserID()
         {
             return _userDal.GetListOnlyUserID();
+        }
+
+        public int CountByGroupNumber(int GrupNo)
+        {
+            return _userDal.CountByGroupNumber(GrupNo);
         }
 
 

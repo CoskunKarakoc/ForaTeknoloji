@@ -38,5 +38,8 @@ namespace ForaTeknoloji.Entities.ComplexType
 
         public string BirimAdi { get; set; }
 
+        public DateTime? Tarih { get; set; }
+
+        public string Gun_Adi { get; set; }
     }
 }

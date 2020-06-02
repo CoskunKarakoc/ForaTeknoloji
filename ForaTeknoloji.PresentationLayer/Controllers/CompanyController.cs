@@ -14,9 +14,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private ISirketService _sirketService;
         private IDBUsersService _dBUsersService;
         private IAccessDatasService _accessDatasService;
+        private IDBUsersSirketService _dBUsersSirketService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public CompanyController(ISirketService sirketService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService)
+        public CompanyController(ISirketService sirketService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService, IDBUsersSirketService dBUsersSirketService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -26,6 +27,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _sirketService = sirketService;
             _dBUsersService = dBUsersService;
             _accessDatasService = accessDatasService;
+            _dBUsersSirketService = dBUsersSirketService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -55,6 +57,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             _sirketService.DeleteAll();
 
                         _sirketService.AddSirket(Sirket);
+                        foreach (var dbsysAdmin in _dBUsersService.GetAllDBUsers(x => x.SysAdmin == true))
+                        {
+                            var dbSirket = new DBUsersSirket
+                            {
+                                Kullanici_Adi = dbsysAdmin.Kullanici_Adi,
+                                Sirket_No = Sirket.Sirket_No
+                            };
+                            _dBUsersSirketService.AddDBUsersSirket(dbSirket);
+                        }
+
                         _accessDatasService.AddOperatorLog(180, user.Kullanici_Adi, Sirket.Sirket_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }

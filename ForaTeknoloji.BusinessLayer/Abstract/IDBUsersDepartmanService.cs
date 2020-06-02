@@ -13,5 +13,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteDBUsersDepartman(DBUsersDepartman dBUsersDepartman);
         DBUsersDepartman UpdateDBUsersDepartman(DBUsersDepartman dBUsersDepartman);
         void DeleteAllWithUserName(string UserName);
+        DBUsersDepartman GetByQuery(Expression<Func<DBUsersDepartman, bool>> filter = null);
     }
 }

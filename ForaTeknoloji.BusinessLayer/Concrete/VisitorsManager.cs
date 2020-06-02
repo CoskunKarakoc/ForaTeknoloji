@@ -34,6 +34,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _visitorsDal.Get(x => x.Kayit_No == id);
         }
 
+        public Visitors GetByKartId(string Kart_ID)
+        {
+            return _visitorsDal.Get(x => x.Kart_ID == Kart_ID);
+        }
+
         public Visitors UpdateVisitor(Visitors visitors)
         {
             return _visitorsDal.Update(visitors);

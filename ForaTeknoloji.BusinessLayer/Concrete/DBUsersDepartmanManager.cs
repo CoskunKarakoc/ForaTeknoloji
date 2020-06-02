@@ -29,6 +29,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return filter == null ? _dBUsersDepartmanDal.GetList() : _dBUsersDepartmanDal.GetList(filter);
         }
 
+        public DBUsersDepartman GetByQuery(Expression<Func<DBUsersDepartman, bool>> filter = null)
+        {
+            return filter == null ? null : _dBUsersDepartmanDal.Get(filter);
+        }
+
         public DBUsersDepartman GetById(int id)
         {
             return _dBUsersDepartmanDal.Get(x => x.Kayit_No == id);

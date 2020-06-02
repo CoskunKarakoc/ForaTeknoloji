@@ -13,5 +13,6 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
         List<ComplexUser> GetAllUsersWithOuther(Expression<Func<ComplexUser, bool>> filter = null);
         List<ComplexUser> GetAllUsersWithOutherOnlyUser(Expression<Func<ComplexUser, bool>> filter = null);
         List<int> GetListOnlyUserID();
+        int CountByGroupNumber(int GrupNo);
     }
 }

@@ -13,6 +13,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         TimeGroups AddTimeGroups(TimeGroups timeGroups);
         void DeleteTimeGroups(TimeGroups timeGroups);
         void DeleteAll();
+        int Count();
         TimeGroups UpdateTimeGroups(TimeGroups timeGroups);
         List<ComplexTimeGroups> GetComplexTimeGroups(Expression<Func<ComplexTimeGroups, bool>> filter = null);
     }

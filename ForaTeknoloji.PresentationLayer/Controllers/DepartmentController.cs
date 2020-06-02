@@ -14,9 +14,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDepartmanService _departmanService;
         private IDBUsersService _dBUsersService;
         private IAccessDatasService _accessDatasService;
+        private IDBUsersDepartmanService _dBUsersDepartmanService;
         public DBUsers user;
         public DBUsers permissionUser;
-        public DepartmentController(IDepartmanService departmanService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService)
+        public DepartmentController(IDepartmanService departmanService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService, IDBUsersDepartmanService dBUsersDepartmanService)
         {
             user = CurrentSession.User;
             if (user == null)
@@ -26,6 +27,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _departmanService = departmanService;
             _dBUsersService = dBUsersService;
             _accessDatasService = accessDatasService;
+            _dBUsersDepartmanService = dBUsersDepartmanService;
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -57,6 +59,19 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
                         _departmanService.AddDepartman(departmanlar);
+
+                        foreach (var dbSysAdmin in _dBUsersService.GetAllDBUsers(x => x.SysAdmin == true))
+                        {
+                            var dbUserDepartman = new DBUsersDepartman
+                            {
+                                Kullanici_Adi = dbSysAdmin.Kullanici_Adi,
+                                Departman_No = departmanlar.Departman_No
+                            };
+                            _dBUsersDepartmanService.AddDBUsersDepartman(dbUserDepartman);
+                        }
+
+
+
                         _accessDatasService.AddOperatorLog(190, user.Kullanici_Adi, departmanlar.Departman_No, 0, 0, 0);
                         return RedirectToAction("Index");
                     }

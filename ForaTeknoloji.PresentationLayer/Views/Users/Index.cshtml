@@ -11,55 +11,40 @@
                 <h3 id="Title" class="card-title"><i class="fas fa-bookmark"></i> Kullanıcı Ayarları</h3>
             </div>
             <div class="card-body ">
-                @if (Model.Users.Count == 0)
-                {
-                    <div class="alert alert-info" role="alert">
-                        <h4 class="alert-heading text-center">Kayıt Bulunamadı!</h4>
-                        <p class="text-center">Geçerli  'Kullanıcı'  kaydı bulunamadı.</p>
-                        <hr>
-                        <p class="mb-0 text-center">Dilerseniz açılır menüden 'Kullanıcılar' > 'Yeni Kullanıcı' butonuna basarak ekleyebilirsiniz.</p>
+                <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead class="table-sm">
+                        <tr>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>TC Kimlik</td>
+                            <td>Departman</td>
+                            <td>Alt Departman</td>
+                            <td>Bölüm</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Açıklama</td>
+                            <td title="Panel Durum Tablosu" class="text-right">
+                                <a data-toggle="modal" data-target="#panelList" onclick="ekle(0,2622)" class="text-success mr-2" title="Tüm Kullanıcıları Gönder"><i class="fas fa-users"></i></a>
+                                <a href="@Url.Action("TaskTable","Task")" class="text-secondary mr"><i class="fas fa-tasks"></i> </a>
 
-                    </div>
-                }
-                else
-                {
-                    <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                        <thead class="table-sm">
-                            <tr>
-                                <td>Kart ID</td>
-                                <td>Adı</td>
-                                <td>Soyadı</td>
-                                <td>TC Kimlik</td>
-                                <td>Departman</td>
-                                <td>Alt Departman</td>
-                                <td>Bölüm</td>
-                                <td>Geçiş Grubu</td>
-                                <td>Açıklama</td>
-                                <td title="Panel Durum Tablosu" class="text-right">
-                                    <a data-toggle="modal" data-target="#panelList" onclick="ekle(0,2622)" class="text-success mr-2" title="Tüm Kullanıcıları Gönder"><i class="fas fa-users"></i></a>
-                                    <a href="@Url.Action("TaskTable","Task")" class="text-secondary mr"><i class="fas fa-tasks"></i> </a>
-
-                                </td>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <td>Kart ID</td>
-                                <td>Adı</td>
-                                <td>Soyadı</td>
-                                <td>TC Kimlik</td>
-                                <td>Departman</td>
-                                <td>Alt Departman</td>
-                                <td>Bölüm</td>
-                                <td>Geçiş Grubu</td>
-                                <td>Açıklama</td>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                }
-
-
+                            </td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td>Kart ID</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>TC Kimlik</td>
+                            <td>Departman</td>
+                            <td>Alt Departman</td>
+                            <td>Bölüm</td>
+                            <td>Geçiş Grubu</td>
+                            <td>Açıklama</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>

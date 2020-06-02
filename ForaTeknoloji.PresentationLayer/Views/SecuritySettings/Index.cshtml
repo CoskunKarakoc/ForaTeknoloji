@@ -18,7 +18,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 text-right">
-                        <a href="@Url.Action("Create","SecuritySettings")" class="btn btn-sm btn-outline-success mb-2"><i class="fas fa-user-plus"></i> Yeni Kullanıcı</a>
+                        <a href="@Url.Action("CreateOperator","SecuritySettings")" class="btn btn-sm btn-outline-success mb-2"><i class="fas fa-user-plus"></i> Yeni Kullanıcı</a>
                     </div>
                 </div>
                 <table class="table-borderless table table-hover text-center table-striped table-sm">
@@ -27,8 +27,14 @@
                             <td>Kullanıcı Adı</td>
                             <td>Adı</td>
                             <td>Soyadı</td>
-                            <td>Diğer Cihaz Raporları</td>
-                            <td></td>
+                            <td>İzleyeceği Şirket</td>
+                            <td>İzleyeceği Departman</td>
+                            <td>İzleyeceği Alt Derpartman</td>
+                            <td>İzleyeceği Bölüm</td>
+                            <td>İzleyeceği Kapı</td>
+                            <td>Menüler</td>
+                            <td>Güncelle</td>
+                            <td>Sil</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,11 +44,31 @@
                                 <td>@item.Kullanici_Adi</td>
                                 <td>@item.Adi</td>
                                 <td>@item.Soyadi</td>
-                                <td>@item.OtherDeviceReports</td>
                                 <td>
-                                    <a title="Edit" id="edit" href="@Url.Action("Edit","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-edit text-info mr-2"></i></a>
-                                    <a title="Check List" href="@Url.Action("UserManagementList","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})"><i class="fas fa-check-circle text-primary mr-2"></i></a>
-                                    <a title="Delete" href="@Url.Action("Delete","SecuritySettings",new {kullaniciAdi=item.Kullanici_Adi })" onclick="return confirm('Kullanıcıyı silmek istediğinize emin misiniz?')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>
+                                    <a class="badge badge-primary" title="Operatör Şirket Listesi" id="sirket" href="@Url.Action("Index","OperatorSirket",new { KullaniciAdi=item.Kullanici_Adi})">Şirketler</a>
+                                </td>
+                                <td>
+                                    <a class="badge badge-secondary" title="Operatör Departman Listesi" id="departman" href="@Url.Action("Index","OperatorDepartman",new { KullaniciAdi=item.Kullanici_Adi})">Departmanlar</a>
+                                </td>
+                                <td>
+                                    <a class="badge badge-success" title="Operatör AltDepartman Listesi" id="altdepartman" href="@Url.Action("Index","OperatorAltDepartman",new { KullaniciAdi=item.Kullanici_Adi})">Alt Departmanlar</a>
+                                </td>
+                                <td>
+                                    <a class="badge badge-danger" title="Operatör Bölüm Listesi" id="departman" href="@Url.Action("Index","OperatorBolum",new { KullaniciAdi=item.Kullanici_Adi})">Bölümler</a>
+                                </td>
+                                <td>
+                                    <a class="badge badge-warning" title="Operatör Kapı Listesi" id="kapi" href="@Url.Action("Index","OperatorKapi",new { KullaniciAdi=item.Kullanici_Adi})">Kapılar</a>
+                                </td>
+                                <td>
+                                    <a class="badge badge-info" title="Operatör Menü Listesi" href="@Url.Action("UserManagementList","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})">Menüler</a>
+
+                                </td>
+                                <td>
+                                    <a class="badge badge-light" title="Operatörü Güncelle" id="edit" href="@Url.Action("EditOperator","SecuritySettings",new { Kullanici_Adi=item.Kullanici_Adi})">Güncelle</a>
+                                </td>
+
+                                <td>
+                                    <a class="badge badge-dark" title="Operatörü Sil" href="@Url.Action("Delete","SecuritySettings",new {kullaniciAdi=item.Kullanici_Adi })" onclick="return confirm('Kullanıcıyı silmek istediğinize emin misiniz?')">Sil</a>
                                 </td>
                             </tr>
                         }

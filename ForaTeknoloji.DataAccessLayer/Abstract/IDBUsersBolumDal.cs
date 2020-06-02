@@ -12,5 +12,8 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
     {
         void DeleteAll();
         void DeleteAllWithUserName(string UserName);
+        void DeleteAllWithUserNameAndDepartmanNo(string UserName, int DepartmanNo);
+        void DeleteAllWithUserNameAndDepartmanNoAndAltDepartman(string UserName, int DepartmanNo, int AltDepartman);
+        void DeleteAllWithUserNameAndDepartmanNoAndAltDepartmanAndBolum(string UserName, int DepartmanNo, int AltDepartman, int Bolum);
     }
 }

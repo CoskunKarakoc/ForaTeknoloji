@@ -111,6 +111,284 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult CreateOperator()
+        {
+
+            var model = new SecurityCreateViewModel
+            {
+                Roller = _dBRolesService.GetAllDBRoles().Select(a => new SelectListItem
+                {
+                    Text = a.Yetki_Adi,
+                    Value = a.Yetki_Tipi.ToString()
+                }),
+                Sirketler = null,
+                Departmanlar = null,
+                Paneller = null,
+                Bolumler = null
+            };
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateOperator(DBUsers dBUsers)
+        {
+            if (ModelState.IsValid)
+            {
+                if (dBUsers != null)
+                {
+                    var Kullanici = _dBUsersService.GetById(dBUsers.Kullanici_Adi);
+                    if (Kullanici != null && Kullanici.Sifre == dBUsers.Sifre)
+                    {
+                        throw new Exception("Aynı kullanıcı adı veya şifre ile kayıt yapılamaz!");
+                    }
+                    if (dBUsers.EMail != null)
+                    {
+                        var checkEmail = _dBUsersService.GetByEmailAdres(dBUsers.EMail);
+                        if (checkEmail != null)
+                        {
+                            throw new Exception("Bu E-Mail Adresine Kayıtlı Kullanıcı Bulunmaktadır!");
+                        }
+                    }
+                    var addedUser = _dBUsersService.AddDBUsers(dBUsers);
+                    if (addedUser.SysAdmin == true)
+                    {
+                        var checkOperator = _operatorTransactionListService.GetByKullaniciAdi(addedUser.Kullanici_Adi);
+                        if (checkOperator == null)
+                        {
+                            OperatorTransactionList operatorTransactionList = new OperatorTransactionList
+                            {
+                                Kullanici_Adi_Yonetim_Listesi = addedUser.Kullanici_Adi,
+                                Aktif_Olmayanlar_Listesi = true,
+                                Aktif_Personel_Raporlari = true,
+                                Asansor_Gecis_Grubu_Ekleme = true,
+                                Canli_Izleme = true,
+                                Diger_Raporlar = true,
+                                Eski_Personel_Raporlari = true,
+                                E_Mail_Gonderme_Ayarlari = true,
+                                Gecis_Grup_Ayarlari = true,
+                                Gecis_Olay_Verileri = true,
+                                Gecis_Olay_Yedekle = true,
+                                Gelen_Kisi_Raporlari = true,
+                                Gelmeyen_Kisi_Raporlari = true,
+                                Global_Bolge_Guncelleme = true,
+                                Grup_Takvimi_Olusturma = true,
+                                Icerde_Disarda_Tumu = true,
+                                Icerde_Disarda_Ziyaretci_Raporlari = true,
+                                Icerde_Disarda_Personel_Raporlari = true,
+                                Ilk_Giris_Son_Cikis_Raporlari = true,
+                                Kamera_Ekleme = true,
+                                Kapi_Grup_Olusturma = true,
+                                Kapi_Operasyon = true,
+                                Kullanici_Alarm_Ekleme = true,
+                                Kullanici_Alarm_Raporu = true,
+                                Kullanici_Duzenleme = true,
+                                Kullanici_Ekleme = true,
+                                Kullanici_Gonderme = true,
+                                Operator_Log_Raporlari = true,
+                                Panel_Ayar_Gonderme = true,
+                                Panel_Durum_Tablosu = true,
+                                Panel_Ekleme = true,
+                                Panel_Guncelleme = true,
+                                Pasif_Kullanici_Raporlari = true,
+                                Personel_Listesi = true,
+                                SMS_Gonderme_Ayarlari = true,
+                                Tanimlamalar = true,
+                                Tanimsiz_Kullanici_Raporlari = true,
+                                Toplam_Icerde_Kalma_Raporu = true,
+                                Toplu_Giris_Sayisi_Raporlari = true,
+                                Yemekhane_Kisi_Bazli_Rapor = true,
+                                Yemekhane_Toplu_Gecis_Sayisi_Raporlari = true,
+                                Zaman_Bolgesi_Ayarlari = true,
+                                Ziyaretci_Duzenleme = true,
+                                Ziyaretci_Ekleme = true,
+                                Ziyaretci_Gonderme = true,
+                                Ziyaretci_Raporlari = true,
+                                Spot_Monitor = true,
+                                Guvenlik_Ayarlari = true,
+                                Gec_Gelen_Erken_Cikan = true
+                            };
+                            _operatorTransactionListService.AddOperatorTransactionList(operatorTransactionList);
+                        }
+                    }
+                    else
+                    {
+                        var checkOperator = _operatorTransactionListService.GetByKullaniciAdi(addedUser.Kullanici_Adi);
+                        if (checkOperator == null)
+                        {
+                            OperatorTransactionList operatorTransactionList = new OperatorTransactionList
+                            {
+                                Kullanici_Adi_Yonetim_Listesi = addedUser.Kullanici_Adi,
+                                Aktif_Olmayanlar_Listesi = false,
+                                Aktif_Personel_Raporlari = false,
+                                Asansor_Gecis_Grubu_Ekleme = false,
+                                Canli_Izleme = false,
+                                Diger_Raporlar = false,
+                                Eski_Personel_Raporlari = false,
+                                E_Mail_Gonderme_Ayarlari = false,
+                                Gecis_Grup_Ayarlari = false,
+                                Gecis_Olay_Verileri = false,
+                                Gecis_Olay_Yedekle = false,
+                                Gelen_Kisi_Raporlari = false,
+                                Gelmeyen_Kisi_Raporlari = false,
+                                Global_Bolge_Guncelleme = false,
+                                Grup_Takvimi_Olusturma = false,
+                                Icerde_Disarda_Tumu = false,
+                                Icerde_Disarda_Ziyaretci_Raporlari = false,
+                                Icerde_Disarda_Personel_Raporlari = false,
+                                Ilk_Giris_Son_Cikis_Raporlari = false,
+                                Kamera_Ekleme = false,
+                                Kapi_Grup_Olusturma = false,
+                                Kapi_Operasyon = false,
+                                Kullanici_Alarm_Ekleme = false,
+                                Kullanici_Alarm_Raporu = false,
+                                Kullanici_Duzenleme = false,
+                                Kullanici_Ekleme = false,
+                                Kullanici_Gonderme = false,
+                                Operator_Log_Raporlari = false,
+                                Panel_Ayar_Gonderme = false,
+                                Panel_Durum_Tablosu = false,
+                                Panel_Ekleme = false,
+                                Panel_Guncelleme = false,
+                                Pasif_Kullanici_Raporlari = false,
+                                Personel_Listesi = false,
+                                SMS_Gonderme_Ayarlari = false,
+                                Tanimlamalar = false,
+                                Tanimsiz_Kullanici_Raporlari = false,
+                                Toplam_Icerde_Kalma_Raporu = false,
+                                Toplu_Giris_Sayisi_Raporlari = false,
+                                Yemekhane_Kisi_Bazli_Rapor = false,
+                                Yemekhane_Toplu_Gecis_Sayisi_Raporlari = false,
+                                Zaman_Bolgesi_Ayarlari = false,
+                                Ziyaretci_Duzenleme = false,
+                                Ziyaretci_Ekleme = false,
+                                Ziyaretci_Gonderme = false,
+                                Ziyaretci_Raporlari = false,
+                                Spot_Monitor = false,
+                                Gec_Gelen_Erken_Cikan = false,
+                                Guvenlik_Ayarlari = false
+                            };
+                            _operatorTransactionListService.AddOperatorTransactionList(operatorTransactionList);
+                        }
+                    }
+                    _accessDatasService.AddOperatorLog(230, user.Kullanici_Adi, 0, 0, 0, 0);
+                    return RedirectToAction("Index", "SecuritySettings");
+                }
+            }
+
+            return View(dBUsers);
+        }
+
+
+        public ActionResult EditOperator(string Kullanici_Adi)
+        {
+            if (permissionUser.SysAdmin == false)
+            {
+                throw new Exception("Yetkisiz Erişim!");
+            }
+
+            var kullanici = _dBUsersService.GetById(Kullanici_Adi);
+            ViewBag.Kullanici_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Kullanici_Islemleri);
+            ViewBag.Grup_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Grup_Islemleri);
+            ViewBag.Programli_Kapi_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Programli_Kapi_Islemleri);
+            ViewBag.Gecis_Verileri_Rapor_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Gecis_Verileri_Rapor_Islemleri);
+            ViewBag.Ziyaretci_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Ziyaretci_Islemleri);
+            ViewBag.Canli_Izleme = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Canli_Izleme);
+            ViewBag.Alarm_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Alarm_Islemleri);
+
+            if (kullanici != null)
+            {
+                return View(kullanici);
+            }
+            else
+            {
+                throw new Exception("Böyle Bir Kullanıcı Bulunamadı!");
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult EditOperator(DBUsers dBUsers)
+        {
+            if (ModelState.IsValid)
+            {
+                if (dBUsers != null)
+                {
+                    var checkUser = _dBUsersService.GetById(dBUsers.Kullanici_Adi);
+                    if (checkUser.SysAdmin != dBUsers.SysAdmin && dBUsers.SysAdmin == true)
+                    {
+                        SysAdminDataFill(dBUsers);
+                    }
+
+
+
+                    var updatedUser = _dBUsersService.UpdateDBUsers(dBUsers);
+                    if (updatedUser.SysAdmin == true)
+                    {
+                        var MenuUserList = _operatorTransactionListService.GetByKullaniciAdi(updatedUser.Kullanici_Adi);
+                        MenuUserList.Aktif_Olmayanlar_Listesi = true;
+                        MenuUserList.Aktif_Personel_Raporlari = true;
+                        MenuUserList.Asansor_Gecis_Grubu_Ekleme = true;
+                        MenuUserList.Canli_Izleme = true;
+                        MenuUserList.Diger_Raporlar = true;
+                        MenuUserList.Eski_Personel_Raporlari = true;
+                        MenuUserList.E_Mail_Gonderme_Ayarlari = true;
+                        MenuUserList.Gecis_Grup_Ayarlari = true;
+                        MenuUserList.Gecis_Olay_Verileri = true;
+                        MenuUserList.Gecis_Olay_Yedekle = true;
+                        MenuUserList.Gelen_Kisi_Raporlari = true;
+                        MenuUserList.Gelmeyen_Kisi_Raporlari = true;
+                        MenuUserList.Global_Bolge_Guncelleme = true;
+                        MenuUserList.Grup_Takvimi_Olusturma = true;
+                        MenuUserList.Icerde_Disarda_Tumu = true;
+                        MenuUserList.Icerde_Disarda_Ziyaretci_Raporlari = true;
+                        MenuUserList.Icerde_Disarda_Personel_Raporlari = true;
+                        MenuUserList.Ilk_Giris_Son_Cikis_Raporlari = true;
+                        MenuUserList.Kamera_Ekleme = true;
+                        MenuUserList.Kapi_Grup_Olusturma = true;
+                        MenuUserList.Kapi_Operasyon = true;
+                        MenuUserList.Kullanici_Alarm_Ekleme = true;
+                        MenuUserList.Kullanici_Alarm_Raporu = true;
+                        MenuUserList.Kullanici_Duzenleme = true;
+                        MenuUserList.Kullanici_Ekleme = true;
+                        MenuUserList.Kullanici_Gonderme = true;
+                        MenuUserList.Operator_Log_Raporlari = true;
+                        MenuUserList.Panel_Ayar_Gonderme = true;
+                        MenuUserList.Panel_Durum_Tablosu = true;
+                        MenuUserList.Panel_Ekleme = true;
+                        MenuUserList.Panel_Guncelleme = true;
+                        MenuUserList.Pasif_Kullanici_Raporlari = true;
+                        MenuUserList.Personel_Listesi = true;
+                        MenuUserList.SMS_Gonderme_Ayarlari = true;
+                        MenuUserList.Tanimlamalar = true;
+                        MenuUserList.Tanimsiz_Kullanici_Raporlari = true;
+                        MenuUserList.Toplam_Icerde_Kalma_Raporu = true;
+                        MenuUserList.Toplu_Giris_Sayisi_Raporlari = true;
+                        MenuUserList.Yemekhane_Kisi_Bazli_Rapor = true;
+                        MenuUserList.Yemekhane_Toplu_Gecis_Sayisi_Raporlari = true;
+                        MenuUserList.Zaman_Bolgesi_Ayarlari = true;
+                        MenuUserList.Ziyaretci_Duzenleme = true;
+                        MenuUserList.Ziyaretci_Ekleme = true;
+                        MenuUserList.Ziyaretci_Gonderme = true;
+                        MenuUserList.Ziyaretci_Raporlari = true;
+                        MenuUserList.Spot_Monitor = true;
+                        _operatorTransactionListService.UpdateOperatorTransactionList(MenuUserList);
+                    }
+                    _accessDatasService.AddOperatorLog(232, user.Kullanici_Adi, 0, 0, 0, 0);
+                }
+
+            }
+            return RedirectToAction("Index", "SecuritySettings");
+        }
+
+
+
+
+
+
+
+
+
         public ActionResult Edit(string Kullanici_Adi)
         {
             if (permissionUser.SysAdmin == false)
@@ -763,7 +1041,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                     _dBUsersPanelsService.AddDBUsersPanels(dbUserPanel);
                                 }
                             }
-                            
+
                         }
                     }
                 }
@@ -1191,6 +1469,81 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return dbBolumListEditUser;
         }
 
+        public void SysAdminDataFill(DBUsers dBUsers)
+        {
+            _dBUsersSirketService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            _dBUsersDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            _dBUsersAltDepartmanService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            _dBUsersBolumService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
+            _dBUsersPanelsService.DeleteAllWithUserName(dBUsers.Kullanici_Adi);
 
+
+            foreach (var sirketler in _sirketService.GetAllSirketler())
+            {
+                var sirket = new DBUsersSirket
+                {
+                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                    Sirket_No = sirketler.Sirket_No
+                };
+                _dBUsersSirketService.AddDBUsersSirket(sirket);
+            }
+
+            foreach (var departmanlar in _departmanService.GetAllDepartmanlar())
+            {
+                var departman = new DBUsersDepartman
+                {
+                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                    Departman_No = departmanlar.Departman_No
+                };
+                _dBUsersDepartmanService.AddDBUsersDepartman(departman);
+            }
+
+            foreach (var altDepartman in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman())
+            {
+                var altdepartman = new DBUsersAltDepartman
+                {
+                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                    Departman_No = altDepartman.Departman_No,
+                    Alt_Departman_No = altDepartman.Alt_Departman_No
+                };
+                _dBUsersAltDepartmanService.AddDBUsersAltDepartman(altdepartman);
+            }
+
+            foreach (var bolumler in _bolumService.GetAllBolum())
+            {
+                var bolum = new DBUsersBolum
+                {
+                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                    Departman_No = bolumler.Departman_No,
+                    Alt_Departman_No = bolumler.Alt_Departman_No
+                };
+                _dBUsersBolumService.AddDBUsersBolum(bolum);
+            }
+
+
+            foreach (var paneller in _panelSettingsService.GetAllPanelSettings(x => x.Panel_TCP_Port != 0 && x.Panel_IP1 != 0 && x.Seri_No != 0).Select(a => a.Panel_ID))
+            {
+                var panel = new DBUsersPanels
+                {
+                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                    Panel_No = paneller.Value
+                };
+                _dBUsersPanelsService.AddDBUsersPanels(panel);
+            }
+
+            foreach (var readers in _readerSettingsNewService.GetAllReaderSettingsNew())
+            {
+                var reader = new DBUsersKapi
+                {
+                    Kullanici_Adi = dBUsers.Kullanici_Adi,
+                    Kapi_Kayit_No = readers.Kayit_No,
+                    Panel_No = readers.Panel_ID
+                };
+                _dBUsersKapiService.AddDBUsersKapi(reader);
+            }
+
+
+        }
     }
 }

@@ -27,6 +27,23 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             }
         }
 
+        public void DeleteAllWithUserNameAndDepartmanNo(string UserName, int DepartmanNo)
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("DELETE FROM DBUsersAltDepartman WHERE [Kullanici Adi] = '" + UserName + "' AND [Departman No]=" + DepartmanNo);
+            }
+        }
+
+        public void DeleteAllWithUserNameAndDepartmanNoAndAltDepartman(string UserName, int DepartmanNo, int AltDepartmanNo)
+        {
+            using (var context = new ForaContext())
+            {
+                context.Database.ExecuteSqlCommand("DELETE FROM DBUsersAltDepartman WHERE [Kullanici Adi] = '" + UserName + "' AND [Departman No]=" + DepartmanNo + " AND [Alt Departman No]=" + AltDepartmanNo);
+            }
+        }
+
+
 
     }
 }
