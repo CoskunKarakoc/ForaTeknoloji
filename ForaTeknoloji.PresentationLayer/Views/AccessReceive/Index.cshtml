@@ -96,8 +96,8 @@
                         <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
                         <hr />
                     </div>
-                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm">
-                        <thead class="table-info">
+                    <table id="PanelTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
@@ -151,8 +151,8 @@
             @using (Html.BeginForm("ClearPanelMemory", "AccessReceive", FormMethod.Post))
             {
                 <div class="modal-body">
-                    <table id="PanelTableClear" class="table-borderless table table-hover text-center table-striped table-sm">
-                        <thead class="table-info">
+                    <table id="PanelTableClear" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
                             <tr>
                                 <td>
                                     <div class="custom-control custom-checkbox">
@@ -190,6 +190,49 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            //$.fn.dataTable.ext.classes.sPageButton = 'btn btn-sm btn-info mr-1 ml-1';
+            //$.fn.dataTable.ext.classes.sFilterInput = "form-control form-control-sm";
+            $("#PanelTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+
+            $("#PanelTableClear").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }
+                ]
+            });
+        });
+    </script>
+}
+
 
 
 <script>

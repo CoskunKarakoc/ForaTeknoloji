@@ -326,6 +326,12 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Operasyon = "KIRMIZI KOD SONLANDI"
             };
             context.CodeOperation.Add(codeOperation47);
+            CodeOperation codeOperation50 = new CodeOperation
+            {
+                TKod = 50,
+                Operasyon = "GEÇERSİZ GEÇİŞ GRUBU"
+            };
+            context.CodeOperation.Add(codeOperation50);
             CodeOperation codeOperation100 = new CodeOperation
             {
                 TKod = 100,
@@ -1182,6 +1188,11 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gecis_Sinirlama_Tipi = 9,
                 Adi = "Çoklu Saat Yasak"
             };
+            TimeZoneIDs timeZoneIDs10 = new TimeZoneIDs
+            {
+                Gecis_Sinirlama_Tipi = 10,
+                Adi = "ÇOKLU SAAT GEÇİŞ YEMEKHANE"
+            };
             TimeZoneIDs timeZoneIDs11 = new TimeZoneIDs
             {
                 Gecis_Sinirlama_Tipi = 11,
@@ -1217,6 +1228,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
                 Gecis_Sinirlama_Tipi = 19,
                 Adi = "İki Tarih-Saat Arası Yasak"
             };
+
             context.TimeZoneIDs.Add(timeZoneIDs0);
             context.TimeZoneIDs.Add(timeZoneIDs1);
             context.TimeZoneIDs.Add(timeZoneIDs2);
@@ -1227,6 +1239,7 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
             context.TimeZoneIDs.Add(timeZoneIDs7);
             context.TimeZoneIDs.Add(timeZoneIDs8);
             context.TimeZoneIDs.Add(timeZoneIDs9);
+            context.TimeZoneIDs.Add(timeZoneIDs10);
             context.TimeZoneIDs.Add(timeZoneIDs11);
             context.TimeZoneIDs.Add(timeZoneIDs12);
             context.TimeZoneIDs.Add(timeZoneIDs13);

@@ -74,24 +74,26 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             dbAltDepartmanList = new List<int>();
             dbPanelList = new List<int>();
             dbSirketList = new List<int>();
-            foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
-            {
-                dbDepartmanList.Add((int)dbUserDepartmanNo);
-            }
-            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
-            {
-                dbPanelList.Add((int)dbUserPanelNo);
-            }
-            foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
-            {
-                dbSirketList.Add((int)dbUserSirketNo);
-            }
-            foreach (var dbUserAltDepartmanNo in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Alt_Departman_No))
-            {
-                dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
-            }
+            //TODO: BURALAR SİLİNECEK
+            //foreach (var dbUserDepartmanNo in _dBUsersDepartmanService.GetAllDBUsersDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Departman_No))
+            //{
+            //    dbDepartmanList.Add((int)dbUserDepartmanNo);
+            //}
+            //foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            //{
+            //    dbPanelList.Add((int)dbUserPanelNo);
+            //}
+            //foreach (var dbUserSirketNo in _dBUsersSirketService.GetAllDBUsersSirket(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Sirket_No))
+            //{
+            //    dbSirketList.Add((int)dbUserSirketNo);
+            //}
+            //foreach (var dbUserAltDepartmanNo in _dBUsersAltDepartmanService.GetAllDBUsersAltDepartman(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Alt_Departman_No))
+            //{
+            //    dbAltDepartmanList.Add((int)dbUserAltDepartmanNo);
+            //}
+            //TODO:BURA SİLİNECEK
+            // SystemAdminSirketDepartmanPanelFill();
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
-            SystemAdminSirketDepartmanPanelFill();
         }
 
 
@@ -288,6 +290,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
 
             var kullanici = _dBUsersService.GetById(Kullanici_Adi);
+            //TODO:_dBRolesService Teke Düşecek
             ViewBag.Kullanici_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Kullanici_Islemleri);
             ViewBag.Grup_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Grup_Islemleri);
             ViewBag.Programli_Kapi_Islemleri = new SelectList(_dBRolesService.GetAllDBRoles(), "Yetki_Tipi", "Yetki_Adi", kullanici.Programli_Kapi_Islemleri);

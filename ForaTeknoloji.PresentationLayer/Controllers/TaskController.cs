@@ -81,11 +81,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             IEnumerable<TaskStatusWatch> liste;
             if (user.SysAdmin == true)
             {
-                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi || x.Kullanici_Adi.Contains("System")).OrderByDescending(x => x.Kayit_No).Take(100);
+                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi || x.Kullanici_Adi.Contains("System")).OrderByDescending(x => x.Kayit_No).Take(200);
             }
             else
             {
-                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderByDescending(x => x.Kayit_No).Take(100);
+                liste = _taskListService.TaskStatusWatch().Where(x => x.Kullanici_Adi == user.Kullanici_Adi).OrderByDescending(x => x.Kayit_No).Take(200);
             }
             if (Panel != null)
             {

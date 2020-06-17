@@ -20,10 +20,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersService _dBUsersService;
         private IAccessDatasService _accessDatasService;
         private IProgInitService _progInitService;
+        private IPanelSettingsService _panelSettingsService;
+        private IDBUsersPanelsService _dBUsersPanelsService;
         DBUsers user = CurrentSession.User;
         DBUsers permissionUser;
         WatchParameters WtchPrmtrs;
-        public WatchScreenController(IReportService reportService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService, IProgInitService progInitService)
+        List<int> dbPanelList;
+
+
+        public WatchScreenController(IReportService reportService, IDBUsersService dBUsersService, IAccessDatasService accessDatasService, IProgInitService progInitService, IPanelSettingsService panelSettingsService, IDBUsersPanelsService dBUsersPanelsService)
         {
             //user = CurrentSession.User;
             //if (user == null)
@@ -35,10 +40,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 WtchPrmtrs = new WatchParameters();
             }
+            dbPanelList = new List<int>();
             _reportService = reportService;
             _dBUsersService = dBUsersService;
             _accessDatasService = accessDatasService;
             _progInitService = progInitService;
+            _panelSettingsService = panelSettingsService;
+            _dBUsersPanelsService = dBUsersPanelsService;
             _reportService.GetPanelList(user == null ? new DBUsers { } : user);
             _reportService.GetDoorList(user == null ? new DBUsers { } : user);
             _reportService.GetSirketList(user == null ? new DBUsers { } : user);
@@ -46,6 +54,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _reportService.GetAltDepartmanList(user == null ? new DBUsers { } : user);
             _reportService.GetBolumList(user == null ? new DBUsers { } : user);
             _reportService.GetPanelAndDoorListForSpotMonitor(user == null ? new DBUsers { } : user);
+            foreach (var dbUserPanelNo in _dBUsersPanelsService.GetAllDBUsersPanels(x => x.Kullanici_Adi == user.Kullanici_Adi).Select(a => a.Panel_No))
+            {
+                dbPanelList.Add((int)dbUserPanelNo);
+            }
             permissionUser = _dBUsersService.GetAllDBUsers().Find(x => x.Kullanici_Adi == user.Kullanici_Adi);
         }
 
@@ -126,7 +138,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
         /*Sadece Listenin Olduğu Ve Tüm Kayıtların Geldiği Canlı İzleme*/
-
         public ActionResult WatchOuther()
         {
             if (permissionUser.SysAdmin == false)
@@ -142,6 +153,27 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return Json(_reportService.GetWatchOuther(CurrentSession.User), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult WatchOutherFilterDoor()
+        {
+            var Paneller = _panelSettingsService.GetAllPanelSettings(x => dbPanelList.Contains((int)x.Panel_ID) && x.Seri_No != 0 && x.Panel_IP1 != 0 && x.Panel_IP2 != 0 && x.Panel_IP3 != 0 && x.Panel_IP4 != 0);
+
+            var model = new WatchOtherFilterViewMode
+            {
+                Panel_ID = Paneller.Select(a => new SelectListItem
+                {
+                    Text = a.Panel_Name,
+                    Value = a.Panel_ID.ToString()
+                })
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult WatchOutherFilterDoor(int? Panel_ID, bool Aktif, List<int> ReaderList)
+        {
+
+            return View();
+        }
 
 
     }

@@ -55,7 +55,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Panel Listesi</h5>
+                <h5 class="modal-title text-danger">Panel Listesi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -81,6 +81,7 @@
                                 <td>Panel Seri No</td>
                                 <td>Panel No</td>
                                 <td>Panel Adı</td>
+                                <td>IP Adresi</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,6 +97,7 @@
                                     <td>@item.Seri_No.Value.ToString("X4")</td>
                                     <td>@item.Panel_ID</td>
                                     <td>@item.Panel_Name</td>
+                                    <td>@string.Format(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</td>
                                 </tr>
                             }
                         </tbody>
@@ -115,7 +117,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Panel Listesi</h5>
+                <h5 class="modal-title text-danger">Panel Listesi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -135,6 +137,7 @@
                                 <td>Panel Seri No</td>
                                 <td>Panel No</td>
                                 <td>Panel Adı</td>
+                                <td>IP Adresi</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -150,6 +153,7 @@
                                     <td>@item.Seri_No.Value.ToString("X4")</td>
                                     <td>@item.Panel_ID</td>
                                     <td>@item.Panel_Name</td>
+                                    <td>@string.Format(item.Panel_IP1 + "." + item.Panel_IP2 + "." + item.Panel_IP3 + "." + item.Panel_IP4)</td>
                                 </tr>
                             }
                         </tbody>

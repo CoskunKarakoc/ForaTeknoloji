@@ -43,6 +43,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _accessDatasTempDal.Get(x => x.ID == id);
         }
 
+
+        public AccessDatasTemp GetByKayit_No(int Kayit_No)
+        {
+            return _accessDatasTempDal.Get(x => x.Kayit_No == Kayit_No);
+        }
+
         public AccessDatasTemp UpdateAccessDatasTemp(AccessDatasTemp accessDatasTemp)
         {
             return _accessDatasTempDal.Update(accessDatasTemp);

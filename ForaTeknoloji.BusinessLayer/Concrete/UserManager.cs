@@ -24,6 +24,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 users.Departman_No = 1;
             if (users.Alt_Departman_No == null)
                 users.Alt_Departman_No = 1;
+            if (users.Kullanici_Tipi == null)
+                users.Kullanici_Tipi = 0;
+
             return _userDal.Add(users);
         }
 
@@ -63,6 +66,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     users.Sirket_No = 1;
                 if (users.Departman_No == null)
                     users.Departman_No = 1;
+                if (users.Alt_Departman_No == null)
+                    users.Alt_Departman_No = 1;
+                if (users.Kullanici_Tipi == null)
+                    users.Kullanici_Tipi = 0;
+
                 _userDal.Add(users);
 
                 return "";
@@ -110,6 +118,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     users.Sirket_No = 1;
                 if (users.Departman_No == null)
                     users.Departman_No = 1;
+                if (users.Kullanici_Tipi == null)
+                    users.Kullanici_Tipi = 0;
+
                 _userDal.Update(users);
 
                 return "";
@@ -144,6 +155,8 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 users.Sirket_No = 1;
             if (users.Departman_No == null)
                 users.Departman_No = 1;
+            if (users.Kullanici_Tipi == null)
+                users.Kullanici_Tipi = 0;
 
             return _userDal.Update(users);
         }

@@ -2648,40 +2648,40 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     {
                         if (CodeString == "")
                         {
-                            CodeString += " AccessDatas.Kod >= 100 ";
+                            CodeString += " AccessDatasTemps.Kod >= 100 ";
                         }
                         else
                         {
-                            CodeString = " AND AccessDatas.Kod IN (" + CodeString + ")" + " OR AccessDatas.Kod >= 100 ";
+                            CodeString = " AND AccessDatasTemps.Kod IN (" + CodeString + ")" + " OR AccessDatasTemps.Kod >= 100 ";
                         }
                     }
                     else
                     {
                         if (CodeString != "")
                         {
-                            CodeString = " AND AccessDatas.Kod IN (" + CodeString + ") ";
+                            CodeString = " AND AccessDatasTemps.Kod IN (" + CodeString + ") ";
                         }
                     }
                 }
                 else
                 {
-                    CodeString = " AND AccessDatas.Kod IN (0,1,2,3,4,5,6,7,8,9,10,14,20,21,22,23,24,25,26,27) OR AccessDatas.Kod >= 100 ";
+                    CodeString = " AND AccessDatasTemps.Kod IN (0,1,2,3,4,5,6,7,8,9,10,14,20,21,22,23,24,25,26,27) OR AccessDatasTemps.Kod >= 100 ";
                 }
 
 
             }
-            queryString = "SELECT DISTINCT TOP 50 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+            queryString = "SELECT DISTINCT TOP 50 AccessDatasTemps.[Kayit No], AccessDatasTemps.ID, AccessDatasTemps.[Kart ID]," +
                 " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
                 " Departmanlar.Adi AS Departman," +
-                " AccessDatas.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
-                " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+                " AccessDatasTemps.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
+                " GroupsMaster.[Grup Adi], AccessDatasTemps.[Panel ID] As Panel," +
                 " ReaderSettingsNew.[WKapi Adi] As Kapi," +
-                " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],AccessDatas.[Canli Resim]" +
-                " FROM (((AccessDatas LEFT JOIN (((((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN AltDepartman ON Users.[Alt Departman No] = AltDepartman.[Alt Departman No])LEFT JOIN Bolum ON Users.[Bolum No] = Bolum.[Bolum No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
-                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ")  AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
+                " AccessDatasTemps.Tarih, AccessDatasTemps.Kod, Users.Resim, CodeOperation.Operasyon," +
+                " AccessDatasTemps.[Kullanici Adi] As Operator, AccessDatasTemps.[Islem Verisi 1], AccessDatasTemps.[Islem Verisi 2],AccessDatasTemps.[Gecis Tipi],AccessDatasTemps.[Canli Resim]" +
+                " FROM (((AccessDatasTemps LEFT JOIN (((((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN AltDepartman ON Users.[Alt Departman No] = AltDepartman.[Alt Departman No])LEFT JOIN Bolum ON Users.[Bolum No] = Bolum.[Bolum No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatasTemps.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatasTemps.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatasTemps.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatasTemps.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                " WHERE AccessDatasTemps.[Panel ID] IN(200," + panelListesi + ")  AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
             queryString += CodeString;
-            queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
+            queryString += " ORDER BY AccessDatasTemps.[Kayit No] DESC";
             List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
             using (SqlConnection connection = new SqlConnection(address))
             {
@@ -2741,28 +2741,28 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
             string CodeString = "0,1,2,3,4,5,6,7,8,9,10,14.20,21,22,23,24,25,26,27";
             //Client-Mod
-            queryString = @"SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID,
-                    AccessDatas.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik,
-                    Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,AltDepartman.Adi AS [Alt Departman],Bolum.Adi AS [Bölüm Adi],Birim.Adi AS[Birim Adi], AccessDatas.Plaka,
-                    Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel,
-                    ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.Tarih, AccessDatas.Kod,
-                    Users.Resim, CodeOperation.Operasyon, AccessDatas.[Kullanici Adi] As Operator,
-                    AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],AccessDatas.[Canli Resim]
-                    FROM ((((AccessDatas LEFT JOIN ((((((Users
+            queryString = @"SELECT DISTINCT TOP 100 AccessDatasTemps.[Kayit No], AccessDatasTemps.ID,
+                    AccessDatasTemps.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik,
+                    Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,AltDepartman.Adi AS [Alt Departman],Bolum.Adi AS [Bölüm Adi],Birim.Adi AS[Birim Adi], AccessDatasTemps.Plaka,
+                    Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi], AccessDatasTemps.[Panel ID] As Panel,
+                    ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatasTemps.Tarih, AccessDatasTemps.Kod,
+                    Users.Resim, CodeOperation.Operasyon, AccessDatasTemps.[Kullanici Adi] As Operator,
+                    AccessDatasTemps.[Islem Verisi 1], AccessDatasTemps.[Islem Verisi 2],AccessDatasTemps.[Gecis Tipi],AccessDatasTemps.[Canli Resim]
+                    FROM ((((AccessDatasTemps LEFT JOIN ((((((Users
                     LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])
                     LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
                     LEFT JOIN AltDepartman ON Users.[Alt Departman No] = AltDepartman.[Alt Departman No])
 					LEFT JOIN Bolum ON Users.[Bolum No] = Bolum.[Bolum No])
 					LEFT JOIN Birim ON Users.[Birim No] = Birim.[Birim No])                    
-                    LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID)
-                    LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) 
-                    LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID])                    
-                    LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID])
+                    LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatasTemps.ID = Users.ID)
+                    LEFT JOIN CodeOperation ON AccessDatasTemps.Kod = CodeOperation.TKod) 
+                    LEFT JOIN PanelSettings ON AccessDatasTemps.[Panel ID] = PanelSettings.[Panel ID])                    
+                    LEFT JOIN ReaderSettingsNew ON (AccessDatasTemps.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatasTemps.[Panel ID]=ReaderSettingsNew.[Panel ID])
                     LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]
-                    WHERE AccessDatas.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN( " + spotMonitorKapiListesi + ")";
+                    WHERE AccessDatasTemps.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN( " + spotMonitorKapiListesi + ")";
             // queryString += " OR Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
-            queryString += " AND AccessDatas.Kod IN (" + CodeString + ")  OR AccessDatas.Kod > 100";
-            queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
+            queryString += " AND AccessDatasTemps.Kod IN (" + CodeString + ")  OR AccessDatasTemps.Kod > 100";
+            queryString += " ORDER BY AccessDatasTemps.[Kayit No] DESC";
             List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
             using (SqlConnection connection = new SqlConnection(address))
             {
@@ -2861,39 +2861,39 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     {
                         if (CodeString == "")
                         {
-                            CodeString += " AccessDatas.Kod >= 100 ";
+                            CodeString += " AccessDatasTemps.Kod >= 100 ";
                         }
                         else
                         {
-                            CodeString = " AND AccessDatas.Kod IN (" + CodeString + ")" + " OR AccessDatas.Kod >= 100 ";
+                            CodeString = " AND AccessDatasTemps.Kod IN (" + CodeString + ")" + " OR AccessDatasTemps.Kod >= 100 ";
                         }
                     }
                     else
                     {
                         if (CodeString != "")
                         {
-                            CodeString = " AND AccessDatas.Kod IN (" + CodeString + ") ";
+                            CodeString = " AND AccessDatasTemps.Kod IN (" + CodeString + ") ";
                         }
                     }
                 }
                 else
                 {
-                    CodeString = " AND AccessDatas.Kod IN (0,1,2,3,4,5,6,7,8,9,10,14,20,21,22,23,24,25,26,27) OR AccessDatas.Kod >= 100 ";
+                    CodeString = " AND AccessDatasTemps.Kod IN (0,1,2,3,4,5,6,7,8,9,10,14,20,21,22,23,24,25,26,27) OR AccessDatasTemps.Kod >= 100 ";
                 }
 
 
             }
             //Client-Mod
-            queryString = "SELECT DISTINCT TOP 1 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+            queryString = "SELECT DISTINCT TOP 1 AccessDatasTemps.[Kayit No], AccessDatasTemps.ID, AccessDatasTemps.[Kart ID]," +
                 " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
                 " Departmanlar.Adi AS Departman," +
-                " AccessDatas.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
-                " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+                " AccessDatasTemps.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
+                " GroupsMaster.[Grup Adi], AccessDatasTemps.[Panel ID] As Panel," +
                 " ReaderSettingsNew.[WKapi Adi] As Kapi," +
-                " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-                " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi]" +
-                " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
-                " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ") AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
+                " AccessDatasTemps.Tarih, AccessDatasTemps.Kod, Users.Resim, CodeOperation.Operasyon," +
+                " AccessDatasTemps.[Kullanici Adi] As Operator, AccessDatasTemps.[Islem Verisi 1], AccessDatasTemps.[Islem Verisi 2],AccessDatasTemps.[Gecis Tipi]" +
+                " FROM (((AccessDatasTemps LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatasTemps.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatasTemps.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatasTemps.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatasTemps.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+                " WHERE AccessDatasTemps.[Panel ID] IN(200," + panelListesi + ") AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
             //Server-Mod
             //queryString = " SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
             //    "Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket, " +
@@ -2910,7 +2910,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             //    " LEFT JOIN ReaderSettingsNew ON AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] AND AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID]) " +
             //    " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] ";
             queryString += CodeString;
-            queryString += " ORDER BY AccessDatas.[Kayit No] DESC";
+            queryString += " ORDER BY AccessDatasTemps.[Kayit No] DESC";
             var nesne = new WatchEntityComplex();
             using (SqlConnection connection = new SqlConnection(address))
             {
@@ -2970,16 +2970,16 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
             if (Kayit_No != null && Kayit_No != 0)
             {
-                queryString = "SELECT DISTINCT TOP 1 AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID]," +
+                queryString = "SELECT DISTINCT TOP 1 AccessDatasTemps.[Kayit No], AccessDatasTemps.ID, AccessDatasTemps.[Kart ID]," +
               " Users.Adi, Users.Soyadi, Users.TCKimlik, Sirketler.Adi AS Sirket," +
               " Departmanlar.Adi AS Departman," +
-              " AccessDatas.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
-              " GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel," +
+              " AccessDatasTemps.Plaka, Bloklar.Adi AS Blok, Users.Daire," +
+              " GroupsMaster.[Grup Adi], AccessDatasTemps.[Panel ID] As Panel," +
               " ReaderSettingsNew.[WKapi Adi] As Kapi," +
-              " AccessDatas.Tarih, AccessDatas.Kod, Users.Resim, CodeOperation.Operasyon," +
-              " AccessDatas.[Kullanici Adi] As Operator, AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],AccessDatas.[Canli Resim]" +
-              " FROM (((AccessDatas LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
-              " WHERE AccessDatas.[Panel ID] IN(200," + panelListesi + ") AND ReaderSettingsNew.[Kayit No] IN (" + doorListesi + ") AND AccessDatas.[Kayit No] = " + Kayit_No;
+              " AccessDatasTemps.Tarih, AccessDatasTemps.Kod, Users.Resim, CodeOperation.Operasyon," +
+              " AccessDatasTemps.[Kullanici Adi] As Operator, AccessDatasTemps.[Islem Verisi 1], AccessDatasTemps.[Islem Verisi 2],AccessDatasTemps.[Gecis Tipi],AccessDatasTemps.[Canli Resim]" +
+              " FROM (((AccessDatasTemps LEFT JOIN (((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatasTemps.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatasTemps.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatasTemps.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatasTemps.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
+              " WHERE AccessDatasTemps.[Panel ID] IN(200," + panelListesi + ") AND ReaderSettingsNew.[Kayit No] IN (" + doorListesi + ") AND AccessDatasTemps.[Kayit No] = " + Kayit_No;
             }
             else
             {
@@ -3043,9 +3043,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
-            queryString = @"SELECT COUNT(*) FROM AccessDatas
-                            LEFT JOIN ReaderSettingsNew ON AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID]
-                            WHERE AccessDatas.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN (" + spotMonitorKapiListesi + ")";
+            queryString = @"SELECT COUNT(*) FROM AccessDatasTemps
+                            LEFT JOIN ReaderSettingsNew ON AccessDatasTemps.[Panel ID] = ReaderSettingsNew.[Panel ID]
+                            WHERE AccessDatasTemps.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN (" + spotMonitorKapiListesi + ")";
             //if (panelID != null && KapiID != null)
             //{
             // queryString += " WHERE [Panel ID] IN(" + spotMonitorPanelListesi + ")";
@@ -3079,25 +3079,25 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
             //if (parameters != null && parameters.Panel_ID != null && parameters.Kapi_ID != null)
             //{
-            queryString = @"SELECT DISTINCT TOP 100 AccessDatas.[Kayit No], AccessDatas.ID,
-                    AccessDatas.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik,
-                    Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,AltDepartman.Adi AS [Alt Departman],Bolum.Adi AS [Bölüm Adi],Birim.Adi AS[Birim Adi], AccessDatas.Plaka,
-                    Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel,
-                    ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatas.Tarih, AccessDatas.Kod,
-                    Users.Resim, CodeOperation.Operasyon, AccessDatas.[Kullanici Adi] As Operator,
-                    AccessDatas.[Islem Verisi 1], AccessDatas.[Islem Verisi 2],AccessDatas.[Gecis Tipi],PanelSettings.[Panel Name]
-                    FROM ((((AccessDatas LEFT JOIN ((((((Users
+            queryString = @"SELECT DISTINCT TOP 100 AccessDatasTemps.[Kayit No], AccessDatasTemps.ID,
+                    AccessDatasTemps.[Kart ID], Users.Adi, Users.Soyadi, Users.TCKimlik,
+                    Sirketler.Adi AS Sirket, Departmanlar.Adi AS Departman,AltDepartman.Adi AS [Alt Departman],Bolum.Adi AS [Bölüm Adi],Birim.Adi AS[Birim Adi], AccessDatasTemps.Plaka,
+                    Bloklar.Adi AS Blok, Users.Daire, GroupsMaster.[Grup Adi], AccessDatasTemps.[Panel ID] As Panel,
+                    ReaderSettingsNew.[WKapi Adi] As Kapi, AccessDatasTemps.Tarih, AccessDatasTemps.Kod,
+                    Users.Resim, CodeOperation.Operasyon, AccessDatasTemps.[Kullanici Adi] As Operator,
+                    AccessDatasTemps.[Islem Verisi 1], AccessDatasTemps.[Islem Verisi 2],AccessDatasTemps.[Gecis Tipi],PanelSettings.[Panel Name]
+                    FROM ((((AccessDatasTemps LEFT JOIN ((((((Users
                     LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])
                     LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
                     LEFT JOIN AltDepartman ON Users.[Alt Departman No] = AltDepartman.[Alt Departman No])
 					LEFT JOIN Bolum ON Users.[Bolum No] = Bolum.[Bolum No])
 					LEFT JOIN Birim ON Users.[Birim No] = Birim.[Birim No])                    
-                    LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatas.ID = Users.ID)
-                    LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod) 
-                    LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID])                    
-                    LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatas.[Panel ID]=ReaderSettingsNew.[Panel ID])
+                    LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatasTemps.ID = Users.ID)
+                    LEFT JOIN CodeOperation ON AccessDatasTemps.Kod = CodeOperation.TKod) 
+                    LEFT JOIN PanelSettings ON AccessDatasTemps.[Panel ID] = PanelSettings.[Panel ID])                    
+                    LEFT JOIN ReaderSettingsNew ON (AccessDatasTemps.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatasTemps.[Panel ID]=ReaderSettingsNew.[Panel ID])
                     LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]
-                    WHERE AccessDatas.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN( " + spotMonitorKapiListesi + ") ORDER BY AccessDatas.[Kayit No] DESC";
+                    WHERE AccessDatasTemps.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN( " + spotMonitorKapiListesi + ") ORDER BY AccessDatasTemps.[Kayit No] DESC";
             //}
             //else
             //{
@@ -3594,15 +3594,15 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
             string queryString = "";
             //CHANGE:LEFT JOIN Users ON AccessDatas.[Kart ID] =Users.[Kart ID] 06032020 Birden Fazla Kart Geldiği İçin Değişiklik Yaptık
-            queryString = @"SELECT TOP 200 AccessDatas.[Kayit No],Users.Adi,Users.Soyadi,AccessDatas.[Kart ID],AccessDatas.[Kapi ID],
-                                AccessDatas.[Panel ID],AccessDatas.Kod,CodeOperation.Operasyon,AccessDatas.Tarih,AccessDatas.ID
-                                FROM AccessDatas 
-                                LEFT JOIN CodeOperation ON AccessDatas.Kod = CodeOperation.TKod
-                                LEFT JOIN Users ON AccessDatas.ID =Users.ID
-                                WHERE AccessDatas.Kod >= 20
-                                AND AccessDatas.Kod <= 27
-                                AND AccessDatas.Kontrol=0
-                                ORDER BY AccessDatas.[Kayit No] DESC";
+            queryString = @"SELECT TOP 200 AccessDatasTemps.[Kayit No],Users.Adi,Users.Soyadi,AccessDatasTemps.[Kart ID],AccessDatasTemps.[Kapi ID],
+                                AccessDatasTemps.[Panel ID],AccessDatasTemps.Kod,CodeOperation.Operasyon,AccessDatasTemps.Tarih,AccessDatasTemps.ID
+                                FROM AccessDatasTemps 
+                                LEFT JOIN CodeOperation ON AccessDatasTemps.Kod = CodeOperation.TKod
+                                LEFT JOIN Users ON AccessDatasTemps.ID =Users.ID
+                                WHERE AccessDatasTemps.Kod >= 20
+                                AND AccessDatasTemps.Kod <= 27
+                                AND AccessDatasTemps.Kontrol=0
+                                ORDER BY AccessDatasTemps.[Kayit No] DESC";
             List<AlarmDatasComplex> liste = new List<AlarmDatasComplex>();
             using (SqlConnection connection = new SqlConnection(address))
             {

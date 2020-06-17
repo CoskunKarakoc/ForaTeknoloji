@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
 }
 <div class="row animated fadeIn faster">
     <div class="col-md-8 offset-2">
@@ -83,11 +84,13 @@
                     { "data": "IP_Adres" },
                     {
                         "data": "Panel_ID", "render": function (data) {
-                            var multipleUrl = '<a title="Paneli Güncelle" id="edit" href="/PanelSettings/Settings?id=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
+                            var multipleUrl = '<a title="Paneli Güncelle" id="edit" href="/PanelSettings/Settings?PanelID=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
                                 '<a title="Paneli Sil" href="/PanelSettings/Delete?PanelID=' + data + '" onclick="return confirm(\'Seçilen Paneli Veritabanından Silmek İstediğinize Emin Misiniz?\')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>' +
                                 '<a title="Panel Ayarlarını Gönder" href="/PanelSettings/SendToPanel?Panel=' + data + '"  onclick="return confirm(\'Panel Ayarlarını Göndermek İstediğinize Emin Misiniz?\')"><i class="fas fa-share text-success mr-2"></i></a>' +
                                 '<a title="Panel Ayarlarını Al" href="/PanelSettings/ReceiveFromPanel?PanelID=' + data + '"  onclick="return confirm(\'Panel Ayarlarını Almak İstediğinize Emin Misiniz?\')"><i class="fas fa-reply text-success mr-2"></i></a>' +
-                                '<a title="Panel Saatini Güncelle" href="/PanelSettings/PanelDate?Panel=' + data + '" onclick="return confirm(\'Panel Saatini Güncellemek İstediğinize Emin Misiniz?\')"><i class="fas fa-clock-o text-warning mr-2"></i></a>';
+                                '<a title="Panel Saatini Güncelle" href="/PanelSettings/PanelDate?Panel=' + data + '" onclick="return confirm(\'Panel Saatini Güncellemek İstediğinize Emin Misiniz?\')"><i class="fas fa-clock-o text-warning mr-2"></i></a>' +
+                                '<a title="Panel Durum Tablosu" href="/Task/TaskTable"><i class="fas fa-tasks text-secondary mr-2"></i></a>';
+
                             return multipleUrl;
                         }
                     },

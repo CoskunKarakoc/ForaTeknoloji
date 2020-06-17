@@ -1,0 +1,51 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.WatchOtherFilterViewMode
+    @{
+        ViewBag.Title = "WatchOutherFilterDoor";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+
+    @using (Html.BeginForm("WatchOutherFilterDoor", "WatchScreen", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-6 offset-2">
+                <div class="form-group">
+                    <label>Panel Listesi</label>
+                    <div class="form-group">
+                        @Html.DropDownListFor(model => model.Panel_ID, Model.Panel_ID, "Panel Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+
+                    </div>
+                </div>
+                <div id="ReaderList">
+
+                </div>
+                <div class="custom-control custom-checkbox">  <input type="checkbox" name="Aktif" class="custom-control-input" value="True" /></div>
+                <hr />
+                <button type="submit" class="btn btn-sm btn-outline-success mt-1"><i class="fas fa-save"></i> Değişikliği Kaydet</button>
+            </div>
+        </div>
+    }
+
+
+    <script>
+        $(document).ready(function () {
+            $('.chosen-select').chosen();
+            $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+            $("#Panel_ID").change(function () {
+                var panelID = $(this).val();
+                $.ajax({
+                    url: '/DoorGroup/ReaderList?PanelID=' + panelID,
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    $("#ReaderList").html('');
+                    $("#ReaderList").append('<hr /><p class="text-danger">' + data[0].Panel_Name + '<p>');
+                    $.each(data, function (index, row) {
+                        $("#ReaderList").append(' <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_' + row.Kayit_No + '" value="' + row.Kayit_No + '"><label class="custom-control-label" for="Kapi_' + row.Kayit_No + '">' + row.WKapi_Adi + '</label></div>');
+                    });
+                });
+            });
+        });
+    </script>
+
+

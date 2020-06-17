@@ -67,7 +67,6 @@
             }).done(function (data) {
                 $("#ReaderList").empty();
                 $.each(data, function (index, row) {
-                    console.log(row);
                     $("#ReaderList").append(' <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" name="ReaderList" id="Kapi_' + row.WKapi_ID + '" value="' + row.WKapi_ID + '"><label class="custom-control-label" for="Kapi_' + row.WKapi_ID + '">' + row.WKapi_Adi+'</label></div>');
                 });
             });

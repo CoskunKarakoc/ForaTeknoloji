@@ -2902,7 +2902,6 @@
     <Compile Include="Controllers\AccessReceiveController.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\AltDepartmanController.cs" />
-    <Compile Include="Controllers\BackupAccessDatasController.cs" />
     <Compile Include="Controllers\BirimController.cs" />
     <Compile Include="Controllers\BlockController.cs" />
     <Compile Include="Controllers\BolumController.cs" />
@@ -3026,6 +3025,7 @@
     <Compile Include="Models\VisitorListViewModel.cs" />
     <Compile Include="Models\VisitorsList.cs" />
     <Compile Include="Models\WatchIndexViewModel.cs" />
+    <Compile Include="Models\WatchOtherFilterViewMode.cs" />
     <Compile Include="Models\ZiyaretciListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagHelpers\PagingTagHelper.cs" />
@@ -3147,7 +3147,6 @@
     <Content Include="Views\Shared\_PartialGelenGelmeyenIlkGirisSonCikis.cshtml" />
     <Content Include="Views\WatchScreen\WatchOuther.cshtml" />
     <Content Include="Views\Panel\ReaderEditMS.cshtml" />
-    <Content Include="Views\BackupAccessDatas\Index.cshtml" />
     <Content Include="Views\Holiday\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutNewTemplate.cshtml" />
     <Content Include="Views\PanelSettings\Index.cshtml" />
@@ -3172,6 +3171,7 @@
     <Content Include="Views\OperatorKapi\Index.cshtml" />
     <Content Include="Views\SecuritySettings\EditOperator.cshtml" />
     <Content Include="Views\SecuritySettings\CreateOperator.cshtml" />
+    <Content Include="Views\WatchScreen\WatchOutherFilterDoor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

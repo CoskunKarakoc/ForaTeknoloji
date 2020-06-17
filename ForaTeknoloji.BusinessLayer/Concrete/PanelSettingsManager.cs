@@ -45,5 +45,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return filter == null ? _panelSettingsDal.GetList().FirstOrDefault(x => x.Seri_No != null) : _panelSettingsDal.Get(filter);
         }
 
+        public List<int> GetPanelIDList()
+        {
+            return _panelSettingsDal.GetPanelIDList();
+        }
+
     }
 }

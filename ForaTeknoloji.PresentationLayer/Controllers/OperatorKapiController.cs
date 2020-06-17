@@ -47,7 +47,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 userReaderID.Add((int)readerID.Kapi_Kayit_No);
             }
-
+            var list = _readerSettingsNewService.GetAllReaderSettingsNew(x => !userReaderID.Contains(x.Kayit_No));
             foreach (var reader in _readerSettingsNewService.GetAllReaderSettingsNew(x => !userReaderID.Contains(x.Kayit_No)))
             {
                 var panelModel = _panelSettingsService.GetById((int)reader.Panel_ID).Panel_Model;

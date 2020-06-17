@@ -367,7 +367,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             throw new Exception("Silmek istenen kayıt veritabanında yok!");
         }
 
-      
+
 
         public ActionResult Create()
         {
@@ -431,74 +431,74 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             try
             {
-                //TaskList taskList = new TaskList
+                TaskList taskList = new TaskList
+                {
+                    Deneme_Sayisi = 1,
+                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                    Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
+                    IntParam_1 = (int)Panel,
+                    Kullanici_Adi = user.Kullanici_Adi,
+                    Panel_No = Panel,
+                    Tablo_Guncelle = true,
+                    Tarih = DateTime.Now
+                };
+                TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                //#region FortigatePanelAyarları
+                //if (_panelSettingsService.GetById((int)Panel).Panel_Model == (int)PanelModel.Panel_1010)
                 //{
-                //    Deneme_Sayisi = 1,
-                //    Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                //    Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
-                //    IntParam_1 = (int)Panel,
-                //    Kullanici_Adi = user.Kullanici_Adi,
-                //    Panel_No = Panel,
-                //    Tablo_Guncelle = true,
-                //    Tarih = DateTime.Now
-                //};
-                //TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                #region FortigatePanelAyarları
-                if (_panelSettingsService.GetById((int)Panel).Panel_Model == (int)PanelModel.Panel_1010)
-                {
-                    TaskList taskListms = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
-                        IntParam_1 = (int)Panel,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = Panel,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceiveMS = _taskListService.AddTaskList(taskListms);
-                }
-                else
-                {
-                    TaskList taskList3 = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_3,
-                        IntParam_1 = (int)Panel,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = Panel,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive3 = _taskListService.AddTaskList(taskList3);
-                    TaskList taskList2 = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_2,
-                        IntParam_1 = (int)Panel,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = Panel,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive2 = _taskListService.AddTaskList(taskList2);
-                    TaskList taskList1 = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_1,
-                        IntParam_1 = (int)Panel,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = Panel,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive1 = _taskListService.AddTaskList(taskList1);
-                }
-                #endregion
+                //    TaskList taskListms = new TaskList
+                //    {
+                //        Deneme_Sayisi = 1,
+                //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                //        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS,
+                //        IntParam_1 = (int)Panel,
+                //        Kullanici_Adi = user.Kullanici_Adi,
+                //        Panel_No = Panel,
+                //        Tablo_Guncelle = true,
+                //        Tarih = DateTime.Now
+                //    };
+                //    TaskList taskListReceiveMS = _taskListService.AddTaskList(taskListms);
+                //}
+                //else
+                //{
+                //    TaskList taskList3 = new TaskList
+                //    {
+                //        Deneme_Sayisi = 1,
+                //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                //        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_3,
+                //        IntParam_1 = (int)Panel,
+                //        Kullanici_Adi = user.Kullanici_Adi,
+                //        Panel_No = Panel,
+                //        Tablo_Guncelle = true,
+                //        Tarih = DateTime.Now
+                //    };
+                //    TaskList taskListReceive3 = _taskListService.AddTaskList(taskList3);
+                //    TaskList taskList2 = new TaskList
+                //    {
+                //        Deneme_Sayisi = 1,
+                //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                //        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_2,
+                //        IntParam_1 = (int)Panel,
+                //        Kullanici_Adi = user.Kullanici_Adi,
+                //        Panel_No = Panel,
+                //        Tablo_Guncelle = true,
+                //        Tarih = DateTime.Now
+                //    };
+                //    TaskList taskListReceive2 = _taskListService.AddTaskList(taskList2);
+                //    TaskList taskList1 = new TaskList
+                //    {
+                //        Deneme_Sayisi = 1,
+                //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                //        Gorev_Kodu = (int)CommandConstants.CMD_SND_GENERALSETTINGS_1,
+                //        IntParam_1 = (int)Panel,
+                //        Kullanici_Adi = user.Kullanici_Adi,
+                //        Panel_No = Panel,
+                //        Tablo_Guncelle = true,
+                //        Tarih = DateTime.Now
+                //    };
+                //    TaskList taskListReceive1 = _taskListService.AddTaskList(taskList1);
+                //}
+                //#endregion
                 _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, Panel, 0);
             }
             catch (Exception)
@@ -517,75 +517,75 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
-                    //TaskList taskList = new TaskList
+                    TaskList taskList = new TaskList
+                    {
+                        Deneme_Sayisi = 1,
+                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                        Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
+                        IntParam_1 = (int)PanelID,
+                        Kullanici_Adi = user.Kullanici_Adi,
+                        Panel_No = PanelID,
+                        Tablo_Guncelle = true,
+                        Tarih = DateTime.Now
+                    };
+                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    //#region FortigatePanelAyarlarıAlma
+                    //if (_panelSettingsService.GetById((int)PanelID).Panel_Model == (int)PanelModel.Panel_1010)
                     //{
-                    //    Deneme_Sayisi = 1,
-                    //    Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                    //    Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
-                    //    IntParam_1 = (int)PanelID,
-                    //    Kullanici_Adi = user.Kullanici_Adi,
-                    //    Panel_No = PanelID,
-                    //    Tablo_Guncelle = true,
-                    //    Tarih = DateTime.Now
-                    //};
-                    //TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    #region FortigatePanelAyarlarıAlma
-                    if (_panelSettingsService.GetById((int)PanelID).Panel_Model == (int)PanelModel.Panel_1010)
-                    {
-                        TaskList taskListms = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
-                            IntParam_1 = (int)PanelID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = PanelID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceiveMS = _taskListService.AddTaskList(taskListms);
-                    }
-                    else
-                    {
+                    //    TaskList taskListms = new TaskList
+                    //    {
+                    //        Deneme_Sayisi = 1,
+                    //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                    //        Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS,
+                    //        IntParam_1 = (int)PanelID,
+                    //        Kullanici_Adi = user.Kullanici_Adi,
+                    //        Panel_No = PanelID,
+                    //        Tablo_Guncelle = true,
+                    //        Tarih = DateTime.Now
+                    //    };
+                    //    TaskList taskListReceiveMS = _taskListService.AddTaskList(taskListms);
+                    //}
+                    //else
+                    //{
 
-                        TaskList taskList1 = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_1,
-                            IntParam_1 = (int)PanelID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = PanelID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive1 = _taskListService.AddTaskList(taskList1);
-                        TaskList taskList2 = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_2,
-                            IntParam_1 = (int)PanelID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = PanelID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive2 = _taskListService.AddTaskList(taskList2);
-                        TaskList taskList3 = new TaskList
-                        {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_3,
-                            IntParam_1 = (int)PanelID,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = PanelID,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive3 = _taskListService.AddTaskList(taskList3);
-                    }
-                    #endregion
+                    //    TaskList taskList1 = new TaskList
+                    //    {
+                    //        Deneme_Sayisi = 1,
+                    //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                    //        Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_1,
+                    //        IntParam_1 = (int)PanelID,
+                    //        Kullanici_Adi = user.Kullanici_Adi,
+                    //        Panel_No = PanelID,
+                    //        Tablo_Guncelle = true,
+                    //        Tarih = DateTime.Now
+                    //    };
+                    //    TaskList taskListReceive1 = _taskListService.AddTaskList(taskList1);
+                    //    TaskList taskList2 = new TaskList
+                    //    {
+                    //        Deneme_Sayisi = 1,
+                    //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                    //        Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_2,
+                    //        IntParam_1 = (int)PanelID,
+                    //        Kullanici_Adi = user.Kullanici_Adi,
+                    //        Panel_No = PanelID,
+                    //        Tablo_Guncelle = true,
+                    //        Tarih = DateTime.Now
+                    //    };
+                    //    TaskList taskListReceive2 = _taskListService.AddTaskList(taskList2);
+                    //    TaskList taskList3 = new TaskList
+                    //    {
+                    //        Deneme_Sayisi = 1,
+                    //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                    //        Gorev_Kodu = (int)CommandConstants.CMD_RCV_GENERALSETTINGS_3,
+                    //        IntParam_1 = (int)PanelID,
+                    //        Kullanici_Adi = user.Kullanici_Adi,
+                    //        Panel_No = PanelID,
+                    //        Tablo_Guncelle = true,
+                    //        Tarih = DateTime.Now
+                    //    };
+                    //    TaskList taskListReceive3 = _taskListService.AddTaskList(taskList3);
+                    //}
+                    //#endregion
                     Thread.Sleep(500);
                 }
                 catch (Exception)
@@ -606,19 +606,22 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
-                    TaskList taskList = new TaskList
-                    {
-                        Deneme_Sayisi = 1,
-                        Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                        Gorev_Kodu = (int)CommandConstants.CMD_ERS_ALARMFIRE_STATUS,
-                        IntParam_1 = (int)PanelID,
-                        Kullanici_Adi = user.Kullanici_Adi,
-                        Panel_No = PanelID,
-                        Tablo_Guncelle = true,
-                        Tarih = DateTime.Now
-                    };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
 
+                    foreach (var alarmPanel in _panelSettingsService.GetPanelIDList())
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_ERS_ALARMFIRE_STATUS,
+                            IntParam_1 = (int)alarmPanel,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = alarmPanel,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    }
                 }
                 catch (Exception)
                 {
@@ -754,7 +757,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             WKapi_Pin_Dogrulama = false,
                             WKapi_Panik_Buton_Alarmi = false,
                             WKapi_WIGType = 1,
-                            WKapi_Acik_Sure = 1,
+                            WKapi_Acik_Sure = 20,
                             WKapi_Alarm_Modu = false,
                             WKapi_Gecis_Modu = 0,
                             WKapi_Harici_Alarm_Rolesi = 1,
@@ -791,7 +794,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             WKapi_Pin_Dogrulama = false,
                             WKapi_Panik_Buton_Alarmi = false,
                             WKapi_WIGType = 1,
-                            WKapi_Acik_Sure = 1,
+                            WKapi_Acik_Sure = 20,
                             WKapi_Alarm_Modu = false,
                             WKapi_Gecis_Modu = 0,
                             WKapi_Harici_Alarm_Rolesi = 1,

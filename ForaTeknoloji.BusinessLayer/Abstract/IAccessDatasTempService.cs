@@ -16,5 +16,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteAccessDatasTemp(AccessDatasTemp accessDatasTemp);
         void DeleteAll();
         AccessDatasTemp UpdateAccessDatasTemp(AccessDatasTemp accessDatasTemp);
+        AccessDatasTemp GetByKayit_No(int Kayit_No);
     }
 }

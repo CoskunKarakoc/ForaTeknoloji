@@ -30,6 +30,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         private IDBUsersAltDepartmanService _dBUsersAltDepartmanService;
         private IReaderSettingsNewService _readerSettingsNewService;
         private IDBUsersKapiService _dBUsersKapiService;
+        private IAccessDatasTempService _accessDatasTempService;
         public DBUsers user = CurrentSession.User;
         public DBUsers permissionUser;
         List<int> dbDepartmanList;
@@ -37,7 +38,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         List<int> dbDoorList;
         List<int> dbSirketList;
         List<int> dbAltDepartmanList;
-        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IReaderSettingsNewService readerSettingsNewService, IDBUsersKapiService dBUsersKapiService)
+        public AlarmController(IAlarmlarService alarmlarService, IAlarmTipleriService alarmTipleriService, IUserService userService, IPanelSettingsService panelSettingsService, ITaskListService taskListService, IDBUsersPanelsService dBUsersPanelsService, IDBUsersService dBUsers, IReportService reportService, IAccessDatasService accessDatasService, IDBUsersDepartmanService dBUsersDepartmanService, IDBUsersSirketService dBUsersSirketService, IDBUsersAltDepartmanService dBUsersAltDepartmanService, IReaderSettingsNewService readerSettingsNewService, IDBUsersKapiService dBUsersKapiService, IAccessDatasTempService accessDatasTempService)
         {
 
             //user = CurrentSession.User;
@@ -59,6 +60,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             _dBUsersAltDepartmanService = dBUsersAltDepartmanService;
             _readerSettingsNewService = readerSettingsNewService;
             _dBUsersKapiService = dBUsersKapiService;
+            _accessDatasTempService = accessDatasTempService;
             dbDepartmanList = new List<int>();
             dbPanelList = new List<int>();
             dbDoorList = new List<int>();
@@ -392,6 +394,13 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     editEntity.Kontrol = 1;
                     editEntity.Kontrol_Tarihi = DateTime.Now;
                     _accessDatasService.UpdateAccessData(editEntity);
+
+                    var editEntityTemps = _accessDatasTempService.GetByKayit_No(item);
+                    editEntityTemps.Kontrol = 1;
+                    editEntityTemps.Kontrol_Tarihi = DateTime.Now;
+                    _accessDatasTempService.UpdateAccessDatasTemp(editEntityTemps);
+
+
                 }
                 return RedirectToAction("AlarmTable", "Alarm");
             }

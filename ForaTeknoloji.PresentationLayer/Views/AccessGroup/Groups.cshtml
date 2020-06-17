@@ -65,6 +65,7 @@
                 <div class="card-footer text-right">
                     <a href="@Url.Action("Create","AccessGroup")" class="btn btn-sm btn-outline-success" title="Yeni Geçiş Grubu"><i class="fas fa-plus"></i> Yeni Geçiş Grubu</a>
                     <a data-toggle="modal" data-target="#panelListAll" title="Send To Panel" id="sendAll" class="btn btn-sm btn-outline-success text-success"><i class="fas fa-share mr-2"></i>Tüm Geçiş Gruplarını Gönder</a>
+                    @*<a data-toggle="modal" data-target="#panelListAll" title="Send To Panel" id="sendAllRemove" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt mr-2"></i>Tüm Geçiş Gruplarını Panelden Sil</a>*@
                 </div>
             </div>
         </div>
@@ -186,6 +187,66 @@
         </div>
     </div>
 </div>
+
+
+
+<!--Panel List Modal All For Erase Panel-->
+@*<div class="modal fade" id="panelListAllErase" tabindex="-1" role="dialog" aria-labelledby="panelListAllEraseTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Panel Listesi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("SendAll", "AccessGroup", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <div hidden id="messageAll">
+                        <h4 class="text-center text-info animated slideInDown">Panel İşlemi Sıraya Alındı!</h4>
+                        <hr />
+                    </div>
+                    <table id="PanelTableAll" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead class="table-sm">
+                            <tr>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="PanelAll" />
+                                        <label class="custom-control-label" for="PanelAll"></label>
+                                    </div>
+                                </td>
+                                <td>Panel Seri No</td>
+                                <td>Panel No</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PanelListesi)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="PanelListAll" id="@("All_"+item.Panel_ID)" value="@item.Panel_ID">
+                                            <label class="custom-control-label" for="@("All_"+item.Panel_ID)"></label>
+                                        </div>
+                                    </td>
+                                    <td>@item.Seri_No.Value.ToString("X4")</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnTaskAll" type="submit" class="btn btn-outline-success"><i class="fas fa-send"></i> Seçilen Panellere Gönder</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>*@
+
 
 
 @section Scripts{

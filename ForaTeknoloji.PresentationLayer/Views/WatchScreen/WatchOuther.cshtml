@@ -1,4 +1,4 @@
-﻿@model ForaTeknoloji.Entities.ComplexType.WatchParameters
+﻿
 @{
     ViewBag.Title = "WatchScreen";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,9 +9,13 @@
         <div class="card border-left-info h-100 shadow-lg mx-lg-5 mt-1" style="height:inherit">
             <div class="card-header">
                 <div class="row">
+
                     <div class="col-md-12 text-right">
-                        <a id="Stop" hidden class="text-danger" data-toggle="tooltip" data-placement="right" title="Anlık Geçiş Akışını Durdur"><i class="fas fa-pause fa-3x"></i></a>
-                        <a id="Start" class="text-success" data-toggle="tooltip" data-placement="right" title="Anlık Geçiş Akışını Başlat"><i class="fas fa-play fa-3x"></i></a>
+                        <div class="text-right">
+                            @*<a href="@Url.Action("WatchOutherFilterDoor","WatchScreen")"><i class="fas fa-filter fa-2x text-info mr-5"></i></a>*@
+                            <a id="Stop" hidden class="text-danger" data-toggle="tooltip" data-placement="right" title="Anlık Geçiş Akışını Durdur"><i class="fas fa-pause fa-3x"></i></a>
+                            <a id="Start" class="text-success" data-toggle="tooltip" data-placement="right" title="Anlık Geçiş Akışını Başlat"><i class="fas fa-play fa-3x"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,6 +48,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 <script>
     $(document).ready(function () {
         var myTimer
@@ -172,7 +180,6 @@
     }
 
     function TableRowTemplate(value, idParam, classParam) {
-        console.log(value);
         var GecisTipi = "";
         var SatirSablon = '';
         if (value.Gecis_Tipi == 0) {

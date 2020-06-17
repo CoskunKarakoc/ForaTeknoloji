@@ -36,7 +36,7 @@
     @*<script src="~/Templete/TempleteDosyalari/vendor/jquery/jquery.min.js"></script>*@
     <!--Benim Eklediklerim-->
 </head>
-<body class="sidebar-mini ">
+<body class="sidebar-mini white-content">
     <div class="wrapper">
         <div class="navbar-minimize-fixed">
             <button class="minimize-sidebar btn btn-link btn-just-icon">
@@ -44,7 +44,7 @@
                 <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
             </button>
         </div>
-        <div class="sidebar">
+        <div class="sidebar" data="blue">
             <!--
                 Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
             -->
@@ -642,7 +642,7 @@
                 </ul>
             </div>
         </div>
-        <div class="main-panel">
+        <div class="main-panel" data="blue">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
                 <div class="container-fluid">
@@ -890,7 +890,11 @@
                 $sidebar_responsive = $('body > .navbar-collapse');
                 sidebar_mini_active = true;
                 white_color = false;
-
+                //$sidebar.attr('data', 'blue');//Yan Menü Bar Rengi
+                //$main_panel.attr('data', 'blue');//Üst Çizgi Rengi
+                //$full_page.attr('filter-color', 'blue');
+                //$sidebar_responsive.attr('data', 'blue');
+                $('body').removeClass("white-content");
                 window_width = $(window).width();
 
                 fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
@@ -963,7 +967,7 @@
                         setTimeout(function () {
                             $('body').removeClass('change-background');
                             $('body').removeClass('white-content');
-                        }, 900);
+                        }, 900);//CHANGE:900-500e indi
                         white_color = false;
                     } else {
 
@@ -971,7 +975,7 @@
                         setTimeout(function () {
                             $('body').removeClass('change-background');
                             $('body').addClass('white-content');
-                        }, 900);
+                        }, 900);//CHANGE:900-500e indi
 
                         white_color = true;
                     }

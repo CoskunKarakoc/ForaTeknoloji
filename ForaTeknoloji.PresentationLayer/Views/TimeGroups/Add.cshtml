@@ -907,65 +907,66 @@
                 $("#HaftalikPlan").prop("hidden", true);
                 $("#EkSaat").prop("hidden", true);
             }
-            if (nesne == 8 || nesne == 9) {
-                $("#Tarih").prop("hidden", true);
-                $("#Saat").prop("hidden", true);
-                $("#HaftalikPlan").prop("hidden", true);
-                $("#AylikPlan").prop("hidden", true);
-                $("#6LiSaat").prop("hidden", true);
-                $("#HaftalikPlanHergunSaat").prop("hidden", true);
-                $("#TarihSaat").prop("hidden", true);
-                $("#CokluSaat").prop("hidden", false);
-                $("#EkSaat").prop("hidden", false);
-            }
-            if (nesne == 11 || nesne == 12) {
-                $("#EkSaat").prop("hidden", true);
-                $("#Tarih").prop("hidden", true);
-                $("#Saat").prop("hidden", true);
-                $("#HaftalikPlan").prop("hidden", true);
-                $("#AylikPlan").prop("hidden", true);
-                $("#CokluSaat").prop("hidden", true);
-                $("#HaftalikPlanHergunSaat").prop("hidden", true);
-                $("#TarihSaat").prop("hidden", true);
-                $("#6LiSaat").prop("hidden", false);
-            }
-            if (nesne == 13) {
-                $("#EkSaat").prop("hidden", true);
-                $("#Tarih").prop("hidden", true);
-                $("#Saat").prop("hidden", true);
-                $("#HaftalikPlan").prop("hidden", false);
-                $("#HaftalikEk").prop("hidden", true);
-                $("#AylikPlan").prop("hidden", true);
-                $("#CokluSaat").prop("hidden", true);
-                $("#6LiSaat").prop("hidden", true);
-                $("#TarihSaat").prop("hidden", true);
-                $("#HaftalikPlanHergunSaat").prop("hidden", false);
-            }
-            if (nesne == 14 || nesne == 15) {
-                $("#IkiliSaatHergunAyri").prop("hidden", false);
-                $("#Tarih").prop("hidden", true);
-                $("#Saat").prop("hidden", true);
-                $("#HaftalikPlan").prop("hidden", false);
-                $("#HaftalikEk").prop("hidden", true);
-                $("#AylikPlan").prop("hidden", true);
-                $("#CokluSaat").prop("hidden", true);
-                $("#6LiSaat").prop("hidden", true);
-                $("#TarihSaat").prop("hidden", true);
-                $("#HaftalikPlanHergunSaat").prop("hidden", false);
-                $("#EkSaat").prop("hidden", false);
+            if (nesne == 8 || nesne == 9 || nesne==10) {
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", false);
+            $("#EkSaat").prop("hidden", false);
+        }
+        if (nesne == 11 || nesne == 12) {
+            $("#EkSaat").prop("hidden", true);
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", false);
+        }
+        if (nesne == 13) {
+            $("#EkSaat").prop("hidden", true);
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", false);
+            $("#HaftalikEk").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", false);
+        }
+        if (nesne == 14 || nesne == 15) {
+            $("#IkiliSaatHergunAyri").prop("hidden", false);
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", false);
+            $("#HaftalikEk").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", false);
+            $("#EkSaat").prop("hidden", false);
 
-            }
-            if (nesne == 18 || nesne == 19) {
-                $("#EkSaat").prop("hidden", true);
-                $("#Tarih").prop("hidden", true);
-                $("#Saat").prop("hidden", true);
-                $("#HaftalikPlan").prop("hidden", true);
-                $("#AylikPlan").prop("hidden", true);
-                $("#CokluSaat").prop("hidden", true);
-                $("#6LiSaat").prop("hidden", true);
-                $("#HaftalikPlanHergunSaat").prop("hidden", true);
-                $("#TarihSaat").prop("hidden", false);
-            }
-        });
+        }
+        if (nesne == 18 || nesne == 19) {
+            $("#EkSaat").prop("hidden", true);
+            $("#Tarih").prop("hidden", true);
+            $("#Saat").prop("hidden", true);
+            $("#HaftalikPlan").prop("hidden", true);
+            $("#AylikPlan").prop("hidden", true);
+            $("#CokluSaat").prop("hidden", true);
+            $("#6LiSaat").prop("hidden", true);
+            $("#HaftalikPlanHergunSaat").prop("hidden", true);
+            $("#TarihSaat").prop("hidden", false);
+        }
+
+    });
     });
 </script>
