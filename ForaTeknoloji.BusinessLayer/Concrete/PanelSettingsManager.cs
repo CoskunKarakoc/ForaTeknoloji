@@ -50,5 +50,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _panelSettingsDal.GetPanelIDList();
         }
 
+        public int GetPanelModelByPanelID(int Panel_ID)
+        {
+            return _panelSettingsDal.GetPanelModelByPanelID(Panel_ID);
+        }
+
+
     }
 }

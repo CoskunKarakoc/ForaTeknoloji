@@ -385,7 +385,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         || User.Sureli_Kullanici != entity.Sureli_Kullanici || User.Tmp != entity.Tmp || User.Visitor_Grup_No != entity.Visitor_Grup_No
                         )
                     {
-                     //SendAuto(_panelSettingsService.GetPanelIDList(), CommandConstants.CMD_SND_USER, entity.ID);
+                     SendAuto(_panelSettingsService.GetPanelIDList(), CommandConstants.CMD_SND_USER, entity.ID);
                     }
                     return RedirectToAction("Index");
                 }

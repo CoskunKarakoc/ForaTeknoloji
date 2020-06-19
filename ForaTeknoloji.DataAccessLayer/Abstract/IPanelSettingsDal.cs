@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 namespace ForaTeknoloji.DataAccessLayer.Abstract
 {
-    public interface IPanelSettingsDal:IEntityRepository<PanelSettings>
+    public interface IPanelSettingsDal : IEntityRepository<PanelSettings>
     {
         List<int> GetPanelIDList();
+        int GetPanelModelByPanelID(int PanelID);
     }
 }

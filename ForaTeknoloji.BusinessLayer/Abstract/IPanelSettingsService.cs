@@ -14,5 +14,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         PanelSettings UpdatePanelSetting(PanelSettings panelSettings);
         PanelSettings GetByQuery(Expression<Func<PanelSettings, bool>> filter = null);
         List<int> GetPanelIDList();
+        int GetPanelModelByPanelID(int Panel_ID);
     }
 }

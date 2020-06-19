@@ -51,5 +51,7 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Canli_Resim { get; set; }
 
         public int? User_Kayit_No { get; set; }
+
+        public string CodeOperation { get; set; }
     }
 }

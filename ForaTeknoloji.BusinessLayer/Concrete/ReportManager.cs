@@ -1475,12 +1475,12 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             string queryString = "";
 
             queryString = @" SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], 
-                Users.Adi, Users.Soyadi, Users.TCKimlik,Unvan.Adi As [Unvan Adi], Users.Telefon, Sirketler.Adi AS Sirket,
+                Users.Adi, Users.Soyadi, Users.TCKimlik,Unvan.Adi As [Unvan Adi], Users.Telefon, Sirketler.Adi AS Sirket,CodeOperation.Operasyon,
                 Departmanlar.Adi AS Departman, AltDepartman.Adi As [Alt Departman],Bolum.Adi As [Bolum Adi],Birim.Adi As [Birim Adi],
                 Users.Plaka, Bloklar.Adi AS Blok, Users.Daire,
                 GroupsMaster.[Grup Adi], AccessDatas.[Panel ID] As Panel, ReaderSettingsNew.[WKapi Adi] As Kapi,
                 AccessDatas.[Gecis Tipi] As Gecis, AccessDatas.Tarih, Users.Resim, AccessDatas.[Canli Resim],AccessDatas.[User Kayit No]
-                FROM ((((((((GroupsMaster
+                FROM (((((((((GroupsMaster
 				RIGHT JOIN (Users
 				LEFT JOIN AccessDatas ON Users.[ID] = AccessDatas.[ID]) ON GroupsMaster.[Grup No] = Users.[Grup No])
 				LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No])
@@ -1490,6 +1490,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 LEFT JOIN Birim ON Users.[Birim No]=Birim.[Birim No])               
                 LEFT JOIN Unvan ON Users.[Unvan No]=Unvan.[Unvan No])
 				LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No] )
+	            LEFT JOIN CodeOperation ON AccessDatas.Kod=CodeOperation.TKod)
 				LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] AND AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID])
                 WHERE AccessDatas.[Kullanici Tipi] = 0 ";
             queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
@@ -1681,21 +1682,22 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             UnvanAdi = reader[6].ToString(),
                             Telefon = reader[7].ToString(),
                             SirketAdi = reader[8].ToString(),
-                            DepartmanAdi = reader[9].ToString(),
-                            AltDepartmanAdi = reader[10].ToString(),
-                            BolumAdi = reader[11].ToString(),
-                            BirimAdi = reader[12].ToString(),
-                            Plaka = reader[13].ToString(),
-                            BlokAdi = reader[14].ToString(),
-                            Daire = reader[15] as int? ?? default(int),
-                            Grup_Adi = reader[16].ToString(),
-                            Panel_ID = reader[17] as int? ?? default(int),
-                            Kapi = reader[18].ToString(),
-                            Gecis_Tipi = reader[19] as int? ?? default(int),
-                            Tarih = reader[20] as DateTime? ?? default(DateTime),
-                            Resim = reader[21].ToString(),
-                            Canli_Resim = reader[22].ToString(),
-                            User_Kayit_No = reader[23] as int? ?? default(int)
+                            CodeOperation=reader[9].ToString(),
+                            DepartmanAdi = reader[10].ToString(),
+                            AltDepartmanAdi = reader[11].ToString(),
+                            BolumAdi = reader[12].ToString(),
+                            BirimAdi = reader[13].ToString(),
+                            Plaka = reader[14].ToString(),
+                            BlokAdi = reader[15].ToString(),
+                            Daire = reader[16] as int? ?? default(int),
+                            Grup_Adi = reader[17].ToString(),
+                            Panel_ID = reader[18] as int? ?? default(int),
+                            Kapi = reader[19].ToString(),
+                            Gecis_Tipi = reader[20] as int? ?? default(int),
+                            Tarih = reader[21] as DateTime? ?? default(DateTime),
+                            Resim = reader[22].ToString(),
+                            Canli_Resim = reader[23].ToString(),
+                            User_Kayit_No = reader[24] as int? ?? default(int)
                         };
                         liste.Add(nesne);
 

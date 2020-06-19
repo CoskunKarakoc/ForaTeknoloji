@@ -609,18 +609,23 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
                     foreach (var alarmPanel in _panelSettingsService.GetPanelIDList())
                     {
-                        TaskList taskList = new TaskList
+
+                        if (_panelSettingsService.GetPanelModelByPanelID(alarmPanel) != (int)PanelModel.Panel_1010)
                         {
-                            Deneme_Sayisi = 1,
-                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                            Gorev_Kodu = (int)CommandConstants.CMD_ERS_ALARMFIRE_STATUS,
-                            IntParam_1 = (int)alarmPanel,
-                            Kullanici_Adi = user.Kullanici_Adi,
-                            Panel_No = alarmPanel,
-                            Tablo_Guncelle = true,
-                            Tarih = DateTime.Now
-                        };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                            TaskList taskList = new TaskList
+                            {
+                                Deneme_Sayisi = 1,
+                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                                Gorev_Kodu = (int)CommandConstants.CMD_ERS_ALARMFIRE_STATUS,
+                                IntParam_1 = (int)alarmPanel,
+                                Kullanici_Adi = user.Kullanici_Adi,
+                                Panel_No = alarmPanel,
+                                Tablo_Guncelle = true,
+                                Tarih = DateTime.Now
+                            };
+                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        }
+
                     }
                 }
                 catch (Exception)
