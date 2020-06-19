@@ -1682,7 +1682,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             UnvanAdi = reader[6].ToString(),
                             Telefon = reader[7].ToString(),
                             SirketAdi = reader[8].ToString(),
-                            CodeOperation=reader[9].ToString(),
+                            CodeOperation = reader[9].ToString(),
                             DepartmanAdi = reader[10].ToString(),
                             AltDepartmanAdi = reader[11].ToString(),
                             BolumAdi = reader[12].ToString(),
@@ -3177,6 +3177,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                         LEFT JOIN PanelSettings ON AccessDatas.[Panel ID] = PanelSettings.[Panel ID] 
                         WHERE AccessDatas.[Gecis Tipi]= 0 AND Users.ID > 0 AND AccessDatas.Kod=1 ";
                 queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+                queryString += " AND AccessDatas.[Panel ID] IN(10000," + panelListesi + ")";
                 if (GetAltDepartmanListReturInt(dBUsers).Count > 0)
                 {
 
@@ -3245,13 +3246,13 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                         queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
                     }
                 }
-                var panelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
-                if (panelListesi != null)
+                var doorpanelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
+                if (doorpanelListesi != null)
                 {
                     var sayac = 0;
-                    var count = panelListesi.Count();
+                    var count = doorpanelListesi.Count();
                     queryString += " AND (";
-                    foreach (var item in panelListesi)
+                    foreach (var item in doorpanelListesi)
                     {
                         sayac++;
                         if (sayac == count)
@@ -3342,6 +3343,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 				LEFT JOIN Birim ON Users.[Birim No] = Birim.[Birim No]
                 WHERE AccessDatas.[Gecis Tipi] = 0 AND AccessDatas.[Kart ID] > 0  AND AccessDatas.Kod = 1 ";
                 queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+                queryString += " AND AccessDatas.[Panel ID] IN(10000," + panelListesi + ")";
                 if (GetAltDepartmanListReturInt(dBUsers).Count > 0)
                 {
 
@@ -3410,13 +3412,13 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                         queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Bitis_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
                     }
                 }
-                var panelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
-                if (panelListesi != null)
+                var doorpanelListesi = _doorGroupsDetailDal.GetList().Where(x => x.Kapi_Grup_No == parameters.Group_ID).Select(x => x.Panel_ID).Distinct();
+                if (doorpanelListesi != null)
                 {
                     var sayac = 0;
-                    var count = panelListesi.Count();
+                    var count = doorpanelListesi.Count();
                     queryString += " AND (";
-                    foreach (var item in panelListesi)
+                    foreach (var item in doorpanelListesi)
                     {
                         sayac++;
                         if (sayac == count)
