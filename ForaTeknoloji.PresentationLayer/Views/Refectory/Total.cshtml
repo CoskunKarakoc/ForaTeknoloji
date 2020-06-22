@@ -46,9 +46,9 @@
                         @Html.DropDownListFor(model => model.Bolum_No, Model.Bolum_No, "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
                     @*<div class="form-group">
-                        <label for="Birim_No">Birim Seçimi</label>
-                        @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>*@
+                            <label for="Birim_No">Birim Seçimi</label>
+                            @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        </div>*@
                 </div>
                 <div class="col-md-4">
                     <div class="custom-control custom-checkbox ">
@@ -75,6 +75,10 @@
                     </div>
                 </div>
                 <div class="col-md-12 text-right">
+                    <br />
+                    <br />
+                    <h4 class="text-info text-right">@Model.ToplamGecis.Count Adet Kayıt Listelendi</h4>
+                    <br />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                     <a id="Excell" href="@Url.Action("YemekhaneRaporlariToplam", "Refectory")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
