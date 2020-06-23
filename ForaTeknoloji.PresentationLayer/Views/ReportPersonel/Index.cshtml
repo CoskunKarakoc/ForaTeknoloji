@@ -347,7 +347,7 @@
         }).done(function (data) {
             $("#KapiListesi").html('');
             $.each(data, function (index, row) {
-                $("#KapiListesi").append('<div class="custom-control custom-checkbox"><input type = "checkbox" value = "' + row.Value + '" name = "Kapi" class= "custom-control-input" id = "' + ('Kapi' + row.Value) + '" /><label class="custom-control-label" for="' + ('Kapi' + row.Value) + '">' + row.Text + '</label></div >');
+                $("#KapiListesi").append('<div class="custom-control custom-checkbox"><input type = "checkbox" value = "' + row.Value + '" name = "Kapilar" class= "custom-control-input" id = "' + ('Kapi' + row.Value) + '" /><label class="custom-control-label" for="' + ('Kapi' + row.Value) + '">' + row.Text + '</label></div >');
             });
         });
 
@@ -360,7 +360,7 @@
             }).done(function (data) {
                 $("#KapiListesi").html('');
                 $.each(data, function (index, row) {
-                    $("#KapiListesi").append('<div class="custom-control custom-checkbox"><input type = "checkbox" value = "' + row.Value + '" name = "Kapi" class= "custom-control-input" id = "' + ('Kapi' + row.Value) + '" /><label class="custom-control-label" for="' + ('Kapi' + row.Value) + '">' + row.Text + '</label></div >');
+                    $("#KapiListesi").append('<div class="custom-control custom-checkbox"><input type = "checkbox" value = "' + row.Value + '" name = "Kapilar" class= "custom-control-input" id = "' + ('Kapi' + row.Value) + '" /><label class="custom-control-label" for="' + ('Kapi' + row.Value) + '">' + row.Text + '</label></div >');
                 });
             });
 

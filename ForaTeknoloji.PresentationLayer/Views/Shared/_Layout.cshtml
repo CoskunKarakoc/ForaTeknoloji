@@ -434,7 +434,6 @@
                                     }
                                     @if (MenuListUser.Yemekhane_Kisi_Bazli_Rapor == true || MenuListUser.Yemekhane_Toplu_Gecis_Sayisi_Raporlari == true)
                                     {
-                                        DBUsers yemekhaneUser = CurrentSession.User;
                                         <a class="collapse-item" href="@Url.Action("Index","Refectory")">Yemekhane Raporları-Kişi</a>
                                         <a class="collapse-item" href="@Url.Action("Total","Refectory")">Yemekhane Raporları-Toplu</a>
 
@@ -584,7 +583,7 @@
                                 }
                                 @if (MenuListUser.Spot_Monitor == true)
                                 {
-                                    <a class="dropdown-item" href="@Url.Action("Index","SpotMonitor")">
+                                    <a class="dropdown-item" href="@Url.Action("Monitoring","SpotMonitor")">
                                         <i class="fas fa-desktop fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Spot Monitör
                                     </a>

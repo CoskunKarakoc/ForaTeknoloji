@@ -37,796 +37,1010 @@
     <!--Benim Eklediklerim-->
 </head>
 <body class="sidebar-mini white-content">
-    <div class="wrapper">
-        <div class="navbar-minimize-fixed">
-            <button class="minimize-sidebar btn btn-link btn-just-icon">
-                <i class="tim-icons icon-align-center visible-on-sidebar-regular text-muted"></i>
-                <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
-            </button>
-        </div>
-        <div class="sidebar" data="blue">
-            <!--
-                Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
-            -->
-            <div class="sidebar-wrapper">
-                <div class="logo">
-                    <a href="javascript:void(0)" class="simple-text logo-mini">
-                        FT
-                    </a>
-                    <a href="javascript:void(0)" class="simple-text logo-normal">
-                        Fora Teknoloji
-                    </a>
-                </div>
-                <ul class="nav">
-                    <li>
-                        <a href="@Url.Action("Index", "Home")">
-                            <i class="tim-icons icon-bank"></i>
-                            <p>Anasayfa</p>
+    @{
+        OperatorTransactionList MenuListUser = CurrentSession.UserManagmentList;
+        DBUsers CurrentUser = CurrentSession.User;
+        <div class="wrapper">
+            <div class="navbar-minimize-fixed">
+                <button class="minimize-sidebar btn btn-link btn-just-icon">
+                    <i class="tim-icons icon-align-center visible-on-sidebar-regular text-muted"></i>
+                    <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
+                </button>
+            </div>
+            <div class="sidebar" data="blue">
+                <div class="sidebar-wrapper">
+                    <div class="logo">
+                        <a href="javascript:void(0)" class="simple-text logo-mini">
+                            FT
                         </a>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#genel">
-                            <i class="tim-icons icon-molecule-40"></i>
-                            <p>
-                                Genel
-                                <b class="caret"></b>
-                            </p>
+                        <a href="javascript:void(0)" class="simple-text logo-normal">
+                            Fora Teknoloji
                         </a>
-                        <div class="collapse" id="genel">
-                            <ul class="nav">
-                                <li>
-                                    <a href="@Url.Action("Index", "Alarm")">
-                                        <span class="sidebar-mini-icon">KAT</span>
-                                        <span class="sidebar-normal"> Kullanıcı Alarm Tanımları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "CameraSettings")">
-                                        <span class="sidebar-mini-icon">K</span>
-                                        <span class="sidebar-normal"> Kameralar</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("LiftGroups", "Lift")">
-                                        <span class="sidebar-mini-icon">AGG</span>
-                                        <span class="sidebar-normal"> Asansör Geçiş Grupları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "GlobalZone")">
-                                        <span class="sidebar-mini-icon">GB</span>
-                                        <span class="sidebar-normal"> Global Bölgeler</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Door")">
-                                        <span class="sidebar-mini-icon">KI</span>
-                                        <span class="sidebar-normal"> Kapı İşlemleri</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    @{
-                                        DBUsers Paswordusers = CurrentSession.User;
-                                        if (Paswordusers.SysAdmin == true)
-                                        {
-                                            <a href="@Url.Action("Index","SecuritySettings")">
-                                                <span class="sidebar-mini-icon">GA</span>
-                                                <span class="sidebar-normal"> Güvenlik Ayarları</span>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.Action("ChangePassword", "SecuritySettings")">
-                                                <span class="sidebar-mini-icon">GA</span>
-                                                <span class="sidebar-normal"> Güvenlik Ayarları</span>
-                                            </a>
-                                        }
-                                    }
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Add", "EMail")">
-                                        <span class="sidebar-mini-icon">EM</span>
-                                        <span class="sidebar-normal"> E-Mail Gönderme Ayarları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Add", "SMS")">
-                                        <span class="sidebar-mini-icon">SG</span>
-                                        <span class="sidebar-normal"> SMS Gönderme Ayarları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "AccessReceive")">
-                                        <span class="sidebar-mini-icon">GOV</span>
-                                        <span class="sidebar-normal"> Geçiş Olay Verileri</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "BackupAccessDatas")">
-                                        <span class="sidebar-mini-icon">GOY</span>
-                                        <span class="sidebar-normal"> Geçiş Olay Yedekle</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#tanimlar">
-                            <i class="far fa-flag"></i>
-                            <p>
-                                Tanımlamalar
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="tanimlar">
-                            <ul class="nav">
-                                <li>
-                                    <a href="@Url.Action("Index", "Company")">
-                                        <span class="sidebar-mini-icon">ŞT</span>
-                                        <span class="sidebar-normal"> Şirket Tanımları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Department")">
-                                        <span class="sidebar-mini-icon">DT</span>
-                                        <span class="sidebar-normal"> Departman Tanımları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "AltDepartman")">
-                                        <span class="sidebar-mini-icon">ADT</span>
-                                        <span class="sidebar-normal"> Alt Departman Tanımları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Bolum")">
-                                        <span class="sidebar-mini-icon">BT</span>
-                                        <span class="sidebar-normal"> Bölüm Tanımları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Block")">
-                                        <span class="sidebar-mini-icon">BT</span>
-                                        <span class="sidebar-normal"> Blok Tanımları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Unvan")">
-                                        <span class="sidebar-mini-icon">UT</span>
-                                        <span class="sidebar-normal"> Ünvan Tanımları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Employment")">
-                                        <span class="sidebar-mini-icon">GT</span>
-                                        <span class="sidebar-normal"> Görev Tanımları</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#sistemAyarları" aria-expanded="true">
-                            <i class="tim-icons icon-settings"></i>
-                            <p>
-                                Sistem Ayarları
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="sistemAyarları">
-                            <ul class="nav">
-                                <li>
-                                    <a data-toggle="collapse" aria-expanded="false" href="#multiPanelOperasyon">
-                                        <span class="sidebar-mini-icon">PO</span>
-                                        <span class="sidebar-normal">
-                                            Panel Operasyon
-                                            <b class="caret"></b>
-                                        </span>
-                                    </a>
-                                    <div class="collapse" id="multiPanelOperasyon">
-                                        <ul class="nav">
-                                            <li>
-                                                <a href="@Url.Action("Create", "PanelSettings")">
-                                                    <span class="sidebar-mini-icon">PE</span>
-                                                    <span class="sidebar-normal"> Panel Ekle</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Settings", "PanelSettings")">
-                                                    <span class="sidebar-mini-icon">PA</span>
-                                                    <span class="sidebar-normal"> Panel Ayarları</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("ReaderList", "Panel")">
-                                                    <span class="sidebar-mini-icon">KA</span>
-                                                    <span class="sidebar-normal"> Kapı Ayarları</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
+                    </div>
+                    <ul class="nav">
+                        <li>
+                            <a href="@Url.Action("Index", "Home")">
+                                <i class="tim-icons icon-bank"></i>
+                                <p>Anasayfa</p>
+                            </a>
+                        </li>
 
-                                <li>
-                                    <a data-toggle="collapse" aria-expanded="false" href="#multiZaman">
-                                        <span class="sidebar-mini-icon">MLT</span>
-                                        <span class="sidebar-normal">
-                                            Zaman Bölgesi
-                                            <b class="caret"></b>
-                                        </span>
-                                    </a>
-                                    <div class="collapse" id="multiZaman">
-                                        <ul class="nav">
-                                            <li>
-                                                <a href="@Url.Action("Add", "TimeGroups")">
-                                                    <span class="sidebar-mini-icon">YZB</span>
-                                                    <span class="sidebar-normal"> Yeni Zaman Bölgesi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "TimeGroups")">
-                                                    <span class="sidebar-mini-icon">ZBA</span>
-                                                    <span class="sidebar-normal"> Zaman Bölgesi Ayarları</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" aria-expanded="false" href="#multiGecisGrup">
-                                        <span class="sidebar-mini-icon">GG</span>
-                                        <span class="sidebar-normal">
-                                            Geçiş Grupları
-                                            <b class="caret"></b>
-                                        </span>
-                                    </a>
-                                    <div class="collapse" id="multiGecisGrup">
-                                        <ul class="nav">
-                                            <li>
-                                                <a href="@Url.Action("Create", "AccessGroup")">
 
-                                                    <span class="sidebar-mini-icon">YGG</span>
-                                                    <span class="sidebar-normal"> Yeni Geçiş Grubu</span>
+                        @if (MenuListUser.Kullanici_Alarm_Ekleme == true || MenuListUser.Kamera_Ekleme == true || MenuListUser.Asansor_Gecis_Grubu_Ekleme == true
+                             || MenuListUser.Global_Bolge_Guncelleme == true || MenuListUser.Kapi_Operasyon == true || MenuListUser.E_Mail_Gonderme_Ayarlari == true
+                             || MenuListUser.SMS_Gonderme_Ayarlari == true || MenuListUser.Gecis_Olay_Verileri == true || MenuListUser.Gecis_Olay_Yedekle == true || MenuListUser.Guvenlik_Ayarlari == true)
+                        {
+                            <li>
+                                <a data-toggle="collapse" href="#genel">
+                                    <i class="tim-icons icon-molecule-40"></i>
+                                    <p>
+                                        Genel
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <div class="collapse" id="genel">
+                                    <ul class="nav">
+                                        @{
+                                            if (MenuListUser.Kullanici_Alarm_Ekleme == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", "Alarm")">
+                                                        <span class="sidebar-mini-icon">KAT</span>
+                                                        <span class="sidebar-normal"> Kullanıcı Alarm Tanımları</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            if (MenuListUser.Kamera_Ekleme == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", "CameraSettings")">
+                                                        <span class="sidebar-mini-icon">K</span>
+                                                        <span class="sidebar-normal"> Kameralar</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            if (MenuListUser.Asansor_Gecis_Grubu_Ekleme == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("LiftGroups", "Lift")">
+                                                        <span class="sidebar-mini-icon">AGG</span>
+                                                        <span class="sidebar-normal"> Asansör Geçiş Grupları</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            if (MenuListUser.Global_Bolge_Guncelleme == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", "GlobalZone")">
+                                                        <span class="sidebar-mini-icon">GB</span>
+                                                        <span class="sidebar-normal"> Global Bölgeler</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            if (MenuListUser.Kapi_Operasyon == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", "Door")">
+                                                        <span class="sidebar-mini-icon">KI</span>
+                                                        <span class="sidebar-normal"> Kapı İşlemleri</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            if (CurrentUser.SysAdmin == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index","SecuritySettings")">
+                                                        <span class="sidebar-mini-icon">GA</span>
+                                                        <span class="sidebar-normal"> Güvenlik Ayarları</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("ChangePassword", "SecuritySettings")">
+                                                        <span class="sidebar-mini-icon">GA</span>
+                                                        <span class="sidebar-normal"> Güvenlik Ayarları</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            if (MenuListUser.E_Mail_Gonderme_Ayarlari == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Add", "EMail")">
+                                                        <span class="sidebar-mini-icon">EM</span>
+                                                        <span class="sidebar-normal"> E-Mail Gönderme Ayarları</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            if (MenuListUser.SMS_Gonderme_Ayarlari == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Add", "SMS")">
+                                                        <span class="sidebar-mini-icon">SG</span>
+                                                        <span class="sidebar-normal"> SMS Gönderme Ayarları</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            if (MenuListUser.Gecis_Olay_Verileri == true && CurrentUser.SysAdmin == true)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", "AccessReceive")">
+                                                        <span class="sidebar-mini-icon">GOV</span>
+                                                        <span class="sidebar-normal"> Geçiş Olay Verileri</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+                        @if (MenuListUser.Tanimlamalar == true)
+                        {
+                            <li>
+                                <a data-toggle="collapse" href="#tanimlar">
+                                    <i class="far fa-flag"></i>
+                                    <p>
+                                        Tanımlamalar
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <div class="collapse" id="tanimlar">
+                                    <ul class="nav">
+                                        <li>
+                                            <a href="@Url.Action("Index", "Company")">
+                                                <span class="sidebar-mini-icon">ŞT</span>
+                                                <span class="sidebar-normal"> Şirket Tanımları</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Index", "Department")">
+                                                <span class="sidebar-mini-icon">DT</span>
+                                                <span class="sidebar-normal"> Departman Tanımları</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Index", "AltDepartman")">
+                                                <span class="sidebar-mini-icon">ADT</span>
+                                                <span class="sidebar-normal"> Alt Departman Tanımları</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="@Url.Action("Index", "Bolum")">
+                                                <span class="sidebar-mini-icon">BT</span>
+                                                <span class="sidebar-normal"> Bölüm Tanımları</span>
+                                            </a>
+                                        </li>
+                                        @*<li>
+                                                <a href="@Url.Action("Index", "Birim")">
+                                                    <span class="sidebar-mini-icon">BR</span>
+                                                    <span class="sidebar-normal">Birim Tanımları</span>
                                                 </a>
-                                            </li>
+                                            </li>*@
+                                        <li>
+                                            <a href="@Url.Action("Index", "Block")">
+                                                <span class="sidebar-mini-icon">BT</span>
+                                                <span class="sidebar-normal"> Blok Tanımları</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Index", "Unvan")">
+                                                <span class="sidebar-mini-icon">UT</span>
+                                                <span class="sidebar-normal"> Ünvan Tanımları</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Index", "Employment")">
+                                                <span class="sidebar-mini-icon">GT</span>
+                                                <span class="sidebar-normal"> Görev Tanımları</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+                        @if (CurrentUser.SysAdmin == true && MenuListUser.Panel_Ekleme == true || MenuListUser.Panel_Guncelleme == true || MenuListUser.Zaman_Bolgesi_Ayarlari == true || MenuListUser.Gecis_Grup_Ayarlari == true)
+                        {
+                            <li>
+                                <a data-toggle="collapse" href="#sistemAyarları" aria-expanded="true">
+                                    <i class="tim-icons icon-settings"></i>
+                                    <p>
+                                        Sistem Ayarları
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <div class="collapse" id="sistemAyarları">
+                                    <ul class="nav">
+                                        @if (CurrentUser.SysAdmin == true && (MenuListUser.Panel_Ekleme == true || MenuListUser.Panel_Guncelleme == true))
+                                        {
                                             <li>
-                                                <a href="@Url.Action("Groups", "AccessGroup")">
+                                                <a data-toggle="collapse" aria-expanded="false" href="#multiPanelOperasyon">
+                                                    <span class="sidebar-mini-icon">PO</span>
+                                                    <span class="sidebar-normal">
+                                                        Panel Operasyon
+                                                        <b class="caret"></b>
+                                                    </span>
+                                                </a>
+                                                <div class="collapse" id="multiPanelOperasyon">
+                                                    <ul class="nav">
+                                                        @if (MenuListUser.Panel_Ekleme == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Create", "PanelSettings")">
+                                                                    <span class="sidebar-mini-icon">PE</span>
+                                                                    <span class="sidebar-normal"> Panel Ekle</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Panel_Guncelleme == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Settings", "PanelSettings")">
+                                                                    <span class="sidebar-mini-icon">PA</span>
+                                                                    <span class="sidebar-normal"> Panel Ayarları</span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="@Url.Action("ReaderList", "Panel")">
+                                                                    <span class="sidebar-mini-icon">KA</span>
+                                                                    <span class="sidebar-normal"> Kapı Ayarları</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        }
+
+                                        @if (MenuListUser.Zaman_Bolgesi_Ayarlari == true)
+                                        {
+                                            <li>
+                                                <a data-toggle="collapse" aria-expanded="false" href="#multiZaman">
+                                                    <span class="sidebar-mini-icon">MLT</span>
+                                                    <span class="sidebar-normal">
+                                                        Zaman Bölgesi
+                                                        <b class="caret"></b>
+                                                    </span>
+                                                </a>
+                                                <div class="collapse" id="multiZaman">
+                                                    <ul class="nav">
+                                                        <li>
+                                                            <a href="@Url.Action("Add", "TimeGroups")">
+                                                                <span class="sidebar-mini-icon">YZB</span>
+                                                                <span class="sidebar-normal"> Yeni Zaman Bölgesi</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "TimeGroups")">
+                                                                <span class="sidebar-mini-icon">ZBA</span>
+                                                                <span class="sidebar-normal"> Zaman Bölgesi Ayarları</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        }
+                                        @if (MenuListUser.Gecis_Grup_Ayarlari == true)
+                                        {
+                                            <li>
+                                                <a data-toggle="collapse" aria-expanded="false" href="#multiGecisGrup">
                                                     <span class="sidebar-mini-icon">GG</span>
-                                                    <span class="sidebar-normal"> Geçiş Grupları</span>
+                                                    <span class="sidebar-normal">
+                                                        Geçiş Grupları
+                                                        <b class="caret"></b>
+                                                    </span>
+                                                </a>
+                                                <div class="collapse" id="multiGecisGrup">
+                                                    <ul class="nav">
+                                                        <li>
+                                                            <a href="@Url.Action("Create", "AccessGroup")">
+
+                                                                <span class="sidebar-mini-icon">YGG</span>
+                                                                <span class="sidebar-normal"> Yeni Geçiş Grubu</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("Groups", "AccessGroup")">
+                                                                <span class="sidebar-mini-icon">GG</span>
+                                                                <span class="sidebar-normal"> Geçiş Grupları</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "FastGroup")">
+                                                                <span class="sidebar-mini-icon">HGA</span>
+                                                                <span class="sidebar-normal"> Hızlı Grup Atama</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@Url.Action("GroupImport", "ExternalData")">
+                                                                <span class="sidebar-mini-icon">DVA</span>
+                                                                <span class="sidebar-normal"> Dış Veri Al</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+                        @if (MenuListUser.Kapi_Operasyon == true || MenuListUser.Grup_Takvimi_Olusturma == true || MenuListUser.Kapi_Grup_Olusturma == true)
+                        {
+                            <li>
+                                <a data-toggle="collapse" href="#kapiIslemleri">
+                                    <i class="fas fa-door-open"></i>
+                                    <p>
+                                        Kapı İşlemleri
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <div class="collapse" id="kapiIslemleri">
+                                    <ul class="nav">
+                                        @if (MenuListUser.Kapi_Operasyon == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "Door")">
+                                                    <span class="sidebar-mini-icon">KO</span>
+                                                    <span class="sidebar-normal"> Kapı Operasyon</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="@Url.Action("Index", "FastGroup")">
-                                                    <span class="sidebar-mini-icon">HGA</span>
-                                                    <span class="sidebar-normal"> Hızlı Grup Atama</span>
+                                                <a href="@Url.Action("Index", "DoorStatus")">
+                                                    <span class="sidebar-mini-icon">KD</span>
+                                                    <span class="sidebar-normal"> Kapı Durumları</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (MenuListUser.Kapi_Grup_Olusturma == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "DoorGroup")">
+                                                    <span class="sidebar-mini-icon">KG</span>
+                                                    <span class="sidebar-normal"> Kapı Grupları</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (MenuListUser.Grup_Takvimi_Olusturma == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Create", "Holiday")">
+                                                    <span class="sidebar-mini-icon">TP</span>
+                                                    <span class="sidebar-normal"> Tatil Planı</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="@Url.Action("GroupImport", "ExternalData")">
+                                                <a href="@Url.Action("ProgRelay", "Door")">
+                                                    <span class="sidebar-mini-icon">PAK</span>
+                                                    <span class="sidebar-normal"> Programlı Açma/Kapama</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+                        @if (MenuListUser.Kullanici_Ekleme == true || MenuListUser.Kullanici_Gonderme == true || MenuListUser.Kullanici_Duzenleme == true)
+                        {
+                            <li>
+                                <a data-toggle="collapse" href="#kullanicilar">
+                                    <i class="tim-icons icon-badge"></i>
+                                    <p>
+                                        Kullanıcılar
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <div class="collapse" id="kullanicilar">
+                                    <ul class="nav">
+                                        @if (MenuListUser.Kullanici_Ekleme == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Create", "Users")">
+                                                    <span class="sidebar-mini-icon">YK</span>
+                                                    <span class="sidebar-normal"> Yeni Kullanıcılar</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (MenuListUser.Kullanici_Gonderme == true && MenuListUser.Kullanici_Duzenleme == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "Users")">
+                                                    <span class="sidebar-mini-icon">KA</span>
+                                                    <span class="sidebar-normal"> Kullanıcı Ayarları</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("PanelOperation", "Users")">
+                                                    <span class="sidebar-mini-icon">KPI</span>
+                                                    <span class="sidebar-normal"> Kullanıcı Panel İşlemleri</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (MenuListUser.Kullanici_Ekleme == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("UserImport", "ExternalData")">
                                                     <span class="sidebar-mini-icon">DVA</span>
                                                     <span class="sidebar-normal"> Dış Veri Al</span>
                                                 </a>
                                             </li>
-                                        </ul>
-                                    </div>
-                                </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+
+                        @if (MenuListUser.Ziyaretci_Ekleme == true || MenuListUser.Ziyaretci_Duzenleme == true)
+                        {
+                            <li>
+                                <a data-toggle="collapse" href="#ziyaretciler">
+                                    <i class="tim-icons icon-single-02"></i>
+                                    <p>
+                                        Ziyaretçiler
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <div class="collapse" id="ziyaretciler">
+                                    <ul class="nav">
+                                        @if (MenuListUser.Ziyaretci_Ekleme == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Create", "Visitor")">
+                                                    <span class="sidebar-mini-icon">YZ</span>
+                                                    <span class="sidebar-normal"> Yeni Ziyaretçi</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Create", "QuickResponse")">
+                                                    <span class="sidebar-mini-icon">YZ</span>
+                                                    <span class="sidebar-normal"> Yeni Ziyaretçi(QR)</span>
+                                                </a>
+                                            </li>
+                                        }
+
+                                        @if (MenuListUser.Ziyaretci_Duzenleme == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "Visitor")">
+                                                    <span class="sidebar-mini-icon">ZA</span>
+                                                    <span class="sidebar-normal"> Ziyaretçi Ayarları</span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="@Url.Action("Index", "QuickResponse")">
+                                                    <span class="sidebar-mini-icon">ZA</span>
+                                                    <span class="sidebar-normal"> Ziyaretçi Ayarları(QR)</span>
+                                                </a>
+                                            </li>
+                                        }
 
 
 
+                                    </ul>
+                                </div>
+                            </li>
+                        }
 
+                        @if (MenuListUser.Personel_Listesi == true || MenuListUser.Aktif_Personel_Raporlari == true
+                        || MenuListUser.Eski_Personel_Raporlari == true || MenuListUser.Aktif_Olmayanlar_Listesi == true
+                        || MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true || MenuListUser.Toplam_Icerde_Kalma_Raporu == true
+                        || MenuListUser.Gelen_Kisi_Raporlari == true || MenuListUser.Gelmeyen_Kisi_Raporlari == true
+                        || MenuListUser.Pasif_Kullanici_Raporlari == true || MenuListUser.Toplu_Giris_Sayisi_Raporlari == true
+                        || MenuListUser.Icerde_Disarda_Personel_Raporlari == true || MenuListUser.Icerde_Disarda_Ziyaretci_Raporlari == true || MenuListUser.Icerde_Disarda_Tumu == true
+                        || MenuListUser.Yemekhane_Kisi_Bazli_Rapor == true || MenuListUser.Yemekhane_Toplu_Gecis_Sayisi_Raporlari == true
+                        || MenuListUser.Diger_Raporlar == true || MenuListUser.Kullanici_Alarm_Raporu == true
+                        || MenuListUser.Ziyaretci_Raporlari == true || MenuListUser.Tanimsiz_Kullanici_Raporlari == true || MenuListUser.Operator_Log_Raporlari == true || MenuListUser.Panel_Durum_Tablosu == true || MenuListUser.Gec_Gelen_Erken_Cikan == true)
+                        {
 
+                            <li>
+                                <a data-toggle="collapse" href="#raporlar">
+                                    <i class="tim-icons icon-chart-bar-32"></i>
+                                    <p>
+                                        Raporlar
+                                        <b class="caret"></b>
+                                    </p>
+                                </a>
+                                <div class="collapse" id="raporlar">
+                                    <ul class="nav">
+                                        @if (MenuListUser.Personel_Listesi == true || MenuListUser.Aktif_Personel_Raporlari == true || MenuListUser.Eski_Personel_Raporlari == true || MenuListUser.Aktif_Olmayanlar_Listesi == true)
+                                        {
 
-
-
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#kapiIslemleri">
-                            <i class="fas fa-door-open"></i>
-                            <p>
-                                Kapı İşlemleri
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="kapiIslemleri">
-                            <ul class="nav">
-                                <li>
-                                    <a href="@Url.Action("Index", "Door")">
-                                        <span class="sidebar-mini-icon">KO</span>
-                                        <span class="sidebar-normal"> Kapı Operasyon</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "DoorStatus")">
-                                        <span class="sidebar-mini-icon">KD</span>
-                                        <span class="sidebar-normal"> Kapı Durumları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "DoorGroup")">
-                                        <span class="sidebar-mini-icon">KG</span>
-                                        <span class="sidebar-normal"> Kapı Grupları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create", "Holiday")">
-                                        <span class="sidebar-mini-icon">TP</span>
-                                        <span class="sidebar-normal"> Tatil Planı</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("ProgRelay", "Door")">
-                                        <span class="sidebar-mini-icon">PAK</span>
-                                        <span class="sidebar-normal"> Programlı Açma/Kapama</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#kullanicilar">
-                            <i class="tim-icons icon-badge"></i>
-                            <p>
-                                Kullanıcılar
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="kullanicilar">
-                            <ul class="nav">
-                                <li>
-                                    <a href="@Url.Action("Create", "Users")">
-                                        <span class="sidebar-mini-icon">YK</span>
-                                        <span class="sidebar-normal"> Yeni Kullanıcılar</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Users")">
-                                        <span class="sidebar-mini-icon">KA</span>
-                                        <span class="sidebar-normal"> Kullanıcı Ayarları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("PanelOperation", "Users")">
-                                        <span class="sidebar-mini-icon">KPI</span>
-                                        <span class="sidebar-normal"> Kullanıcı Panel İşlemleri</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("UserImport", "ExternalData")">
-                                        <span class="sidebar-mini-icon">DVA</span>
-                                        <span class="sidebar-normal"> Dış Veri Al</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#ziyaretciler">
-                            <i class="tim-icons icon-single-02"></i>
-                            <p>
-                                Ziyaretçiler
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="ziyaretciler">
-                            <ul class="nav">
-                                <li>
-                                    <a href="@Url.Action("Create", "Visitor")">
-                                        <span class="sidebar-mini-icon">YZ</span>
-                                        <span class="sidebar-normal"> Yeni Ziyaretçi</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Visitor")">
-                                        <span class="sidebar-mini-icon">ZA</span>
-                                        <span class="sidebar-normal"> Ziyaretçi Ayarları</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#raporlar">
-                            <i class="tim-icons icon-chart-bar-32"></i>
-                            <p>
-                                Raporlar
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="raporlar">
-                            <ul class="nav">
-                                <li>
-                                    <a data-toggle="collapse" aria-expanded="false" href="#multiPersonel">
-                                        <span class="sidebar-mini-icon">PR</span>
-                                        <span class="sidebar-normal">
-                                            Personel Raporları
-                                            <b class="caret"></b>
-                                        </span>
-                                    </a>
-                                    <div class="collapse" id="multiPersonel">
-                                        <ul class="nav">
                                             <li>
-                                                <a href="@Url.Action("Index", "PersonelListReport")">
-                                                    <span class="sidebar-mini-icon">PL</span>
-                                                    <span class="sidebar-normal"> Personel Listesi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Index", "ReportPersonel")">
-                                                    <span class="sidebar-mini-icon">AKR</span>
-                                                    <span class="sidebar-normal"> Aktif Kullanıcı Raporları</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("OldStaff", "ReportPersonel")">
-                                                    <span class="sidebar-mini-icon">EKR</span>
-                                                    <span class="sidebar-normal"> Eski Kullanıcı Raporları</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("DeletedUsers", "ReportPersonel")">
-                                                    <span class="sidebar-mini-icon">AO</span>
-                                                    <span class="sidebar-normal"> Aktif Olmayanlar</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" aria-expanded="false" href="#multiGenelRapor">
-                                        <span class="sidebar-mini-icon">GR</span>
-                                        <span class="sidebar-normal">
-                                            Genel Raporlar
-                                            <b class="caret"></b>
-                                        </span>
-                                    </a>
-                                    <div class="collapse" id="multiGenelRapor">
-                                        <ul class="nav">
-                                            <li>
-                                                <a href="@Url.Action("IlkGirisSonCikis", "GelenGelmeyenReport")">
-                                                    <span class="sidebar-mini-icon">IGSC</span>
-                                                    <span class="sidebar-normal"> İlk Giriş Son Çıkış</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("ToplamIcerdeKalma", "GelenGelmeyenReport")">
-                                                    <span class="sidebar-mini-icon">TIK</span>
-                                                    <span class="sidebar-normal"> Toplam İçerde Kalma</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Gelenler", "GelenGelmeyenReport")">
-                                                    <span class="sidebar-mini-icon">GKR</span>
-                                                    <span class="sidebar-normal"> Gelen Kişi Raporları</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("Gelmeyenler", "GelenGelmeyenReport")">
-                                                    <span class="sidebar-mini-icon">GKR</span>
-                                                    <span class="sidebar-normal"> Gelmeyen Kişi Raporları</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("PasifKullanici", "GelenGelmeyenReport")">
-                                                    <span class="sidebar-mini-icon">PKR</span>
-                                                    <span class="sidebar-normal"> Pasif Kullanıcı Raporları</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("TopluGirisSayisi", "GelenGelmeyenReport")">
-                                                    <span class="sidebar-mini-icon">TGSR</span>
-                                                    <span class="sidebar-normal"> Toplu Giriş Sayısı Raporları</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" aria-expanded="false" href="#multiIcerdeDisarda">
-                                        <span class="sidebar-mini-icon">IDR</span>
-                                        <span class="sidebar-normal">
-                                            İçerde-Dışarda Raporları
-                                            <b class="caret"></b>
-                                        </span>
-                                    </a>
-                                    <div class="collapse" id="multiIcerdeDisarda">
-                                        <ul class="nav">
-                                            <li>
-                                                <a href="@Url.Action("InOutPersonel", "InsideOutReport")">
+                                                <a data-toggle="collapse" aria-expanded="false" href="#multiPersonel">
                                                     <span class="sidebar-mini-icon">PR</span>
-                                                    <span class="sidebar-normal"> Personel</span>
+                                                    <span class="sidebar-normal">
+                                                        Personel Raporları
+                                                        <b class="caret"></b>
+                                                    </span>
                                                 </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("InOutVisitor", "InsideOutReport")">
-                                                    <span class="sidebar-mini-icon">ZR</span>
-                                                    <span class="sidebar-normal"> Ziyaretçi</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("InOutAll", "InsideOutReport")">
-                                                    <span class="sidebar-mini-icon">TR</span>
-                                                    <span class="sidebar-normal"> Tümü</span>
-                                                </a>
-                                            </li>
+                                                <div class="collapse" id="multiPersonel">
+                                                    <ul class="nav">
+                                                        @if (MenuListUser.Personel_Listesi == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Index", "PersonelListReport")">
+                                                                    <span class="sidebar-mini-icon">PL</span>
+                                                                    <span class="sidebar-normal"> Personel Listesi</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Aktif_Personel_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Index", "ReportPersonel")">
+                                                                    <span class="sidebar-mini-icon">AKR</span>
+                                                                    <span class="sidebar-normal"> Aktif Kullanıcı Raporları</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Eski_Personel_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("OldStaff", "ReportPersonel")">
+                                                                    <span class="sidebar-mini-icon">EKR</span>
+                                                                    <span class="sidebar-normal"> Eski Kullanıcı Raporları</span>
+                                                                </a>
+                                                            </li>
+                                                        }
 
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" aria-expanded="false" href="#multiYemekhane">
-                                        <span class="sidebar-mini-icon">MLT</span>
-                                        <span class="sidebar-normal">
-                                            Yemekhane Raporları
-                                            <b class="caret"></b>
-                                        </span>
-                                    </a>
-                                    <div class="collapse" id="multiYemekhane">
-                                        <ul class="nav">
-                                            <li>
-                                                <a href="@Url.Action("Index", "Refectory")">
-                                                    <span class="sidebar-mini-icon">YRK</span>
-                                                    <span class="sidebar-normal"> Yemekhane Raporları-Kişi</span>
-                                                </a>
+                                                        @if (MenuListUser.Aktif_Olmayanlar_Listesi == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("DeletedUsers", "ReportPersonel")">
+                                                                    <span class="sidebar-mini-icon">AO</span>
+                                                                    <span class="sidebar-normal"> Aktif Olmayanlar</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
                                             </li>
+                                        }
+                                        @if (MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true || MenuListUser.Toplam_Icerde_Kalma_Raporu == true || MenuListUser.Gelen_Kisi_Raporlari == true || MenuListUser.Gelmeyen_Kisi_Raporlari == true || MenuListUser.Pasif_Kullanici_Raporlari == true || MenuListUser.Toplu_Giris_Sayisi_Raporlari == true || MenuListUser.Gec_Gelen_Erken_Cikan == true)
+                                        {
                                             <li>
-                                                <a href="@Url.Action("Total", "Refectory")">
-                                                    <span class="sidebar-mini-icon">YRT</span>
-                                                    <span class="sidebar-normal"> Yemekhane Raporları-Toplu</span>
+                                                <a data-toggle="collapse" aria-expanded="false" href="#multiGenelRapor">
+                                                    <span class="sidebar-mini-icon">GR</span>
+                                                    <span class="sidebar-normal">
+                                                        Genel Raporlar
+                                                        <b class="caret"></b>
+                                                    </span>
                                                 </a>
+                                                <div class="collapse" id="multiGenelRapor">
+                                                    <ul class="nav">
+                                                        @if (MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("IlkGirisSonCikis", "GelenGelmeyenReport")">
+                                                                    <span class="sidebar-mini-icon">IGSC</span>
+                                                                    <span class="sidebar-normal"> İlk Giriş Son Çıkış</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Gec_Gelen_Erken_Cikan == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("GecGelenErkenCikan", "GelenGelmeyenReport")">
+                                                                    <span class="sidebar-mini-icon">GEÇ</span>
+                                                                    <span class="sidebar-normal"> Geç Gelen Erken Çıkan</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Toplam_Icerde_Kalma_Raporu == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("ToplamIcerdeKalma", "GelenGelmeyenReport")">
+                                                                    <span class="sidebar-mini-icon">TIK</span>
+                                                                    <span class="sidebar-normal"> Toplam İçerde Kalma</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Gelen_Kisi_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Gelenler", "GelenGelmeyenReport")">
+                                                                    <span class="sidebar-mini-icon">GKR</span>
+                                                                    <span class="sidebar-normal"> Gelen Kişi Raporları</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Gelmeyen_Kisi_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Gelmeyenler", "GelenGelmeyenReport")">
+                                                                    <span class="sidebar-mini-icon">GKR</span>
+                                                                    <span class="sidebar-normal"> Gelmeyen Kişi Raporları</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Pasif_Kullanici_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("PasifKullanici", "GelenGelmeyenReport")">
+                                                                    <span class="sidebar-mini-icon">PKR</span>
+                                                                    <span class="sidebar-normal"> Pasif Kullanıcı Raporları</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Toplu_Giris_Sayisi_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("TopluGirisSayisi", "GelenGelmeyenReport")">
+                                                                    <span class="sidebar-mini-icon">TGSR</span>
+                                                                    <span class="sidebar-normal"> Toplu Giriş Sayısı Raporları</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
                                             </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a data-toggle="collapse" aria-expanded="false" href="#multiDiger">
-                                        <span class="sidebar-mini-icon">MLT</span>
-                                        <span class="sidebar-normal">
-                                            Diğer Raporlar
-                                            <b class="caret"></b>
-                                        </span>
-                                    </a>
-                                    <div class="collapse" id="multiDiger">
-                                        <ul class="nav">
+                                        }
+                                        @if (MenuListUser.Icerde_Disarda_Personel_Raporlari == true || MenuListUser.Icerde_Disarda_Ziyaretci_Raporlari == true || MenuListUser.Icerde_Disarda_Tumu == true)
+                                        {
                                             <li>
-                                                <a href="@Url.Action("Index", "OutherReport")">
-                                                    <span class="sidebar-mini-icon">DR</span>
-                                                    <span class="sidebar-normal"> Diğer Raporlar</span>
+                                                <a data-toggle="collapse" aria-expanded="false" href="#multiIcerdeDisarda">
+                                                    <span class="sidebar-mini-icon">IDR</span>
+                                                    <span class="sidebar-normal">
+                                                        İçerde-Dışarda Raporları
+                                                        <b class="caret"></b>
+                                                    </span>
                                                 </a>
+                                                <div class="collapse" id="multiIcerdeDisarda">
+                                                    <ul class="nav">
+                                                        @if (MenuListUser.Icerde_Disarda_Personel_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("InOutPersonel", "InsideOutReport")">
+                                                                    <span class="sidebar-mini-icon">PR</span>
+                                                                    <span class="sidebar-normal"> Personel</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Icerde_Disarda_Ziyaretci_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("InOutVisitor", "InsideOutReport")">
+                                                                    <span class="sidebar-mini-icon">ZR</span>
+                                                                    <span class="sidebar-normal"> Ziyaretçi</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Icerde_Disarda_Tumu == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("InOutAll", "InsideOutReport")">
+                                                                    <span class="sidebar-mini-icon">TR</span>
+                                                                    <span class="sidebar-normal"> Tümü</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
                                             </li>
+                                        }
+                                        @if (MenuListUser.Yemekhane_Kisi_Bazli_Rapor == true || MenuListUser.Yemekhane_Toplu_Gecis_Sayisi_Raporlari == true)
+                                        {
                                             <li>
-                                                <a href="@Url.Action("KullaniciAlarm", "OutherReport")">
-                                                    <span class="sidebar-mini-icon">KAR</span>
-                                                    <span class="sidebar-normal"> Kullanıcı Alarm Raporu</span>
+                                                <a data-toggle="collapse" aria-expanded="false" href="#multiYemekhane">
+                                                    <span class="sidebar-mini-icon">MLT</span>
+                                                    <span class="sidebar-normal">
+                                                        Yemekhane Raporları
+                                                        <b class="caret"></b>
+                                                    </span>
                                                 </a>
+                                                <div class="collapse" id="multiYemekhane">
+                                                    <ul class="nav">
+                                                        @if (MenuListUser.Yemekhane_Kisi_Bazli_Rapor == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Index", "Refectory")">
+                                                                    <span class="sidebar-mini-icon">YRK</span>
+                                                                    <span class="sidebar-normal"> Yemekhane Raporları-Kişi</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Yemekhane_Toplu_Gecis_Sayisi_Raporlari == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Total", "Refectory")">
+                                                                    <span class="sidebar-mini-icon">YRT</span>
+                                                                    <span class="sidebar-normal"> Yemekhane Raporları-Toplu</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
                                             </li>
+                                        }
+
+                                        @if (MenuListUser.Diger_Raporlar == true || MenuListUser.Kullanici_Alarm_Raporu == true)
+                                        {
+                                            <li>
+                                                <a data-toggle="collapse" aria-expanded="false" href="#multiDiger">
+                                                    <span class="sidebar-mini-icon">MLT</span>
+                                                    <span class="sidebar-normal">
+                                                        Diğer Raporlar
+                                                        <b class="caret"></b>
+                                                    </span>
+                                                </a>
+                                                <div class="collapse" id="multiDiger">
+                                                    <ul class="nav">
+                                                        @if (MenuListUser.Diger_Raporlar == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Index", "OutherReport")">
+                                                                    <span class="sidebar-mini-icon">DR</span>
+                                                                    <span class="sidebar-normal"> Diğer Raporlar</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+                                                        @if (MenuListUser.Kullanici_Alarm_Raporu == true)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("KullaniciAlarm", "OutherReport")">
+                                                                    <span class="sidebar-mini-icon">KAR</span>
+                                                                    <span class="sidebar-normal"> Kullanıcı Alarm Raporu</span>
+                                                                </a>
+                                                            </li>
+                                                        }
+
+
+                                                        <li>
+                                                            <a href="@Url.Action("Index", "UndefinedUserReport")">
+                                                                <span class="sidebar-mini-icon">TKR</span>
+                                                                <span class="sidebar-normal"> Tanımsız Kullanıcı Raporları</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        }
+                                        @if (MenuListUser.Ziyaretci_Raporlari == true)
+                                        {
                                             <li>
                                                 <a href="@Url.Action("Index", "VisitorReport")">
                                                     <span class="sidebar-mini-icon">ZR</span>
                                                     <span class="sidebar-normal"> Ziyaretçi Raporları</span>
                                                 </a>
                                             </li>
+                                        }
+
+                                        @if (MenuListUser.Tanimsiz_Kullanici_Raporlari == true)
+                                        {
                                             <li>
                                                 <a href="@Url.Action("Index", "UndefinedUserReport")">
                                                     <span class="sidebar-mini-icon">TKR</span>
                                                     <span class="sidebar-normal"> Tanımsız Kullanıcı Raporları</span>
                                                 </a>
                                             </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "OperatorLogReport")">
-                                        <span class="sidebar-mini-icon">OLR</span>
-                                        <span class="sidebar-normal"> Operator Log Raporları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("TaskTable", "Task")">
-                                        <span class="sidebar-mini-icon">PDT</span>
-                                        <span class="sidebar-normal"> Panel Durum Tablosu</span>
-                                    </a>
-                                </li>
+                                        }
+                                        @if (MenuListUser.Operator_Log_Raporlari == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index", "OperatorLogReport")">
+                                                    <span class="sidebar-mini-icon">OLR</span>
+                                                    <span class="sidebar-normal"> Operator Log Raporları</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (MenuListUser.Panel_Durum_Tablosu == true)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("TaskTable", "Task")">
+                                                    <span class="sidebar-mini-icon">PDT</span>
+                                                    <span class="sidebar-normal"> Panel Durum Tablosu</span>
+                                                </a>
+                                            </li>
+                                        }
 
-
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Logout", "Home")">
-                            <i class="tim-icons icon-simple-remove"></i>
-                            <p>Çıkış</p>
-                        </a>
-                    </li>
-                </ul>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        <li>
+                            <a href="@Url.Action("Logout", "Home")">
+                                <i class="tim-icons icon-simple-remove"></i>
+                                <p>Çıkış</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="main-panel" data="blue">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <div class="navbar-minimize d-inline">
-                            <button class="minimize-sidebar btn btn-link btn-just-icon" rel="tooltip" data-original-title="Sidebar toggle" data-placement="right">
-                                <i class="tim-icons icon-align-center visible-on-sidebar-regular"></i>
-                                <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini"></i>
-                            </button>
+            <div class="main-panel" data="blue">
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+                    <div class="container-fluid">
+                        <div class="navbar-wrapper">
+                            <div class="navbar-minimize d-inline">
+                                <button class="minimize-sidebar btn btn-link btn-just-icon" rel="tooltip" data-original-title="Sidebar toggle" data-placement="right">
+                                    <i class="tim-icons icon-align-center visible-on-sidebar-regular"></i>
+                                    <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini"></i>
+                                </button>
+                            </div>
+                            <div class="navbar-toggle d-inline">
+                                <button type="button" class="navbar-toggler">
+                                    <span class="navbar-toggler-bar bar1"></span>
+                                    <span class="navbar-toggler-bar bar2"></span>
+                                    <span class="navbar-toggler-bar bar3"></span>
+                                </button>
+                            </div>
+                            <a class="navbar-brand" href="javascript:void(0)">Genişletilmiş Formlar</a>
                         </div>
-                        <div class="navbar-toggle d-inline">
-                            <button type="button" class="navbar-toggler">
-                                <span class="navbar-toggler-bar bar1"></span>
-                                <span class="navbar-toggler-bar bar2"></span>
-                                <span class="navbar-toggler-bar bar3"></span>
-                            </button>
-                        </div>
-                        <a class="navbar-brand" href="javascript:void(0)">Genişletilmiş Formlar</a>
-                    </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navigation">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-bar navbar-kebab"></span>
+                            <span class="navbar-toggler-bar navbar-kebab"></span>
+                            <span class="navbar-toggler-bar navbar-kebab"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navigation">
 
-                        <ul class="navbar-nav ml-auto">
-                            @Html.Partial("_PartialAlarm")
-                            <li class="search-bar input-group">
-                                <a href="@Url.Action("Index","WatchScreen")" class="btn btn-link" id="watchScreen">
-                                    <i class="fas fa-desktop"></i>
-                                </a>
-                            </li>
-                            <li class="search-bar input-group">
-                                <a href="@Url.Action("Index","Door")" class="btn btn-link" id="search-button">
-                                    <i class="fas fa-door-closed"></i>
-                                </a>
-                            </li>
-                            <li class="dropdown nav-item">
-                                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                    @{
-                                        DBUsers usersName = CurrentSession.User;
-                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">@usersName.Adi @usersName.Soyadi</span>
-                                    }
-                                    <div class="photo mr-4">
-                                        <img src="~/Images/BaseUser.jpg" alt="Profile Photo">
-                                    </div>
-                                    <b class="caret d-none d-lg-block d-xl-block"></b>
-                                    <p class="d-lg-none">
-                                        Log out
-                                    </p>
-                                </a>
-                                <ul class="dropdown-menu dropdown-navbar">
-                                    <li class="nav-link">
-                                        @{
-                                            DBUsers dBUsers = CurrentSession.User;
-                                            if (dBUsers.SysAdmin == false)
+                            <ul class="navbar-nav ml-auto">
+                                @Html.Partial("_PartialAlarm")
+                                <li class="search-bar input-group">
+                                    <a href="@Url.Action("Index","WatchScreen")" class="btn btn-link" id="watchScreen">
+                                        <i class="fas fa-desktop"></i>
+                                    </a>
+                                </li>
+                                <li class="search-bar input-group">
+                                    <a href="@Url.Action("Index","Door")" class="btn btn-link" id="search-button">
+                                        <i class="fas fa-door-closed"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown nav-item">
+                                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">@CurrentUser.Adi @CurrentUser.Soyadi</span>
+                                        <div class="photo mr-4">
+                                            <img src="~/Images/BaseUser.jpg" alt="Profile Photo">
+                                        </div>
+                                        <b class="caret d-none d-lg-block d-xl-block"></b>
+                                        <p class="d-lg-none">
+                                            Log out
+                                        </p>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-navbar">
+                                        <li class="nav-link">
+                                            @if (CurrentUser.SysAdmin == false)
                                             {
                                                 <a href="@Url.Action("ChangePassword", "SecuritySettings")" class="nav-item dropdown-item">Profil</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("Edit", "SecuritySettings", new { Kullanici_Adi = dBUsers.Kullanici_Adi })" class="nav-item dropdown-item">Profil</a>
+                                                <a href="@Url.Action("Edit", "SecuritySettings", new { Kullanici_Adi = CurrentUser.Kullanici_Adi })" class="nav-item dropdown-item">Profil</a>
                                             }
-                                        }
-
-
-
-                                    </li>
-                                    <li class="nav-link">
-                                        <a href="@Url.Action("Settings", "PanelSettings")" class="nav-item dropdown-item">Ayarlar</a>
-                                    </li>
-                                    @{
-                                        DBUsers monitorUser = CurrentSession.User;
-                                        if (monitorUser.SysAdmin == true)
+                                        </li>
+                                        <li class="nav-link">
+                                            <a href="@Url.Action("Settings", "PanelSettings")" class="nav-item dropdown-item">Ayarlar</a>
+                                        </li>
+                                        @if (MenuListUser.Spot_Monitor == true)
                                         {
                                             <li class="nav-link">
-                                                <a href="@Url.Action("Index","SpotMonitor")" class="nav-item dropdown-item">Spot Monitör</a>
+                                                <a href="@Url.Action("Monitoring","SpotMonitor")" class="nav-item dropdown-item">Spot Monitör</a>
                                             </li>
+                                        }
+                                        @if (MenuListUser.Canli_Izleme == true)
+                                        {
                                             <li class="nav-link">
                                                 <a href="@Url.Action("WatchOuther","WatchScreen")" class="nav-item dropdown-item">Anlık Geçişler</a>
                                             </li>
                                         }
-                                    }
-                                    <li class="dropdown-divider"></li>
-                                    <li class="nav-link">
-                                        <a href="@Url.Action("Logout","Home")" class="nav-item dropdown-item">Log out</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="separator d-lg-none"></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="nav-link">
+                                            <a href="@Url.Action("Logout","Home")" class="nav-item dropdown-item">Log out</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="separator d-lg-none"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="tim-icons icon-simple-remove"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Navbar -->
+                <div class="content">
+                    @RenderBody()
+                    @RenderSection("camera", false)
+                </div>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <ul class="nav">
+                            @if (MenuListUser.Canli_Izleme == true)
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("WatchOuther","WatchScreen")" class="nav-link">
+                                        Canlı İzleme
+                                    </a>
+                                </li>
+                            }
+                            @if (MenuListUser.Panel_Guncelleme == true || MenuListUser.Panel_Ayar_Gonderme == true)
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Settings", "PanelSettings")" class="nav-link">
+                                        Panel Ayarları
+                                    </a>
+                                </li>
+                            }
+                            @if (MenuListUser.Kapi_Operasyon == true)
+                            {
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", "Door")" class="nav-link">
+                                        Kapı Operasyon
+                                    </a>
+                                </li>
+                            }
                         </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <i class="tim-icons icon-simple-remove"></i>
-                            </button>
+                        <div class="copyright">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script> made with <i class="tim-icons icon-atom"></i> by
+                            <a href="javascript:void(0)" target="_blank">Fora Technology Team.</a>
                         </div>
                     </div>
-                </div>
+                </footer>
             </div>
-            <!-- End Navbar -->
-            <div class="content">
-                @RenderBody()
-                @RenderSection("camera", false)
-            </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a href="@Url.Action("WatchOuther","WatchScreen")" class="nav-link">
-                                Canlı İzleme
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Settings", "PanelSettings")" class="nav-link">
-                                Panel Ayarları
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", "Door")" class="nav-link">
-                                Kapı Operasyon
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="copyright">
-                        ©
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script> made with <i class="tim-icons icon-atom"></i> by
-                        <a href="javascript:void(0)" target="_blank">Fora Technology Team.</a>
-                    </div>
-                </div>
-            </footer>
         </div>
-    </div>
-    <div class="fixed-plugin">
-        <div class="dropdown show-dropdown">
-            <a href="#" data-toggle="dropdown">
-                <i class="fa fa-cog fa-2x"> </i>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="header-title">Arka Plan Rengi</li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger background-color">
-                        <div class="badge-colors text-center">
-                            <span class="badge filter badge-info active" data-color="blue"></span>
-                            <span class="badge filter badge-primary" data-color="primary"></span>
-                            <span class="badge filter badge-success" data-color="green"></span>
-                            <span class="badge filter badge-warning" data-color="orange"></span>
-                            <span class="badge filter badge-danger" data-color="red"></span>
+        <div class="fixed-plugin">
+            <div class="dropdown show-dropdown">
+                <a href="#" data-toggle="dropdown">
+                    <i class="fa fa-cog fa-2x"> </i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header-title">Arka Plan Rengi</li>
+                    <li class="adjustments-line">
+                        <a href="javascript:void(0)" class="switch-trigger background-color">
+                            <div class="badge-colors text-center">
+                                <span class="badge filter badge-info active" data-color="blue"></span>
+                                <span class="badge filter badge-primary" data-color="primary"></span>
+                                <span class="badge filter badge-success" data-color="green"></span>
+                                <span class="badge filter badge-warning" data-color="orange"></span>
+                                <span class="badge filter badge-danger" data-color="red"></span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </a>
+                    </li>
+                    <li class="header-title">
+                        Kenar Cubugu Mini
+                    </li>
+                    <li class="adjustments-line">
+                        <div class="togglebutton switch-sidebar-mini">
+                            <span class="label-switch">OFF</span>
+                            <input type="checkbox" name="checkbox" checked class="bootstrap-switch" data-on-label="" data-off-label="" />
+                            <span class="label-switch label-right">ON</span>
                         </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="header-title">
-                    Kenar Cubugu Mini
-                </li>
-                <li class="adjustments-line">
-                    <div class="togglebutton switch-sidebar-mini">
-                        <span class="label-switch">OFF</span>
-                        <input type="checkbox" name="checkbox" checked class="bootstrap-switch" data-on-label="" data-off-label="" />
-                        <span class="label-switch label-right">ON</span>
-                    </div>
-                    <div class="togglebutton switch-change-color mt-3">
-                        <span class="label-switch">LIGHT MODE</span>
-                        <input type="checkbox" name="checkbox" checked class="bootstrap-switch" data-on-label="" data-off-label="" />
-                        <span class="label-switch label-right">DARK MODE</span>
-                    </div>
-                </li>
-                <li class="button-container mt-4">
-                    <a href="@Url.Action("TaskTable", "Task")" class="btn btn-default btn-block btn-round">
-                        Panel Durum Tablosu
-                    </a>
-                </li>
-            </ul>
+                        <div class="togglebutton switch-change-color mt-3">
+                            <span class="label-switch">LIGHT MODE</span>
+                            <input type="checkbox" name="checkbox" checked class="bootstrap-switch" data-on-label="" data-off-label="" />
+                            <span class="label-switch label-right">DARK MODE</span>
+                        </div>
+                    </li>
+                    <li class="button-container mt-4">
+                        <a href="@Url.Action("TaskTable", "Task")" class="btn btn-default btn-block btn-round">
+                            Panel Durum Tablosu
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    }
+
 
     <!--   Core JS Files   -->
     @*<script src="~/NewTemplate/assets/js/core/jquery.min.js"></script>*@

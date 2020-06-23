@@ -1,0 +1,316 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>MaviSoft - Monitör</title>
+    <!-- Custom fonts for this template-->
+
+
+
+
+    <link runat="server" rel="shortcut icon" href="~/Content/Images/favicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/Content/Images/favicon.ico" type="image/ico" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Templete/TempleteDosyalari/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    @*<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">*@
+    <link href="~/Content/SiteContent/fontfamily.css" rel="stylesheet" />
+    <!-- Custom styles for this template-->
+    <link href="~/Templete/TempleteDosyalari/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
+    <link href="~/Content/gridmvc.datepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/Animate.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/gridmvc.min.js"></script>
+
+    <!---Alerttfy js--->
+    <!-- JavaScript -->
+    @*<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/alertify.min.js"></script>*@
+    <script src="~/Content/SiteContent/alertify.min.js"></script>
+    <!-- CSS -->
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/alertify.min.css" />*@
+    <link href="~/Content/SiteContent/alertify.min.css" rel="stylesheet" />
+    <!-- Default theme -->
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/default.min.css" />*@
+    <link href="~/Content/SiteContent/default.min.css" rel="stylesheet" />
+    <!-- Semantic UI theme -->
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/semantic.min.css" />*@
+    <link href="~/Content/SiteContent/semantic.min.css" rel="stylesheet" />
+    <!-- Bootstrap theme -->
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/bootstrap.min.css" />*@
+    <link href="~/Content/SiteContent/alertify-bootstrap.min.css" rel="stylesheet" />
+    <!--
+        RTL version
+    -->
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/alertify.rtl.min.css" />*@
+    <link href="~/Content/SiteContent/alertify.rtl.min.css" rel="stylesheet" />
+    <!-- Default theme -->
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/default.rtl.min.css" />*@
+    <link href="~/Content/SiteContent/default.rtl.min.css" rel="stylesheet" />
+    <!-- Semantic UI theme -->
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/semantic.rtl.min.css" />*@
+    <link href="~/Content/SiteContent/semantic.rtl.min.css" rel="stylesheet" />
+    <!-- Bootstrap theme -->
+    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/themes/bootstrap.rtl.min.css" />*@
+    <link href="~/Content/SiteContent/bootstrap.rtl.min.css" rel="stylesheet" />
+    <!---Alertfy JS-->
+    @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+    <!--Chose Select Search---->
+    <link href="~/Content/SiteContent/searchSelect.css" rel="stylesheet" />
+    <!--Chose Select Search---->
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-md-12 mt-5 mb-5">
+            <div class="card border-info h-100 shadow-lg mx-lg-5 mt-1" style="height:inherit">
+                <div class="card-header">
+                    <div class="row">
+
+                        <div class="col-md-12 text-right">
+                            <h3 class="text-center text-muted">Anlık Geçiş Listesi</h3>
+                            <div class="text-right">
+                                <a href="@Url.Action("Index","Home")"><i class="fas fa-home fa-2x text-secondary"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover text-center table-striped small " id="table" width="100%" cellspacing="0">
+                            <thead class="bg-gray-600 text-white table-sm">
+                                <tr>
+                                    @*<td>Resim</td>*@
+                                    <td>Kart ID</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>TCKimlik</td>
+                                    <td>Departman</td>
+                                    <td>Alt Departman</td>
+                                    <td>Bölüm</td>
+                                    <td>Kapı</td>
+                                    <td>Geçiş</td>
+                                    <td>Tarih</td>
+                                    <td>Operasyon</td>
+                                    <td>Operator</td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script src="~/Templete/TempleteDosyalari/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Templete/TempleteDosyalari/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/Templete/TempleteDosyalari/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="~/Templete/TempleteDosyalari/js/sb-admin-2.min.js"></script>
+    <!-- Page level plugins -->
+    @*<script src="~/Templete/TempleteDosyalari/vendor/chart.js/Chart.min.js"></script>*@
+    <!-- Page level custom scripts -->
+    @*<script src="~/Templete/TempleteDosyalari/js/demo/chart-area-demo.js"></script>*@
+    @*<script src="~/Templete/TempleteDosyalari/js/demo/chart-pie-demo.js"></script>*@
+    @*<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>*@
+    <script src="~/Content/SiteContent/bootstrap4-toggle.js"></script>
+    <!--Choese Select Search-->
+    <script src="~/Content/SiteContent/searchSelect.js"></script>
+    <!--Choese Select Search-->
+
+
+    <script>
+        $(document).ready(function () {
+
+            var myTimerSpeed = 250;
+            var myTimer = setInterval(timerTick, myTimerSpeed);
+
+            function timerTick() {
+                $.ajax({
+                    url: '/WatchScreen/AccessCount',
+                    type: 'GET',
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data != count) {
+                        ListBind();
+                    }
+                }).always(function (data) {
+                    count = data;
+                });
+            }
+            FirstOpeningList();
+            var count = 0;
+            $.ajax({
+                url: '/WatchScreen/AccessCount',
+                type: 'GET',
+                dataType: 'json',
+            }).done(function (data) {
+                count = data;
+            });
+
+
+
+        });
+        function ListBind() {
+            $.ajax({
+                url: '/WatchScreen/WatchListOther',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                let lastItem = data[0];
+                $("#table tbody").html("");
+                $.each(data, function (key, value) {
+                    if (value.Kod == 0) {
+                        $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
+                    } else if (value.Kod == 1) {
+                        $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
+                    } else if (value.Kod == 2) {
+                        $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
+                    } else if (value.Kod == 3) {
+                        $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
+                    } else if (value.Kod == 4) {
+                        $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
+                    } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
+                        $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
+                    } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
+                        $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
+                    } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
+                        $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
+                    } else if (value.Kod == 20 || value.Kod == 21) {
+                        $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
+                    } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
+                        $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
+                    } else if (value.Kod > 24 && value.Kod < 48) {
+                        $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
+                    } else if (value.Kod >= 100) {
+                        $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
+                    }
+                });
+
+            });
+        }
+
+
+        function FirstOpeningList() {
+            $.ajax({
+                url: '/WatchScreen/WatchListOther',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                let lastItem = data[0];
+                $("#table tbody").html("");
+                $.each(data, function (key, value) {
+                    if (value.Kod == 0) {
+                        $("#table tbody").append(TableRowTemplate(value, "engellenenSatir", "table-danger"))
+                    } else if (value.Kod == 1) {
+                        $("#table tbody").append(TableRowTemplate(value, "normalSatir", "table-success"))
+                    } else if (value.Kod == 2) {
+                        $("#table tbody").append(TableRowTemplate(value, "antipassbackSatir", "table-danger"))
+                    } else if (value.Kod == 3) {
+                        $("#table tbody").append(TableRowTemplate(value, "cokluGecisSatir", "table-info"))
+                    } else if (value.Kod == 4) {
+                        $("#table tbody").append(TableRowTemplate(value, "tanimsizSatir", "table-primary"))
+                    } else if (value.Kod == 5 || value.Kod == 6 || value.Kod == 7 || value.Kod == 13) {
+                        $("#table tbody").append(TableRowTemplate(value, "manuelSatir", "table-warning"))
+                    } else if (value.Kod == 8 || value.Kod == 25 || value.Kod == 14) {
+                        $("#table tbody").append(TableRowTemplate(value, "butonSatir", "table-warning"))
+                    } else if (value.Kod == 9 || value.Kod == 10 || value.Kod == 14) {
+                        $("#table tbody").append(TableRowTemplate(value, "programliSatir", "table-success"))
+                    } else if (value.Kod == 20 || value.Kod == 21) {
+                        $("#table tbody").append(TableRowTemplate(value, "alarmYanginSatir", "table-muted"))
+                    } else if (value.Kod == 22 || value.Kod == 23 || value.Kod == 24) {
+                        $("#table tbody").append(TableRowTemplate(value, "kapiAlarmSatir", "table-info"))
+                    } else if (value.Kod > 24 && value.Kod < 48) {
+                        $("#table tbody").append(TableRowTemplate(value, "digerSatir", "table-dark"))
+                    } else if (value.Kod >= 100) {
+                        $("#table tbody").append(TableRowTemplate(value, "operatorSatir", "table-hover"))
+                    }
+                });
+            });
+        }
+
+        function TableRowTemplate(value, idParam, classParam) {
+            var GecisTipi = "";
+            var SatirSablon = '';
+            if (value.Gecis_Tipi == 0) {
+                GecisTipi = "Giriş";
+            } else if (value.Gecis_Tipi == 1) {
+                GecisTipi = "Çıkış";
+            } else {
+                GecisTipi = "Çıkış";
+            }
+            if (idParam == "tanimsizSatir") {
+                SatirSablon = '<tr data-kayitno="' + value.Kayit_No + '" id="' + idParam + '" class="' + classParam + '">' +
+                    //'<td></td>' +
+                    '<td>' + value.Kart_ID + '</td>' +
+                    '<td>' + value.Adi + '</td>' +
+                    '<td>' + value.Soyadi + '</td>' +
+                    '<td>' + value.TCKimlik + '</td>' +
+                    '<td>' + value.Departman_Adi + '</td>' +
+                    '<td>' + value.Alt_Departman_Adi + '</td>' +
+                    '<td>' + value.Bolum_Adi + '</td>' +
+                    '<td>' + value.Kapi_Adi + '</td>' +
+                    '<td>' + GecisTipi + '</td>' +
+                    '<td>' + ConvertTime(value.Tarih) + '</td>' +
+                    '<td class="small">' + value.Operasyon + '</td>' +
+                    '<td class="small">' + value.Operator + '<a title="Yeni Kullanıcı Olarak Ekle" onclick="return confirm(\'Yeni Kullanıcı Olarak Eklemek İstiyormusunuz?\')" href="/Users/Create?Kart_ID=' + value.Kart_ID + '"><i class="fas fa-user-plus text-info ml-2"></i></a></td>' +
+                    '</tr>';
+            } else {
+                SatirSablon = '<tr data-kayitno="' + value.Kayit_No + '" id="' + idParam + '" class="' + classParam + '">' +
+                    //'<td class="text-center"><div class="photo"><img src="/Images/' + value.Resim + '" alt="Table Image"></div></td>' +
+                    '<td>' + value.Kart_ID + '</td>' +
+                    '<td>' + value.Adi + '</td>' +
+                    '<td>' + value.Soyadi + '</td>' +
+                    '<td>' + value.TCKimlik + '</td>' +
+                    '<td>' + value.Departman_Adi + '</td>' +
+                    '<td>' + value.Alt_Departman_Adi + '</td>' +
+                    '<td>' + value.Bolum_Adi + '</td>' +
+                    '<td>' + value.Kapi_Adi + '</td>' +
+                    '<td>' + GecisTipi + '</td>' +
+                    '<td>' + ConvertTime(value.Tarih) + '</td>' +
+                    '<td class="small">' + value.Operasyon + '</td>' +
+                    '<td class="small">' + value.Operator + '</td>' +
+                    '</tr>';
+            }
+            return SatirSablon;
+        }
+
+        function AddLeadingZeros(number, size) {
+            var s = "0000" + number;
+            return s.substr(s.length - size);
+        }
+
+        function ConvertTime(value) {
+            var dt = new Date(parseInt(value.replace('/Date(', '')))
+            var result = AddLeadingZeros(dt.getDate(), 2) + "/" + AddLeadingZeros(dt.getMonth() + 1, 2) + "/" + AddLeadingZeros(dt.getFullYear(), 4) + " " + AddLeadingZeros(dt.getHours(), 2) + ":" + AddLeadingZeros(dt.getMinutes(), 2) + ":" + AddLeadingZeros(dt.getSeconds(), 2);
+            return result;
+        }
+    </script>
+
+
+
+</body>
+</html>

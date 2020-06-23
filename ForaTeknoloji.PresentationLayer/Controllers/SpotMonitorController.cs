@@ -42,46 +42,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
-
-
-
-        // GET: SpotMonitor
-        public ActionResult Index()
+        public ActionResult Monitoring()
         {
-
-            var Kapi = _readerSettingsNewService.GetAllReaderSettingsNew();
-            var MonitorList = _reportService.MonitorWatch(null);
-            var model = new MonitorWatchViewModel
-            {
-                MonitorListesi = MonitorList,
-            };
-
-            return View(model);
+            return View();
         }
 
-
-        public ActionResult WatchSettings(SpotMonitorSettings parameters)
-        {
-            if (parameters.Panel_ID != null && parameters.Kapi_ID != null)
-            {
-                CurrentSession.Set<SpotMonitorSettings>("SpotWatchParameter", parameters);
-                var nesne = CurrentSession.Get<SpotMonitorSettings>("SpotWatchParameter");
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                CurrentSession.Set<SpotMonitorSettings>("SpotWatchParameter", new SpotMonitorSettings());
-                var nesne = CurrentSession.Get<SpotMonitorSettings>("SpotWatchParameter");
-                return RedirectToAction("Index");
-            }
-        }
-
-
-        public ActionResult Count()
-        {
-            var count = _reportService.WatchScreenGetCount(null, null);
-            return Json(count, JsonRequestBehavior.AllowGet);
-        }
 
     }
 }
