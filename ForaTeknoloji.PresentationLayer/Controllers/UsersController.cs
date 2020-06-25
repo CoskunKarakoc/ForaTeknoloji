@@ -283,7 +283,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 if (result != "")
                     throw new Exception(result);
 
-                SendAuto(_panelSettingsService.GetPanelIDList(), CommandConstants.CMD_SND_USER, Addeduser.ID);
+
+                _taskListService.sp_SendOneUserAllPanel(CurrentSession.User, Addeduser.ID);
                 _accessDatasService.AddOperatorLog(100, permissionUser.Kullanici_Adi, Addeduser.ID, 0, 0, 0);
                 return RedirectToAction("Index");
             }
@@ -385,7 +386,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         || User.Sureli_Kullanici != entity.Sureli_Kullanici || User.Tmp != entity.Tmp || User.Visitor_Grup_No != entity.Visitor_Grup_No
                         )
                     {
-                        SendAuto(_panelSettingsService.GetPanelIDList(), CommandConstants.CMD_SND_USER, entity.ID);
+                        _taskListService.sp_SendOneUserAllPanel(CurrentSession.User, entity.ID);
+                        // SendAuto(_panelSettingsService.GetPanelIDList(), CommandConstants.CMD_SND_USER, entity.ID);
                     }
                     return RedirectToAction("Index");
                 }
@@ -604,47 +606,48 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     {
                         foreach (var panel in PanelList)
                         {
-                            TaskList taskListRemove = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                                Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
-                                IntParam_1 = 1,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = panel,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            _taskListService.AddTaskList(taskListRemove);
-                            TaskList maxUser = new TaskList
-                            {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                                Gorev_Kodu = (int)CommandConstants.CMD_SND_MAXUSERID,
-                                IntParam_1 = _userService.GetAllUsers().Max(x => x.ID),
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = panel,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            _taskListService.AddTaskList(maxUser);
-                            _reportService.SendAllUserTask(2620, DateTime.Now, 1, permissionUser.Kullanici_Adi, panel);
-                            //foreach (var userID in userListe)
+                            _taskListService.sp_SendAllUserOnePanel(CurrentSession.User, panel);
+                            //TaskList taskListRemove = new TaskList
                             //{
-                            //    TaskList taskList = new TaskList
-                            //    {
-                            //        Deneme_Sayisi = 1,
-                            //        Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                            //        Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
-                            //        IntParam_1 = userID,
-                            //        Kullanici_Adi = user.Kullanici_Adi,
-                            //        Panel_No = panel,
-                            //        Tablo_Guncelle = true,
-                            //        Tarih = DateTime.Now
-                            //    };
-                            //    _taskListService.AddTaskList(taskList);
-                            //    _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, userID, 0, 0, 0);
-                            //}
+                            //    Deneme_Sayisi = 1,
+                            //    Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            //    Gorev_Kodu = (int)CommandConstants.CMD_ERSALL_USER,
+                            //    IntParam_1 = 1,
+                            //    Kullanici_Adi = user.Kullanici_Adi,
+                            //    Panel_No = panel,
+                            //    Tablo_Guncelle = true,
+                            //    Tarih = DateTime.Now
+                            //};
+                            //_taskListService.AddTaskList(taskListRemove);
+                            //TaskList maxUser = new TaskList
+                            //{
+                            //    Deneme_Sayisi = 1,
+                            //    Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            //    Gorev_Kodu = (int)CommandConstants.CMD_SND_MAXUSERID,
+                            //    IntParam_1 = _userService.GetAllUsers().Max(x => x.ID),
+                            //    Kullanici_Adi = user.Kullanici_Adi,
+                            //    Panel_No = panel,
+                            //    Tablo_Guncelle = true,
+                            //    Tarih = DateTime.Now
+                            //};
+                            //_taskListService.AddTaskList(maxUser);
+                            //_reportService.SendAllUserTask(2620, DateTime.Now, 1, permissionUser.Kullanici_Adi, panel);
+                            ////foreach (var userID in userListe)
+                            ////{
+                            ////    TaskList taskList = new TaskList
+                            ////    {
+                            ////        Deneme_Sayisi = 1,
+                            ////        Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            ////        Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
+                            ////        IntParam_1 = userID,
+                            ////        Kullanici_Adi = user.Kullanici_Adi,
+                            ////        Panel_No = panel,
+                            ////        Tablo_Guncelle = true,
+                            ////        Tarih = DateTime.Now
+                            ////    };
+                            ////    _taskListService.AddTaskList(taskList);
+                            ////    _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, userID, 0, 0, 0);
+                            ////}
 
                         }
                     }
@@ -672,6 +675,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         {
                             if (OprKod == CommandConstants.CMD_SND_USER)
                             {
+
                                 TaskList maxUser = new TaskList
                                 {
                                     Deneme_Sayisi = 1,
@@ -684,20 +688,37 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                     Tarih = DateTime.Now
                                 };
                                 _taskListService.AddTaskList(maxUser);
+                                TaskList taskList = new TaskList
+                                {
+                                    Deneme_Sayisi = 1,
+                                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                                    Gorev_Kodu = (int)CommandConstants.CMD_SND_USER,
+                                    IntParam_1 = UserID,
+                                    Kullanici_Adi = user.Kullanici_Adi,
+                                    Panel_No = item,
+                                    Tablo_Guncelle = true,
+                                    Tarih = DateTime.Now
+                                };
+                                _taskListService.AddTaskList(taskList);
+                                _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, UserID, 0, 0, 0);
                             }
-                            TaskList taskList = new TaskList
+                            else
                             {
-                                Deneme_Sayisi = 1,
-                                Durum_Kodu = (int)PanelStatusCode.Beklemede,
-                                Gorev_Kodu = (int)OprKod,
-                                IntParam_1 = UserID,
-                                Kullanici_Adi = user.Kullanici_Adi,
-                                Panel_No = item,
-                                Tablo_Guncelle = true,
-                                Tarih = DateTime.Now
-                            };
-                            _taskListService.AddTaskList(taskList);
-                            _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, UserID, 0, 0, 0);
+                                TaskList taskList = new TaskList
+                                {
+                                    Deneme_Sayisi = 1,
+                                    Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                                    Gorev_Kodu = (int)OprKod,
+                                    IntParam_1 = UserID,
+                                    Kullanici_Adi = user.Kullanici_Adi,
+                                    Panel_No = item,
+                                    Tablo_Guncelle = true,
+                                    Tarih = DateTime.Now
+                                };
+                                _taskListService.AddTaskList(taskList);
+                            }
+                           
+                            
                         }
                     }
                 }

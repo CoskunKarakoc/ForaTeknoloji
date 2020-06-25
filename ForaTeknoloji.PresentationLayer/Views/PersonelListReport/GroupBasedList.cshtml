@@ -1,0 +1,142 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.PersonelListViewModel
+@{
+    ViewBag.Title = "Personel Listesi Raporları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
+
+}
+<div class="card border-left-info h-100 mt-2 shadow-lg animated fadeIn">
+    <div class="card-header-tabs mt-1">
+        <h3 class="text-center text-muted">Aktif Personel Grup Listesi</h3>
+    </div>
+    <div class="card-body">
+
+
+        @using (Html.BeginForm("GroupBasedList", "PersonelListReport", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group text-center">
+                        @Html.DropDownListFor(model => model.Gecis_Grubu, Model.Gecis_Grubu, "Geçiş Grubu Seçimi", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                    </div>
+                </div>
+            </div>
+            <button id="btnSubmit" hidden type="submit">Submit</button>
+        }
+
+
+
+
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <table id="UserList" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead class="table-sm">
+                        <tr>
+                            <td>Kart ID</td>
+                            <td>TC Kimlik</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Çoklu Grup Modu</td>
+                            <td>Ana Grup</td>
+                            <td>Grup 1</td>
+                            <td>Grup 2</td>
+                            <td>Grup 3</td>
+                            <td>Grup 4</td>
+                            <td>Grup 5</td>
+                            <td>Grup 6</td>
+                            <td>Grup 7</td>
+                            <td>Grup 8</td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td>Kart ID</td>
+                            <td>TC Kimlik</td>
+                            <td>Adı</td>
+                            <td>Soyadı</td>
+                            <td>Çoklu Grup Modu</td>
+                            <td>Ana Grup</td>
+                            <td>Grup 1</td>
+                            <td>Grup 2</td>
+                            <td>Grup 3</td>
+                            <td>Grup 4</td>
+                            <td>Grup 5</td>
+                            <td>Grup 6</td>
+                            <td>Grup 7</td>
+                            <td>Grup 8</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.chosen-select').chosen();
+            $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+            $("#UserList").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "ajax": "/PersonelListReport/GroupBasedListAjax?Gecis_Grubu=" + $("#Gecis_Grubu").val(),
+                "columns": [
+                    { "data": "Kart_ID" },
+                    { "data": "TCKimlik" },
+                    { "data": "Adi" },
+                    { "data": "Soyadi" },
+                    {
+                        "data": "Coklu_Grup", "render": function (data) {
+                            if (data == true) {
+                                return "Aktif";
+                            } else {
+                                return "Pasif";
+                            }
+                        }
+                    },
+                    { "data": "Grup_Adi" },
+                    { "data": "Grup_No_1_Adi" },
+                    { "data": "Grup_No_2_Adi" },
+                    { "data": "Grup_No_3_Adi" },
+                    { "data": "Grup_No_4_Adi" },
+                    { "data": "Grup_No_5_Adi" },
+                    { "data": "Grup_No_6_Adi" },
+                    { "data": "Grup_No_7_Adi" },
+                    { "data": "Grup_No_8_Adi" },
+                ]
+            });
+
+
+
+            $("#Gecis_Grubu").chosen().change(function () {
+                $("#btnSubmit").click();
+            });
+
+        });
+    </script>
+}
+
+
+

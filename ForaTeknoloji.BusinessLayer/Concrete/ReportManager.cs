@@ -37,6 +37,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         private IDBUsersAltDepartmanDal _dBUsersAltDepartmanDal;
         private IDBUsersKapiDal _dBUsersKapiDal;
         private IDBUsersBolumDal _dBUsersBolumDal;
+        private IGroupMasterDal _groupMasterDal;
         public string panelListesi = "0";
         public string doorListesi = "0";
         public string sirketListesi = "0";
@@ -46,7 +47,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public string spotMonitorPanelListesi = "0";
         public string spotMonitorKapiListesi = "0";
         public List<int?> sirketler;
-        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal, IGroupsDetailNewDal groupsDetailNewDal, IDoorGroupsDetailDal doorGroupsDetailDal, IReaderSettingsNewDal readerSettingsNewDal, IProgInitDal progInitDal, IAccessDatasDal accessDatasDal, IDBUsersAltDepartmanDal dBUsersAltDepartmanDal, IDBUsersKapiDal dBUsersKapiDal, IDBUsersBolumDal dBUsersBolumDal)
+        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal, IGroupsDetailNewDal groupsDetailNewDal, IDoorGroupsDetailDal doorGroupsDetailDal, IReaderSettingsNewDal readerSettingsNewDal, IProgInitDal progInitDal, IAccessDatasDal accessDatasDal, IDBUsersAltDepartmanDal dBUsersAltDepartmanDal, IDBUsersKapiDal dBUsersKapiDal, IDBUsersBolumDal dBUsersBolumDal, IGroupMasterDal groupMasterDal)
         {
             _visitorsDal = visitorsDal;
             _groupsDetailDal = groupsDetailDal;
@@ -71,6 +72,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _dBUsersKapiDal = dBUsersKapiDal;
             _dBUsersBolumDal = dBUsersBolumDal;
             _dBUsersAltDepartmanDal = dBUsersAltDepartmanDal;
+            _groupMasterDal = groupMasterDal;
         }
 
         //OutherReport Controller
@@ -1466,6 +1468,119 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             }
             return liste;
         }
+
+
+        public List<PersonelList> GetUserGroupsList(PersonelListReportParameters parameters, DBUsers dBUsers)
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            GlobalZones GlobalZone = new GlobalZones();
+            if (parameters != null && parameters.Global_Kapi_Bolgesi != null)
+            {
+                GlobalZone = _globalZoneDal.Get(x => x.Global_Bolge_No == parameters.Global_Kapi_Bolgesi);
+            }
+
+            string queryString = @"SELECT DISTINCT U.[Kart ID],U.Adi,U.Soyadi,U.TCKimlik,UNV.Adi,BASE.[Grup Adi],
+                                        GR1.[Grup Adi],GR2.[Grup Adi],GR3.[Grup Adi],GR4.[Grup Adi],
+                                        GR5.[Grup Adi],GR6.[Grup Adi],GR7.[Grup Adi],GR8.[Grup Adi],U.[3 Grup],U.ID FROM Users U
+                                        LEFT JOIN GroupsMaster BASE ON BASE.[Grup No]=U.[Grup No]
+                                        LEFT JOIN GroupsMaster GR1 ON GR1.[Grup No]=U.[Grup No 1]
+                                        LEFT JOIN GroupsMaster GR2 ON GR2.[Grup No]=U.[Grup No 2]
+                                        LEFT JOIN GroupsMaster GR3 ON GR3.[Grup No]=U.[Grup No 3]
+                                        LEFT JOIN GroupsMaster GR4 ON GR4.[Grup No]=U.[Grup No 4]
+                                        LEFT JOIN GroupsMaster GR5 ON GR5.[Grup No]=U.[Grup No 5]
+                                        LEFT JOIN GroupsMaster GR6 ON GR6.[Grup No]=U.[Grup No 6]
+                                        LEFT JOIN GroupsMaster GR7 ON GR7.[Grup No]=U.[Grup No 7]
+                                        LEFT JOIN GroupsMaster GR8 ON GR8.[Grup No]=U.[Grup No 8]
+                                        LEFT JOIN Unvan UNV ON UNV.[Unvan No]=U.[Unvan No]
+                                        LEFT JOIN Sirketler ON U.[Sirket No] =Sirketler.[Sirket No] 
+                                        LEFT JOIN Departmanlar ON U.[Departman No] = Departmanlar.[Departman No]
+                                        LEFT JOIN Bloklar ON U.[Blok No] = Bloklar.[Blok No]
+                                        LEFT JOIN AltDepartman ON U.[Alt Departman No]=AltDepartman.[Alt Departman No]
+                                        LEFT JOIN Bolum ON U.[Bolum No]=Bolum.[Bolum No]
+                                        LEFT JOIN Birim ON U.[Birim No]=Birim.[Birim No]
+                                        WHERE U.[Kullanici Tipi] = 0  AND U.ID > 0";
+            queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+            if (GetAltDepartmanListReturInt(dBUsers).Count > 0)
+            {
+
+                if (GetBolumListReturInt(dBUsers).Count > 0)
+                {
+                    queryString += " AND(Departmanlar.[Departman No] IN(" + departmanListesi + ") AND AltDepartman.[Alt Departman No] IN(" + altDepartmanListesi + ") OR Bolum.[Bolum No] IN(" + bolumListesi + ")) ";
+                }
+                else
+                {
+                    queryString += " AND(Departmanlar.[Departman No] IN(" + departmanListesi + ") AND AltDepartman.[Alt Departman No] IN(" + altDepartmanListesi + ")) ";
+                }
+            }
+
+            if (parameters != null && parameters.Gecis_Grubu != null && parameters.Gecis_Grubu != 0)
+            {
+                queryString += " AND U.[Grup No] =" + parameters.Gecis_Grubu;
+                queryString += " OR U.[Grup No 1] =" + parameters.Gecis_Grubu;
+                queryString += " OR U.[Grup No 2] =" + parameters.Gecis_Grubu;
+                queryString += " OR U.[Grup No 3] =" + parameters.Gecis_Grubu;
+                queryString += " OR U.[Grup No 4] =" + parameters.Gecis_Grubu;
+                queryString += " OR U.[Grup No 5] =" + parameters.Gecis_Grubu;
+                queryString += " OR U.[Grup No 6] =" + parameters.Gecis_Grubu;
+                queryString += " OR U.[Grup No 7] =" + parameters.Gecis_Grubu;
+                queryString += " OR U.[Grup No 8] =" + parameters.Gecis_Grubu;
+            }
+            queryString += " ORDER BY U.ID";
+
+
+            List<PersonelList> liste = new List<PersonelList>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var nesne = new PersonelList
+                        {
+                            Kart_ID = reader[0].ToString(),
+                            Adi = reader[1].ToString(),
+                            Soyadi = reader[2].ToString(),
+                            TCKimlik = reader[3].ToString(),
+                            UnvanAdi = reader[4].ToString(),
+                            Grup_Adi = reader[5].ToString(),
+                            Grup_No_1_Adi = reader[6].ToString(),
+                            Grup_No_2_Adi = reader[7].ToString(),
+                            Grup_No_3_Adi = reader[8].ToString(),
+                            Grup_No_4_Adi = reader[9].ToString(),
+                            Grup_No_5_Adi = reader[10].ToString(),
+                            Grup_No_6_Adi = reader[11].ToString(),
+                            Grup_No_7_Adi = reader[12].ToString(),
+                            Grup_No_8_Adi = reader[13].ToString(),
+                            Coklu_Grup = reader[14] as bool? ?? default(bool),
+                            ID = reader[15] as int? ?? default(int)
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    var temp = ex.Message;
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+
+
+            return liste;
+        }
+
+
+
+
 
         //ReportPersonel-Aktif Controller*
         public List<ReportPersonelList> GetReportPersonelLists(ActiveUserReportParameters parameters, DBUsers dBUsers)

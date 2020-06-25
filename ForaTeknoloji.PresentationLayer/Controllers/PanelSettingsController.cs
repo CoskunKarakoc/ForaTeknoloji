@@ -431,6 +431,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             try
             {
+                #region Normal Panel Ayarları
                 TaskList taskList = new TaskList
                 {
                     Deneme_Sayisi = 1,
@@ -443,7 +444,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Tarih = DateTime.Now
                 };
                 TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                //#region FortigatePanelAyarları
+                #endregion
+
+                #region Fortigate Panel Ayarları
                 //if (_panelSettingsService.GetById((int)Panel).Panel_Model == (int)PanelModel.Panel_1010)
                 //{
                 //    TaskList taskListms = new TaskList
@@ -498,7 +501,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 //    };
                 //    TaskList taskListReceive1 = _taskListService.AddTaskList(taskList1);
                 //}
-                //#endregion
+                #endregion
+
                 _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, Panel, 0);
             }
             catch (Exception)
@@ -517,6 +521,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 try
                 {
+                    #region Normal Panel Ayarları Alma
                     TaskList taskList = new TaskList
                     {
                         Deneme_Sayisi = 1,
@@ -529,7 +534,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tarih = DateTime.Now
                     };
                     TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-                    //#region FortigatePanelAyarlarıAlma
+                    #endregion
+
+                    #region Fortigate Panel Ayarları Alma
                     //if (_panelSettingsService.GetById((int)PanelID).Panel_Model == (int)PanelModel.Panel_1010)
                     //{
                     //    TaskList taskListms = new TaskList
@@ -585,7 +592,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     //    };
                     //    TaskList taskListReceive3 = _taskListService.AddTaskList(taskList3);
                     //}
-                    //#endregion
+                    #endregion
+
                     Thread.Sleep(500);
                 }
                 catch (Exception)

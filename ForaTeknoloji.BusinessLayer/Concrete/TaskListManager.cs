@@ -84,5 +84,20 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             _taskListDal.ClearAllTakList();
         }
+
+        public void sp_SendAllUserToAllPanel(DBUsers users)
+        {
+            _taskListDal.sp_SendAllUserToAllPanel(users);
+        }
+
+        public void sp_SendOneUserAllPanel(DBUsers users, int UserId)
+        {
+            _taskListDal.sp_SendOneUserAllPanel(users, UserId);
+        }
+
+        public void sp_SendAllUserOnePanel(DBUsers users, int PanelId)
+        {
+            _taskListDal.sp_SendAllUserOnePanel(users, PanelId);
+        }
     }
 }

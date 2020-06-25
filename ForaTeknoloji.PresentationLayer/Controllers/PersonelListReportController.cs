@@ -158,6 +158,38 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult GroupBasedList(PersonelListReportParameters parameters)
+        {
+            var groupMaster = _groupMasterService.GetAllGroupsMaster();
+            var model = new PersonelListViewModel
+            {
+                Gecis_Grubu = groupMaster.Select(a => new SelectListItem
+                {
+                    Text = a.Grup_Adi,
+                    Value = a.Grup_No.ToString()
+                }),
+                ListCount = null,
+                PersonelListesi = null,
+                Departman = null,
+                Blok = null,
+                Sirket = null,
+                Global_Kapi_Bolgesi = null,
+                Alt_Departman_No = null,
+                Unvan_No = null,
+                Bolum_No = null,
+                Birim_No = null
+
+            };
+            return View(model);
+        }
+
+        public ActionResult GroupBasedListAjax(PersonelListReportParameters parameters)
+        {
+
+            var jsonresult = Json(new { data = _reportService.GetUserGroupsList(parameters, user) }, JsonRequestBehavior.AllowGet);
+            jsonresult.MaxJsonLength = int.MaxValue;
+            return jsonresult;
+        }
 
         public ActionResult AltDepartmanListesi(int? Departman)
         {

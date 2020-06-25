@@ -4,6 +4,7 @@ using ForaTeknoloji.Entities.ComplexType;
 using ForaTeknoloji.Entities.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -28,6 +29,35 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.EntityFramework
             }
         }
 
+        public void sp_SendAllUserToAllPanel(DBUsers users)
+        {
+            using (var context = new ForaContext())
+            {
+                SqlParameter parameter = new SqlParameter("@userName", users.Kullanici_Adi);
+                context.Database.ExecuteSqlCommand("sp_AllUsersToAllPanels @userName", parameter);
+            }
+        }
+
+        public void sp_SendOneUserAllPanel(DBUsers users, int UserId)
+        {
+            using (var context = new ForaContext())
+            {
+                SqlParameter parameterUserId = new SqlParameter("@userID", UserId);
+                SqlParameter parameterUserName = new SqlParameter("@userName", users.Kullanici_Adi);
+                context.Database.ExecuteSqlCommand("sp_OneUserAllPanel @userID, @userName", parameters: new[] { parameterUserId, parameterUserName });
+            }
+        }
+
+
+        public void sp_SendAllUserOnePanel(DBUsers users, int PanelId)
+        {
+            using (var context = new ForaContext())
+            {
+                SqlParameter parameterPanelId = new SqlParameter("@panelID", PanelId);
+                SqlParameter parameterUserName = new SqlParameter("@userName", users.Kullanici_Adi);
+                context.Database.ExecuteSqlCommand("sp_AllUserOnePanel @panelID, @userName", parameters: new[] { parameterPanelId, parameterUserName });
+            }
+        }
 
 
         public List<TaskStatusWatch> GetAllTaskStatusWatch(Expression<Func<TaskStatusWatch, bool>> filter = null)

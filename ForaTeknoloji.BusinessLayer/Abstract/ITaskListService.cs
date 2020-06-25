@@ -21,5 +21,8 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<ComplexTaskList> ComplexTaskList(string UserName);
         void DeleteAllWithUserName(string kullaniciAdi);
         void DeleteAll();
+        void sp_SendAllUserToAllPanel(DBUsers users);
+        void sp_SendOneUserAllPanel(DBUsers users, int UserId);
+        void sp_SendAllUserOnePanel(DBUsers users, int PanelId);
     }
 }

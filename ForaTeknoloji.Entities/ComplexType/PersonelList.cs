@@ -77,6 +77,27 @@ namespace ForaTeknoloji.Entities.ComplexType
         public int? Kapi14_Global_Bolge_No { get; set; }
         public int? Kapi15_Global_Bolge_No { get; set; }
         public int? Kapi16_Global_Bolge_No { get; set; }
+        public int? Grup_No_1 { get; set; }
+        public int? Grup_No_2 { get; set; }
+        public int? Grup_No_3 { get; set; }
+        public int? Grup_No_4 { get; set; }
+        public int? Grup_No_5 { get; set; }
+        public int? Grup_No_6 { get; set; }
+        public int? Grup_No_7 { get; set; }
+        public int? Grup_No_8 { get; set; }
+        public bool? Coklu_Grup { get; set; }
+        public string Grup_No_1_Adi { get; set; }
+        public string Grup_No_2_Adi { get; set; }
+        public string Grup_No_3_Adi { get; set; }
+        public string Grup_No_4_Adi { get; set; }
+        public string Grup_No_5_Adi { get; set; }
+        public string Grup_No_6_Adi { get; set; }
+        public string Grup_No_7_Adi { get; set; }
+        public string Grup_No_8_Adi { get; set; }
+
+
+
+
 
     }
 }

@@ -13,5 +13,8 @@ namespace ForaTeknoloji.DataAccessLayer.Abstract
         List<ComplexTaskList> ComplexTaskList();
         void ClearTakList(string kullaniciAdi);
         void ClearAllTakList();
+        void sp_SendAllUserToAllPanel(DBUsers users);
+        void sp_SendOneUserAllPanel(DBUsers users, int UserId);
+        void sp_SendAllUserOnePanel(DBUsers users, int PanelId);
     }
 }

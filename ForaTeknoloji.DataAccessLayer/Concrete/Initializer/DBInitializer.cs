@@ -7,8 +7,233 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
 {
     public class DBInitializer : CreateDatabaseIfNotExists<ForaContext>
     {
+        public string OneUserAllPanel { get; set; }
+
+        public string AllUsersToAllPanels { get; set; }
+
+        public string AllUsersAllPanelsAddTask { get; set; }
+
+        public string AllUserOnePanel { get; set; }
+
+        public DBInitializer()
+        {
+            #region OneUserAllPanel
+
+            OneUserAllPanel = @"CREATE PROCEDURE [dbo].[sp_OneUserAllPanel]
+@userID int,
+@userName nvarchar(50)
+AS BEGIN
+DECLARE @maxUserID int
+SET @maxUserID=(SELECT MAX(Users.ID) FROM Users)
+DECLARE @panelID int
+DECLARE oneUserAllPanel_cursor CURSOR FAST_FORWARD
+
+FOR SELECT panel.[Panel ID] FROM PanelSettings as panel
+WHERE  panel.[Seri No]<>0 AND panel.[Panel IP1]<>0 AND panel.[Panel IP2]<>0
+AND panel.[Panel IP3]<>0 AND panel.[Panel IP4]<>0  AND panel.[Panel TCP Port]<>0
+
+OPEN oneUserAllPanel_cursor
+FETCH NEXT FROM oneUserAllPanel_cursor INTO @panelID
+WHILE @@FETCH_STATUS = 0
+BEGIN
+   
+   INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (2630,@maxUserID
+           ,NULL,NULL
+           ,NULL,NULL
+           ,@panelID,NULL
+           ,NULL,NULL
+           ,NULL,1
+           ,1,GETDATE()
+           ,@userName,1
+           ,NULL,NULL,NULL)
+
+
+	INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (2620,@userID
+           ,NULL,NULL
+           ,NULL,NULL
+           ,@panelID,NULL
+           ,NULL,NULL
+           ,NULL,1
+           ,1,GETDATE()
+           ,@userName,1
+           ,NULL,NULL,NULL)
+    FETCH NEXT FROM oneUserAllPanel_cursor INTO @panelID
+END
+CLOSE oneUserAllPanel_cursor
+DEALLOCATE oneUserAllPanel_cursor
+END";
+            #endregion
+
+            #region AllUsersToAllPanels
+            AllUsersToAllPanels = @"CREATE PROCEDURE [dbo].[sp_AllUsersToAllPanels]
+@userName nvarchar(50)
+AS
+
+DECLARE @panelID int
+DECLARE panel_cursor CURSOR FAST_FORWARD
+
+FOR SELECT panel.[Panel ID] FROM PanelSettings as panel
+WHERE  panel.[Seri No]<>0 AND panel.[Panel IP1]<>0 AND panel.[Panel IP2]<>0
+AND panel.[Panel IP3]<>0 AND panel.[Panel IP4]<>0  AND panel.[Panel TCP Port]<>0
+
+OPEN panel_cursor
+FETCH NEXT FROM panel_cursor INTO @panelID
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    EXEC [sp_AllUsersAllPanelsAddTask] @panelID,@userName
+    FETCH NEXT FROM panel_cursor INTO @panelID
+END
+CLOSE panel_cursor
+DEALLOCATE panel_cursor
+";
+            #endregion
+
+            #region AllUsersAllPanelsAddTask
+            AllUsersAllPanelsAddTask = @"CREATE PROCEDURE [dbo].[sp_AllUsersAllPanelsAddTask]
+@panelID int,
+@userName nvarchar(50)
+AS BEGIN
+DECLARE @userID int
+DECLARE @maxUserID int
+SET @maxUserID=(SELECT MAX(Users.ID) FROM Users)
+INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (2629,1
+           ,NULL,NULL
+           ,NULL,NULL
+           ,@panelID,NULL
+           ,NULL,NULL
+           ,NULL,1
+           ,1,GETDATE()
+           ,@userName,1
+           ,NULL,NULL,NULL)
+INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (2630,@maxUserID
+           ,NULL,NULL
+           ,NULL,NULL
+           ,@panelID,NULL
+           ,NULL,NULL
+           ,NULL,1
+           ,1,GETDATE()
+           ,@userName,1
+           ,NULL,NULL,NULL)
+DECLARE user_cursor CURSOR FAST_FORWARD
+FOR SELECT users.ID FROM Users as users 
+WHERE users.[Kart ID] IS NOT NULL AND users.ID<>0
+
+OPEN user_cursor
+FETCH NEXT FROM user_cursor INTO @userID
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+   INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (2620,@userID
+           ,NULL,NULL
+           ,NULL,NULL
+           ,@panelID,NULL
+           ,NULL,NULL
+           ,NULL,1
+           ,1,GETDATE()
+           ,@userName,1
+           ,NULL,NULL,NULL)
+    FETCH NEXT FROM user_cursor INTO @userID
+END
+CLOSE user_cursor
+DEALLOCATE user_cursor
+END";
+            #endregion
+
+            #region AllUserOnePanel
+            AllUserOnePanel = @"CREATE PROCEDURE [dbo].[sp_AllUserOnePanel]
+@panelID int,
+@userName nvarchar(50)
+AS BEGIN
+DECLARE @maxUserID int
+SET @maxUserID=(SELECT MAX(Users.ID) FROM Users)
+DECLARE @userID int
+
+INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (2629,1
+           ,NULL,NULL
+           ,NULL,NULL
+           ,@panelID,NULL
+           ,NULL,NULL
+           ,NULL,1
+           ,1,GETDATE()
+           ,@userName,1
+           ,NULL,NULL,NULL)
+INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (2630,@maxUserID
+           ,NULL,NULL
+           ,NULL,NULL
+           ,@panelID,NULL
+           ,NULL,NULL
+           ,NULL,1
+           ,1,GETDATE()
+           ,@userName,1
+           ,NULL,NULL,NULL)
+DECLARE allUserOnePanel_cursor CURSOR FAST_FORWARD
+FOR SELECT users.ID FROM Users as users 
+WHERE users.[Kart ID] IS NOT NULL AND users.ID<>0
+
+OPEN allUserOnePanel_cursor
+FETCH NEXT FROM allUserOnePanel_cursor INTO @userID
+WHILE @@FETCH_STATUS = 0
+BEGIN
+   INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (2620,@userID
+           ,NULL,NULL
+           ,NULL,NULL
+           ,@panelID,NULL
+           ,NULL,NULL
+           ,NULL,1
+           ,1,GETDATE()
+           ,@userName,1
+           ,NULL,NULL,NULL)
+    FETCH NEXT FROM allUserOnePanel_cursor INTO @userID
+END
+CLOSE allUserOnePanel_cursor
+DEALLOCATE allUserOnePanel_cursor
+END";
+            #endregion
+
+        }
+
         protected override void Seed(ForaContext context)
         {
+
+            context.Database.ExecuteSqlCommand(OneUserAllPanel);
+            context.Database.ExecuteSqlCommand(AllUsersToAllPanels);
+            context.Database.ExecuteSqlCommand(AllUsersAllPanelsAddTask);
+            context.Database.ExecuteSqlCommand(AllUserOnePanel);
+
+
             DBUsers dBUsers = new DBUsers
             {
                 Adi = "Administrator",
@@ -1783,5 +2008,11 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
 
             context.SaveChanges();
         }
+
+
+
+
+
+
     }
 }
