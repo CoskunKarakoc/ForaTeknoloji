@@ -362,7 +362,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
                 _accessDatasService.AddOperatorLog(132, user.Kullanici_Adi, 0, 0, PanelID, 0);
 
-                return RedirectToAction("Settings");
+                return RedirectToAction("Index");
             }
             throw new Exception("Silmek istenen kayıt veritabanında yok!");
         }
