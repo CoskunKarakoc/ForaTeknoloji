@@ -717,8 +717,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 };
                                 _taskListService.AddTaskList(taskList);
                             }
-                           
-                            
+
+
                         }
                     }
                 }
@@ -734,7 +734,18 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
-
+        public ActionResult SendUserAllPanel(int id)
+        {
+            if (id > 0)
+            {
+                _taskListService.sp_SendOneUserAllPanel(CurrentSession.User, id);
+                return RedirectToAction("Index", "Users");
+            }
+            else
+            {
+                throw new Exception("Kullanıcı Gönderme Hatası!");
+            }
+        }
 
         public ActionResult AltDepartmanListesi(int? Departman)
         {

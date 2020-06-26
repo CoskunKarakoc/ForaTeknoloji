@@ -85,7 +85,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             int maxID;
             if (_doorGroupsMasterService.GetAllDoorGroupsMaster().Count > 0)
-                maxID = _doorGroupsMasterService.GetAllDoorGroupsMaster().Count;
+                maxID = _doorGroupsMasterService.GetAllDoorGroupsMaster().Max(X => X.Kapi_Grup_No);
             else
                 maxID = 0;
 

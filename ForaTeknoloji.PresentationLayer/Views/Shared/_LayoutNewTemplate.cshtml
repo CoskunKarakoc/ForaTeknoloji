@@ -279,7 +279,7 @@
                                                         @if (MenuListUser.Panel_Guncelleme == true)
                                                         {
                                                             <li>
-                                                                <a href="@Url.Action("Settings", "PanelSettings")">
+                                                                <a href="@Url.Action("Index", "PanelSettings")">
                                                                     <span class="sidebar-mini-icon">PA</span>
                                                                     <span class="sidebar-normal"> Panel Ayarları</span>
                                                                 </a>
@@ -922,7 +922,7 @@
                                             }
                                         </li>
                                         <li class="nav-link">
-                                            <a href="@Url.Action("Settings", "PanelSettings")" class="nav-item dropdown-item">Ayarlar</a>
+                                            <a href="@Url.Action("Index", "PanelSettings")" class="nav-item dropdown-item">Ayarlar</a>
                                         </li>
                                         @if (MenuListUser.Spot_Monitor == true)
                                         {
@@ -978,7 +978,7 @@
                             @if (MenuListUser.Panel_Guncelleme == true || MenuListUser.Panel_Ayar_Gonderme == true)
                             {
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Settings", "PanelSettings")" class="nav-link">
+                                    <a href="@Url.Action("Index", "PanelSettings")" class="nav-link">
                                         Panel Ayarları
                                     </a>
                                 </li>

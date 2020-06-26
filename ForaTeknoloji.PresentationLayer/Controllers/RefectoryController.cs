@@ -157,8 +157,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             var Total = _reportService.YemekhaneRaporuTotal(parameters, CurrentSession.User);
             var Groups = _doorGroupsMasterService.GetAllDoorGroupsMaster();
             var Email = _emailSettingsService.GetAllEMailSetting().FirstOrDefault();
-            var Departmanlar = _departmanService.GetAllDepartmanlar(x => dbSirketList.Contains(x.Departman_No)); //_reportService.DepartmanListesi(user);
             var Sikterler = _sirketService.GetAllSirketler(x => dbSirketList.Contains(x.Sirket_No)); //_reportService.SirketListesi(user);
+            var Departmanlar = _departmanService.GetAllDepartmanlar(x => dbDepartmanList.Contains(x.Departman_No)); //_reportService.DepartmanListesi(user);
             var AltDepartman = _altDepartmanService.GetAllAltDepartman(x => x.Departman_No == parameters.Departman_No && dbAltDepartmanList.Contains(x.Alt_Departman_No));
             var Bolumler = _bolumService.GetAllBolum(x => x.Alt_Departman_No == parameters.Alt_Departman_No && x.Departman_No == parameters.Departman_No);
             var Birimler = _birimService.GetAllBirim(x => x.Departman_No == parameters.Departman_No && x.Alt_Departman_No == parameters.Alt_Departman_No && x.Bolum_No == parameters.Bolum_No);

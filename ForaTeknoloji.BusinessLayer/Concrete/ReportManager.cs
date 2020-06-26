@@ -4154,10 +4154,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
-                    if (panelListesi != "0")
-                        queryString = "SELECT [Panel ID],[Seri No],[Panel Name],[Panel Model],[Panel IP1],[Panel IP2],[Panel IP3],[Panel IP4]  FROM PanelSettings WHERE [Panel IP1] <> 0 AND [Panel IP2] <> 0 AND [Panel IP3] <> 0 AND [Panel IP4] <> 0 AND [Panel TCP Port] <> 0 AND [Panel ID] IN(1000," + panelListesi + ")";
-                    else
-                        queryString = "SELECT [Panel ID],[Seri No],[Panel Name],[Panel Model],[Panel IP1],[Panel IP2],[Panel IP3],[Panel IP4]  FROM PanelSettings WHERE [Panel IP1] <> 0 AND [Panel IP2] <> 0 AND [Panel IP3] <> 0 AND [Panel IP4] <> 0 AND [Panel TCP Port] <> 0";
+                    //if (panelListesi != "0")
+                    //    queryString = "SELECT [Panel ID],[Seri No],[Panel Name],[Panel Model],[Panel IP1],[Panel IP2],[Panel IP3],[Panel IP4]  FROM PanelSettings WHERE [Panel IP1] <> 0 AND [Panel IP2] <> 0 AND [Panel IP3] <> 0 AND [Panel IP4] <> 0 AND [Panel TCP Port] <> 0 AND [Panel ID] IN(1000," + panelListesi + ")";
+                    //else
+                    queryString = "SELECT [Panel ID],[Seri No],[Panel Name],[Panel Model],[Panel IP1],[Panel IP2],[Panel IP3],[Panel IP4]  FROM PanelSettings WHERE [Panel IP1] <> 0 AND [Panel IP2] <> 0 AND [Panel IP3] <> 0 AND [Panel IP4] <> 0 AND [Panel TCP Port] <> 0";
 
                     SqlCommand command = new SqlCommand(queryString, connection);
                     SqlDataReader reader = command.ExecuteReader();

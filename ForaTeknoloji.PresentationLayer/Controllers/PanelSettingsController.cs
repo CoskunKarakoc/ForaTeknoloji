@@ -420,7 +420,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     ReaderSettingsNewFill(panelSettings);
                     DBUserPanelAndKapiFill(_settingsNewService.GetAllReaderSettingsNew(x => x.Panel_ID == panelSettings.Panel_ID).ToList());
                     _accessDatasService.AddOperatorLog(130, user.Kullanici_Adi, 0, 0, panelSettings.Panel_ID, 0);
-                    return RedirectToAction("Settings", "PanelSettings");
+                    return RedirectToAction("Index", "PanelSettings");
                 }
             }
             return View(panelSettings);
@@ -509,7 +509,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
             }
-            return RedirectToAction("Settings", new { @PanelID = Panel });
+            return RedirectToAction("Index", new { @PanelID = Panel });
         }
 
 
@@ -667,33 +667,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
             }
-            return RedirectToAction("Settings", new { @PanelID = Panel });
+            return RedirectToAction("Index", new { @PanelID = Panel });
         }
-
-        //Panel Saatini Okuma Rutini Devre Dışı
-        //public ActionResult PanelReceiveDate(int Panel)
-        //{
-        //    try
-        //    {
-        //        TaskList taskList = new TaskList
-        //        {
-        //            Deneme_Sayisi = 1,
-        //            Durum_Kodu = (int)PanelStatusCode.Beklemede,
-        //            Gorev_Kodu = (int)CommandConstants.CMD_RCV_RTC,
-        //            IntParam_1 = (int)Panel,
-        //            Kullanici_Adi = user.Kullanici_Adi,
-        //            Panel_No = Panel,
-        //            Tablo_Guncelle = true,
-        //            Tarih = DateTime.Now
-        //        };
-        //        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
-        //    }
-        //    return RedirectToAction("Settings", new { @PanelID = Panel });
-        //}
 
         public int CheckStatus(int GrupNo = -1)
         {
