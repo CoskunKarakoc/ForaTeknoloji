@@ -1141,6 +1141,10 @@ END";
             };
             context.DBUsersSirket.Add(dBUsersSirket);
 
+
+
+
+
             for (int i = 1; i < 129; i++)
             {
                 FloorNames floorNames = new FloorNames
@@ -1951,20 +1955,33 @@ END";
             context.SMSSettings.Add(sMSSetting);
             Sirketler sirket = new Sirketler
             {
-                Adi = "Şirket 1"
+                Adi = "Örnek Şirket"
             };
             context.Sirketler.Add(sirket);
             Departmanlar departman = new Departmanlar
             {
-                Adi = "Departman"
+                Adi = "Örnek Departman"
             };
             context.Departmanlar.Add(departman);
             AltDepartman altdepartman = new AltDepartman
             {
-                Adi = "Alt Departman",
+                Adi = "Örnek Alt Departman",
                 Departman_No = 1
             };
             context.AltDepartman.Add(altdepartman);
+            DBUsersDepartman dBUsersDepartman = new DBUsersDepartman
+            {
+                Kullanici_Adi = "sa",
+                Departman_No = 1,
+            };
+            context.DBUsersDepartman.Add(dBUsersDepartman);
+            DBUsersAltDepartman dBUsersAltDepartman = new DBUsersAltDepartman
+            {
+                Kullanici_Adi = "sa",
+                Departman_No = 1,
+                Alt_Departman_No = 1
+            };
+            context.DBUsersAltDepartman.Add(dBUsersAltDepartman);
 
             ProgInit progInit = new ProgInit
             {
