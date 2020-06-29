@@ -75,6 +75,8 @@ namespace ForaTeknoloji.PresentationLayer.Models
         public static void Clear()
         {
             HttpContext.Current.Session.Clear();
+            HttpContext.Current.Session.RemoveAll();
+            HttpContext.Current.Session.Abandon();
         }
     }
 }

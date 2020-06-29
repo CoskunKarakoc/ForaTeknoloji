@@ -61,6 +61,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
+            Session.RemoveAll();
+            Session.Abandon();
             return RedirectToAction("Login");
         }
 

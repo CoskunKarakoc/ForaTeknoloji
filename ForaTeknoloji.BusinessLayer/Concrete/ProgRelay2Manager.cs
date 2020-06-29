@@ -39,5 +39,11 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             return _progRelay2Dal.Update(progRelay2);
         }
+
+        public void DeleteByDayOfTheWeek(int Haftanin_Gunu)
+        {
+            _progRelay2Dal.DeleteByDayOfTheWeek(Haftanin_Gunu);
+        }
+
     }
 }

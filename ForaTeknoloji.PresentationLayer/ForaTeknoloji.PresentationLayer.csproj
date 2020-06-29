@@ -3173,6 +3173,8 @@
     <Content Include="Views\WatchScreen\WatchOutherFilterDoor.cshtml" />
     <Content Include="Views\SpotMonitor\Monitoring.cshtml" />
     <Content Include="Views\PersonelListReport\GroupBasedList.cshtml" />
+    <Content Include="Views\Holiday\Index.cshtml" />
+    <Content Include="Views\Holiday\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

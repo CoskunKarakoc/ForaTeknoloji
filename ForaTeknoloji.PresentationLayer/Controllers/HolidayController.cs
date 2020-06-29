@@ -37,7 +37,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult Create()
         {
             TatilGunu tatilGunu = new TatilGunu();
-            var model = _tatilGunuService.GetAllTatilGunu().Count;
+            var model = _tatilGunuService.GetAllTatilGunu().Count();
             if (model == 0)
             {
                 tatilGunu = new TatilGunu
@@ -45,13 +45,16 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     Ozel_Gun_No = 8,
                     Ozel_Gun_Adi = "23 Nisan",
                     Haftanin_Gunu = Convert.ToInt32(DateTime.Now.DayOfWeek),
-                    Tarih = DateTime.Now.Date
+                    Tarih = new DateTime(DateTime.Now.Year, 4, 23, 0, 0, 0)
                 };
             }
             else
             {
-                var entity = _tatilGunuService.GetAllTatilGunu().OrderByDescending(x => x.Kayit_No).FirstOrDefault();
-                tatilGunu.Ozel_Gun_No = (entity.Ozel_Gun_No + 1);
+                var entity = _tatilGunuService.GetAllTatilGunu().Max(x => x.Ozel_Gun_No);
+                tatilGunu.Ozel_Gun_No = (entity + 1);
+                tatilGunu.Ozel_Gun_Adi = "23 Nisan";
+                tatilGunu.Haftanin_Gunu = Convert.ToInt32(DateTime.Now.DayOfWeek);
+                tatilGunu.Tarih = new DateTime(DateTime.Now.Year, 4, 23, 0, 0, 0);
             }
 
             return View(tatilGunu);
@@ -133,8 +136,48 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult Index()
+        {
+            return View();
+        }
 
 
+        public ActionResult HolidayList()
+        {
+            var jsonresult = Json(new { data = _tatilGunuService.GetAllTatilGunu() }, JsonRequestBehavior.AllowGet);
+            jsonresult.MaxJsonLength = int.MaxValue;
+            return jsonresult;
+        }
+
+
+        public ActionResult Delete(int? Kayit_No)
+        {
+            if (Kayit_No != null && Kayit_No > 0)
+            {
+                var entiy = _tatilGunuService.GetAllTatilGunu().FirstOrDefault(x => x.Kayit_No == Kayit_No);
+                _progRelay2Service.DeleteByDayOfTheWeek(entiy.Ozel_Gun_No);
+                _tatilGunuService.DeleteTatilGunu(entiy);
+                return RedirectToAction("Index", "Holiday");
+            }
+            throw new Exception("Böyle Bir Tatil Günü Bulunamadı!");
+        }
+
+        public ActionResult Edit(int? Kayit_No)
+        {
+            var model = _tatilGunuService.GetAllTatilGunu().FirstOrDefault(x => x.Kayit_No == Kayit_No);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(TatilGunu tatilGunu)
+        {
+            if (ModelState.IsValid)
+            {
+                _tatilGunuService.UpdateTatilGunu(tatilGunu);
+                return RedirectToAction("Index", "Holiday");
+            }
+            throw new Exception("Tatil Günü Güncellenirken Hata İle Karşılaşıldı!");
+        }
 
     }
 }

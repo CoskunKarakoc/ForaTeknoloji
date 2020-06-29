@@ -288,7 +288,9 @@
                                     }
                                     @if (MenuListUser.Grup_Takvimi_Olusturma == true)
                                     {
-                                        <a class="collapse-item" href="@Url.Action("Create","Holiday")">Tatil Planı</a>
+                                        <h6 class="collapse-header">Prog. Kapı Ayarları</h6>
+                                        <a class="collapse-item" href="@Url.Action("Create","Holiday")">Yeni Tatil Planı</a>
+                                        <a class="collapse-item" href="@Url.Action("Index","Holiday")">Tatil Planı Listesi</a>
                                         <a class="collapse-item" href="@Url.Action("ProgRelay","Door")">Programlı Kapı<br /> Açma/Kapama</a>
                                     }
                                 </div>

@@ -12,5 +12,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         ProgRelay2 AddProgRelay2(ProgRelay2 progRelay2);
         void DeleteProgRelay2(ProgRelay2 progRelay2);
         ProgRelay2 UpdateProgRelay2(ProgRelay2 progRelay2);
+        void DeleteByDayOfTheWeek(int Haftanin_Gunu);
     }
 }

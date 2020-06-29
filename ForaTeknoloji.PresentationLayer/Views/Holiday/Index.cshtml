@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="m-0 font-weight-bold text-secondary text-center">Tatil Günleri</h3>
+            </div>
+            <div class="card-body">
+                <table id="holiday" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                    <thead class="table-sm">
+                        <tr>
+                            <td>Özel Gün No</td>
+                            <td>Özel Gün Adı</td>
+                            <td>Tarih</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td>Özel Gün No</td>
+                            <td>Özel Gün Adı</td>
+                            <td>Tarih</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#holiday").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "ajax": "/Holiday/HolidayList",
+                "columns": [
+                    { "data": "Ozel_Gun_No" },
+                    { "data": "Ozel_Gun_Adi" },
+                    {
+                        "data": "Tarih", "render": function (data) {
+                            return ConvertTime(data);
+                        }
+                    },
+                    {
+                        "data": "Kayit_No", "render": function (data) {
+                            var multipleUrl = '<a title="Edit" id="edit" href="/Holiday/Edit?Kayit_No=' + data + '"><i class="fas fa-edit text-info mr-2"></i></a>' +
+                                '<a title="Delete" href="/Holiday/Delete?Kayit_No=' + data + '" onclick="return confirm(\'Seçilen Tatil Gününü Veritabanından Silmek İstediğinize Emin Misiniz?\')"><i class="fas fa-trash-alt text-danger mr-2"></i></a>';
+                            return multipleUrl;
+                        }
+                    },
+                ],
+                "columnDefs": [
+                    { "orderable": false, "targets": 3 }
+                ]
+            });
+
+        });
+
+        function AddLeadingZeros(number, size) {
+            var s = "0000" + number;
+            return s.substr(s.length - size);
+        }
+
+        function ConvertTime(value) {
+            var dt = new Date(parseInt(value.replace('/Date(', '')))
+            var result = AddLeadingZeros(dt.getDate(), 2) + "/" + AddLeadingZeros(dt.getMonth() + 1, 2) + "/" + AddLeadingZeros(dt.getFullYear(), 4);//+ " " + AddLeadingZeros(dt.getHours(), 2) + ":" + AddLeadingZeros(dt.getMinutes(), 2) + ":" + AddLeadingZeros(dt.getSeconds(), 2);
+            return result;
+        }
+    </script>
+}
