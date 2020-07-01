@@ -2798,7 +2798,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 " FROM (((AccessDatasTemps LEFT JOIN (((((Users LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])LEFT JOIN AltDepartman ON Users.[Alt Departman No] = AltDepartman.[Alt Departman No])LEFT JOIN Bolum ON Users.[Bolum No] = Bolum.[Bolum No]) LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) ON AccessDatasTemps.ID = Users.ID) LEFT JOIN CodeOperation ON AccessDatasTemps.Kod = CodeOperation.TKod) LEFT JOIN ReaderSettingsNew ON (AccessDatasTemps.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatasTemps.[Panel ID]=ReaderSettingsNew.[Panel ID]) LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]" +
                 " WHERE AccessDatasTemps.[Panel ID] IN(200," + panelListesi + ")  AND ReaderSettingsNew.[Kayit No] IN(" + doorListesi + ")";
             queryString += CodeString;
-            queryString += " ORDER BY AccessDatasTemps.[Kayit No] DESC";
+            queryString += " ORDER BY AccessDatasTemps.[Tarih] DESC";
             List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
             using (SqlConnection connection = new SqlConnection(address))
             {
@@ -2879,7 +2879,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     WHERE AccessDatasTemps.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN( " + spotMonitorKapiListesi + ")";
             // queryString += " OR Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
             queryString += " AND AccessDatasTemps.Kod IN (" + CodeString + ")  OR AccessDatasTemps.Kod > 100";
-            queryString += " ORDER BY AccessDatasTemps.[Kayit No] DESC";
+            queryString += " ORDER BY AccessDatasTemps.[Tarih] DESC";
             List<WatchEntityComplex> liste = new List<WatchEntityComplex>();
             using (SqlConnection connection = new SqlConnection(address))
             {
@@ -3027,7 +3027,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             //    " LEFT JOIN ReaderSettingsNew ON AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID] AND AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID]) " +
             //    " LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] ";
             queryString += CodeString;
-            queryString += " ORDER BY AccessDatasTemps.[Kayit No] DESC";
+            queryString += " ORDER BY AccessDatasTemps.[Tarih] DESC";
             var nesne = new WatchEntityComplex();
             using (SqlConnection connection = new SqlConnection(address))
             {
@@ -3214,7 +3214,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     LEFT JOIN PanelSettings ON AccessDatasTemps.[Panel ID] = PanelSettings.[Panel ID])                    
                     LEFT JOIN ReaderSettingsNew ON (AccessDatasTemps.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND AccessDatasTemps.[Panel ID]=ReaderSettingsNew.[Panel ID])
                     LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No]
-                    WHERE AccessDatasTemps.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN( " + spotMonitorKapiListesi + ") ORDER BY AccessDatasTemps.[Kayit No] DESC";
+                    WHERE AccessDatasTemps.[Panel ID] IN(" + spotMonitorPanelListesi + ") AND ReaderSettingsNew.[Kayit No] IN( " + spotMonitorKapiListesi + ") ORDER BY AccessDatasTemps.[Tarih] DESC";
             //}
             //else
             //{
@@ -3721,7 +3721,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                 WHERE AccessDatasTemps.Kod >= 20
                                 AND AccessDatasTemps.Kod <= 27
                                 AND AccessDatasTemps.Kontrol=0
-                                ORDER BY AccessDatasTemps.[Kayit No] DESC";
+                                ORDER BY AccessDatasTemps.[Tarih] DESC";
             List<AlarmDatasComplex> liste = new List<AlarmDatasComplex>();
             using (SqlConnection connection = new SqlConnection(address))
             {
