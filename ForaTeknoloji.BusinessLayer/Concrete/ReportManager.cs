@@ -1470,6 +1470,90 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         }
 
 
+        //PersonelAndVisitorListReport Controller*
+        public List<PersonelList> GetPersonelAndVisitorLists(DBUsers dBUsers)
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = @"SELECT DISTINCT Users.[Kayit No],Users.ID, Users.[Kart ID], Users.Adi,Unvan.Adi As [Unvan Adi],
+                                        Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,
+                                        Departmanlar.Adi As Departman,AltDepartman.Adi As [Alt Departman],Bolum.Adi As [Bolum Adi], Birim.Adi AS [Birim Adi],
+										Users.[Grup No], GroupsMaster.[Grup Adi] As [Geçiş Grubu],
+                                        Users.Tmp AS [Global Bolge Adi],Users.[Telefon],Users.[Aciklama] FROM ((((((((GroupsMaster
+                                        LEFT JOIN Users ON Users.[Grup No] = GroupsMaster.[Grup No]) 
+                                        LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) 
+                                        LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
+                                        LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])
+                                        LEFT JOIN AltDepartman ON Users.[Alt Departman No]=AltDepartman.[Alt Departman No])
+                                        LEFT JOIN Bolum ON Users.[Bolum No]=Bolum.[Bolum No])
+										LEFT JOIN Birim ON Users.[Birim No]=Birim.[Birim No])
+                                        LEFT JOIN Unvan ON Users.[Unvan No]=Unvan.[Unvan No])
+                                        WHERE Users.ID > 0";
+            queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+            if (GetAltDepartmanListReturInt(dBUsers).Count > 0)
+            {
+
+                if (GetBolumListReturInt(dBUsers).Count > 0)
+                {
+                    queryString += " AND(Departmanlar.[Departman No] IN(" + departmanListesi + ") AND AltDepartman.[Alt Departman No] IN(" + altDepartmanListesi + ") OR Bolum.[Bolum No] IN(" + bolumListesi + ")) ";
+                }
+                else
+                {
+                    queryString += " AND(Departmanlar.[Departman No] IN(" + departmanListesi + ") AND AltDepartman.[Alt Departman No] IN(" + altDepartmanListesi + ")) ";
+                }
+            }
+            queryString += " ORDER BY Users.ID";
+
+
+
+            List<PersonelList> liste = new List<PersonelList>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var nesne = new PersonelList
+                        {
+                            Kayit_No = reader[0] as int? ?? default(int),
+                            ID = reader[1] as int? ?? default(int),
+                            Kart_ID = reader[2].ToString(),
+                            Adi = reader[3].ToString(),
+                            UnvanAdi = reader[4].ToString(),
+                            Soyadi = reader[5].ToString(),
+                            TCKimlik = reader[6].ToString(),
+                            SirketAdi = reader[7].ToString(),
+                            DepartmanAdi = reader[8].ToString(),
+                            AltDepartmanAdi = reader[9].ToString(),
+                            BolumAdi = reader[10].ToString(),
+                            Birim_Adi = reader[11].ToString(),
+                            Grup_No = reader[12] as int? ?? default(int),
+                            Grup_Adi = reader[13].ToString(),
+                            Tmp = reader[14].ToString(),
+                            Telefon = reader[15].ToString()
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return liste;
+        }
+
+
+
         public List<PersonelList> GetUserGroupsList(PersonelListReportParameters parameters, DBUsers dBUsers)
         {
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
@@ -1577,9 +1661,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 
             return liste;
         }
-
-
-
 
 
         //ReportPersonel-Aktif Controller*

@@ -11,6 +11,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
 
         List<ZiyaretciRaporList> GetZiyaretciListesi(VisitorReportParameters parameters);
         List<PersonelList> GetPersonelLists(PersonelListReportParameters parameters, DBUsers dBUsers);
+        List<PersonelList> GetPersonelAndVisitorLists(DBUsers dBUsers);
         List<PersonelList> GetUserGroupsList(PersonelListReportParameters parameters, DBUsers dBUsers);
         List<ReportPersonelList> GetReportPersonelLists(ActiveUserReportParameters parameters, DBUsers dBUsers);
         List<ReportPersonelList> GetReportPersonelListsEski(ActiveUserReportParameters parameters, DBUsers dBUsers);

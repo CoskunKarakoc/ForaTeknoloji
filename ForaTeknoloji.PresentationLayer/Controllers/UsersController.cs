@@ -135,7 +135,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
         public ActionResult UserList()
         {
-            var jsonresult = Json(new { data = _reportService.GetPersonelLists(null, user) }, JsonRequestBehavior.AllowGet);
+            var jsonresult = Json(new { data = _reportService.GetPersonelAndVisitorLists(user) }, JsonRequestBehavior.AllowGet);
             jsonresult.MaxJsonLength = int.MaxValue;
             return jsonresult;
         }
