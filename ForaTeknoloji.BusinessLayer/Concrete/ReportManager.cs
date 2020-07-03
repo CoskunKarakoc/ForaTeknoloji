@@ -38,6 +38,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         private IDBUsersKapiDal _dBUsersKapiDal;
         private IDBUsersBolumDal _dBUsersBolumDal;
         private IGroupMasterDal _groupMasterDal;
+        private ITaskListDal _taskListDal;
         public string panelListesi = "0";
         public string doorListesi = "0";
         public string sirketListesi = "0";
@@ -47,7 +48,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         public string spotMonitorPanelListesi = "0";
         public string spotMonitorKapiListesi = "0";
         public List<int?> sirketler;
-        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal, IGroupsDetailNewDal groupsDetailNewDal, IDoorGroupsDetailDal doorGroupsDetailDal, IReaderSettingsNewDal readerSettingsNewDal, IProgInitDal progInitDal, IAccessDatasDal accessDatasDal, IDBUsersAltDepartmanDal dBUsersAltDepartmanDal, IDBUsersKapiDal dBUsersKapiDal, IDBUsersBolumDal dBUsersBolumDal, IGroupMasterDal groupMasterDal)
+        public ReportManager(IVisitorsDal visitorsDal, IGroupsDetailDal groupsDetailDal, IGlobalZoneDal globalZoneDal, ISirketDal sirketDal, IBloklarDal bloklarDal, IDepartmanDal departmanDal, IPanelSettingsDal panelSettingsDal, IReaderSettingDal readerSettingDal, IAccessDatasService accessDatasService, IDBUsersPanelsService dbUsersPanelsService, IDBUsersSirketDal dBUsersSirketDal, IDoorNamesService doorNamesService, IUserService userService, IDBUsersDepartmanDal dBUsersDepartmanDal, IDBUsersPanelsDal dBUsersPanelsDal, IGroupsDetailNewDal groupsDetailNewDal, IDoorGroupsDetailDal doorGroupsDetailDal, IReaderSettingsNewDal readerSettingsNewDal, IProgInitDal progInitDal, IAccessDatasDal accessDatasDal, IDBUsersAltDepartmanDal dBUsersAltDepartmanDal, IDBUsersKapiDal dBUsersKapiDal, IDBUsersBolumDal dBUsersBolumDal, IGroupMasterDal groupMasterDal, ITaskListDal taskListDal)
         {
             _visitorsDal = visitorsDal;
             _groupsDetailDal = groupsDetailDal;
@@ -73,6 +74,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             _dBUsersBolumDal = dBUsersBolumDal;
             _dBUsersAltDepartmanDal = dBUsersAltDepartmanDal;
             _groupMasterDal = groupMasterDal;
+            _taskListDal = taskListDal;
         }
 
         //OutherReport Controller
@@ -4284,13 +4286,17 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 connection.Open();
                 foreach (var userID in userIDList)
                 {
-                    queryString = @"INSERT INTO [TaskList] 
-                    ([Gorev Kodu],[IntParam 1],[Panel No],[Deneme Sayisi],
-                    [Durum Kodu],[Tarih],[Kullanici Adi],[Tablo Guncelle])
-                    VALUES(" + TaskCode + "," + userID + "," + PanelNo + "," + 1 + "," +
-                   "" + DurumKodu + ",'" + Tarih.ToString("yyyy-MM-dd HH:mm:ss") + "','" + KullaniciAdi + "'," + 1 + ")";
-                    SqlCommand command = new SqlCommand(queryString, connection);
-                    var TResult = command.ExecuteNonQuery();
+                    TaskList taskList = new TaskList
+                    {
+                        Gorev_Kodu = TaskCode,
+                        IntParam_1 = userID,
+                        Panel_No = PanelNo,
+                        Durum_Kodu = DurumKodu,
+                        Tarih = Tarih,
+                        Kullanici_Adi = KullaniciAdi,
+                        Tablo_Guncelle = true
+                    };
+                    _taskListDal.sp_AddTaskList(taskList);
                     SendAllUserTaskOperatorLogAdd(103, KullaniciAdi, userID, 0, 0, 0, progInt);
                 }
             }

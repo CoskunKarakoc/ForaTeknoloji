@@ -233,8 +233,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     foreach (var item in PanelList)
                     {
-                        var panelModel = _panelSettingsService.GetById(item);
-                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
+                        if (_panelSettingsService.GetPanelModelByPanelID(item) != (int)PanelModel.Panel_1010)
                         {
                             TaskList taskList = new TaskList
                             {
@@ -247,7 +246,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                            _taskListService.sp_AddTaskList(taskList);
                             _accessDatasService.AddOperatorLog(112, permissionUser.Kullanici_Adi, ZamanGrupNo, 0, item, 0);
                         }
 
@@ -275,8 +274,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     foreach (var panel in PanelListAll)
                     {
-                        var panelModel = _panelSettingsService.GetById(panel);
-                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
+                        if (_panelSettingsService.GetPanelModelByPanelID(panel) != (int)PanelModel.Panel_1010)
                         {
                             TaskList taskListERS = new TaskList
                             {
@@ -289,7 +287,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            TaskList taskListReceiveErs = _taskListService.AddTaskList(taskListERS);
+                            _taskListService.sp_AddTaskList(taskListERS);
                             _accessDatasService.AddOperatorLog(111, permissionUser.Kullanici_Adi, 0, 0, panel, 0);
                             foreach (var item in _timeGroupsService.GetAllTimeGroups().Select(a => a.Zaman_Grup_No))
                             {
@@ -304,7 +302,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                     Tablo_Guncelle = true,
                                     Tarih = DateTime.Now
                                 };
-                                TaskList taskListReceiveSend = _taskListService.AddTaskList(taskListSend);
+                                _taskListService.sp_AddTaskList(taskListSend);
                                 _accessDatasService.AddOperatorLog(113, permissionUser.Kullanici_Adi, item, 0, panel, 0);
                             }
                         }

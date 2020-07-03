@@ -124,7 +124,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tablo_Guncelle = true,
                             Tarih = DateTime.Now
                         };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _taskListService.sp_AddTaskList(taskList);
                     }
                 }
                 else
@@ -142,7 +142,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    _taskListService.sp_AddTaskList(taskList);
                 }
             }
             return RedirectToAction("Index", new { @PanelID = kapiOperasyon.Panel_ID });
@@ -255,8 +255,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (Panel_No != null)
             {
-                var panelModel = _panelSettingsService.GetById((int)Panel_No);
-                if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
+                if (_panelSettingsService.GetPanelModelByPanelID((int)Panel_No) != (int)PanelModel.Panel_1010)
                 {
                     try
                     {
@@ -273,7 +272,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tablo_Guncelle = true,
                             Tarih = DateTime.Now
                         };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _taskListService.sp_AddTaskList(taskList);
                         _accessDatasService.AddOperatorLog(171, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
                     }
                     catch (Exception)
@@ -291,8 +290,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (Panel_No != null)
             {
-                var panelModel = _panelSettingsService.GetById((int)Panel_No);
-                if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
+                if (_panelSettingsService.GetPanelModelByPanelID((int)Panel_No) != (int)PanelModel.Panel_1010)
                 {
                     try
                     {
@@ -309,7 +307,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             Tablo_Guncelle = true,
                             Tarih = DateTime.Now
                         };
-                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _taskListService.sp_AddTaskList(taskList);
                         _accessDatasService.AddOperatorLog(172, user.Kullanici_Adi, Hafta, ZamanDilimi, Panel_No, 0);
                     }
                     catch (Exception)

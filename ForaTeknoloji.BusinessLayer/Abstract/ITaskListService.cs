@@ -24,5 +24,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void sp_SendAllUserToAllPanel(DBUsers users);
         void sp_SendOneUserAllPanel(DBUsers users, int UserId);
         void sp_SendAllUserOnePanel(DBUsers users, int PanelId);
+        void sp_AddTaskList(TaskList taskList);
     }
 }

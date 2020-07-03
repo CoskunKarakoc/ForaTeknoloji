@@ -340,7 +340,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            _taskListService.AddTaskList(taskListRemove);
+                            _taskListService.sp_AddTaskList(taskListRemove);
                             TaskList maxUser = new TaskList
                             {
                                 Deneme_Sayisi = 1,
@@ -352,7 +352,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            _taskListService.AddTaskList(maxUser);
+                            _taskListService.sp_AddTaskList(maxUser);
                             _reportService.SendAllUserTask(2620, DateTime.Now, 1, permissionUser.Kullanici_Adi, panel);
                             //foreach (var userID in userListe)
                             //{
@@ -367,7 +367,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                             //        Tablo_Guncelle = true,
                             //        Tarih = DateTime.Now
                             //    };
-                            //    _taskListService.AddTaskList(taskList);
+                            //    _taskListService.sp_AddTaskList(taskList);
                             //    _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, userID, 0, 0, 0);
                             //}
 
@@ -388,7 +388,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            _taskListService.AddTaskList(taskList);
+                            _taskListService.sp_AddTaskList(taskList);
                         }
                     }
                     else
@@ -408,7 +408,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                     Tablo_Guncelle = true,
                                     Tarih = DateTime.Now
                                 };
-                                _taskListService.AddTaskList(maxUser);
+                                _taskListService.sp_AddTaskList(maxUser);
                             }
                             TaskList taskList = new TaskList
                             {
@@ -421,7 +421,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            _taskListService.AddTaskList(taskList);
+                            _taskListService.sp_AddTaskList(taskList);
                             _accessDatasService.AddOperatorLog(103, permissionUser.Kullanici_Adi, UserID, 0, 0, 0);
                         }
                     }

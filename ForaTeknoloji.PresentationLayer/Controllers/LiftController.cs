@@ -240,8 +240,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                 {
                     foreach (var item in PanelList)
                     {
-                        var panelModel = _panelSettingsService.GetById(item);
-                        if (panelModel.Panel_Model != (int)PanelModel.Panel_1010)
+                        if (_panelSettingsService.GetPanelModelByPanelID(item) != (int)PanelModel.Panel_1010)
                         {
                             TaskList taskList = new TaskList
                             {
@@ -254,7 +253,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                                 Tablo_Guncelle = true,
                                 Tarih = DateTime.Now
                             };
-                            _taskListService.AddTaskList(taskList);
+                            _taskListService.sp_AddTaskList(taskList);
                             _accessDatasService.AddOperatorLog(163, user.Kullanici_Adi, AsansorGrupNo, 0, item, 0);
                         }
                     }

@@ -99,5 +99,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             _taskListDal.sp_SendAllUserOnePanel(users, PanelId);
         }
+
+        public void sp_AddTaskList(TaskList taskList)
+        {
+            _taskListDal.sp_AddTaskList(taskList);
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace ForaTeknoloji.DataAccessLayer.Concrete.Initializer
 
         public string AllUserOnePanel { get; set; }
 
+        public string AddTaskList { get; set; }
+
         public DBInitializer()
         {
             #region OneUserAllPanel
@@ -223,6 +225,39 @@ DEALLOCATE allUserOnePanel_cursor
 END";
             #endregion
 
+            #region AddTaskList
+            AddTaskList = @"CREATE PROCEDURE sp_AddTaskList
+@gorevKodu int,
+@IntParam1 int,
+@IntParam2 int = null,
+@IntParam3 int = null,
+@IntParam4 int = null,
+@IntParam5 int = null,
+@panelNo int = null,
+@tumPanel bit = null,
+@panelGrup1 int = null,
+@panelGrup2 int = null,
+@panelGrup3 int = null,
+@denemeSayisi int = null,
+@durumKodu int,
+@tarih datetime,
+@kullaniciAdi nvarchar(50),
+@tabloGuncelle bit = null,
+@strParam1 nvarchar(250) = null,
+@strParam2 nvarchar(250) = null,
+@strParam3 nvarchar(250) = null
+AS BEGIN
+INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
+			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
+			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
+     VALUES
+           (@gorevKodu,@IntParam1,@IntParam2,@IntParam3,@IntParam4,
+		   @IntParam5,@panelNo,@tumPanel,@panelGrup1,
+		   @panelGrup2,@panelGrup3,@denemeSayisi,@durumKodu,GETDATE(),
+		   @kullaniciAdi,@tabloGuncelle,@strParam1,@strParam2,@strParam3)
+END";
+            #endregion
+
         }
 
         protected override void Seed(ForaContext context)
@@ -232,7 +267,7 @@ END";
             context.Database.ExecuteSqlCommand(AllUsersToAllPanels);
             context.Database.ExecuteSqlCommand(AllUsersAllPanelsAddTask);
             context.Database.ExecuteSqlCommand(AllUserOnePanel);
-
+            context.Database.ExecuteSqlCommand(AddTaskList);
 
             DBUsers dBUsers = new DBUsers
             {

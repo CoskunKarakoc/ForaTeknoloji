@@ -533,7 +533,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         Tablo_Guncelle = true,
                         Tarih = DateTime.Now
                     };
-                    TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    _taskListService.sp_AddTaskList(taskList);
                     #endregion
 
                     #region Fortigate Panel Ayarları Alma
@@ -550,7 +550,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     //        Tablo_Guncelle = true,
                     //        Tarih = DateTime.Now
                     //    };
-                    //    TaskList taskListReceiveMS = _taskListService.AddTaskList(taskListms);
+                    //    _taskListService.sp_AddTaskList(taskListms);
                     //}
                     //else
                     //{
@@ -566,7 +566,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     //        Tablo_Guncelle = true,
                     //        Tarih = DateTime.Now
                     //    };
-                    //    TaskList taskListReceive1 = _taskListService.AddTaskList(taskList1);
+                    //    _taskListService.sp_AddTaskList(taskList1);
                     //    TaskList taskList2 = new TaskList
                     //    {
                     //        Deneme_Sayisi = 1,
@@ -578,7 +578,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     //        Tablo_Guncelle = true,
                     //        Tarih = DateTime.Now
                     //    };
-                    //    TaskList taskListReceive2 = _taskListService.AddTaskList(taskList2);
+                    //    _taskListService.sp_AddTaskList(taskList2);
                     //    TaskList taskList3 = new TaskList
                     //    {
                     //        Deneme_Sayisi = 1,
@@ -590,7 +590,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     //        Tablo_Guncelle = true,
                     //        Tarih = DateTime.Now
                     //    };
-                    //    TaskList taskListReceive3 = _taskListService.AddTaskList(taskList3);
+                    //    _taskListService.sp_AddTaskList(taskList3);
                     //}
                     #endregion
 
