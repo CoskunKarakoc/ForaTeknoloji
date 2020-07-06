@@ -44,5 +44,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return _visitorsDal.Update(visitors);
         }
 
+        public Visitors GetByTCKimlik(string TCKimlik)
+        {
+            return _visitorsDal.Get(x => x.TCKimlik == TCKimlik);
+        }
+
     }
 }

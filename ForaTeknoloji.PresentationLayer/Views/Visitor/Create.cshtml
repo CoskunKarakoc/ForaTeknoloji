@@ -36,20 +36,24 @@
                             <div class="form-group">
                                 <label class="control-label col-md-5">TC Kimlik No</label>
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" name="TCKimlik" class="form-control form-control-sm" maxlength="11" pattern="\d{11}" title="Bu alana sadece 11 karakterli sayısal değer girilebilir" value="" />
-
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm" id="TCKimlik" name="TCKimlik" maxlength="11" pattern="\d{11}" title="Bu alana sadece 11 karakterli sayısal değer girilebilir" placeholder="TC Kimlik" aria-label="TCKimlik" aria-describedby="button-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-success btn-sm" type="button" onclick="GetVisitorByTCNo()" id="button-addon2"><i class="fas fa-search"></i></button>
+                                        </div>
                                     </div>
+                                    <p id="Alert" class="text-danger"></p>
+                                    @*<div class="form-group"><input type="text" name="TCKimlik" class="form-control form-control-sm" maxlength="11" pattern="\d{11}" title="Bu alana sadece 11 karakterli sayısal değer girilebilir" value="" /></div>*@
                                 </div>
                             </div>
+
 
 
                             <div class="form-group">
                                 <label class="control-label col-md-5">Adı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" name="Adi" value="" />
-
+                                        <input type="text" class="form-control form-control-sm" name="Adi" id="Adi" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +63,7 @@
                                 <label class="control-label col-md-5">Soyadı</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" name="Soyadi" value="" />
+                                        <input type="text" class="form-control form-control-sm" name="Soyadi" id="Soyadi" value="" />
 
                                     </div>
                                 </div>
@@ -70,7 +74,7 @@
                                 <label class="control-label col-md-5">Plaka</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" name="Plaka" value="" />
+                                        <input type="text" class="form-control form-control-sm" name="Plaka" id="Plaka" value="" />
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +84,7 @@
                                 <label class="control-label col-md-5">Telefon</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" name="Telefon" value="" />
+                                        <input type="text" class="form-control form-control-sm" name="Telefon" id="Telefon" value="" />
 
                                     </div>
                                 </div>
@@ -90,7 +94,7 @@
                                 <label class="control-label col-md-5">Firma</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-sm" name="Firma" value="" />
+                                        <input type="text" class="form-control form-control-sm" name="Firma" id="Firma" value="" />
 
                                     </div>
                                 </div>
@@ -110,7 +114,7 @@
                                 <label class="control-label col-md-5">Ziyaret Sebebi</label>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <textarea class="form-control form-control-sm" cols="3" rows="3" name="Ziyaret_Sebebi"></textarea>
+                                        <textarea class="form-control form-control-sm" cols="3" rows="3" id="Ziyaret_Sebebi" name="Ziyaret_Sebebi"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -371,4 +375,47 @@
         $("#alert").text("");
         $("#alertMain").prop("hidden", true);
     });
+
+
+    function GetVisitorByTCNo() {
+        var tcNo = $("#TCKimlik").val();
+        $.ajax({
+            url: '/Visitor/GetVisitorByTCKimlik?TCKimlik=' + tcNo,
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            if (data == 'Error') {
+                $("#Alert").text('* Yanlış Yada Eksik Karakter Girdiniz!');
+                $("#Adi").attr("value", "");
+                $("#Soyadi").attr("value", "");
+                $("#Plaka").attr("value", "");
+                $("#Telefon").attr("value", "");
+                $("#Firma").attr("value", "");
+                $("#Ziyaret_Sebebi").val("");
+            } else if (data == 'NotFound') {
+                $("#Alert").text('* Ziyaretçi Kayıtlarda Bulunamadı!');
+                $("#Alert").removeClass("text-danger");
+                $("#Alert").addClass("text-info");
+                $("#Adi").attr("value", "");
+                $("#Soyadi").attr("value", "");
+                $("#Plaka").attr("value", "");
+                $("#Telefon").attr("value", "");
+                $("#Firma").attr("value", "");
+                $("#Ziyaret_Sebebi").val("");
+            } else {
+                $("#Adi").attr("value", data.Adi);
+                $("#Soyadi").attr("value", data.Soyadi);
+                $("#Plaka").attr("value", data.Plaka);
+                $("#Telefon").attr("value", data.Telefon);
+                $("#Firma").attr("value", data.Firma);
+                $("#Ziyaret_Sebebi").val(data.Ziyaret_Sebebi);
+                $("#Alert").text("");
+            }
+        });
+    }
+
+
+
+
+
 </script>

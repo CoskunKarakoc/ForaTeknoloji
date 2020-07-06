@@ -13,5 +13,6 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         void DeleteVisitor(Visitors visitors);
         Visitors UpdateVisitor(Visitors visitors);
         Visitors GetByKartId(string Kart_ID);
+        Visitors GetByTCKimlik(string TCKimlik);
     }
 }

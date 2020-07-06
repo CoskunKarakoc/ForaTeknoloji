@@ -2281,7 +2281,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
         {
             //TODO: Global Zone düzeltilecek
             string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
-            var GlobalZone = _globalZoneDal.Get(x => x.Global_Bolge_No == parameters.Global_Kapi_Bolgesi);
             string queryString = @"SELECT DISTINCT AccessDatas.[Kayit No], AccessDatas.ID, AccessDatas.[Kart ID], 
             Visitors.Adi, Visitors.Soyadi, Visitors.TCKimlik, Visitors.Telefon, Visitors.Plaka, 
             Visitors.[Ziyaret Sebebi], GroupsMaster.[Grup Adi], 
@@ -2289,7 +2288,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             AccessDatas.[Gecis Tipi] AS Gecis, AccessDatas.Tarih,
             Users.Adi AS [Personel Adi], Users.Soyadi AS [Personel Soyadi], Visitors.Resim,AccessDatas.[Canli Resim]
             FROM (((Visitors
-			RIGHT JOIN AccessDatas ON Visitors.[Kart ID] = AccessDatas.[Kart ID])
+			RIGHT JOIN AccessDatas ON Visitors.[Kayit No] = AccessDatas.[Visitor Kayit No])
 			LEFT JOIN GroupsMaster ON Visitors.[Grup No] = GroupsMaster.[Grup No])
 			LEFT JOIN Users ON Visitors.ID = Users.ID)
 			LEFT JOIN ReaderSettingsNew ON (AccessDatas.[Kapi ID] = ReaderSettingsNew.[WKapi ID]) AND (AccessDatas.[Panel ID] = ReaderSettingsNew.[Panel ID])
@@ -2300,10 +2299,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 if (parameters.Visitor != null)
                 {
                     queryString += " AND AccessDatas.[Visitor Kayit No] =" + parameters.Visitor;
-                }
-                else
-                {
-                    queryString += " AND AccessDatas.[Visitor Kayit No] =" + 0;
                 }
             }
 
@@ -2322,6 +2317,10 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             else if (parameters.Gecis_Tipi == 2)
             {
                 queryString += " AND AccessDatas.[Kod] = 2";
+            }
+            else
+            {
+                queryString += " AND AccessDatas.[Kod] IN(0,1,2)";
             }
 
             if (parameters.Panel != null)
@@ -2377,7 +2376,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                         queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + parameters.Baslangic_Tarihi?.AddHours(23).AddMinutes(59).AddSeconds(59).ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
                     }
                 }
-                if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
+                else if (parameters.Baslangic_Tarihi != null && parameters.Bitis_Tarihi != null)
                 {
                     if (parameters.Baslangic_Saati != null && parameters.Bitis_Saati != null)
                     {
@@ -2438,7 +2437,6 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 finally
                 {
                     connection.Close();
-
                 }
             }
 

@@ -351,5 +351,28 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
+        public ActionResult GetVisitorByTCKimlik(string TCKimlik)
+        {
+            long TCNo = 0;
+            if (TCKimlik != null && TCKimlik != "" && long.TryParse(TCKimlik, out TCNo))
+            {
+                var entity = _visitorsService.GetByTCKimlik(TCKimlik);
+                if (entity == null)
+                    return Json("NotFound", JsonRequestBehavior.AllowGet);
+                else
+                    return Json(entity, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
+
+
+        }
+
+
+
+
+
     }
 }
