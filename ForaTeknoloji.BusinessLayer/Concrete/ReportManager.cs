@@ -2596,7 +2596,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     parameters.Gecis = 0;
 
                 queryString = @" SELECT AccessDatas.[Kayit No], AccessDatas.[Kart ID], TTT.Adi, TTT.Soyadi, 
-                        Visitors.[Ziyaret Sebebi], TTT.Tarih, AccessDatas.[Gecis Tipi] 
+                        Visitors.[Ziyaret Sebebi], AccessDatas.Tarih, AccessDatas.[Gecis Tipi] 
                         FROM AccessDatas 
                         INNER JOIN 
                             (SELECT AccessDatas.[Visitor Kayit No], Visitors.Adi, Visitors.Soyadi, 
@@ -2617,7 +2617,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             else
             {
                 queryString = @"SELECT AccessDatas.[Kayit No], AccessDatas.[Kart ID], TTT.Adi, TTT.Soyadi, 
-                        TTT.Tarih, AccessDatas.[Gecis Tipi] 
+                        Visitors.[Ziyaret Sebebi],AccessDatas.Tarih, AccessDatas.[Gecis Tipi] 
                         FROM AccessDatas 
                         INNER JOIN 
                             (SELECT AccessDatas.[Visitor Kayit No], Visitors.Adi, Visitors.Soyadi, 
@@ -2649,8 +2649,9 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Kart_ID = reader[1].ToString(),
                             Adi = reader[2].ToString(),
                             Soyadi = reader[3].ToString(),
-                            Tarih = reader[4] as DateTime? ?? default(DateTime),
-                            Gecis_Tipi = reader[5] as int? ?? default(int)
+                            Ziyaret_Sebebi=reader[4].ToString(),
+                            Tarih = reader[5] as DateTime? ?? default(DateTime),
+                            Gecis_Tipi = reader[6] as int? ?? default(int)
                         };
                         liste.Add(nesne);
                     }
