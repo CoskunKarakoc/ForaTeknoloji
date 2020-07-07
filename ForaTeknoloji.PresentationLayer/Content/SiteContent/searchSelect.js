@@ -1244,3 +1244,4 @@
     })(AbstractChosen);
 
 }).call(this);
+/*Coşkun Karakoç 07/07/2020 Upgrade-Page*/
