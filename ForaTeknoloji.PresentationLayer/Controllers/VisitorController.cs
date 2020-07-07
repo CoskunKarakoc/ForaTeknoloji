@@ -96,7 +96,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
             var model = new VisitorListViewModel
             {
-                Visitor = _visitorsService.GetAllVisitors().OrderByDescending(x => x.Kayit_No).ToList(),
+                Visitor = null,
                 PanelListesi = _reportService.PanelListesi(user)
             };
             return View(model);
@@ -105,8 +105,9 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         [HttpGet]
         public ActionResult Liste()
         {
-            var model = _visitorsService.GetAllVisitors().OrderByDescending(x => x.Kayit_No).ToList();
-            return Json(new { data = model }, JsonRequestBehavior.AllowGet);
+            var jsonresult = Json(new { data = _visitorsService.GetAllVisitors().OrderByDescending(x => x.Kayit_No).ToList() }, JsonRequestBehavior.AllowGet);
+            jsonresult.MaxJsonLength = int.MaxValue;
+            return jsonresult;
         }
 
 
