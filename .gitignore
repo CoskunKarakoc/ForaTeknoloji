@@ -259,3 +259,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/ForaTeknoloji.PresentationLayer/Content/Images/MaviSoft00BF9A.png
