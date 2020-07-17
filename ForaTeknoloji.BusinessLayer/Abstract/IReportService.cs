@@ -16,7 +16,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
         List<ReportPersonelList> GetReportPersonelLists(ActiveUserReportParameters parameters, DBUsers dBUsers);
         List<ReportPersonelList> GetReportPersonelListsEski(ActiveUserReportParameters parameters, DBUsers dBUsers);
         List<AccessDatasComplex> GetTanimsizListesi(TanimsizReportParameters parameters);
-
+        List<PersonelList> GetPersonelAndVisitorCardLists(DBUsers dBUsers);
 
         List<DigerGecisRaporList> GetDigerGecisListesi(OutherReportParameters parameters);
         List<DigerGecisRaporListKullaniciAlarm> GetDigerGecisRaporListKullaniciAlarms(OutherReportParameters parameters);

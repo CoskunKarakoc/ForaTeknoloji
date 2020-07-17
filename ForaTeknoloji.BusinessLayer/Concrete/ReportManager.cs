@@ -1554,6 +1554,89 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
+        //PersonelAdnVisitorCardList
+        public List<PersonelList> GetPersonelAndVisitorCardLists(DBUsers dBUsers)
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            string queryString = @"SELECT DISTINCT Users.[Kayit No],Users.ID, Users.[Kart ID],Users.[Kart ID 2],Users.[Kart ID 3] ,Users.Adi,Unvan.Adi As [Unvan Adi],
+                                        Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,
+                                        Departmanlar.Adi As Departman,AltDepartman.Adi As [Alt Departman],Bolum.Adi As [Bolum Adi], Birim.Adi AS [Birim Adi],
+										Users.[Grup No], GroupsMaster.[Grup Adi] As [Geçiş Grubu],
+                                        Users.Tmp AS [Global Bolge Adi],Users.[Telefon],Users.[Aciklama] FROM ((((((((GroupsMaster
+                                        LEFT JOIN Users ON Users.[Grup No] = GroupsMaster.[Grup No]) 
+                                        LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) 
+                                        LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
+                                        LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No])
+                                        LEFT JOIN AltDepartman ON Users.[Alt Departman No]=AltDepartman.[Alt Departman No])
+                                        LEFT JOIN Bolum ON Users.[Bolum No]=Bolum.[Bolum No])
+										LEFT JOIN Birim ON Users.[Birim No]=Birim.[Birim No])
+                                        LEFT JOIN Unvan ON Users.[Unvan No]=Unvan.[Unvan No])
+                                        WHERE Users.ID > 0";
+            queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ")";
+            if (GetAltDepartmanListReturInt(dBUsers).Count > 0)
+            {
+
+                if (GetBolumListReturInt(dBUsers).Count > 0)
+                {
+                    queryString += " AND(Departmanlar.[Departman No] IN(" + departmanListesi + ") AND AltDepartman.[Alt Departman No] IN(" + altDepartmanListesi + ") OR Bolum.[Bolum No] IN(" + bolumListesi + ")) ";
+                }
+                else
+                {
+                    queryString += " AND(Departmanlar.[Departman No] IN(" + departmanListesi + ") AND AltDepartman.[Alt Departman No] IN(" + altDepartmanListesi + ")) ";
+                }
+            }
+            queryString += " ORDER BY Users.ID";
+
+
+
+            List<PersonelList> liste = new List<PersonelList>();
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var nesne = new PersonelList
+                        {
+                            Kayit_No = reader[0] as int? ?? default(int),
+                            ID = reader[1] as int? ?? default(int),
+                            Kart_ID = reader[2].ToString(),
+                            Kart_ID_2 = reader[3].ToString(),
+                            Kart_ID_3 = reader[4].ToString(),
+                            Adi = reader[5].ToString(),
+                            UnvanAdi = reader[6].ToString(),
+                            Soyadi = reader[7].ToString(),
+                            TCKimlik = reader[8].ToString(),
+                            SirketAdi = reader[9].ToString(),
+                            DepartmanAdi = reader[10].ToString(),
+                            AltDepartmanAdi = reader[11].ToString(),
+                            BolumAdi = reader[12].ToString(),
+                            Birim_Adi = reader[13].ToString(),
+                            Grup_No = reader[14] as int? ?? default(int),
+                            Grup_Adi = reader[15].ToString(),
+                            Tmp = reader[16].ToString(),
+                            Telefon = reader[17].ToString()
+                        };
+                        liste.Add(nesne);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return liste;
+        }
 
 
         public List<PersonelList> GetUserGroupsList(PersonelListReportParameters parameters, DBUsers dBUsers)
@@ -2649,7 +2732,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Kart_ID = reader[1].ToString(),
                             Adi = reader[2].ToString(),
                             Soyadi = reader[3].ToString(),
-                            Ziyaret_Sebebi=reader[4].ToString(),
+                            Ziyaret_Sebebi = reader[4].ToString(),
                             Tarih = reader[5] as DateTime? ?? default(DateTime),
                             Gecis_Tipi = reader[6] as int? ?? default(int)
                         };

@@ -3175,6 +3175,7 @@
     <Content Include="Views\PersonelListReport\GroupBasedList.cshtml" />
     <Content Include="Views\Holiday\Index.cshtml" />
     <Content Include="Views\Holiday\Edit.cshtml" />
+    <Content Include="Views\PersonelListReport\PersonelCardList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

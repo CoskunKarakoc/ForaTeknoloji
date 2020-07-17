@@ -191,6 +191,24 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             return jsonresult;
         }
 
+
+        public ActionResult PersonelCardList()
+        {
+            return View();
+        }
+
+        public ActionResult PersonelCardListAjax()
+        {
+            var jsonresult = Json(new { data = _reportService.GetPersonelAndVisitorCardLists(user) }, JsonRequestBehavior.AllowGet);
+            jsonresult.MaxJsonLength = int.MaxValue;
+            return jsonresult;
+        }
+
+
+
+
+
+
         public ActionResult AltDepartmanListesi(int? Departman)
         {
             if (Departman != 0 && Departman != null)

@@ -94,7 +94,8 @@ namespace ForaTeknoloji.Entities.ComplexType
         public string Grup_No_6_Adi { get; set; }
         public string Grup_No_7_Adi { get; set; }
         public string Grup_No_8_Adi { get; set; }
-
+        public string Kart_ID_2 { get; set; }
+        public string Kart_ID_3 { get; set; }
 
 
 
