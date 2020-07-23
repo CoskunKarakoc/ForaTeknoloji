@@ -1874,13 +1874,13 @@ END";
             context.TaskCodes.Add(taskCode2657);
             TaskCode taskCode48 = new TaskCode
             {
-                Gorev_Kodu = 48,
+                Gorev_Kodu = 2775,
                 Gorev_Adi = "Lokal Interlock Kapı Sensör Çiftleri Ayarlarının Gönderilmesi"
             };
             context.TaskCodes.Add(taskCode48);
             TaskCode taskCode49 = new TaskCode
             {
-                Gorev_Kodu = 49,
+                Gorev_Kodu = 2774,
                 Gorev_Adi = "Lokal Interlock Kapı Sensör Çiftleri Ayarlarının Alınması"
             };
             context.TaskCodes.Add(taskCode49);

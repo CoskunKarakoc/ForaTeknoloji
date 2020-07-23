@@ -891,5 +891,83 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+
+
+
+        public ActionResult LokalInterlockGonder(int id)
+        {
+
+            if (id != 0)
+            {
+                var panel = _panelSettingsService.GetById(id);
+                if (panel.Panel_Model != (int)PanelModel.Panel_1010)
+                {
+                    try
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_LOCALINTERLOCK,
+                            IntParam_1 = (int)id,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = id,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, id, 0);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                    }
+                }
+            }
+            return RedirectToAction("Settings", new { @PanelID = id });
+        }
+
+        public ActionResult LokalInterlockAl(int id)
+        {
+
+            if (id != 0)
+            {
+                var panel = _panelSettingsService.GetById(id);
+                if (panel.Panel_Model != (int)PanelModel.Panel_1010)
+                {
+                    try
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_LOCALINTERLOCK,
+                            IntParam_1 = (int)id,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = id,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                        _accessDatasService.AddOperatorLog(134, user.Kullanici_Adi, 0, 0, id, 0);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                    }
+                }
+            }
+            return RedirectToAction("Settings", new { @PanelID = id });
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }
