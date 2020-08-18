@@ -402,6 +402,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (MacAdress == null || MacAdress == "")
+                    throw new Exception("Seri Numara Boş Geçilemez!");
+                if (panelSettings.Panel_ID == null)
+                    throw new Exception("Panel ID Boş Geçilemez!");
+                if (panelSettings.Panel_Name == null || panelSettings.Panel_Name == "")
+                    throw new Exception("Panel Adı Boş Geçilemez!");
+                if (panelSettings.Panel_IP1 == null || panelSettings.Panel_IP2 == null || panelSettings.Panel_IP3 == null || panelSettings.Panel_IP4 == null)
+                    throw new Exception("Panel IP Adresleri Boş Geçilemez!");
+
                 panelSettings.Sira_No = panelSettings.Panel_ID;
                 panelSettings.Seri_No = int.Parse(MacAdress, System.Globalization.NumberStyles.HexNumber);
                 var panel = _panelSettingsService.GetAllPanelSettings().Find(x => x.Panel_ID == panelSettings.Panel_ID && x.Sira_No == panelSettings.Sira_No);

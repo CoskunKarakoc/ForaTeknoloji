@@ -265,6 +265,11 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             if (Addeduser.Kart_ID == null || Addeduser.Kart_ID == "")
                 throw new Exception("Kart ID Değeri Boş Bırakılamaz!");
 
+
+            if (Addeduser.Grup_No == null)
+                throw new Exception("Ana Grup Değeri Boş Bırakılamaz!");
+
+
             if (Addeduser != null && Addeduser.ID != 0 && Addeduser.Kart_ID != null)
             {
                 var CheckKartID = _userService.GetAllUsers(x => x.Kart_ID == Addeduser.Kart_ID);
