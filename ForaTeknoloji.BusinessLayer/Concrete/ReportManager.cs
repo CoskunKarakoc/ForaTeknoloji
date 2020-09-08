@@ -1480,7 +1480,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                         Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,
                                         Departmanlar.Adi As Departman,AltDepartman.Adi As [Alt Departman],Bolum.Adi As [Bolum Adi], Birim.Adi AS [Birim Adi],
 										Users.[Grup No], GroupsMaster.[Grup Adi] As [Geçiş Grubu],
-                                        Users.Tmp AS [Global Bolge Adi],Users.[Telefon],Users.[Aciklama] FROM ((((((((GroupsMaster
+                                        Users.Tmp AS [Global Bolge Adi],Users.[Telefon],Users.[Aciklama],Users.[Kart ID 2] FROM ((((((((GroupsMaster
                                         LEFT JOIN Users ON Users.[Grup No] = GroupsMaster.[Grup No]) 
                                         LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) 
                                         LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
@@ -1535,7 +1535,8 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Grup_No = reader[12] as int? ?? default(int),
                             Grup_Adi = reader[13].ToString(),
                             Tmp = reader[14].ToString(),
-                            Telefon = reader[15].ToString()
+                            Telefon = reader[15].ToString(),
+                            Kart_ID_2 = reader[17].ToString()
                         };
                         liste.Add(nesne);
                     }
@@ -3884,7 +3885,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                 LEFT JOIN CodeOperation ON AccessDatasTemps.Kod = CodeOperation.TKod
                                 LEFT JOIN Users ON AccessDatasTemps.ID =Users.ID
                                 WHERE AccessDatasTemps.Kod >= 20
-                                AND AccessDatasTemps.Kod <= 27
+                                AND AccessDatasTemps.Kod <= 28
                                 AND AccessDatasTemps.Kontrol=0
                                 ORDER BY AccessDatasTemps.[Tarih] DESC";
             List<AlarmDatasComplex> liste = new List<AlarmDatasComplex>();

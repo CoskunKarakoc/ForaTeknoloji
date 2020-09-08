@@ -65,17 +65,30 @@
 
     function AlarmSablon(value) {
         var sablon = '';
-        sablon = ' <a href="/Alarm/AlarmTable" class="dropdown-item d-flex align-items-center" href="#">' +
-            '<div class="mr-3">' +
-            '<div class="icon-circle badge-danger">' +
-            '<i title="Hata" class="fas fa-exclamation-triangle text-white"></i>' +
+        if (value.Kart_ID == "0" && value.Kod == 28 && value.ID == 0) {
+            sablon = ' <a href="/Alarm/AlarmTable" class="dropdown-item d-flex align-items-center" href="#">' +
+                '<div class="mr-3">' +
+                '<div class="icon-circle badge-danger">' +
+                '<i title="Hata" class="fas fa-exclamation-triangle text-white"></i>' +
+                '</div>' +
+                '</div>' +
+                '<div>' +
+                '<div class="small text-gray-500">Panel No:' + value.Panel_ID + ' - Kapı No: ' + value.Kapi_ID + '</div>' + value.Operasyon + ''
             '</div>' +
+                '</a>';
+        } else {
+            sablon = ' <a href="/Alarm/AlarmTable" class="dropdown-item d-flex align-items-center" href="#">' +
+                '<div class="mr-3">' +
+                '<div class="icon-circle badge-danger">' +
+                '<i title="Hata" class="fas fa-exclamation-triangle text-white"></i>' +
+                '</div>' +
+                '</div>' +
+                '<div>' +
+                '<div class="small text-gray-500">Panel No:' + value.Panel_ID + '</div>' +
+                value.Operasyon
             '</div>' +
-            '<div>' +
-            '<div class="small text-gray-500">Panel No:' + value.Panel_ID + '</div>' +
-            value.Operasyon
-        '</div>' +
-            '</a>';
+                '</a>';
+        }
         return sablon;
     }
 </script>

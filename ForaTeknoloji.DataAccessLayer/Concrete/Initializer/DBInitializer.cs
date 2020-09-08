@@ -538,6 +538,12 @@ END";
                 Operasyon = "KULANICI ALARM-GEÇİŞ SONRASI"
             };
             context.CodeOperation.Add(codeOperation27);
+            CodeOperation codeOperation28 = new CodeOperation
+            {
+                TKod = 28,
+                Operasyon = "SABOTAJ"
+            };
+            context.CodeOperation.Add(codeOperation28);
             CodeOperation codeOperation40 = new CodeOperation
             {
                 TKod = 40,
