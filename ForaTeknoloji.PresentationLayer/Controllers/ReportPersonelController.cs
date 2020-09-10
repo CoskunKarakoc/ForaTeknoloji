@@ -193,6 +193,10 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
 
+        public ActionResult GelenGelmeyenSayisi()
+        {
+            return Json(_reportService.GelenGelmeyenCount(), JsonRequestBehavior.AllowGet);
+        }
 
 
         // GET: ReportPersonelEski

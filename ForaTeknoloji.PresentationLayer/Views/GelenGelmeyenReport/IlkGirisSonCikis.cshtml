@@ -23,7 +23,7 @@
 </style>
 <div class="card border-left-info h-100 shadow-lg mt-2">
     <div class="card-header py-1">
-        <h3 class="card-title"><i class="fas fa-bookmark"></i> İlk Giriş Son Çıkış</h3>
+        <h3 class="card-title"><i class="fas fa-bookmark"></i> İlk Okutma Son Okutma</h3>
     </div>
     <div class="card-body">
         @using (Html.BeginForm("IlkGirisSonCikis", "GelenGelmeyenReport", FormMethod.Get))
@@ -95,7 +95,7 @@
                     <h4 class="text-info text-right">@Model.IlkGirisSonCikis.Count Adet Kayıt Listelendi</h4>
                     <hr />
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
-                    <a id="Excell" href="@Url.Action("IlkGirisSonCikisExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
+                    <a id="Excell" href="@Url.Action("IlkOkutmaSonOkutmaExcell","GelenGelmeyenReport")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
 
@@ -387,7 +387,7 @@
             frameDoc.document.write('</head>');
             frameDoc.document.write('<body>');
             frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
-            frameDoc.document.write('<h5>İlk Giriş-Son Çıkış Raporu (' + '@TempData["DateAndTimeView"]'  + ')</h5>');
+            frameDoc.document.write('<h5>İlk Okutma-Son Okutma Raporu (' + '@TempData["DateAndTimeView"]'  + ')</h5>');
             frameDoc.document.write(contents);
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');

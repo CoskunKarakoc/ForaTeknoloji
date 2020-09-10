@@ -917,7 +917,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         }
 
         //İlk Giriş Son Çıkış
-        public void IlkGirisSonCikisExcell()
+        public void IlkOkutmaSonOkutmaExcell()
         {
             List<GelenGelmeyen_IlkGirisSonCikis> liste = new List<GelenGelmeyen_IlkGirisSonCikis>();
             liste = TempData["IlkGirisSonCikis"] as List<GelenGelmeyen_IlkGirisSonCikis>;
@@ -927,7 +927,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
             ExcelPackage package = new ExcelPackage();
             ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Report");
-            worksheet.Cells["A1"].Value = "İlk Giriş Son Çıkış";
+            worksheet.Cells["A1"].Value = "İlk Okutma Son Okutma";
             worksheet.Cells["A3"].Value = "Tarih";
             worksheet.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}  {0:hh: mm ss}", DateTimeOffset.Now);
             worksheet.Cells["A4"].Value = "Rapor Tarih Aralığı";

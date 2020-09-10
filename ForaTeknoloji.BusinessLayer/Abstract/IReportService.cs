@@ -8,7 +8,7 @@ namespace ForaTeknoloji.BusinessLayer.Abstract
     public interface IReportService
     {
         void SendAllUserTask(int TaskCode, DateTime Tarih, int DurumKodu, string KullaniciAdi, int PanelNo);
-
+        GelenGelmeyenComplexCount GelenGelmeyenCount();
         List<ZiyaretciRaporList> GetZiyaretciListesi(VisitorReportParameters parameters);
         List<PersonelList> GetPersonelLists(PersonelListReportParameters parameters, DBUsers dBUsers);
         List<PersonelList> GetPersonelAndVisitorLists(DBUsers dBUsers);

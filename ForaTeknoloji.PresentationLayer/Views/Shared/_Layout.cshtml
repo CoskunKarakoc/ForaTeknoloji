@@ -69,6 +69,11 @@
     <!--Chose Select Search---->
     <link href="~/Content/SiteContent/searchSelect.css" rel="stylesheet" />
     <!--Chose Select Search---->
+    <!--Chart JS Documents-->
+    <link href="~/Content/ChartJS/Chart.min.css" rel="stylesheet" />
+    <script src="~/Content/ChartJS/Chart.min.js"></script>
+    <script src="~/Content/ChartJS/Chart.bundle.min.js"></script>
+    <!--Chart JS Documents-->
 </head>
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -390,7 +395,7 @@
                                         <h6 class="collapse-header">Genel Raporlar</h6>
                                         if (MenuListUser.Ilk_Giris_Son_Cikis_Raporlari == true)
                                         {
-                                            <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">İlk Giriş Son Çıkış</a>
+                                            <a class="collapse-item" href="@Url.Action("IlkGirisSonCikis","GelenGelmeyenReport")">İlk Okutma Son Okutma</a>
                                         }
 
                                         if (MenuListUser.Gec_Gelen_Erken_Cikan == true)

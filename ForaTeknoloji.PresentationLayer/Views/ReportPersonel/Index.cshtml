@@ -207,7 +207,13 @@
                     <button type="submit" class="btn btn-sm btn-secondary"><i class="fas fa-chart-bar"></i> Rapor Oluştur</button>
                     <a id="Excell" href="@Url.Action("AktifPersonelRaporları", "ReportPersonel")" class="btn  btn-sm btn-success"><i class="fas fa-file-export"></i>Excell'e Aktar</a>
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
-
+                    <br />
+                    <hr />
+                    <div id="canvas-holder" style="width:75%">
+                        <canvas id="chart-area"></canvas>
+                    </div>
+                    <hr />
+                    <br />
 
                 </div>
             </div>
@@ -309,6 +315,55 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        var gelen = 0;
+        var gelmeyen = 0;
+        $.ajax({
+            url: '/ReportPersonel/GelenGelmeyenSayisi',
+            type: 'GET',
+            dataType: 'json'
+        }).done(function (data) {
+            gelen = data.GelenCount;
+            gelmeyen = data.GelmeyenCount;
+            var config = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: [
+                            gelen,
+                            gelmeyen
+                        ],
+                        backgroundColor: [
+                            'rgba(3, 166, 120, 1)',
+                            'rgba(214, 69, 65, 1)',
+                        ]
+                    }],
+                    labels: [
+                        'Gelenler',
+                        'Gelmeyenler'
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            fontColor: "black"
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Gelen Gelmeyen Kullanıcı Sayısı'
+                    }
+                }
+            };
+
+            var ctx = document.getElementById('chart-area').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+        });
+    });
+</script>
 @section Scripts{
     <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
     <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@

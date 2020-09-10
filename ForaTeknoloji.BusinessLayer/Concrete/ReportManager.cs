@@ -519,6 +519,88 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             return liste;
         }
 
+        //CharJS 
+        public GelenGelmeyenComplexCount GelenGelmeyenCount()
+        {
+            string address = ConfigurationManager.ConnectionStrings["ForaContext"].ConnectionString;
+            var Baslangic_Tarihi = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 1);
+            var Bitis_Tarihi = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+            int gelenSayisi = 0;
+            int gelmeyenSayisi = 0;
+            string queryString = @"SELECT COUNT(*) 
+                             FROM Users 
+                             WHERE Users.ID > 0
+                             AND Users.ID IN (SELECT DISTINCT AccessDatas.ID 
+                             FROM AccessDatas 
+                             WHERE AccessDatas.[Kullanici Tipi] = 0 
+                             AND AccessDatas.Kod = 1 ";
+            queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + Baslangic_Tarihi.ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+            queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + Bitis_Tarihi.ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+            queryString += " AND AccessDatas.[Gecis Tipi] = 0";
+            queryString += ")";
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        gelenSayisi = reader[0] as int? ?? default(int);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+            queryString = @" SELECT COUNT(*) FROM Users
+                                         WHERE Users.ID > 0
+                                         AND Users.ID <> ALL (SELECT DISTINCT AccessDatas.ID
+                                         FROM AccessDatas 
+                                         WHERE AccessDatas.[Kullanici Tipi] = 0 
+                                         AND AccessDatas.Kod = 1";
+            queryString += " AND AccessDatas.Tarih >= CONVERT(SMALLDATETIME,'" + Baslangic_Tarihi.ToString("dd/MM/yyyy HH:mm:ss") + "',103) ";
+            queryString += " AND AccessDatas.Tarih <= CONVERT(SMALLDATETIME,'" + Bitis_Tarihi.ToString("dd/MM/yyyy HH:mm:ss") + "',103)";
+            queryString += " AND AccessDatas.[Gecis Tipi] = 0";
+            queryString += ")";
+            using (SqlConnection connection = new SqlConnection(address))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        gelmeyenSayisi = reader[0] as int? ?? default(int);
+                    }
+                    reader.Close();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
+            var entity = new GelenGelmeyenComplexCount
+            {
+                GelenCount = gelenSayisi,
+                GelmeyenCount = gelmeyenSayisi
+            };
+            return entity;
+        }
 
 
         //Gelen-Gelmeyen Gelenler*
@@ -825,7 +907,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
 				    LEFT JOIN Unvan ON Users.[Unvan No] = Unvan.[Unvan No]) 
                     LEFT JOIN Bloklar ON Users.[Blok No] = Bloklar.[Blok No]) ON AccessDatas.ID = Users.ID) 
                     LEFT JOIN GroupsMaster ON Users.[Grup No] = GroupsMaster.[Grup No] 
-                    WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod = 1 ";
+                    WHERE AccessDatas.[Kullanici Tipi] = 0 AND AccessDatas.Kod IN (0,1,2,3) ";
             queryString += " AND Sirketler.[Sirket No] IN(10000," + sirketListesi + ") ";
             if (GetAltDepartmanListReturInt(dBUsers).Count > 0)
             {
@@ -1480,7 +1562,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                                         Users.Soyadi,Users.TCKimlik, Sirketler.Adi AS Şirket,
                                         Departmanlar.Adi As Departman,AltDepartman.Adi As [Alt Departman],Bolum.Adi As [Bolum Adi], Birim.Adi AS [Birim Adi],
 										Users.[Grup No], GroupsMaster.[Grup Adi] As [Geçiş Grubu],
-                                        Users.Tmp AS [Global Bolge Adi],Users.[Telefon],Users.[Aciklama],Users.[Kart ID 2] FROM ((((((((GroupsMaster
+                                        Users.Tmp AS [Global Bolge Adi],Users.[Telefon],Users.[Aciklama],Users.[Kart ID 2],Users.[Kart ID 3] FROM ((((((((GroupsMaster
                                         LEFT JOIN Users ON Users.[Grup No] = GroupsMaster.[Grup No]) 
                                         LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]) 
                                         LEFT JOIN Departmanlar ON Users.[Departman No] = Departmanlar.[Departman No])
@@ -1536,7 +1618,8 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                             Grup_Adi = reader[13].ToString(),
                             Tmp = reader[14].ToString(),
                             Telefon = reader[15].ToString(),
-                            Kart_ID_2 = reader[17].ToString()
+                            Kart_ID_2 = reader[17].ToString(),
+                            Kart_ID_3 = reader[18].ToString()
                         };
                         liste.Add(nesne);
                     }

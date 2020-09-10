@@ -66,6 +66,7 @@
     <Compile Include="ComplexType\ExcelGroupType.cs" />
     <Compile Include="ComplexType\ExcelUserType.cs" />
     <Compile Include="ComplexType\FastGroupParameters.cs" />
+    <Compile Include="ComplexType\GelenGelmeyenComplexCount.cs" />
     <Compile Include="ComplexType\GelenGelmeyenRaporList.cs" />
     <Compile Include="ComplexType\GelenGelmeyenReportParameters.cs" />
     <Compile Include="ComplexType\GelenGelmeyen_Gelenler.cs" />

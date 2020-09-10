@@ -318,6 +318,9 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ChartJS\Chart.bundle.min.js" />
+    <Content Include="Content\ChartJS\Chart.min.css" />
+    <Content Include="Content\ChartJS\Chart.min.js" />
     <Content Include="Content\DataTablesNew\dataTables.bootstrap.min.css" />
     <Content Include="Content\DataTablesNew\dataTables.bootstrap.min.js" />
     <Content Include="Content\DataTablesNew\dataTables.bootstrap4.min.css" />
