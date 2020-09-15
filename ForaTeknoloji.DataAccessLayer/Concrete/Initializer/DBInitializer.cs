@@ -169,8 +169,10 @@ END";
 AS BEGIN
 DECLARE @maxUserID int
 SET @maxUserID=(SELECT MAX(Users.ID) FROM Users)
+SET @panelModel=(SELECT TOP 1 [Panel Model] FROM PanelSettings WHERE [Panel ID] = @panelID)
 DECLARE @userID int
-
+IF(@panelModel <> 9)
+BEGIN
 INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
 			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
 			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])
@@ -184,6 +186,7 @@ INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3]
            ,1,GETDATE()
            ,@userName,1
            ,NULL,NULL,NULL)
+END
 INSERT INTO [dbo].[TaskList]([Gorev Kodu],[IntParam 1],[IntParam 2],[IntParam 3],[IntParam 4],[IntParam 5],
 			[Panel No],[Tum Panel],[Panel Grup 1],[Panel Grup 2],[Panel Grup 3],[Deneme Sayisi],[Durum Kodu],
 			[Tarih],[Kullanici Adi],[Tablo Guncelle],[StrParam 1],[StrParam 2],[StrParam 3])

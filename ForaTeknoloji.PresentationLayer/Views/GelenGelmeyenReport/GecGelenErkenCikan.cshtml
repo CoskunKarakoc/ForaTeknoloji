@@ -81,9 +81,9 @@
                         @Html.DropDownListFor(model => model.Bolum, Model.Bolum, "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
                     @*<div class="form-group">
-                        <label>Birimler</label>
-                        @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>*@
+                            <label>Birimler</label>
+                            @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        </div>*@
                     <div class="form-group">
                         <label>Geçiş Grupları</label>
                         <div class="form-group">
@@ -114,10 +114,8 @@
                 </div>
 
 
-                <div class="col-md-12">
-
+                @*<div class="col-md-12">
                     <div id="print_div" class="mt-4">
-
                         @if (Model.IlkGirisSonCikis.Count > 0)
                         {
                             @webGrid.GetHtml(
@@ -147,15 +145,55 @@
                                 <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
                             </div>
                         }
-
-
                     </div>
+                </div>*@
+            </div>
 
-
-
-
+            <div class="col-md-12">
+                <div id="print_div" class="mt-4">
+                    <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>Alt Departman</td>
+                                <td>Bölüm</td>
+                                <td>Grup</td>
+                                <td>Tarih Değeri</td>
+                                <td>İlk Kayıt</td>
+                                <td>Son Kayıt</td>
+                                <td>Fark</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.IlkGirisSonCikis)
+                            {
+                                <tr>
+                                    <td>@item.ID</td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Soyadi</td>
+                                    <td>@item.SirketAdi</td>
+                                    <td>@item.DepartmanAdi</td>
+                                    <td>@item.AltDepartmanAdi</td>
+                                    <td>@item.BolumAdi</td>
+                                    <td>@item.Grup_Adi</td>
+                                    <td>@item.Tarih_Degeri</td>
+                                    <td>@item.Ilk_Kayit</td>
+                                    <td>@item.Son_Kayit</td>
+                                    <td>@item.Fark</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
+
 
         }
     </div>
@@ -242,6 +280,18 @@
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
                 }
+            });
+            $("#mainTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "bPaginate": true,
+                "bInfo": false,
+                "bFilter": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    ['10', '25', '50', '100', 'Hepsi']
+                ],
             });
         });
     </script>
@@ -403,6 +453,9 @@
             frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
             frameDoc.document.write('<h5>İlk Giriş-Son Çıkış Raporu (' + '@TempData["DateAndTimeView"]'  + ')</h5>');
             frameDoc.document.write(contents);
+            frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+            frameDoc.document.getElementById('mainTable_length').style.display = "none";
+            frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
             frameDoc.document.close();

@@ -145,9 +145,9 @@
                         @Html.DropDownListFor(model => model.Bolum, Model.Bolum, "Bölüm Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
                     </div>
                     @*<div class="form-group">
-                        <label>Birimler</label>
-                        @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
-                    </div>*@
+                            <label>Birimler</label>
+                            @Html.DropDownListFor(model => model.Birim_No, Model.Birim_No, "Birim Seçiniz..", new { @class = "form-control form-control-sm chosen-select", tabindex = "2" })
+                        </div>*@
 
                     <div class="form-group">
                         @*<div class="custom-control custom-checkbox">
@@ -203,9 +203,9 @@
 
                 </div>
                 <div class="col-md-4">
-                    <img id="change-image" src="@img " alt="Kayıtlı Fotoğraf" />
+                    <img id="change-image" src="" alt="Kayıtlı Fotoğraf" />
                     <hr />
-                    <img id="change-image-canli" src="@canlimg" alt="Canlı Fotoğraf" />
+                    <img id="change-image-canli" src="" alt="Canlı Fotoğraf" />
                     <br /><br /><br />
                     <h4 class="text-info text-right">@Model.ReportPersonel.Count Adet Kayıt Listelendi</h4>
                     <hr />
@@ -218,48 +218,107 @@
             </div>
         }
 
+        @*<div class="row">
+                 <div class="col-md-12">
+                     <div id="print_div">
+                         @if (Model.ReportPersonel.Count > 0)
+                         {
+                             @webGrid.GetHtml(
+             htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+             selectedRowStyle: "selectRow",
+             footerStyle: "table-pager",
+             columns: webGrid.Columns(
+             webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
+             webGrid.Column("ID", "ID"),
+             webGrid.Column("Kart_ID", "Kart ID"),
+             webGrid.Column("UnvanAdi", "Ünvan"),
+             webGrid.Column("Adi", "Adı"),
+             webGrid.Column("Soyadi", "Soyadı"),
+             webGrid.Column("TCKimlik", "TC Kimlik"),
+             webGrid.Column("Telefon", "Telefon"),
+             webGrid.Column("SirketAdi", "Şirket"),
+             webGrid.Column("DepartmanAdi", "Departman"),
+             webGrid.Column("AltDepartmanAdi", "Alt Departman"),
+             webGrid.Column("BolumAdi", "Bölüm"),
+            // webGrid.Column("BirimAdi", "Birim"),
+             webGrid.Column("BlokAdi", "Blok"),
+             webGrid.Column("Daire", "Daire"),
+             webGrid.Column("Grup_Adi", "Grup"),
+             webGrid.Column("Panel_ID", "Panel"),
+             webGrid.Column("Kapi", "Kapı"),
+             webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+             webGrid.Column("Tarih", "Tarih")))
+
+                         }
+                         else
+                         {
+                             <div class="alert alert-info alert-message">
+                                 <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                             </div>
+
+                         }
+                     </div>
+                 </div>
+             </div>*@
+
+
+
         <div class="row">
             <div class="col-md-12">
-                <div id="print_div">
-                    @if (Model.ReportPersonel.Count > 0)
-                    {
-                        @webGrid.GetHtml(
-        htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-        selectedRowStyle: "selectRow",
-        footerStyle: "table-pager",
-        columns: webGrid.Columns(
-        webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
-        webGrid.Column("ID", "ID"),
-        webGrid.Column("Kart_ID", "Kart ID"),
-        webGrid.Column("UnvanAdi", "Ünvan"),
-        webGrid.Column("Adi", "Adı"),
-        webGrid.Column("Soyadi", "Soyadı"),
-        webGrid.Column("TCKimlik", "TC Kimlik"),
-        webGrid.Column("Telefon", "Telefon"),
-        webGrid.Column("SirketAdi", "Şirket"),
-        webGrid.Column("DepartmanAdi", "Departman"),
-        webGrid.Column("AltDepartmanAdi", "Alt Departman"),
-        webGrid.Column("BolumAdi", "Bölüm"),
-       // webGrid.Column("BirimAdi", "Birim"),
-        webGrid.Column("BlokAdi", "Blok"),
-        webGrid.Column("Daire", "Daire"),
-        webGrid.Column("Grup_Adi", "Grup"),
-        webGrid.Column("Panel_ID", "Panel"),
-        webGrid.Column("Kapi", "Kapı"),
-        webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
-        webGrid.Column("Tarih", "Tarih")))
-
-                    }
-                    else
-                    {
-                        <div class="alert alert-info alert-message">
-                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                        </div>
-
-                    }
+                <div id="print_div" class="card-body">
+                    <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <td>Resim</td>
+                                <td>Kart ID</td>
+                                <td>Ünvan</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>TC Kimlik</td>
+                                <td>Telefon</td>
+                                <td>Şirket</td>
+                                <td>Departman</td>
+                                <td>Alt Departman</td>
+                                <td>Bölüm</td>
+                                <td>Grup</td>
+                                <td>Panel</td>
+                                <td>Kapı</td>
+                                <td>Geçiş</td>
+                                <td>Tarih</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ReportPersonel)
+                            {
+                                <tr>
+                                    <td><a class="text-primary" onclick="SetImageUrl('@item.Resim','@item.Canli_Resim')">Resim</a></td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.UnvanAdi</td>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Soyadi</td>
+                                    <td>@item.TCKimlik</td>
+                                    <td>@item.Telefon</td>
+                                    <td>@item.SirketAdi</td>
+                                    <td>@item.DepartmanAdi</td>
+                                    <td>@item.AltDepartmanAdi</td>
+                                    <td>@item.BolumAdi</td>
+                                    <td>@item.Grup_Adi</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Kapi</td>
+                                    <td>@(item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")</td>
+                                    <td>@item.Tarih</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+
+
+
+
     </div>
 </div>
 <!-- Modal Eski -->
@@ -342,6 +401,19 @@
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
                 }
+            });
+
+            $("#mainTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "bPaginate": true,
+                "bInfo": false,
+                "bFilter": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    ['10', '25', '50', '100', 'Hepsi']
+                ],
             });
         })
     </script>
@@ -632,6 +704,9 @@
         frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
         frameDoc.document.write('<h5>Eski Personel Listesi (' + '@TempData["DateAndTimeView"]' + ')</h5>');
         frameDoc.document.write(contents);
+        frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+        frameDoc.document.getElementById('mainTable_length').style.display = "none";
+        frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
         frameDoc.document.write('</body>');
         frameDoc.document.write('</html>');
         frameDoc.document.close();
@@ -641,8 +716,23 @@
             window.frames["frame1"].print();
             frame1.remove();
         }, 500);
-
     });
+
+    function SetImageUrl(resim, canliResim) {
+        if (resim != "" && resim != null) {
+            var tempResim = "/Images/" + resim;
+            $("#change-image").attr('src', tempResim)
+        }
+
+        if (canliResim != "" && canliResim != null) {
+            var tempCanliResim = "/Canli_Images/" + canliResim;
+            $("#change-image-canli").attr('src', tempCanliResim)
+        }
+
+    }
+
+
+
 </script>
 
 @*Personel Raporları*@

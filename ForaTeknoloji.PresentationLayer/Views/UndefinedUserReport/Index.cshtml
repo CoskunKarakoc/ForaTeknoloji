@@ -123,13 +123,13 @@
             </div>
 
             <div class="col-md-6">
-                <img class="img-fluid" id="change-image" alt="Kritere Uygun Resim Yok" style="width:300px; height:300px;" src="@canlimg" />
+                <img class="img-fluid" id="change-image" alt="Kritere Uygun Resim Yok" style="width:300px; height:300px;" src="" />
             </div>
         </div>
     </div>
 </div>
 <div class="card border-left-info h-100 mt-1 shadow-lg animated fadeIn">
-    <div id="print_div" class="card-body">
+    @*<div id="print_div" class="card-body">
         @if (Model.Liste.Count > 0)
         {
             @webGrid.GetHtml(
@@ -150,8 +150,44 @@
                 <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
             </div>
         }
+    </div>*@
+
+
+    <div id="print_div" class="card-body">
+        <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+            <thead>
+                <tr>
+                    <td>Canlı/Kayıtlı</td>
+                    <td>Kart ID</td>
+                    <td>Panel</td>
+                    <td>Kapı</td>
+                    <td>Geçiş</td>
+                    <td>Tarih</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Liste)
+                {
+                <tr>
+                    <td><a class="text-primary" onclick="SetImageUrl('@item.Canli_Resim')">Resim</a></td>
+                    <td>@item.Kart_ID</td>
+                    <td>@item.Panel_ID</td>
+                    <td>@item.Kapi_Adi</td>
+                    <td>@item.Gecis_Tipi</td>
+                    <td>@item.Tarih</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+
+
 
     </div>
+
+
+
+
 </div>
 <script>
     $(document).ready(function () {
@@ -184,7 +220,40 @@
     });
 </script>
 
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
 
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#mainTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "bPaginate": true,
+                "bInfo": false,
+                "bFilter": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    ['10', '25', '50', '100', 'Hepsi']
+                ],
+            });
+
+        });
+    </script>
+}
 
 <script>
     $(document).ready(function () {
@@ -289,6 +358,9 @@
             frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
             frameDoc.document.write('<h5>Tanımsız Kullanıcı Raporları (' + '@TempData["DateAndTimeView"]' + ')</h5>');
             frameDoc.document.write(contents);
+            frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+            frameDoc.document.getElementById('mainTable_length').style.display = "none";
+            frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
             frameDoc.document.close();
@@ -320,4 +392,14 @@
         $('#Tarih1').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
         $('#Tarih2').val(today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2));
     });
+
+    function SetImageUrl(canliResim) {
+        if (canliResim != "" && canliResim != null) {
+            var tempCanliResim = "/Canli_Images/" + canliResim;
+            $("#change-image").attr('src', tempCanliResim)
+        }
+
+    }
+
+
 </script>

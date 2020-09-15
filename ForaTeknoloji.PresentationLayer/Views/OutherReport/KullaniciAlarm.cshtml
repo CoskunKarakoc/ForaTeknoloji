@@ -197,7 +197,7 @@
     </div>
 </div>
 <div class="card border-left-info h-100 shadow-lg mt-1">
-    <div id="print_div" class="card-body">
+    @*<div id="print_div" class="card-body">
         @if (Model.DigerGecisListesiAlarm.Count > 0)
         {
             @webGrid.GetHtml(
@@ -220,10 +220,81 @@
         {
             <div class="alert alert-info alert-message"><h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4></div>
         }
+    </div>*@
 
+    <div id="print_div" class="card-body">
+        <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+            <thead>
+                <tr>
+                    <td>Kayıt No</td>
+                    <td>ID</td>
+                    <td>Kart ID</td>
+                    <td>Adı</td>
+                    <td>Soyadı</td>
+                    <td>Şirket</td>
+                    <td>Panel</td>
+                    <td>Kapı</td>
+                    <td>Geçiş</td>
+                    <td>Operasyon</td>
+                    <td>Tarih</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DigerGecisListesiAlarm)
+                {
+                    <tr>
+                        <td>@item.Kayit_No</td>
+                        <td>@item.ID</td>
+                        <td>@item.Kart_ID</td>
+                        <td>@item.Adi</td>
+                        <td>@item.Soyadi</td>
+                        <td>@item.SirketAdi</td>
+                        <td>@item.PanelID</td>
+                        <td>@item.Kapi_ID</td>
+                        <td>@(item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")</td>
+                        <td>@item.Operasyon</td>
+                        <td>@item.Tarih</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-</div>
 
+</div>
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#mainTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "bPaginate": true,
+                "bInfo": false,
+                "bFilter": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    ['10', '25', '50', '100', 'Hepsi']
+                ],
+            });
+
+        });
+    </script>
+}
 <script>
     $(document).ready(function () {
         var panelNo = $("#Panel").val();
@@ -287,6 +358,9 @@
             frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
             frameDoc.document.write('<h5>Kullanıcı Alarm Raporları (' + '@TempData["DateAndTimeView"]' + ')</h5><hr/>');
             frameDoc.document.write(contents);
+            frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+            frameDoc.document.getElementById('mainTable_length').style.display = "none";
+            frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
             frameDoc.document.close();

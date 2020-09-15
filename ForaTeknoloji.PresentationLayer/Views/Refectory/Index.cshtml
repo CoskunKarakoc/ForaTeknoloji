@@ -83,7 +83,7 @@
                 </div>
             </div>
         }
-        <div class="row">
+        @*<div class="row">
             <div class="col-md-12">
                 <hr />
                 <div id="print_div">
@@ -114,13 +114,91 @@
                         </div>
 
                     }
+                </div>
+            </div>
+        </div>*@
 
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+                <div id="print_div">
+                    <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <td>Tarih</td>
+                                <td>Gün</td>
+                                <td>Kart ID</td>
+                                <td>Adı</td>
+                                <td>Soyadı</td>
+                                <td>TC Kimlik</td>
+                                <td>Departman</td>
+                                <td>Alt Departman</td>
+                                <td>Bölüm</td>
+                                <td>Panel ID</td>
+                                <td>Panel Adı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.YemekhaneListe)
+                            {
+                                <tr>
+                                    <td>@item.Tarih</td>
+                                    <td>@item.Gun_Adi</td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.Adi</td>
+                                    <td>@item.Soyadi</td>
+                                    <td>@item.TC_Kimlik</td>
+                                    <td>@item.Departman_Adi</td>
+                                    <td>@item.AltDepartmanAdi</td>
+                                    <td>@item.BolumAdi</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Panel_Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#mainTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "bPaginate": true,
+                "bInfo": false,
+                "bFilter": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    ['10', '25', '50', '100', 'Hepsi']
+                ],
+            });
+
+        });
+    </script>
+}
 
 <script>
     $(document).ready(function () {
@@ -280,6 +358,9 @@
         frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
         frameDoc.document.write('<h5>(PDKS-YEMEKHANE) Terminal Kişi Bazlı Hareket Sayıları (' + '@TempData["DateAndTimeView"]' + ')</h5><hr/>');
         frameDoc.document.write(contents);
+        frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+        frameDoc.document.getElementById('mainTable_length').style.display = "none";
+        frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
         frameDoc.document.write('</body>');
         frameDoc.document.write('</html>');
         frameDoc.document.close();

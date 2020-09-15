@@ -165,11 +165,11 @@
                 <div class="col-md-4 text-center">
                     <p class="text-center text-muted">Kayıtlı Fotoğraf</p>
                     <hr />
-                    <img id="change-image" style="height:350px;" src="@img" alt="Kayıtlı Fotoğraf" />
+                    <img id="change-image" style="height:350px;" src="" alt="Kayıtlı Fotoğraf" />
 
                     <p class="text-center text-muted">Canlı Fotoğraf</p>
                     <hr />
-                    <img id="change-image-canli" style="height:350px;" src="@canlimg" alt="Canlı Fotoğraf" />
+                    <img id="change-image-canli" style="height:350px;" src="" alt="Canlı Fotoğraf" />
 
                 </div>
             </div>
@@ -177,38 +177,89 @@
 
         <div class="row">
             <div class="col-md-12">
+                @*<div id="print_div">
+                            @if (Model.ComplexVisitorsListesi.Count > 0)
+                            {
+                                @webGrid.GetHtml(
+                          htmlAttributes: new { @id = "tableNon", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+                         footerStyle:"table-pager",
+                          selectedRowStyle: "selectRow",
+                          columns: webGrid.Columns(
+                    webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
+                    webGrid.Column("ID", "ID"),
+                    webGrid.Column("Kart_ID", "Kart ID"),
+                    webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
+                    webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadı"),
+                    webGrid.Column("Ziyaretci_TCKimlik", "Ziyaretçi TC Kimlik"),
+                    webGrid.Column("Ziyaretci_Telefon", "Ziyaretçi Telefon"),
+                    webGrid.Column("Ziyaretci_Plaka", "Ziyaretçi Plaka"),
+                    webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
+                    webGrid.Column("Grup_Adi", "Grup"),
+                    webGrid.Column("Panel_ID", "Panel"),
+                    webGrid.Column("Kapi", "Kapı"),
+                    webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+                    webGrid.Column("Tarih", "Tarih"),
+                    webGrid.Column("Personel_Adi", "Personel Adı"),
+                    webGrid.Column("Personel_Soyadi", "Personel Soyadı")))
+                            }
+                            else
+                            {
+                                <div class="alert alert-info alert-message">
+                                    <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                                </div>
+                            }
+                        </div>*@
+
+
                 <div id="print_div">
-                    @if (Model.ComplexVisitorsListesi.Count > 0)
-                    {
-                        @webGrid.GetHtml(
-                  htmlAttributes: new { @id = "tableNon", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-                 footerStyle:"table-pager",
-                  selectedRowStyle: "selectRow",
-                  columns: webGrid.Columns(
-            webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
-            webGrid.Column("ID", "ID"),
-            webGrid.Column("Kart_ID", "Kart ID"),
-            webGrid.Column("Ziyaretci_Adi", "Ziyaretçi Adı"),
-            webGrid.Column("Ziyaretci_Soyadi", "Ziyaretçi Soyadı"),
-            webGrid.Column("Ziyaretci_TCKimlik", "Ziyaretçi TC Kimlik"),
-            webGrid.Column("Ziyaretci_Telefon", "Ziyaretçi Telefon"),
-            webGrid.Column("Ziyaretci_Plaka", "Ziyaretçi Plaka"),
-            webGrid.Column("Ziyaret_Sebebi", "Ziyaret Sebebi"),
-            webGrid.Column("Grup_Adi", "Grup"),
-            webGrid.Column("Panel_ID", "Panel"),
-            webGrid.Column("Kapi", "Kapı"),
-            webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
-            webGrid.Column("Tarih", "Tarih"),
-            webGrid.Column("Personel_Adi", "Personel Adı"),
-            webGrid.Column("Personel_Soyadi", "Personel Soyadı")))
-                    }
-                    else
-                    {
-                        <div class="alert alert-info alert-message">
-                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                        </div>
-                    }
+                    <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <td>Resim</td>
+                                <td>ID</td>
+                                <td>Kart ID</td>
+                                <td>Ziyaretçi Adı</td>
+                                <td>Ziyaretçi Soyadı</td>
+                                <td>Ziyaretçi TC Kimlik</td>
+                                <td>Ziyaretçi Telefon</td>
+                                <td>Ziyaretçi Plaka</td>
+                                <td>Ziyaret Sebebi</td>
+                                <td>Grup</td>
+                                <td>Panel</td>
+                                <td>Kapı</td>
+                                <td>Geçiş</td>
+                                <td>Tarih</td>
+                                <td>Personel Adı</td>
+                                <td>Personel Soyadı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ComplexVisitorsListesi)
+                            {
+                                <tr>
+                                    <td><a class="text-primary" onclick="SetImageUrl('@item.Ziyaretci_Resim','@item.Canli_Resim')">Resim</a></td>
+                                    <td>@item.ID</td>
+                                    <td>@item.Kart_ID</td>
+                                    <td>@item.Ziyaretci_Adi</td>
+                                    <td>@item.Ziyaretci_Soyadi</td>
+                                    <td>@item.Ziyaretci_TCKimlik</td>
+                                    <td>@item.Ziyaretci_Telefon</td>
+                                    <td>@item.Ziyaretci_Plaka</td>
+                                    <td>@item.Ziyaret_Sebebi</td>
+                                    <td>@item.Grup_Adi</td>
+                                    <td>@item.Panel_ID</td>
+                                    <td>@item.Kapi</td>
+                                    <td>@(item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")</td>
+                                    <td>@item.Tarih</td>
+                                    <td>@item.Personel_Adi</td>
+                                    <td>@item.Personel_Soyadi</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -315,6 +366,18 @@
                 "language": {
                     "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
                 }
+            });
+            $("#mainTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "bPaginate": true,
+                "bInfo": false,
+                "bFilter": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    ['10', '25', '50', '100', 'Hepsi']
+                ],
             });
         });
     </script>
@@ -476,6 +539,9 @@
             frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
             frameDoc.document.write('<h5>Ziyaretçi Geçiş Raporları (' + '@TempData["DateAndTimeView"]' + ')</h5>');
             frameDoc.document.write(contents);
+            frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+            frameDoc.document.getElementById('mainTable_length').style.display = "none";
+            frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
             frameDoc.document.close();
@@ -536,4 +602,16 @@
         });
 
     });
+    function SetImageUrl(resim, canliResim) {
+        if (resim != "" && resim != null) {
+            var tempResim = "/Images/" + resim;
+            $("#change-image").attr('src', tempResim)
+        }
+
+        if (canliResim != "" && canliResim != null) {
+            var tempCanliResim = "/Canli_Images/" + canliResim;
+            $("#change-image-canli").attr('src', tempCanliResim)
+        }
+
+    }
 </script>

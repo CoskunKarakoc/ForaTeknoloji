@@ -86,32 +86,59 @@
             </div>
         }
         <div class="row">
+            @*<div class="col-md-12">
+                                <hr />
+                                <div id="print_div">
+                                    @if (Model.ToplamGecis.Count > 0)
+                                    {
+                                        @webGrid.GetHtml(
+                htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+                selectedRowStyle: "selectRow",
+                footerStyle: "table-pager",
+                columns: webGrid.Columns(
+                webGrid.Column("PanelID", "Cihaz No"),
+                webGrid.Column("PanelAdi", "Cihaz Adı"),
+                webGrid.Column("Ilk_Kayit", "İlk İşlem Zamanı"),
+                webGrid.Column("Son_Kayit", "Son İşlem Zamanı"),
+                webGrid.Column("GecisSayi", "Onaylı Geçiş Sayısı")))
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-info alert-message">
+                                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>*@
+
+
             <div class="col-md-12">
                 <hr />
                 <div id="print_div">
-
-                    @if (Model.ToplamGecis.Count > 0)
-                    {
-                        @webGrid.GetHtml(
-htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-selectedRowStyle: "selectRow",
-footerStyle: "table-pager",
-columns: webGrid.Columns(
-webGrid.Column("PanelID", "Cihaz No"),
-webGrid.Column("PanelAdi", "Cihaz Adı"),
-webGrid.Column("Ilk_Kayit", "İlk İşlem Zamanı"),
-webGrid.Column("Son_Kayit", "Son İşlem Zamanı"),
-webGrid.Column("GecisSayi", "Onaylı Geçiş Sayısı")))
-                    }
-                    else
-                    {
-                        <div class="alert alert-info alert-message">
-                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                        </div>
-
-                    }
-
-
+                    <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <td>Cihaz No</td>
+                                <td>Cihaz Adı</td>
+                                <td>İlk İşlem Zamanı</td>
+                                <td>Son İşlem Zamanı</td>
+                                <td>Onaylı Geçiş Sayısı</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ToplamGecis)
+                            {
+                                <tr>
+                                    <td>@item.PanelID</td>
+                                    <td>@item.PanelAdi</td>
+                                    <td>@item.Ilk_Kayit</td>
+                                    <td>@item.Son_Kayit</td>
+                                    <td>@item.GecisSayi</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-md-12 text-right">
@@ -193,6 +220,40 @@ webGrid.Column("GecisSayi", "Onaylı Geçiş Sayısı")))
     </div>
 </div>
 
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#mainTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "bPaginate": true,
+                "bInfo": false,
+                "bFilter": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    ['10', '25', '50', '100', 'Hepsi']
+                ],
+            });
+
+        });
+    </script>
+}
 <script>
     $(document).ready(function () {
         $('.chosen-select').chosen();
@@ -291,6 +352,7 @@ webGrid.Column("GecisSayi", "Onaylı Geçiş Sayısı")))
     $(document).ready(function () {
         var gecisSayisi = $('#GecisSayisiHidden').val();
         var html = '<tfoot><tr><td></td><td></td><td></td><td><b>TOPLAM</b></td><td>' + gecisSayisi + '</td></tr></tfoot>';
+        $('#mainTable').append(html);
         $('#table').append(html);
 
     });
@@ -340,6 +402,9 @@ webGrid.Column("GecisSayi", "Onaylı Geçiş Sayısı")))
         frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
         frameDoc.document.write('<h5>(PDKS-YEMEKHANE) Terminal Kişi Bazlı Hareket Sayıları (' + '@TempData["DateAndTimeView"]' + ')</h5><hr/>');
         frameDoc.document.write(contents);
+        frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+        frameDoc.document.getElementById('mainTable_length').style.display = "none";
+        frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
         frameDoc.document.write('</body>');
         frameDoc.document.write('</html>');
         frameDoc.document.close();

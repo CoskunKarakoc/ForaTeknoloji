@@ -80,28 +80,88 @@
                 }
 
                 <div class="row">
+                    @*<div class="col-md-12">
+                                                <br />
+                                                @if (Model.Liste.Count > 0)
+                                                {
+                                                    @webGrid.GetHtml(
+                                                    htmlAttributes: new {@id="table",@class= "table-borderless table table-hover text-center table-striped small" },
+                                                    headerStyle:"table-sm",
+                                                    footerStyle: "table-pager",
+                                                     columns:webGrid.Columns(
+                                                         webGrid.Column("Gorev_Adi",header:"Görev Adı"),
+                                                         webGrid.Column("Panel_Adi",header:"Panel Adı"),
+                                                         webGrid.Column("Durum_Adi",header:"Durum",format:@<text>@(SetStatus(item.Durum_Adi))</text>),
+                        webGrid.Column("Tarih", "Tarih"),
+                        webGrid.Column("Adi", "Adı"),
+                        webGrid.Column("Soyadi", "Soyadı")))
+                                                }
+                                                else
+                                                {
+                                                    <div class="alert alert-info alert-message ">
+                                                        <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                                                    </div>
+                                                }
+                                                <div class="row">
+                                                    <div class="col-md-12 text-info">
+                                                        <hr />
+                                                        <span class="fas fa-info-circle">&nbsp;</span>
+                                                        <span><i>Bu kullanıcıya ait görev listesinde sadece son <b class="text-dark">200</b> kayıt gösterilmektedir.</i></span><br />
+                                                    </div>
+                                                </div>
+
+                                            </div>*@
+
+
                     <div class="col-md-12">
                         <br />
-                        @if (Model.Liste.Count > 0)
-                        {
-                            @webGrid.GetHtml(
-                            htmlAttributes: new {@id="table",@class= "table-borderless table table-hover text-center table-striped small" },
-                            headerStyle:"table-sm",
-                            footerStyle: "table-pager",
-                             columns:webGrid.Columns(
-                                 webGrid.Column("Gorev_Adi",header:"Görev Adı"),
-                                 webGrid.Column("Panel_Adi",header:"Panel Adı"),
-                                 webGrid.Column("Durum_Adi",header:"Durum",format:@<text>@(SetStatus(item.Durum_Adi))</text>),
-webGrid.Column("Tarih", "Tarih"),
-webGrid.Column("Adi", "Adı"),
-webGrid.Column("Soyadi", "Soyadı")))
-                        }
-                        else
-                        {
-                            <div class="alert alert-info alert-message ">
-                                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                            </div>
-                        }
+                        <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <td>Görev Adı</td>
+                                    <td>Panel Adı</td>
+                                    <td>Durum</td>
+                                    <td>Tarih</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Liste)
+                                {
+                                    <tr>
+                                        <td>@item.Gorev_Adi</td>
+                                        <td>@item.Panel_Adi</td>
+                                        <td>
+                                            @if (item.Durum_Adi == "Beklemede")
+                                            {
+                                                <span class="text-warning"><b>Beklemede</b></span>
+                                            }
+                                            else if (item.Durum_Adi == "Tamamlandı")
+                                            {
+                                                <span class="text-success"><b>Tamamlandı</b></span>
+                                            }
+                                            else if (item.Durum_Adi == "Hata")
+                                            {
+                                                <span class="text-danger"><b>Hata</b></span>
+                                            }
+                                            else if (item.Durum_Adi == "Zaman Aşımı")
+                                            {
+                                                <span class="text-secondary"><b>Zaman Aşımı</b></span>
+                                            }
+                                            else if (item.Durum_Adi == "Bağlantı Yok")
+                                            {
+                                                <span class="text-danger"><b>Bağlantı Yok</b></span>
+                                            }
+
+                                        </td>
+                                        <td>@item.Tarih</td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                         <div class="row">
                             <div class="col-md-12 text-info">
                                 <hr />
@@ -109,8 +169,10 @@ webGrid.Column("Soyadi", "Soyadı")))
                                 <span><i>Bu kullanıcıya ait görev listesinde sadece son <b class="text-dark">200</b> kayıt gösterilmektedir.</i></span><br />
                             </div>
                         </div>
-
                     </div>
+
+
+
                 </div>
             </div>
         </div>
@@ -158,3 +220,40 @@ webGrid.Column("Soyadi", "Soyadı")))
         $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
     });
 </script>
+
+@section Scripts{
+    <link href="~/Content/DataTablesNew/jquery.dataTables.min.css" rel="stylesheet" />@*Yeni Eklenen Datatables CSS*@
+    <script src="~/Content/DataTablesNew/jquery.dataTables.min.js"></script>@*Yeni Eklenen DataTables JS*@
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: none;
+            color: black !important;
+            border-radius: 4px;
+            border: 1px solid #828282;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background: none;
+            color: black !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#mainTable").DataTable({
+                "language": {
+                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+                },
+                "bPaginate": true,
+                "bInfo": false,
+                "bFilter": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    ['10', '25', '50', '100', 'Hepsi']
+                ],
+                "order": [[3, "desc"]], //or asc 
+                "columnDefs": [{ "targets": 3, "type": "date-eu" }],
+            });
+
+        });
+    </script>
+}

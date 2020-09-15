@@ -156,8 +156,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             TempData["PersonelLists"] = personelLists;
             return View(model);
         }
-
-
+     
         public ActionResult GroupBasedList(PersonelListReportParameters parameters)
         {
             var groupMaster = _groupMasterService.GetAllGroupsMaster();
