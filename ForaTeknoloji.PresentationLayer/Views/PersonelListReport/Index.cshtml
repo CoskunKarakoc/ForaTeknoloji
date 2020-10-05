@@ -98,81 +98,81 @@
             </div>
 
         }
-        @*<div class="row">
-                <div class="col-md-12">
-                    <div id="print_div" class="card-body">
-                        @if (Model.PersonelListesi.Count > 0)
-                        {
-                            @webGrid.GetHtml(
-                                      htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-                                      footerStyle: "table-pager",
-                                      columns: webGrid.Columns(
-                                          webGrid.Column("ID", "ID"),
-                                          webGrid.Column("Kart_ID", "Kart ID"),
-                                          webGrid.Column("UnvanAdi", "Ünvan"),
-                                          webGrid.Column("Adi", "Adı"),
-                                          webGrid.Column("Soyadi", "Soyadı"),
-                                          webGrid.Column("TCKimlik", "TC Kimlik"),
-                                          webGrid.Column("SirketAdi", "Şirket"),
-                                          webGrid.Column("DepartmanAdi", "Departman"),
-                                          webGrid.Column("AltDepartmanAdi", "Alt Departman"),
-                                          webGrid.Column("BolumAdi", "Bölüm"),
-                                          //webGrid.Column("Birim_Adi", "Birim"),
-                                          webGrid.Column("Grup_Adi", "Grup")))
-
-                        }
-                        else
-                        {
-                            <div class="alert alert-info alert-message ">
-                                <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                            </div>
-                        }
-
-                    </div>
-                </div>
-            </div>*@
-
         <div class="row">
             <div class="col-md-12">
                 <div id="print_div" class="card-body">
-                    <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                        <thead>
-                            <tr>
-                                <td>ID</td>
-                                <td>Kart ID</td>
-                                <td>Ünvan</td>
-                                <td>Adı</td>
-                                <td>Soyadı</td>
-                                <td>TC Kimlik</td>
-                                <td>Şirket</td>
-                                <td>Departman</td>
-                                <td>Alt Departman</td>
-                                <td>Bölüm</td>
-                                <td>Grup</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.PersonelListesi)
-                            {
-                                <tr>
-                                    <td>@item.ID</td>
-                                    <td>@item.Kart_ID</td>
-                                    <td>@item.UnvanAdi</td>
-                                    <td>@item.Adi</td>
-                                    <td>@item.Soyadi</td>
-                                    <td>@item.TCKimlik</td>
-                                    <td>@item.SirketAdi</td>
-                                    <td>@item.DepartmanAdi</td>
-                                    <td>@item.AltDepartmanAdi</td>
-                                    <td>@item.BolumAdi</td>
-                                    <td>@item.Grup_Adi</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    @if (Model.PersonelListesi.Count > 0)
+                    {
+                        @webGrid.GetHtml(
+                                  htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+                                  footerStyle: "table-pager",
+                                  columns: webGrid.Columns(
+                                      webGrid.Column("ID", "ID"),
+                                      webGrid.Column("Kart_ID", "Kart ID"),
+                                      webGrid.Column("UnvanAdi", "Ünvan"),
+                                      webGrid.Column("Adi", "Adı"),
+                                      webGrid.Column("Soyadi", "Soyadı"),
+                                      webGrid.Column("TCKimlik", "TC Kimlik"),
+                                      webGrid.Column("SirketAdi", "Şirket"),
+                                      webGrid.Column("DepartmanAdi", "Departman"),
+                                      webGrid.Column("AltDepartmanAdi", "Alt Departman"),
+                                      webGrid.Column("BolumAdi", "Bölüm"),
+                                      //webGrid.Column("Birim_Adi", "Birim"),
+                                      webGrid.Column("Grup_Adi", "Grup")))
+
+                    }
+                    else
+                    {
+                        <div class="alert alert-info alert-message ">
+                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                        </div>
+                    }
+
                 </div>
             </div>
         </div>
+
+        @*<div class="row">
+                <div class="col-md-12">
+                    <div id="print_div" class="card-body">
+                        <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <td>ID</td>
+                                    <td>Kart ID</td>
+                                    <td>Ünvan</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>TC Kimlik</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>Alt Departman</td>
+                                    <td>Bölüm</td>
+                                    <td>Grup</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PersonelListesi)
+                                {
+                                    <tr>
+                                        <td>@item.ID</td>
+                                        <td>@item.Kart_ID</td>
+                                        <td>@item.UnvanAdi</td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.TCKimlik</td>
+                                        <td>@item.SirketAdi</td>
+                                        <td>@item.DepartmanAdi</td>
+                                        <td>@item.AltDepartmanAdi</td>
+                                        <td>@item.BolumAdi</td>
+                                        <td>@item.Grup_Adi</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>*@
 
 
     </div>
@@ -316,9 +316,9 @@
             frameDoc.document.write('<body>');
             frameDoc.document.write('<h5>Personel Listesi (' + new Date().toLocaleDateString() + ')</h5><hr/>');
             frameDoc.document.write(contents);
-            frameDoc.document.getElementById('mainTable_filter').style.display = "none";
-            frameDoc.document.getElementById('mainTable_length').style.display = "none";
-            frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_length').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
             frameDoc.document.close();

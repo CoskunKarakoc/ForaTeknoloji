@@ -2917,6 +2917,7 @@
     <Compile Include="Controllers\DoorStatusController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\EmploymentController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExternalDataController.cs" />
     <Compile Include="Controllers\FastGroupController.cs" />
     <Compile Include="Controllers\GelenGelmeyenReportController.cs" />
@@ -3179,6 +3180,9 @@
     <Content Include="Views\Holiday\Index.cshtml" />
     <Content Include="Views\Holiday\Edit.cshtml" />
     <Content Include="Views\PersonelListReport\PersonelCardList.cshtml" />
+    <Content Include="Views\DoorStatus\DoorList.cshtml" />
+    <Content Include="Views\Error\Page404.cshtml" />
+    <Content Include="Views\Error\PageError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -218,102 +218,102 @@
             </div>
         }
 
-        @*<div class="row">
-                 <div class="col-md-12">
-                     <div id="print_div">
-                         @if (Model.ReportPersonel.Count > 0)
-                         {
-                             @webGrid.GetHtml(
-             htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
-             selectedRowStyle: "selectRow",
-             footerStyle: "table-pager",
-             columns: webGrid.Columns(
-             webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
-             webGrid.Column("ID", "ID"),
-             webGrid.Column("Kart_ID", "Kart ID"),
-             webGrid.Column("UnvanAdi", "Ünvan"),
-             webGrid.Column("Adi", "Adı"),
-             webGrid.Column("Soyadi", "Soyadı"),
-             webGrid.Column("TCKimlik", "TC Kimlik"),
-             webGrid.Column("Telefon", "Telefon"),
-             webGrid.Column("SirketAdi", "Şirket"),
-             webGrid.Column("DepartmanAdi", "Departman"),
-             webGrid.Column("AltDepartmanAdi", "Alt Departman"),
-             webGrid.Column("BolumAdi", "Bölüm"),
-            // webGrid.Column("BirimAdi", "Birim"),
-             webGrid.Column("BlokAdi", "Blok"),
-             webGrid.Column("Daire", "Daire"),
-             webGrid.Column("Grup_Adi", "Grup"),
-             webGrid.Column("Panel_ID", "Panel"),
-             webGrid.Column("Kapi", "Kapı"),
-             webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
-             webGrid.Column("Tarih", "Tarih")))
-
-                         }
-                         else
-                         {
-                             <div class="alert alert-info alert-message">
-                                 <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
-                             </div>
-
-                         }
-                     </div>
-                 </div>
-             </div>*@
-
-
-
         <div class="row">
             <div class="col-md-12">
-                <div id="print_div" class="card-body">
-                    <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                        <thead>
-                            <tr>
-                                <td>Resim</td>
-                                <td>Kart ID</td>
-                                <td>Ünvan</td>
-                                <td>Adı</td>
-                                <td>Soyadı</td>
-                                <td>TC Kimlik</td>
-                                <td>Telefon</td>
-                                <td>Şirket</td>
-                                <td>Departman</td>
-                                <td>Alt Departman</td>
-                                <td>Bölüm</td>
-                                <td>Grup</td>
-                                <td>Panel</td>
-                                <td>Kapı</td>
-                                <td>Geçiş</td>
-                                <td>Tarih</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.ReportPersonel)
-                            {
-                                <tr>
-                                    <td><a class="text-primary" onclick="SetImageUrl('@item.Resim','@item.Canli_Resim')">Resim</a></td>
-                                    <td>@item.Kart_ID</td>
-                                    <td>@item.UnvanAdi</td>
-                                    <td>@item.Adi</td>
-                                    <td>@item.Soyadi</td>
-                                    <td>@item.TCKimlik</td>
-                                    <td>@item.Telefon</td>
-                                    <td>@item.SirketAdi</td>
-                                    <td>@item.DepartmanAdi</td>
-                                    <td>@item.AltDepartmanAdi</td>
-                                    <td>@item.BolumAdi</td>
-                                    <td>@item.Grup_Adi</td>
-                                    <td>@item.Panel_ID</td>
-                                    <td>@item.Kapi</td>
-                                    <td>@(item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")</td>
-                                    <td>@item.Tarih</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                <div id="print_div">
+                    @if (Model.ReportPersonel.Count > 0)
+                    {
+                        @webGrid.GetHtml(
+        htmlAttributes: new { @id = "table", @class = "table-borderless table table-hover text-center table-striped table-sm" },
+        selectedRowStyle: "selectRow",
+        footerStyle: "table-pager",
+        columns: webGrid.Columns(
+        webGrid.Column("Kart_ID", "Canlı/Kayıtlı", format: (item) => item.GetSelectLink("Resim")),
+        webGrid.Column("ID", "ID"),
+        webGrid.Column("Kart_ID", "Kart ID"),
+        webGrid.Column("UnvanAdi", "Ünvan"),
+        webGrid.Column("Adi", "Adı"),
+        webGrid.Column("Soyadi", "Soyadı"),
+        webGrid.Column("TCKimlik", "TC Kimlik"),
+        webGrid.Column("Telefon", "Telefon"),
+        webGrid.Column("SirketAdi", "Şirket"),
+        webGrid.Column("DepartmanAdi", "Departman"),
+        webGrid.Column("AltDepartmanAdi", "Alt Departman"),
+        webGrid.Column("BolumAdi", "Bölüm"),
+       // webGrid.Column("BirimAdi", "Birim"),
+        webGrid.Column("BlokAdi", "Blok"),
+        webGrid.Column("Daire", "Daire"),
+        webGrid.Column("Grup_Adi", "Grup"),
+        webGrid.Column("Panel_ID", "Panel"),
+        webGrid.Column("Kapi", "Kapı"),
+        webGrid.Column("Gecis_Tipi", "Geçiş", format: item => item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış"),
+        webGrid.Column("Tarih", "Tarih")))
+
+                    }
+                    else
+                    {
+                        <div class="alert alert-info alert-message">
+                            <h4 class="text-center text-muted">Kriterlere Uygun Kayıt Yok!</h4>
+                        </div>
+
+                    }
                 </div>
             </div>
         </div>
+
+
+
+        @*<div class="row">
+                <div class="col-md-12">
+                    <div id="print_div" class="card-body">
+                        <table id="myTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <td>Resim</td>
+                                    <td>Kart ID</td>
+                                    <td>Ünvan</td>
+                                    <td>Adı</td>
+                                    <td>Soyadı</td>
+                                    <td>TC Kimlik</td>
+                                    <td>Telefon</td>
+                                    <td>Şirket</td>
+                                    <td>Departman</td>
+                                    <td>Alt Departman</td>
+                                    <td>Bölüm</td>
+                                    <td>Grup</td>
+                                    <td>Panel</td>
+                                    <td>Kapı</td>
+                                    <td>Geçiş</td>
+                                    <td>Tarih</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ReportPersonel)
+                                {
+                                    <tr>
+                                        <td><a class="text-primary" onclick="SetImageUrl('@item.Resim','@item.Canli_Resim')">Resim</a></td>
+                                        <td>@item.Kart_ID</td>
+                                        <td>@item.UnvanAdi</td>
+                                        <td>@item.Adi</td>
+                                        <td>@item.Soyadi</td>
+                                        <td>@item.TCKimlik</td>
+                                        <td>@item.Telefon</td>
+                                        <td>@item.SirketAdi</td>
+                                        <td>@item.DepartmanAdi</td>
+                                        <td>@item.AltDepartmanAdi</td>
+                                        <td>@item.BolumAdi</td>
+                                        <td>@item.Grup_Adi</td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi</td>
+                                        <td>@(item.Gecis_Tipi == 0 ? "Giriş" : "Çıkış")</td>
+                                        <td>@item.Tarih</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>*@
 
 
 
@@ -397,11 +397,11 @@
     </style>
     <script>
         $(document).ready(function () {
-            $("#myTable").DataTable({
-                "language": {
-                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
-                }
-            });
+            //$("#myTable").DataTable({
+            //    "language": {
+            //        "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+            //    }
+            //});
 
             $("#mainTable").DataTable({
                 "language": {
@@ -704,9 +704,9 @@
         frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
         frameDoc.document.write('<h5>Eski Personel Listesi (' + '@TempData["DateAndTimeView"]' + ')</h5>');
         frameDoc.document.write(contents);
-        frameDoc.document.getElementById('mainTable_filter').style.display = "none";
-        frameDoc.document.getElementById('mainTable_length').style.display = "none";
-        frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
+        //frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+        //frameDoc.document.getElementById('mainTable_length').style.display = "none";
+        //frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
         frameDoc.document.write('</body>');
         frameDoc.document.write('</html>');
         frameDoc.document.close();

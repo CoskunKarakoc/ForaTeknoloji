@@ -3530,7 +3530,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
             if (parameters.Group_ID != null)
             {   //CHANGE: LEFT JOIN Users ON AccessDatas.[Kart ID] = Users.[Kart ID] 06032020 Birden Fazla Kart ID Geldiği İçin Değişiklik Yaptık.
 
-                queryString = @"SELECT AccessDatas.Tarih,Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],Sirketler.Adi AS [Sirket Adi],Departmanlar.Adi AS [Departman Adi],AltDepartman.Adi AS [Alt Departman],Bolum.Adi AS [Bolum Adi],Birim.Adi AS [Birim Adi],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]
+                queryString = @"SELECT AccessDatas.Tarih,Users.ID,AccessDatas.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],Sirketler.Adi AS [Sirket Adi],Departmanlar.Adi AS [Departman Adi],AltDepartman.Adi AS [Alt Departman],Bolum.Adi AS [Bolum Adi],Birim.Adi AS [Birim Adi],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID]
                         FROM AccessDatas 
                         LEFT JOIN Users ON AccessDatas.ID = Users.ID
 						LEFT JOIN Sirketler ON Users.[Sirket No] = Sirketler.[Sirket No]
@@ -3633,7 +3633,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     }
                     queryString += ")";
                 }
-                queryString += " GROUP BY Users.ID,Users.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID],Departmanlar.Adi,AltDepartman.Adi,Bolum.Adi,Birim.Adi,Sirketler.Adi,AccessDatas.Tarih";
+                queryString += " GROUP BY Users.ID,AccessDatas.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID],Departmanlar.Adi,AltDepartman.Adi,Bolum.Adi,Birim.Adi,Sirketler.Adi,AccessDatas.Tarih";
             }
             else
             {

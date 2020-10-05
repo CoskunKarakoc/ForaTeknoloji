@@ -1773,6 +1773,12 @@ END";
                 Gorev_Adi = "Panel Rölelerinin Kapanması (Sürekli Kapalı)"
             };
             context.TaskCodes.Add(taskCode2772);
+            TaskCode taskCode2773 = new TaskCode
+            {
+                Gorev_Kodu = 2773,
+                Gorev_Adi = "Panel Rölelerinin Serbest Bırakılması"
+            };
+            context.TaskCodes.Add(taskCode2773);
             TaskCode taskCode2720 = new TaskCode
             {
                 Gorev_Kodu = 2720,

@@ -285,7 +285,7 @@
                                     @if (MenuListUser.Kapi_Operasyon == true)
                                     {
                                         <a class="collapse-item" href="@Url.Action("Index","Door")">Kapı Operasyon</a>
-                                        <a class="collapse-item" href="@Url.Action("Index","DoorStatus")">Kapı Durumları</a>
+                                        <a class="collapse-item" href="@Url.Action("DoorList","DoorStatus")">Kapı Durumları</a>
                                     }
                                     @if (MenuListUser.Kapi_Grup_Olusturma == true)
                                     {
@@ -341,8 +341,8 @@
                                     <a class="collapse-item" href="@Url.Action("Create","Visitor")">Yeni Ziyaretçi</a>
                                     <a class="collapse-item" href="@Url.Action("Index","Visitor")">Ziyaretçi Ayarları</a>
                                     @*<h6 class="collapse-header">Ziyaretçiler-QR Kod</h6>
-                                    <a class="collapse-item" href="@Url.Action("Create","QuickResponse")">Yeni Ziyaretçi(QR)</a>
-                                    <a class="collapse-item" href="@Url.Action("Index","QuickResponse")">Ziyaretçi Ayarları(QR)</a>*@
+                                        <a class="collapse-item" href="@Url.Action("Create","QuickResponse")">Yeni Ziyaretçi(QR)</a>
+                                        <a class="collapse-item" href="@Url.Action("Index","QuickResponse")">Ziyaretçi Ayarları(QR)</a>*@
                                 </div>
                             </div>
                         </li>

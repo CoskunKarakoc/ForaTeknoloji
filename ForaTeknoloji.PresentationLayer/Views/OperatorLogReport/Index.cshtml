@@ -100,7 +100,7 @@
         <div class="row">
             <div class="col-md-12">
                 <hr />
-                @*<div id="print_div">
+                <div id="print_div">
                     @if (Model.OperatorLogList.Count > 0)
                     {
                         @webGrid.GetHtml(
@@ -125,41 +125,41 @@
                         </div>
                     }
 
-                </div>*@
-
-                <div id="print_div">
-                    <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
-                        <thead>
-                            <tr>
-                                <td>Kayit No</td>
-                                <td>Panel ID</td>
-                                <td>Kapı Adı</td>
-                                <td>Geçiş Tipi</td>
-                                <td>Operasyon</td>
-                                <td>Tarih</td>
-                                <td>Kullanıcı Adı</td>
-                                <td>İşlem Verisi 1</td>
-                                <td>İşlem Verisi 2</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.OperatorLogList)
-                            {
-                                <tr>
-                                    <td>@item.Kayit_No</td>
-                                    <td>@item.Panel_ID</td>
-                                    <td>@item.Kapi_Adi</td>
-                                    <td>@item.Gecis_Tipi</td>
-                                    <td>@item.Operasyon</td>
-                                    <td>@item.Tarih</td>
-                                    <td>@item.Kullanici_Adi</td>
-                                    <td>@item.Islem_Verisi_1</td>
-                                    <td>@item.Islem_Verisi_2</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
                 </div>
+
+                @*<div id="print_div">
+                        <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <td>Kayit No</td>
+                                    <td>Panel ID</td>
+                                    <td>Kapı Adı</td>
+                                    <td>Geçiş Tipi</td>
+                                    <td>Operasyon</td>
+                                    <td>Tarih</td>
+                                    <td>Kullanıcı Adı</td>
+                                    <td>İşlem Verisi 1</td>
+                                    <td>İşlem Verisi 2</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OperatorLogList)
+                                {
+                                    <tr>
+                                        <td>@item.Kayit_No</td>
+                                        <td>@item.Panel_ID</td>
+                                        <td>@item.Kapi_Adi</td>
+                                        <td>@item.Gecis_Tipi</td>
+                                        <td>@item.Operasyon</td>
+                                        <td>@item.Tarih</td>
+                                        <td>@item.Kullanici_Adi</td>
+                                        <td>@item.Islem_Verisi_1</td>
+                                        <td>@item.Islem_Verisi_2</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>*@
 
 
             </div>
@@ -250,9 +250,9 @@
             frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
             frameDoc.document.write('<h5>Operatör Log Raporları (' + '@TempData["DateAndTimeView"]' + ')</h5><hr/>');
             frameDoc.document.write(contents);
-            frameDoc.document.getElementById('mainTable_filter').style.display = "none";
-            frameDoc.document.getElementById('mainTable_length').style.display = "none";
-            frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_length').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
             frameDoc.document.close();
@@ -284,18 +284,18 @@
     </style>
     <script>
         $(document).ready(function () {
-            $("#mainTable").DataTable({
-                "language": {
-                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
-                },
-                "bPaginate": true,
-                "bInfo": false,
-                "bFilter": true,
-                "lengthMenu": [
-                    [10, 25, 50, 100, -1],
-                    ['10', '25', '50', '100', 'Hepsi']
-                ],
-            });
+            //$("#mainTable").DataTable({
+            //    "language": {
+            //        "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+            //    },
+            //    "bPaginate": true,
+            //    "bInfo": false,
+            //    "bFilter": true,
+            //    "lengthMenu": [
+            //        [10, 25, 50, 100, -1],
+            //        ['10', '25', '50', '100', 'Hepsi']
+            //    ],
+            //});
 
         });
     </script>

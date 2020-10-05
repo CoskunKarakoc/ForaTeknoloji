@@ -100,7 +100,7 @@
                     <button type="button" id="btnPrint" class="btn  btn-sm btn-info"><i class="fa fa-print"></i> Yazdır</button>
                 </div>
 
-                @*<div class="col-md-12">
+                <div class="col-md-12">
                     <div id="print_div" class="mt-4">
                         @if (Model.TopluGirisSayisi.Count > 0)
                         {
@@ -128,10 +128,10 @@
                             </div>
                         }
                     </div>
-                </div>*@
+                </div>
 
 
-                <div class="col-md-12">
+                @*<div class="col-md-12">
                     <div id="print_div" class="mt-4">
                         <table id="mainTable" class="table-borderless table table-hover text-center table-striped table-sm" style="width:100%;">
                             <thead>
@@ -169,7 +169,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>*@
 
             </div>
         }
@@ -258,18 +258,18 @@
                 }
             });
 
-            $("#mainTable").DataTable({
-                "language": {
-                    "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
-                },
-                "bPaginate": true,
-                "bInfo": false,
-                "bFilter": true,
-                "lengthMenu": [
-                    [10, 25, 50, 100, -1],
-                    ['10', '25', '50', '100', 'Hepsi']
-                ],
-            });
+            //$("#mainTable").DataTable({
+            //    "language": {
+            //        "url": "/Content/DataTablesNew/dataTablesLanguageTr.js"
+            //    },
+            //    "bPaginate": true,
+            //    "bInfo": false,
+            //    "bFilter": true,
+            //    "lengthMenu": [
+            //        [10, 25, 50, 100, -1],
+            //        ['10', '25', '50', '100', 'Hepsi']
+            //    ],
+            //});
         });
     </script>
 
@@ -304,9 +304,9 @@
             frameDoc.document.write('<h5>Tarih ' + new Date().toLocaleDateString() + '</h5>');
             frameDoc.document.write('<h5>Toplu Giriş Sayısı Raporu (' + '@TempData["DateAndTimeView"]' + ')</h5>');
             frameDoc.document.write(contents);
-            frameDoc.document.getElementById('mainTable_filter').style.display = "none";
-            frameDoc.document.getElementById('mainTable_length').style.display = "none";
-            frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_filter').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_length').style.display = "none";
+            //frameDoc.document.getElementById('mainTable_paginate').style.display = "none";
             frameDoc.document.write('</body>');
             frameDoc.document.write('</html>');
             frameDoc.document.close();

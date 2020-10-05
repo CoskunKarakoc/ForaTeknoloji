@@ -1,0 +1,304 @@
+﻿@model ForaTeknoloji.PresentationLayer.Models.DoorStatusListViewModel
+@{
+    ViewBag.Title = "Kapı Durumları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_LayoutNewTemplate.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
+            <div class="card-header py-1 mt-1">
+                <h3 class="card-title">
+                    <i class="fas fa-bookmark"></i> Kapı Durumları
+                    <span class="badge badge-pill badge-success mr-3 ml-5">Kapı Aktif</span>
+                    <span class="badge badge-pill badge-danger mr-3 ml-5">Kapı Pasif</span>
+                    <span class="badge badge-pill badge-info text-white mr-3 ml-5">Kapı Kapalı</span>
+                    <span class="badge badge-pill badge-warning mr-3 ml-5">Butona Basıldı</span>
+                </h3>
+            </div>
+            <div class="card-body">
+                <table id="DoorList" class="table table-bordered" style="width:100%;">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Panel ID</th>
+                            <th>Panel Adı</th>
+                            <th>Kapı 1</th>
+                            <th>Kapı 2</th>
+                            <th>Kapı 3</th>
+                            <th>Kapı 4</th>
+                            <th>Kapı 5</th>
+                            <th>Kapı 6</th>
+                            <th>Kapı 7</th>
+                            <th>Kapı 8</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach (var status in Model.DoorStatusList)
+                        {
+                            <tr>
+                                <td><h5> @status.Panel_ID</h5></td>
+                                <td><h5> @status.Panel_Name</h5></td>
+
+                                <td id="@("P"+status.Panel_ID+"K1")" ondblclick="TriggerDoor(@status.Panel_ID,1)" class="bg-success text-white"><i class="fas fa-door-open text-white"></i><h5 class="text-white"> @Model.ReaderList.FirstOrDefault(a => a.Panel_ID == status.Panel_ID && a.WKapi_ID == 1).WKapi_Adi </h5></td>
+
+                                <td id="@("P"+status.Panel_ID+"K2")" ondblclick="TriggerDoor(@status.Panel_ID,2)" class="bg-success text-white"><i class="fas fa-door-open text-white"></i><h5 class="text-white"> @Model.ReaderList.FirstOrDefault(a => a.Panel_ID == status.Panel_ID && a.WKapi_ID == 2).WKapi_Adi </h5></td>
+
+                                <td id="@("P"+status.Panel_ID+"K3")" ondblclick="TriggerDoor(@status.Panel_ID,3)" class="bg-success text-white"><i class="fas fa-door-open text-white"></i><h5 class="text-white"> @Model.ReaderList.FirstOrDefault(a => a.Panel_ID == status.Panel_ID && a.WKapi_ID == 3).WKapi_Adi</h5></td>
+
+                                <td id="@("P"+status.Panel_ID+"K4")" ondblclick="TriggerDoor(@status.Panel_ID,4)" class="bg-success text-white"><i class="fas fa-door-open text-white"></i><h5 class="text-white"> @Model.ReaderList.FirstOrDefault(a => a.Panel_ID == status.Panel_ID && a.WKapi_ID == 4).WKapi_Adi</h5></td>
+
+                                <td id="@("P"+status.Panel_ID+"K5")" ondblclick="TriggerDoor(@status.Panel_ID,5)" class="bg-success text-white"><i class="fas fa-door-open text-white"></i><h5 class="text-white"> @Model.ReaderList.FirstOrDefault(a => a.Panel_ID == status.Panel_ID && a.WKapi_ID == 5).WKapi_Adi</h5></td>
+
+                                <td id="@("P"+status.Panel_ID+"K6")" ondblclick="TriggerDoor(@status.Panel_ID,6)" class="bg-success text-white"><i class="fas fa-door-open text-white"></i><h5 class="text-white"> @Model.ReaderList.FirstOrDefault(a => a.Panel_ID == status.Panel_ID && a.WKapi_ID == 6).WKapi_Adi</h5></td>
+
+                                <td id="@("P"+status.Panel_ID+"K7")" ondblclick="TriggerDoor(@status.Panel_ID,7)" class="bg-success text-white"><i class="fas fa-door-open text-white"></i><h5 class="text-white"> @Model.ReaderList.FirstOrDefault(a => a.Panel_ID == status.Panel_ID && a.WKapi_ID == 7).WKapi_Adi</h5></td>
+
+                                <td id="@("P"+status.Panel_ID+"K8")" ondblclick="TriggerDoor(@status.Panel_ID,8)" class="bg-success text-white"><i class="fas fa-door-open text-white"></i><h5 class="text-white"> @Model.ReaderList.FirstOrDefault(a => a.Panel_ID == status.Panel_ID && a.WKapi_ID == 8).WKapi_Adi</h5></td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        setInterval(function () {
+            $.ajax({
+                url: '/DoorStatus/Status',
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $.each(data, function (item, value) {
+                    $.each(value, function () {
+                        if (this.Kapi_1_Baglanti == true) {
+                            if (this.Kapi_1_Sensor == false) {
+                                $('#P' + this.Panel_ID + 'K1').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K1').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K1').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K1').addClass('badge-info');
+                            } else if (this.Kapi_1_Button == false) {
+                                $('#P' + this.Panel_ID + 'K1').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K1').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K1').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K1').addClass('bg-warning');
+                            } else {
+                                $('#P' + this.Panel_ID + 'K1').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K1').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K1').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K1').addClass('bg-success');
+                            }
+                        } else {
+                            $('#P' + this.Panel_ID + 'K1').removeClass('bg-success');
+                            $('#P' + this.Panel_ID + 'K1').removeClass('bg-warning');
+                            $('#P' + this.Panel_ID + 'K1').removeClass('badge-info');
+                            $('#P' + this.Panel_ID + 'K1').addClass('bg-danger');
+                        }
+
+
+                        if (this.Kapi_2_Baglanti == true) {
+                            if (this.Kapi_2_Sensor == false) {
+                                $('#P' + this.Panel_ID + 'K2').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K2').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K2').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K2').addClass('badge-info');
+                            } else if (this.Kapi_2_Button == false) {
+                                $('#P' + this.Panel_ID + 'K2').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K2').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K2').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K2').addClass('bg-warning');
+                            } else {
+                                $('#P' + this.Panel_ID + 'K2').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K2').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K2').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K2').addClass('bg-success');
+                            }
+                        } else {
+                            $('#P' + this.Panel_ID + 'K2').removeClass('bg-success');
+                            $('#P' + this.Panel_ID + 'K2').removeClass('bg-warning');
+                            $('#P' + this.Panel_ID + 'K2').removeClass('badge-info');
+                            $('#P' + this.Panel_ID + 'K2').addClass('bg-danger');
+                        }
+
+
+                        if (this.Kapi_3_Baglanti == true) {
+                            if (this.Kapi_3_Sensor == false) {
+                                $('#P' + this.Panel_ID + 'K3').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K3').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K3').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K3').addClass('badge-info');
+                            } else if (this.Kapi_3_Button == false) {
+                                $('#P' + this.Panel_ID + 'K3').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K3').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K3').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K3').addClass('bg-warning');
+                            } else {
+                                $('#P' + this.Panel_ID + 'K3').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K3').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K3').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K3').addClass('bg-success');
+                            }
+                        } else {
+                            $('#P' + this.Panel_ID + 'K3').removeClass('bg-success');
+                            $('#P' + this.Panel_ID + 'K3').removeClass('bg-warning');
+                            $('#P' + this.Panel_ID + 'K3').removeClass('badge-info');
+                            $('#P' + this.Panel_ID + 'K3').addClass('bg-danger');
+                        }
+
+
+                        if (this.Kapi_4_Baglanti == true) {
+                            if (this.Kapi_4_Sensor == false) {
+                                $('#P' + this.Panel_ID + 'K4').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K4').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K4').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K4').addClass('badge-info');
+                            } else if (this.Kapi_4_Button == false) {
+                                $('#P' + this.Panel_ID + 'K4').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K4').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K4').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K4').addClass('bg-warning');
+                            } else {
+                                $('#P' + this.Panel_ID + 'K4').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K4').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K4').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K4').addClass('bg-success');
+                            }
+                        } else {
+                            $('#P' + this.Panel_ID + 'K4').removeClass('bg-success');
+                            $('#P' + this.Panel_ID + 'K4').removeClass('bg-warning');
+                            $('#P' + this.Panel_ID + 'K4').removeClass('badge-info');
+                            $('#P' + this.Panel_ID + 'K4').addClass('bg-danger');
+                        }
+
+                        if (this.Kapi_5_Baglanti == true) {
+                            if (this.Kapi_5_Sensor == false) {
+                                $('#P' + this.Panel_ID + 'K5').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K5').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K5').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K5').addClass('badge-info');
+                            } else if (this.Kapi_5_Button == false) {
+                                $('#P' + this.Panel_ID + 'K5').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K5').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K5').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K5').addClass('bg-warning');
+                            } else {
+                                $('#P' + this.Panel_ID + 'K5').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K5').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K5').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K5').addClass('bg-success');
+                            }
+                        } else {
+                            $('#P' + this.Panel_ID + 'K5').removeClass('bg-success');
+                            $('#P' + this.Panel_ID + 'K5').removeClass('bg-warning');
+                            $('#P' + this.Panel_ID + 'K5').removeClass('badge-info');
+                            $('#P' + this.Panel_ID + 'K5').addClass('bg-danger');
+                        }
+
+                        if (this.Kapi_6_Baglanti == true) {
+                            if (this.Kapi_6_Sensor == false) {
+                                $('#P' + this.Panel_ID + 'K6').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K6').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K6').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K6').addClass('badge-info');
+                            } else if (this.Kapi_6_Button == false) {
+                                $('#P' + this.Panel_ID + 'K6').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K6').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K6').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K6').addClass('bg-warning');
+                            } else {
+                                $('#P' + this.Panel_ID + 'K6').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K6').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K6').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K6').addClass('bg-success');
+                            }
+                        } else {
+                            $('#P' + this.Panel_ID + 'K6').removeClass('bg-success');
+                            $('#P' + this.Panel_ID + 'K6').removeClass('bg-warning');
+                            $('#P' + this.Panel_ID + 'K6').removeClass('badge-info');
+                            $('#P' + this.Panel_ID + 'K6').addClass('bg-danger');
+                        }
+
+                        if (this.Kapi_7_Baglanti == true) {
+                            if (this.Kapi_7_Sensor == false) {
+                                $('#P' + this.Panel_ID + 'K7').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K7').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K7').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K7').addClass('badge-info');
+                            } else if (this.Kapi_7_Button == false) {
+                                $('#P' + this.Panel_ID + 'K7').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K7').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K7').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K7').addClass('bg-warning');
+                            } else {
+                                $('#P' + this.Panel_ID + 'K7').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K7').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K7').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K7').addClass('bg-success');
+                            }
+                        } else {
+                            $('#P' + this.Panel_ID + 'K7').removeClass('bg-success');
+                            $('#P' + this.Panel_ID + 'K7').removeClass('bg-warning');
+                            $('#P' + this.Panel_ID + 'K7').removeClass('badge-info');
+                            $('#P' + this.Panel_ID + 'K7').addClass('bg-danger');
+                        }
+
+
+
+                        if (this.Kapi_8_Baglanti == true) {
+                            if (this.Kapi_8_Sensor == false) {
+                                $('#P' + this.Panel_ID + 'K8').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K8').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K8').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K8').addClass('badge-info');
+                            } else if (this.Kapi_8_Button == false) {
+                                $('#P' + this.Panel_ID + 'K8').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K8').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K8').removeClass('bg-success');
+                                $('#P' + this.Panel_ID + 'K8').addClass('bg-warning');
+                            } else {
+                                $('#P' + this.Panel_ID + 'K8').removeClass('bg-danger');
+                                $('#P' + this.Panel_ID + 'K8').removeClass('bg-warning');
+                                $('#P' + this.Panel_ID + 'K8').removeClass('badge-info');
+                                $('#P' + this.Panel_ID + 'K8').addClass('bg-success');
+                            }
+                        } else {
+                            $('#P' + this.Panel_ID + 'K8').removeClass('bg-success');
+                            $('#P' + this.Panel_ID + 'K8').removeClass('bg-warning');
+                            $('#P' + this.Panel_ID + 'K8').removeClass('badge-info');
+                            $('#P' + this.Panel_ID + 'K8').addClass('bg-danger');
+                        }
+
+
+                    });
+                });
+            });
+        }, 10);
+    });
+
+
+    function TriggerDoor(PanelID, DoorID) {
+        var result = window.confirm(PanelID + " Nolu Panelin " + DoorID + " Nolu Kapısını Tetiklemek İstiyor musunuz?");
+        if (result == true) {
+            $.ajax({
+                url: '/DoorStatus/TriggerDoor',
+                data: {
+                    'PanelID': PanelID,
+                    'DoorID': DoorID
+                },
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                if (data == "Success") {
+                    alert("Kapı Tetikleme İşlemi Sıraya Alındı!");
+                }
+            });
+        }
+    }
+
+</script>
+
