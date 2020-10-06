@@ -3633,7 +3633,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                     }
                     queryString += ")";
                 }
-                queryString += " GROUP BY Users.ID,AccessDatas.[Kart ID],Users.Adi,Users.Soyadi,Users.[TCKimlik],AccessDatas.[Panel ID],PanelSettings.[Panel Name],AccessDatas.[Kapi ID],Departmanlar.Adi,AltDepartman.Adi,Bolum.Adi,Birim.Adi,Sirketler.Adi,AccessDatas.Tarih";
+                queryString += " ORDER BY AccessDatas.Tarih ASC";
             }
             else
             {
