@@ -49,18 +49,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             }
         }
 
-        // GET: DoorStatus
-        public ActionResult Index()
-        {
-            var model = new DoorStatusListViewModel
-            {
-                DoorStatusList = _doorStatusService.ComplexDoorStatuses(x => dbPanelList.Contains((int)x.Panel_ID)),
-                ReaderList = _readerSettingsNewService.GetAllReaderSettingsNew()
-            };
-            return View(model);
-        }
-
-
+    
         public ActionResult DoorList()
         {
             var model = new DoorStatusListViewModel

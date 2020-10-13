@@ -971,6 +971,69 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
 
 
 
+        public ActionResult PanelSendLpr(int Panel)
+        {
+            if (Panel != 0)
+            {
+
+                var panel = _panelSettingsService.GetById(Panel);
+                if (panel.Panel_Model != (int)PanelModel.Panel_1010)
+                {
+                    try
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_SND_LPR,
+                            IntParam_1 = (int)Panel,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = Panel,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                    }
+                }
+            }
+            return RedirectToAction("Settings", new { @PanelID = Panel });
+        }
+
+        public ActionResult PanelRcvLpr(int Panel)
+        {
+            if (Panel != 0)
+            {
+
+                var panel = _panelSettingsService.GetById(Panel);
+                if (panel.Panel_Model != (int)PanelModel.Panel_1010)
+                {
+                    try
+                    {
+                        TaskList taskList = new TaskList
+                        {
+                            Deneme_Sayisi = 1,
+                            Durum_Kodu = (int)PanelStatusCode.Beklemede,
+                            Gorev_Kodu = (int)CommandConstants.CMD_RCV_LPR,
+                            IntParam_1 = (int)Panel,
+                            Kullanici_Adi = user.Kullanici_Adi,
+                            Panel_No = Panel,
+                            Tablo_Guncelle = true,
+                            Tarih = DateTime.Now
+                        };
+                        TaskList taskListReceive = _taskListService.AddTaskList(taskList);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("Upss! Yanlış Giden Birşeyler Var.");
+                    }
+                }
+            }
+            return RedirectToAction("Settings", new { @PanelID = Panel });
+        }
 
 
 

@@ -53,5 +53,38 @@
     $(document).ready(function () {
         $('.chosen-select').chosen();
         $('.chosen-select-deselect').chosen({ allow_single_deselect: true });
+        var count = $("#BolumCount").val();
+        if (count == 0) {
+            $("#BolumList").prop("hidden", true);
+            $("#Title").prop("hidden", true);
+        } else {
+            $("#BolumList").prop("hidden", false);
+            $("#Title").prop("hidden", false);
+        }
+
+        $("#Departman_No").chosen().change(function () {
+            var departmanNo = $(this).val();
+            $.ajax({
+                url: '/Bolum/AltDepartmanListesi?Departman=' + departmanNo,
+                type: 'GET',
+                dataType: 'json'
+            }).done(function (data) {
+                $("#Alt_Departman_No").empty();
+                console.log(data);
+                if (data == null || data.count == 0) {
+                    $("#Alt_Departman_No").empty();
+                    $("#Alt_Departman_No").append('<option> Alt Departman Seçiniz.. </option>');
+                } else {
+                    $("#Alt_Departman_No").empty();
+                    $("#Alt_Departman_No").append('<option> Alt Departman Seçiniz.. </option>');
+                    $.each(data, function (index, row) {
+                        $("#Alt_Departman_No").append('<option value=' + row.Value + '>' + row.Text + '</option>').trigger("chosen:updated");
+                    });
+                }
+
+            });
+        });
+
+
     });
 </script>

@@ -69,7 +69,6 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
         public ActionResult HassError()
         {
             return View();
-
         }
 
 

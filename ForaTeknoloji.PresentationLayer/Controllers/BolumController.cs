@@ -181,7 +181,7 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                     var bolum = _bolumService.GetById(Bolum.Bolum_No);
                     if (bolum != null)
                     {
-                        _bolumService.UpdateBolum(bolum);
+                        _bolumService.UpdateBolum(Bolum);
                         return RedirectToAction("Index");
                     }
                 }

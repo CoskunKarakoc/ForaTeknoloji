@@ -38,6 +38,7 @@
                                 <td>Geçiş</td>
                                 <td>Tarih</td>
                                 <td>Operasyon</td>
+                                <td>Plaka</td>
                                 <td>Operator</td>
                             </tr>
                         </thead>
@@ -205,6 +206,7 @@
                 '<td>' + GecisTipi + '</td>' +
                 '<td>' + ConvertTime(value.Tarih) + '</td>' +
                 '<td class="small">' + value.Operasyon + '</td>' +
+                '<td class="small">' + value.Plaka + '</td>' +
                 '<td class="small">' + value.Operator + '<a title="Yeni Kullanıcı Olarak Ekle" onclick="return confirm(\'Yeni Kullanıcı Olarak Eklemek İstiyormusunuz?\')" href="/Users/Create?Kart_ID=' + value.Kart_ID + '"><i class="fas fa-user-plus text-info ml-2"></i></a></td>' +
                 '</tr>';
         } else {
@@ -223,6 +225,7 @@
                 '<td>' + GecisTipi + '</td>' +
                 '<td>' + ConvertTime(value.Tarih) + '</td>' +
                 '<td class="small">' + value.Operasyon + '</td>' +
+                '<td class="small">' + value.Plaka + '</td>' +
                 '<td class="small">' + value.Operator + '</td>' +
                 '</tr>';
         }

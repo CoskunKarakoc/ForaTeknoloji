@@ -168,6 +168,7 @@ END";
 @userName nvarchar(50)
 AS BEGIN
 DECLARE @maxUserID int
+DECLARE @panelModel int
 SET @maxUserID=(SELECT MAX(Users.ID) FROM Users)
 SET @panelModel=(SELECT TOP 1 [Panel Model] FROM PanelSettings WHERE [Panel ID] = @panelID)
 DECLARE @userID int
@@ -1965,6 +1966,18 @@ END";
                 Gorev_Adi = "Kapı Ayarlarının Alınması(9 ile 16 Okuyucular)"
             };
             context.TaskCodes.Add(taskCode2768);
+            TaskCode taskCode2784 = new TaskCode
+            {
+                Gorev_Kodu = 2784,
+                Gorev_Adi = "Plaka Tanıma Kamera Ayar Gönderme"
+            };
+            context.TaskCodes.Add(taskCode2784);
+            TaskCode taskCode2785 = new TaskCode
+            {
+                Gorev_Kodu = 2785,
+                Gorev_Adi = "Plaka Tanıma Kamera Ayar Alma"
+            };
+            context.TaskCodes.Add(taskCode2785);
             EMailSetting eMailSetting = new EMailSetting
             {
                 E_Mail_Adres = "sample@abcd.com",

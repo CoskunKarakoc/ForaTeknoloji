@@ -122,6 +122,8 @@
         CMD_SND_DOORFREE = CMD_BASE + 213,
         CMD_RCV_LOCALINTERLOCK = CMD_BASE + 214,
         CMD_SND_LOCALINTERLOCK = CMD_BASE + 215,
+        CMD_SND_LPR = CMD_BASE + 224,
+        CMD_RCV_LPR = CMD_BASE + 225,
 
         //Answer Commands
         CMD_OK = CMD_BASE + 401,
