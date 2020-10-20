@@ -160,11 +160,11 @@
                                     DBUsers Paswordusers = CurrentSession.User;
                                     if (Paswordusers.SysAdmin == true)
                                     {
-                                        <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Güvenlik Ayarları</a>
+                                        <a class="collapse-item" href="@Url.Action("Index","SecuritySettings")">Kullanıcı Ayarları</a>
                                     }
                                     else
                                     {
-                                        <a class="collapse-item" href="@Url.Action("ChangePassword","SecuritySettings")">Güvenlik Ayarları</a>
+                                        <a class="collapse-item" href="@Url.Action("ChangePassword","SecuritySettings")">Kullanıcı Ayarları</a>
                                     }
                                 }
                                 @{

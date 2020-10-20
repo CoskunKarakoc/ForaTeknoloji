@@ -390,17 +390,15 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
             {
                 foreach (var item in Alarmlar)
                 {
-                    var editEntity = _accessDatasService.GetByKayit_No(item);
-                    editEntity.Kontrol = 1;
-                    editEntity.Kontrol_Tarihi = DateTime.Now;
-                    _accessDatasService.UpdateAccessData(editEntity);
-
                     var editEntityTemps = _accessDatasTempService.GetByKayit_No(item);
                     editEntityTemps.Kontrol = 1;
                     editEntityTemps.Kontrol_Tarihi = DateTime.Now;
                     _accessDatasTempService.UpdateAccessDatasTemp(editEntityTemps);
 
-
+                    var editEntity = _accessDatasService.GetAllAccessDatas().FirstOrDefault(x => x.Panel_ID == editEntityTemps.Panel_ID && x.Kapi_ID == editEntityTemps.Kapi_ID && x.Kontrol == 0);
+                    editEntity.Kontrol = 1;
+                    editEntity.Kontrol_Tarihi = DateTime.Now;
+                    _accessDatasService.UpdateAccessData(editEntity);
                 }
                 return RedirectToAction("AlarmTable", "Alarm");
             }

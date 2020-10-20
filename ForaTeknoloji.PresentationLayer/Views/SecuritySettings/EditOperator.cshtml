@@ -9,7 +9,7 @@
     <div class="col-md-12">
         <div class="card border-left-info h-100 shadow-lg mt-xl-5 mb-xl-5">
             <div class="card-header py-1 mt-1">
-                <h3 class="card-title"><i class="fas fa-bookmark"></i> Güvenlik Ayarları</h3>
+                <h3 class="card-title"><i class="fas fa-bookmark"></i> Kullanıcı Ayarları</h3>
             </div>
             <div class="card-body">
                 @using (Html.BeginForm("EditOperator", "SecuritySettings", FormMethod.Post))
@@ -40,7 +40,7 @@
                             <div class="form-group row">
                                 <label for="Sifre" class="col-sm-4 col-form-label">Şifre</label>
                                 <div class="col-sm-6">
-                                    @Html.EditorFor(model => model.Sifre, null, "Sifre", new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                    @Html.EditorFor(model => model.Sifre, null, "Sifre", new { htmlAttributes = new { @class = "form-control form-control-sm", type = "password" } })
                                     @Html.ValidationMessageFor(model => model.Sifre, "", new { @class = "text-danger" })
                                 </div>
                             </div>
