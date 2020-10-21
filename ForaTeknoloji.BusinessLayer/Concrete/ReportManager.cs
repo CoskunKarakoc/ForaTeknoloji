@@ -209,6 +209,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -333,6 +334,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -479,6 +481,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -544,6 +547,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
@@ -718,6 +722,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -846,6 +851,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -979,6 +985,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -1121,6 +1128,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -1253,6 +1261,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -1368,6 +1377,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -1513,6 +1523,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
@@ -1596,6 +1607,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
@@ -1680,6 +1692,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
@@ -1788,6 +1801,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
@@ -2033,6 +2047,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -2274,6 +2289,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -2409,6 +2425,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -2568,6 +2585,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -2710,6 +2728,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -2807,6 +2826,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -2935,6 +2955,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -3055,6 +3076,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -3136,6 +3158,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -3284,6 +3307,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -3358,6 +3382,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -3423,6 +3448,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(queryString, connection);
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
@@ -3477,6 +3503,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -3648,6 +3675,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 {
                     var dateTimeFormats = new CultureInfo("tr-TR").DateTimeFormat;
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -3812,6 +3840,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
@@ -3923,6 +3952,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -3978,6 +4008,7 @@ namespace ForaTeknoloji.BusinessLayer.Concrete
                 try
                 {
                     connection.Open();
+                    command.CommandTimeout = 600;
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
