@@ -92,6 +92,8 @@ namespace ForaTeknoloji.PresentationLayer.Controllers
                         };
                         userList.Add(user);
                     }
+                    application.Workbooks.Close();
+                    _rawUsersService.DeleteAll();
                     foreach (var item in userList)
                     {
                         if (!_rawUsersService.GetAllRawUsers().Any(x => x.ID == item.ID))
